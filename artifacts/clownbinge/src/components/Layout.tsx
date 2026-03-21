@@ -47,7 +47,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <span className="text-white/80 text-xl sm:text-2xl font-sans font-light tracking-normal">Receipts</span>
             </div>
             <span className="text-white/50 text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase mt-0.5 group-hover:text-white/70 transition-colors">
-              The Registry of the People
+              Verified. Documented. Clowned.
             </span>
           </Link>
 
@@ -131,7 +131,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                   <span className="text-white/80 text-xl font-sans font-light tracking-normal">Receipts</span>
                 </div>
                 <span className="text-white/50 text-[10px] font-mono tracking-[0.2em] uppercase mt-0.5">
-                  The Registry of the People
+                  Verified. Documented. Clowned.
                 </span>
               </Link>
               <p className="text-white/70 font-medium max-w-sm mb-6 leading-relaxed">
