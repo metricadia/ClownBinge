@@ -103,10 +103,15 @@
 
   .prose a.cb-factoid {
     color: inherit !important;
-    font-weight: inherit !important;
+    font-weight: 700 !important;
     text-decoration: underline dotted #F5C518 !important;
     text-underline-offset: 5px !important;
     text-decoration-thickness: 2px !important;
+  }
+
+  .cb-subject-intro {
+    font-weight: 800;
+    color: #1A3A8F;
   }
 
   /* Factoid Popup */

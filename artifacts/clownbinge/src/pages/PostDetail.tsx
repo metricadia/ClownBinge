@@ -6,11 +6,37 @@ import { ShareButtons } from "@/components/ShareButtons";
 import { BookCTA } from "@/components/BookCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { usePostDetail, useViewTracker } from "@/hooks/use-posts";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { format } from "date-fns";
 import { Loader2, AlertTriangle, ArrowLeft, Copy, Check } from "lucide-react";
 import { Link } from "wouter";
+
+function abbreviateTitle(title: string): string {
+  if (/senator/i.test(title)) return "Sen.";
+  if (/representative/i.test(title)) return "Rep.";
+  if (/attorney general/i.test(title)) return "AG";
+  if (/governor/i.test(title)) return "Gov.";
+  if (/pastor/i.test(title)) return "Pastor";
+  if (/mayor/i.test(title)) return "Mayor";
+  if (/president/i.test(title)) return "President";
+  return "";
+}
+
+function formatSubjectLabel(name: string, title: string | null, party: string | null): string {
+  const abbr = title ? abbreviateTitle(title) : "";
+  const partyInitial = party === "Republican" ? "(R)" : party === "Democrat" || party === "Democratic" ? "(D)" : "";
+  return [abbr, name, partyInitial].filter(Boolean).join(" ");
+}
+
+function boldFirstMention(html: string, name: string, label: string): string {
+  if (!name || !html) return html;
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return html.replace(
+    new RegExp(`(>|^)([^<]*?)(${escaped})`),
+    `$1$2<strong class="cb-subject-intro">${label}</strong>`
+  );
+}
 
 interface FactoidState {
   title: string;
@@ -26,6 +52,12 @@ export default function PostDetail() {
   const { data: post, isLoading, error } = usePostDetail(slug);
   const { trackView } = useViewTracker(slug);
   const bodyRef = useRef<HTMLDivElement>(null);
+
+  const processedBody = useMemo(() => {
+    if (!post?.body || !post?.subjectName) return post?.body ?? "";
+    const label = formatSubjectLabel(post.subjectName, post.subjectTitle ?? null, post.subjectParty ?? null);
+    return boldFirstMention(post.body, post.subjectName, label);
+  }, [post?.body, post?.subjectName, post?.subjectTitle, post?.subjectParty]);
   const popupRef = useRef<HTMLDivElement>(null);
   const [factoid, setFactoid] = useState<FactoidState | null>(null);
   const [copied, setCopied] = useState(false);
@@ -219,8 +251,8 @@ export default function PostDetail() {
 
         <div
           ref={bodyRef}
-          className="prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed prose-p:mb-5 mb-12"
-          dangerouslySetInnerHTML={{ __html: post.body }}
+          className="prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed prose-p:mb-8 mb-12"
+          dangerouslySetInnerHTML={{ __html: processedBody }}
         />
 
         <div className="my-8 bg-muted border border-border h-[90px] w-full flex items-center justify-center rounded-lg">
