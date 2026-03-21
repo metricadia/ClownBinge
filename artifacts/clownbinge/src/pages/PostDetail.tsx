@@ -129,7 +129,7 @@ export default function PostDetail() {
         </div>
 
         {/* Article Body */}
-        <div className="prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed mb-12">
+        <div className="prose prose-xl sm:prose-2xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed mb-12">
           {/* For MVP, rendering raw text. In prod, this would be a rich text renderer or MDX */}
           <div dangerouslySetInnerHTML={{ __html: post.body.replace(/\n/g, '<br/>') }} />
           
