@@ -6,23 +6,31 @@ const samplePosts = [
     title: "Senator Claims He Never Voted For The Bill He Voted For",
     slug: "senator-claims-never-voted-for-bill",
     teaser: "The Congressional Record does not care about your selective memory. Neither does ClownBinge.",
-    body: `The Congressional Record is a merciless document. It does not forget. It does not forgive. It does not accept amendments retroactively.
+    body: `<p>There is a document called the <a href="https://www.congress.gov/congressional-record" class="cb-factoid" data-title="The Congressional Record" data-summary="The official daily record of the proceedings and debates of the U.S. Congress, published by the U.S. Government Publishing Office. Every vote, every speech, and every procedural motion is logged with a timestamp and a member's name." target="_blank" rel="noopener noreferrer">Congressional Record</a>. It has been published continuously since 1873. It is the official journal of what Congress actually does, as opposed to what members of Congress tell their donors they did. It does not accept corrections after the fact. It does not offer a comment period. It simply records what happened, when it happened, and who was responsible.</p>
 
-On March 15, 2023, it captured Senator James Whitmore of Missouri doing exactly the thing he now insists he never did.
+<p>Senator James Whitmore of Missouri apparently believes this document does not exist, or perhaps that his constituents lack the literacy and internet access required to locate it. On the basis of that assumption, he has constructed a comfortable narrative about his own voting record. The Congressional Record has constructed a different one. The Congressional Record's version has dates attached.</p>
 
-The vote was S.1247, the Rural Infrastructure Investment Act. It passed 61-39. Senator Whitmore's name appears in the official Senate roll call as a "YEA" vote. That is not an interpretation. That is a timestamp and a legal record of a congressional action.
+<p>On March 15, 2023, the United States Senate voted on <a href="https://www.congress.gov" class="cb-factoid" data-title="S.1247 — Rural Infrastructure Investment Act" data-summary="Senate legislation providing $4.2 billion in rural broadband, road, and water infrastructure funding. Passed 61-39 on March 15, 2023. Full text and roll call vote available at Congress.gov." target="_blank" rel="noopener noreferrer">S.1247, the Rural Infrastructure Investment Act</a>. The bill allocated $4.2 billion toward rural broadband expansion, road repair, and water system upgrades across fourteen states, including Missouri. The bill passed 61 to 39. Senator Whitmore's name appears in the official Senate roll call record under "YEA." That is a legal term meaning he voted for it. Not "in favor of portions of it." Not "present." For it.</p>
 
-Four months later, during a town hall in Springfield, Missouri, a constituent asked Whitmore directly about his vote on rural broadband funding. That provision was contained within S.1247. The Senator's response, captured on video by three separate attendees: "I never supported that bill. I voted against government overreach every single time."
+<p>The vote is logged with a time. It is logged with a date. It is logged with the senator's name spelled correctly. There is no ambiguity in a roll call vote. You either cast one or you do not. Senator Whitmore cast one.</p>
 
-The C-SPAN archive of the Senate floor that March afternoon tells a different story. The audio is clear. The timestamp is precise. The vote count is verified.
+<p>Four months later, at a town hall in Springfield, Missouri, a constituent asked Whitmore a direct question about rural broadband funding — specifically, why he had not supported efforts to bring high-speed internet to underserved communities in the state. The constituent had read about the bill. She had not, apparently, read the roll call.</p>
 
-Senator Whitmore, at 2:47 PM Eastern, cast an affirmative vote for S.1247.
+<p>Senator Whitmore's response, captured on video by three separate attendees and later uploaded to social media: "I never supported that bill. I voted against government overreach every single time. That's what this district sent me to Washington to do."</p>
 
-This is the anatomy of a political self-own. A public official operating under the assumption that his constituents do not have access to the same public records he generates. The assumption is wrong.
+<p>The C-SPAN archive of the <a href="https://www.c-span.org" class="cb-factoid" data-title="C-SPAN Congressional Archive" data-summary="C-SPAN has recorded and archived Congressional proceedings since 1979. The archive includes floor votes, committee hearings, and press conferences. All footage is publicly accessible and timestamped." target="_blank" rel="noopener noreferrer">Senate floor proceedings</a> from March 15, 2023, is publicly accessible. The audio of the vote is clear. The timestamp is precise. At 2:47 PM Eastern, the clerk called Whitmore's name. At 2:47 PM Eastern, Whitmore responded "Aye." At 2:47 PM Eastern, the Congressional Record logged a YEA vote from Senator James Whitmore of Missouri on S.1247.</p>
 
-The pattern is not new. Whitmore has made similar claims about his vote on the American Rescue Plan (voted yes, now says no) and his 2019 position on farm subsidies (supported, now opposes). Each reversal is documented. Each document is public. Each denial is now archived here.
+<p>His communications team, reached for comment after the town hall video circulated, said the senator's vote had been "mischaracterized." The Congressional Record does not characterize. It transcribes. The distinction matters.</p>
 
-The receipts do not have a political agenda. They have dates.`,
+<p>This is not an isolated instance. ClownBinge has reviewed Senator Whitmore's public statements against his voting record going back to 2019. The pattern is consistent. He voted yes on the American Rescue Plan in 2021 and told a local radio station in 2022 that he had "always opposed wasteful pandemic spending." He voted in favor of a 2019 farm subsidy reauthorization and described it on his campaign website as a "bloated entitlement program he proudly voted against."</p>
+
+<p>Each of these reversals follows the same structure. A vote is cast. Time passes. Political circumstances shift. The vote is retroactively described as something else. The Congressional Record, indifferent to political circumstances, continues to say what it said the day the vote was taken.</p>
+
+<p>The self-own here is structural. Whitmore is not operating in a pre-internet era where constituent access to primary documents required a trip to a federal depository library. The Congressional Record is searchable online. The C-SPAN archive is free to access. The Senate roll call database is a public website. Anyone with a phone and curiosity can find the vote in approximately ninety seconds.</p>
+
+<p>Senator Whitmore is a sitting member of the United States Senate. He generates the very public records he is now contradicting. That is not a tragic irony. That is a choice. And it is now documented here.</p>
+
+<p>The receipts do not have a political agenda. They have dates.</p>`,
     category: "self_owned" as const,
     subjectName: "James Whitmore",
     subjectTitle: "U.S. Senator",
@@ -40,25 +48,29 @@ The receipts do not have a political agenda. They have dates.`,
     title: "Congressman Caught on C-SPAN Saying the Quiet Part Loud",
     slug: "congressman-caught-cspan-quiet-part-loud",
     teaser: "C-SPAN cameras are always on. This is a lesson some elected officials never learn.",
-    body: `C-SPAN has been recording Congress since 1979. Forty-five years of floor speeches, committee hearings, and the kind of candid moments that occur when someone forgets the red light is blinking.
+    body: `<p><a href="https://www.c-span.org" class="cb-factoid" data-title="C-SPAN — America's Network" data-summary="C-SPAN has provided unfiltered, gavel-to-gavel coverage of Congress since 1979. Cameras are placed throughout hearing rooms and chambers. All footage is archived and publicly searchable at c-span.org." target="_blank" rel="noopener noreferrer">C-SPAN</a> has been recording Congress since 1979. That is forty-five years of floor speeches, committee hearings, confirmation battles, and the kind of candid moments that occur when a public official forgets that the red recording light means the camera is running. The network does not editorialize. It does not crop. It does not cut away at inconvenient moments. It simply records what is happening in rooms that belong to the American public.</p>
 
-Congressman Dale Hartwick of Georgia forgot the red light on February 7, 2024.
+<p>Congressman Dale Hartwick of Georgia forgot the red light on February 7, 2024.</p>
 
-The clip runs three minutes and forty-two seconds. It is timestamped, archived, and indexed in the C-SPAN database under House Judiciary Committee proceedings.
+<p>The clip in question runs three minutes and forty-two seconds. It is timestamped, indexed, and archived in the <a href="https://www.c-span.org/congress/" class="cb-factoid" data-title="C-SPAN Congressional Archive" data-summary="Searchable database of C-SPAN footage dating to 1979, including committee hearings, floor debates, and press availability. Footage is indexed by date, member name, committee, and topic." target="_blank" rel="noopener noreferrer">C-SPAN database</a> under House Judiciary Committee proceedings, February 7, 2024. In it, Congressman Hartwick is visible speaking to a colleague during what he believed was a recess break. The committee had not formally recessed. The cameras had not been turned off. Both of these facts were apparently unknown to him.</p>
 
-In it, Congressman Hartwick speaks to a colleague during what he believed was a recess break. He articulates a position on immigration enforcement that is substantially different from the one in his official press releases, his constituent newsletters, and his campaign website.
+<p>What Hartwick said during those three minutes and forty-two seconds articulates a position on immigration enforcement substantially different from the one he has articulated in his official press releases, his constituent newsletters, his campaign mailers, and his public remarks on the House floor. In the clip, he describes his own signature immigration legislation as "political theater for the base" and characterizes his public statements on border security as "what you have to say to get through a primary."</p>
 
-"It was taken out of context," his communications director told reporters on February 9th.
+<p>His communications director issued a statement on February 9th. It said the clip had been "taken out of context."</p>
 
-The C-SPAN clip contains no context gap. It is a continuous, unedited recording. The context is the context.
+<p>The C-SPAN clip contains no context gap. It is a continuous, unedited recording beginning before Hartwick starts speaking and ending after he finishes. The context is the entire clip. The clip is the context.</p>
 
-What Hartwick said on February 7th contradicts positions he has held in at least six documented public statements going back to 2021. ClownBinge has reviewed each statement.
+<p>What Hartwick said on February 7th contradicts positions he has held in at least six documented public statements going back to 2021. ClownBinge has reviewed each of those statements. The <a href="https://www.congress.gov/congressional-record" class="cb-factoid" data-title="Congressional Record — Official Proceedings" data-summary="The daily record of Congressional debate, votes, and proceedings. Member floor speeches are printed in full. All content is public record under the Federal Records Act." target="_blank" rel="noopener noreferrer">Congressional Record</a> contains three floor speeches in which he described his immigration enforcement bill as a sincere and urgent response to a genuine national crisis. The C-SPAN archive contains two committee appearances in which he used language indistinguishable from those floor speeches. His official website contains a press release calling the legislation "my proudest achievement in office."</p>
 
-The Congressional Record contains the floor speeches. The C-SPAN archive contains the committee appearances. The official website contains the press releases. They do not agree with each other or with the February 7th recording.
+<p>None of those documents agree with the February 7th recording. The February 7th recording appears to be the only instance in which Hartwick described what he actually believes about the legislation he authored.</p>
 
-The public record covers everything from his 2022 primary campaign, during which he described himself as "the strongest border hawk in this delegation," to the February 7th moment when he described his own enforcement legislation as "political theater for the base."
+<p>The gap between Hartwick's public statements and his private assessment of those statements is not a policy disagreement. It is not a nuance. It is a documented, timestamped, publicly accessible record of a sitting member of Congress telling a colleague that his public statements are performance and his private assessment is the opposite of those statements.</p>
 
-These are not two interpretations of a complicated policy position. They are two contradictory statements from the same person, both captured on video, both entered into the public record.`,
+<p>The <a href="https://judiciary.house.gov" class="cb-factoid" data-title="House Committee on the Judiciary" data-summary="One of the oldest standing committees in the U.S. House of Representatives, with jurisdiction over federal courts, constitutional amendments, immigration law, and civil liberties. Committee hearings are public record." target="_blank" rel="noopener noreferrer">House Judiciary Committee</a>, on which Hartwick sits, has jurisdiction over the immigration enforcement legislation he describes as political theater. He continues to serve on that committee. He continues to advocate publicly for that legislation. The C-SPAN archive continues to exist.</p>
+
+<p>The primary source here is a U.S. Representative's own voice, in a U.S. government building, recorded by cameras his own institution invited into that building. There is no secondary interpretation required. There is no anonymous source. There is no leaked document. There is a man saying one thing in public and the opposite thing in private, and a camera that was running the whole time.</p>
+
+<p>These are not two interpretations of a complicated policy position. They are two contradictory statements from the same person, both captured on video, both entered into the permanent public record. One of them is true. The congressman's own behavior on February 7th tells us which one.</p>`,
     category: "clown_electeds" as const,
     subjectName: "Dale Hartwick",
     subjectTitle: "U.S. Representative",
@@ -78,21 +90,25 @@ These are not two interpretations of a complicated policy position. They are two
     title: "State AG Files Lawsuit Against Practice He Used Himself For Six Years",
     slug: "state-ag-files-lawsuit-practice-used-himself",
     teaser: "The lawsuit was filed March 3rd. His own department's records document the same practice from 2016 to 2022.",
-    body: `Attorney General Rick Donahue of Texas filed a 47-page lawsuit on March 3, 2024, targeting a business practice he characterized as "a flagrant abuse of regulatory frameworks designed to protect working families."
+    body: `<p>On March 3, 2024, Texas Attorney General Rick Donahue filed a 47-page civil lawsuit against a national insurance consortium. The lawsuit's central argument: the consortium had engaged in a pattern of fraudulent business practices that exploited regulatory frameworks meant to protect working families. Donahue called a press conference. He used words like "predatory," "deceptive," and "accountability."</p>
 
-The lawsuit, filed against a national insurance consortium, argues that the practice constitutes fraud under Texas consumer protection statutes.
+<p>The <a href="https://statutes.capitol.texas.gov/Docs/BC/htm/BC.17.htm" class="cb-factoid" data-title="Texas Deceptive Trade Practices Act (DTPA)" data-summary="Texas Business and Commerce Code §17.41-17.63. The DTPA prohibits false, misleading, or deceptive acts or practices in the conduct of any trade or commerce. It is the primary consumer protection statute in Texas and is frequently invoked by the AG's office." target="_blank" rel="noopener noreferrer">Texas Deceptive Trade Practices Act</a>, under which the lawsuit was filed, prohibits exactly the kind of business structuring described in Donahue's complaint. The complaint is detailed. It names specific practices. It cites specific statutes. It asks the court for specific remedies including disgorgement, civil penalties, and injunctive relief.</p>
 
-Court records from Bexar County show that Donahue, while serving as a private attorney from 2016 to 2022, represented clients who engaged in the same practice described in his lawsuit. His firm billed for services related to structuring exactly the kind of arrangements now listed in paragraphs 12 through 28 of his complaint as "inherently deceptive."
+<p>What the complaint does not mention: from 2016 to 2022, Rick Donahue was a private attorney at the firm Donahue, Kellar and Associates in San Antonio. During that period, according to <a href="https://www.texasbar.com" class="cb-factoid" data-title="State Bar of Texas — Attorney Records" data-summary="The State Bar of Texas maintains a public directory of all licensed attorneys in the state, including their case history, disciplinary records, and areas of practice. Records are searchable at texasbar.com." target="_blank" rel="noopener noreferrer">State Bar of Texas</a> records and Bexar County court filings, his firm represented clients engaged in the same business practice now described in paragraphs 12 through 28 of his complaint as "inherently deceptive."</p>
 
-The Texas State Bar Association's public database contains his firm's case filings from that period. They are not sealed. They have not been expunged. They include the names of the clients, the nature of the representation, and in several instances, detailed memos describing the practice's legal architecture. That same architecture his lawsuit now calls fraudulent.
+<p>The Bexar County filings are public record. They include case numbers, client names, and the nature of the legal representation. In several instances, the filings include detailed memoranda authored by Donahue's firm describing the practice's legal architecture and recommending it to clients as compliant with state law. These memoranda were part of the public record before Rick Donahue became Attorney General. They remain part of the public record now that he is.</p>
 
-Donahue's press release announcing the lawsuit describes it as "a historic action to protect Texas families from predatory corporate behavior."
+<p>His press release from March 3rd describes the lawsuit as "a historic action to protect Texas families from predatory corporate behavior." A 2019 client memorandum from his private practice, obtained through a public records request to <a href="https://www.bexar.org/2730/District-Courts" class="cb-factoid" data-title="Bexar County District Courts — Public Records" data-summary="Bexar County, Texas maintains public access to district court filings including civil case documents, attorney appearances, and case memoranda. Records can be requested through the Bexar County District Clerk's office." target="_blank" rel="noopener noreferrer">Bexar County District Courts</a>, describes the same behavior as "a legally sound structure consistent with industry standards and fully compliant with applicable state law."</p>
 
-The 2019 memo from his private firm, obtained through public records, describes the same behavior as "a legally sound structure consistent with industry standards and fully compliant with applicable state law."
+<p>Both documents describe the same business practice. One was written by Rick Donahue the private attorney billing $450 per hour to structure it. The other was filed by Rick Donahue the Attorney General charging it as a consumer fraud scheme. They are irreconcilable. They are both public record. They both have his name on them.</p>
 
-Both documents are now in the public record. One was written by Rick Donahue the attorney. The other was filed by Rick Donahue the Attorney General. They represent irreconcilable positions on the same legal question, separated by four years and a change in professional interest.
+<p>The legal question of whether the practice is fraudulent is one for the courts. ClownBinge does not adjudicate law. What ClownBinge adjudicates is the documented gap between what a public official says in public and what the public record shows they did in private. In this case, that gap spans six years, two careers, and one spectacular flip that appears to have been timed to a statewide election campaign.</p>
 
-The receipts do not adjudicate the legal merits of either position. They document that both positions belong to the same person.`,
+<p>Donahue was elected Attorney General in November 2022. His first major consumer protection lawsuit, filed sixteen months into office, targets a practice his former clients paid him to facilitate. His former clients' names appear in the Bexar County filings. His name also appears in the Bexar County filings, identified as their attorney of record.</p>
+
+<p>There is a word in law for when a lawyer's prior representation creates a conflict with their current position. That word is "conflict." The State Bar of Texas has a process for reviewing such conflicts. Whether that process has been engaged in this matter is a question for the Bar. The question for ClownBinge is simpler: did Rick Donahue build a legal practice doing the exact thing he is now suing other people for doing?</p>
+
+<p>The public record says yes. The public record has case numbers.</p>`,
     category: "political" as const,
     subjectName: "Rick Donahue",
     subjectTitle: "State Attorney General",
@@ -110,23 +126,25 @@ The receipts do not adjudicate the legal merits of either position. They documen
     title: "Anti-Immigration Pastor Discovered to Have Immigrant Grandparents on Both Sides",
     slug: "anti-immigration-pastor-immigrant-grandparents",
     teaser: "The genealogical records predate the political position by about 80 years.",
-    body: `Pastor Vernon Mills of Cornerstone Fellowship Church in Scottsdale, Arizona, has delivered seventeen documented sermons on immigration since 2020. ClownBinge has reviewed each one.
+    body: `<p>Pastor Vernon Mills of Cornerstone Fellowship Church in Scottsdale, Arizona, has delivered seventeen documented sermons on immigration since January 2020. ClownBinge has reviewed each one. The transcripts are available on Cornerstone Fellowship's official YouTube channel, archived in full with timestamps. The argument across all seventeen sermons is consistent: unrestricted immigration from certain regions of the world constitutes a demographic and cultural threat to what Pastor Mills calls "the foundational character of this nation."</p>
 
-The consistent argument: America is a nation founded on specific principles of cultural continuity, and unrestricted immigration from certain regions constitutes a demographic threat to those principles.
+<p>The <a href="https://www.libertyellisfoundation.org/passenger-search" class="cb-factoid" data-title="Ellis Island Foundation — Passenger Search" data-summary="The Ellis Island Foundation maintains a searchable database of more than 65 million records of immigrants who passed through Ellis Island and the Port of New York between 1892 and 1957. Records include arrival dates, countries of origin, and ship manifests." target="_blank" rel="noopener noreferrer">Ellis Island Foundation's passenger records database</a> is not interested in Pastor Mills' theology. It is interested in names, dates, and countries of origin. And it has information about Vernon Mills' family that Vernon Mills has apparently chosen not to share with his congregation.</p>
 
-The Maricopa County vital records and the Ellis Island database are not interested in Pastor Mills' theology. They are interested in dates and names.
+<p>Mills' maternal grandparents are Bogdan and Irena Kowalczyk, who immigrated from Poland in November 1951 as displaced persons following World War II. They arrived at the Port of New York aboard the SS General R.M. Blatchford. Bogdan Kowalczyk's name appears in the <a href="https://www.govinfo.gov/content/pkg/STATUTE-62/pdf/STATUTE-62-Pg1009.pdf" class="cb-factoid" data-title="Displaced Persons Act of 1948" data-summary="Public Law 80-774. The Displaced Persons Act authorized the admission of approximately 400,000 European displaced persons to the United States between 1948 and 1952. It was one of the largest refugee resettlement programs in American history." target="_blank" rel="noopener noreferrer">Displaced Persons Act</a> admission records maintained by the National Archives. Irena Kowalczyk's name appears beside his. Both were admitted to the United States as refugees. Both became American citizens.</p>
 
-Mills' paternal grandmother, Maria Elena Reyes de Mills, immigrated to the United States from Sonora, Mexico, in 1943. She entered through the Nogales port of entry on a temporary agricultural work visa and applied for permanent residency in 1947. She was naturalized in 1952.
+<p>Mills' paternal grandmother is Maria Elena Reyes de Mills, who immigrated to the United States from Sonora, Mexico, in 1943. She entered through the Nogales port of entry on a temporary agricultural work visa under the Bracero Program and applied for permanent residency in 1947. She was naturalized in 1952. Her <a href="https://www.uscis.gov/records/genealogy-research" class="cb-factoid" data-title="USCIS Genealogy Records" data-summary="U.S. Citizenship and Immigration Services maintains historical immigration records including naturalization files, alien registration records, and visa petitions. Records can be requested for genealogical research through the USCIS Genealogy Program." target="_blank" rel="noopener noreferrer">naturalization record</a> is filed with U.S. Citizenship and Immigration Services.</p>
 
-Mills' maternal grandparents, Bogdan and Irena Kowalczyk, immigrated from Poland in 1951 as displaced persons following World War II. They arrived at Ellis Island in November of that year. Bogdan Kowalczyk is listed in the Displaced Persons Act admission records.
+<p>All four of Vernon Mills' grandparents were immigrants. Two entered as refugees from war-torn Europe under a federal program designed specifically to bring displaced persons into the United States. One entered on a work visa from Mexico. All four eventually became American citizens. Vernon Mills is an American citizen because the United States government allowed four immigrants into the country in the 1940s and 1950s.</p>
 
-All four of Vernon Mills' grandparents were immigrants. Two entered on work visas. Two entered as refugees. All four became American citizens.
+<p>His sermon from February 18, 2024, archived on Cornerstone Fellowship's official YouTube channel and available to anyone with an internet connection, includes this passage: "God did not build this nation for the whole world to walk into. This is a nation of a specific people, a specific heritage, a specific covenant, and we are obligated to protect that covenant from being diluted by those who do not share it."</p>
 
-Vernon Mills is an American citizen because four immigrants were allowed into the United States of America.
+<p>He delivered this sermon as a man whose maternal grandmother entered the United States from Mexico on a work visa, whose maternal grandparents entered as Polish refugees, and whose own existence is a direct product of the immigration policies he now describes from the pulpit as a threat to national identity.</p>
 
-His most recent sermon, delivered February 18, 2024, and archived on Cornerstone Fellowship's official YouTube channel, includes the following: "God did not build this nation for the whole world to walk into."
+<p>The genealogical records are not accusatory documents. They are vital records maintained by county offices, federal agencies, and nonprofit archives. They record births, deaths, arrivals, and naturalization dates. They do not make arguments. They document facts about families. The argument here makes itself.</p>
 
-The genealogical records are public. The sermon is public. The contradiction is complete.`,
+<p>Cornerstone Fellowship Church has not responded to a request for comment. Pastor Mills' sermons remain publicly archived on the church's YouTube channel. The Ellis Island records remain publicly searchable. The Maricopa County vital records remain public documents. The contradiction between them is complete, documented, and now archived here at ClownBinge alongside the receipts.</p>
+
+<p>The genealogical records predate the political position by about eighty years. Time, it turns out, keeps receipts too.</p>`,
     category: "religious" as const,
     subjectName: "Vernon Mills",
     subjectTitle: "Pastor, Cornerstone Fellowship Church",
@@ -144,23 +162,27 @@ The genealogical records are public. The sermon is public. The contradiction is 
     title: "School Board Member Who Banned Diversity Books Has Daughter at Diversity-Focused University",
     slug: "school-board-bans-diversity-books-daughter-at-dei-university",
     teaser: "The same month the ban passed, enrollment deposits were due.",
-    body: `The Palmetto County School Board voted 5-2 on August 14, 2023, to remove 23 books from district library shelves. Board member Patricia Holden was among the five affirmative votes.
+    body: `<p>On August 14, 2023, the Palmetto County School Board voted 5 to 2 to remove 23 books from district library shelves. Board member Patricia Holden was one of the five affirmative votes. The removal list, entered into the official meeting minutes and available through the district's public records office, includes titles related to civil rights history, LGBTQ+ youth experiences, and what the board's resolution describes as "ideologically targeted diversity programming."</p>
 
-The removal list includes titles related to civil rights history, LGBTQ+ experiences, and what the board's resolution describes as "ideologically targeted diversity programming."
+<p>The board's action drew national media coverage. Patricia Holden gave multiple interviews. In each one, she framed the removals as a principled stand for parental rights and what she called "age-appropriate" educational content. She appeared on three cable news programs. She was quoted in the Associated Press. She was described, by herself and others, as a defender of community values.</p>
 
-The University of Southern California's Office of Admission published its Class of 2027 enrollment announcements in May 2023. Among the incoming students: Emma Holden of Palmetto County, South Carolina.
+<p>Four months before that vote, in April 2023, enrollment deposits for the University of Southern California's Class of 2027 were due. Among the students submitting deposits: Emma Holden of Palmetto County, South Carolina, daughter of Patricia Holden.</p>
 
-The university's website describes its first-year experience as including "a robust diversity and inclusion orientation curriculum" and "equity-focused residential programming."
+<p>The <a href="https://diversity.usc.edu" class="cb-factoid" data-title="USC Office of Diversity, Equity and Inclusion" data-summary="The University of Southern California's Division for Diversity, Equity and Inclusion oversees campus-wide programming, mandatory first-year orientation components, and residential life programming focused on equity and inclusion. Information is publicly available at diversity.usc.edu." target="_blank" rel="noopener noreferrer">University of Southern California's Office of Diversity, Equity and Inclusion</a> maintains a publicly accessible website describing its programming. The university's first-year experience, as described on that website, includes a mandatory diversity and inclusion orientation curriculum and equity-focused residential programming. These are not elective courses. They are required components of the first-year experience.</p>
 
-Emma Holden's enrollment deposit was submitted April 14, 2023. That is four months before her mother's August vote on the library ban.
+<p>Emma Holden's enrollment deposit was submitted April 14, 2023. The Palmetto County School Board vote removing 23 books was taken August 14, 2023. The deposit preceded the vote by exactly four months. The USC 2023-2024 student handbook, a public document available on the university's website, describes mandatory first-year participation in diversity programming as a condition of on-campus housing.</p>
 
-Patricia Holden's prepared statement at the August 14 meeting states: "The materials we are removing promote a value system that is fundamentally incompatible with the educational mission of this district and the values of this community."
+<p>Patricia Holden's prepared statement at the August 14 meeting, entered into the official board minutes, states: "The materials we are removing promote a value system that is fundamentally incompatible with the educational mission of this district and the values of this community."</p>
 
-The University of Southern California's 2023-2024 student handbook, which Emma Holden received upon enrollment, includes mandatory participation in diversity and inclusion programming as a condition of first-year housing.
+<p>At the time she read that statement, her daughter had been enrolled at an institution whose publicly stated educational mission centers the exact value system Holden described as incompatible with her community's values. Her daughter was living in USC housing whose occupancy required participation in programming Holden's resolution characterized as ideologically inappropriate for students in her district.</p>
 
-Neither the school board resolution nor Emma Holden's USC enrollment is a secret. Both are public records. The timeline between them is three months and twenty-three days.
+<p>ClownBinge reviewed the <a href="https://ala.org/advocacy/bbooks" class="cb-factoid" data-title="American Library Association — Book Ban Tracker" data-summary="The ALA's Office for Intellectual Freedom tracks book challenges and bans in schools and public libraries across the United States. Their annual reports document the most frequently challenged titles and the stated reasons for each challenge." target="_blank" rel="noopener noreferrer">American Library Association's documentation</a> of the Palmetto County book removals. Several of the removed titles appear on USC's recommended first-year reading lists for incoming students.</p>
 
-ClownBinge makes no judgment about Emma Holden, who is a private individual and is not the subject of this piece. The subject is Patricia Holden, a public official who made a public vote, and the documented relationship between that vote and her private family choices.`,
+<p>ClownBinge makes no judgment about Emma Holden. She is a private individual, a student, and the subject of nothing on this platform. The subject of this piece is her mother, a public official who exercised public authority to remove materials she described as incompatible with community values while simultaneously enrolling her own child in an institution that has made those values a formal requirement of attendance.</p>
+
+<p>The school board meeting minutes are public record. The USC enrollment information is verifiable through public statements. The student handbook is publicly available. The timeline between these documents is one hundred and twenty-three days.</p>
+
+<p>The receipts were filed in two different states, four months apart, by the same family.</p>`,
     category: "cultural" as const,
     subjectName: "Patricia Holden",
     subjectTitle: "School Board Member",
@@ -178,25 +200,29 @@ ClownBinge makes no judgment about Emma Holden, who is a private individual and 
     title: "Afroman Sued His Own Harassers Into a Museum Exhibit",
     slug: "afroman-sued-harassers-into-museum-exhibit",
     teaser: "When police raided his home on a drug tip that yielded nothing, he turned the surveillance footage into art. Then merch. Then a lawsuit.",
-    body: `On August 18, 2022, officers from the Adams County Sheriff's Office in Ohio executed a search warrant at the home of Joseph Foreman, known professionally as Afroman.
+    body: `<p>On August 18, 2022, officers from the Adams County Sheriff's Office in Ohio executed a search warrant at the home of Joseph Foreman, known professionally as Afroman, in Licking County. The officers were acting on a tip alleging drug trafficking and kidnapping. The warrant authorized them to search the premises. They searched it thoroughly.</p>
 
-The officers were looking for evidence of drug trafficking and kidnapping. They found no drugs. They found no kidnapping victims. They found a man making music in his home.
+<p>They found no drugs. They found no kidnapping victims. They found a recording artist working in his home studio, which is, by most legal and artistic standards, exactly what he is supposed to be doing there.</p>
 
-What they did not find, but what Afroman had: extensive surveillance footage of the entire raid.
+<p>What they also found, though they did not appear to account for this in their operational planning, was that Afroman had installed comprehensive security cameras throughout the property. The cameras were recording. They recorded everything. When the officers left, the footage remained.</p>
 
-He used the footage. He released a series of music videos: "Lemon Pound Cake," "Will You Help Me Repair My Door," and "Poker Face." Each featured footage of the officers searching his home. The videos were nominated for Grammy awards.
+<p>Afroman, who has spent his career finding creative utility in whatever materials life provides, applied the <a href="https://www.copyright.gov/fair-use/" class="cb-factoid" data-title="17 U.S.C. § 107 — Fair Use Doctrine" data-summary="The fair use doctrine, codified at 17 U.S.C. § 107, allows the use of copyrighted material without permission for purposes such as commentary, criticism, news reporting, and artistic transformation. Courts weigh four factors including purpose, nature, amount used, and market effect." target="_blank" rel="noopener noreferrer">principle of artistic transformation</a> to approximately ninety minutes of surveillance footage depicting law enforcement officers conducting an unsuccessful search of his property. He released a series of music videos.</p>
 
-That sentence is not a joke. The Recording Academy nominated surveillance footage of an unlawful raid, repurposed as music video content, for Grammy consideration.
+<p>"Lemon Pound Cake," "Will You Help Me Repair My Door," and "Poker Face" each featured footage of Adams County Sheriff's deputies searching Afroman's home, moving his belongings, and generally occupying his property in connection with a search that produced no evidence of any crime. The videos were posted to YouTube. They accumulated millions of views. They were then submitted for Grammy consideration.</p>
 
-The Adams County deputies appeared in the videos without their consent. They sued Afroman for invasion of privacy, emotional distress, and interference with potential future law enforcement employment.
+<p>The <a href="https://www.grammy.com" class="cb-factoid" data-title="The Recording Academy — Grammy Awards" data-summary="The Recording Academy, founded in 1957, administers the Grammy Awards, the recording industry's most prestigious honor. Nominations are determined by academy members across 86 categories. The 2024 Grammy nominations were announced in November 2023." target="_blank" rel="noopener noreferrer">Recording Academy</a> nominated them. That is not a metaphor or an exaggeration. Surveillance footage of an unsuccessful police raid on an artist's home, repurposed as music video content, received nominations from the organization that gives out the most prestigious awards in the American recording industry. This happened.</p>
 
-They sued the man whose home they searched, using footage of themselves, taken in his home, during an unsuccessful operation.
+<p>The Adams County Sheriff's deputies who appeared in the videos then took legal action. Several officers filed a civil lawsuit against Afroman alleging invasion of privacy, emotional distress, and interference with potential future law enforcement employment. The lawsuit was filed on behalf of officers who had appeared, on camera, in a government building executing a government-issued warrant at a civilian's home.</p>
 
-The lawsuit was dismissed. Afroman counter-sued. Then he opened a store selling merch featuring the officers' images from the videos. Then he used footage from the raid in a museum exhibition about civil rights and police accountability.
+<p>To be precise about the legal posture here: law enforcement officers, acting in their official capacity pursuant to a <a href="https://www.law.cornell.edu/wex/search_warrant" class="cb-factoid" data-title="Search Warrant — Legal Definition" data-summary="A search warrant is a court order issued by a judge or magistrate that authorizes law enforcement to search a specific location for specific items. Under the Fourth Amendment, searches conducted under a valid warrant are constitutionally authorized government actions, making the officers agents of the state." target="_blank" rel="noopener noreferrer">court-issued search warrant</a>, in a home that was not theirs, conducting an operation that yielded no evidence of criminal activity, sued the homeowner for recording them doing so.</p>
 
-The Adams County Sheriff's Office raided Afroman's home looking for contraband. They left behind a Grammy nomination, a civil rights museum exhibit, and the clearest example in recent American cultural history of what happens when institutional overreach meets an artist who knows exactly what to do with documentation.
+<p>The lawsuit was dismissed.</p>
 
-The receipts were his surveillance footage all along.`,
+<p>Afroman counter-sued. He then opened an online store selling merchandise featuring the officers' images from the footage, including coffee mugs, t-shirts, and campaign materials he used in a subsequent run for public office. He then developed a museum installation using footage from the raid as part of an exhibition about civil rights and police accountability that has traveled to multiple venues.</p>
+
+<p>The Adams County Sheriff's Office conducted a raid that was intended to produce evidence of serious criminal activity. Instead, it produced a Grammy nomination, a merchandise line, a museum exhibition, a counter-lawsuit, and a case study in what happens when the assumption of impunity collides with a fully documented creative process and an artist who understands the legal and artistic concept of fair use better than the people who raided his home.</p>
+
+<p>The receipts were his surveillance footage all along. He was ready. They were not.</p>`,
     category: "anti_racist_hero" as const,
     subjectName: "Afroman (Joseph Foreman)",
     subjectTitle: "Recording Artist",

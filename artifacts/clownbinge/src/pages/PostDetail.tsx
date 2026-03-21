@@ -6,10 +6,19 @@ import { ShareButtons } from "@/components/ShareButtons";
 import { BookCTA } from "@/components/BookCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { usePostDetail, useViewTracker } from "@/hooks/use-posts";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { format } from "date-fns";
 import { Loader2, AlertTriangle, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
+
+interface FactoidState {
+  title: string;
+  summary: string;
+  url: string;
+  x: number;
+  y: number;
+}
 
 export default function PostDetail() {
   const [, params] = useRoute("/case/:slug");
@@ -17,12 +26,50 @@ export default function PostDetail() {
   
   const { data: post, isLoading, error } = usePostDetail(slug);
   const { trackView } = useViewTracker(slug);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const [factoid, setFactoid] = useState<FactoidState | null>(null);
 
   useEffect(() => {
     if (post) {
       trackView();
     }
   }, [post?.id, trackView]);
+
+  useEffect(() => {
+    const container = bodyRef.current;
+    if (!container) return;
+
+    let hideTimeout: ReturnType<typeof setTimeout>;
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = (e.target as Element).closest('a.cb-factoid') as HTMLAnchorElement | null;
+      if (!target) return;
+      clearTimeout(hideTimeout);
+      const rect = target.getBoundingClientRect();
+      setFactoid({
+        title: target.dataset.title || '',
+        summary: target.dataset.summary || '',
+        url: target.href,
+        x: rect.left + rect.width / 2,
+        y: rect.top + window.scrollY,
+      });
+    };
+
+    const handleMouseOut = (e: MouseEvent) => {
+      const target = (e.target as Element).closest('a.cb-factoid');
+      if (!target) return;
+      hideTimeout = setTimeout(() => setFactoid(null), 120);
+    };
+
+    container.addEventListener('mouseover', handleMouseOver);
+    container.addEventListener('mouseout', handleMouseOut);
+
+    return () => {
+      container.removeEventListener('mouseover', handleMouseOver);
+      container.removeEventListener('mouseout', handleMouseOut);
+      clearTimeout(hideTimeout);
+    };
+  }, [post]);
 
   if (isLoading) {
     return (
@@ -43,7 +90,7 @@ export default function PostDetail() {
             <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-6" />
             <h1 className="font-display font-extrabold text-3xl text-red-900 mb-4">Case Not Found</h1>
             <p className="text-red-700 mb-8">
-              Either this URL is wrong, or the politicians finally figured out how to delete the internet. (Probably the former).
+              Either this URL is wrong, or the politicians finally figured out how to delete the internet. (Probably the former.)
             </p>
             <Link href="/" className="inline-flex bg-red-900 text-white font-bold px-6 py-3 rounded-lg hover:bg-red-800 transition-colors">
               Return to Archives
@@ -70,13 +117,13 @@ export default function PostDetail() {
 
         {/* Article Header */}
         <header className="mb-10">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-border pb-6 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-border pb-5 mb-6">
             <div>
-              <div className="font-mono text-xl sm:text-2xl font-bold tracking-tight text-header mb-1">
+              <div className="font-mono text-lg sm:text-xl font-bold tracking-tight text-header mb-1">
                 CASE {post.caseNumber}
               </div>
               <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-muted-foreground">
-                <span className="uppercase tracking-widest">{post.category.replace('_', ' ')}</span>
+                <span className="uppercase tracking-widest">{post.category.replace(/_/g, ' ')}</span>
                 <span>•</span>
                 <span>Source: <span className="text-foreground">{post.verifiedSource}</span></span>
                 {post.dateOfIncident && (
@@ -92,19 +139,18 @@ export default function PostDetail() {
             </div>
           </div>
 
-          <h1 className={`font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight mb-6 ${isSelfOwned ? 'text-primary' : 'text-header'}`}>
+          <h1 className={`font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight mb-5 ${isSelfOwned ? 'text-primary' : 'text-header'}`}>
             {post.title}
           </h1>
 
-          <p className="text-base sm:text-lg text-muted-foreground font-medium leading-relaxed border-l-4 border-secondary pl-6">
+          <p className="text-base sm:text-lg text-muted-foreground font-medium leading-relaxed border-l-4 border-secondary pl-5">
             {post.teaser}
           </p>
         </header>
 
         {/* Video Player Area */}
         {isVideo && (
-          <div className="mb-12 rounded-2xl overflow-hidden shadow-2xl bg-black aspect-video relative">
-            {/* Placeholder for Bunny.net embed */}
+          <div className="mb-10 rounded-2xl overflow-hidden shadow-2xl bg-black aspect-video relative">
             {post.videoUrl ? (
               <iframe 
                 src={post.videoUrl} 
@@ -123,43 +169,21 @@ export default function PostDetail() {
           </div>
         )}
 
-        {/* Ad Placeholder Top */}
-        <div className="my-10 bg-muted border border-border h-[100px] sm:h-[250px] w-full flex items-center justify-center rounded-xl">
-          <span className="text-xs uppercase font-bold text-muted-foreground tracking-widest">Advertisement Space</span>
+        {/* Ad Banner — industry standard leaderboard height */}
+        <div className="my-8 bg-muted border border-border h-[90px] w-full flex items-center justify-center rounded-lg">
+          <span className="text-xs uppercase font-bold text-muted-foreground tracking-widest">Advertisement</span>
         </div>
 
-        {/* Article Body */}
-        <div className="prose prose-xl sm:prose-2xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed mb-12">
-          {/* For MVP, rendering raw text. In prod, this would be a rich text renderer or MDX */}
-          <div dangerouslySetInnerHTML={{ __html: post.body.replace(/\n/g, '<br/>') }} />
-          
-          {/* If the body is short/mocked, let's add some styled structure to show the design */}
-          {post.body.length < 200 && (
-            <>
-              <h2>Who They Claim To Be</h2>
-              <p>For years, the public messaging has been perfectly disciplined. Press releases, campaign speeches, and Sunday morning talk show appearances all hit the exact same talking points. The brand was built entirely on this specific foundation of supposed principles.</p>
-              
-              <h2>What The Record Actually Shows</h2>
-              <p>But when we look at the verified public record, a completely different reality emerges. The contradiction isn't subtle—it's structural. The actions taken behind closed doors or in obscure committee hearings directly violate the very principles loudly championed on camera.</p>
-              
-              <div className="bg-primary/5 border-l-4 border-primary p-6 my-8 rounded-r-xl">
-                <h3 className="text-primary mt-0 mb-2">The Self-Own Moment</h3>
-                <p className="mb-0 text-foreground">The most documented hypocrisy occurred when they were forced to vote on the exact legislation they claimed to champion, choosing instead to block it while simultaneously sending a fundraising email about their steadfast support for the cause.</p>
-              </div>
-
-              <div className="mt-12 text-center">
-                <span className="font-mono font-bold text-sm uppercase tracking-widest text-muted-foreground mb-2 block">ClownBinge Verdict</span>
-                <p className="font-display font-bold text-2xl text-header leading-tight">
-                  You can build a career on rhetoric, but you can't hide the receipts.
-                </p>
-              </div>
-            </>
-          )}
-        </div>
+        {/* Article Body — HTML rendered with factoid popup support */}
+        <div
+          ref={bodyRef}
+          className="prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed prose-p:mb-5 mb-12"
+          dangerouslySetInnerHTML={{ __html: post.body }}
+        />
 
         {/* Ad Placeholder Bottom */}
-        <div className="my-10 bg-muted border border-border h-[100px] w-full flex items-center justify-center rounded-xl">
-          <span className="text-xs uppercase font-bold text-muted-foreground tracking-widest">Advertisement Space</span>
+        <div className="my-8 bg-muted border border-border h-[90px] w-full flex items-center justify-center rounded-lg">
+          <span className="text-xs uppercase font-bold text-muted-foreground tracking-widest">Advertisement</span>
         </div>
 
         {/* Engagement Zone */}
@@ -171,10 +195,8 @@ export default function PostDetail() {
           <NewsletterSignup source={`post_${post.id}`} />
         </div>
 
-        {/* Inline Book CTA */}
         {isSelfOwned && <BookCTA variant="inline" />}
 
-        {/* Mock Comments Section */}
         <div className="mt-16 pt-8 border-t-2 border-border">
           <h3 className="font-display font-extrabold text-2xl mb-8">The Jury (Comments)</h3>
           <div className="bg-muted/50 border border-border rounded-xl p-8 text-center">
@@ -189,6 +211,27 @@ export default function PostDetail() {
 
       {/* Sticky Bottom Book CTA */}
       <BookCTA variant="banner" />
+
+      {/* Factoid Popup Portal */}
+      {factoid && createPortal(
+        <div
+          className="cb-factoid-popup"
+          style={{ left: factoid.x, top: factoid.y }}
+        >
+          <div className="cb-factoid-popup-label">ClownBinge Factoid</div>
+          <div className="cb-factoid-popup-title">{factoid.title}</div>
+          <div className="cb-factoid-popup-summary">{factoid.summary}</div>
+          <a
+            href={factoid.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cb-factoid-popup-link"
+          >
+            View Source Document →
+          </a>
+        </div>,
+        document.body
+      )}
     </Layout>
   );
 }
