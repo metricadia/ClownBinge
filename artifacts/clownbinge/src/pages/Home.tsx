@@ -85,11 +85,11 @@ export default function Home() {
                 A Public Accountability Platform. <span className="font-bold">Against Fabricated News.</span>
               </h1>
               <p className="font-sans text-xs tracking-wide mt-1 flex items-center gap-2 flex-wrap">
-                <a href="/clowncheck" className="font-semibold hover:underline" style={{ color: "#F5C518" }}>Verify News</a>
+                <a href="/clowncheck" className="font-semibold hover:underline" style={{ color: "#1A3A8F" }}>Verify News</a>
                 <span className="text-muted-foreground/40">|</span>
-                <a href="/submit" className="font-semibold hover:underline" style={{ color: "#F5C518" }}>Submit A Clown</a>
+                <a href="/submit" className="font-semibold hover:underline" style={{ color: "#1A3A8F" }}>Submit A Clown</a>
                 <span className="text-muted-foreground/40">|</span>
-                <a href="/contact" className="font-semibold hover:underline" style={{ color: "#F5C518" }}>Report a Problem</a>
+                <a href="/ethics" className="font-semibold hover:underline" style={{ color: "#1A3A8F" }}>Our Ethics Policy</a>
               </p>
             </div>
 
