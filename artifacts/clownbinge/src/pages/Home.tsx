@@ -81,8 +81,8 @@ export default function Home() {
           {/* Main Feed Column */}
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
             <div className="mb-8">
-              <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-header mb-2">
-                The Receipts.
+              <h1 className="font-display font-semibold text-2xl sm:text-3xl text-header mb-2">
+                A Refuge of Facts for the People<sup className="text-sm align-super">™</sup>
               </h1>
               <p className="text-muted-foreground font-medium">
                 Showing {displayPosts.length} verified cases.
