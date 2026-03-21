@@ -1,6 +1,7 @@
 import { useRoute } from "wouter";
 import { Layout } from "@/components/Layout";
 import { VerifiedBadge } from "@/components/VerifiedBadge";
+import { CitedBadge } from "@/components/CitedBadge";
 import { ReactionBar } from "@/components/ReactionBar";
 import { ShareButtons } from "@/components/ShareButtons";
 import { BookCTA } from "@/components/BookCTA";
@@ -243,11 +244,12 @@ export default function PostDetail() {
                 )}
               </div>
             </div>
-            <div className="shrink-0">
+            <div className="shrink-0 flex items-center gap-2">
               <VerifiedBadge
                 source={post.verifiedSource}
                 date={post.dateOfIncident ? format(new Date(post.dateOfIncident), "MMM d, yyyy") : undefined}
               />
+              {references.length > 0 && <CitedBadge count={references.length} />}
             </div>
           </div>
 
@@ -315,7 +317,7 @@ export default function PostDetail() {
 
         {/* Verified References */}
         {references.length > 0 && (
-          <section className="mt-10" aria-label="Verified References">
+          <section id="verified-references" className="mt-10" aria-label="Verified References">
             <div className="h-1 w-full bg-[#F5C518] rounded-full mb-8" />
             <h2 className="font-display font-medium text-base text-header mb-6 uppercase tracking-widest">
               Verified References
