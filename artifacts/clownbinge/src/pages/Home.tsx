@@ -1,4 +1,3 @@
-import { useRef, useEffect, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
@@ -65,19 +64,6 @@ const MOCK_POSTS: Post[] = [
 export default function Home() {
   const { category, setCategory } = usePostsFilter();
   const { data, isLoading, error } = usePostsFeed(category);
-  const sentinelRef = useRef<HTMLDivElement>(null);
-  const [isStuck, setIsStuck] = useState(false);
-
-  useEffect(() => {
-    const sentinel = sentinelRef.current;
-    if (!sentinel) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsStuck(!entry.isIntersecting),
-      { rootMargin: "-131px 0px 0px 0px", threshold: 0 }
-    );
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, []);
 
   // Use real data if available and not empty, otherwise fallback to mock for demonstration
   const posts = (data?.posts && data.posts.length > 0) ? data.posts : MOCK_POSTS;
@@ -94,25 +80,6 @@ export default function Home() {
           
           {/* Main Feed Column */}
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
-            {/* Sentinel — sits just above the sticky block; when it leaves viewport the block is "stuck" */}
-            <div ref={sentinelRef} className="h-px w-full" aria-hidden />
-            <div
-              className={`sticky top-[130px] z-30 bg-background pt-6 pb-4 mb-0 transition-shadow duration-200 ${isStuck ? "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.12)]" : ""}`}
-            >
-              <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-relaxed max-w-xl">
-                A Public Accountability Platform. <span className="font-bold">Against Fabricated News.</span>
-              </h1>
-              <p className="font-sans text-xs tracking-wide mt-1 flex items-center gap-2 flex-wrap">
-                <a href="/clowncheck" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Verify News</a>
-                <span className="text-muted-foreground/40">|</span>
-                <a href="/reports" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Order Comprehensive Report</a>
-                <span className="text-muted-foreground/40">|</span>
-                <a href="/submit" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Submit A Clown</a>
-                <span className="text-muted-foreground/40">|</span>
-                <a href="/ethics" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Our Ethics Policy</a>
-              </p>
-            </div>
-
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
                 <Loader2 className="w-10 h-10 animate-spin mb-4 text-primary" />

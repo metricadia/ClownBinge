@@ -108,6 +108,24 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </div>
         )}
 
+        {/* Mission + Links bar — always visible on all pages */}
+        <div className="border-t border-white/10 bg-background px-4 sm:px-6 py-2.5">
+          <div className="cb-container flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4">
+            <p className="font-sans font-normal text-sm text-header leading-snug">
+              A Public Accountability Platform. <span className="font-bold">Against Fabricated News.</span>
+            </p>
+            <p className="font-sans text-xs tracking-wide flex items-center gap-2 flex-wrap shrink-0">
+              <Link href="/clowncheck" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Verify News</Link>
+              <span className="text-muted-foreground/40">|</span>
+              <Link href="/reports" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Order Comprehensive Report</Link>
+              <span className="text-muted-foreground/40">|</span>
+              <Link href="/submit" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit A Clown</Link>
+              <span className="text-muted-foreground/40">|</span>
+              <Link href="/ethics" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Our Ethics Policy</Link>
+            </p>
+          </div>
+        </div>
+
       </header>
 
       {/* Mobile Menu Dropdown */}
