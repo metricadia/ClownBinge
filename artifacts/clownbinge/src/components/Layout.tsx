@@ -43,8 +43,10 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <div className="flex items-baseline gap-0">
               <span className="logo-text text-3xl sm:text-4xl text-white tracking-tight">Clown</span>
               <span className="logo-text text-3xl sm:text-4xl text-secondary tracking-tight">Binge</span>
+              <span className="text-white/40 text-2xl sm:text-3xl font-sans font-light mx-2">|</span>
+              <span className="text-white/80 text-xl sm:text-2xl font-sans font-light tracking-normal">Receipts</span>
             </div>
-            <span className="text-white/60 text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase mt-0.5 group-hover:text-white/80 transition-colors">
+            <span className="text-white/50 text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase mt-0.5 group-hover:text-white/70 transition-colors">
               The Registry of the People
             </span>
           </Link>
@@ -125,6 +127,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 <div className="flex items-baseline gap-0">
                   <span className="logo-text text-3xl text-white tracking-tight">Clown</span>
                   <span className="logo-text text-3xl text-secondary tracking-tight">Binge</span>
+                  <span className="text-white/40 text-2xl font-sans font-light mx-2">|</span>
+                  <span className="text-white/80 text-xl font-sans font-light tracking-normal">Receipts</span>
                 </div>
                 <span className="text-white/50 text-[10px] font-mono tracking-[0.2em] uppercase mt-0.5">
                   The Registry of the People
