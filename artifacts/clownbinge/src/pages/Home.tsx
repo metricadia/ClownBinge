@@ -81,11 +81,13 @@ export default function Home() {
           {/* Main Feed Column */}
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
             <div className="mb-8">
-              <h1 className="font-display font-semibold text-2xl sm:text-3xl text-header mb-2">
-                A Refuge of Facts for the People<sup className="text-sm align-super">™</sup>
+              <h1 className="font-display font-light text-2xl sm:text-3xl text-header mb-1 leading-snug">
+                A Refuge of{" "}
+                <span className="font-bold" style={{ color: "#F5C518" }}>Facts</span>
+                {" "}for the People<sup className="text-xs align-super font-normal" style={{ color: "#F5C518" }}>™</sup>
               </h1>
-              <p className="text-muted-foreground font-medium">
-                Showing {displayPosts.length} verified cases.
+              <p className="text-muted-foreground text-sm">
+                {displayPosts.length} verified cases, each with cited sources.
               </p>
             </div>
 
