@@ -108,8 +108,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </div>
         )}
 
-        {/* Mission + Links bar — always visible on all pages */}
-        <div className="border-t border-white/10 bg-background px-4 sm:px-6 py-2.5">
+        {/* Mission + Links bar — sub-pages only; home page renders its own */}
+        {location !== "/" && <div className="border-t border-white/10 bg-background px-4 sm:px-6 py-2.5">
           <div className="cb-container flex flex-col items-center gap-1 text-center">
             <p className="font-sans font-normal text-sm text-header leading-snug">
               A Public Accountability Platform. <span className="font-bold">Against Fabricated News.</span>
@@ -124,7 +124,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <Link href="/ethics" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Our Ethics Policy</Link>
             </p>
           </div>
-        </div>
+        </div>}
 
       </header>
 
