@@ -114,51 +114,11 @@
     color: #1A3A8F;
   }
 
-  /* Paragraph Divider */
-  .cb-divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 1.75rem 0;
-    width: 100%;
-    opacity: 0.35;
-  }
-
-  .cb-divider-line {
-    flex: 1;
-    height: 1px;
-    border-radius: 1px;
-  }
-
-  .cb-divider-line-left {
-    background: linear-gradient(to right, transparent, #F5C518 90%);
-  }
-
-  .cb-divider-line-right {
-    background: linear-gradient(to left, transparent, #F5C518 90%);
-  }
-
-  .cb-divider-badge {
-    flex-shrink: 0;
-    background: #1A3A8F;
-    border-radius: 4px;
-    padding: 2px 6px;
-    font-family: var(--font-display);
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 0.1em;
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    gap: 1px;
-  }
-
-  .cb-divider-c {
-    color: #ffffff;
-  }
-
-  .cb-divider-b {
-    color: #F5C518;
+  /* Article body justification */
+  .cb-article-body p {
+    text-align: justify;
+    hyphens: auto;
+    margin-bottom: 1.75rem;
   }
 
   /* Factoid Popup */
