@@ -6,6 +6,7 @@ import { VerifiedBadge } from "./VerifiedBadge";
 
 export function PostCard({ post }: { post: Post }) {
   const isSelfOwned = post.category === "self_owned";
+  const isAntiRacist = post.category === "anti_racist_hero";
   const isVideo = post.hasVideo || post.category === "clown_electeds";
   
   const categoryLabels: Record<string, string> = {
@@ -19,11 +20,13 @@ export function PostCard({ post }: { post: Post }) {
 
   // Base card styles depend on category
   const cardClasses = isSelfOwned 
-    ? "bg-primary text-white border-primary shadow-lg shadow-primary/20" 
+    ? "bg-primary text-white border-primary shadow-lg shadow-primary/20"
+    : isAntiRacist
+    ? "bg-secondary text-gray-900 border-secondary shadow-lg shadow-secondary/30"
     : "bg-white text-foreground border-border shadow-sm hover:shadow-md";
 
-  const textClasses = isSelfOwned ? "text-white" : "text-dark-text";
-  const mutedTextClasses = isSelfOwned ? "text-white/80" : "text-muted-foreground";
+  const textClasses = isSelfOwned ? "text-white" : isAntiRacist ? "text-gray-900" : "text-dark-text";
+  const mutedTextClasses = isSelfOwned ? "text-white/80" : isAntiRacist ? "text-gray-700" : "text-muted-foreground";
 
   return (
     <Link href={`/case/${post.slug}`} className="block group">
@@ -31,18 +34,18 @@ export function PostCard({ post }: { post: Post }) {
         relative rounded-xl border overflow-hidden transition-all duration-300 hover:-translate-y-1
         ${cardClasses}
       `}>
-        {/* Yellow accent line at bottom */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-secondary" />
+        {/* Accent line at bottom */}
+        <div className={`absolute bottom-0 left-0 w-full h-1 ${isAntiRacist ? 'bg-header' : 'bg-secondary'}`} />
 
         <div className="p-5 sm:p-6">
           {/* Header Row */}
           <div className="flex justify-between items-start mb-4 gap-4">
             <div className="flex flex-wrap items-center gap-3">
-              <span className={`font-mono text-sm font-semibold tracking-tight ${isSelfOwned ? 'text-secondary' : 'text-primary'}`}>
+              <span className={`font-mono text-sm font-semibold tracking-tight ${isSelfOwned ? 'text-secondary' : isAntiRacist ? 'text-header' : 'text-primary'}`}>
                 {post.caseNumber}
               </span>
               <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm border ${
-                isSelfOwned ? 'border-white/30 text-white' : 'border-primary/20 text-primary bg-primary/5'
+                isSelfOwned ? 'border-white/30 text-white' : isAntiRacist ? 'border-header/30 text-header bg-header/10' : 'border-primary/20 text-primary bg-primary/5'
               }`}>
                 {categoryLabels[post.category] || post.category}
               </span>
@@ -87,7 +90,7 @@ export function PostCard({ post }: { post: Post }) {
             <div className={`text-xs font-medium ${mutedTextClasses}`}>
               {post.verifiedSource ? `Source: ${post.verifiedSource}` : 'Verified Public Record'}
             </div>
-            <div className={`text-xs font-bold uppercase tracking-wider ${isSelfOwned ? 'text-secondary' : 'text-primary'} group-hover:translate-x-1 transition-transform`}>
+            <div className={`text-xs font-bold uppercase tracking-wider ${isSelfOwned ? 'text-secondary' : isAntiRacist ? 'text-header' : 'text-primary'} group-hover:translate-x-1 transition-transform`}>
               Read More &gt;
             </div>
           </div>
