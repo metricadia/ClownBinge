@@ -290,8 +290,28 @@ export default function PostDetail() {
           dangerouslySetInnerHTML={{ __html: processedBody }}
         />
 
+        {/* Engagement: Reactions + Share unified */}
+        <div className="border-t border-border pt-8 mt-4">
+          <ReactionBar postId={post.id} isHero={isHero} />
+          <ShareButtons post={post} />
+        </div>
+
+        {/* Discussion */}
+        <div className="mt-10 pt-8 border-t border-border">
+          <h3 className="font-display font-semibold text-lg text-header mb-5">Discussion</h3>
+          <div className="bg-muted/40 border border-border rounded-xl p-8 text-center">
+            <p className="text-foreground/65 text-sm mb-5 leading-relaxed">
+              Join the conversation. Only verified receipt readers allowed.
+            </p>
+            <button className="bg-[#1A3A8F] text-white font-bold text-sm px-6 py-2.5 rounded-lg hover:bg-[#162f74] transition-colors">
+              Log in to Comment
+            </button>
+          </div>
+        </div>
+
+        {/* Verified References */}
         {references.length > 0 && (
-          <section className="mt-2 mb-10" aria-label="Verified References">
+          <section className="mt-10" aria-label="Verified References">
             <div className="h-1 w-full bg-[#F5C518] rounded-full mb-8" />
             <h2 className="font-display font-medium text-base text-header mb-6 uppercase tracking-widest">
               Verified References
@@ -309,8 +329,8 @@ export default function PostDetail() {
                     >
                       {ref.title}
                     </a>
-                    <p className="text-sm text-muted-foreground leading-relaxed m-0">{ref.summary}</p>
-                    <span className="text-xs text-muted-foreground/60 font-mono break-all">{ref.href}</span>
+                    <p className="text-sm text-foreground/75 leading-relaxed m-0">{ref.summary}</p>
+                    <span className="text-xs text-foreground/45 font-mono break-all">{ref.href}</span>
                   </div>
                 </li>
               ))}
@@ -318,28 +338,11 @@ export default function PostDetail() {
           </section>
         )}
 
-        <div className="my-8 bg-muted border border-border h-[90px] w-full flex items-center justify-center rounded-lg">
-          <span className="text-xs uppercase font-bold text-muted-foreground tracking-widest">Advertisement</span>
-        </div>
-
-        <ReactionBar postId={post.id} isHero={isHero} />
-        <ShareButtons post={post} />
-
-        <div className="mt-16">
+        <div className="mt-14">
           <NewsletterSignup source={`post_${post.id}`} />
         </div>
 
         {isSelfOwned && <BookCTA variant="inline" />}
-
-        <div className="mt-16 pt-8 border-t-2 border-border">
-          <h3 className="font-display font-extrabold text-2xl mb-8">The Jury (Comments)</h3>
-          <div className="bg-muted/50 border border-border rounded-xl p-8 text-center">
-            <p className="text-muted-foreground font-medium mb-4">Join the discussion with other verified receipt readers.</p>
-            <button className="bg-white border-2 border-border text-header hover:border-header font-bold px-6 py-3 rounded-lg transition-all shadow-sm">
-              Log in to Comment
-            </button>
-          </div>
-        </div>
 
       </article>
 
