@@ -81,11 +81,11 @@ export default function Home() {
           {/* Main Feed Column */}
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
             <div className="mb-8">
-              <h1 className="font-sans font-normal text-xl sm:text-2xl text-header mb-1 leading-snug tracking-wide">
-                A Refuge of <em>Facts</em> for the People<sup className="text-[10px] align-super not-italic">™</sup>
+              <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-relaxed max-w-xl">
+                Curated as a verified alternative to false, fabricated, and politically engineered fake news.
               </h1>
-              <p className="text-muted-foreground text-sm">
-                {displayPosts.length} verified cases, each with cited sources.
+              <p className="font-sans font-semibold text-xs tracking-widest uppercase" style={{ color: "#F5C518" }}>
+                Updated Daily.
               </p>
             </div>
 
