@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { 
   useListPosts, 
@@ -38,12 +38,17 @@ export function usePostDetail(slug: string) {
 
 export function useViewTracker(slug: string) {
   const incrementMutation = useIncrementView();
-  
+  const mutateRef = useRef(incrementMutation.mutate);
+
+  useEffect(() => {
+    mutateRef.current = incrementMutation.mutate;
+  });
+
   const trackView = useCallback(() => {
     if (slug) {
-      incrementMutation.mutate({ slug });
+      mutateRef.current({ slug });
     }
-  }, [slug, incrementMutation]);
+  }, [slug]);
 
   return { trackView };
 }

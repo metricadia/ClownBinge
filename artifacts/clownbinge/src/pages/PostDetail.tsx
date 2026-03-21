@@ -53,6 +53,7 @@ export default function PostDetail() {
   const { data: post, isLoading, error } = usePostDetail(slug);
   const { trackView } = useViewTracker(slug);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const hasTrackedView = useRef(false);
 
   const processedBody = useMemo(() => {
     if (!post?.body) return post?.body ?? "";
@@ -68,8 +69,11 @@ export default function PostDetail() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (post) trackView();
-  }, [post?.id, trackView]);
+    if (post && !hasTrackedView.current) {
+      hasTrackedView.current = true;
+      trackView();
+    }
+  }, [post?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const closeFactoid = useCallback(() => {
     setFactoid(null);
