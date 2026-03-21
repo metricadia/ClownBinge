@@ -16,7 +16,7 @@ export function CitedBadge({ count }: { count: number }) {
       style={{ background: "#1A3A8F" }}
     >
       <BookOpen className="w-3 h-3 shrink-0" strokeWidth={2} />
-      <span style={{ color: "#F5C518" }}>{count}</span> Cited
+      <span style={{ color: "#F5C518" }}>{count}</span> Citations
     </button>
   );
 }
