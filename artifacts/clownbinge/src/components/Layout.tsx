@@ -81,20 +81,28 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           <div className="bg-white border-b shadow-sm">
             <div className="cb-container">
               <div className="flex overflow-x-auto py-3 gap-2 sm:gap-4 no-scrollbar scroll-smooth">
-                {CATEGORIES.map(cat => (
-                  <button
-                    key={cat.id}
-                    onClick={() => onCategoryChange(cat.id)}
-                    className={`
-                      shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors
-                      ${(activeCategory === cat.id || (!activeCategory && cat.id === 'all'))
-                        ? 'bg-primary text-white shadow-md' 
-                        : 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground'}
-                    `}
-                  >
-                    {cat.label}
-                  </button>
-                ))}
+                {CATEGORIES.map(cat => {
+                  const isActive = activeCategory === cat.id || (!activeCategory && cat.id === 'all');
+                  const isHero = cat.id === 'anti_racist_hero';
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => onCategoryChange(cat.id)}
+                      className={`
+                        shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors
+                        ${isHero
+                          ? isActive
+                            ? 'bg-secondary text-gray-900 shadow-md ring-2 ring-secondary/50'
+                            : 'bg-secondary/80 text-gray-900 hover:bg-secondary'
+                          : isActive
+                            ? 'bg-primary text-white shadow-md'
+                            : 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground'}
+                      `}
+                    >
+                      {cat.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
