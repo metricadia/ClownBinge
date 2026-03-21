@@ -29,6 +29,30 @@ function formatSubjectLabel(name: string, title: string | null, party: string | 
   return [abbr, name, partyInitial].filter(Boolean).join(" ");
 }
 
+interface Reference {
+  title: string;
+  summary: string;
+  href: string;
+}
+
+function extractReferences(html: string): Reference[] {
+  const seen = new Set<string>();
+  const refs: Reference[] = [];
+  const tagRe = /<a[^>]+class="cb-factoid"[^>]*>/g;
+  let m: RegExpExecArray | null;
+  while ((m = tagRe.exec(html)) !== null) {
+    const tag = m[0];
+    const href = /href="([^"]*)"/.exec(tag)?.[1] ?? "";
+    const title = /data-title="([^"]*)"/.exec(tag)?.[1] ?? "";
+    const summary = /data-summary="([^"]*)"/.exec(tag)?.[1] ?? "";
+    if (href && title && !seen.has(href)) {
+      seen.add(href);
+      refs.push({ href, title, summary });
+    }
+  }
+  return refs;
+}
+
 function boldFirstMention(html: string, name: string, label: string): string {
   if (!name || !html) return html;
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -64,6 +88,8 @@ export default function PostDetail() {
     }
     return html;
   }, [post?.body, post?.subjectName, post?.subjectTitle, post?.subjectParty]);
+
+  const references = useMemo(() => extractReferences(post?.body ?? ""), [post?.body]);
   const popupRef = useRef<HTMLDivElement>(null);
   const [factoid, setFactoid] = useState<FactoidState | null>(null);
   const [copied, setCopied] = useState(false);
@@ -263,6 +289,34 @@ export default function PostDetail() {
           className="cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed mb-12"
           dangerouslySetInnerHTML={{ __html: processedBody }}
         />
+
+        {references.length > 0 && (
+          <section className="mt-2 mb-10" aria-label="Verified References">
+            <div className="h-1 w-full bg-[#F5C518] rounded-full mb-8" />
+            <h2 className="font-display font-extrabold text-xl text-header mb-6 uppercase tracking-wide">
+              Verified References
+            </h2>
+            <ol className="space-y-5 list-none p-0 m-0">
+              {references.map((ref, i) => (
+                <li key={ref.href} className="flex gap-4">
+                  <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
+                  <div>
+                    <a
+                      href={ref.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-bold text-[#1A3A8F] hover:underline text-sm leading-snug block mb-1"
+                    >
+                      {ref.title}
+                    </a>
+                    <p className="text-sm text-muted-foreground leading-relaxed m-0">{ref.summary}</p>
+                    <span className="text-xs text-muted-foreground/60 font-mono break-all">{ref.href}</span>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
 
         <div className="my-8 bg-muted border border-border h-[90px] w-full flex items-center justify-center rounded-lg">
           <span className="text-xs uppercase font-bold text-muted-foreground tracking-widest">Advertisement</span>
