@@ -12,6 +12,8 @@ import Contact from "@/pages/Contact";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
 import Ethics from "@/pages/Ethics";
+import VerifyNews from "@/pages/VerifyNews";
+import ComprehensiveReport from "@/pages/ComprehensiveReport";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient({
@@ -34,6 +36,8 @@ function Router() {
       <Route path="/privacy" component={Privacy} />
       <Route path="/terms" component={Terms} />
       <Route path="/ethics" component={Ethics} />
+      <Route path="/clowncheck" component={VerifyNews} />
+      <Route path="/reports" component={ComprehensiveReport} />
       <Route component={NotFound} />
     </Switch>
   );
