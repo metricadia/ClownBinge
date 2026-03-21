@@ -1,0 +1,21 @@
+packages:
+  "framer-motion": "For smooth page transitions and interactive element animations"
+  "date-fns": "For formatting incident dates in article headers"
+  "react-hook-form": "For the contact and newsletter forms"
+  "@hookform/resolvers": "For Zod validation integration with forms"
+
+images:
+  - path: "artifacts/clownbinge/public/images/illegal-who-cover.png"
+    description: "A bold, graphic editorial book cover titled 'Illegal, Who?' featuring a striking minimalist silhouette of a politician in deep blue and yellow on a white background, political thriller aesthetic"
+    aspect_ratio: "3:4"
+  - path: "artifacts/clownbinge/public/images/greatest-hits-cover.png"
+    description: "A bold book cover titled 'ClownBinge Greatest Hits' featuring a collage of redacted documents, microphones, and podiums in halftone style with hot pink accents and deep blue background"
+    aspect_ratio: "3:4"
+  - path: "artifacts/clownbinge/public/images/about-hero.png"
+    description: "A wide editorial graphic featuring stacked, redacted governmental documents, court transcripts, and news clippings with a hot pink 'VERIFIED' stamp overlay, serious journalistic tone"
+    aspect_ratio: "16:9"
+
+notes:
+  - "The app imports generated API hooks directly from @workspace/api-client-react"
+  - "Tailwind colors are strictly mapped to the design system constraints"
+  - "Images for book covers are dynamically referenced via import.meta.env.BASE_URL"

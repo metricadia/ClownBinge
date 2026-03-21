@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@500&display=swap');
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: 'DM Sans', sans-serif;
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* ClownBinge Design System Colors */
+  --color-background: hsl(var(--page-bg));
+  --color-foreground: hsl(var(--dark-text));
+  
+  --color-primary: hsl(var(--blue-primary));
+  --color-primary-foreground: hsl(var(--white-base));
+  
+  --color-secondary: hsl(var(--yellow-accent));
+  --color-secondary-foreground: hsl(var(--dark-text));
+  
+  --color-muted: hsl(var(--muted-bg));
+  --color-muted-foreground: hsl(var(--muted-text));
+  
+  --color-accent: hsl(var(--pink-verified));
+  --color-accent-foreground: hsl(var(--white-base));
+  
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--border));
+  --color-ring: hsl(var(--blue-primary));
+  
+  --color-card: hsl(var(--white-base));
+  --color-card-foreground: hsl(var(--dark-text));
+
+  --color-header: hsl(var(--blue-deep));
+  --color-header-foreground: hsl(var(--white-base));
+  
+  --color-verified: hsl(var(--pink-verified));
+}
+
+:root {
+  /* HSL Values for ClownBinge Palette */
+  --blue-deep: 224 69% 33%;      /* #1A3A8F */
+  --blue-primary: 222 78% 57%;   /* #3D6FE8 */
+  --yellow-accent: 47 92% 53%;   /* #F5C518 */
+  --white-base: 0 0% 100%;       /* #FFFFFF */
+  --page-bg: 225 33% 98%;        /* #F8F9FC */
+  --dark-text: 240 28% 14%;      /* #1A1A2E */
+  --muted-text: 220 9% 46%;      /* #6B7280 */
+  --muted-bg: 210 20% 96%;
+  --border: 214 32% 91%;         /* #E2E8F0 */
+  --pink-verified: 324 100% 50%; /* #FF0099 */
+
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    @apply font-bold tracking-tight text-foreground;
+  }
+}
+
+@layer utilities {
+  .verified-badge {
+    @apply inline-flex items-center bg-verified text-white font-sans font-bold text-[11px] tracking-wider uppercase px-3 py-1.5 rounded-full whitespace-nowrap cursor-pointer transition-all duration-150 ease-out;
+    box-shadow: 0 2px 8px rgba(255, 0, 153, 0.35);
+  }
+  
+  .verified-badge:hover {
+    @apply scale-105;
+    box-shadow: 0 4px 12px rgba(255, 0, 153, 0.5);
+  }
+
+  .cb-container {
+    @apply w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .logo-text {
+    @apply font-display font-extrabold tracking-tight;
+  }
+}

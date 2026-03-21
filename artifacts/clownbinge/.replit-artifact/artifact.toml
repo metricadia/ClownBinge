@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "ClownBinge"
+version = "1.0.0"
+id = "artifacts/clownbinge"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25305
+
+[services.development]
+run = "pnpm --filter @workspace/clownbinge run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/clownbinge", "run", "build" ]
+publicDir = "artifacts/clownbinge/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25305"
+BASE_PATH = "/"

@@ -1,22 +1,28 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: ClownBinge API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: posts
+    description: Post operations
+  - name: reactions
+    description: Reaction operations
+  - name: books
+    description: Book operations
+  - name: subscribers
+    description: Subscriber operations
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +30,159 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /posts:
+    get:
+      operationId: listPosts
+      tags: [posts]
+      summary: List published posts
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [political, self_owned, clown_electeds, religious, cultural, anti_racist_hero]
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+      responses:
+        "200":
+          description: List of posts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PostListResponse"
+
+  /posts/{slug}:
+    get:
+      operationId: getPost
+      tags: [posts]
+      summary: Get a single post by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Post detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /posts/{slug}/view:
+    post:
+      operationId: incrementView
+      tags: [posts]
+      summary: Increment view count
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+
+  /reactions:
+    post:
+      operationId: addReaction
+      tags: [reactions]
+      summary: Add a reaction to a post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddReactionRequest"
+      responses:
+        "200":
+          description: Reaction counts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReactionCountsResponse"
+
+  /reactions/{postId}:
+    get:
+      operationId: getReactions
+      tags: [reactions]
+      summary: Get reaction counts for a post
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Reaction counts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReactionCountsResponse"
+
+  /books:
+    get:
+      operationId: listBooks
+      tags: [books]
+      summary: List available books
+      responses:
+        "200":
+          description: List of books
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookListResponse"
+
+  /subscribers:
+    post:
+      operationId: subscribe
+      tags: [subscribers]
+      summary: Subscribe to newsletter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscribeRequest"
+      responses:
+        "200":
+          description: Subscribed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        "409":
+          description: Already subscribed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +193,203 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required:
+        - success
+
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+        caseNumber:
+          type: string
+        title:
+          type: string
+        slug:
+          type: string
+        teaser:
+          type: string
+        body:
+          type: string
+        category:
+          type: string
+          enum: [political, self_owned, clown_electeds, religious, cultural, anti_racist_hero]
+        subjectName:
+          type: string
+          nullable: true
+        subjectTitle:
+          type: string
+          nullable: true
+        subjectParty:
+          type: string
+          nullable: true
+        verifiedSource:
+          type: string
+          nullable: true
+        hasVideo:
+          type: boolean
+        videoUrl:
+          type: string
+          nullable: true
+        videoThumbnail:
+          type: string
+          nullable: true
+        selfOwnScore:
+          type: integer
+          nullable: true
+        tags:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [draft, review, published]
+        dateOfIncident:
+          type: string
+          nullable: true
+        publishedAt:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+        viewCount:
+          type: integer
+        shareCount:
+          type: integer
+      required:
+        - id
+        - caseNumber
+        - title
+        - slug
+        - teaser
+        - body
+        - category
+        - hasVideo
+        - tags
+        - status
+        - createdAt
+        - viewCount
+        - shareCount
+
+    PostListResponse:
+      type: object
+      properties:
+        posts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Post"
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+      required:
+        - posts
+        - total
+        - limit
+        - offset
+
+    AddReactionRequest:
+      type: object
+      properties:
+        postId:
+          type: string
+        type:
+          type: string
+          enum: [clowned, side_eye, receipts, dead, self_owned, thats_right, king_queen, finished_them, nailed_it]
+      required:
+        - postId
+        - type
+
+    ReactionCount:
+      type: object
+      properties:
+        type:
+          type: string
+        count:
+          type: integer
+      required:
+        - type
+        - count
+
+    ReactionCountsResponse:
+      type: object
+      properties:
+        postId:
+          type: string
+        reactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReactionCount"
+      required:
+        - postId
+        - reactions
+
+    Book:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        priceUsd:
+          type: number
+        stripeId:
+          type: string
+          nullable: true
+        coverUrl:
+          type: string
+          nullable: true
+        language:
+          type: string
+        active:
+          type: boolean
+      required:
+        - id
+        - title
+        - slug
+        - description
+        - priceUsd
+        - language
+        - active
+
+    BookListResponse:
+      type: object
+      properties:
+        books:
+          type: array
+          items:
+            $ref: "#/components/schemas/Book"
+      required:
+        - books
+
+    SubscribeRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        source:
+          type: string
+      required:
+        - email
