@@ -293,7 +293,7 @@ export default function PostDetail() {
         {references.length > 0 && (
           <section className="mt-2 mb-10" aria-label="Verified References">
             <div className="h-1 w-full bg-[#F5C518] rounded-full mb-8" />
-            <h2 className="font-display font-extrabold text-xl text-header mb-6 uppercase tracking-wide">
+            <h2 className="font-display font-medium text-base text-header mb-6 uppercase tracking-widest">
               Verified References
             </h2>
             <ol className="space-y-5 list-none p-0 m-0">
