@@ -39,9 +39,14 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
       `}>
         <div className="cb-container h-16 sm:h-20 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-1 hover:opacity-90 transition-opacity">
-            <span className="logo-text text-2xl sm:text-3xl text-white">Clown</span>
-            <span className="logo-text text-2xl sm:text-3xl text-secondary">Binge</span>
+          <Link href="/" className="flex flex-col leading-none hover:opacity-90 transition-opacity group">
+            <div className="flex items-baseline gap-0">
+              <span className="logo-text text-3xl sm:text-4xl text-white tracking-tight">Clown</span>
+              <span className="logo-text text-3xl sm:text-4xl text-secondary tracking-tight">Binge</span>
+            </div>
+            <span className="text-white/60 text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase mt-0.5 group-hover:text-white/80 transition-colors">
+              The Registry of the People
+            </span>
           </Link>
 
           {/* Desktop Nav */}
@@ -116,9 +121,14 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         <div className="cb-container">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             <div className="col-span-1 md:col-span-2">
-              <Link href="/" className="flex items-center gap-1 mb-4 inline-block">
-                <span className="logo-text text-3xl text-white">Clown</span>
-                <span className="logo-text text-3xl text-secondary">Binge</span>
+              <Link href="/" className="flex flex-col leading-none mb-4 inline-flex hover:opacity-90 transition-opacity">
+                <div className="flex items-baseline gap-0">
+                  <span className="logo-text text-3xl text-white tracking-tight">Clown</span>
+                  <span className="logo-text text-3xl text-secondary tracking-tight">Binge</span>
+                </div>
+                <span className="text-white/50 text-[10px] font-mono tracking-[0.2em] uppercase mt-0.5">
+                  The Registry of the People
+                </span>
               </Link>
               <p className="text-white/70 font-medium max-w-sm mb-6 leading-relaxed">
                 Verified accountability journalism and political satire. Documenting the hypocrisy so you don't have to. The receipts don't lie.
