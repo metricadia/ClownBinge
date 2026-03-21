@@ -82,7 +82,8 @@ export default function Home() {
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
             <div className="mb-8">
               <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-relaxed max-w-xl">
-                A Public Accountability Platform. Against Fabricated News.
+                A Public Accountability Platform.<br />
+                <span className="font-bold">Against Fabricated News.</span>
               </h1>
               <p className="font-sans font-semibold text-xs tracking-widest uppercase" style={{ color: "#F5C518" }}>
                 Updated Daily.
