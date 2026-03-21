@@ -108,23 +108,6 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </div>
         )}
 
-        {/* Mission + Links bar — sub-pages only; home page renders its own */}
-        {location !== "/" && <div className="border-t border-white/10 bg-background px-4 sm:px-6 py-2.5">
-          <div className="cb-container flex flex-col items-center gap-1 text-center">
-            <p className="font-sans font-normal text-sm text-header leading-snug">
-              A Public Accountability Platform. <span className="font-bold">Against Fabricated News.</span>
-            </p>
-            <p className="font-sans text-xs tracking-wide flex items-center justify-center gap-2 flex-wrap">
-              <Link href="/clowncheck" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Verify News</Link>
-              <span className="text-muted-foreground/40">|</span>
-              <Link href="/reports" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Order Comprehensive Report</Link>
-              <span className="text-muted-foreground/40">|</span>
-              <Link href="/submit" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit A Clown</Link>
-              <span className="text-muted-foreground/40">|</span>
-              <Link href="/ethics" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Our Ethics Policy</Link>
-            </p>
-          </div>
-        </div>}
 
       </header>
 
