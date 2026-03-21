@@ -3,7 +3,7 @@ import { db, postsTable, booksTable } from "@workspace/db";
 const samplePosts = [
   {
     caseNumber: "CB-000001",
-    title: "Senator Claims He Never Voted For The Bill He Voted For",
+    title: "Sen. James Whitmore Claims He Never Voted For The Bill He Voted For",
     slug: "senator-claims-never-voted-for-bill",
     teaser: "The Congressional Record does not care about your selective memory. Neither does ClownBinge.",
     body: `<p>There is a document called the <a href="https://www.congress.gov/congressional-record" class="cb-factoid" data-title="The Congressional Record" data-summary="The official daily record of the proceedings and debates of the U.S. Congress, published by the U.S. Government Publishing Office. Every vote, every speech, and every procedural motion is logged with a timestamp and a member's name." target="_blank" rel="noopener noreferrer">Congressional Record</a>. It has been published continuously since 1873. It is the official journal of what Congress actually does, as opposed to what members of Congress tell their donors they did. It does not accept corrections after the fact. It does not offer a comment period. It simply records what happened, when it happened, and who was responsible.</p>
@@ -45,7 +45,7 @@ const samplePosts = [
   },
   {
     caseNumber: "CB-000002",
-    title: "Congressman Caught on C-SPAN Saying the Quiet Part Loud",
+    title: "Rep. Dale Hartwick Caught on C-SPAN Calling His Own Immigration Bill 'Political Theater for the Base'",
     slug: "congressman-caught-cspan-quiet-part-loud",
     teaser: "C-SPAN cameras are always on. This is a lesson some elected officials never learn.",
     body: `<p><a href="https://www.c-span.org" class="cb-factoid" data-title="C-SPAN — America's Network" data-summary="C-SPAN has provided unfiltered, gavel-to-gavel coverage of Congress since 1979. Cameras are placed throughout hearing rooms and chambers. All footage is archived and publicly searchable at c-span.org." target="_blank" rel="noopener noreferrer">C-SPAN</a> has been recording Congress since 1979. That is forty-five years of floor speeches, committee hearings, confirmation battles, and the kind of candid moments that occur when a public official forgets that the red recording light means the camera is running. The network does not editorialize. It does not crop. It does not cut away at inconvenient moments. It simply records what is happening in rooms that belong to the American public.</p>
@@ -87,7 +87,7 @@ const samplePosts = [
   },
   {
     caseNumber: "CB-000003",
-    title: "State AG Files Lawsuit Against Practice He Used Himself For Six Years",
+    title: "Texas AG Rick Donahue Is Suing Companies For What His Own Law Firm Did For Six Years",
     slug: "state-ag-files-lawsuit-practice-used-himself",
     teaser: "The lawsuit was filed March 3rd. His own department's records document the same practice from 2016 to 2022.",
     body: `<p>On March 3, 2024, Texas Attorney General Rick Donahue filed a 47-page civil lawsuit against a national insurance consortium. The lawsuit's central argument: the consortium had engaged in a pattern of fraudulent business practices that exploited regulatory frameworks meant to protect working families. Donahue called a press conference. He used words like "predatory," "deceptive," and "accountability."</p>
@@ -123,7 +123,7 @@ const samplePosts = [
   },
   {
     caseNumber: "CB-000004",
-    title: "Anti-Immigration Pastor Discovered to Have Immigrant Grandparents on Both Sides",
+    title: "Pastor Vernon Mills Preaches Against Immigration. Public Records Show All Four of His Grandparents Were Immigrants.",
     slug: "anti-immigration-pastor-immigrant-grandparents",
     teaser: "The genealogical records predate the political position by about 80 years.",
     body: `<p>Pastor Vernon Mills of Cornerstone Fellowship Church in Scottsdale, Arizona, has delivered seventeen documented sermons on immigration since January 2020. ClownBinge has reviewed each one. The transcripts are available on Cornerstone Fellowship's official YouTube channel, archived in full with timestamps. The argument across all seventeen sermons is consistent: unrestricted immigration from certain regions of the world constitutes a demographic and cultural threat to what Pastor Mills calls "the foundational character of this nation."</p>
@@ -159,7 +159,7 @@ const samplePosts = [
   },
   {
     caseNumber: "CB-000005",
-    title: "School Board Member Who Banned Diversity Books Has Daughter at Diversity-Focused University",
+    title: "Patricia Holden Voted to Ban Diversity Books. Her Daughter Was Already Enrolled in USC's Mandatory DEI Program.",
     slug: "school-board-bans-diversity-books-daughter-at-dei-university",
     teaser: "The same month the ban passed, enrollment deposits were due.",
     body: `<p>On August 14, 2023, the Palmetto County School Board voted 5 to 2 to remove 23 books from district library shelves. Board member Patricia Holden was one of the five affirmative votes. The removal list, entered into the official meeting minutes and available through the district's public records office, includes titles related to civil rights history, LGBTQ+ youth experiences, and what the board's resolution describes as "ideologically targeted diversity programming."</p>
@@ -197,7 +197,7 @@ const samplePosts = [
   },
   {
     caseNumber: "CB-000006",
-    title: "Afroman Sued His Own Harassers Into a Museum Exhibit",
+    title: "Adams County Deputies Raided Afroman's Home, Found Nothing, Then Sued Him. He Made Grammy-Nominated Art About It.",
     slug: "afroman-sued-harassers-into-museum-exhibit",
     teaser: "When police raided his home on a drug tip that yielded nothing, he turned the surveillance footage into art. Then merch. Then a lawsuit.",
     body: `<p>On August 18, 2022, officers from the Adams County Sheriff's Office in Ohio executed a search warrant at the home of Joseph Foreman, known professionally as Afroman, in Licking County. The officers were acting on a tip alleging drug trafficking and kidnapping. The warrant authorized them to search the premises. They searched it thoroughly.</p>
