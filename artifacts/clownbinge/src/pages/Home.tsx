@@ -80,12 +80,14 @@ export default function Home() {
           
           {/* Main Feed Column */}
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
-            <div className="mb-8">
+            <div className="sticky top-[130px] z-30 bg-background pb-4 mb-4">
               <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-relaxed max-w-xl">
                 A Public Accountability Platform. <span className="font-bold">Against Fabricated News.</span>
               </h1>
               <p className="font-sans text-xs tracking-wide mt-1 flex items-center gap-2 flex-wrap">
                 <a href="/clowncheck" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Verify News</a>
+                <span className="text-muted-foreground/40">|</span>
+                <a href="/reports" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Order Comprehensive Report</a>
                 <span className="text-muted-foreground/40">|</span>
                 <a href="/submit" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Submit A Clown</a>
                 <span className="text-muted-foreground/40">|</span>
