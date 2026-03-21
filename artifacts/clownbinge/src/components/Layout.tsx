@@ -107,6 +107,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             </div>
           </div>
         )}
+
       </header>
 
       {/* Mobile Menu Dropdown */}

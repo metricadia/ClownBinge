@@ -80,7 +80,7 @@ export default function Home() {
           
           {/* Main Feed Column */}
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
-            <div className="sticky top-[130px] z-30 bg-background pb-4 mb-4">
+            <div className="sticky top-[130px] z-30 bg-background pt-6 pb-4 mb-0">
               <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-relaxed max-w-xl">
                 A Public Accountability Platform. <span className="font-bold">Against Fabricated News.</span>
               </h1>
