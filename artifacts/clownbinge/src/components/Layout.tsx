@@ -145,8 +145,11 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <p className="text-white/70 font-medium max-w-sm mb-6 leading-relaxed">
                 Verified accountability journalism and political satire. Documenting the hypocrisy so you don't have to. The receipts don't lie.
               </p>
-              <div className="text-xs text-white/50 font-mono">
-                © {new Date().getFullYear()} ClownBinge Wyoming Corp.
+              <div className="text-xs text-white/50 font-mono leading-relaxed">
+                © {new Date().getFullYear()} ClownBinge
+              </div>
+              <div className="text-xs text-white/40 mt-1 leading-relaxed">
+                A project of Laughphoria Informatics &nbsp;·&nbsp; Wyoming Corporation
               </div>
             </div>
             
