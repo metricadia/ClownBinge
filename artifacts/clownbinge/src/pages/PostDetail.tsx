@@ -38,6 +38,12 @@ function boldFirstMention(html: string, name: string, label: string): string {
   );
 }
 
+const CB_DIVIDER = `<div class="cb-divider" aria-hidden="true"><div class="cb-divider-line cb-divider-line-left"></div><span class="cb-divider-badge"><span class="cb-divider-c">C</span><span class="cb-divider-b">B</span></span><div class="cb-divider-line cb-divider-line-right"></div></div>`;
+
+function injectDividers(html: string): string {
+  return html.replace(/<\/p>\s*<p/g, `</p>${CB_DIVIDER}<p`);
+}
+
 interface FactoidState {
   title: string;
   summary: string;
@@ -54,9 +60,13 @@ export default function PostDetail() {
   const bodyRef = useRef<HTMLDivElement>(null);
 
   const processedBody = useMemo(() => {
-    if (!post?.body || !post?.subjectName) return post?.body ?? "";
-    const label = formatSubjectLabel(post.subjectName, post.subjectTitle ?? null, post.subjectParty ?? null);
-    return boldFirstMention(post.body, post.subjectName, label);
+    if (!post?.body) return post?.body ?? "";
+    let html = post.body;
+    if (post.subjectName) {
+      const label = formatSubjectLabel(post.subjectName, post.subjectTitle ?? null, post.subjectParty ?? null);
+      html = boldFirstMention(html, post.subjectName, label);
+    }
+    return injectDividers(html);
   }, [post?.body, post?.subjectName, post?.subjectTitle, post?.subjectParty]);
   const popupRef = useRef<HTMLDivElement>(null);
   const [factoid, setFactoid] = useState<FactoidState | null>(null);
@@ -251,7 +261,7 @@ export default function PostDetail() {
 
         <div
           ref={bodyRef}
-          className="prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed prose-p:mb-8 mb-12"
+          className="prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed mb-12"
           dangerouslySetInnerHTML={{ __html: processedBody }}
         />
 
