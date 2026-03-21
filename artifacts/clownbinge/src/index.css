@@ -118,39 +118,39 @@
   .cb-divider {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin: 2.25rem 0;
+    gap: 12px;
+    margin: 1.75rem 0;
     width: 100%;
+    opacity: 0.35;
   }
 
   .cb-divider-line {
     flex: 1;
-    height: 2px;
+    height: 1px;
     border-radius: 1px;
   }
 
   .cb-divider-line-left {
-    background: linear-gradient(to right, transparent, #F5C518 80%);
+    background: linear-gradient(to right, transparent, #F5C518 90%);
   }
 
   .cb-divider-line-right {
-    background: linear-gradient(to left, transparent, #F5C518 80%);
+    background: linear-gradient(to left, transparent, #F5C518 90%);
   }
 
   .cb-divider-badge {
     flex-shrink: 0;
     background: #1A3A8F;
-    border-radius: 6px;
-    padding: 3px 9px;
+    border-radius: 4px;
+    padding: 2px 6px;
     font-family: var(--font-display);
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 900;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     line-height: 1;
     display: inline-flex;
     align-items: center;
     gap: 1px;
-    box-shadow: 0 2px 8px rgba(26,58,143,0.25);
   }
 
   .cb-divider-c {

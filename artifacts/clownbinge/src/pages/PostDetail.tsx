@@ -261,7 +261,7 @@ export default function PostDetail() {
 
         <div
           ref={bodyRef}
-          className="prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed mb-12"
+          className="prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed prose-p:[text-align:justify] mb-12"
           dangerouslySetInnerHTML={{ __html: processedBody }}
         />
 
