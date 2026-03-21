@@ -92,7 +92,7 @@
     text-decoration: underline dotted #F5C518;
     text-underline-offset: 5px;
     text-decoration-thickness: 2px;
-    cursor: help;
+    cursor: pointer;
     transition: text-decoration-color 0.15s;
   }
 
@@ -120,7 +120,7 @@
     padding: 14px 16px 12px;
     box-shadow: 0 12px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.08);
     transform: translateX(-50%) translateY(calc(-100% - 14px));
-    pointer-events: none;
+    pointer-events: auto;
   }
 
   .cb-factoid-popup::after {
@@ -160,13 +160,30 @@
     margin-bottom: 8px;
   }
 
-  .cb-factoid-popup-link {
+  .cb-factoid-popup-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     font-size: 11px;
     font-weight: 700;
-    color: #F5C518;
+    color: #1A3A8F;
+    background: #F5C518;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    text-decoration: none;
-    pointer-events: auto;
+    letter-spacing: 0.06em;
+    transition: background 0.15s, transform 0.1s;
+    margin-top: 4px;
+  }
+
+  .cb-factoid-popup-copy-btn:hover {
+    background: #fff;
+    transform: scale(1.03);
+  }
+
+  .cb-factoid-popup-copy-btn:active {
+    transform: scale(0.97);
   }
 }

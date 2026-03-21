@@ -6,16 +6,15 @@ import { ShareButtons } from "@/components/ShareButtons";
 import { BookCTA } from "@/components/BookCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { usePostDetail, useViewTracker } from "@/hooks/use-posts";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { format } from "date-fns";
-import { Loader2, AlertTriangle, ArrowLeft } from "lucide-react";
+import { Loader2, AlertTriangle, ArrowLeft, Copy, Check } from "lucide-react";
 import { Link } from "wouter";
 
 interface FactoidState {
   title: string;
   summary: string;
-  url: string;
   x: number;
   y: number;
 }
@@ -23,53 +22,98 @@ interface FactoidState {
 export default function PostDetail() {
   const [, params] = useRoute("/case/:slug");
   const slug = params?.slug || "";
-  
+
   const { data: post, isLoading, error } = usePostDetail(slug);
   const { trackView } = useViewTracker(slug);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
   const [factoid, setFactoid] = useState<FactoidState | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (post) {
-      trackView();
-    }
+    if (post) trackView();
   }, [post?.id, trackView]);
 
+  const closeFactoid = useCallback(() => {
+    setFactoid(null);
+    setCopied(false);
+  }, []);
+
+  // Click on factoid links — open popup, prevent navigation
   useEffect(() => {
     const container = bodyRef.current;
     if (!container) return;
 
-    let hideTimeout: ReturnType<typeof setTimeout>;
-
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = (e.target as Element).closest('a.cb-factoid') as HTMLAnchorElement | null;
+    const handleClick = (e: MouseEvent) => {
+      const target = (e.target as Element).closest("a.cb-factoid") as HTMLAnchorElement | null;
       if (!target) return;
-      clearTimeout(hideTimeout);
+      e.preventDefault();
+      e.stopPropagation();
+
       const rect = target.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + window.scrollY;
+
+      // Toggle off if clicking same factoid
+      if (
+        factoid &&
+        Math.abs(factoid.x - x) < 4 &&
+        Math.abs(factoid.y - y) < 4
+      ) {
+        closeFactoid();
+        return;
+      }
+
+      setCopied(false);
       setFactoid({
-        title: target.dataset.title || '',
-        summary: target.dataset.summary || '',
-        url: target.href,
-        x: rect.left + rect.width / 2,
-        y: rect.top + window.scrollY,
+        title: target.dataset.title || "",
+        summary: target.dataset.summary || "",
+        x,
+        y,
       });
     };
 
-    const handleMouseOut = (e: MouseEvent) => {
-      const target = (e.target as Element).closest('a.cb-factoid');
-      if (!target) return;
-      hideTimeout = setTimeout(() => setFactoid(null), 120);
+    container.addEventListener("click", handleClick);
+    return () => container.removeEventListener("click", handleClick);
+  }, [post, factoid, closeFactoid]);
+
+  // Escape key dismisses popup
+  useEffect(() => {
+    if (!factoid) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeFactoid();
     };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [factoid, closeFactoid]);
 
-    container.addEventListener('mouseover', handleMouseOver);
-    container.addEventListener('mouseout', handleMouseOut);
-
+  // Click outside popup and outside factoid links dismisses popup
+  useEffect(() => {
+    if (!factoid) return;
+    const handleOutside = (e: MouseEvent) => {
+      const target = e.target as Element;
+      if (popupRef.current?.contains(target)) return;
+      if (target.closest("a.cb-factoid")) return;
+      closeFactoid();
+    };
+    // Small delay so the click that opened the popup doesn't immediately close it
+    const timeout = setTimeout(() => {
+      document.addEventListener("click", handleOutside);
+    }, 50);
     return () => {
-      container.removeEventListener('mouseover', handleMouseOver);
-      container.removeEventListener('mouseout', handleMouseOut);
-      clearTimeout(hideTimeout);
+      clearTimeout(timeout);
+      document.removeEventListener("click", handleOutside);
     };
-  }, [post]);
+  }, [factoid, closeFactoid]);
+
+  const handleCopy = useCallback(() => {
+    if (!factoid) return;
+    const text = `${factoid.title}\n\n${factoid.summary}`;
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [factoid]);
 
   if (isLoading) {
     return (
@@ -108,14 +152,12 @@ export default function PostDetail() {
   return (
     <Layout>
       <article className="cb-container py-8 sm:py-12 max-w-3xl mx-auto pb-32">
-        
-        {/* Breadcrumb / Back */}
+
         <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors mb-8">
           <ArrowLeft className="w-4 h-4" />
           Back to Feed
         </Link>
 
-        {/* Article Header */}
         <header className="mb-10">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-border pb-5 mb-6">
             <div>
@@ -123,23 +165,26 @@ export default function PostDetail() {
                 CASE {post.caseNumber}
               </div>
               <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-muted-foreground">
-                <span className="uppercase tracking-widest">{post.category.replace(/_/g, ' ')}</span>
+                <span className="uppercase tracking-widest">{post.category.replace(/_/g, " ")}</span>
                 <span>•</span>
                 <span>Source: <span className="text-foreground">{post.verifiedSource}</span></span>
                 {post.dateOfIncident && (
                   <>
                     <span>•</span>
-                    <span>Incident: {format(new Date(post.dateOfIncident), 'MMM d, yyyy')}</span>
+                    <span>Incident: {format(new Date(post.dateOfIncident), "MMM d, yyyy")}</span>
                   </>
                 )}
               </div>
             </div>
             <div className="shrink-0">
-              <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
+              <VerifiedBadge
+                source={post.verifiedSource}
+                date={post.dateOfIncident ? format(new Date(post.dateOfIncident), "MMM d, yyyy") : undefined}
+              />
             </div>
           </div>
 
-          <h1 className={`font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight mb-5 ${isSelfOwned ? 'text-primary' : 'text-header'}`}>
+          <h1 className={`font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight mb-5 ${isSelfOwned ? "text-primary" : "text-header"}`}>
             {post.title}
           </h1>
 
@@ -148,14 +193,13 @@ export default function PostDetail() {
           </p>
         </header>
 
-        {/* Video Player Area */}
         {isVideo && (
           <div className="mb-10 rounded-2xl overflow-hidden shadow-2xl bg-black aspect-video relative">
             {post.videoUrl ? (
-              <iframe 
-                src={post.videoUrl} 
+              <iframe
+                src={post.videoUrl}
                 className="w-full h-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             ) : (
@@ -169,26 +213,21 @@ export default function PostDetail() {
           </div>
         )}
 
-        {/* Ad Banner — industry standard leaderboard height */}
         <div className="my-8 bg-muted border border-border h-[90px] w-full flex items-center justify-center rounded-lg">
           <span className="text-xs uppercase font-bold text-muted-foreground tracking-widest">Advertisement</span>
         </div>
 
-        {/* Article Body — HTML rendered with factoid popup support */}
         <div
           ref={bodyRef}
           className="prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed prose-p:mb-5 mb-12"
           dangerouslySetInnerHTML={{ __html: post.body }}
         />
 
-        {/* Ad Placeholder Bottom */}
         <div className="my-8 bg-muted border border-border h-[90px] w-full flex items-center justify-center rounded-lg">
           <span className="text-xs uppercase font-bold text-muted-foreground tracking-widest">Advertisement</span>
         </div>
 
-        {/* Engagement Zone */}
         <ReactionBar postId={post.id} isHero={isHero} />
-        
         <ShareButtons post={post} />
 
         <div className="mt-16">
@@ -209,26 +248,29 @@ export default function PostDetail() {
 
       </article>
 
-      {/* Sticky Bottom Book CTA */}
       <BookCTA variant="banner" />
 
       {/* Factoid Popup Portal */}
       {factoid && createPortal(
         <div
+          ref={popupRef}
           className="cb-factoid-popup"
           style={{ left: factoid.x, top: factoid.y }}
+          role="dialog"
+          aria-label="ClownBinge Factoid"
         >
           <div className="cb-factoid-popup-label">ClownBinge Factoid</div>
           <div className="cb-factoid-popup-title">{factoid.title}</div>
           <div className="cb-factoid-popup-summary">{factoid.summary}</div>
-          <a
-            href={factoid.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cb-factoid-popup-link"
+          <button
+            onClick={handleCopy}
+            className="cb-factoid-popup-copy-btn"
           >
-            View Source Document →
-          </a>
+            {copied
+              ? <><Check size={12} strokeWidth={3} /> Copied!</>
+              : <><Copy size={12} strokeWidth={2} /> Copy Factoid</>
+            }
+          </button>
         </div>,
         document.body
       )}
