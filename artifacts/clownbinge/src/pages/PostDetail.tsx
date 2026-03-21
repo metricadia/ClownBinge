@@ -92,11 +92,11 @@ export default function PostDetail() {
             </div>
           </div>
 
-          <h1 className={`font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] tracking-tight mb-6 ${isSelfOwned ? 'text-primary' : 'text-header'}`}>
+          <h1 className={`font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight mb-6 ${isSelfOwned ? 'text-primary' : 'text-header'}`}>
             {post.title}
           </h1>
 
-          <p className="text-xl sm:text-2xl text-muted-foreground font-medium leading-relaxed border-l-4 border-secondary pl-6">
+          <p className="text-base sm:text-lg text-muted-foreground font-medium leading-relaxed border-l-4 border-secondary pl-6">
             {post.teaser}
           </p>
         </header>
