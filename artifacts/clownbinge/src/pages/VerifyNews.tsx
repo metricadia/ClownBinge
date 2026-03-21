@@ -11,7 +11,7 @@ export default function VerifyNews() {
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">ClownBinge Verification</p>
           <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-header leading-tight mb-4">
             Verify News.<br />
-            <span style={{ color: "#F5C518" }}>Instantly.</span>
+            <span style={{ color: "#F5C518" }} className="font-normal">Instantly.</span>
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl">
             Paste a headline, story, or URL. We check it against verified American sources and return a verdict — fast.
