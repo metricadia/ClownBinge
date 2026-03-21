@@ -290,23 +290,27 @@ export default function PostDetail() {
           dangerouslySetInnerHTML={{ __html: processedBody }}
         />
 
-        {/* Engagement: Reactions + Share unified */}
-        <div className="border-t border-border pt-8 mt-4">
-          <ReactionBar postId={post.id} isHero={isHero} />
-          <ShareButtons post={post} />
+        {/* Engagement strip */}
+        <div className="border-t border-border pt-4 mt-2 space-y-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground w-10 shrink-0">React</span>
+            <ReactionBar postId={post.id} isHero={isHero} />
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground w-10 shrink-0">Share</span>
+            <ShareButtons post={post} />
+          </div>
         </div>
 
-        {/* Discussion */}
-        <div className="mt-10 pt-8 border-t border-border">
-          <h3 className="font-display font-semibold text-lg text-header mb-5">Discussion</h3>
-          <div className="bg-muted/40 border border-border rounded-xl p-8 text-center">
-            <p className="text-foreground/65 text-sm mb-5 leading-relaxed">
-              Join the conversation. Only verified receipt readers allowed.
-            </p>
-            <button className="bg-[#1A3A8F] text-white font-bold text-sm px-6 py-2.5 rounded-lg hover:bg-[#162f74] transition-colors">
-              Log in to Comment
-            </button>
+        {/* Discussion — compact strip */}
+        <div className="flex items-center justify-between gap-4 border-t border-border pt-3 mt-3">
+          <div className="flex items-baseline gap-2 min-w-0">
+            <span className="font-semibold text-sm text-header shrink-0">Discussion</span>
+            <span className="text-xs text-foreground/50 truncate">Join the conversation — verified readers only</span>
           </div>
+          <button className="shrink-0 bg-[#1A3A8F] text-white font-bold text-xs px-4 py-2 rounded-lg hover:bg-[#162f74] transition-colors">
+            Log in to Comment
+          </button>
         </div>
 
         {/* Verified References */}
