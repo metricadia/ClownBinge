@@ -253,6 +253,18 @@ export default function PostDetail() {
             </div>
           </div>
 
+          {/* Action links strip */}
+          <div className="flex items-center justify-center gap-3 flex-wrap py-2.5 text-xs tracking-wide">
+            <a href="/clowncheck" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Verify News</a>
+            <span className="text-muted-foreground/40">|</span>
+            <a href="/reports" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Order Comprehensive Report</a>
+            <span className="text-muted-foreground/40">|</span>
+            <a href="/submit" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit A Clown</a>
+            <span className="text-muted-foreground/40">|</span>
+            <a href="/ethics" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Our Ethics Policy</a>
+          </div>
+          <div className="border-b-2 border-border mb-6" />
+
           <h1 className={`font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight mb-5 ${isSelfOwned ? "text-primary" : "text-header"}`}>
             {post.title}
           </h1>
