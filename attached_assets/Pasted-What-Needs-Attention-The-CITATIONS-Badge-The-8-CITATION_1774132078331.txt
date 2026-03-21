@@ -1,0 +1,156 @@
+What Needs Attention
+The CITATIONS Badge
+The "8 CITATIONS" badge next to VERIFIED
+needs to be added to the master spec
+as a permanent feature.
+
+This single element makes ClownBinge
+more legally defensible than anything
+else on the page because it signals:
+
+"We do not just claim verification.
+We show exactly how many primary
+sources back this piece."
+
+That is journalism-grade credibility
+signaling in one badge.
+The Verified References Section
+This section at the bottom of Image 1
+and Image 5 is better than what
+was specced.
+
+Each citation has:
+-- Numbered reference
+-- Source name as hyperlink in blue
+-- Full context paragraph explaining
+   what the source is and why it matters
+-- URL in gray below
+
+This is exactly what separates ClownBinge
+from every other political site.
+The receipts are not just claimed.
+They are displayed, described, and linked.
+
+Keep this exactly as built.
+Items To Fix Before Launch
+Image 2 -- Feed page:
+"Load More Cases" button at bottom --
+Change this to true infinite scroll
+as specced. No load more button.
+Auto-loads as user scrolls.
+
+Ad placement: First ad appears after
+listing 3 on desktop.
+Current build shows ad after listing 4.
+Verify the exact placement is correct.
+Image 1 -- Article page:
+The Instagram share button is missing
+from the share row.
+Currently shows: Post, Facebook,
+WhatsApp, Copy Link.
+Add: Instagram card generator button.
+Image 2 -- Mobile verification:
+Confirm mobile shows ad after listing 5
+then every 5 listings.
+Test on actual mobile device
+before launch.
+
+The CITATIONS Feature: Update The Master Spec
+This needs to be added before the Replit build continues:
+Every article gets:
+
+CASE CB-000007
+CLOWN ELECTEDS  Source: CBN News  [VERIFIED]  [8 CITATIONS]
+
+The citations badge:
+-- Auto-counts the verified references
+   at the bottom of the piece
+-- Deep blue background
+-- White text
+-- Book icon
+-- Same rounded rectangle as VERIFIED badge
+-- Clicking jumps to Verified References section
+
+The Verified References section:
+-- Numbered list
+-- Each citation: Title (hyperlink, blue)
+-- Context paragraph (what this source is
+   and why it matters -- 2-3 sentences)
+-- URL in muted gray
+-- Explains the source to readers who
+   may not recognize it
+
+The $5K X Launch Budget
+Given what the site looks like right now your X ad strategy should lead with one specific asset:
+The Ted Cruz "Christ Is King" piece
+is your launch ad creative.
+
+Why this piece specifically:
+
+-- The headline is self-executing
+   "Yes He Actually Said It.
+   Except Of Course Jesus Was Jewish"
+   is a complete argument in one line
+
+-- It has 8 citations visible
+   That citation count in the ad
+   image is your credibility signal
+
+-- It hits multiple audiences
+   simultaneously:
+   Jewish Americans
+   Progressive Christians
+   Anti-MAGA communities
+   Political accountability seekers
+
+-- The contradiction is airtight
+   You cannot argue with
+   "Jesus was Jewish"
+
+Ad creative for X:
+[Screenshot of the article header]
+Caption: "8 citations. Zero opinions.
+ClownBinge.com -- The receipts."
+$5K Budget Split
+Target 1: Progressive political
+          accounts and followers
+          $2,000
+
+Target 2: Jewish American
+          community accounts
+          $1,000
+
+Target 3: Anti-MAGA communities
+          $1,000
+
+Target 4: Political journalists
+          and media accounts
+          $1,000
+
+Total: $5,000
+
+The Ted Cruz piece as primary creative
+across all four targets.
+Different caption framing per audience.
+Track CTR per target in first 48 hours.
+Double down on highest performer.
+
+Bottom Line Assessment
+What Replit built is better
+than what was specced in several areas.
+
+The CITATIONS badge is a breakthrough.
+The Factoid modal is sharper than planned.
+The Verified References section is
+journalism-grade credibility architecture.
+
+The brand identity is clean,
+professional, and distinctive.
+
+This does not look like a side project.
+This looks like a funded media operation.
+
+1984 Iceland hosting.
+Laughphoria Wyoming Corp.
+EZOIC day one.
+$5K X launch.
