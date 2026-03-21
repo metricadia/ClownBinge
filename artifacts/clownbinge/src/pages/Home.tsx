@@ -1,3 +1,4 @@
+import { useRef, useEffect, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
@@ -64,6 +65,19 @@ const MOCK_POSTS: Post[] = [
 export default function Home() {
   const { category, setCategory } = usePostsFilter();
   const { data, isLoading, error } = usePostsFeed(category);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [isStuck, setIsStuck] = useState(false);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsStuck(!entry.isIntersecting),
+      { rootMargin: "-131px 0px 0px 0px", threshold: 0 }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
 
   // Use real data if available and not empty, otherwise fallback to mock for demonstration
   const posts = (data?.posts && data.posts.length > 0) ? data.posts : MOCK_POSTS;
@@ -80,7 +94,11 @@ export default function Home() {
           
           {/* Main Feed Column */}
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
-            <div className="sticky top-[130px] z-30 bg-background pt-6 pb-4 mb-0">
+            {/* Sentinel — sits just above the sticky block; when it leaves viewport the block is "stuck" */}
+            <div ref={sentinelRef} className="h-px w-full" aria-hidden />
+            <div
+              className={`sticky top-[130px] z-30 bg-background pt-6 pb-4 mb-0 transition-shadow duration-200 ${isStuck ? "shadow-[0_4px_12px_-2px_rgba(0,0,0,0.12)]" : ""}`}
+            >
               <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-relaxed max-w-xl">
                 A Public Accountability Platform. <span className="font-bold">Against Fabricated News.</span>
               </h1>
