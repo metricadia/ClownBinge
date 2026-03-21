@@ -83,7 +83,7 @@ export default function Home() {
             <div className="mb-8">
               <h1 className="font-display font-light text-2xl sm:text-3xl text-header mb-1 leading-snug">
                 A Refuge of{" "}
-                <span className="font-bold" style={{ color: "#F5C518" }}>Facts</span>
+                <span className="font-medium" style={{ color: "#F5C518" }}>Facts</span>
                 {" "}for the People<sup className="text-xs align-super font-normal" style={{ color: "#F5C518" }}>™</sup>
               </h1>
               <p className="text-muted-foreground text-sm">
