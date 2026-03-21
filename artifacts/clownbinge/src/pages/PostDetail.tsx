@@ -227,7 +227,7 @@ export default function PostDetail() {
         </Link>
 
         <header className="mb-10">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-border pb-5 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-border pb-5 mb-0">
             <div>
               <div className="font-mono text-lg sm:text-xl font-bold tracking-tight text-header mb-1">
                 CASE {post.caseNumber}
@@ -254,7 +254,7 @@ export default function PostDetail() {
           </div>
 
           {/* Action links strip */}
-          <div className="flex items-center justify-center gap-3 flex-wrap py-2.5 text-xs tracking-wide">
+          <div className="flex items-center justify-center gap-3 flex-wrap py-1.5 text-xs tracking-wide">
             <a href="/clowncheck" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Verify News</a>
             <span className="text-muted-foreground/40">|</span>
             <a href="/reports" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Order Comprehensive Report</a>
@@ -263,7 +263,7 @@ export default function PostDetail() {
             <span className="text-muted-foreground/40">|</span>
             <a href="/ethics" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Our Ethics Policy</a>
           </div>
-          <div className="border-b-2 border-border mb-6" />
+          <div className="border-b-2 border-border mb-4" />
 
           <h1 className={`font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight mb-5 ${isSelfOwned ? "text-primary" : "text-header"}`}>
             {post.title}
