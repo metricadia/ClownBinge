@@ -94,6 +94,7 @@ export default function PostDetail() {
   const popupRef = useRef<HTMLDivElement>(null);
   const [factoid, setFactoid] = useState<FactoidState | null>(null);
   const [copied, setCopied] = useState(false);
+  const [verifyOpen, setVerifyOpen] = useState(false);
 
   useEffect(() => {
     if (post && !hasTrackedView.current) {
@@ -255,7 +256,7 @@ export default function PostDetail() {
 
           {/* Action links strip */}
           <div className="flex items-center justify-center gap-3 flex-wrap py-1.5 text-xs tracking-wide">
-            <a href="/clowncheck" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Verify News</a>
+            <button onClick={() => setVerifyOpen(true)} className="font-semibold hover:underline whitespace-nowrap cursor-pointer" style={{ color: "#B8860B" }}>Verify News</button>
             <span className="text-muted-foreground/40">|</span>
             <a href="/reports" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Order Comprehensive Report</a>
             <span className="text-muted-foreground/40">|</span>
@@ -389,6 +390,59 @@ export default function PostDetail() {
           </button>
         </div>,
         document.body
+      )}
+      {/* ClownCheck Verify Modal */}
+      {verifyOpen && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+          style={{ backgroundColor: "rgba(0,0,0,0.55)" }}
+          onClick={() => setVerifyOpen(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative"
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setVerifyOpen(false)}
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors text-xl font-bold leading-none"
+              aria-label="Close"
+            >
+              &times;
+            </button>
+
+            <div className="mb-1 text-xs font-mono font-bold uppercase tracking-widest" style={{ color: "#1A3A8F" }}>ClownCheck</div>
+            <h2 className="font-display font-extrabold text-2xl text-header mb-2 leading-tight">
+              Is This Story Real?
+            </h2>
+            <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+              Submit any claim, headline, or quote. Our team cross-references government records, congressional archives, court filings, and peer-reviewed sources to return one verdict.
+            </p>
+
+            <div className="flex gap-3 mb-6">
+              <div className="flex-1 bg-green-50 border border-green-200 rounded-xl p-3 text-center">
+                <div className="font-bold text-green-700 text-sm">Verified</div>
+                <div className="text-xs text-green-600 mt-0.5">Confirmed true</div>
+              </div>
+              <div className="flex-1 bg-red-50 border border-red-200 rounded-xl p-3 text-center">
+                <div className="font-bold text-red-700 text-sm">Fake News</div>
+                <div className="text-xs text-red-600 mt-0.5">Demonstrably false</div>
+              </div>
+              <div className="flex-1 bg-gray-50 border border-gray-200 rounded-xl p-3 text-center">
+                <div className="font-bold text-gray-600 text-sm">Cannot Verify</div>
+                <div className="text-xs text-gray-500 mt-0.5">Insufficient record</div>
+              </div>
+            </div>
+
+            <a
+              href="/clowncheck"
+              className="block w-full text-center font-bold text-white py-3.5 rounded-xl transition-colors"
+              style={{ backgroundColor: "#1A3A8F" }}
+            >
+              Verify a Claim &mdash; $1.95
+            </a>
+            <p className="text-center text-xs text-muted-foreground mt-3">Results delivered within 24 hours. No subscription required.</p>
+          </div>
+        </div>
       )}
     </Layout>
   );
