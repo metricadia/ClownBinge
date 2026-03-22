@@ -52,7 +52,7 @@ export default function Privacy() {
           <h2>6. Contact Us</h2>
           <p>
             If you have questions about this Privacy Policy, please contact us at:
-            <br />ClownBinge Wyoming Corp
+            <br />ClownBinge Primary Source Analytics, LLC
             <br />privacy@clownbinge.com
           </p>
 

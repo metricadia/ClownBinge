@@ -167,7 +167,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 © {new Date().getFullYear()} ClownBinge
               </div>
               <div className="text-xs text-white/40 mt-1 leading-relaxed">
-                A project of Laughphoria Informatics &nbsp;·&nbsp; Wyoming Corporation
+                ClownBinge Primary Source Analytics, LLC
               </div>
             </div>
             

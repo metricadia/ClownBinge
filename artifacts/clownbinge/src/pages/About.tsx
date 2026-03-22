@@ -12,7 +12,7 @@ export default function About() {
             The Mission.
           </h1>
           <p className="text-muted-foreground text-sm">
-            Laughphoria Informatics &mdash; ClownBinge.com &mdash; Updated March 2026
+            ClownBinge Primary Source Analytics, LLC &mdash; ClownBinge.com &mdash; Updated March 2026
           </p>
           <div className="h-1 w-full bg-[#F5C518] rounded-full mt-6" />
         </div>
@@ -23,8 +23,8 @@ export default function About() {
 
           <h2>Who We Are</h2>
           <p>
-            ClownBinge is a public accountability news platform operated by Laughphoria Informatics, a
-            Wyoming corporation. We document real, verifiable incidents in which elected officials,
+            ClownBinge is a public accountability news platform operated by ClownBinge Primary Source Analytics, LLC.
+            We document real, verifiable incidents in which elected officials,
             religious leaders, and other figures entrusted with public confidence have acted in direct
             contradiction to their own documented words, votes, and stated values.
           </p>
@@ -114,7 +114,7 @@ export default function About() {
 
           <h2>Contact</h2>
           <p>
-            ClownBinge is operated by Laughphoria Informatics. For press inquiries, corrections,
+            ClownBinge is operated by ClownBinge Primary Source Analytics, LLC. For press inquiries, corrections,
             or tip submissions, use the contact form linked in the site navigation. We respond to
             all credible error reports within 48 hours.
           </p>
@@ -122,7 +122,7 @@ export default function About() {
           <div className="h-1 w-full bg-[#F5C518] rounded-full my-10" />
 
           <p className="text-sm text-muted-foreground">
-            Laughphoria Informatics &mdash; Wyoming Corporation &mdash; ClownBinge.com<br />
+            ClownBinge Primary Source Analytics, LLC &mdash; ClownBinge.com<br />
             <em>Verified. Primary Sources. For The People.</em>
           </p>
 

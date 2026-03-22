@@ -14,7 +14,7 @@ export default function Contact() {
             Got Receipts?
           </h1>
           <p className="text-muted-foreground text-sm">
-            Laughphoria Informatics &mdash; ClownBinge.com &mdash; Tips, press inquiries, corrections &amp; bulk orders
+            ClownBinge Primary Source Analytics, LLC &mdash; ClownBinge.com &mdash; Tips, press inquiries, corrections &amp; bulk orders
           </p>
           <div className="h-1 w-full bg-[#F5C518] rounded-full mt-6" />
         </div>
@@ -50,7 +50,7 @@ export default function Contact() {
                   <div>
                     <p className="font-bold text-sm text-foreground">Mailing Address</p>
                     <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                      ClownBinge Wyoming Corp<br/>
+                      ClownBinge Primary Source Analytics, LLC<br/>
                       1309 Coffeen Avenue STE 1200<br/>
                       Sheridan, Wyoming 82801
                     </p>

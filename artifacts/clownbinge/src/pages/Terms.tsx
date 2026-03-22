@@ -24,7 +24,7 @@ export default function Terms() {
 
           <h2>3. Intellectual Property</h2>
           <p>
-            The original commentary, compilation, design, and structure of the Site (including the "ClownBinge" name and logo) are owned by ClownBinge Wyoming Corp.
+            The original commentary, compilation, design, and structure of the Site (including the "ClownBinge" name and logo) are owned by ClownBinge Primary Source Analytics, LLC.
           </p>
           <p>
             <strong>Fair Use:</strong> The Site utilizes short excerpts of video, audio, and text from public records, congressional archives (C-SPAN), and news broadcasts for the strict purpose of transformative commentary, criticism, and reporting. This constitutes Fair Use under U.S. Copyright law.
@@ -50,7 +50,7 @@ export default function Terms() {
 
           <h2>6. Limitation of Liability</h2>
           <p>
-            ClownBinge Wyoming Corp shall not be liable for any indirect, incidental, special, consequential or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, resulting from your use of the Site.
+            ClownBinge Primary Source Analytics, LLC shall not be liable for any indirect, incidental, special, consequential or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, resulting from your use of the Site.
           </p>
 
           <h2>7. Governing Law</h2>

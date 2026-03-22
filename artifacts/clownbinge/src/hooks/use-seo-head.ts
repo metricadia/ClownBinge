@@ -250,7 +250,7 @@ export function useHomeSeoHead() {
       "@context": "https://schema.org",
       "@type": "NewsMediaOrganization",
       "name": "ClownBinge",
-      "alternateName": "Laughphoria Informatics",
+      "alternateName": "ClownBinge Primary Source Analytics, LLC",
       "url": DOMAIN,
       "logo": `${DOMAIN}/logo.png`,
       "description": SITE_DESCRIPTION,
