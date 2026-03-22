@@ -269,14 +269,25 @@ export default function PostDetail() {
           </div>
 
           {/* Action links strip */}
-          <div className="flex items-center justify-center gap-3 flex-wrap py-1.5 text-xs tracking-wide">
-            <button onClick={() => setVerifyOpen(true)} className="font-semibold hover:underline whitespace-nowrap cursor-pointer" style={{ color: "#B8860B" }}>Verify News</button>
-            <span className="text-muted-foreground/40">|</span>
-            <a href="/reports" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Order Comprehensive Report</a>
-            <span className="text-muted-foreground/40">|</span>
-            <a href="/submit" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit a Post</a>
-            <span className="text-muted-foreground/40">|</span>
-            <a href="/ethics" className="font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Our Ethics Policy</a>
+          <div className="flex items-center justify-center gap-2 flex-wrap py-2">
+            <button
+              onClick={() => setVerifyOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors whitespace-nowrap"
+            >
+              Verify News
+              <span className="text-[10px] font-semibold opacity-70 ml-0.5">$1.95</span>
+            </button>
+            <a
+              href="/reports"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors whitespace-nowrap"
+            >
+              Order a Report
+              <span className="text-[10px] font-semibold opacity-70 ml-0.5">$24.95</span>
+            </a>
+            <span className="text-muted-foreground/30 text-sm px-1">|</span>
+            <a href="/submit" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit a Post</a>
+            <span className="text-muted-foreground/30">|</span>
+            <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
           </div>
           <div className="border-b-2 border-border mb-4" />
 
