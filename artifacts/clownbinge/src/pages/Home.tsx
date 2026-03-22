@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { ClownCheckModal } from "@/components/ClownCheckModal";
 import { usePostsFilter, usePostsFeed } from "@/hooks/use-posts";
 import { Loader2, AlertCircle } from "lucide-react";
 import type { Post } from "@workspace/api-client-react";
@@ -64,6 +66,7 @@ const MOCK_POSTS: Post[] = [
 export default function Home() {
   const { category, setCategory } = usePostsFilter();
   const { data, isLoading, error } = usePostsFeed(category);
+  const [verifyOpen, setVerifyOpen] = useState(false);
 
   // Use real data if available and not empty, otherwise fallback to mock for demonstration
   const posts = (data?.posts && data.posts.length > 0) ? data.posts : MOCK_POSTS;
@@ -85,7 +88,7 @@ export default function Home() {
                 A Public Accountability Platform. <span className="font-bold">Against Fabricated News.</span>
               </h1>
               <p className="font-sans text-xs tracking-wide mt-1 flex items-center gap-2 flex-wrap">
-                <a href="/clowncheck" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Verify News</a>
+                <button onClick={() => setVerifyOpen(true)} className="font-semibold hover:underline cursor-pointer" style={{ color: "#B8860B" }}>Verify News</button>
                 <span className="text-muted-foreground/40">|</span>
                 <a href="/reports" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Order Comprehensive Report</a>
                 <span className="text-muted-foreground/40">|</span>
@@ -184,6 +187,7 @@ export default function Home() {
           
         </div>
       </div>
+      {verifyOpen && <ClownCheckModal onClose={() => setVerifyOpen(false)} />}
     </Layout>
   );
 }
