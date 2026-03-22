@@ -161,7 +161,7 @@ export default function Home() {
                   The internet is forever, and so are the web archives. A masterclass in panicking on camera.
                 </p>
                 <button className="w-full bg-secondary text-dark-text font-bold uppercase tracking-wider text-sm py-3 rounded-lg hover:bg-white transition-colors">
-                  View Receipts
+                  View The Record
                 </button>
               </div>
 

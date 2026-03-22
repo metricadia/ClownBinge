@@ -51,7 +51,7 @@ export function VerifiedBadge({ source, date }: { source?: string | null, date?:
               onClick={() => setOpen(false)}
               className="w-full bg-header text-white font-bold py-3 rounded-lg hover:bg-header/90 transition-colors"
             >
-              Back to the Receipts
+              Back to The Record
             </button>
           </div>
         </DialogContent>

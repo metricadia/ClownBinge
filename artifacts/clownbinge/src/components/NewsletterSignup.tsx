@@ -38,7 +38,7 @@ export function NewsletterSignup({ source = "inline" }: { source?: string }) {
       <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-8">
         <div className="max-w-md">
           <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-white mb-3">
-            Get the Receipts Delivered.
+            Get The Record Delivered.
           </h3>
           <p className="text-white/80 text-sm sm:text-base">
             Join the ClownBinge newsletter for the most documented self-owns and political hypocrisy, straight to your inbox. No spam. Just facts.

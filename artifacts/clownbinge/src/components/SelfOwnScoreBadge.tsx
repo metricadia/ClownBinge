@@ -73,7 +73,7 @@ export function SelfOwnScoreBadge({ score }: { score: number }) {
               onClick={() => setOpen(false)}
               className="w-full bg-[#1A3A8F] text-white font-bold py-3 rounded-lg hover:bg-[#1A3A8F]/90 transition-colors text-sm uppercase tracking-wider"
             >
-              Back to the Receipts
+              Back to The Record
             </button>
           </div>
         </DialogContent>

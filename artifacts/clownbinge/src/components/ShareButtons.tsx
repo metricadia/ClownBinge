@@ -15,7 +15,7 @@ export function ShareButtons({ post }: { post: Post }) {
   };
 
   const shareLinks = {
-    x: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}&hashtags=ClownBinge,Receipts`,
+    x: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}&hashtags=ClownBinge,TheRecord`,
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
     whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(title + " " + url)}`,
   };

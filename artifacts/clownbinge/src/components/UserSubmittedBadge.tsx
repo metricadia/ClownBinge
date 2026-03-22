@@ -54,7 +54,7 @@ export function UserSubmittedBadge() {
               onClick={() => setOpen(false)}
               className="w-full bg-green-700 text-white font-bold py-3 rounded-lg hover:bg-green-800 transition-colors"
             >
-              Back to the Receipts
+              Back to The Record
             </button>
           </div>
         </DialogContent>
