@@ -4,18 +4,20 @@ import { Send, MapPin, Mail, MessageSquare } from "lucide-react";
 export default function Contact() {
   return (
     <Layout>
-      <div className="cb-container py-16 sm:py-24">
-        
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h1 className="font-sans font-bold text-4xl sm:text-5xl text-header mb-6 tracking-tight">
+      <div className="max-w-5xl mx-auto px-4 py-12">
+
+        <div className="max-w-3xl mb-10">
+          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Get In Touch</p>
+          <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-4">
             Got Receipts?
           </h1>
-          <p className="text-xl text-muted-foreground font-medium">
-            Send us a tip, report a bug, or inquire about bulk book orders for academic use.
+          <p className="text-muted-foreground text-sm">
+            Laughphoria Informatics &mdash; ClownBinge.com &mdash; Tips, press inquiries, corrections &amp; bulk orders
           </p>
+          <div className="h-1 w-full bg-[#F5C518] rounded-full mt-6 mb-10" />
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12 max-w-5xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-12">
           
           {/* Contact Info */}
           <div className="w-full lg:w-1/3 space-y-8">
