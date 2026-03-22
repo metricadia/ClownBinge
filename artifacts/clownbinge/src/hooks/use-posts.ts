@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   useListPosts, 
   useGetPost, 
@@ -34,6 +34,19 @@ export function usePostsFeed(category?: ListPostsCategory) {
 
 export function usePostDetail(slug: string) {
   return useGetPost(slug);
+}
+
+export function usePostsCount() {
+  return useQuery<number>({
+    queryKey: ["posts-count"],
+    queryFn: async () => {
+      const res = await fetch("/api/posts/count");
+      const data = await res.json();
+      return data.count as number;
+    },
+    staleTime: 60_000,
+    refetchInterval: 5 * 60_000,
+  });
 }
 
 export function useViewTracker(slug: string) {

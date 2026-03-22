@@ -10,6 +10,18 @@ import crypto from "crypto";
 
 const router: IRouter = Router();
 
+router.get("/posts/count", async (_req, res) => {
+  try {
+    const result = await db
+      .select({ count: count() })
+      .from(postsTable)
+      .where(eq(postsTable.status, "published"));
+    res.json({ count: Number(result[0]?.count ?? 0) });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch count" });
+  }
+});
+
 router.get("/posts", async (req, res) => {
   try {
     const query = ListPostsQueryParams.safeParse(req.query);
