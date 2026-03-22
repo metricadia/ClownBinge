@@ -16,6 +16,36 @@ import { format } from "date-fns";
 import { Loader2, AlertTriangle, ArrowLeft, Copy, Check, Share2 } from "lucide-react";
 import { Link } from "wouter";
 
+const SOURCE_ABBREV: [RegExp, string][] = [
+  [/Congressional Budget Office\b[^;,]*/gi, "CBO"],
+  [/Congressional Record\b[^;,]*/gi,        "Cong. Record"],
+  [/GovTrack\b[^;,]*/gi,                    "GovTrack"],
+  [/Federal Election Commission\b[^;,]*/gi,  "FEC"],
+  [/U\.S\. Citizenship and Immigration Services\b[^;,]*/gi, "USCIS"],
+  [/American Library Association\b[^;,]*/gi, "ALA"],
+  [/Ellis Island Foundation\b[^;,]*/gi,      "Ellis Island"],
+  [/House (Committee on the )?Judiciary\b[^;,]*/gi, "House Judiciary"],
+  [/OpenSecrets\b[^;,]*/gi,                  "OpenSecrets"],
+  [/C-SPAN\b[^;,]*/gi,                       "C-SPAN"],
+  [/American Israel Public Affairs Committee\b[^;,]*/gi, "AIPAC"],
+  [/Recording Academy\b[^;,]*/gi,            "Grammy/RIAA"],
+  [/State Bar of Texas\b[^;,]*/gi,           "TX State Bar"],
+  [/Bexar County[^;,]*/gi,                   "Bexar Co. Courts"],
+  [/Maricopa County[^;,]*/gi,                "Maricopa Co."],
+  [/Court Records?\b[^;,]*/gi,               "Court Records"],
+];
+
+function abbreviateSource(raw: string | null | undefined): string {
+  if (!raw) return "Verified Public Record";
+  const segments = raw.split(/[;|]/).map(s => s.trim()).filter(Boolean);
+  const shortened = segments.slice(0, 2).map(seg => {
+    let s = seg;
+    for (const [pattern, abbr] of SOURCE_ABBREV) s = s.replace(pattern, abbr);
+    return s.replace(/\s+/g, " ").trim();
+  });
+  return shortened.join(" / ");
+}
+
 function abbreviateTitle(title: string): string {
   if (/senator/i.test(title)) return "Sen.";
   if (/representative/i.test(title)) return "Rep.";
@@ -239,7 +269,7 @@ export default function PostDetail() {
               <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-muted-foreground">
                 <span className="uppercase tracking-widest">{post.category.replace(/_/g, " ")}</span>
                 <span>•</span>
-                <span>Source: <span className="text-foreground">{post.verifiedSource}</span></span>
+                <span>Source: <span className="text-foreground">{abbreviateSource(post.verifiedSource)}</span></span>
                 {post.dateOfIncident && (
                   <>
                     <span>•</span>
@@ -332,6 +362,28 @@ export default function PostDetail() {
             Log in to Comment
           </button>
         </div>
+
+        {/* Source Articulations (In-Full) */}
+        {post.verifiedSource && (
+          <details className="mt-8 group border border-border rounded-lg overflow-hidden">
+            <summary className="flex items-center justify-between gap-3 px-5 py-3.5 cursor-pointer select-none list-none bg-muted hover:bg-muted/80 transition-colors">
+              <span className="text-xs font-bold uppercase tracking-widest text-header">
+                Source Articulations (In-Full)
+              </span>
+              <span className="text-muted-foreground text-xs font-mono group-open:rotate-180 transition-transform duration-200 inline-block">
+                ▼
+              </span>
+            </summary>
+            <div className="px-5 py-4 text-sm text-foreground/75 leading-relaxed space-y-1.5">
+              {post.verifiedSource.split(/[;]/).map((s, i) => s.trim()).filter(Boolean).map((entry, i) => (
+                <p key={i} className="m-0">
+                  <span className="font-mono text-xs text-[#F5C518] mr-2">{i + 1}.</span>
+                  {entry}
+                </p>
+              ))}
+            </div>
+          </details>
+        )}
 
         {/* Verified References */}
         {references.length > 0 && (
