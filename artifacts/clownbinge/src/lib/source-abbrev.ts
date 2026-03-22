@@ -43,6 +43,27 @@ export const SOURCE_ABBREV: [RegExp, string][] = [
   [/Recording Academy[^;]*/gi,                        "Grammy/RIAA"],
   [/OpenSecrets\b[^;]*/gi,                            "OpenSecrets"],
 
+  // Human rights / civil society
+  [/BSR\s+Human Rights Due Diligence Report[^;]*/gi,          "BSR Report"],
+  [/Business\s+and\s+Human Rights Resource Centre[^;]*/gi,    "BHRRC"],
+  [/Human Rights Watch[^;]*/gi,                               "HRW"],
+  [/Amnesty International[^;]*/gi,                            "Amnesty Int'l"],
+  [/Meta\s+Oversight Board[^;]*/gi,                           "Meta OB"],
+  [/Drop Site News[^;]*/gi,                                   "Drop Site News"],
+  [/BBC News Arabic[^;]*/gi,                                  "BBC Arabic"],
+  [/BBC News[^;]*/gi,                                         "BBC"],
+  [/\bBBC\b[^;]*/gi,                                          "BBC"],
+
+  // Research / think tanks
+  [/Pew Research Center[^;]*/gi,                              "Pew Research"],
+  [/Indiana University[^;]*/gi,                               "Indiana Univ."],
+  [/U\.S\.\s+PIRG[^;]*/gi,                                   "US PIRG"],
+  [/\bUSPIRG\b[^;]*/gi,                                       "US PIRG"],
+
+  // Congressional / government hearings
+  [/House Energy and Commerce Committee[^;]*/gi,              "House E&C Cmte."],
+  [/Facebook Papers[^;]*/gi,                                  "Facebook Papers"],
+
   // Social media / official posts
   [/official\s+(?:Senate|House|Congressional)\s+social media[^;]*/gi, "Official Posts"],
   [/\w+\s+official\s+Senate\s+social media[^;]*/gi,  "Official Posts"],
