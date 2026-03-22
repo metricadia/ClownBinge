@@ -36,13 +36,13 @@ router.get("/posts", async (req, res) => {
     if (category) {
       conditions.push(eq(postsTable.category, category as any));
     } else {
-      // Main feed: suppress religious articles unless selfOwnScore >= 8 (major scandal threshold)
+      // Main feed: suppress religious articles unless selfOwnScore = 10 (only perfect-score stories)
       conditions.push(
         or(
           ne(postsTable.category, "religious"),
           and(
             eq(postsTable.category, "religious"),
-            gte(postsTable.selfOwnScore, 8)
+            gte(postsTable.selfOwnScore, 10)
           )
         )!
       );
