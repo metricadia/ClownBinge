@@ -15,6 +15,7 @@ import Ethics from "@/pages/Ethics";
 import VerifyNews from "@/pages/VerifyNews";
 import ComprehensiveReport from "@/pages/ComprehensiveReport";
 import TagIndex from "@/pages/TagIndex";
+import SubmitTip from "@/pages/SubmitTip";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient({
@@ -40,6 +41,7 @@ function Router() {
       <Route path="/clowncheck" component={VerifyNews} />
       <Route path="/reports" component={ComprehensiveReport} />
       <Route path="/tags/:tag" component={TagIndex} />
+      <Route path="/submit" component={SubmitTip} />
       <Route component={NotFound} />
     </Switch>
   );

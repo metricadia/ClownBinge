@@ -158,6 +158,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-4">Platform</h4>
               <ul className="space-y-3">
                 <li><Link href="/" className="text-white/70 hover:text-secondary transition-colors font-medium">Home Feed</Link></li>
+                <li><Link href="/submit" className="text-white/70 hover:text-secondary transition-colors font-medium">Submit a Tip</Link></li>
                 <li><Link href="/store" className="text-white/70 hover:text-secondary transition-colors font-medium">Books & Store</Link></li>
                 <li><Link href="/about" className="text-white/70 hover:text-secondary transition-colors font-medium">About & Mission</Link></li>
                 <li><Link href="/contact" className="text-white/70 hover:text-secondary transition-colors font-medium">Contact Us</Link></li>

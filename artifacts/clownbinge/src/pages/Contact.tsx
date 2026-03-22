@@ -1,6 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { AdminNav } from "@/components/AdminNav";
-import { Send, MapPin, Mail, MessageSquare } from "lucide-react";
+import { Link } from "wouter";
+import { Send, MapPin, Mail, MessageSquare, FileText } from "lucide-react";
 
 export default function Contact() {
   return (
@@ -19,6 +20,20 @@ export default function Contact() {
         </div>
 
         <AdminNav />
+
+        <div className="mb-10 bg-primary/5 border border-primary/20 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-6">
+          <div className="flex-1">
+            <p className="text-xs font-bold tracking-widest uppercase text-primary mb-1">Got Receipts?</p>
+            <h2 className="font-bold text-xl text-header mb-2">Submit a Tip</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Know of a politician or religious leader who has betrayed their constituents? Submit your tip with a primary source and we will review it for publication.
+            </p>
+          </div>
+          <Link href="/submit" className="shrink-0 inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-bold px-6 py-3 rounded-lg transition-colors text-sm">
+            <FileText className="w-4 h-4" />
+            Submit a Tip
+          </Link>
+        </div>
 
         <div className="flex flex-col lg:flex-row gap-12">
           
