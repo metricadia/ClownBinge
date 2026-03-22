@@ -4,6 +4,7 @@ import { Video } from "lucide-react";
 import type { Post } from "@workspace/api-client-react";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { UserSubmittedBadge } from "./UserSubmittedBadge";
+import { SelfOwnScoreBadge } from "./SelfOwnScoreBadge";
 
 export function PostCard({ post }: { post: Post }) {
   const isSelfOwned = post.category === "self_owned";
@@ -51,6 +52,7 @@ export function PostCard({ post }: { post: Post }) {
             </div>
             <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
               {post.userSubmitted && <UserSubmittedBadge />}
+              {isSelfOwned && post.selfOwnScore != null && <SelfOwnScoreBadge score={post.selfOwnScore} />}
               <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
             </div>
           </div>
