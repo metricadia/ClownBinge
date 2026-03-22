@@ -94,3 +94,191 @@ Generated React Query hooks and fetch client from the OpenAPI spec (e.g. `useHea
 ### `scripts` (`@workspace/scripts`)
 
 Utility scripts package. Each script is a `.ts` file in `src/` with a corresponding npm script in `package.json`. Run scripts via `pnpm --filter @workspace/scripts run <script>`. Scripts can import any workspace package (e.g., `@workspace/db`) by adding it as a dependency in `scripts/package.json`.
+
+---
+
+## ClownBinge Project
+
+**Company:** Laughphoria Informatics, Wyoming Corporation
+**Tagline:** "Verified. Primary Sources. Clowned."
+**Mission:** Verified accountability journalism and political satire. Real, verifiable incidents of politicians and religious leaders betraying constituents.
+
+### Products
+
+- **ClownCheck** — $1.95/verification
+- **Comprehensive Reports** — $24.95/PDF
+
+### Article Workflow
+
+```bash
+cd scripts && pnpm insert ../attached_assets/FILENAME.json    # Insert article
+cd scripts && pnpm generate ../attached_assets/topics.json --insert  # Generate + insert via Claude
+cd scripts && pnpm sitemap                                    # Regenerate sitemap.xml after inserts
+```
+
+- ALWAYS run `pnpm sitemap` after inserting new articles
+- Generate script uses `ANTHROPIC_API_KEY` directly; batches of 3 max (~30-40s per article)
+- `subjectParty` can be null for non-politicians
+
+### Article Database (articles in DB)
+
+- CB-000001 through CB-000014 published
+- CB-000010: Brian Carn (self_owned, score 10) -- "Prophet Brian Carn's Betrayal..."
+- CB-000011: Robert Morris (religious, score 9) -- indictment (DUPLICATE of 000012, recommend delete)
+- CB-000012: Robert Morris (religious, score 9) -- guilty plea (KEEP)
+- CB-000013: Mitchell Summerfield (religious, score 8)
+- CB-000014: Paul Mitchell (religious, score 8)
+- 21 more religious topics queued in `attached_assets/rbatch-*.json`
+
+### Main Feed Curation Rules
+
+- Religious articles only appear on main feed if `selfOwnScore >= 10` (perfect score)
+- Explicitly selecting the Religious category tab shows all religious articles
+- Category virality: self_owned > clown_electeds > religious > political > cultural > anti_racist_hero
+
+### Design System
+
+- Blue-deep: `#1A3A8F`
+- Yellow/Gold: `#F5C518`
+- Pink (VERIFIED badge): `#FF0099`
+- Green: `#16A34A`
+
+### Key Files
+
+- `artifacts/clownbinge/src/components/PostCard.tsx`
+- `artifacts/clownbinge/src/pages/PostDetail.tsx`
+- `artifacts/clownbinge/src/lib/source-abbrev.ts` (add new source outlets here only)
+- `artifacts/clownbinge/src/App.tsx`
+- `artifacts/api-server/src/routes/posts.ts`
+- `artifacts/api-server/src/app.ts`
+- `scripts/src/generate-articles.ts`
+- `scripts/src/insert-article.ts`
+- `scripts/src/generate-sitemap.ts`
+
+### SEO Implementation (completed)
+
+- `use-seo-head.ts` hook: title, canonical, OG, Twitter Card, JSON-LD NewsArticle + Person schema
+- `public/robots.txt`: static, points to `/sitemap.xml`
+- `public/sitemap.xml`: statically generated; run `pnpm sitemap` to regenerate
+- `/tags/:tag` route: tag index pages with clickable tag pills on article pages
+- selfOwnScore badge: shows on ALL article categories (not just self_owned)
+
+### Editorial Rules
+
+- NEVER use em dashes anywhere in this project
+- Source abbreviations: add to `src/lib/source-abbrev.ts` only (single source of truth)
+
+---
+
+## SEO Publication Methodology (Google Dating -- NOT YET IMPLEMENTED)
+
+**Reference doc:** `attached_assets/clownbinge-google-dating-methodology_1774148234634.md`
+**Status:** Future implementation -- do not build yet
+
+### Publication Velocity Schedule
+
+| Phase | Months | Articles/Week | Articles/Day Max | Cumulative |
+|-------|--------|---------------|------------------|-----------|
+| Establishment | 1-2 | 2-3 | 1 | ~20 |
+| Building | 3-4 | 4-5 | 1 | ~60 |
+| Momentum | 5-6 | 5-7 | 2 | ~120 |
+| Operation | 7-12 | 7-10 | 2 | ~400 |
+| Scale | 13-24 | 10-14 | 2 | ~1,000 |
+| Full | 25-42 | 10-14 | 2 | ~2,000 |
+
+**Hard limits:** Max 2 articles/day, max 14/week, min 11-hour gap between any two publications.
+
+### Publishing Windows (Eastern Time)
+
+- Morning: 07:15-09:45 (20%)
+- Midday: 11:00-13:30 (25%)
+- Afternoon: 14:00-16:30 (25%)
+- Evening: 19:00-21:00 (20%)
+- Late: 22:00-23:30 (10%)
+- PROHIBITED: 00:00-07:00
+
+### Publication Queue Architecture (future build)
+
+- All articles enter a managed queue with assigned future `publishedAt` timestamps
+- Max queue size: 500 articles
+- Category rotation: never publish same category on consecutive days
+- Weekend publishing rate reduced 50% vs weekdays
+- `consecutiveCategoryBlock: true`
+
+### `publishedAt` Field Rules
+
+- NEVER set to the date the article was written
+- ALWAYS set to the queue-assigned future publication date
+- NEVER backdate to before domain activation
+- NEVER bulk-assign the same timestamp to multiple articles
+- Format: ISO 8601 with time and timezone (`YYYY-MM-DDTHH:MM:SS.000Z`) -- never date-only
+
+### Sitemap Management Rules
+
+- Update sitemap ONLY when an article goes live (never pre-publish future articles)
+- Resubmit to Google Search Console within 30 minutes of each publication
+- Use sitemap index file when approaching 1,000 articles
+- Max 50,000 URLs per sitemap file
+
+### Google Indexing API (future)
+
+- Submit every new URL via Indexing API immediately on publication
+- 200 URL/day quota; ClownBinge uses max 2/day -- well within limits
+- Endpoint: `POST https://indexing.googleapis.com/v3/urlNotifications:publish`
+- Type: `URL_UPDATED`
+
+### `dateModified` Protocol
+
+- Update `dateModified` in JSON-LD when: new factoid tags, updated sources, title revisions, meta description changes, body additions
+- Do NOT update for: typo fixes, formatting corrections
+- NEVER change `datePublished` after initial publication
+
+### Thin Content Ratio Protection
+
+- Body word count: 600 words minimum
+- Factoid anchor tags: minimum 3 per article
+- External source links: minimum 2 per article
+- Internal links: minimum 1 per article
+- Meta description: 120-160 characters
+- Title tag: 50-65 characters
+- Category index pages: 200+ words of unique descriptive content (NOT YET BUILT)
+- Tag index pages: 150+ words of unique descriptive content (currently thin -- needs body copy)
+
+### Slug Construction Rules (permanent after indexing)
+
+```
+Format:  /[subject-lastname]-[topic-keyword]-[year]
+Rules:   lowercase, hyphens only, no stop words, max 75 chars
+         must include subject last name + primary topic keyword + year of incident
+```
+- NEVER change a slug after an article is indexed (creates 404, loses all ranking signals)
+- If slug must change: implement 301 redirect immediately and resubmit both URLs
+
+### Domain Authority Timeline
+
+- Months 1-3: Indexing establishment, minimal traffic
+- Months 4-6: Named-entity searches surface ClownBinge, early growth signal
+- Months 7-12: First page-1 rankings for primary queries
+- Months 13-24: Compounding weekly growth, 1,000 records
+- Months 25-42: 2,000 records, topical authority, citation source for press
+
+### Weekly Automated Health Checks (future -- runs Sunday 2am ET)
+
+- Minimum 600-word body count on all articles
+- Canonical tag, schema markup, meta description present on all pages
+- Internal + external link validation (flag broken source links)
+- Core Web Vitals: LCP < 2.5s, FID < 100ms, CLS < 0.1, TTFB < 800ms
+- Publication velocity anomaly detection (alert if > 2 articles same day)
+
+### What to Never Do
+
+- Never publish > 2 articles in a calendar day
+- Never set identical `publishedAt` on any two articles
+- Never backdate articles before domain activation
+- Never publish stub/placeholder articles
+- Never use AI-bulk-generated content without editorial voice standards applied
+- Never purchase backlinks
+- Never submit same URL to Indexing API more than once per 24 hours
+- Never create tag/category pages with no substantive content
+- Never allow broken external links to primary sources beyond 30 days
+- Never change a slug after indexing
