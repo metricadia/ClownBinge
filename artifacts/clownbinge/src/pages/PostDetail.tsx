@@ -301,7 +301,7 @@ export default function PostDetail() {
           </div>
           <div className="border-b-2 border-border mb-4" />
 
-          <h1 className={`font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight mb-5 ${isSelfOwned ? "text-primary" : "text-header"}`}>
+          <h1 className={`font-sans font-bold text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight mb-5 ${isSelfOwned ? "text-primary" : "text-header"}`}>
             {post.title}
           </h1>
 
