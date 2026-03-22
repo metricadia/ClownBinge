@@ -375,9 +375,9 @@ export default function PostDetail() {
               </span>
             </summary>
             <div className="px-5 py-4 text-sm text-foreground/75 leading-relaxed space-y-1.5">
-              {post.verifiedSource.split(/[;]/).map((s, i) => s.trim()).filter(Boolean).map((entry, i) => (
+              {post.verifiedSource.split(/[;/|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => (
                 <p key={i} className="m-0">
-                  <span className="font-mono text-xs text-[#F5C518] mr-2">{i + 1}.</span>
+                  <span className="font-mono text-xs text-[#F5C518] mr-2 select-none">{i + 1}.</span>
                   {entry}
                 </p>
               ))}
