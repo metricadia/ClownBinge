@@ -1,0 +1,66 @@
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://clownbinge.com/case/cb-000010"
+  },
+  "headline": "Prophet Brian Carn's Betrayal of Christ and the Black Community - A Cataclysmic Self-Own",
+  "description": "A forensic audit of Prophet Brian Carn's federal guilty plea for IRS obstruction and documented instances of prophetic plagiarism and misconduct.",
+  "image": "https://clownbinge.com/images/cases/cb-000010-hero.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Amir Baldwin Noirsolé",
+    "jobTitle": "Visionary System Architect",
+    "url": "https://clownbinge.com/authors/amir-baldwin-noirsole"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Laughphoria Informatics",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://clownbinge.com/logo.png"
+    }
+  },
+  "datePublished": "2026-03-22T00:00:00Z",
+  "dateModified": "2026-03-22T00:00:00Z",
+  "articleSection": "Religious Accountability",
+  "keywords": "Brian Carn, IRS, Federal Guilty Plea, Prophetic Plagiarism, Kingdom City Church",
+  "additionalProperty": [
+    {
+      "@type": "PropertyValue",
+      "name": "Self-Own Score",
+      "value": "7",
+      "maxValue": "10",
+      "description": "The Quiet Part Loud: Documented evidence that the public position was inconsistent with the subject's own concurrent private disclosures and filed federal records."
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "Case ID",
+      "value": "CB-000010"
+    },
+    {
+      "@type": "PropertyValue",
+      "name": "Verification Status",
+      "value": "VERIFIED",
+      "description": "Cross-referenced against Tier 1 DOJ and Federal Court records."
+    }
+  ],
+  "claimReviewed": "Brian Carn's 2015 New Year's prophecy was a divine revelation.",
+  "itemReviewed": {
+    "@type": "Claim",
+    "author": {
+      "@type": "Person",
+      "name": "Brian Carn Jr."
+    },
+    "datePublished": "2014-12-31"
+  },
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": "1",
+    "bestRating": "5",
+    "worstRating": "1",
+    "alternateName": "False - Sourced from YouTube timestamp Feb 2014"
+  },
+  "publishingPrinciples": "https://clownbinge.com/ethics"
+}
