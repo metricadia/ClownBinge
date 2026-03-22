@@ -86,8 +86,8 @@ export function PostCard({ post }: { post: Post }) {
           )}
 
           {/* Footer Info */}
-          <div className="flex items-center justify-between mt-auto pt-4 border-t border-current/10">
-            <div className={`text-xs font-medium ${mutedTextClasses}`}>
+          <div className="flex items-center justify-between mt-auto pt-4 border-t border-current/10 gap-4">
+            <div className={`text-xs font-medium truncate min-w-0 ${mutedTextClasses}`}>
               {post.verifiedSource ? `Source: ${post.verifiedSource}` : 'Verified Public Record'}
             </div>
             <div className={`text-xs font-bold uppercase tracking-wider ${isSelfOwned ? 'text-secondary' : 'text-primary'} group-hover:translate-x-1 transition-transform`}>
