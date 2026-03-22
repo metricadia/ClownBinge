@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { AdminNav } from "@/components/AdminNav";
+import { StatWidget } from "@/components/StatWidget";
 
 export default function About() {
   return (
@@ -33,6 +34,12 @@ export default function About() {
             verification services, and reports. This structure ensures our editorial independence
             remains absolute and unconditional.
           </p>
+
+        </div>
+
+        <StatWidget />
+
+        <div className="prose prose-slate max-w-none cb-article-body">
 
           <h2>The Premise</h2>
           <p>
