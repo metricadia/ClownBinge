@@ -72,13 +72,13 @@ interface Reference {
 function extractReferences(html: string): Reference[] {
   const seen = new Set<string>();
   const refs: Reference[] = [];
-  const tagRe = /<a[^>]+class="cb-factoid"[^>]*>/g;
+  const tagRe = /<a[^>]+class=["']cb-factoid["'][^>]*>/g;
   let m: RegExpExecArray | null;
   while ((m = tagRe.exec(html)) !== null) {
     const tag = m[0];
-    const href = /href="([^"]*)"/.exec(tag)?.[1] ?? "";
-    const title = /data-title="([^"]*)"/.exec(tag)?.[1] ?? "";
-    const summary = /data-summary="([^"]*)"/.exec(tag)?.[1] ?? "";
+    const href = /href=["']([^"']*)["']/.exec(tag)?.[1] ?? "";
+    const title = /data-title=["']([^"']*)["']/.exec(tag)?.[1] ?? "";
+    const summary = /data-summary=["']([^"']*)["']/.exec(tag)?.[1] ?? "";
     if (href && title && !seen.has(href)) {
       seen.add(href);
       refs.push({ href, title, summary });
