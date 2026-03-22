@@ -8,7 +8,7 @@ export default function Ethics() {
         <div className="mb-10">
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Editorial Standards</p>
           <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-4">
-            Our Ethics Policy
+            Editorial Standards, Ethics, and Analytical Methodology
           </h1>
           <p className="text-muted-foreground text-sm">
             Laughphoria Informatics &mdash; ClownBinge.com &mdash; Updated March 2026
@@ -29,6 +29,37 @@ export default function Ethics() {
             Laughphoria Informatics. Drawing on peer-reviewed research in political communication, media
             studies, and democratic theory, this document establishes the empirical basis for ClownBinge's
             mission and articulates the standards to which it holds itself and the public figures it covers.
+          </p>
+
+          <h2>Platform Framework: Satire as Analytical Lens</h2>
+          <p>
+            ClownBinge operates within an established tradition of accountability journalism that employs
+            satirical framing as a presentational device. The platform name, visual identity, and category
+            terminology use the vernacular term "clown" as a rhetorical instrument with documented roots in
+            democratic political commentary, consistent with its use in editorial cartooning, political satire,
+            and accountability journalism since the nineteenth century. Courts, legislatures, and journalistic
+            bodies have long recognized satirical framing as a constitutionally protected and journalistically
+            legitimate method of presenting factual material.
+          </p>
+          <p>
+            This framing is explicitly and exclusively presentational. The term is applied only to documented
+            patterns of public hypocrisy by individuals in positions of public trust. No content published
+            on this platform targets any person on the basis of race, ethnicity, religion as a protected
+            characteristic, gender, sexual orientation, national origin, disability status, or any other
+            identity category. Coverage is limited to the documented public conduct of public figures in the
+            exercise of their public roles. When religious leaders or institutions are covered, coverage is
+            confined to documented instances in which their public conduct contradicts their own publicly
+            stated doctrinal positions -- a standard of accountability that applies equally across all
+            categories of public figure on this platform.
+          </p>
+          <p>
+            The satirical presentational layer and the empirical methodology are not in tension. The satirical
+            register is the frame; the primary source documentation is the substance. All content must satisfy
+            the verification standards defined in Section 7 regardless of any satirical or analytical framing
+            applied to any headline, case label, or platform feature. The platform does not publish satire as
+            fact. All analytical commentary is labeled distinctly from verified factual reportage, and no
+            article is published without at least one citation to a source within the three-tier verification
+            hierarchy.
           </p>
 
           <h2>1. Introduction: The Misinformation Crisis</h2>
@@ -275,6 +306,50 @@ export default function Ethics() {
             publish private information about public figures that is not relevant to their exercise of
             public duties. ClownBinge does not publish opinion presented as fact. Satirical commentary,
             where it appears, is clearly labeled and never presented as primary sourcing.
+          </p>
+
+          <h3>7.6 The ClownBinge Self-Own Score: A Proprietary Empirical Accountability Metric</h3>
+          <p>
+            The ClownBinge Self-Own Score is a proprietary analytical instrument that quantifies the magnitude
+            of documented contradiction between a public figure's stated positions and their verifiable actions
+            or disclosed records. It is not a measure of political alignment, moral judgment, or editorial
+            opinion. It is a measure of documentary gap: the distance, expressed in evidentiary terms, between
+            what a subject has said in the public record and what the public record independently demonstrates
+            they have done.
+          </p>
+          <p>
+            The metric is expressed on a 10-point ordinal scale. Each point on the scale corresponds to a
+            defined evidentiary threshold, not a subjective editorial determination. Assignment of a score
+            at any level requires that the contradiction be directly legible in verified primary source
+            documentation without editorial inference or interpretive mediation. A Self-Own Score may not
+            be assigned on the basis of anonymous sourcing, reputation, prior reporting not independently
+            verified by ClownBinge, or circumstantial evidence. The specific primary sources supporting
+            the assigned score are cited in the article body and compiled in the Verified References section
+            of every article, allowing independent reader verification of the evidentiary adequacy of
+            any assignment.
+          </p>
+          <p>The 10-level evidentiary taxonomy is defined as follows:</p>
+          <ul>
+            <li><strong>1 — Loose Change.</strong> A minor documented inconsistency. A misstatement, a quietly drifted position, or a contradicted detail for which plausible deniability exists in the primary record.</li>
+            <li><strong>2 — Paper Trail.</strong> A documented contradiction with arguable grounds for distinction. The primary sources establish a gap; the subject retains defensible room to characterize the positions as different rather than contradictory.</li>
+            <li><strong>3 — Public Record.</strong> A clear, documented contradiction between a stated position and a recorded action. The subject's own record requires argumentation against itself to deny the gap.</li>
+            <li><strong>4 — The Pivot.</strong> A verifiable, documented reversal that directly affected the subject's constituents or followers. The gap between documented word and documented deed is no longer readily deniable against the primary sources.</li>
+            <li><strong>5 — Caught on File.</strong> Documented betrayal of a stated core principle, supported by unambiguous primary sources. The subject's own disclosed records are the primary instrument of contradiction.</li>
+            <li><strong>6 — Structural Hypocrisy.</strong> Multiple documented reversals forming a verifiable pattern across the primary record. The contradiction is not isolated; it is recurring and documentable across multiple independent sources within the verification hierarchy.</li>
+            <li><strong>7 — The Quiet Part Loud.</strong> Documented evidence that the public position was inconsistent with the subject's own concurrent private disclosures, filed records, or recorded statements.</li>
+            <li><strong>8 — Spectacular Own Goal.</strong> The documented contradiction directly and materially undermines the subject's defining public identity, established without ambiguity by primary sources.</li>
+            <li><strong>9 — Career-Defining.</strong> A documented contradiction so complete, so thoroughly sourced across multiple independent primary sources, and so consequential that it materially and permanently alters the subject's documented public record.</li>
+            <li><strong>10 — Historic.</strong> A documented contradiction so total and so irrefutable across multiple independent source tiers that it constitutes a standing monument in the primary record. Reserved exclusively for instances in which no reasonable application of the Section 7 source standards can produce a defensible alternative reading of the documentary evidence.</li>
+          </ul>
+          <p>
+            The Self-Own Score is encoded in the platform's structured data output as an
+            {" "}<code>additionalProperty</code> within the <code>NewsArticle</code> JSON-LD schema
+            attached to each article, and as a <code>reviewRating</code> within the
+            {" "}<code>ClaimReview</code> schema on all articles covering named public figures. This
+            structured data architecture enables search engines and AI answer systems to recognize the
+            score as a formalized, methodology-grounded analytical rating rather than informal editorial
+            commentary, consistent with the platform's obligations under E-E-A-T (Experience, Expertise,
+            Authoritativeness, and Trustworthiness) evaluation frameworks.
           </p>
 
           <h2>8. Corrections and Accountability</h2>

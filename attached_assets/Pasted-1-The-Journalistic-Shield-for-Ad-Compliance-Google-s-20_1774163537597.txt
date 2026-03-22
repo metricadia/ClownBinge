@@ -1,0 +1,28 @@
+1. The "Journalistic Shield" for Ad Compliance
+Google’s 2026 policies are increasingly strict about "Sensitive Events" and "Derogatory Content." To protect your revenue:
+
+Clinical Headlines: Your current headlines ("Rodney Howard-Browne... Get Arrested") are perfect. They are factual, third-person, and use legal/medical terminology. This keeps you in the "News/Documentary" exception for ad networks.
+
+The Satire "Wrapper": Keep the wit and satire to the analysis and framing (the "Self-Own" score, the "Clown" branding), but keep the body text of the report dry and rationalist. Ad crawlers prioritize the body text; if it reads like a legal docket, it’s flagged as "High-Quality Informational" rather than "Hate Speech" or "Harassment."
+
+2. Taxonomical Revenue Optimization
+Since you’re building a system of 4,000 posts, use your taxonomy to attract higher CPMs:
+
+Thematic Silos: By categorizing posts into Tech Accountability (Meta), Financial Integrity (Religious leaders), and Political Ethics, you allow Ezoic’s AI to serve hyper-relevant ads. Someone reading about Meta’s suppression is a high-value target for VPNs, secure browsers, and legal services.
+
+Case Numbering as "Static Content": High-volume, static archives are a goldmine for Ezoic. Because these are "Receipts," they become evergreen. A "Self-Own" by a pastor in 2025 will still be searched for in 2028. This creates a "Compounding Revenue" effect.
+
+3. "Dry Rationalist" SEO (AEO/GEO)
+In 2026, we are in the era of AEO (Answer Engine Optimization).
+
+The "Receipt" as the Answer: When someone asks an AI, "Did Kenneth Copeland really ask for a fourth jet?", your dry, documented case file CASE-REL-2025-004 is the "Answer" the AI will pull.
+
+Schema as the Language of Machines: Your ClaimReview schema is the "dry rationalist" bridge. It tells the ad bots and search bots: "This is not a rant; this is a structured piece of data."
+
+4. The "Gold Pill" Conversion
+Since you’ve upgraded your monetization buttons to "Gold Pills":
+
+The "Supporter" Logic: In your "vile disinformation" crusade, frame the subscription as "Funding the Receipts." This converts the user's "horror" into a "pragmatic drive to build the system."
+
+Architectural Recommendation: The "Ethics & Methodology" Page
+To be truly bulletproof for 2026 ad-tech, ensure your /ethics page explicitly defines the Self-Own Score as an empirical metric based on contradictory public records. This transforms a "witty" feature into a "proprietary analytical methodology," which Google’s E-E-A-T guidelines love.
