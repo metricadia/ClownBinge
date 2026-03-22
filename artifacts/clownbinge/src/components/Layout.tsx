@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
+import { Menu, X, CheckCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
 
@@ -91,17 +91,28 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               {CATEGORIES.map(cat => {
                 const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
                 const isHero = cat.id === 'anti_racist_hero';
+                const isCbExclusive = cat.id === 'cb_exclusive';
                 const baseStyle = `shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors`;
-                const activeStyle = isHero
+                const activeStyle = isCbExclusive
+                  ? isActive
+                    ? 'bg-green-600 text-white shadow-md ring-2 ring-green-600/40'
+                    : 'bg-green-600 text-white hover:bg-green-700'
+                  : isHero
                   ? isActive ? 'bg-secondary text-gray-900 shadow-md ring-2 ring-secondary/50' : 'bg-secondary/80 text-gray-900 hover:bg-secondary'
                   : isActive ? 'bg-primary text-white shadow-md' : 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground';
+                const content = isCbExclusive ? (
+                  <span className="inline-flex items-center gap-1.5">
+                    <CheckCircle className="w-3.5 h-3.5 text-yellow-300 shrink-0" strokeWidth={3} />
+                    CB Exclusive
+                  </span>
+                ) : cat.label;
                 return onCategoryChange && location === '/' ? (
                   <button key={cat.id} onClick={() => onCategoryChange(cat.id)} className={`${baseStyle} ${activeStyle}`}>
-                    {cat.label}
+                    {content}
                   </button>
                 ) : (
                   <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={`${baseStyle} ${activeStyle}`}>
-                    {cat.label}
+                    {content}
                   </Link>
                 );
               })}
