@@ -86,7 +86,7 @@ export default function Home() {
           
           {/* Main Feed Column */}
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
-            <div className="sticky top-[130px] z-30 bg-background pt-6 pb-4">
+            <div className="sticky top-[146px] z-30 bg-background pt-6 pb-4">
               <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-snug max-w-xl">
                 <span className="block">A Public Accountability News Platform.</span>
                 <span className="block font-bold">Against Fabricated News.</span>
@@ -148,7 +148,7 @@ export default function Home() {
 
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block w-[320px] shrink-0 space-y-8">
-            <div className="sticky top-[140px]">
+            <div className="sticky top-[156px]">
               {/* Highlighted Self-Owned Section */}
               <div className="bg-primary text-white rounded-xl p-6 shadow-xl shadow-primary/20 mb-8 border border-primary-foreground/10">
                 <div className="flex items-center gap-2 mb-4">

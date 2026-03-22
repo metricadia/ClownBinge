@@ -39,7 +39,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         sticky top-0 z-50 w-full transition-all duration-200
         ${scrolled ? 'bg-header/95 backdrop-blur-md shadow-lg' : 'bg-header'}
       `}>
-        <div className="cb-container h-16 sm:h-20 flex items-center justify-between">
+        <div className="cb-container h-20 sm:h-24 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex flex-col leading-none hover:opacity-90 transition-opacity group">
             <div className="flex items-baseline gap-0">
@@ -117,7 +117,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-16 sm:top-20 z-40 bg-header/95 backdrop-blur-xl flex flex-col md:hidden">
+        <div className="fixed inset-0 top-20 sm:top-24 z-40 bg-header/95 backdrop-blur-xl flex flex-col md:hidden">
           <nav className="flex flex-col items-center justify-center flex-1 gap-8 p-6">
             <Link href="/" className="text-2xl font-bold text-white uppercase tracking-widest">Home</Link>
             <Link href="/about" className="text-2xl font-bold text-white uppercase tracking-widest">About</Link>
