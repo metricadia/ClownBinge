@@ -100,10 +100,13 @@ export default function Ethics() {
             operation targeting American voters between 2013 and 2018, reaching an estimated 126 million
             Facebook users, 20 million Instagram users, and 1.4 million Twitter users with fabricated,
             divisive, and politically engineered content (U.S. Senate Select Committee on Intelligence, 2020).
-            The operation was not limited to electoral interference. IRA operatives created and managed
-            hundreds of fake American personas, built audiences on issues ranging from immigration and race to
-            gun rights and LGBTQ+ issues, and deployed these audiences to amplify existing social divisions
-            (DiResta et al., 2019).
+            The scale of Instagram engagement alone is instructive: the Senate Intelligence Committee's
+            2020 report documented that IRA content on Instagram accumulated over 185 million likes, a figure
+            that exceeds the combined circulation of every major American daily newspaper by several orders
+            of magnitude. The operation was not limited to electoral interference. IRA operatives created and
+            managed hundreds of fake American personas, built audiences on issues ranging from immigration and
+            race to gun rights and LGBTQ+ issues, and deployed these audiences to amplify existing social
+            divisions (DiResta et al., 2019).
           </p>
           <p>
             China's information operations targeting the United States have followed a different model,
@@ -308,7 +311,7 @@ export default function Ethics() {
             where it appears, is clearly labeled and never presented as primary sourcing.
           </p>
 
-          <h3>7.6 The ClownBinge Self-Own Score: A Proprietary Empirical Accountability Metric</h3>
+          <h3 id="self-own-methodology">7.6 The ClownBinge Self-Own Score: A Proprietary Empirical Accountability Metric</h3>
           <p>
             The ClownBinge Self-Own Score is a proprietary analytical instrument that quantifies the magnitude
             of documented contradiction between a public figure's stated positions and their verifiable actions
