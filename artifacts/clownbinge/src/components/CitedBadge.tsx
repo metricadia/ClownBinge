@@ -4,7 +4,7 @@ export function CitedBadge({ count }: { count: number }) {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const el = document.getElementById("verified-references");
+    const el = document.getElementById("primary-sources");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 

@@ -93,25 +93,29 @@ export default function Home() {
                 <span className="block">A Public Accountability News Platform.</span>
                 <span className="block font-bold">Against Fabricated News.</span>
               </h1>
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                <button
-                  onClick={() => setVerifyOpen(true)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors whitespace-nowrap"
-                >
-                  Verify News
-                  <span className="text-[10px] font-semibold opacity-70 ml-0.5">$1.95</span>
-                </button>
-                <a
-                  href="/reports"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors whitespace-nowrap"
-                >
-                  Order a Report
-                  <span className="text-[10px] font-semibold opacity-70 ml-0.5">$24.95</span>
-                </a>
-                <span className="text-muted-foreground/30 text-sm px-1">|</span>
-                <a href="/submit" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit a Post</a>
-                <span className="text-muted-foreground/30">|</span>
-                <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
+              <div className="mt-3 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2">
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setVerifyOpen(true)}
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors"
+                  >
+                    Verify News
+                    <span className="text-[10px] font-semibold opacity-70 ml-0.5">$1.95</span>
+                  </button>
+                  <a
+                    href="/reports"
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors"
+                  >
+                    Order a Report
+                    <span className="text-[10px] font-semibold opacity-70 ml-0.5">$24.95</span>
+                  </a>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-muted-foreground/30 text-sm hidden sm:inline px-1">|</span>
+                  <a href="/submit" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit a Post</a>
+                  <span className="text-muted-foreground/30">|</span>
+                  <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
+                </div>
               </div>
             </div>
 

@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Menu, X, CheckCircle } from "lucide-react";
+import { Menu, X, CheckCircle, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
 
@@ -22,6 +22,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [footerOpen, setFooterOpen] = useState<Record<string, boolean>>({});
   const { data: postCount } = usePostsCount();
 
   useEffect(() => {
@@ -171,21 +172,39 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             </div>
             
             <div>
-              <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-4">Platform</h4>
-              <ul className="space-y-3">
-                <li><Link href="/" className="text-white/70 hover:text-secondary transition-colors font-medium">Home Feed</Link></li>
-                <li><Link href="/submit" className="text-white/70 hover:text-secondary transition-colors font-medium">Submit a Post</Link></li>
-                <li><Link href="/store" className="text-white/70 hover:text-secondary transition-colors font-medium">Books & Store</Link></li>
-                <li><Link href="/about" className="text-white/70 hover:text-secondary transition-colors font-medium">About & Mission</Link></li>
-                <li><Link href="/contact" className="text-white/70 hover:text-secondary transition-colors font-medium">Contact Us</Link></li>
+              <button
+                className="w-full flex items-center justify-between text-white font-bold uppercase tracking-widest text-sm py-3 md:py-0 md:mb-4 border-b border-white/10 md:border-none md:cursor-default"
+                onClick={() => setFooterOpen(s => ({ ...s, platform: !s.platform }))}
+                aria-expanded={!!footerOpen.platform}
+              >
+                Platform
+                <ChevronDown
+                  className={`w-4 h-4 md:hidden transition-transform duration-200 ${footerOpen.platform ? "rotate-180" : ""}`}
+                />
+              </button>
+              <ul className={`space-y-4 mt-3 md:mt-0 overflow-hidden transition-all duration-200 ${footerOpen.platform ? "max-h-96" : "max-h-0 md:max-h-96"}`}>
+                <li><Link href="/" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Home Feed</Link></li>
+                <li><Link href="/submit" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Submit a Post</Link></li>
+                <li><Link href="/store" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Books & Store</Link></li>
+                <li><Link href="/about" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">About & Mission</Link></li>
+                <li><Link href="/contact" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Contact Us</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-4">Legal</h4>
-              <ul className="space-y-3">
-                <li><Link href="/privacy" className="text-white/70 hover:text-secondary transition-colors font-medium">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="text-white/70 hover:text-secondary transition-colors font-medium">Terms of Service</Link></li>
+              <button
+                className="w-full flex items-center justify-between text-white font-bold uppercase tracking-widest text-sm py-3 md:py-0 md:mb-4 border-b border-white/10 md:border-none md:cursor-default"
+                onClick={() => setFooterOpen(s => ({ ...s, legal: !s.legal }))}
+                aria-expanded={!!footerOpen.legal}
+              >
+                Legal
+                <ChevronDown
+                  className={`w-4 h-4 md:hidden transition-transform duration-200 ${footerOpen.legal ? "rotate-180" : ""}`}
+                />
+              </button>
+              <ul className={`space-y-4 mt-3 md:mt-0 overflow-hidden transition-all duration-200 ${footerOpen.legal ? "max-h-96" : "max-h-0 md:max-h-96"}`}>
+                <li><Link href="/privacy" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Terms of Service</Link></li>
               </ul>
             </div>
           </div>
