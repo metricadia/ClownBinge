@@ -26,6 +26,28 @@ export const SOURCE_ABBREV: [RegExp, string][] = [
   [/senate\.gov[^;]*/gi,                              "senate.gov"],
   [/congress\.gov[^;]*/gi,                            "congress.gov"],
 
+  // Founding documents / constitutional
+  [/Declaration of Independence[^;/]*/gi,             "Declaration (1776)"],
+  [/14th Amendment[^;/]*/gi,                          "14th Amend."],
+  [/Fourteenth Amendment[^;/]*/gi,                    "14th Amend."],
+  [/Fifth Amendment[^;/]*/gi,                         "5th Amend."],
+  [/First Amendment[^;/]*/gi,                         "1st Amend."],
+  [/Federalist No\.\s*51[^;/]*/gi,                    "Fed. No. 51"],
+  [/Federalist No\.\s*\d+[^;/]*/gi,                   "Federalist Papers"],
+  [/Federalist Papers?[^;/]*/gi,                      "Federalist Papers"],
+  [/Marbury v\. Madison[^;/]*/gi,                     "Marbury v. Madison"],
+  [/Federal Register[^;/]*/gi,                        "Fed. Register"],
+  [/Library of Congress[^;/]*/gi,                     "Lib. of Congress"],
+  [/National Archives[^;/]*/gi,                       "Natl. Archives"],
+  [/Bureau of Justice Statistics[^;/]*/gi,            "BJS"],
+  [/Vera Institute[^;/]*/gi,                          "Vera Inst."],
+  [/Brookings Institution[^;/]*/gi,                   "Brookings"],
+  [/Prison Policy Initiative[^;/]*/gi,                "PPI"],
+  [/SCOTUSblog[^;/]*/gi,                              "SCOTUSblog"],
+  [/U\.S\. Supreme Court[^;/]*/gi,                    "SCOTUS"],
+  [/Supreme Court[^;/]*/gi,                           "SCOTUS"],
+  [/Dominion v\. Fox[^;/]*/gi,                        "Dominion v. Fox"],
+
   // Courts / legal
   [/U\.S\. District Court[^;]*/gi,                    "Fed. Court"],
   [/United States District Court[^;]*/gi,             "Fed. Court"],
@@ -139,12 +161,24 @@ export const SOURCE_ABBREV: [RegExp, string][] = [
 
 export function abbreviateSource(raw: string | null | undefined, prefix = false): string {
   if (!raw) return prefix ? "Source: Verified Public Record" : "Verified Public Record";
-  const segments = raw.split(/[;|]/).map(s => s.trim()).filter(Boolean);
+
+  // Split on any common separator: semicolon, pipe, or slash
+  const segments = raw.split(/[;|/]/).map(s => s.trim()).filter(Boolean);
+
+  // Tile mode: first segment only, hard 38-char cap
+  if (prefix) {
+    let s = segments[0] || raw;
+    for (const [pattern, abbr] of SOURCE_ABBREV) s = s.replace(pattern, abbr);
+    s = s.replace(/\s+/g, " ").trim();
+    if (s.length > 38) s = s.slice(0, 35).trimEnd() + "...";
+    return `Source: ${s}`;
+  }
+
+  // Detail / non-tile: up to 2 segments, abbreviated
   const shortened = segments.slice(0, 2).map(seg => {
     let s = seg;
     for (const [pattern, abbr] of SOURCE_ABBREV) s = s.replace(pattern, abbr);
     return s.replace(/\s+/g, " ").trim();
   });
-  const result = shortened.join(" / ");
-  return prefix ? `Source: ${result}` : result;
+  return shortened.join(" / ");
 }
