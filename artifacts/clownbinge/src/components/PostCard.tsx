@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { Video } from "lucide-react";
 import type { Post } from "@workspace/api-client-react";
 import { VerifiedBadge } from "./VerifiedBadge";
+import { UserSubmittedBadge } from "./UserSubmittedBadge";
 
 export function PostCard({ post }: { post: Post }) {
   const isSelfOwned = post.category === "self_owned";
@@ -48,7 +49,8 @@ export function PostCard({ post }: { post: Post }) {
                 {categoryLabels[post.category] || post.category}
               </span>
             </div>
-            <div className="shrink-0">
+            <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
+              {post.userSubmitted && <UserSubmittedBadge />}
               <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
             </div>
           </div>

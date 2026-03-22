@@ -78,6 +78,16 @@
     box-shadow: 0 4px 12px rgba(255, 0, 153, 0.5);
   }
 
+  .user-submitted-badge {
+    @apply inline-flex items-center gap-1.5 bg-green-600 text-white font-sans font-bold text-[11px] tracking-wider uppercase px-3 py-1.5 rounded-full whitespace-nowrap cursor-pointer transition-all duration-150 ease-out;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.35);
+  }
+
+  .user-submitted-badge:hover {
+    @apply scale-105;
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.5);
+  }
+
   .cb-container {
     @apply w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
   }

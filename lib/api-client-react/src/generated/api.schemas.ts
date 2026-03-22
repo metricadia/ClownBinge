@@ -60,6 +60,7 @@ export interface Post {
   createdAt: string;
   viewCount: number;
   shareCount: number;
+  userSubmitted: boolean;
 }
 
 export interface PostListResponse {

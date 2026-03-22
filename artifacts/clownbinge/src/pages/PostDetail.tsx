@@ -8,6 +8,7 @@ import { BookCTA } from "@/components/BookCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { usePostDetail, useViewTracker } from "@/hooks/use-posts";
 import { ClownCheckModal } from "@/components/ClownCheckModal";
+import { UserSubmittedBadge } from "@/components/UserSubmittedBadge";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { format } from "date-fns";
@@ -246,7 +247,8 @@ export default function PostDetail() {
                 )}
               </div>
             </div>
-            <div className="shrink-0 flex items-center gap-2">
+            <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
+              {post.userSubmitted && <UserSubmittedBadge />}
               <VerifiedBadge
                 source={post.verifiedSource}
                 date={post.dateOfIncident ? format(new Date(post.dateOfIncident), "MMM d, yyyy") : undefined}

@@ -25,6 +25,7 @@ const MOCK_POSTS: Post[] = [
     dateOfIncident: "2023-11-15T00:00:00Z",
     viewCount: 14500,
     shareCount: 2300,
+    userSubmitted: false,
   },
   {
     id: "2",
@@ -43,6 +44,7 @@ const MOCK_POSTS: Post[] = [
     dateOfIncident: "2024-01-22T00:00:00Z",
     viewCount: 45200,
     shareCount: 8900,
+    userSubmitted: false,
   },
   {
     id: "3",
@@ -60,6 +62,7 @@ const MOCK_POSTS: Post[] = [
     dateOfIncident: "2024-02-10T00:00:00Z",
     viewCount: 8200,
     shareCount: 450,
+    userSubmitted: true,
   }
 ];
 
