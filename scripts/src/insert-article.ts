@@ -58,7 +58,7 @@ async function main() {
     process.exit(1);
   }
 
-  const required = ["title", "slug", "teaser", "body", "category", "subjectName", "subjectTitle", "subjectParty", "verifiedSource"];
+  const required = ["title", "slug", "teaser", "body", "category", "subjectName", "subjectTitle", "verifiedSource"];
   const missing = required.filter(k => !(article as any)[k]);
   if (missing.length > 0) {
     console.error(`Missing required fields: ${missing.join(", ")}`);
