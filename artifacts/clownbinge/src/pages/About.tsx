@@ -1,75 +1,119 @@
 import { Layout } from "@/components/Layout";
-import { ShieldAlert, FileText, Scale } from "lucide-react";
 
 export default function About() {
   return (
     <Layout>
-      {/* Hero */}
-      <div className="w-full h-[40vh] sm:h-[50vh] relative bg-black flex items-center justify-center overflow-hidden">
-        <img 
-          src={`${import.meta.env.BASE_URL}images/about-hero.png`} 
-          alt="ClownBinge Documentation" 
-          className="absolute inset-0 w-full h-full object-cover opacity-50"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-        <div className="relative z-10 text-center px-4">
-          <h1 className="font-sans font-bold text-5xl sm:text-7xl text-white mb-4 tracking-tight">
+      <div className="max-w-3xl mx-auto px-4 py-12">
+        <div className="mb-10">
+          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">About ClownBinge</p>
+          <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-4">
             The Mission.
           </h1>
-          <p className="text-xl sm:text-2xl text-secondary font-mono tracking-widest uppercase">
-            Documenting the hypocrisy.
+          <p className="text-muted-foreground text-sm">
+            Laughphoria Informatics &mdash; ClownBinge.com &mdash; Updated March 2026
           </p>
+          <div className="h-1 w-full bg-[#F5C518] rounded-full mt-6" />
         </div>
-      </div>
 
-      <div className="cb-container py-16 sm:py-24 max-w-4xl mx-auto">
-        <div className="prose prose-lg sm:prose-xl text-foreground max-w-none prose-headings:font-display prose-headings:font-extrabold prose-headings:text-header prose-p:leading-relaxed">
-          
-          <p className="text-2xl font-medium leading-relaxed border-l-4 border-primary pl-6 mb-12 text-header">
-            ClownBinge is a verified accountability journalism and political satire platform. We operate on a simple premise: public figures should be held to the standard of their own documented words and actions.
+        <div className="prose prose-slate max-w-none cb-article-body">
+
+          <h2>Who We Are</h2>
+          <p>
+            ClownBinge is a public accountability news platform operated by Laughphoria Informatics, a
+            Wyoming corporation. We document real, verifiable incidents in which elected officials,
+            religious leaders, and other figures entrusted with public confidence have acted in direct
+            contradiction to their own documented words, votes, and stated values.
+          </p>
+          <p>
+            We are entirely independent. We are not funded by PACs, dark money groups, political
+            parties, or billionaires. Our revenue comes directly from our readers through subscriptions,
+            verification services, and reports. This structure ensures our editorial independence
+            remains absolute and unconditional.
           </p>
 
-          <div className="grid sm:grid-cols-3 gap-8 my-16 not-prose">
-            <div className="bg-muted p-6 rounded-2xl border border-border">
-              <FileText className="w-10 h-10 text-primary mb-4" />
-              <h3 className="font-bold text-lg mb-2">Verified Sources</h3>
-              <p className="text-sm text-muted-foreground">Every claim traces to a public record, C-SPAN archive, or verified news outlet.</p>
-            </div>
-            <div className="bg-muted p-6 rounded-2xl border border-border">
-              <ShieldAlert className="w-10 h-10 text-primary mb-4" />
-              <h3 className="font-bold text-lg mb-2">No Fabrications</h3>
-              <p className="text-sm text-muted-foreground">We document reality. The truth is vastly more compelling than fiction.</p>
-            </div>
-            <div className="bg-muted p-6 rounded-2xl border border-border">
-              <Scale className="w-10 h-10 text-primary mb-4" />
-              <h3 className="font-bold text-lg mb-2">Public Figures Only</h3>
-              <p className="text-sm text-muted-foreground">We never target private individuals. We focus exclusively on those wielding public power.</p>
-            </div>
-          </div>
-
-          <h2>Editorial Standards</h2>
+          <h2>The Premise</h2>
           <p>
-            The internet is flooded with misinformation, deep fakes, and bad-faith arguments. We cut through the noise by relying entirely on the <strong className="bg-pink-verified/10 text-verified px-1">receipts</strong>. 
+            Public figures should be held to the standard of their own documented words and actions.
+            Nothing more. Nothing less. When a senator votes for a bill he publicly claimed to oppose,
+            that is not an opinion. It is a fact. When a pastor preaches against the behavior he is
+            privately engaged in, that is not commentary. It is a record. ClownBinge publishes the record.
+          </p>
+          <p>
+            We operate on the conviction that the public record belongs to the public, and that
+            accountability journalism does not require fabrication, speculation, or partisan framing.
+            Reality, properly documented, is damning enough.
+          </p>
+
+          <h2>What We Cover</h2>
+          <p>
+            ClownBinge covers verified incidents of hypocrisy, self-contradiction, and betrayal of
+            public trust by individuals in positions of power or public confidence. Our coverage
+            focuses on five categories:
           </p>
           <ul>
-            <li><strong>Primary Sources First:</strong> We prefer court documents, voting records, and uncut video footage over punditry.</li>
-            <li><strong>Context Matters:</strong> We don't deceptively edit. If a public official self-owns, we show the full context that proves they meant exactly what they said.</li>
-            <li><strong>Satirical Frame:</strong> Our tone is sharp, mocking, and forensic. We treat our audience as intelligent adults capable of understanding complex hypocrisy.</li>
+            <li><strong>Self-Owned:</strong> Public figures caught directly contradicting their own documented statements or votes.</li>
+            <li><strong>Clown Electeds:</strong> Elected officials whose conduct in office contradicts their public platform.</li>
+            <li><strong>Religious:</strong> Religious leaders whose private conduct directly contradicts their public moral teachings.</li>
+            <li><strong>Political:</strong> Documented political hypocrisy grounded in voting records, financial disclosures, and public statements.</li>
+            <li><strong>Anti-Racist Hero:</strong> Individuals who stood for accountability and faced institutional retaliation for it.</li>
           </ul>
-
-          <h2>Corporate Structure & Protection</h2>
-          <div className="bg-header text-white p-8 rounded-2xl my-8 not-prose">
-            <h3 className="font-display font-bold text-2xl mb-4 text-white">ClownBinge Wyoming Corp</h3>
-            <p className="text-white/80 mb-6">
-              ClownBinge operates under the strongest First Amendment protections available in the United States. Our legal architecture is designed specifically to protect independent media from frivolous SLAPP suits and bad-faith legal bullying.
-            </p>
-            <div className="bg-black/20 p-4 rounded-lg font-mono text-sm text-white/70">
-              New York Times Co. v. Sullivan, 376 U.S. 254 (1964) establishes the "actual malice" standard for public figures. Because we only publish verified public records, establishing actual malice against ClownBinge is legally impossible.
-            </div>
-          </div>
-
           <p>
-            We are entirely independent. We are not funded by PACs, dark money groups, or billionaires. We are funded directly by our readers through book sales and our newsletter. This ensures our editorial independence remains absolute.
+            We do not cover private individuals. We do not publish unverified tips, anonymous
+            allegations, or content that cannot be traced to a primary source. Every record published
+            on this platform is sourced before it is written.
+          </p>
+
+          <h2>Verification Standards</h2>
+          <p>
+            Every claim published on ClownBinge is verified against at least one of the following
+            source tiers before publication:
+          </p>
+          <ul>
+            <li><strong>Tier One:</strong> Official government records, court documents, congressional voting records, federal agency publications, and FEC filings.</li>
+            <li><strong>Tier Two:</strong> Peer-reviewed academic research and nonpartisan research institutions with documented, publicly available methodology.</li>
+            <li><strong>Tier Three:</strong> Recognized news organizations with published editorial standards, a documented corrections policy, and identifiable editorial leadership.</li>
+          </ul>
+          <p>
+            Primary sources are linked directly within article text. The full source citation appears
+            in the Verified References section at the conclusion of every article. Readers can verify
+            every factual claim independently without leaving the page.
+          </p>
+
+          <h2>Legal Architecture</h2>
+          <p>
+            ClownBinge operates under the strongest First Amendment protections available in the United
+            States. Our legal architecture is designed specifically to protect independent media from
+            frivolous SLAPP suits and bad-faith legal pressure.
+          </p>
+          <p>
+            <em>New York Times Co. v. Sullivan</em>, 376 U.S. 254 (1964) establishes the actual malice
+            standard for public figures. Because ClownBinge publishes only verified primary source
+            documentation, establishing actual malice against this platform is, by design, legally
+            impossible. We do not speculate. We do not fabricate. We cite.
+          </p>
+
+          <h2>Corrections Policy</h2>
+          <p>
+            If a factual error is identified in any published record, a correction will be appended
+            to the article within 48 hours of confirmation. A public corrections log documents the
+            nature of every error and the corrected information. Corrections are never deleted or
+            obscured. The original text and the correction are both preserved in the public record.
+            Submissions identifying potential errors may be submitted through the platform's
+            contact form.
+          </p>
+
+          <h2>Contact</h2>
+          <p>
+            ClownBinge is operated by Laughphoria Informatics. For press inquiries, corrections,
+            or tip submissions, use the contact form linked in the site navigation. We respond to
+            all credible error reports within 48 hours.
+          </p>
+
+          <div className="h-1 w-full bg-[#F5C518] rounded-full my-10" />
+
+          <p className="text-sm text-muted-foreground">
+            Laughphoria Informatics &mdash; Wyoming Corporation &mdash; ClownBinge.com<br />
+            <em>Verified. Primary Sources. For The People.</em>
           </p>
 
         </div>
