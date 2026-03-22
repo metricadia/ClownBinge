@@ -11,7 +11,7 @@ export default function Ethics() {
             Editorial Standards, Ethics, and Analytical Methodology
           </h1>
           <p className="text-muted-foreground text-sm">
-            ClownBinge Primary Source Analytics, LLC &mdash; ClownBinge.com &mdash; Updated March 2026
+            Primary Source Analytics, LLC &mdash; ClownBinge.com &mdash; Updated March 2026
           </p>
           <div className="h-1 w-full bg-[#F5C518] rounded-full mt-6" />
         </div>
@@ -26,7 +26,7 @@ export default function Ethics() {
             misinformation constitutes one of the most consequential threats to democratic governance in the
             twenty-first century. This policy document outlines the editorial ethics, sourcing standards, and
             verification methodology that govern ClownBinge, a public accountability platform operated by
-            ClownBinge Primary Source Analytics, LLC. Drawing on peer-reviewed research in political communication, media
+            Primary Source Analytics, LLC. Drawing on peer-reviewed research in political communication, media
             studies, and democratic theory, this document establishes the empirical basis for ClownBinge's
             mission and articulates the standards to which it holds itself and the public figures it covers.
           </p>

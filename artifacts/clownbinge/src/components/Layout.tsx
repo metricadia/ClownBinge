@@ -167,7 +167,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 © {new Date().getFullYear()} ClownBinge
               </div>
               <div className="text-xs text-white/40 mt-1 leading-relaxed">
-                ClownBinge Primary Source Analytics, LLC
+                Primary Source Analytics, LLC
               </div>
             </div>
             
