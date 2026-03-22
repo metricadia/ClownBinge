@@ -11,6 +11,7 @@ const CATEGORIES = [
   { id: "religious", label: "Religious" },
   { id: "cultural", label: "Cultural" },
   { id: "anti_racist_hero", label: "Anti-Racist Hero" },
+  { id: "cb_exclusive", label: "CB Exclusive" },
 ];
 
 export function Layout({ children, onCategoryChange, activeCategory }: { 

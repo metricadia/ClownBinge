@@ -27,6 +27,7 @@ export const PostCategory = {
   religious: "religious",
   cultural: "cultural",
   anti_racist_hero: "anti_racist_hero",
+  cb_exclusive: "cb_exclusive",
 } as const;
 
 export type PostStatus = (typeof PostStatus)[keyof typeof PostStatus];
@@ -138,4 +139,5 @@ export const ListPostsCategory = {
   religious: "religious",
   cultural: "cultural",
   anti_racist_hero: "anti_racist_hero",
+  cb_exclusive: "cb_exclusive",
 } as const;

@@ -5,11 +5,13 @@ import type { Post } from "@workspace/api-client-react";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { UserSubmittedBadge } from "./UserSubmittedBadge";
 import { SelfOwnScoreBadge } from "./SelfOwnScoreBadge";
+import { CbExclusiveBadge } from "./CbExclusiveBadge";
 import { abbreviateSource } from "@/lib/source-abbrev";
 
 export function PostCard({ post }: { post: Post }) {
   const isSelfOwned = post.category === "self_owned";
   const isAntiRacist = post.category === "anti_racist_hero";
+  const isCbExclusive = post.category === "cb_exclusive";
   const isVideo = post.hasVideo || post.category === "clown_electeds";
   
   const categoryLabels: Record<string, string> = {
@@ -18,12 +20,15 @@ export function PostCard({ post }: { post: Post }) {
     clown_electeds: "Clown Electeds",
     religious: "Religious",
     cultural: "Cultural",
-    anti_racist_hero: "Anti-Racist Hero"
+    anti_racist_hero: "Anti-Racist Hero",
+    cb_exclusive: "CB Exclusive"
   };
 
   // Base card styles depend on category
   const cardClasses = isSelfOwned
     ? "bg-white text-foreground border-primary shadow-lg shadow-primary/20"
+    : isCbExclusive
+    ? "bg-white text-foreground border-green-600 shadow-lg shadow-green-600/20"
     : "bg-white text-foreground border-border shadow-sm hover:shadow-md";
 
   const textClasses = "text-dark-text";
@@ -45,9 +50,13 @@ export function PostCard({ post }: { post: Post }) {
               <span className="font-mono text-sm font-semibold tracking-tight text-primary">
                 {post.caseNumber}
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm border border-primary/20 text-primary bg-primary/5">
-                {categoryLabels[post.category] || post.category}
-              </span>
+              {isCbExclusive ? (
+                <CbExclusiveBadge />
+              ) : (
+                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm border border-primary/20 text-primary bg-primary/5">
+                  {categoryLabels[post.category] || post.category}
+                </span>
+              )}
             </div>
             <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
               {post.userSubmitted && <UserSubmittedBadge />}
@@ -91,7 +100,7 @@ export function PostCard({ post }: { post: Post }) {
             <div className={`text-xs font-medium truncate min-w-0 ${mutedTextClasses}`}>
               {abbreviateSource(post.verifiedSource, true)}
             </div>
-            <div className={`text-xs font-bold uppercase tracking-wider ${isSelfOwned ? 'text-secondary' : 'text-primary'} group-hover:translate-x-1 transition-transform`}>
+            <div className={`text-xs font-bold uppercase tracking-wider ${isSelfOwned ? 'text-secondary' : isCbExclusive ? 'text-green-600' : 'text-primary'} group-hover:translate-x-1 transition-transform`}>
               Read More &gt;
             </div>
           </div>

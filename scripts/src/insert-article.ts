@@ -7,11 +7,11 @@ interface ArticleInput {
   teaser: string;
   body: string;
   category: string;
-  subjectName: string;
-  subjectTitle: string;
-  subjectParty: string;
+  subjectName: string | null;
+  subjectTitle: string | null;
+  subjectParty: string | null;
   verifiedSource: string;
-  selfOwnScore: number;
+  selfOwnScore: number | null;
   tags: string[];
   dateOfIncident: string;
   publishedAt?: string;
@@ -58,7 +58,9 @@ async function main() {
     process.exit(1);
   }
 
-  const required = ["title", "slug", "teaser", "body", "category", "subjectName", "subjectTitle", "verifiedSource"];
+  const alwaysRequired = ["title", "slug", "teaser", "body", "category", "verifiedSource"];
+  const subjectRequired = article.category !== "cb_exclusive" ? ["subjectName", "subjectTitle"] : [];
+  const required = [...alwaysRequired, ...subjectRequired];
   const missing = required.filter(k => !(article as any)[k]);
   if (missing.length > 0) {
     console.error(`Missing required fields: ${missing.join(", ")}`);

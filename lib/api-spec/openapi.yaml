@@ -42,7 +42,7 @@ paths:
           required: false
           schema:
             type: string
-            enum: [political, self_owned, clown_electeds, religious, cultural, anti_racist_hero]
+            enum: [political, self_owned, clown_electeds, religious, cultural, anti_racist_hero, cb_exclusive]
         - name: limit
           in: query
           required: false
@@ -228,7 +228,7 @@ components:
           type: string
         category:
           type: string
-          enum: [political, self_owned, clown_electeds, religious, cultural, anti_racist_hero]
+          enum: [political, self_owned, clown_electeds, religious, cultural, anti_racist_hero, cb_exclusive]
         subjectName:
           type: string
           nullable: true
