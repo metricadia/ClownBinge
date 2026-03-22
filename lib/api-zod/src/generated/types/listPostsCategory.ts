@@ -16,4 +16,5 @@ export const ListPostsCategory = {
   religious: "religious",
   cultural: "cultural",
   anti_racist_hero: "anti_racist_hero",
+  cb_exclusive: "cb_exclusive",
 } as const;

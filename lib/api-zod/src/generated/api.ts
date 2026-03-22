@@ -29,6 +29,7 @@ export const ListPostsQueryParams = zod.object({
       "religious",
       "cultural",
       "anti_racist_hero",
+      "cb_exclusive",
     ])
     .optional(),
   limit: zod.coerce.number().default(listPostsQueryLimitDefault),
@@ -51,6 +52,7 @@ export const ListPostsResponse = zod.object({
         "religious",
         "cultural",
         "anti_racist_hero",
+        "cb_exclusive",
       ]),
       subjectName: zod.string().nullish(),
       subjectTitle: zod.string().nullish(),
@@ -95,6 +97,7 @@ export const GetPostResponse = zod.object({
     "religious",
     "cultural",
     "anti_racist_hero",
+    "cb_exclusive",
   ]),
   subjectName: zod.string().nullish(),
   subjectTitle: zod.string().nullish(),
