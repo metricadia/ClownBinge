@@ -40,6 +40,16 @@ function removeJsonLd(id: string) {
   document.querySelector(`script[data-ld="${id}"]`)?.remove();
 }
 
+const CATEGORY_LABELS: Record<string, string> = {
+  political:        "Political",
+  self_owned:       "Self-Owned",
+  clown_electeds:   "Clown Electeds",
+  religious:        "Religious",
+  cultural:         "Cultural",
+  anti_racist_hero: "Anti-Racist Hero",
+  cb_exclusive:     "CB Exclusive",
+};
+
 export function useArticleSeoHead(post: Post | null | undefined) {
   useEffect(() => {
     if (!post) return;
@@ -47,6 +57,9 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     const canonical = `${DOMAIN}/case/${post.slug}`;
     const ogImage = (post as any).videoThumbnail ?? `${DOMAIN}/opengraph.jpg`;
     const description = post.teaser ?? "";
+    const categoryLabel = CATEGORY_LABELS[post.category] ?? post.category;
+    const isSelfOwned = post.category === "self_owned";
+    const isHero = post.category === "anti_racist_hero";
 
     document.title = `${post.title} | ClownBinge`;
 
@@ -66,14 +79,51 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     setMeta("twitter:description", description);
     setMeta("twitter:image",       ogImage);
 
-    setJsonLd("article", {
+    // Build subject Person block (reused in article and ClaimReview)
+    let subjectPerson: Record<string, unknown> | null = null;
+    if (post.subjectName) {
+      subjectPerson = {
+        "@type": "Person",
+        "name": post.subjectName,
+      };
+      if (post.subjectTitle) subjectPerson.jobTitle = post.subjectTitle;
+      if (post.subjectParty && post.subjectParty !== "None") {
+        subjectPerson.memberOf = {
+          "@type": "Organization",
+          "name": `${post.subjectParty} Party`
+        };
+      }
+    }
+
+    // Additional properties for self-own score
+    const additionalProps: Record<string, unknown>[] = [];
+    if (post.selfOwnScore != null) {
+      additionalProps.push({
+        "@type": "PropertyValue",
+        "name": "SelfOwnScore",
+        "description": "ClownBinge Self-Own severity rating (1-10)",
+        "value": post.selfOwnScore,
+        "minValue": 1,
+        "maxValue": 10
+      });
+    }
+    additionalProps.push({
+      "@type": "PropertyValue",
+      "name": "VerificationStatus",
+      "value": "Verified — Primary Sources"
+    });
+
+    // NewsArticle schema
+    const articleSchema: Record<string, unknown> = {
       "@context": "https://schema.org",
       "@type": "NewsArticle",
       "headline": post.title,
       "description": description,
       "datePublished": post.publishedAt ?? post.createdAt,
       "dateModified":  post.publishedAt ?? post.createdAt,
-      "mainEntityOfPage": canonical,
+      "mainEntityOfPage": { "@type": "WebPage", "@id": canonical },
+      "url": canonical,
+      "articleSection": categoryLabel,
       "keywords": Array.isArray(post.tags) ? post.tags.join(", ") : "",
       "author": {
         "@type": "Organization",
@@ -83,33 +133,83 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       "publisher": {
         "@type": "Organization",
         "name": "ClownBinge",
+        "url": DOMAIN,
         "logo": {
           "@type": "ImageObject",
           "url": `${DOMAIN}/logo.png`
         }
-      }
-    });
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "ClownBinge",
+        "url": DOMAIN
+      },
+      "additionalProperty": additionalProps
+    };
 
+    if (subjectPerson) articleSchema.about = subjectPerson;
+    if (post.dateOfIncident) articleSchema.temporalCoverage = post.dateOfIncident;
+
+    setJsonLd("article", articleSchema);
+
+    // Subject standalone Person block
+    if (subjectPerson) {
+      setJsonLd("subject", { "@context": "https://schema.org", ...subjectPerson });
+    } else {
+      removeJsonLd("subject");
+    }
+
+    // ClaimReview — Google rich result for fact-check / accountability journalism
+    // Only emit for articles with a named subject (not CB Exclusive editorials)
     if (post.subjectName) {
-      const person: Record<string, unknown> = {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": post.subjectName,
-      };
-      if (post.subjectTitle) person.jobTitle = post.subjectTitle;
-      if (post.subjectParty && post.subjectParty !== "None") {
-        person.memberOf = {
-          "@type": "Organization",
-          "name": `${post.subjectParty} Party`
-        };
+      let ratingValue: number;
+      let alternateName: string;
+      if (isHero) {
+        ratingValue = 5;
+        alternateName = "Anti-Racist Hero — Verified";
+      } else if (isSelfOwned && post.selfOwnScore != null) {
+        ratingValue = Math.min(5, Math.round(post.selfOwnScore / 2));
+        alternateName = `Self-Owned — Severity ${post.selfOwnScore}/10`;
+      } else {
+        ratingValue = 4;
+        alternateName = "Verified — Documented";
       }
-      setJsonLd("subject", person);
+
+      setJsonLd("claimreview", {
+        "@context": "https://schema.org",
+        "@type": "ClaimReview",
+        "url": canonical,
+        "claimReviewed": post.title,
+        "datePublished": post.publishedAt ?? post.createdAt,
+        "author": {
+          "@type": "Organization",
+          "name": "ClownBinge",
+          "url": DOMAIN,
+          "publishingPrinciples": `${DOMAIN}/ethics`
+        },
+        "itemReviewed": {
+          "@type": "Claim",
+          "author": subjectPerson,
+          "datePublished": post.dateOfIncident ?? (post.publishedAt ?? post.createdAt),
+          "name": post.title
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": ratingValue,
+          "bestRating": 5,
+          "worstRating": 1,
+          "alternateName": alternateName
+        }
+      });
+    } else {
+      removeJsonLd("claimreview");
     }
 
     return () => {
       document.title = SITE_TITLE;
       removeJsonLd("article");
       removeJsonLd("subject");
+      removeJsonLd("claimreview");
     };
   }, [post?.slug]);
 }
