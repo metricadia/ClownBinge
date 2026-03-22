@@ -368,7 +368,7 @@ export default function PostDetail() {
           <details className="mt-8 group border border-border rounded-lg overflow-hidden">
             <summary className="flex items-center justify-between gap-3 px-5 py-3.5 cursor-pointer select-none list-none bg-muted hover:bg-muted/80 transition-colors">
               <span className="text-xs font-bold uppercase tracking-widest text-header">
-                Source Articulations (In-Full)
+                Primary Sources
               </span>
               <span className="text-muted-foreground text-xs font-mono group-open:rotate-180 transition-transform duration-200 inline-block">
                 ▼
