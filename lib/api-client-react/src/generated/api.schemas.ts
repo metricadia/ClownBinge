@@ -125,6 +125,7 @@ export interface SubscribeRequest {
 
 export type ListPostsParams = {
   category?: ListPostsCategory;
+  tag?: string;
   limit?: number;
   offset?: number;
 };

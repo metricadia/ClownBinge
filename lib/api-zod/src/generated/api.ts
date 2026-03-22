@@ -32,6 +32,7 @@ export const ListPostsQueryParams = zod.object({
       "cb_exclusive",
     ])
     .optional(),
+  tag: zod.string().optional(),
   limit: zod.coerce.number().default(listPostsQueryLimitDefault),
   offset: zod.coerce.number().default(listPostsQueryOffsetDefault),
 });

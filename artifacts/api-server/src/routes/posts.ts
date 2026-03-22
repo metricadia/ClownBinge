@@ -30,13 +30,16 @@ router.get("/posts", async (req, res) => {
       return;
     }
 
-    const { category, limit = 20, offset = 0 } = query.data;
+    const { category, tag, limit = 20, offset = 0 } = query.data;
 
     const conditions = [eq(postsTable.status, "published")];
-    if (category) {
+    if (tag) {
+      // Tag archive: show all matching posts, no category suppression
+      conditions.push(sql`${postsTable.tags} @> ARRAY[${tag}]::text[]`);
+    } else if (category) {
       conditions.push(eq(postsTable.category, category as any));
     } else {
-      // Main feed: suppress religious articles unless selfOwnScore = 10 (only perfect-score stories)
+      // Main feed: suppress religious articles unless selfOwnScore >= 10
       conditions.push(
         or(
           ne(postsTable.category, "religious"),
