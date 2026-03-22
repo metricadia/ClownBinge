@@ -51,7 +51,7 @@ export function PostCard({ post }: { post: Post }) {
             </div>
             <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
               {post.userSubmitted && <UserSubmittedBadge />}
-              {isSelfOwned && post.selfOwnScore != null && <SelfOwnScoreBadge score={post.selfOwnScore} />}
+              {post.selfOwnScore != null && <SelfOwnScoreBadge score={post.selfOwnScore} />}
               <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
             </div>
           </div>

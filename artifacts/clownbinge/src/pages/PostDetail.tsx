@@ -10,6 +10,7 @@ import { usePostDetail, useViewTracker } from "@/hooks/use-posts";
 import { ClownCheckModal } from "@/components/ClownCheckModal";
 import { UserSubmittedBadge } from "@/components/UserSubmittedBadge";
 import { SelfOwnScoreBadge } from "@/components/SelfOwnScoreBadge";
+import { useArticleSeoHead } from "@/hooks/use-seo-head";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { format } from "date-fns";
@@ -80,6 +81,7 @@ export default function PostDetail() {
   const slug = params?.slug || "";
 
   const { data: post, isLoading, error } = usePostDetail(slug);
+  useArticleSeoHead(post);
   const { trackView } = useViewTracker(slug);
   const bodyRef = useRef<HTMLDivElement>(null);
   const hasTrackedView = useRef(false);
@@ -251,7 +253,7 @@ export default function PostDetail() {
             </div>
             <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
               {post.userSubmitted && <UserSubmittedBadge />}
-              {post.category === "self_owned" && post.selfOwnScore != null && <SelfOwnScoreBadge score={post.selfOwnScore} />}
+              {post.selfOwnScore != null && <SelfOwnScoreBadge score={post.selfOwnScore} />}
               <VerifiedBadge
                 source={post.verifiedSource}
                 date={post.dateOfIncident ? format(new Date(post.dateOfIncident), "MMM d, yyyy") : undefined}
@@ -369,6 +371,20 @@ export default function PostDetail() {
               }
             </ol>
           </section>
+        )}
+
+        {Array.isArray(post.tags) && post.tags.length > 0 && (
+          <div className="mt-10 flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <Link
+                key={tag}
+                href={`/tags/${encodeURIComponent(tag)}`}
+                className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-muted text-muted-foreground border border-border hover:border-primary hover:text-primary transition-colors"
+              >
+                #{tag}
+              </Link>
+            ))}
+          </div>
         )}
 
         <div className="mt-14">

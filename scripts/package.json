@@ -8,6 +8,7 @@
     "seed": "tsx ./src/seed.ts",
     "insert": "tsx ./src/insert-article.ts",
     "generate": "tsx ./src/generate-articles.ts",
+    "sitemap": "tsx ./src/generate-sitemap.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

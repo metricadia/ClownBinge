@@ -14,6 +14,7 @@ import Terms from "@/pages/Terms";
 import Ethics from "@/pages/Ethics";
 import VerifyNews from "@/pages/VerifyNews";
 import ComprehensiveReport from "@/pages/ComprehensiveReport";
+import TagIndex from "@/pages/TagIndex";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient({
@@ -38,6 +39,7 @@ function Router() {
       <Route path="/ethics" component={Ethics} />
       <Route path="/clowncheck" component={VerifyNews} />
       <Route path="/reports" component={ComprehensiveReport} />
+      <Route path="/tags/:tag" component={TagIndex} />
       <Route component={NotFound} />
     </Switch>
   );
