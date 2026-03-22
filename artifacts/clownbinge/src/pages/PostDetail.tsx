@@ -363,8 +363,8 @@ export default function PostDetail() {
           </button>
         </div>
 
-        {/* Source Articulations (In-Full) */}
-        {post.verifiedSource && (
+        {/* Primary Sources */}
+        {(references.length > 0 || post.verifiedSource) && (
           <details className="mt-8 group border border-border rounded-lg overflow-hidden">
             <summary className="flex items-center justify-between gap-3 px-5 py-3.5 cursor-pointer select-none list-none bg-muted hover:bg-muted/80 transition-colors">
               <span className="text-xs font-bold uppercase tracking-widest text-header">
@@ -374,14 +374,32 @@ export default function PostDetail() {
                 ▼
               </span>
             </summary>
-            <div className="px-5 py-4 text-sm text-foreground/75 leading-relaxed space-y-1.5">
-              {post.verifiedSource.split(/[;/|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => (
-                <p key={i} className="m-0">
-                  <span className="font-mono text-xs text-[#F5C518] mr-2 select-none">{i + 1}.</span>
-                  {entry}
-                </p>
-              ))}
-            </div>
+            <ol className="px-5 py-4 space-y-4 list-none m-0">
+              {references.length > 0
+                ? references.map((ref, i) => (
+                    <li key={ref.href} className="flex gap-3">
+                      <span className="font-mono font-bold text-xs text-[#F5C518] mt-0.5 shrink-0 w-5 text-right select-none">{i + 1}.</span>
+                      <div className="min-w-0">
+                        <a
+                          href={ref.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-semibold text-sm text-[#1A3A8F] hover:underline leading-snug block mb-0.5"
+                        >
+                          {ref.title}
+                        </a>
+                        <span className="text-xs text-foreground/40 font-mono break-all">{ref.href}</span>
+                      </div>
+                    </li>
+                  ))
+                : post.verifiedSource!.split(/[;/|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span className="font-mono font-bold text-xs text-[#F5C518] mt-0.5 shrink-0 w-5 text-right select-none">{i + 1}.</span>
+                      <span className="text-sm text-foreground/75">{entry}</span>
+                    </li>
+                  ))
+              }
+            </ol>
           </details>
         )}
 
