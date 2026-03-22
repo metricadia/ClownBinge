@@ -234,7 +234,7 @@ export default function PostDetail() {
         <div className="cb-container py-24 max-w-2xl mx-auto text-center">
           <div className="bg-red-50 border border-red-200 rounded-2xl p-10">
             <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-6" />
-            <h1 className="font-display font-extrabold text-3xl text-red-900 mb-4">Case Not Found</h1>
+            <h1 className="font-sans font-bold text-3xl text-red-900 mb-4">Case Not Found</h1>
             <p className="text-red-700 mb-8">
               Either this URL is wrong, or the politicians finally figured out how to delete the internet. (Probably the former.)
             </p>
@@ -301,7 +301,7 @@ export default function PostDetail() {
           </div>
           <div className="border-b-2 border-border mb-4" />
 
-          <h1 className={`font-sans font-bold text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight mb-5 ${isSelfOwned ? "text-primary" : "text-header"}`}>
+          <h1 className={`font-sans font-bold text-xl sm:text-2xl lg:text-3xl leading-tight tracking-tight mb-5 ${isSelfOwned ? "text-primary" : "text-header"}`}>
             {post.title}
           </h1>
 

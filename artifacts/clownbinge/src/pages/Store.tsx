@@ -10,7 +10,7 @@ export default function Store() {
         <div className="cb-container relative z-10">
           <div className="max-w-2xl">
             <span className="font-mono text-secondary font-bold tracking-widest uppercase mb-4 block">ClownBinge Press</span>
-            <h1 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl mb-6 leading-tight">
+            <h1 className="font-sans font-bold text-4xl sm:text-5xl lg:text-6xl mb-6 leading-tight">
               The Complete Archives. In Print.
             </h1>
             <p className="text-xl text-white/80 font-medium leading-relaxed">

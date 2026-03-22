@@ -6,7 +6,7 @@ export default function Ethics() {
       <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="mb-10">
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Editorial Standards</p>
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-header leading-tight mb-4">
+          <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-4">
             Our Ethics Policy
           </h1>
           <p className="text-muted-foreground text-sm">

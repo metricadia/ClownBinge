@@ -7,7 +7,7 @@ export default function Contact() {
       <div className="cb-container py-16 sm:py-24">
         
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h1 className="font-display font-extrabold text-4xl sm:text-5xl text-header mb-6 tracking-tight">
+          <h1 className="font-sans font-bold text-4xl sm:text-5xl text-header mb-6 tracking-tight">
             Got Receipts?
           </h1>
           <p className="text-xl text-muted-foreground font-medium">

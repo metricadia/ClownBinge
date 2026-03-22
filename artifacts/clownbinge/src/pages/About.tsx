@@ -13,7 +13,7 @@ export default function About() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         <div className="relative z-10 text-center px-4">
-          <h1 className="font-display font-extrabold text-5xl sm:text-7xl text-white mb-4 tracking-tight">
+          <h1 className="font-sans font-bold text-5xl sm:text-7xl text-white mb-4 tracking-tight">
             The Mission.
           </h1>
           <p className="text-xl sm:text-2xl text-secondary font-mono tracking-widest uppercase">

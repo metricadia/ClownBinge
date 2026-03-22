@@ -9,7 +9,7 @@ export default function VerifyNews() {
         {/* Header */}
         <div className="mb-10">
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">ClownBinge Verification</p>
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-header leading-tight mb-4">
+          <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-4">
             Verify News.<br />
             <span style={{ color: "#F5C518" }} className="font-normal">Instantly.</span>
           </h1>
