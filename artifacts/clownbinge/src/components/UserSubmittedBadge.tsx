@@ -46,7 +46,7 @@ export function UserSubmittedBadge() {
           </div>
 
           <p className="text-xs text-muted-foreground mt-4 leading-relaxed">
-            Want to submit a tip? Use the Submit A Clown form. All submissions are reviewed. We verify aggressively before we publish anything.
+            Want to submit a post? Use the Submit a Post form. All submissions are reviewed. We verify aggressively before we publish anything.
           </p>
 
           <div className="mt-4">

@@ -98,7 +98,7 @@ export default function Home() {
                 <span className="text-muted-foreground/40">|</span>
                 <a href="/reports" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Order Comprehensive Report</a>
                 <span className="text-muted-foreground/40">|</span>
-                <a href="/submit" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Submit A Clown</a>
+                <a href="/submit" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Submit a Post</a>
                 <span className="text-muted-foreground/40">|</span>
                 <a href="/ethics" className="font-semibold hover:underline" style={{ color: "#B8860B" }}>Our Ethics Policy</a>
               </p>

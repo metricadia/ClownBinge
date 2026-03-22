@@ -56,7 +56,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/' ? 'text-white' : 'text-white/70'}`}>
               Home
             </Link>
@@ -68,6 +68,9 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             </Link>
             <Link href="/contact" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/contact' ? 'text-white' : 'text-white/70'}`}>
               Contact
+            </Link>
+            <Link href="/submit" className={`text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full transition-colors ${location === '/submit' ? 'bg-secondary text-gray-900' : 'bg-secondary/90 text-gray-900 hover:bg-secondary'}`}>
+              Submit a Post
             </Link>
           </nav>
 
@@ -116,6 +119,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/about" className="text-2xl font-bold text-white uppercase tracking-widest">About</Link>
             <Link href="/store" className="text-2xl font-bold text-secondary uppercase tracking-widest">Books</Link>
             <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Contact</Link>
+            <Link href="/submit" className="text-2xl font-bold bg-secondary text-gray-900 uppercase tracking-widest px-8 py-3 rounded-full">Submit a Post</Link>
           </nav>
         </div>
       )}
@@ -158,7 +162,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-4">Platform</h4>
               <ul className="space-y-3">
                 <li><Link href="/" className="text-white/70 hover:text-secondary transition-colors font-medium">Home Feed</Link></li>
-                <li><Link href="/submit" className="text-white/70 hover:text-secondary transition-colors font-medium">Submit a Tip</Link></li>
+                <li><Link href="/submit" className="text-white/70 hover:text-secondary transition-colors font-medium">Submit a Post</Link></li>
                 <li><Link href="/store" className="text-white/70 hover:text-secondary transition-colors font-medium">Books & Store</Link></li>
                 <li><Link href="/about" className="text-white/70 hover:text-secondary transition-colors font-medium">About & Mission</Link></li>
                 <li><Link href="/contact" className="text-white/70 hover:text-secondary transition-colors font-medium">Contact Us</Link></li>

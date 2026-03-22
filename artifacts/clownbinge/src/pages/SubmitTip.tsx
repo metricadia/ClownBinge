@@ -125,7 +125,7 @@ export default function SubmitTip() {
         <div className="mb-10">
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Got Receipts?</p>
           <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-4">
-            Submit a Tip
+            Submit a Post
           </h1>
           <p className="text-muted-foreground text-sm">
             ClownBinge &mdash; Verified accountability journalism &mdash; Primary sources only
@@ -281,7 +281,7 @@ export default function SubmitTip() {
             ) : (
               <>
                 <Send className="w-4 h-4" />
-                Submit Tip
+                Submit Post
               </>
             )}
           </button>
