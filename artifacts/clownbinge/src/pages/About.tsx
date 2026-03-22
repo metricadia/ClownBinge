@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { AdminNav } from "@/components/AdminNav";
 
 export default function About() {
   return (
@@ -14,6 +15,8 @@ export default function About() {
           </p>
           <div className="h-1 w-full bg-[#F5C518] rounded-full mt-6" />
         </div>
+
+        <AdminNav />
 
         <div className="prose prose-slate max-w-none cb-article-body">
 

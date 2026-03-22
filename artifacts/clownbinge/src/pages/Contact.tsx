@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { AdminNav } from "@/components/AdminNav";
 import { Send, MapPin, Mail, MessageSquare } from "lucide-react";
 
 export default function Contact() {
@@ -14,8 +15,10 @@ export default function Contact() {
           <p className="text-muted-foreground text-sm">
             Laughphoria Informatics &mdash; ClownBinge.com &mdash; Tips, press inquiries, corrections &amp; bulk orders
           </p>
-          <div className="h-1 w-full bg-[#F5C518] rounded-full mt-6 mb-10" />
+          <div className="h-1 w-full bg-[#F5C518] rounded-full mt-6" />
         </div>
+
+        <AdminNav />
 
         <div className="flex flex-col lg:flex-row gap-12">
           
