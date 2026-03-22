@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Pastor John Smith",
+    "role": "Senior Pastor, First Baptist Church of Example City",
+    "date": "2026-01-15",
+    "source": "https://www.example-news.com/article/pastor-arrested-2026",
+    "sourceLabel": "Example City Gazette",
+    "incident": "Pastor Smith preached against gambling from the pulpit for 15 years while secretly embezzling 200,000 dollars from the church's building fund and losing it at a casino in Shreveport, Louisiana. He was charged with wire fraud and breach of fiduciary duty in January 2026."
+  },
+  {
+    "name": "Reverend Jane Doe",
+    "role": "Lead Pastor, Prosperity Gospel Ministries International",
+    "date": "2026-02-08",
+    "source": "https://www.investigativenews.org/prosperity-gospel-fraud",
+    "sourceLabel": "Investigative News Network",
+    "incident": "Reverend Doe raised 4 million dollars in 2025 for a 'clean water mission' in rural Kenya. An IRS audit in February 2026 revealed the funds were used to renovate her personal residence in Scottsdale, Arizona and purchase a Porsche Cayenne. She had preached tithing as a divine obligation at least 28 times in the preceding 12 months."
+  }
+]

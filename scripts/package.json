@@ -7,9 +7,11 @@
     "hello": "tsx ./src/hello.ts",
     "seed": "tsx ./src/seed.ts",
     "insert": "tsx ./src/insert-article.ts",
+    "generate": "tsx ./src/generate-articles.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
     "@workspace/db": "workspace:*"
   },
   "devDependencies": {

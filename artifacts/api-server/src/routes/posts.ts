@@ -1,6 +1,6 @@
 import { Router, type IRouter } from "express";
 import { db, postsTable, reactionsTable } from "@workspace/db";
-import { eq, desc, and, sql, count } from "drizzle-orm";
+import { eq, desc, and, or, ne, gte, sql, count } from "drizzle-orm";
 import {
   ListPostsQueryParams,
   GetPostParams,
@@ -35,6 +35,17 @@ router.get("/posts", async (req, res) => {
     const conditions = [eq(postsTable.status, "published")];
     if (category) {
       conditions.push(eq(postsTable.category, category as any));
+    } else {
+      // Main feed: suppress religious articles unless selfOwnScore >= 8 (major scandal threshold)
+      conditions.push(
+        or(
+          ne(postsTable.category, "religious"),
+          and(
+            eq(postsTable.category, "religious"),
+            gte(postsTable.selfOwnScore, 8)
+          )
+        )!
+      );
     }
 
     const where = conditions.length === 1 ? conditions[0] : and(...conditions);
