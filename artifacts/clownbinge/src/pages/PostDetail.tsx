@@ -15,57 +15,7 @@ import { createPortal } from "react-dom";
 import { format } from "date-fns";
 import { Loader2, AlertTriangle, ArrowLeft, Copy, Check, Share2 } from "lucide-react";
 import { Link } from "wouter";
-
-const SOURCE_ABBREV: [RegExp, string][] = [
-  [/Congressional Budget Office\b[^;]*/gi,   "CBO"],
-  [/Congressional Record\b[^;]*/gi,          "Cong. Record"],
-  [/Senate Vote #\d+[^;]*/gi,               "GovTrack"],
-  [/House Vote #\d+[^;]*/gi,                "GovTrack"],
-  [/GovTrack\b[^;]*/gi,                     "GovTrack"],
-  [/senate\.gov[^;]*/gi,                    "senate.gov"],
-  [/Federal Election Commission\b[^;]*/gi,   "FEC"],
-  [/U\.S\. Citizenship and Immigration Services\b[^;]*/gi, "USCIS"],
-  [/American Library Association\b[^;]*/gi,  "ALA"],
-  [/Ellis Island Foundation\b[^;]*/gi,       "Ellis Island"],
-  [/House (Committee on the )?Judiciary\b[^;]*/gi, "House Judiciary"],
-  [/OpenSecrets\b[^;]*/gi,                   "OpenSecrets"],
-  [/C-SPAN\b[^;]*/gi,                        "C-SPAN"],
-  [/American Israel Public Affairs Committee\b[^;]*/gi, "AIPAC"],
-  [/Recording Academy\b[^;]*/gi,             "Grammy/RIAA"],
-  [/State Bar of Texas\b[^;]*/gi,            "TX State Bar"],
-  [/Bexar County[^;]*/gi,                    "Bexar Co. Courts"],
-  [/Maricopa County[^;]*/gi,                 "Maricopa Co."],
-  [/Palmetto County[^;]*/gi,                 "County Records"],
-  [/Court Records?\b[^;]*/gi,                "Court Records"],
-  [/official\s+(?:Senate|House|Congressional)\s+social media[^;]*/gi, "Official Posts"],
-  [/\w+\s+official\s+Senate\s+social media[^;]*/gi, "Official Posts"],
-  [/(?:Biden|Trump|Obama|Bush|Clinton)\s+\w+\s+speech transcript[^;]*/gi, "Presidential Speech"],
-  [/(?:Biden|Trump|Obama|Bush|Clinton)\s+speech transcript[^;]*/gi, "Presidential Speech"],
-  [/NBC News[^;]*/gi,                        "NBC News"],
-  [/The Hill[^;]*/gi,                        "The Hill"],
-  [/HuffPost[^;]*/gi,                        "HuffPost"],
-  [/Rolling Stone[^;]*/gi,                   "Rolling Stone"],
-  [/Politico[^;]*/gi,                        "Politico"],
-  [/Washington Post[^;]*/gi,                 "Wash. Post"],
-  [/New York Times[^;]*/gi,                  "NY Times"],
-  [/Los Angeles Times[^;]*/gi,               "LA Times"],
-  [/Associated Press[^;]*/gi,                "AP"],
-  [/Reuters[^;]*/gi,                         "Reuters"],
-  [/ProPublica[^;]*/gi,                      "ProPublica"],
-  [/The Guardian[^;]*/gi,                    "The Guardian"],
-  [/Axios[^;]*/gi,                           "Axios"],
-];
-
-function abbreviateSource(raw: string | null | undefined): string {
-  if (!raw) return "Verified Public Record";
-  const segments = raw.split(/[;|]/).map(s => s.trim()).filter(Boolean);
-  const shortened = segments.slice(0, 2).map(seg => {
-    let s = seg;
-    for (const [pattern, abbr] of SOURCE_ABBREV) s = s.replace(pattern, abbr);
-    return s.replace(/\s+/g, " ").trim();
-  });
-  return shortened.join(" / ");
-}
+import { abbreviateSource } from "@/lib/source-abbrev";
 
 function abbreviateTitle(title: string): string {
   if (/senator/i.test(title)) return "Sen.";

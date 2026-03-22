@@ -5,57 +5,7 @@ import type { Post } from "@workspace/api-client-react";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { UserSubmittedBadge } from "./UserSubmittedBadge";
 import { SelfOwnScoreBadge } from "./SelfOwnScoreBadge";
-
-const ABBREV: [RegExp, string][] = [
-  [/Congressional Budget Office\b[^;]*/gi,   "CBO"],
-  [/Congressional Record\b[^;]*/gi,          "Cong. Record"],
-  [/Senate Vote #\d+[^;]*/gi,               "GovTrack"],
-  [/House Vote #\d+[^;]*/gi,                "GovTrack"],
-  [/GovTrack\b[^;]*/gi,                     "GovTrack"],
-  [/senate\.gov[^;]*/gi,                    "senate.gov"],
-  [/Federal Election Commission\b[^;]*/gi,   "FEC"],
-  [/U\.S\. Citizenship and Immigration Services\b[^;]*/gi, "USCIS"],
-  [/American Library Association\b[^;]*/gi,  "ALA"],
-  [/Ellis Island Foundation\b[^;]*/gi,       "Ellis Island"],
-  [/House (Committee on the )?Judiciary\b[^;]*/gi, "House Judiciary"],
-  [/OpenSecrets\b[^;]*/gi,                   "OpenSecrets"],
-  [/C-SPAN\b[^;]*/gi,                        "C-SPAN"],
-  [/American Israel Public Affairs Committee\b[^;]*/gi, "AIPAC"],
-  [/Recording Academy\b[^;]*/gi,             "Grammy/RIAA"],
-  [/State Bar of Texas\b[^;]*/gi,            "TX State Bar"],
-  [/Bexar County[^;]*/gi,                    "Bexar Co. Courts"],
-  [/Maricopa County[^;]*/gi,                 "Maricopa Co."],
-  [/Palmetto County[^;]*/gi,                 "County Records"],
-  [/Court Records?\b[^;]*/gi,                "Court Records"],
-  [/official\s+(?:Senate|House|Congressional)\s+social media[^;]*/gi, "Official Posts"],
-  [/\w+\s+official\s+Senate\s+social media[^;]*/gi, "Official Posts"],
-  [/(?:Biden|Trump|Obama|Bush|Clinton)\s+\w+\s+speech transcript[^;]*/gi, "Presidential Speech"],
-  [/(?:Biden|Trump|Obama|Bush|Clinton)\s+speech transcript[^;]*/gi, "Presidential Speech"],
-  [/NBC News[^;]*/gi,                        "NBC News"],
-  [/The Hill[^;]*/gi,                        "The Hill"],
-  [/HuffPost[^;]*/gi,                        "HuffPost"],
-  [/Rolling Stone[^;]*/gi,                   "Rolling Stone"],
-  [/Politico[^;]*/gi,                        "Politico"],
-  [/Washington Post[^;]*/gi,                 "Wash. Post"],
-  [/New York Times[^;]*/gi,                  "NY Times"],
-  [/Los Angeles Times[^;]*/gi,               "LA Times"],
-  [/Associated Press[^;]*/gi,                "AP"],
-  [/Reuters[^;]*/gi,                         "Reuters"],
-  [/ProPublica[^;]*/gi,                      "ProPublica"],
-  [/The Guardian[^;]*/gi,                    "The Guardian"],
-  [/Axios[^;]*/gi,                           "Axios"],
-];
-
-function abbreviateSource(raw: string | null | undefined): string {
-  if (!raw) return "Verified Public Record";
-  const segments = raw.split(/[;|]/).map(s => s.trim()).filter(Boolean);
-  const shortened = segments.slice(0, 2).map(seg => {
-    let s = seg;
-    for (const [pattern, abbr] of ABBREV) s = s.replace(pattern, abbr);
-    return s.replace(/\s+/g, " ").trim();
-  });
-  return `Source: ${shortened.join(" / ")}`;
-}
+import { abbreviateSource } from "@/lib/source-abbrev";
 
 export function PostCard({ post }: { post: Post }) {
   const isSelfOwned = post.category === "self_owned";
@@ -139,7 +89,7 @@ export function PostCard({ post }: { post: Post }) {
           {/* Footer Info */}
           <div className="flex items-center justify-between mt-auto pt-4 border-t border-current/10 gap-4">
             <div className={`text-xs font-medium truncate min-w-0 ${mutedTextClasses}`}>
-              {abbreviateSource(post.verifiedSource)}
+              {abbreviateSource(post.verifiedSource, true)}
             </div>
             <div className={`text-xs font-bold uppercase tracking-wider ${isSelfOwned ? 'text-secondary' : 'text-primary'} group-hover:translate-x-1 transition-transform`}>
               Read More &gt;
