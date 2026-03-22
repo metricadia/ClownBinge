@@ -33,7 +33,7 @@ export default function Contact() {
                     <MapPin className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-bold text-sm text-foreground">Registered Agent</p>
+                    <p className="font-bold text-sm text-foreground">Mailing Address</p>
                     <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
                       ClownBinge Wyoming Corp<br/>
                       1309 Coffeen Avenue STE 1200<br/>
