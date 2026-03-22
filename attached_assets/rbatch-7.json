@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Ted Haggard",
+    "role": "Former President, National Association of Evangelicals; Founder, New Life Church, Colorado Springs, Colorado",
+    "date": "2006-11-02",
+    "source": "https://www.theguardian.com/world/2006/nov/03/usa.religion",
+    "sourceLabel": "The Guardian",
+    "incident": "Ted Haggard, president of the National Association of Evangelicals representing 30 million American Christians and one of the most prominent anti-gay-marriage voices in the country, resigned on November 2, 2006 after a male escort named Mike Jones disclosed that Haggard had been his client for three years and had purchased methamphetamine from him. Haggard had met weekly with President George W. Bush and regularly advised the White House on faith policy."
+  },
+  {
+    "name": "Tony Spell",
+    "role": "Lead Pastor, Life Tabernacle Church, Central, Louisiana",
+    "date": "2020-03-31",
+    "source": "https://apnews.com/article/us-news-ap-top-news-virus-outbreak-religion-baton-rouge-764769b02d1be7a1fc73a63e1c5e87fc",
+    "sourceLabel": "Associated Press",
+    "incident": "Tony Spell, lead pastor of Life Tabernacle Church, held in-person church services of over 1,000 people on March 31, 2020 in direct violation of Louisiana Governor John Bel Edwards' emergency stay-at-home order. Spell was charged with six counts of unlawful assembly. Spell argued that the government had no authority over the church, then subsequently requested and accepted a Paycheck Protection Program loan from the federal government whose authority he had publicly rejected."
+  },
+  {
+    "name": "Rodney Howard-Browne",
+    "role": "Founder and Senior Pastor, The River at Tampa Bay Church, Tampa, Florida",
+    "date": "2020-03-30",
+    "source": "https://www.tampabay.com/news/health/2020/03/30/hillsborough-pastor-arrested-for-holding-church-services-in-defiance-of-safer-at-home-order/",
+    "sourceLabel": "Tampa Bay Times",
+    "incident": "Rodney Howard-Browne, South African-born founder of The River at Tampa Bay Church, was arrested on March 30, 2020 on charges of unlawful assembly and violation of a public health emergency order after holding two packed church services on March 29 in defiance of Hillsborough County's stay-at-home order. Howard-Browne had built his ministry on teaching that divine healing supersedes medical authority, while simultaneously requiring all church staff to sign legal liability waivers."
+  }
+]

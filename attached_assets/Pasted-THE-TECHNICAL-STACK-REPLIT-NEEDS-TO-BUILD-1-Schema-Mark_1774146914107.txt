@@ -1,0 +1,101 @@
+THE TECHNICAL STACK REPLIT NEEDS TO BUILD
+1. Schema Markup (non-negotiable for Google)
+Every article needs NewsArticle or Article JSON-LD schema injected into the <head>. The fields map directly from your existing JSON structure:
+json{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "{{title}}",
+  "datePublished": "{{publishedAt}}",
+  "dateModified": "{{publishedAt}}",
+  "author": {
+    "@type": "Organization",
+    "name": "ClownBinge"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "ClownBinge",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://clownbinge.com/logo.png"
+    }
+  },
+  "description": "{{teaser}}",
+  "mainEntityOfPage": "https://clownbinge.com/{{slug}}"
+}
+Google News eligibility requires this. Without it, articles are crawled but not surfaced as news content.
+2. Political Figure Entity Markup
+For every article, add a secondary Person schema block:
+json{
+  "@type": "Person",
+  "name": "{{subjectName}}",
+  "jobTitle": "{{subjectTitle}}",
+  "memberOf": {
+    "@type": "Organization",
+    "name": "{{subjectParty}} Party"
+  }
+}
+This is what connects ClownBinge records to named-entity searches. When someone Googles a senator's name, Google's knowledge graph needs to associate ClownBinge as a source about that entity.
+3. The Factoid Anchor Tags Need a Tooltip Layer
+Your cb-factoid class tags are already structured correctly. Replit needs to render them as interactive tooltips using the data-title and data-summary attributes already in your JSON. The CSS and JS pattern:
+javascriptdocument.querySelectorAll('.cb-factoid').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    const tooltip = document.createElement('div');
+    tooltip.className = 'cb-tooltip';
+    tooltip.innerHTML = `
+      <strong>${el.dataset.title}</strong>
+      <p>${el.dataset.summary}</p>
+    `;
+    document.body.appendChild(tooltip);
+  });
+});
+This creates dwell time. Users hover on factoid tags, read the tooltip, stay on page longer. Dwell time is a behavioral signal Google measures.
+4. Canonical URLs and Open Graph
+Every article page needs:
+html<link rel="canonical" href="https://clownbinge.com/{{slug}}" />
+<meta property="og:title" content="{{title}}" />
+<meta property="og:description" content="{{teaser}}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://clownbinge.com/{{slug}}" />
+<meta name="twitter:card" content="summary_large_image" />
+```
+
+Canonical tags prevent duplicate content penalties if articles are shared or syndicated.
+
+**5. The SelfOwnScore Needs a Visible UI Element**
+
+The `selfOwnScore` field in your JSON is an SEO asset hiding in plain sight. Replit should render it as a visible, branded meter on every article page. Something like:
+```
+SELF-OWN SCORE: 9/10  [■■■■■■■■■□]
+This creates a unique, site-specific data point that other outlets can cite and link to. Inbound links from journalists saying "ClownBinge rated this a 9 out of 10 self-own" are high-value editorial backlinks.
+6. Category and Tag Index Pages
+Every category and tags value in your JSON needs a corresponding index page. So /self_owned/ renders all self-own articles. /tags/infrastructure-investment-jobs-act/ renders all articles touching that bill. These index pages build internal link density and give Google crawlable topical clusters.
+7. Sitemap Auto-Generation
+Replit should auto-generate and update sitemap.xml every time a new article is published. Format:
+xml<url>
+  <loc>https://clownbinge.com/{{slug}}</loc>
+  <lastmod>{{publishedAt}}</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+```
+
+Submit the sitemap to Google Search Console on day one. Every new record gets indexed within 24 to 48 hours rather than waiting for organic discovery.
+
+**8. `robots.txt` Configuration**
+```
+User-agent: *
+Allow: /
+Sitemap: https://clownbinge.com/sitemap.xml
+Simple. Clean. No accidental blocking of crawlers.
+THE PUBLISH PIPELINE REPLIT SHOULD BUILD
+Your workflow becomes:
+
+ClownBinge staff writer generates the JSON object per the voice rules.
+Replit ingests the JSON, validates required fields, flags missing factoid URLs.
+Replit renders the article page with all schema, meta tags, canonical, and OG tags injected automatically.
+Sitemap updates. Google Search Console pinged via the Indexing API.
+Article is live and crawlable within minutes of JSON submission.
+
+THE ONE CRITICAL INSTRUCTION FOR REPLIT
+The body field in your JSON contains raw HTML with the cb-factoid anchor tags already built. Replit must render this as raw HTML, not as escaped text. If Replit sanitizes the anchor tags, the entire factoid architecture collapses. Specify explicitly: render body field as trusted HTML, not as a text string.
+That pipeline turns every JSON object you generate into a fully Google-optimized article page without a single manual step after the writing is done.
