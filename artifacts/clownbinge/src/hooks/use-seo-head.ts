@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import type { Post } from "@workspace/api-client-react";
 
 const DOMAIN = "https://clownbinge.com";
-const SITE_TITLE = "ClownBinge | Verified News. Primary Sources. For the People.";
+const SITE_TITLE = "ClownBinge.com | Verified News. Primary Sources. For the People.";
 const SITE_DESCRIPTION = "Verified accountability journalism. ClownBinge documents real, sourced incidents where politicians and religious leaders contradict their own words and votes. Primary sources only. No fabrications.";
 
 function setMeta(name: string, content: string, attr = "name") {
