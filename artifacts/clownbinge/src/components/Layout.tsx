@@ -47,7 +47,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <span className="text-white/80 text-xl sm:text-2xl font-sans font-light tracking-normal">Receipts</span>
             </div>
             <span className="text-white/50 text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase mt-0.5 group-hover:text-white/70 transition-colors">
-              Verified. Documented. Clowned.
+              Verified. Primary Sources. Clowned.
             </span>
           </Link>
 
@@ -141,11 +141,11 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                   <span className="text-white/80 text-xl font-sans font-light tracking-normal">Receipts</span>
                 </div>
                 <span className="text-white/50 text-[10px] font-mono tracking-[0.2em] uppercase mt-0.5">
-                  Verified. Documented. Clowned.
+                  Verified. Primary Sources. Clowned.
                 </span>
               </Link>
               <p className="text-white/70 font-medium max-w-sm mb-6 leading-relaxed">
-                Verified accountability journalism and political satire. Documenting the hypocrisy so you don't have to. The receipts don't lie.
+                Verified accountability journalism. Primary sources only. The receipts don't lie.
               </p>
               <div className="text-xs text-white/50 font-mono leading-relaxed">
                 © {new Date().getFullYear()} ClownBinge
