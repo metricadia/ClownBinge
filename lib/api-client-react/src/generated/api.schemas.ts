@@ -49,6 +49,7 @@ export interface Post {
   subjectTitle?: string | null;
   subjectParty?: string | null;
   verifiedSource?: string | null;
+  sourceUrl?: string | null;
   hasVideo: boolean;
   videoUrl?: string | null;
   videoThumbnail?: string | null;

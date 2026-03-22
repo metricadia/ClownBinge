@@ -64,10 +64,22 @@ export const SOURCE_ABBREV: [RegExp, string][] = [
   [/The Christian Chronicle[^;]*/gi,                  "Christian Chronicle"],
   [/Church Militant[^;]*/gi,                          "Church Militant"],
   [/Baptist Press[^;]*/gi,                            "Baptist Press"],
+  [/Juicy Ecumenism[^;]*/gi,                          "Juicy Ecumenism"],
   [/NC Beat[^;]*/gi,                                  "NC Beat"],
   [/CBN News[^;]*/gi,                                 "CBN"],
   [/TBN\b[^;]*/gi,                                    "TBN"],
   [/Daystar[^;]*/gi,                                  "Daystar"],
+
+  // Regional news outlets
+  [/Tampa Bay Times[^;]*/gi,                          "Tampa Bay Times"],
+  [/Tampa Bay[^;]*/gi,                                "Tampa Bay Times"],
+  [/KERA News[^;]*/gi,                                "KERA News"],
+  [/KERA\b[^;]*/gi,                                   "KERA News"],
+  [/The Tennessean[^;]*/gi,                           "The Tennessean"],
+  [/Chicago Tribune[^;]*/gi,                          "Chicago Tribune"],
+  [/The Advocate[^;]*/gi,                             "The Advocate"],
+  [/ABC Australia[^;]*/gi,                            "ABC Australia"],
+  [/abc\.net\.au[^;]*/gi,                             "ABC Australia"],
 
   // National news outlets
   [/C-SPAN[^;]*/gi,                                   "C-SPAN"],

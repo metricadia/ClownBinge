@@ -362,7 +362,24 @@ export default function PostDetail() {
                       </div>
                     </li>
                   ))
-                : post.verifiedSource!.split(/[;/|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => (
+                : post.sourceUrl
+                  ? (
+                    <li className="flex gap-4">
+                      <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">1.</span>
+                      <div>
+                        <a
+                          href={post.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-bold text-[#1A3A8F] hover:underline text-sm leading-snug block mb-1"
+                        >
+                          {abbreviateSource(post.verifiedSource)}
+                        </a>
+                        <span className="text-xs text-foreground/45 font-mono break-all">{post.sourceUrl}</span>
+                      </div>
+                    </li>
+                  )
+                  : post.verifiedSource!.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => (
                     <li key={i} className="flex gap-4">
                       <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
                       <p className="text-sm text-foreground/75 leading-relaxed m-0">{entry}</p>
