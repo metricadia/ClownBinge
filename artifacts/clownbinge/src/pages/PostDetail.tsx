@@ -367,7 +367,7 @@ export default function PostDetail() {
         {(references.length > 0 || post.verifiedSource) && (
           <section id="primary-sources" className="mt-10" aria-label="Primary Sources">
             <div className="h-1 w-full bg-[#F5C518] rounded-full mb-8" />
-            <h2 className="font-display font-medium text-base text-header mb-6 uppercase tracking-widest">
+            <h2 className="font-mono font-bold text-lg tracking-tight text-header mb-6 uppercase">
               Primary Sources
             </h2>
             <ol className="space-y-5 list-none p-0 m-0">
