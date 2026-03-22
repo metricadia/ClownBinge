@@ -53,7 +53,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               </span>
             </div>
             <span className="text-white/50 text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase mt-0.5 group-hover:text-white/70 transition-colors">
-              Verified. Primary Sourced News. For The People.
+              Accountable. Primary Source Journalism.
             </span>
           </Link>
 
