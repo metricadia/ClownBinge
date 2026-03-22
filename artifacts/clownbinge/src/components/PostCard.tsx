@@ -21,12 +21,12 @@ export function PostCard({ post }: { post: Post }) {
   };
 
   // Base card styles depend on category
-  const cardClasses = isSelfOwned 
-    ? "bg-primary text-white border-primary shadow-lg shadow-primary/20"
+  const cardClasses = isSelfOwned
+    ? "bg-white text-foreground border-primary shadow-lg shadow-primary/20"
     : "bg-white text-foreground border-border shadow-sm hover:shadow-md";
 
-  const textClasses = isSelfOwned ? "text-white" : "text-dark-text";
-  const mutedTextClasses = isSelfOwned ? "text-white/80" : "text-muted-foreground";
+  const textClasses = "text-dark-text";
+  const mutedTextClasses = "text-muted-foreground";
 
   return (
     <Link href={`/case/${post.slug}`} className="block group">
@@ -41,12 +41,10 @@ export function PostCard({ post }: { post: Post }) {
           {/* Header Row */}
           <div className="flex justify-between items-start mb-4 gap-4">
             <div className="flex flex-wrap items-center gap-3">
-              <span className={`font-mono text-sm font-semibold tracking-tight ${isSelfOwned ? 'text-secondary' : 'text-primary'}`}>
+              <span className="font-mono text-sm font-semibold tracking-tight text-primary">
                 {post.caseNumber}
               </span>
-              <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm border ${
-                isSelfOwned ? 'border-white/30 text-white' : 'border-primary/20 text-primary bg-primary/5'
-              }`}>
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm border border-primary/20 text-primary bg-primary/5">
                 {categoryLabels[post.category] || post.category}
               </span>
             </div>
