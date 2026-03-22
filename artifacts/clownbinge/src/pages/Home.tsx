@@ -4,6 +4,7 @@ import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { ClownCheckModal } from "@/components/ClownCheckModal";
 import { usePostsFilter, usePostsFeed } from "@/hooks/use-posts";
+import { useHomeSeoHead } from "@/hooks/use-seo-head";
 import { Loader2, AlertCircle } from "lucide-react";
 import type { Post } from "@workspace/api-client-react";
 
@@ -67,6 +68,7 @@ const MOCK_POSTS: Post[] = [
 ];
 
 export default function Home() {
+  useHomeSeoHead();
   const { category, setCategory } = usePostsFilter();
   const { data, isLoading, error } = usePostsFeed(category);
   const [verifyOpen, setVerifyOpen] = useState(false);

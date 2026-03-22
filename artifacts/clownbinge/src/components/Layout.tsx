@@ -13,8 +13,6 @@ const CATEGORIES = [
   { id: "anti_racist_hero", label: "Anti-Racist Hero" },
 ];
 
-const ADMIN_PAGES = ['/about', '/ethics', '/contact'];
-
 export function Layout({ children, onCategoryChange, activeCategory }: { 
   children: React.ReactNode,
   onCategoryChange?: (id: string | null) => void,
@@ -24,7 +22,6 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { data: postCount } = usePostsCount();
-  const isAdminPage = ADMIN_PAGES.includes(location);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -83,38 +80,28 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </button>
         </div>
 
-        {/* Sub-bar: admin nav on admin pages, category tabs everywhere else */}
+        {/* Category sub-bar -- always visible on every page */}
         <div className="bg-white border-b shadow-sm">
           <div className="cb-container">
-            {isAdminPage ? (
-              <nav className="flex items-center gap-3 py-3 text-xs font-bold tracking-widest uppercase">
-                <Link href="/about" className={`hover:text-primary transition-colors ${location === '/about' ? 'text-primary' : 'text-muted-foreground'}`}>About</Link>
-                <span className="text-muted-foreground/40">|</span>
-                <Link href="/ethics" className={`hover:text-primary transition-colors ${location === '/ethics' ? 'text-primary' : 'text-muted-foreground'}`}>Our Ethics</Link>
-                <span className="text-muted-foreground/40">|</span>
-                <Link href="/contact" className={`hover:text-primary transition-colors ${location === '/contact' ? 'text-primary' : 'text-muted-foreground'}`}>Contact</Link>
-              </nav>
-            ) : (
-              <div className="flex overflow-x-auto py-3 gap-2 sm:gap-4 no-scrollbar scroll-smooth">
-                {CATEGORIES.map(cat => {
-                  const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
-                  const isHero = cat.id === 'anti_racist_hero';
-                  const baseStyle = `shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors`;
-                  const activeStyle = isHero
-                    ? isActive ? 'bg-secondary text-gray-900 shadow-md ring-2 ring-secondary/50' : 'bg-secondary/80 text-gray-900 hover:bg-secondary'
-                    : isActive ? 'bg-primary text-white shadow-md' : 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground';
-                  return onCategoryChange && location === '/' ? (
-                    <button key={cat.id} onClick={() => onCategoryChange(cat.id)} className={`${baseStyle} ${activeStyle}`}>
-                      {cat.label}
-                    </button>
-                  ) : (
-                    <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={`${baseStyle} ${activeStyle}`}>
-                      {cat.label}
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
+            <div className="flex overflow-x-auto py-3 gap-2 sm:gap-4 no-scrollbar scroll-smooth">
+              {CATEGORIES.map(cat => {
+                const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
+                const isHero = cat.id === 'anti_racist_hero';
+                const baseStyle = `shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors`;
+                const activeStyle = isHero
+                  ? isActive ? 'bg-secondary text-gray-900 shadow-md ring-2 ring-secondary/50' : 'bg-secondary/80 text-gray-900 hover:bg-secondary'
+                  : isActive ? 'bg-primary text-white shadow-md' : 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground';
+                return onCategoryChange && location === '/' ? (
+                  <button key={cat.id} onClick={() => onCategoryChange(cat.id)} className={`${baseStyle} ${activeStyle}`}>
+                    {cat.label}
+                  </button>
+                ) : (
+                  <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={`${baseStyle} ${activeStyle}`}>
+                    {cat.label}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
 

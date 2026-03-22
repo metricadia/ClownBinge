@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import type { Post } from "@workspace/api-client-react";
 
 const DOMAIN = "https://clownbinge.com";
+const SITE_TITLE = "ClownBinge | Verified News. Primary Sources. For the People.";
+const SITE_DESCRIPTION = "Verified accountability journalism. ClownBinge documents real, sourced incidents where politicians and religious leaders contradict their own words and votes. Primary sources only. No fabrications.";
 
 function setMeta(name: string, content: string, attr = "name") {
   let el = document.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement | null;
@@ -105,9 +107,62 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     }
 
     return () => {
-      document.title = "ClownBinge";
+      document.title = SITE_TITLE;
       removeJsonLd("article");
       removeJsonLd("subject");
     };
   }, [post?.slug]);
+}
+
+export function useHomeSeoHead() {
+  useEffect(() => {
+    document.title = SITE_TITLE;
+
+    setLink("canonical", `${DOMAIN}/`);
+    setMeta("description", SITE_DESCRIPTION);
+
+    setMeta("og:title",       SITE_TITLE,       "property");
+    setMeta("og:description", SITE_DESCRIPTION, "property");
+    setMeta("og:type",        "website",         "property");
+    setMeta("og:url",         `${DOMAIN}/`,      "property");
+    setMeta("og:image",       `${DOMAIN}/opengraph.jpg`, "property");
+    setMeta("og:site_name",   "ClownBinge",      "property");
+
+    setMeta("twitter:card",        "summary_large_image");
+    setMeta("twitter:title",       SITE_TITLE);
+    setMeta("twitter:description", SITE_DESCRIPTION);
+    setMeta("twitter:image",       `${DOMAIN}/opengraph.jpg`);
+
+    setJsonLd("website", {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ClownBinge",
+      "url": DOMAIN,
+      "description": SITE_DESCRIPTION,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": `${DOMAIN}/?q={search_term_string}`,
+        "query-input": "required name=search_term_string"
+      }
+    });
+
+    setJsonLd("organization", {
+      "@context": "https://schema.org",
+      "@type": "NewsMediaOrganization",
+      "name": "ClownBinge",
+      "alternateName": "Laughphoria Informatics",
+      "url": DOMAIN,
+      "logo": `${DOMAIN}/logo.png`,
+      "description": SITE_DESCRIPTION,
+      "foundingDate": "2024",
+      "publishingPrinciples": `${DOMAIN}/ethics`,
+      "verificationFactCheckingPolicy": `${DOMAIN}/ethics`,
+      "actionableFeedbackPolicy": `${DOMAIN}/contact`
+    });
+
+    return () => {
+      removeJsonLd("website");
+      removeJsonLd("organization");
+    };
+  }, []);
 }
