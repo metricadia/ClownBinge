@@ -88,7 +88,7 @@ export default function Home() {
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
             <div className="sticky top-[130px] z-30 bg-background pt-6 pb-4">
               <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-snug max-w-xl">
-                <span className="block">A Public Accountability Platform.</span>
+                <span className="block">A Public Accountability News Platform.</span>
                 <span className="block font-bold">Against Fabricated News.</span>
               </h1>
               <p className="font-sans text-xs tracking-wide mt-1 flex items-center gap-2 flex-wrap">
