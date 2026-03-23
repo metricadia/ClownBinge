@@ -94,28 +94,29 @@ Based ONLY on the articles provided above, produce a PST verification report as 
   "verdictExplanation": "<one sentence explaining why this verdict was reached>",
   "axis1": {
     "label": "US/Global Record",
-    "finding": "<2-3 sentences summarizing what GDELT results show, or note absence of coverage>",
+    "finding": "<2-3 sentences summarizing what US/global coverage shows, or note absence of coverage>",
     "sources": [{"title": "<title>", "url": "<url>", "domain": "<domain>"}]
   },
   "axis2": {
-    "label": "European Press (The Guardian)",
-    "finding": "<2-3 sentences summarizing what Guardian results show, or note absence of coverage>",
-    "sources": [{"title": "<title>", "url": "<url>", "domain": "theguardian.com"}]
+    "label": "Western European Press",
+    "finding": "<2-3 sentences summarizing what Western European press shows, or note absence of coverage>",
+    "sources": [{"title": "<title>", "url": "<url>", "domain": "<domain>"}]
   },
   "whatTheRecordShows": "<a concise paragraph of what can be confirmed from the available record>",
   "whatIsNotConfirmed": "<what cannot be confirmed, is being suppressed, or is actively inaccessible — be honest>",
-  "suppressionFlag": <true if GDELT is silent while Guardian covers it, or if both are silent on a widely-discussed claim>
+  "suppressionFlag": <true if US/global coverage is silent while European press has it, or if both axes are silent on a widely-discussed claim>
 }
 
 Verdict definitions:
 - CONFIRMED: Both axes cover the topic consistently
-- US_SUPPRESSED: Guardian has coverage but GDELT (US-heavy) has none or minimal
+- US_SUPPRESSED: Western European press has coverage but US/global has none or minimal
 - WESTERN_COORDINATED_BLACKOUT: Both axes have little or no coverage of a claim that appears significant
 - CONTESTED: The two axes present contradictory information
 - UNVERIFIABLE: Insufficient information across both axes to reach any conclusion
 
 Rules:
 - Cite only sources actually listed above. Never invent sources.
+- Do NOT mention the names of any data platforms, APIs, or news services in your findings or explanations. Refer only to "US/global coverage" and "Western European press."
 - Return ONLY the JSON object. No preamble, no markdown, no explanation outside the JSON.
 - Limit axis sources arrays to 3 items maximum.`;
 }

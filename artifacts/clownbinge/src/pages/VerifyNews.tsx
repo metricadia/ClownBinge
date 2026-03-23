@@ -140,14 +140,14 @@ export default function VerifyNews() {
             <Globe className="w-5 h-5 text-primary shrink-0 mt-0.5" />
             <div>
               <div className="font-bold text-sm text-header mb-0.5">Axis 1 — US/Global Record</div>
-              <p className="text-xs text-muted-foreground">GDELT global news index. Real-time coverage across thousands of sources.</p>
+              <p className="text-xs text-muted-foreground">Real-time coverage across thousands of US and international news sources.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 rounded-xl border bg-white">
             <Newspaper className="w-5 h-5 text-primary shrink-0 mt-0.5" />
             <div>
-              <div className="font-bold text-sm text-header mb-0.5">Axis 2 — European Press</div>
-              <p className="text-xs text-muted-foreground">The Guardian (UK). Independent editorial standards, different political pressures.</p>
+              <div className="font-bold text-sm text-header mb-0.5">Axis 2 — Western European Press</div>
+              <p className="text-xs text-muted-foreground">Independent European editorial coverage operating under different political and ownership pressures.</p>
             </div>
           </div>
         </div>
