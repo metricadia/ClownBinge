@@ -134,6 +134,14 @@ export default function VerifyNews() {
           <div className="h-1 w-full bg-[#F5C518] rounded-full mt-5" />
         </div>
 
+        {/* Scale claim */}
+        <div className="flex items-center justify-center gap-3 mb-6 py-4 px-6 rounded-2xl bg-white border-2" style={{ borderColor: "#1A3A8F" }}>
+          <span className="font-extrabold text-2xl sm:text-3xl" style={{ color: "#1A3A8F" }}>65,000+</span>
+          <span className="text-sm font-semibold text-muted-foreground leading-snug max-w-xs">
+            empirical news sources searched globally via Primary Source Triangulation
+          </span>
+        </div>
+
         {/* PST Axes */}
         <div className="grid sm:grid-cols-2 gap-3 mb-8">
           <div className="flex items-start gap-3 p-4 rounded-xl border bg-white">
