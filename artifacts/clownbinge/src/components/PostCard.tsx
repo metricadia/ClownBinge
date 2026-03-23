@@ -12,16 +12,22 @@ export function PostCard({ post }: { post: Post }) {
   const isSelfOwned = post.category === "self_owned";
   const isAntiRacist = post.category === "anti_racist_hero";
   const isCbExclusive = post.category === "cb_exclusive";
-  const isVideo = post.hasVideo || post.category === "clown_electeds";
-  
+  const isRecord = post.category === "the_record_confirms_it";
+  const isReceipts = post.category === "the_receipts";
+  const isVideo = post.hasVideo;
+
   const categoryLabels: Record<string, string> = {
-    political: "Political",
-    self_owned: "Self-Owned",
-    clown_electeds: "Clown Electeds",
-    religious: "Religious",
-    cultural: "Cultural",
-    anti_racist_hero: "Anti-Racist Hero",
-    cb_exclusive: "CB Exclusive"
+    self_owned:             "Self Owned",
+    the_record_confirms_it: "The Record Confirms It",
+    constitutional_record:  "Constitutional Record",
+    the_receipts:           "The Receipts",
+    religious:              "Religious",
+    anti_racist_hero:       "Anti-Racist Hero",
+    how_it_works:           "How It Works",
+    cb_exclusive:           "CB Exclusive",
+    political:              "Political",
+    clown_electeds:         "Self Owned",
+    cultural:               "Cultural",
   };
 
   // Base card styles depend on category
@@ -29,6 +35,10 @@ export function PostCard({ post }: { post: Post }) {
     ? "bg-white text-foreground border-primary shadow-lg shadow-primary/20"
     : isCbExclusive
     ? "bg-white text-foreground border-green-600 shadow-lg shadow-green-600/20"
+    : isRecord
+    ? "bg-white text-foreground border-teal-700 shadow-lg shadow-teal-700/20"
+    : isReceipts
+    ? "bg-white text-foreground border-amber-600 shadow-lg shadow-amber-600/20"
     : "bg-white text-foreground border-border shadow-sm hover:shadow-md";
 
   const textClasses = "text-dark-text";

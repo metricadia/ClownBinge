@@ -59,7 +59,14 @@ async function main() {
   }
 
   const alwaysRequired = ["title", "slug", "teaser", "body", "category", "verifiedSource"];
-  const subjectRequired = article.category !== "cb_exclusive" ? ["subjectName", "subjectTitle"] : [];
+  const noSubjectCategories = [
+    "the_record_confirms_it",
+    "constitutional_record",
+    "the_receipts",
+    "how_it_works",
+    "cb_exclusive",
+  ];
+  const subjectRequired = noSubjectCategories.includes(article.category) ? [] : ["subjectName", "subjectTitle"];
   const required = [...alwaysRequired, ...subjectRequired];
   const missing = required.filter(k => !(article as any)[k]);
   if (missing.length > 0) {

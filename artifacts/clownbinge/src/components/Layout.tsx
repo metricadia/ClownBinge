@@ -4,14 +4,15 @@ import { useState, useEffect } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
 
 const CATEGORIES = [
-  { id: "all", label: "All" },
-  { id: "political", label: "Political" },
-  { id: "self_owned", label: "Self-Owned" },
-  { id: "clown_electeds", label: "Clown Electeds" },
-  { id: "religious", label: "Religious" },
-  { id: "cultural", label: "Cultural" },
-  { id: "anti_racist_hero", label: "Anti-Racist Hero" },
-  { id: "cb_exclusive", label: "CB Exclusive" },
+  { id: "all",                    label: "All" },
+  { id: "self_owned",             label: "Self Owned" },
+  { id: "the_record_confirms_it", label: "The Record Confirms It" },
+  { id: "constitutional_record",  label: "Constitutional Record" },
+  { id: "the_receipts",           label: "The Receipts" },
+  { id: "religious",              label: "Religious" },
+  { id: "anti_racist_hero",       label: "Anti-Racist Hero" },
+  { id: "how_it_works",           label: "How It Works" },
+  { id: "cb_exclusive",           label: "CB Exclusive" },
 ];
 
 export function Layout({ children, onCategoryChange, activeCategory }: { 
@@ -93,13 +94,23 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
                 const isHero = cat.id === 'anti_racist_hero';
                 const isCbExclusive = cat.id === 'cb_exclusive';
+                const isRecord = cat.id === 'the_record_confirms_it';
+                const isReceipts = cat.id === 'the_receipts';
+                const isConstitutional = cat.id === 'constitutional_record';
+                const isHowItWorks = cat.id === 'how_it_works';
                 const baseStyle = `shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors`;
                 const activeStyle = isCbExclusive
-                  ? isActive
-                    ? 'bg-green-600 text-white shadow-md ring-2 ring-green-600/40'
-                    : 'bg-green-600 text-white hover:bg-green-700'
+                  ? isActive ? 'bg-green-600 text-white shadow-md ring-2 ring-green-600/40' : 'bg-green-600 text-white hover:bg-green-700'
                   : isHero
                   ? isActive ? 'bg-secondary text-gray-900 shadow-md ring-2 ring-secondary/50' : 'bg-secondary/80 text-gray-900 hover:bg-secondary'
+                  : isRecord
+                  ? isActive ? 'bg-teal-700 text-white shadow-md ring-2 ring-teal-700/40' : 'bg-teal-700 text-white hover:bg-teal-800'
+                  : isReceipts
+                  ? isActive ? 'bg-amber-600 text-white shadow-md ring-2 ring-amber-600/40' : 'bg-amber-600 text-white hover:bg-amber-700'
+                  : isConstitutional
+                  ? isActive ? 'bg-indigo-700 text-white shadow-md ring-2 ring-indigo-700/40' : 'bg-indigo-700 text-white hover:bg-indigo-800'
+                  : isHowItWorks
+                  ? isActive ? 'bg-slate-600 text-white shadow-md ring-2 ring-slate-600/40' : 'bg-slate-600 text-white hover:bg-slate-700'
                   : isActive ? 'bg-primary text-white shadow-md' : 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground';
                 const content = isCbExclusive ? (
                   <span className="inline-flex items-center gap-1.5">
