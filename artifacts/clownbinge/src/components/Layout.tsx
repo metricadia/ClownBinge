@@ -103,7 +103,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-6 ml-10">
             <Link href="/" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/' ? 'text-white' : 'text-white/70'}`}>
               Home
             </Link>
