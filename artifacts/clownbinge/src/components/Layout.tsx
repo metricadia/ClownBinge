@@ -84,7 +84,11 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
       `}>
         <div className="cb-container h-20 sm:h-24 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex flex-col leading-none hover:opacity-90 transition-opacity group">
+          <Link
+            href="/"
+            onClick={() => { onCategoryChange?.('all'); setCatDropdownOpen(false); }}
+            className="flex flex-col leading-none hover:opacity-90 transition-opacity group"
+          >
             <div className="flex items-baseline gap-0">
               <span className="logo-text text-3xl sm:text-4xl text-white tracking-tight">Clown</span>
               <span className="logo-text text-3xl sm:text-4xl text-secondary tracking-tight">Binge</span>
