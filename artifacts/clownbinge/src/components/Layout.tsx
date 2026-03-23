@@ -51,6 +51,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
   const [catDropdownOpen, setCatDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [footerOpen, setFooterOpen] = useState<Record<string, boolean>>({});
+  const [mobileCtaOpen, setMobileCtaOpen] = useState(false);
   const catDropdownRef = useRef<HTMLDivElement>(null);
   const { data: postCount } = usePostsCount();
 
@@ -288,8 +289,11 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         </div>
       </footer>
 
-      {/* Floating Verify CTA -- desktop only */}
-      <div className="hidden lg:flex fixed bottom-6 left-6 z-30 flex-col gap-2 shadow-2xl rounded-2xl overflow-hidden border border-white/10" style={{ background: "#1A3A8F" }}>
+      {/* Floating Verify CTA -- desktop: low-opacity, reveal on hover */}
+      <div
+        className="hidden lg:flex fixed bottom-6 left-6 z-30 flex-col gap-2 shadow-2xl rounded-2xl overflow-hidden border border-white/10 opacity-25 hover:opacity-100 transition-opacity duration-300"
+        style={{ background: "#1A3A8F" }}
+      >
         <div className="px-4 pt-3 pb-1">
           <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Primary Source Verification</p>
         </div>
@@ -310,6 +314,46 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <span className="text-xs font-semibold opacity-70">$24.95</span>
           </Link>
         </div>
+      </div>
+
+      {/* Floating Verify CTA -- mobile: tap to reveal */}
+      <div className="flex lg:hidden fixed bottom-5 left-4 z-30 flex-col items-start">
+        {mobileCtaOpen && (
+          <div
+            className="mb-2 flex flex-col gap-2 shadow-2xl rounded-2xl overflow-hidden border border-white/10 animate-in fade-in slide-in-from-bottom-2 duration-200"
+            style={{ background: "#1A3A8F" }}
+          >
+            <div className="px-4 pt-3 pb-1">
+              <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Primary Source Verification</p>
+            </div>
+            <div className="px-3 pb-3 flex flex-col gap-2">
+              <Link
+                href="/clowncheck"
+                onClick={() => setMobileCtaOpen(false)}
+                className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl font-bold text-sm text-gray-900"
+                style={{ background: "#F5C518" }}
+              >
+                <span>Verify News</span>
+                <span className="text-xs font-semibold opacity-70">$4.95</span>
+              </Link>
+              <Link
+                href="/reports"
+                onClick={() => setMobileCtaOpen(false)}
+                className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl font-bold text-sm text-white border border-white/20"
+              >
+                <span>Order a Report</span>
+                <span className="text-xs font-semibold opacity-70">$24.95</span>
+              </Link>
+            </div>
+          </div>
+        )}
+        <button
+          onClick={() => setMobileCtaOpen((o) => !o)}
+          className="px-4 py-2 rounded-full font-bold text-xs text-gray-900 shadow-lg transition-transform active:scale-95"
+          style={{ background: "#F5C518" }}
+        >
+          {mobileCtaOpen ? "Close" : "PST Verify"}
+        </button>
       </div>
     </div>
   );
