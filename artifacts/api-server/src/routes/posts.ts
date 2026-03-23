@@ -61,17 +61,6 @@ router.get("/posts", async (req, res) => {
       conditions.push(sql`${postsTable.tags} @> ARRAY[${tag}]::text[]`);
     } else if (category) {
       conditions.push(eq(postsTable.category, category as any));
-    } else {
-      // Main feed: suppress religious articles unless selfOwnScore >= 10
-      conditions.push(
-        or(
-          ne(postsTable.category, "religious"),
-          and(
-            eq(postsTable.category, "religious"),
-            gte(postsTable.selfOwnScore, 10)
-          )
-        )!
-      );
     }
 
     const where = conditions.length === 1 ? conditions[0] : and(...conditions);
@@ -81,7 +70,11 @@ router.get("/posts", async (req, res) => {
         .select()
         .from(postsTable)
         .where(where)
-        .orderBy(desc(postsTable.publishedAt))
+        .orderBy(
+          // Main feed: religion articles sink to the bottom; all other categories sort by recency
+          sql`CASE WHEN ${postsTable.category} = 'religion' THEN 1 ELSE 0 END`,
+          desc(postsTable.publishedAt)
+        )
         .limit(Number(limit))
         .offset(Number(offset)),
       db.select({ count: count() }).from(postsTable).where(where),
