@@ -10,7 +10,6 @@ import { usePostDetail, useViewTracker } from "@/hooks/use-posts";
 import { ClownCheckModal } from "@/components/ClownCheckModal";
 import { UserSubmittedBadge } from "@/components/UserSubmittedBadge";
 import { SelfOwnScoreBadge } from "@/components/SelfOwnScoreBadge";
-import { CbExclusiveBadge } from "@/components/CbExclusiveBadge";
 import { useArticleSeoHead } from "@/hooks/use-seo-head";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
@@ -223,8 +222,7 @@ export default function PostDetail() {
 
   const isSelfOwned = post.category === "self_owned";
   const isVideo = post.hasVideo;
-  const isHero = post.category === "anti_racist_hero";
-  const isCbExclusive = post.category === "cb_exclusive";
+  const isHero = post.category === "anti_racist_heroes";
 
   return (
     <Layout>
@@ -242,11 +240,7 @@ export default function PostDetail() {
                 CASE {post.caseNumber}
               </div>
               <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-muted-foreground">
-                {isCbExclusive ? (
-                  <CbExclusiveBadge />
-                ) : (
-                  <span className="uppercase tracking-widest">{post.category.replace(/_/g, " ")}</span>
-                )}
+                <span className="uppercase tracking-widest">{post.category.replace(/_/g, " ")}</span>
                 <span>•</span>
                 <span>Source: <span className="text-foreground">{abbreviateSource(post.verifiedSource)}</span></span>
                 {post.dateOfIncident && (

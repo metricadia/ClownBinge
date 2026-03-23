@@ -60,11 +60,16 @@ async function main() {
 
   const alwaysRequired = ["title", "slug", "teaser", "body", "category", "verifiedSource"];
   const noSubjectCategories = [
-    "the_record_confirms_it",
-    "constitutional_record",
-    "the_receipts",
+    "us_history",
+    "us_constitution",
+    "investigations",
     "how_it_works",
-    "cb_exclusive",
+    "war_and_inhumanity",
+    "health_and_healing",
+    "technology",
+    "censorship",
+    "global_south",
+    "women_and_girls",
   ];
   const subjectRequired = noSubjectCategories.includes(article.category) ? [] : ["subjectName", "subjectTitle"];
   const required = [...alwaysRequired, ...subjectRequired];

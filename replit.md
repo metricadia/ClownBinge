@@ -132,9 +132,11 @@ cd scripts && pnpm sitemap                                    # Regenerate sitem
 
 ### Main Feed Curation Rules
 
-- Religious articles only appear on main feed if `selfOwnScore >= 10` (perfect score)
-- Explicitly selecting the Religious category tab shows all religious articles
-- Category virality: self_owned > clown_electeds > religious > political > cultural > anti_racist_hero
+- Religion articles only appear on main feed if `selfOwnScore >= 10` (perfect score)
+- Explicitly selecting the Religion category tab shows all religion articles
+- 15 categories (DB enum `category`): `self_owned`, `law_and_justice`, `money_and_power`, `us_constitution`, `women_and_girls`, `anti_racist_heroes`, `us_history`, `religion`, `investigations`, `war_and_inhumanity`, `health_and_healing`, `technology`, `censorship`, `global_south`, `how_it_works`
+- Categories where subjectName/subjectTitle NOT required: `us_history`, `us_constitution`, `investigations`, `how_it_works`, `war_and_inhumanity`, `health_and_healing`, `technology`, `censorship`, `global_south`, `women_and_girls`
+- NOTE: `anti_racist_heroes` is PLURAL (not `anti_racist_hero`)
 
 ### Design System
 

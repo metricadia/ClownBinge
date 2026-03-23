@@ -1,18 +1,25 @@
 import { Link, useLocation } from "wouter";
-import { Menu, X, CheckCircle, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
 
 const CATEGORIES = [
-  { id: "all",                    label: "All" },
-  { id: "self_owned",             label: "Self Owned" },
-  { id: "the_record_confirms_it", label: "The Record Confirms It" },
-  { id: "constitutional_record",  label: "Constitutional Record" },
-  { id: "the_receipts",           label: "The Receipts" },
-  { id: "religious",              label: "Religious" },
-  { id: "anti_racist_hero",       label: "Anti-Racist Hero" },
-  { id: "how_it_works",           label: "How It Works" },
-  { id: "cb_exclusive",           label: "CB Exclusive" },
+  { id: "all",               label: "All" },
+  { id: "self_owned",        label: "Self-Owned" },
+  { id: "law_and_justice",   label: "Law & Justice Files" },
+  { id: "money_and_power",   label: "Money & Power" },
+  { id: "us_constitution",   label: "U.S. Constitution" },
+  { id: "women_and_girls",   label: "Women & Girls" },
+  { id: "anti_racist_heroes",label: "Anti-Racist Heroes" },
+  { id: "us_history",        label: "U.S. History" },
+  { id: "religion",          label: "Religion" },
+  { id: "investigations",    label: "Investigations" },
+  { id: "war_and_inhumanity",label: "War & Inhumanity" },
+  { id: "health_and_healing",label: "Health & Healing" },
+  { id: "technology",        label: "Technology" },
+  { id: "censorship",        label: "Censorship" },
+  { id: "global_south",      label: "Global South" },
+  { id: "how_it_works",      label: "How It Works" },
 ];
 
 export function Layout({ children, onCategoryChange, activeCategory }: { 
@@ -92,39 +99,34 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <div className="flex overflow-x-auto py-3 gap-2 sm:gap-4 no-scrollbar scroll-smooth">
               {CATEGORIES.map(cat => {
                 const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
-                const isHero = cat.id === 'anti_racist_hero';
-                const isCbExclusive = cat.id === 'cb_exclusive';
-                const isRecord = cat.id === 'the_record_confirms_it';
-                const isReceipts = cat.id === 'the_receipts';
-                const isConstitutional = cat.id === 'constitutional_record';
-                const isHowItWorks = cat.id === 'how_it_works';
-                const baseStyle = `shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors`;
-                const activeStyle = isCbExclusive
-                  ? isActive ? 'bg-green-600 text-white shadow-md ring-2 ring-green-600/40' : 'bg-green-600 text-white hover:bg-green-700'
-                  : isHero
-                  ? isActive ? 'bg-secondary text-gray-900 shadow-md ring-2 ring-secondary/50' : 'bg-secondary/80 text-gray-900 hover:bg-secondary'
-                  : isRecord
-                  ? isActive ? 'bg-teal-700 text-white shadow-md ring-2 ring-teal-700/40' : 'bg-teal-700 text-white hover:bg-teal-800'
-                  : isReceipts
-                  ? isActive ? 'bg-amber-600 text-white shadow-md ring-2 ring-amber-600/40' : 'bg-amber-600 text-white hover:bg-amber-700'
-                  : isConstitutional
-                  ? isActive ? 'bg-indigo-700 text-white shadow-md ring-2 ring-indigo-700/40' : 'bg-indigo-700 text-white hover:bg-indigo-800'
-                  : isHowItWorks
-                  ? isActive ? 'bg-slate-600 text-white shadow-md ring-2 ring-slate-600/40' : 'bg-slate-600 text-white hover:bg-slate-700'
-                  : isActive ? 'bg-primary text-white shadow-md' : 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground';
-                const content = isCbExclusive ? (
-                  <span className="inline-flex items-center gap-1.5">
-                    <CheckCircle className="w-3.5 h-3.5 text-yellow-300 shrink-0" strokeWidth={3} />
-                    CB Exclusive
-                  </span>
-                ) : cat.label;
+                const base = `shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors`;
+                const PILL: Record<string, { on: string; off: string }> = {
+                  all:               { on: 'bg-primary text-white shadow-md ring-2 ring-primary/40',       off: 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground' },
+                  self_owned:        { on: 'bg-primary text-white shadow-md ring-2 ring-primary/40',       off: 'bg-primary text-white hover:bg-primary/80' },
+                  law_and_justice:   { on: 'bg-red-700 text-white shadow-md ring-2 ring-red-700/40',       off: 'bg-red-700 text-white hover:bg-red-800' },
+                  money_and_power:   { on: 'bg-emerald-700 text-white shadow-md ring-2 ring-emerald-700/40', off: 'bg-emerald-700 text-white hover:bg-emerald-800' },
+                  us_constitution:   { on: 'bg-indigo-700 text-white shadow-md ring-2 ring-indigo-700/40', off: 'bg-indigo-700 text-white hover:bg-indigo-800' },
+                  women_and_girls:   { on: 'bg-rose-600 text-white shadow-md ring-2 ring-rose-600/40',     off: 'bg-rose-600 text-white hover:bg-rose-700' },
+                  anti_racist_heroes:{ on: 'bg-secondary text-gray-900 shadow-md ring-2 ring-secondary/50', off: 'bg-secondary/80 text-gray-900 hover:bg-secondary' },
+                  us_history:        { on: 'bg-teal-700 text-white shadow-md ring-2 ring-teal-700/40',     off: 'bg-teal-700 text-white hover:bg-teal-800' },
+                  religion:          { on: 'bg-violet-700 text-white shadow-md ring-2 ring-violet-700/40', off: 'bg-violet-700 text-white hover:bg-violet-800' },
+                  investigations:    { on: 'bg-amber-600 text-white shadow-md ring-2 ring-amber-600/40',   off: 'bg-amber-600 text-white hover:bg-amber-700' },
+                  war_and_inhumanity:{ on: 'bg-orange-700 text-white shadow-md ring-2 ring-orange-700/40', off: 'bg-orange-700 text-white hover:bg-orange-800' },
+                  health_and_healing:{ on: 'bg-green-700 text-white shadow-md ring-2 ring-green-700/40',   off: 'bg-green-700 text-white hover:bg-green-800' },
+                  technology:        { on: 'bg-sky-600 text-white shadow-md ring-2 ring-sky-600/40',       off: 'bg-sky-600 text-white hover:bg-sky-700' },
+                  censorship:        { on: 'bg-zinc-700 text-white shadow-md ring-2 ring-zinc-700/40',     off: 'bg-zinc-700 text-white hover:bg-zinc-800' },
+                  global_south:      { on: 'bg-cyan-700 text-white shadow-md ring-2 ring-cyan-700/40',     off: 'bg-cyan-700 text-white hover:bg-cyan-800' },
+                  how_it_works:      { on: 'bg-slate-600 text-white shadow-md ring-2 ring-slate-600/40',   off: 'bg-slate-600 text-white hover:bg-slate-700' },
+                };
+                const pill = PILL[cat.id] ?? PILL.all;
+                const cls = `${base} ${isActive ? pill.on : pill.off}`;
                 return onCategoryChange && location === '/' ? (
-                  <button key={cat.id} onClick={() => onCategoryChange(cat.id)} className={`${baseStyle} ${activeStyle}`}>
-                    {content}
+                  <button key={cat.id} onClick={() => onCategoryChange(cat.id)} className={cls}>
+                    {cat.label}
                   </button>
                 ) : (
-                  <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={`${baseStyle} ${activeStyle}`}>
-                    {content}
+                  <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={cls}>
+                    {cat.label}
                   </Link>
                 );
               })}

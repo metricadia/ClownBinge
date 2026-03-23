@@ -5,41 +5,48 @@ import type { Post } from "@workspace/api-client-react";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { UserSubmittedBadge } from "./UserSubmittedBadge";
 import { SelfOwnScoreBadge } from "./SelfOwnScoreBadge";
-import { CbExclusiveBadge } from "./CbExclusiveBadge";
 import { abbreviateSource } from "@/lib/source-abbrev";
 
+const CATEGORY_LABELS: Record<string, string> = {
+  self_owned:         "Self-Owned",
+  law_and_justice:    "Law & Justice Files",
+  money_and_power:    "Money & Power",
+  us_constitution:    "U.S. Constitution",
+  women_and_girls:    "Women & Girls",
+  anti_racist_heroes: "Anti-Racist Heroes",
+  us_history:         "U.S. History",
+  religion:           "Religion",
+  investigations:     "Investigations",
+  war_and_inhumanity: "War & Inhumanity",
+  health_and_healing: "Health & Healing",
+  technology:         "Technology",
+  censorship:         "Censorship",
+  global_south:       "Global South",
+  how_it_works:       "How It Works",
+};
+
+const CATEGORY_BORDER: Record<string, string> = {
+  self_owned:         "border-primary shadow-lg shadow-primary/20",
+  law_and_justice:    "border-red-700 shadow-lg shadow-red-700/20",
+  money_and_power:    "border-emerald-700 shadow-lg shadow-emerald-700/20",
+  us_constitution:    "border-indigo-700 shadow-lg shadow-indigo-700/20",
+  women_and_girls:    "border-rose-600 shadow-lg shadow-rose-600/20",
+  anti_racist_heroes: "border-secondary shadow-lg shadow-secondary/20",
+  us_history:         "border-teal-700 shadow-lg shadow-teal-700/20",
+  religion:           "border-violet-700 shadow-lg shadow-violet-700/20",
+  investigations:     "border-amber-600 shadow-lg shadow-amber-600/20",
+  war_and_inhumanity: "border-orange-700 shadow-lg shadow-orange-700/20",
+  health_and_healing: "border-green-700 shadow-lg shadow-green-700/20",
+  technology:         "border-sky-600 shadow-lg shadow-sky-600/20",
+  censorship:         "border-zinc-700 shadow-lg shadow-zinc-700/20",
+  global_south:       "border-cyan-700 shadow-lg shadow-cyan-700/20",
+  how_it_works:       "border-slate-600 shadow-lg shadow-slate-600/20",
+};
+
 export function PostCard({ post }: { post: Post }) {
-  const isSelfOwned = post.category === "self_owned";
-  const isAntiRacist = post.category === "anti_racist_hero";
-  const isCbExclusive = post.category === "cb_exclusive";
-  const isRecord = post.category === "the_record_confirms_it";
-  const isReceipts = post.category === "the_receipts";
   const isVideo = post.hasVideo;
 
-  const categoryLabels: Record<string, string> = {
-    self_owned:             "Self Owned",
-    the_record_confirms_it: "The Record Confirms It",
-    constitutional_record:  "Constitutional Record",
-    the_receipts:           "The Receipts",
-    religious:              "Religious",
-    anti_racist_hero:       "Anti-Racist Hero",
-    how_it_works:           "How It Works",
-    cb_exclusive:           "CB Exclusive",
-    political:              "Political",
-    clown_electeds:         "Self Owned",
-    cultural:               "Cultural",
-  };
-
-  // Base card styles depend on category
-  const cardClasses = isSelfOwned
-    ? "bg-white text-foreground border-primary shadow-lg shadow-primary/20"
-    : isCbExclusive
-    ? "bg-white text-foreground border-green-600 shadow-lg shadow-green-600/20"
-    : isRecord
-    ? "bg-white text-foreground border-teal-700 shadow-lg shadow-teal-700/20"
-    : isReceipts
-    ? "bg-white text-foreground border-amber-600 shadow-lg shadow-amber-600/20"
-    : "bg-white text-foreground border-border shadow-sm hover:shadow-md";
+  const cardClasses = `bg-white text-foreground ${CATEGORY_BORDER[post.category] ?? "border-border shadow-sm hover:shadow-md"}`;
 
   const textClasses = "text-dark-text";
   const mutedTextClasses = "text-muted-foreground";
@@ -60,13 +67,9 @@ export function PostCard({ post }: { post: Post }) {
               <span className="font-mono text-sm font-semibold tracking-tight text-primary">
                 {post.caseNumber}
               </span>
-              {isCbExclusive ? (
-                <CbExclusiveBadge />
-              ) : (
-                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm border border-primary/20 text-primary bg-primary/5">
-                  {categoryLabels[post.category] || post.category}
-                </span>
-              )}
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm border border-primary/20 text-primary bg-primary/5">
+                {CATEGORY_LABELS[post.category] || post.category}
+              </span>
             </div>
             <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
               {post.userSubmitted && <UserSubmittedBadge />}
@@ -110,7 +113,7 @@ export function PostCard({ post }: { post: Post }) {
             <div className={`text-xs font-medium truncate min-w-0 ${mutedTextClasses}`}>
               {abbreviateSource(post.verifiedSource, true)}
             </div>
-            <div className={`text-xs font-bold uppercase tracking-wider ${isSelfOwned ? 'text-secondary' : isCbExclusive ? 'text-green-600' : 'text-primary'} group-hover:translate-x-1 transition-transform`}>
+            <div className="text-xs font-bold uppercase tracking-wider text-primary group-hover:translate-x-1 transition-transform">
               Read More &gt;
             </div>
           </div>
