@@ -53,7 +53,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               </span>
             </div>
             <span className="text-white text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase mt-0.5 transition-colors">
-              Independent<span className="text-[#F5C518]">.</span> Primary source<span className="text-[#F5C518]">.</span> Journalism<span className="text-[#F5C518]">.</span>
+              Independent<span className="text-[#F5C518]">.</span> Primary sourced<span className="text-[#F5C518]">.</span> Journalism<span className="text-[#F5C518]">.</span>
             </span>
           </Link>
 
