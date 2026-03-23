@@ -133,71 +133,6 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </button>
         </div>
 
-        {/* Category sub-bar */}
-        <div className="bg-white border-b shadow-sm relative" ref={catDropdownRef}>
-          <div className="cb-container">
-
-            {/* Desktop: two-row wrap (md+) */}
-            <div className="hidden md:flex flex-wrap py-2.5 gap-2">
-              {CATEGORIES.map(cat => {
-                const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
-                const pill = PILL[cat.id] ?? PILL.all;
-                const cls = `px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
-                return onCategoryChange && location === '/' ? (
-                  <button key={cat.id} onClick={() => onCategoryChange(cat.id)} className={cls}>{cat.label}</button>
-                ) : (
-                  <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={cls}>{cat.label}</Link>
-                );
-              })}
-            </div>
-
-            {/* Mobile: tap-to-open dropdown (below md) */}
-            <div className="md:hidden">
-              {(() => {
-                const activeCat = CATEGORIES.find(c => c.id === (activeCategory || 'all')) ?? CATEGORIES[0];
-                const pill = PILL[activeCat.id] ?? PILL.all;
-                return (
-                  <button
-                    onClick={() => setCatDropdownOpen(o => !o)}
-                    className="flex items-center justify-between w-full py-3 gap-3"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Category</span>
-                      <span className={`px-3 py-1 rounded-full text-sm font-bold ${location === '/' ? pill.on : PILL.all.off}`}>
-                        {activeCat.label}
-                      </span>
-                    </div>
-                    <ChevronDown className={`w-4 h-4 text-muted-foreground shrink-0 transition-transform duration-200 ${catDropdownOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                );
-              })()}
-
-              {catDropdownOpen && (
-                <div className="absolute left-0 right-0 top-full z-50 bg-white border-b border-t border-border shadow-xl">
-                  <div className="cb-container py-4 flex flex-wrap gap-2 max-h-[70vh] overflow-y-auto">
-                    {CATEGORIES.map(cat => {
-                      const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
-                      const pill = PILL[cat.id] ?? PILL.all;
-                      const cls = `px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
-                      const handleSelect = () => {
-                        setCatDropdownOpen(false);
-                        if (onCategoryChange && location === '/') onCategoryChange(cat.id);
-                      };
-                      return onCategoryChange && location === '/' ? (
-                        <button key={cat.id} onClick={handleSelect} className={cls}>{cat.label}</button>
-                      ) : (
-                        <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} onClick={() => setCatDropdownOpen(false)} className={cls}>{cat.label}</Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-
-          </div>
-        </div>
-
-
       </header>
 
       {/* Mobile Menu Dropdown */}
@@ -213,6 +148,70 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </nav>
         </div>
       )}
+
+      {/* Category sub-bar -- scrolls with page, not sticky */}
+      <div className="bg-white border-b shadow-sm relative" ref={catDropdownRef}>
+        <div className="cb-container">
+
+          {/* Desktop: two-row wrap (md+) */}
+          <div className="hidden md:flex flex-wrap py-2.5 gap-2">
+            {CATEGORIES.map(cat => {
+              const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
+              const pill = PILL[cat.id] ?? PILL.all;
+              const cls = `px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
+              return onCategoryChange && location === '/' ? (
+                <button key={cat.id} onClick={() => onCategoryChange(cat.id)} className={cls}>{cat.label}</button>
+              ) : (
+                <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={cls}>{cat.label}</Link>
+              );
+            })}
+          </div>
+
+          {/* Mobile: tap-to-open dropdown (below md) */}
+          <div className="md:hidden">
+            {(() => {
+              const activeCat = CATEGORIES.find(c => c.id === (activeCategory || 'all')) ?? CATEGORIES[0];
+              const pill = PILL[activeCat.id] ?? PILL.all;
+              return (
+                <button
+                  onClick={() => setCatDropdownOpen(o => !o)}
+                  className="flex items-center justify-between w-full py-3 gap-3"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Category</span>
+                    <span className={`px-3 py-1 rounded-full text-sm font-bold ${location === '/' ? pill.on : PILL.all.off}`}>
+                      {activeCat.label}
+                    </span>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-muted-foreground shrink-0 transition-transform duration-200 ${catDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+              );
+            })()}
+
+            {catDropdownOpen && (
+              <div className="absolute left-0 right-0 top-full z-50 bg-white border-b border-t border-border shadow-xl">
+                <div className="cb-container py-4 flex flex-wrap gap-2 max-h-[70vh] overflow-y-auto">
+                  {CATEGORIES.map(cat => {
+                    const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
+                    const pill = PILL[cat.id] ?? PILL.all;
+                    const cls = `px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
+                    const handleSelect = () => {
+                      setCatDropdownOpen(false);
+                      if (onCategoryChange && location === '/') onCategoryChange(cat.id);
+                    };
+                    return onCategoryChange && location === '/' ? (
+                      <button key={cat.id} onClick={handleSelect} className={cls}>{cat.label}</button>
+                    ) : (
+                      <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} onClick={() => setCatDropdownOpen(false)} className={cls}>{cat.label}</Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+        </div>
+      </div>
 
       {/* Main Content */}
       <main className="flex-1 w-full relative">

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
 import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
@@ -71,7 +72,10 @@ export default function Home() {
   useHomeSeoHead();
   const { category, setCategory } = usePostsFilter();
   const { data, isLoading, error } = usePostsFeed(category);
+  const { data: selfOwnData } = usePostsFeed('self_owned');
   const [verifyOpen, setVerifyOpen] = useState(false);
+
+  const topSelfOwn = selfOwnData?.posts?.[0] ?? null;
 
   // Use real data if available and not empty, otherwise fallback to mock for demonstration
   const posts = (data?.posts && data.posts.length > 0) ? data.posts : MOCK_POSTS;
@@ -88,7 +92,7 @@ export default function Home() {
           
           {/* Main Feed Column */}
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
-            <div className="sticky top-[146px] z-30 bg-background pt-6 pb-4">
+            <div className="pt-6 pb-4">
               <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-snug max-w-xl">
                 <span className="block">A Public Accountability News Platform.</span>
                 <span className="block font-bold">Verified Fact-Finding for the People.</span>
@@ -165,23 +169,27 @@ export default function Home() {
 
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block w-[320px] shrink-0 space-y-8">
-            <div className="sticky top-[156px]">
-              {/* Highlighted Self-Owned Section */}
-              <div className="bg-primary text-white rounded-xl p-6 shadow-xl shadow-primary/20 mb-8 border border-primary-foreground/10">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-2xl">🫵</span>
-                  <h3 className="font-display font-extrabold text-xl">Top Self-Own</h3>
+            <div className="sticky top-[96px]">
+              {/* Top Self-Own card -- pulls real data */}
+              {topSelfOwn && (
+                <div className="bg-primary text-white rounded-xl p-6 shadow-xl shadow-primary/20 mb-8 border border-primary-foreground/10">
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-2xl">🫵</span>
+                    <h3 className="font-display font-extrabold text-xl">Top Self-Own</h3>
+                  </div>
+                  <h4 className="font-bold text-lg mb-2 leading-snug">
+                    {topSelfOwn.title}
+                  </h4>
+                  {topSelfOwn.teaser && (
+                    <p className="text-white/80 text-sm mb-4 line-clamp-3">
+                      {topSelfOwn.teaser}
+                    </p>
+                  )}
+                  <Link href={`/post/${topSelfOwn.slug}`} className="block w-full bg-secondary text-dark-text font-bold uppercase tracking-wider text-sm py-3 rounded-lg hover:bg-white transition-colors text-center">
+                    View The Record
+                  </Link>
                 </div>
-                <h4 className="font-bold text-lg mb-2 leading-snug">
-                  Mayor Caught Deleting Tweets During Live Press Conference
-                </h4>
-                <p className="text-white/80 text-sm mb-4">
-                  The internet is forever, and so are the web archives. A masterclass in panicking on camera.
-                </p>
-                <button className="w-full bg-secondary text-dark-text font-bold uppercase tracking-wider text-sm py-3 rounded-lg hover:bg-white transition-colors">
-                  View The Record
-                </button>
-              </div>
+              )}
 
               {/* Newsletter Inline Widget */}
               <div className="bg-white border-2 border-border rounded-xl p-6 shadow-sm">
