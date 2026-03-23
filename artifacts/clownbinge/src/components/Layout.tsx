@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
 
 const CATEGORIES = [
@@ -22,6 +22,25 @@ const CATEGORIES = [
   { id: "how_it_works",      label: "How It Works" },
 ];
 
+const PILL: Record<string, { on: string; off: string }> = {
+  all:               { on: 'bg-primary text-white shadow-md ring-2 ring-primary/40',         off: 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground' },
+  self_owned:        { on: 'bg-primary text-white shadow-md ring-2 ring-primary/40',         off: 'bg-primary text-white hover:bg-primary/80' },
+  law_and_justice:   { on: 'bg-red-700 text-white shadow-md ring-2 ring-red-700/40',         off: 'bg-red-700 text-white hover:bg-red-800' },
+  money_and_power:   { on: 'bg-emerald-700 text-white shadow-md ring-2 ring-emerald-700/40', off: 'bg-emerald-700 text-white hover:bg-emerald-800' },
+  us_constitution:   { on: 'bg-indigo-700 text-white shadow-md ring-2 ring-indigo-700/40',   off: 'bg-indigo-700 text-white hover:bg-indigo-800' },
+  women_and_girls:   { on: 'bg-rose-600 text-white shadow-md ring-2 ring-rose-600/40',       off: 'bg-rose-600 text-white hover:bg-rose-700' },
+  anti_racist_heroes:{ on: 'bg-secondary text-gray-900 shadow-md ring-2 ring-secondary/50', off: 'bg-secondary/80 text-gray-900 hover:bg-secondary' },
+  us_history:        { on: 'bg-teal-700 text-white shadow-md ring-2 ring-teal-700/40',       off: 'bg-teal-700 text-white hover:bg-teal-800' },
+  religion:          { on: 'bg-violet-700 text-white shadow-md ring-2 ring-violet-700/40',   off: 'bg-violet-700 text-white hover:bg-violet-800' },
+  investigations:    { on: 'bg-amber-600 text-white shadow-md ring-2 ring-amber-600/40',     off: 'bg-amber-600 text-white hover:bg-amber-700' },
+  war_and_inhumanity:{ on: 'bg-orange-700 text-white shadow-md ring-2 ring-orange-700/40',   off: 'bg-orange-700 text-white hover:bg-orange-800' },
+  health_and_healing:{ on: 'bg-green-700 text-white shadow-md ring-2 ring-green-700/40',     off: 'bg-green-700 text-white hover:bg-green-800' },
+  technology:        { on: 'bg-sky-600 text-white shadow-md ring-2 ring-sky-600/40',         off: 'bg-sky-600 text-white hover:bg-sky-700' },
+  censorship:        { on: 'bg-zinc-700 text-white shadow-md ring-2 ring-zinc-700/40',       off: 'bg-zinc-700 text-white hover:bg-zinc-800' },
+  global_south:      { on: 'bg-cyan-700 text-white shadow-md ring-2 ring-cyan-700/40',       off: 'bg-cyan-700 text-white hover:bg-cyan-800' },
+  how_it_works:      { on: 'bg-slate-600 text-white shadow-md ring-2 ring-slate-600/40',     off: 'bg-slate-600 text-white hover:bg-slate-700' },
+};
+
 export function Layout({ children, onCategoryChange, activeCategory }: { 
   children: React.ReactNode,
   onCategoryChange?: (id: string | null) => void,
@@ -29,8 +48,10 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
 }) {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [catDropdownOpen, setCatDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [footerOpen, setFooterOpen] = useState<Record<string, boolean>>({});
+  const catDropdownRef = useRef<HTMLDivElement>(null);
   const { data: postCount } = usePostsCount();
 
   useEffect(() => {
@@ -39,8 +60,20 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => setMobileMenuOpen(false), [location]);
+  // Close menus on route change
+  useEffect(() => { setMobileMenuOpen(false); setCatDropdownOpen(false); }, [location]);
+
+  // Close category dropdown on outside click
+  useEffect(() => {
+    if (!catDropdownOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (catDropdownRef.current && !catDropdownRef.current.contains(e.target as Node)) {
+        setCatDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [catDropdownOpen]);
 
   return (
     <div className="min-h-screen flex flex-col selection:bg-pink-verified selection:text-white">
@@ -93,44 +126,67 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </button>
         </div>
 
-        {/* Category sub-bar -- always visible on every page */}
-        <div className="bg-white border-b shadow-sm">
+        {/* Category sub-bar */}
+        <div className="bg-white border-b shadow-sm relative" ref={catDropdownRef}>
           <div className="cb-container">
-            <div className="flex overflow-x-auto py-3 gap-2 sm:gap-4 no-scrollbar scroll-smooth">
+
+            {/* Desktop: horizontal scroll (md+) */}
+            <div className="hidden md:flex overflow-x-auto py-3 gap-2 lg:gap-3 no-scrollbar scroll-smooth">
               {CATEGORIES.map(cat => {
                 const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
-                const base = `shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors`;
-                const PILL: Record<string, { on: string; off: string }> = {
-                  all:               { on: 'bg-primary text-white shadow-md ring-2 ring-primary/40',       off: 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground' },
-                  self_owned:        { on: 'bg-primary text-white shadow-md ring-2 ring-primary/40',       off: 'bg-primary text-white hover:bg-primary/80' },
-                  law_and_justice:   { on: 'bg-red-700 text-white shadow-md ring-2 ring-red-700/40',       off: 'bg-red-700 text-white hover:bg-red-800' },
-                  money_and_power:   { on: 'bg-emerald-700 text-white shadow-md ring-2 ring-emerald-700/40', off: 'bg-emerald-700 text-white hover:bg-emerald-800' },
-                  us_constitution:   { on: 'bg-indigo-700 text-white shadow-md ring-2 ring-indigo-700/40', off: 'bg-indigo-700 text-white hover:bg-indigo-800' },
-                  women_and_girls:   { on: 'bg-rose-600 text-white shadow-md ring-2 ring-rose-600/40',     off: 'bg-rose-600 text-white hover:bg-rose-700' },
-                  anti_racist_heroes:{ on: 'bg-secondary text-gray-900 shadow-md ring-2 ring-secondary/50', off: 'bg-secondary/80 text-gray-900 hover:bg-secondary' },
-                  us_history:        { on: 'bg-teal-700 text-white shadow-md ring-2 ring-teal-700/40',     off: 'bg-teal-700 text-white hover:bg-teal-800' },
-                  religion:          { on: 'bg-violet-700 text-white shadow-md ring-2 ring-violet-700/40', off: 'bg-violet-700 text-white hover:bg-violet-800' },
-                  investigations:    { on: 'bg-amber-600 text-white shadow-md ring-2 ring-amber-600/40',   off: 'bg-amber-600 text-white hover:bg-amber-700' },
-                  war_and_inhumanity:{ on: 'bg-orange-700 text-white shadow-md ring-2 ring-orange-700/40', off: 'bg-orange-700 text-white hover:bg-orange-800' },
-                  health_and_healing:{ on: 'bg-green-700 text-white shadow-md ring-2 ring-green-700/40',   off: 'bg-green-700 text-white hover:bg-green-800' },
-                  technology:        { on: 'bg-sky-600 text-white shadow-md ring-2 ring-sky-600/40',       off: 'bg-sky-600 text-white hover:bg-sky-700' },
-                  censorship:        { on: 'bg-zinc-700 text-white shadow-md ring-2 ring-zinc-700/40',     off: 'bg-zinc-700 text-white hover:bg-zinc-800' },
-                  global_south:      { on: 'bg-cyan-700 text-white shadow-md ring-2 ring-cyan-700/40',     off: 'bg-cyan-700 text-white hover:bg-cyan-800' },
-                  how_it_works:      { on: 'bg-slate-600 text-white shadow-md ring-2 ring-slate-600/40',   off: 'bg-slate-600 text-white hover:bg-slate-700' },
-                };
                 const pill = PILL[cat.id] ?? PILL.all;
-                const cls = `${base} ${isActive ? pill.on : pill.off}`;
+                const cls = `shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
                 return onCategoryChange && location === '/' ? (
-                  <button key={cat.id} onClick={() => onCategoryChange(cat.id)} className={cls}>
-                    {cat.label}
-                  </button>
+                  <button key={cat.id} onClick={() => onCategoryChange(cat.id)} className={cls}>{cat.label}</button>
                 ) : (
-                  <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={cls}>
-                    {cat.label}
-                  </Link>
+                  <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={cls}>{cat.label}</Link>
                 );
               })}
             </div>
+
+            {/* Mobile: tap-to-open dropdown (below md) */}
+            <div className="md:hidden">
+              {(() => {
+                const activeCat = CATEGORIES.find(c => c.id === (activeCategory || 'all')) ?? CATEGORIES[0];
+                const pill = PILL[activeCat.id] ?? PILL.all;
+                return (
+                  <button
+                    onClick={() => setCatDropdownOpen(o => !o)}
+                    className="flex items-center justify-between w-full py-3 gap-3"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Category</span>
+                      <span className={`px-3 py-1 rounded-full text-sm font-bold ${location === '/' ? pill.on : PILL.all.off}`}>
+                        {activeCat.label}
+                      </span>
+                    </div>
+                    <ChevronDown className={`w-4 h-4 text-muted-foreground shrink-0 transition-transform duration-200 ${catDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                );
+              })()}
+
+              {catDropdownOpen && (
+                <div className="absolute left-0 right-0 top-full z-50 bg-white border-b border-t border-border shadow-xl">
+                  <div className="cb-container py-4 flex flex-col gap-2.5 max-h-[70vh] overflow-y-auto">
+                    {CATEGORIES.map(cat => {
+                      const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
+                      const pill = PILL[cat.id] ?? PILL.all;
+                      const cls = `w-full text-left px-5 py-2.5 rounded-full text-sm font-bold transition-colors ${isActive ? pill.on : pill.off}`;
+                      const handleSelect = () => {
+                        setCatDropdownOpen(false);
+                        if (onCategoryChange && location === '/') onCategoryChange(cat.id);
+                      };
+                      return onCategoryChange && location === '/' ? (
+                        <button key={cat.id} onClick={handleSelect} className={cls}>{cat.label}</button>
+                      ) : (
+                        <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} onClick={() => setCatDropdownOpen(false)} className={cls}>{cat.label}</Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+
           </div>
         </div>
 
