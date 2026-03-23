@@ -149,8 +149,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         </div>
       )}
 
-      {/* Category sub-bar -- scrolls with page, not sticky */}
-      <div className="bg-white border-b shadow-sm relative" ref={catDropdownRef}>
+      {/* Category sub-bar -- sticky below nav */}
+      <div className="sticky top-[80px] z-40 bg-white border-b shadow-sm relative" ref={catDropdownRef}>
         <div className="cb-container">
 
           {/* Desktop: two-row wrap (md+) */}
@@ -287,6 +287,30 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </div>
         </div>
       </footer>
+
+      {/* Floating Verify CTA -- desktop only */}
+      <div className="hidden lg:flex fixed bottom-6 left-6 z-30 flex-col gap-2 shadow-2xl rounded-2xl overflow-hidden border border-white/10" style={{ background: "#1A3A8F" }}>
+        <div className="px-4 pt-3 pb-1">
+          <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Primary Source Verification</p>
+        </div>
+        <div className="px-3 pb-3 flex flex-col gap-2">
+          <Link
+            href="/clowncheck"
+            className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl font-bold text-sm text-gray-900 hover:opacity-90 transition-opacity"
+            style={{ background: "#F5C518" }}
+          >
+            <span>Verify News</span>
+            <span className="text-xs font-semibold opacity-70">$4.95</span>
+          </Link>
+          <Link
+            href="/reports"
+            className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl font-bold text-sm text-white border border-white/20 hover:bg-white/10 transition-colors"
+          >
+            <span>Order a Report</span>
+            <span className="text-xs font-semibold opacity-70">$24.95</span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

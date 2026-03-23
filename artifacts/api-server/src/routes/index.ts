@@ -6,6 +6,7 @@ import booksRouter from "./books";
 import subscribersRouter from "./subscribers";
 import tipsRouter from "./tips";
 import sponsorsRouter from "./sponsors";
+import verifyRouter from "./verify";
 
 const router: IRouter = Router();
 
@@ -16,5 +17,6 @@ router.use(booksRouter);
 router.use(subscribersRouter);
 router.use(tipsRouter);
 router.use(sponsorsRouter);
+router.use(verifyRouter);
 
 export default router;

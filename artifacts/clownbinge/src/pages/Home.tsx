@@ -104,7 +104,7 @@ export default function Home() {
                     className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors"
                   >
                     Verify News
-                    <span className="text-[10px] font-semibold opacity-70 ml-0.5">$1.95</span>
+                    <span className="text-[10px] font-semibold opacity-70 ml-0.5">$4.95</span>
                   </button>
                   <a
                     href="/reports"

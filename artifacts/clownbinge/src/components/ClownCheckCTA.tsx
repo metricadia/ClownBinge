@@ -24,7 +24,7 @@ export function ClownCheckCTA() {
             className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-[#1A3A8F] text-white font-bold text-sm hover:bg-[#162f74] transition-colors"
           >
             ClownCheck
-            <span className="text-[11px] font-semibold opacity-75">$1.95</span>
+            <span className="text-[11px] font-semibold opacity-75">$4.95</span>
           </button>
           <a
             href="/reports"

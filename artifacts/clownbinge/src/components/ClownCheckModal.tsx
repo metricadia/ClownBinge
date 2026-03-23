@@ -52,7 +52,7 @@ export function ClownCheckModal({ onClose }: ClownCheckModalProps) {
           className="block w-full text-center font-bold text-white py-3.5 rounded-xl transition-colors"
           style={{ backgroundColor: "#1A3A8F" }}
         >
-          Verify a Claim &mdash; $1.95
+          Verify a Claim &mdash; $4.95
         </a>
         <p className="text-center text-xs text-muted-foreground mt-3">Results delivered within 24 hours. No subscription required.</p>
       </div>
