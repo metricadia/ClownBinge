@@ -11,6 +11,10 @@ import { ClownCheckModal } from "@/components/ClownCheckModal";
 import { UserSubmittedBadge } from "@/components/UserSubmittedBadge";
 import { SelfOwnScoreBadge } from "@/components/SelfOwnScoreBadge";
 import { useArticleSeoHead } from "@/hooks/use-seo-head";
+import { AdSlot } from "@/components/AdSlot";
+import { ClownCheckCTA } from "@/components/ClownCheckCTA";
+import { SponsorBar } from "@/components/SponsorBar";
+import { useCategorySponsor } from "@/hooks/use-sponsor";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { format } from "date-fns";
@@ -96,7 +100,22 @@ export default function PostDetail() {
     return html;
   }, [post?.body, post?.subjectName, post?.subjectTitle, post?.subjectParty]);
 
+  const [bodyTop, bodyBottom] = useMemo(() => {
+    if (!processedBody) return [processedBody, ""];
+    let count = 0;
+    let idx = 0;
+    while (count < 3) {
+      const next = processedBody.indexOf("</p>", idx);
+      if (next === -1) return [processedBody, ""];
+      idx = next + 4;
+      count++;
+    }
+    return [processedBody.slice(0, idx), processedBody.slice(idx)];
+  }, [processedBody]);
+
   const references = useMemo(() => extractReferences(post?.body ?? ""), [post?.body]);
+
+  const { data: sponsor } = useCategorySponsor(post?.category);
   const popupRef = useRef<HTMLDivElement>(null);
   const [factoid, setFactoid] = useState<FactoidState | null>(null);
   const [copied, setCopied] = useState(false);
@@ -318,15 +337,21 @@ export default function PostDetail() {
           </div>
         )}
 
-        <div className="my-8 bg-muted border border-border h-[90px] w-full flex items-center justify-center rounded-lg">
-          <span className="text-xs uppercase font-bold text-muted-foreground tracking-widest">Advertisement</span>
-        </div>
+        {/* Zone 1: Hero Ad — direct sponsor takes priority; programmatic slot falls back */}
+        {sponsor
+          ? <SponsorBar sponsor={sponsor} />
+          : <AdSlot id="cb-ad-top" className="my-6" />
+        }
 
+        {/* Article body split at paragraph 3 with ClownCheck CTA injected mid-article */}
         <div
           ref={bodyRef}
           className="cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed mb-12"
-          dangerouslySetInnerHTML={{ __html: processedBody }}
-        />
+        >
+          <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
+          <ClownCheckCTA />
+          <div dangerouslySetInnerHTML={{ __html: bodyBottom }} />
+        </div>
 
         {/* Engagement strip */}
         <div className="border-t border-border pt-4 mt-2 space-y-2">
@@ -404,6 +429,9 @@ export default function PostDetail() {
             </ol>
           </section>
         )}
+
+        {/* Zone 3: Bottom programmatic slot — after the full source record */}
+        <AdSlot id="cb-ad-bottom" className="mt-10" />
 
         {Array.isArray(post.tags) && post.tags.length > 0 && (
           <div className="mt-10 flex flex-wrap gap-2">

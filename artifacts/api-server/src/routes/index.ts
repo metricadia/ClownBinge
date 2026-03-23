@@ -5,6 +5,7 @@ import reactionsRouter from "./reactions";
 import booksRouter from "./books";
 import subscribersRouter from "./subscribers";
 import tipsRouter from "./tips";
+import sponsorsRouter from "./sponsors";
 
 const router: IRouter = Router();
 
@@ -14,5 +15,6 @@ router.use(reactionsRouter);
 router.use(booksRouter);
 router.use(subscribersRouter);
 router.use(tipsRouter);
+router.use(sponsorsRouter);
 
 export default router;
