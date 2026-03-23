@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
 import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
-import { ClownCheckModal } from "@/components/ClownCheckModal";
 import { usePostsFilter, usePostsFeed } from "@/hooks/use-posts";
 import { useHomeSeoHead } from "@/hooks/use-seo-head";
 import { Loader2, AlertCircle } from "lucide-react";
@@ -73,8 +71,6 @@ export default function Home() {
   const { category, setCategory } = usePostsFilter();
   const { data, isLoading, error } = usePostsFeed(category);
   const { data: selfOwnData } = usePostsFeed('self_owned');
-  const [verifyOpen, setVerifyOpen] = useState(false);
-
   const topSelfOwn = selfOwnData?.posts?.[0] ?? null;
 
   // Use real data if available and not empty, otherwise fallback to mock for demonstration
@@ -99,13 +95,13 @@ export default function Home() {
               </h1>
               <div className="mt-3 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2">
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => setVerifyOpen(true)}
+                  <a
+                    href="/clowncheck"
                     className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors"
                   >
                     Verify ANY News
                     <span className="text-[10px] font-semibold opacity-70 ml-0.5">$4.95</span>
-                  </button>
+                  </a>
                   <a
                     href="/reports"
                     className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors"
@@ -216,7 +212,6 @@ export default function Home() {
           
         </div>
       </div>
-      {verifyOpen && <ClownCheckModal onClose={() => setVerifyOpen(false)} />}
     </Layout>
   );
 }

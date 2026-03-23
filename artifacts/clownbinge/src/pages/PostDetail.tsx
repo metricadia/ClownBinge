@@ -7,7 +7,6 @@ import { ShareButtons } from "@/components/ShareButtons";
 import { BookCTA } from "@/components/BookCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { usePostDetail, useViewTracker } from "@/hooks/use-posts";
-import { ClownCheckModal } from "@/components/ClownCheckModal";
 import { UserSubmittedBadge } from "@/components/UserSubmittedBadge";
 import { SelfOwnScoreBadge } from "@/components/SelfOwnScoreBadge";
 import { useArticleSeoHead } from "@/hooks/use-seo-head";
@@ -119,8 +118,6 @@ export default function PostDetail() {
   const popupRef = useRef<HTMLDivElement>(null);
   const [factoid, setFactoid] = useState<FactoidState | null>(null);
   const [copied, setCopied] = useState(false);
-  const [verifyOpen, setVerifyOpen] = useState(false);
-
   useEffect(() => {
     if (post && !hasTrackedView.current) {
       hasTrackedView.current = true;
@@ -284,13 +281,13 @@ export default function PostDetail() {
           {/* Action links strip */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 py-2">
             <div className="flex gap-2 justify-center">
-              <button
-                onClick={() => setVerifyOpen(true)}
+              <a
+                href="/clowncheck"
                 className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors"
               >
                 Verify ANY News
                 <span className="text-[10px] font-semibold opacity-70 ml-0.5">$4.95</span>
-              </button>
+              </a>
               <a
                 href="/reports"
                 className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors"
@@ -541,7 +538,6 @@ export default function PostDetail() {
         </div>,
         document.body
       )}
-      {verifyOpen && <ClownCheckModal onClose={() => setVerifyOpen(false)} />}
     </Layout>
   );
 }
