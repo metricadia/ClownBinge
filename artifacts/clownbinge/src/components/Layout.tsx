@@ -99,7 +99,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               </span>
             </div>
             <span className="text-white text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase mt-0.5 transition-colors">
-              Independent Primary Sourced News Only
+              Independent<span className="text-[#F5C518]">.</span> Verified<span className="text-[#F5C518]">.</span> The Primary Source<span className="text-[#F5C518]">.</span>
             </span>
           </Link>
 
@@ -234,7 +234,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                   </span>
                 </div>
                 <span className="text-white/50 text-[10px] font-mono tracking-[0.2em] uppercase mt-0.5">
-                  Independent Primary Sourced News Only
+                  Independent<span className="text-[#F5C518]">.</span> Verified<span className="text-[#F5C518]">.</span> The Primary Source<span className="text-[#F5C518]">.</span>
                 </span>
               </Link>
               <p className="text-white/70 font-medium max-w-sm mb-6 leading-relaxed">
