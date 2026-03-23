@@ -137,12 +137,12 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         <div className="bg-white border-b shadow-sm relative" ref={catDropdownRef}>
           <div className="cb-container">
 
-            {/* Desktop: horizontal scroll (md+) */}
-            <div className="hidden md:flex overflow-x-auto py-3 gap-2 lg:gap-3 no-scrollbar scroll-smooth">
+            {/* Desktop: two-row wrap (md+) */}
+            <div className="hidden md:flex flex-wrap py-2.5 gap-2">
               {CATEGORIES.map(cat => {
                 const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
                 const pill = PILL[cat.id] ?? PILL.all;
-                const cls = `shrink-0 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
+                const cls = `px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
                 return onCategoryChange && location === '/' ? (
                   <button key={cat.id} onClick={() => onCategoryChange(cat.id)} className={cls}>{cat.label}</button>
                 ) : (
