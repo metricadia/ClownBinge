@@ -6,15 +6,32 @@ export default function About() {
   return (
     <Layout>
       <div className="max-w-3xl mx-auto px-4 py-12">
-        <div className="mb-10">
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">About ClownBinge</p>
-          <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-4">
-            The Record.
+        {/* Brand Manifesto Hero */}
+        <div className="mb-12">
+          <p className="text-xs font-bold tracking-widest uppercase text-primary mb-4">About ClownBinge</p>
+
+          <h1 className="font-sans font-extrabold text-4xl sm:text-5xl text-header leading-tight mb-3">
+            The news cycle is a clown farm.
           </h1>
-          <p className="text-muted-foreground text-sm">
-            Primary Source Analytics, LLC &mdash; ClownBinge.com &mdash; Updated March 2026
+          <p className="font-sans font-bold text-2xl sm:text-3xl mb-8" style={{ color: "#F5C518" }}>
+            We binge it so you don't have to.
           </p>
-          <div className="h-1 w-full bg-[#F5C518] rounded-full mt-6" />
+
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
+            ClownBinge was built on a simple premise: traditional media has become a circus of misinformation, performance, and manufactured narrative. We don't editorialize the chaos. We navigate it. Our team binges the entire information ecosystem, from fringe to mainstream, from local court records to international wire services, extracting only what survives the only test that matters: the primary source. If it can't be verified against an original document, it doesn't exist here.
+          </p>
+
+          <div className="rounded-2xl px-6 py-5 mb-8 border-2" style={{ background: "#1A3A8F", borderColor: "#1A3A8F" }}>
+            <p className="font-mono font-bold text-base sm:text-lg text-white tracking-wide">
+              65,000 global sources<span style={{ color: "#F5C518" }}>.</span> Zero opinions<span style={{ color: "#F5C518" }}>.</span> One standard: the primary source record<span style={{ color: "#F5C518" }}>.</span>
+            </p>
+          </div>
+
+          <p className="font-sans font-extrabold text-xl sm:text-2xl text-header mb-8">
+            ClownBinge isn't commentary. It's the receipt.
+          </p>
+
+          <div className="h-1 w-full bg-[#F5C518] rounded-full" />
         </div>
 
         <AdminNav />
