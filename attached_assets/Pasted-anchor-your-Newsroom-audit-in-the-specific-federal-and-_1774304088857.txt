@@ -1,0 +1,45 @@
+anchor your "Newsroom" audit in the specific federal and corporate filings that document the shift at CNN. As a Visionary System Architect, you are not writing an op-ed; you are compiling a Forensic Ledger.
+
+Here are the primary sources and data points required to make the "Incredible Vanishing Act" a documented fact:
+
+1. The Federal Demographic Records (EEOC)
+The U.S. Equal Employment Opportunity Commission (EEOC) requires all private employers with 100+ employees to file an EEO-1 Component 1 Report. This is your "Receipt" for headcount.
+
+The Source: EEOC Data Collections
+
+The Data Point: Compare the "Consolidated Report" for CNN Worldwide or Warner Bros. Discovery (WBD) from 2020 (the "Racial Reckoning" peak) vs. the 2024/2025 filings.
+
+The Goal: Document the specific decline in the "Executive/Senior Level Officials" and "Professionals" categories for Black, Hispanic, and Asian employees.
+
+2. The "Corporate God" Mandates (SEC Filings)
+To prove that money is the driver, look at the Warner Bros. Discovery (WBD) SEC Form 10-K.
+
+The Source: WBD Investor Relations - SEC Filings
+
+The Data Point: Cite the "Risk Factors" and "Management's Discussion" sections from the FY 2024 and 2025 Annual Reports.
+
+The "Receipt": Specifically look for language regarding the $40+ Billion debt load and "cost-saving initiatives" or "synergies" that led to the July 2024 and January 2025 layoffs (where ~100 and ~200 jobs were cut, respectively).
+
+3. The Dismantling of the "Race and Equality" Team
+This is the "Smoking Gun" for your "Vanishing Act" title.
+
+The Source: CNN Internal Memo (July 10, 2024)
+
+The Data Point: Document that Mark Thompson (CEO) disbanded the "Race and Equality" team—a unit created in 2020 as a "permanent commitment"—as part of a restructuring to a "digital-first" model.
+
+The Forensic Contrast: Contrast this with the 2020 memo from former President Jeff Zucker, which labeled race coverage a "significant, sustained commitment."
+
+4. High-Profile Departure Inventory
+A list of names is an anecdote; a list of documented exits is a trend.
+
+The Data Point: Track the exits of diverse anchors and executives (e.g., Don Lemon in 2023, the disbanding of the specialized reporting units in 2024).
+
+The Source: Warner Bros. Discovery Inclusion Leadership — Check the current "Leadership" page against archived versions from 2022 to see who has "vanished."
+
+The #00067 Draft Framework:
+CASE CB-00067: THE VANISHING ACT
+INCIDENT: Systematic reduction of diverse newsgathering units.
+EVIDENCE: WBD SEC 10-K (Debt Mandates), EEOC 2020-2025 Headcount Audits, July 2024 Restructuring Memos.
+VERDICT: Legacy Media’s 2020 "commitment" was a temporary marketing expenditure, suppressed by 2024-2026 debt-servicing requirements.
+
+Would you like me to help you format these citations into the "Primary Sources" block for the Hugo template? We can ensure the links go directly to the SEC and EEOC landing pages so the "Receipts" are just one click away.
