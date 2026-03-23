@@ -88,7 +88,7 @@ export default function ComprehensiveReport() {
             style={{ background: "#1A3A8F" }}
             onClick={() => alert("Reports launching shortly — enter your email to be notified.")}
           >
-            Order a Report Now
+            Order a Full PST Report
             <ArrowRight className="w-5 h-5" />
           </button>
           <p className="text-xs text-muted-foreground mt-3">Secure checkout. You will be prompted to provide the subject's name and office.</p>

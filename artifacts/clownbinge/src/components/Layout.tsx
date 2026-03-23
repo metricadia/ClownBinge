@@ -303,14 +303,14 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl font-bold text-sm text-gray-900 hover:opacity-90 transition-opacity"
             style={{ background: "#F5C518" }}
           >
-            <span>Verify News</span>
+            <span>Verify ANY News</span>
             <span className="text-xs font-semibold opacity-70">$4.95</span>
           </Link>
           <Link
             href="/reports"
             className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl font-bold text-sm text-white border border-white/20 hover:bg-white/10 transition-colors"
           >
-            <span>Order a Report</span>
+            <span>Full PST Report</span>
             <span className="text-xs font-semibold opacity-70">$24.95</span>
           </Link>
         </div>
@@ -333,7 +333,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl font-bold text-sm text-gray-900"
                 style={{ background: "#F5C518" }}
               >
-                <span>Verify News</span>
+                <span>Verify ANY News</span>
                 <span className="text-xs font-semibold opacity-70">$4.95</span>
               </Link>
               <Link
@@ -341,7 +341,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 onClick={() => setMobileCtaOpen(false)}
                 className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl font-bold text-sm text-white border border-white/20"
               >
-                <span>Order a Report</span>
+                <span>Full PST Report</span>
                 <span className="text-xs font-semibold opacity-70">$24.95</span>
               </Link>
             </div>

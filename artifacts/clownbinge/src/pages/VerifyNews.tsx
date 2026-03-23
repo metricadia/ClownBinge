@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import {
   CheckCircle, XCircle, HelpCircle, AlertTriangle, EyeOff,
-  ArrowRight, Shield, Globe, Newspaper, Loader2, ExternalLink, Lock
+  ArrowRight, Shield, Globe, Newspaper, Radio, Loader2, ExternalLink, Lock
 } from "lucide-react";
 
 type Verdict =
@@ -123,13 +123,14 @@ export default function VerifyNews() {
             Primary Source Triangulation
           </p>
           <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-3">
-            Verify News.{" "}
+            Verify ANY News.{" "}
             <span style={{ color: "#F5C518" }}>Three Axes. One Truth.</span>
           </h1>
           <p className="text-muted-foreground text-base leading-relaxed max-w-2xl">
-            Submit a topic, claim, or headline. Our PST engine cross-references
-            US/global news archives and European press to detect confirmation,
-            suppression, and coordinated blackouts.
+            Submit any topic, claim, or headline. The PST engine cross-references
+            US/global, Western European, and non-Western press simultaneously to
+            detect confirmation, suppression, and coordinated blackouts.
+            Instant on-screen report. No account required.
           </p>
           <div className="h-1 w-full bg-[#F5C518] rounded-full mt-5" />
         </div>
@@ -143,7 +144,7 @@ export default function VerifyNews() {
         </div>
 
         {/* PST Axes */}
-        <div className="grid sm:grid-cols-2 gap-3 mb-8">
+        <div className="grid sm:grid-cols-3 gap-3 mb-8">
           <div className="flex items-start gap-3 p-4 rounded-xl border bg-white">
             <Globe className="w-5 h-5 text-primary shrink-0 mt-0.5" />
             <div>
@@ -155,7 +156,17 @@ export default function VerifyNews() {
             <Newspaper className="w-5 h-5 text-primary shrink-0 mt-0.5" />
             <div>
               <div className="font-bold text-sm text-header mb-0.5">Axis 2 — Western European Press</div>
-              <p className="text-xs text-muted-foreground">Independent European editorial coverage operating under different political and ownership pressures.</p>
+              <p className="text-xs text-muted-foreground">Independent European editorial coverage under different political and ownership pressures.</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 p-4 rounded-xl border bg-white relative">
+            <Radio className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <div>
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="font-bold text-sm text-header">Axis 3 — Non-Western Press</span>
+                <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style={{ background: "#F5C518", color: "#1A3A8F" }}>Soon</span>
+              </div>
+              <p className="text-xs text-muted-foreground">Al Jazeera and Global South editorial sources operating outside Western media alliances.</p>
             </div>
           </div>
         </div>
