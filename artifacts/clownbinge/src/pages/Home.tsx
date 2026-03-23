@@ -87,12 +87,12 @@ export default function Home() {
 
   return (
     <Layout onCategoryChange={setCategory} activeCategory={category}>
-      <div className="cb-container py-8 sm:py-12">
+      <div className="cb-container pt-4 pb-8 sm:pb-12">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           
           {/* Main Feed Column */}
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
-            <div className="pt-6 pb-4">
+            <div className="pt-2 pb-4">
               <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-snug max-w-xl">
                 <span className="block">A Public Accountability News Platform.</span>
                 <span className="block font-bold">Verified Fact-Finding for the People.</span>
