@@ -42,7 +42,7 @@ paths:
           required: false
           schema:
             type: string
-            enum: [political, self_owned, clown_electeds, religious, cultural, anti_racist_hero, cb_exclusive]
+            enum: [self_owned, law_and_justice, money_and_power, us_constitution, women_and_girls, anti_racist_heroes, us_history, religion, investigations, war_and_inhumanity, health_and_healing, technology, censorship, global_south, how_it_works]
         - name: limit
           in: query
           required: false
@@ -228,7 +228,7 @@ components:
           type: string
         category:
           type: string
-          enum: [political, self_owned, clown_electeds, religious, cultural, anti_racist_hero, cb_exclusive]
+          enum: [self_owned, law_and_justice, money_and_power, us_constitution, women_and_girls, anti_racist_heroes, us_history, religion, investigations, war_and_inhumanity, health_and_healing, technology, censorship, global_south, how_it_works]
         subjectName:
           type: string
           nullable: true

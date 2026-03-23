@@ -21,13 +21,21 @@ export interface SuccessResponse {
 export type PostCategory = (typeof PostCategory)[keyof typeof PostCategory];
 
 export const PostCategory = {
-  political: "political",
   self_owned: "self_owned",
-  clown_electeds: "clown_electeds",
-  religious: "religious",
-  cultural: "cultural",
-  anti_racist_hero: "anti_racist_hero",
-  cb_exclusive: "cb_exclusive",
+  law_and_justice: "law_and_justice",
+  money_and_power: "money_and_power",
+  us_constitution: "us_constitution",
+  women_and_girls: "women_and_girls",
+  anti_racist_heroes: "anti_racist_heroes",
+  us_history: "us_history",
+  religion: "religion",
+  investigations: "investigations",
+  war_and_inhumanity: "war_and_inhumanity",
+  health_and_healing: "health_and_healing",
+  technology: "technology",
+  censorship: "censorship",
+  global_south: "global_south",
+  how_it_works: "how_it_works",
 } as const;
 
 export type PostStatus = (typeof PostStatus)[keyof typeof PostStatus];
@@ -50,7 +58,6 @@ export interface Post {
   subjectTitle?: string | null;
   subjectParty?: string | null;
   verifiedSource?: string | null;
-  sourceUrl?: string | null;
   hasVideo: boolean;
   videoUrl?: string | null;
   videoThumbnail?: string | null;
@@ -62,7 +69,6 @@ export interface Post {
   createdAt: string;
   viewCount: number;
   shareCount: number;
-  userSubmitted: boolean;
 }
 
 export interface PostListResponse {
@@ -125,7 +131,6 @@ export interface SubscribeRequest {
 
 export type ListPostsParams = {
   category?: ListPostsCategory;
-  tag?: string;
   limit?: number;
   offset?: number;
 };
@@ -134,11 +139,19 @@ export type ListPostsCategory =
   (typeof ListPostsCategory)[keyof typeof ListPostsCategory];
 
 export const ListPostsCategory = {
-  political: "political",
   self_owned: "self_owned",
-  clown_electeds: "clown_electeds",
-  religious: "religious",
-  cultural: "cultural",
-  anti_racist_hero: "anti_racist_hero",
-  cb_exclusive: "cb_exclusive",
+  law_and_justice: "law_and_justice",
+  money_and_power: "money_and_power",
+  us_constitution: "us_constitution",
+  women_and_girls: "women_and_girls",
+  anti_racist_heroes: "anti_racist_heroes",
+  us_history: "us_history",
+  religion: "religion",
+  investigations: "investigations",
+  war_and_inhumanity: "war_and_inhumanity",
+  health_and_healing: "health_and_healing",
+  technology: "technology",
+  censorship: "censorship",
+  global_south: "global_south",
+  how_it_works: "how_it_works",
 } as const;
