@@ -4,7 +4,6 @@ import { VerifiedBadge } from "@/components/VerifiedBadge";
 import { CitedBadge } from "@/components/CitedBadge";
 import { ReactionBar } from "@/components/ReactionBar";
 import { ShareButtons } from "@/components/ShareButtons";
-import { BookCTA } from "@/components/BookCTA";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { usePostDetail, useViewTracker } from "@/hooks/use-posts";
 import { UserSubmittedBadge } from "@/components/UserSubmittedBadge";
@@ -448,11 +447,9 @@ export default function PostDetail() {
           <NewsletterSignup source={`post_${post.id}`} />
         </div>
 
-        {isSelfOwned && <BookCTA variant="inline" />}
 
       </article>
 
-      <BookCTA variant="banner" />
 
       {/* Factoid Popup Portal */}
       {factoid && createPortal(
