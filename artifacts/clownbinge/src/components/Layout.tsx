@@ -48,8 +48,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <span className="logo-text text-3xl sm:text-4xl text-white tracking-tight">Clown</span>
               <span className="logo-text text-3xl sm:text-4xl text-secondary tracking-tight">Binge</span>
               <span className="text-white/40 text-2xl sm:text-3xl font-sans font-light mx-2">|</span>
-              <span className="text-white/80 text-xl sm:text-2xl font-sans font-light tracking-normal">
-                {postCount != null ? `${postCount.toLocaleString()} Records` : "The Record"}
+              <span className="text-white/80 text-xl sm:text-2xl font-sans font-semibold tracking-widest uppercase">
+                Newsroom
               </span>
             </div>
             <span className="text-white text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase mt-0.5 transition-colors">
@@ -152,8 +152,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                   <span className="logo-text text-3xl text-white tracking-tight">Clown</span>
                   <span className="logo-text text-3xl text-secondary tracking-tight">Binge</span>
                   <span className="text-white/40 text-2xl font-sans font-light mx-2">|</span>
-                  <span className="text-white/80 text-xl font-sans font-light tracking-normal">
-                    {postCount != null ? `${postCount.toLocaleString()} Records` : "The Record"}
+                  <span className="text-white/80 text-xl font-sans font-semibold tracking-widest uppercase">
+                    Newsroom
                   </span>
                 </div>
                 <span className="text-white/50 text-[10px] font-mono tracking-[0.2em] uppercase mt-0.5">
