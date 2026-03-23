@@ -116,6 +116,9 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/contact" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/contact' ? 'text-white' : 'text-white/70'}`}>
               Contact
             </Link>
+            <Link href="/advertise" className={`text-sm font-bold uppercase tracking-wider hover:text-secondary transition-colors ${location === '/advertise' ? 'text-secondary' : 'text-white/70'}`}>
+              Advertise
+            </Link>
             <Link href="/submit" className={`text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full transition-colors ${location === '/submit' ? 'bg-secondary text-gray-900' : 'bg-secondary/90 text-gray-900 hover:bg-secondary'}`}>
               Submit a Post
             </Link>
@@ -205,6 +208,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/about" className="text-2xl font-bold text-white uppercase tracking-widest">About</Link>
             <Link href="/store" className="text-2xl font-bold text-secondary uppercase tracking-widest">Books</Link>
             <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Contact</Link>
+            <Link href="/advertise" className="text-2xl font-bold text-secondary uppercase tracking-widest">Advertise</Link>
             <Link href="/submit" className="text-2xl font-bold bg-secondary text-gray-900 uppercase tracking-widest px-8 py-3 rounded-full">Submit a Post</Link>
           </nav>
         </div>
