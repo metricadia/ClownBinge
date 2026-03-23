@@ -167,11 +167,11 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
 
               {catDropdownOpen && (
                 <div className="absolute left-0 right-0 top-full z-50 bg-white border-b border-t border-border shadow-xl">
-                  <div className="cb-container py-4 flex flex-col gap-2.5 max-h-[70vh] overflow-y-auto">
+                  <div className="cb-container py-4 flex flex-wrap gap-2 max-h-[70vh] overflow-y-auto">
                     {CATEGORIES.map(cat => {
                       const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
                       const pill = PILL[cat.id] ?? PILL.all;
-                      const cls = `w-full text-left px-5 py-2.5 rounded-full text-sm font-bold transition-colors ${isActive ? pill.on : pill.off}`;
+                      const cls = `px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
                       const handleSelect = () => {
                         setCatDropdownOpen(false);
                         if (onCategoryChange && location === '/') onCategoryChange(cat.id);
