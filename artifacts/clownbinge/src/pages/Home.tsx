@@ -91,7 +91,7 @@ export default function Home() {
             <div className="pt-2 pb-4">
               <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-snug max-w-xl">
                 <span className="block">A Public Accountability News Platform.</span>
-                <span className="block font-bold">Verified Fact-Finding for the People.</span>
+                <span className="block font-bold">Verified Across 65,000 Global Sources.</span>
               </h1>
               <div className="mt-3 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2">
                 <div className="flex gap-2">
