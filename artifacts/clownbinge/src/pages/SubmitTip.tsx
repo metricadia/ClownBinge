@@ -121,7 +121,7 @@ export default function SubmitTip() {
             Got Receipts?
           </div>
           <h1 className="font-black text-3xl sm:text-4xl lg:text-5xl leading-tight mb-4">
-            Submit a Post
+            Submit a <span className="text-[#F5C518]">Post</span>
           </h1>
           <p className="text-white/75 text-sm sm:text-base max-w-lg leading-relaxed">
             ClownBinge runs on primary sources. If you have a verifiable incident where a public figure contradicted their own documented record, we want it.
