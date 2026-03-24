@@ -132,23 +132,31 @@ cd scripts && pnpm sitemap                                    # Regenerate sitem
 
 ### Main Feed Curation Rules
 
-- **Main feed sort (3-tier system) in `artifacts/api-server/src/routes/posts.ts`:**
-  - `pinned DESC` always first
-  - CASE (ASC, negated): Tier A `self_owned`/`anti_racist_heroes` = -2, Tier B `nerd_out` = -1, Tier C everything else = 0
+- **Main feed sort (4-tier system) in `artifacts/api-server/src/routes/posts.ts`:**
+  - Single CASE (ASC, negated): Tier -3 = pinned, Tier -2 = self_owned/anti_racist_heroes, Tier -1 = nerd_out, Tier 0 = everything else
   - `publishedAt DESC` within each tier
-  - **IMPORTANT:** Drizzle ORM sql`` CASE in `.orderBy()` defaults ASC. Use negated values so -2 < -1 < 0 achieves correct priority.
+  - **IMPORTANT:** Drizzle ORM sql`` CASE in `.orderBy()` defaults ASC. Use negated values so -3 < -2 < -1 < 0 achieves correct priority. Pinned must be in the CASE -- do NOT use a separate `desc(postsTable.pinned)` or the CASE tier will override pinned ordering.
 - **Religion: EXCLUDED from main feed entirely.** Religion tab shows all religion articles.
-- **Tier A publishedAt timestamps (editorial curation):**
-  - CB-000007 (Ted Cruz): 2026-03-22T09:00 (Tier A #1)
-  - CB-000010 (Brian Carn): 2026-03-22T08:30 (Tier A #2)
-  - CB-000001 (Whitmore): 2026-03-22T08:00 (Tier A #3)
-  - CB-000006 (Afroman): 2026-03-22T07:30 (Tier A #4)
-  - CB-000003 (Donahue): 2026-03-22T07:00 (Tier A #5)
-  - CB-000009 (Tuberville): 2026-03-22T06:30 (Tier A #6)
-  - CB-000008 (Corker): 2026-03-22T06:00 (Tier A #7)
-  - CB-000002 (Hartwick): 2026-03-22T05:30 (Tier A #8)
-  - CB-000005 (Holden): 2026-03-22T05:00 (Tier A #9)
-- CB-000060 (NerdOut Black Americans) slotted at 2026-03-22T03:22:20 (Tier B #2)
+- **Pinned articles (STAFF PICK curated front page, ordered by publishedAt DESC):**
+  - CB-000043 (Ketanji): 2026-03-22T10:00 (#1)
+  - CB-000054 (Columbus/Washington visa): 2026-03-22T09:55 (#2)
+  - CB-000058 (A Roadmap Home): 2026-03-22T09:50 (#3)
+  - CB-000057 (Woke Is Not a Slur): 2026-03-22T09:45 (#4) -- asterisk removed from title
+  - CB-000056 (The Strongest Thing/Healing): 2026-03-22T09:40 (#5)
+  - CB-000007 (Ted Cruz Christ is King): 2026-03-22T09:35 (#6)
+  - CB-000045 ($2.8B/day debt interest): 2026-03-22T09:30 (#7)
+  - CB-000059 (Harriet Tubman/Irena Sendler): 2026-03-22T09:25 (#8)
+- **Tier -2 (self_owned/anti_racist_heroes) follow pinned block:**
+  - CB-000010 (Brian Carn): 2026-03-22T08:30 (#9)
+  - CB-000001 (Whitmore): 2026-03-22T08:00 (#10)
+  - CB-000006 (Afroman): 2026-03-22T07:30 (#11)
+  - CB-000003 (Donahue): 2026-03-22T07:00 (#12)
+  - CB-000009 (Tuberville): 2026-03-22T06:30 (#13)
+  - CB-000008 (Corker): 2026-03-22T06:00 (#14)
+  - CB-000002 (Hartwick): 2026-03-22T05:30 (#15)
+  - CB-000005 (Holden): 2026-03-22T05:00 (#16)
+- **Tier -1 (nerd_out) follow self_own block** (CB-000053, CB-000060)
+- **Tier 0 (everything else)** after nerd_out
 - Explicitly selecting the Religion category tab shows all religion articles
 - 15 categories (DB enum `category`): `self_owned`, `law_and_justice`, `money_and_power`, `us_constitution`, `women_and_girls`, `anti_racist_heroes`, `us_history`, `religion`, `investigations`, `war_and_inhumanity`, `health_and_healing`, `technology`, `censorship`, `global_south`, `how_it_works`
 - Categories where subjectName/subjectTitle NOT required: `us_history`, `us_constitution`, `investigations`, `how_it_works`, `war_and_inhumanity`, `health_and_healing`, `technology`, `censorship`, `global_south`, `women_and_girls`
