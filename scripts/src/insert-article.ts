@@ -58,6 +58,17 @@ async function main() {
     process.exit(1);
   }
 
+  const canonicalCategories = [
+    "self_owned", "law_and_justice", "money_and_power", "us_constitution",
+    "women_and_girls", "anti_racist_heroes", "us_history", "religion",
+    "investigations", "war_and_inhumanity", "health_and_healing", "technology",
+    "censorship", "global_south", "how_it_works", "nerd_out",
+  ];
+  if (!canonicalCategories.includes(article.category)) {
+    console.error(`Invalid category: "${article.category}". Must be one of: ${canonicalCategories.join(", ")}`);
+    process.exit(1);
+  }
+
   const alwaysRequired = ["title", "slug", "teaser", "body", "category", "verifiedSource"];
   const noSubjectCategories = [
     "us_history",

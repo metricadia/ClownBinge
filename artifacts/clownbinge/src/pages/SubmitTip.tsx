@@ -180,10 +180,22 @@ export default function SubmitTip() {
                 className="w-full border border-border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 bg-background"
               >
                 <option value="">Select a category</option>
-                <option value="political">Political</option>
-                <option value="religious">Religious</option>
-                <option value="cultural">Cultural</option>
-                <option value="other">Other</option>
+                <option value="self_owned">Self-Owned</option>
+                <option value="law_and_justice">Law &amp; Justice Files</option>
+                <option value="money_and_power">Money &amp; Power</option>
+                <option value="us_constitution">U.S. Constitution</option>
+                <option value="women_and_girls">Women &amp; Girls</option>
+                <option value="anti_racist_heroes">Anti-Racist Heroes</option>
+                <option value="us_history">U.S. History</option>
+                <option value="religion">Religion</option>
+                <option value="investigations">Investigations</option>
+                <option value="war_and_inhumanity">War &amp; Inhumanity</option>
+                <option value="health_and_healing">Health &amp; Healing</option>
+                <option value="technology">Technology</option>
+                <option value="censorship">Censorship</option>
+                <option value="global_south">Global South</option>
+                <option value="how_it_works">How It Works</option>
+                <option value="nerd_out">NerdOut</option>
               </select>
             </div>
           </fieldset>

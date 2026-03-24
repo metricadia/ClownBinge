@@ -5,67 +5,8 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { usePostsFilter, usePostsFeed } from "@/hooks/use-posts";
 import { useHomeSeoHead } from "@/hooks/use-seo-head";
 import { Loader2, AlertCircle } from "lucide-react";
-import type { Post } from "@workspace/api-client-react";
 import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
 
-// Mock data to ensure beautiful UI even if API fails or is empty initially
-const MOCK_POSTS: Post[] = [
-  {
-    id: "1",
-    caseNumber: "CB-00124",
-    title: "Senator Claims To Support 'Family Values' While Voting Against Child Tax Credit Expansion",
-    slug: "senator-family-values-hypocrisy",
-    teaser: "The voting record tells a different story than the campaign mailers. A deep dive into the consistent pattern of opposing family-centric legislation while running on a pro-family platform.",
-    body: "Full content here...",
-    category: "self_owned",
-    verifiedSource: "Congressional Record",
-    hasVideo: false,
-    tags: ["hypocrisy", "voting record"],
-    status: "published",
-    createdAt: new Date().toISOString(),
-    dateOfIncident: "2023-11-15T00:00:00Z",
-    viewCount: 14500,
-    shareCount: 2300,
-    userSubmitted: false,
-  },
-  {
-    id: "2",
-    caseNumber: "CB-00125",
-    title: "Governor's Bizarre Town Hall Tirade Goes Viral After Reporter Asks Basic Economics Question",
-    slug: "governor-town-hall-meltdown",
-    teaser: "When asked to explain the math behind the new budget proposal, the response devolved into a 4-minute rant about unrelated cultural grievances.",
-    body: "Full content here...",
-    category: "clown_electeds",
-    verifiedSource: "C-SPAN",
-    hasVideo: true,
-    videoThumbnail: "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=800&h=450&fit=crop",
-    tags: ["meltdown", "economy"],
-    status: "published",
-    createdAt: new Date().toISOString(),
-    dateOfIncident: "2024-01-22T00:00:00Z",
-    viewCount: 45200,
-    shareCount: 8900,
-    userSubmitted: false,
-  },
-  {
-    id: "3",
-    caseNumber: "CB-00126",
-    title: "Local Official Backtracks Entire Career Position After Checking Poll Numbers",
-    slug: "local-official-poll-reversal",
-    teaser: "We have the tape from 2018, 2020, and 2022. The 2024 pivot is a masterclass in political whiplash.",
-    body: "Full content here...",
-    category: "political",
-    verifiedSource: "Reuters",
-    hasVideo: false,
-    tags: ["flip-flop"],
-    status: "published",
-    createdAt: new Date().toISOString(),
-    dateOfIncident: "2024-02-10T00:00:00Z",
-    viewCount: 8200,
-    shareCount: 450,
-    userSubmitted: true,
-  }
-];
 
 export default function Home() {
   useHomeSeoHead();
@@ -75,8 +16,7 @@ export default function Home() {
   const { data: selfOwnData } = usePostsFeed('self_owned');
   const topSelfOwn = selfOwnData?.posts?.[0] ?? null;
 
-  // Use real data if available and not empty, otherwise fallback to mock for demonstration
-  const posts = (data?.posts && data.posts.length > 0) ? data.posts : MOCK_POSTS;
+  const posts = data?.posts ?? [];
 
   // Staff picks: filter to curated slugs in editorial order
   const displayPosts = isStaffPicks

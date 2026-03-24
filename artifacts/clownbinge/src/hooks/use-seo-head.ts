@@ -41,13 +41,22 @@ function removeJsonLd(id: string) {
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
-  political:        "Political",
-  self_owned:       "Self-Owned",
-  clown_electeds:   "Clown Electeds",
-  religious:        "Religious",
-  cultural:         "Cultural",
-  anti_racist_hero: "Anti-Racist Hero",
-  cb_exclusive:     "CB Exclusive",
+  self_owned:         "Self-Owned",
+  law_and_justice:    "Law & Justice Files",
+  money_and_power:    "Money & Power",
+  us_constitution:    "U.S. Constitution",
+  women_and_girls:    "Women & Girls",
+  anti_racist_heroes: "Anti-Racist Heroes",
+  us_history:         "U.S. History",
+  religion:           "Religion",
+  investigations:     "Investigations",
+  war_and_inhumanity: "War & Inhumanity",
+  health_and_healing: "Health & Healing",
+  technology:         "Technology",
+  censorship:         "Censorship",
+  global_south:       "Global South",
+  how_it_works:       "How It Works",
+  nerd_out:           "NerdOut",
 };
 
 export function useArticleSeoHead(post: Post | null | undefined) {
@@ -59,7 +68,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     const description = post.teaser ?? "";
     const categoryLabel = CATEGORY_LABELS[post.category] ?? post.category;
     const isSelfOwned = post.category === "self_owned";
-    const isHero = post.category === "anti_racist_hero";
+    const isHero = post.category === "anti_racist_heroes";
 
     document.title = `${post.title} | ClownBinge`;
 
