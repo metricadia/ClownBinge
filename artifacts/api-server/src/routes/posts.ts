@@ -61,6 +61,14 @@ router.get("/posts", async (req, res) => {
       conditions.push(sql`${postsTable.tags} @> ARRAY[${tag}]::text[]`);
     } else if (category) {
       conditions.push(eq(postsTable.category, category as any));
+    } else {
+      // Main feed: cap religion at the 2 most recent articles only
+      conditions.push(
+        sql`(${postsTable.category} != 'religion' OR ${postsTable.publishedAt} >= (
+          SELECT COALESCE(MIN(t.published_at), '1970-01-01'::timestamptz)
+          FROM (SELECT published_at FROM posts WHERE category = 'religion' AND status = 'published' ORDER BY published_at DESC LIMIT 2) t
+        ))`
+      );
     }
 
     const where = conditions.length === 1 ? conditions[0] : and(...conditions);
