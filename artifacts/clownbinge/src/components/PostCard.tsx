@@ -6,6 +6,7 @@ import { VerifiedBadge } from "./VerifiedBadge";
 import { UserSubmittedBadge } from "./UserSubmittedBadge";
 import { SelfOwnScoreBadge } from "./SelfOwnScoreBadge";
 import { abbreviateSource } from "@/lib/source-abbrev";
+import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
 
 const CATEGORY_LABELS: Record<string, string> = {
   self_owned:         "Self-Owned",
@@ -74,6 +75,11 @@ export function PostCard({ post }: { post: Post }) {
             <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
               {post.userSubmitted && <UserSubmittedBadge />}
               {post.selfOwnScore != null && <SelfOwnScoreBadge score={post.selfOwnScore} />}
+              {STAFF_PICKS_SLUGS.includes(post.slug) && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-green-600 text-white">
+                  ★ Staff Pick
+                </span>
+              )}
               <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
             </div>
           </div>
