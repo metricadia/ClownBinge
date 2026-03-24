@@ -25,7 +25,10 @@ router.get("/sponsors/category/:category", async (req, res) => {
         tagline: row.tagline ?? null,
       },
     });
-  } catch (err) {
+  } catch (err: any) {
+    if (err?.code === "42P01") {
+      return res.json({ sponsor: null });
+    }
     console.error("sponsors route error:", err);
     return res.status(500).json({ error: "Internal server error" });
   }
