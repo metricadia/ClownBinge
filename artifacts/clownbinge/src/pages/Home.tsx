@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
 import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
-import { usePostsFilter, usePostsFeed } from "@/hooks/use-posts";
+import { usePostsFilter, usePostsFeed, usePostsFeedPaginated } from "@/hooks/use-posts";
 import { useHomeSeoHead } from "@/hooks/use-seo-head";
 import { Loader2, AlertCircle } from "lucide-react";
 import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
@@ -12,18 +12,19 @@ export default function Home() {
   useHomeSeoHead();
   const { category, setCategory } = usePostsFilter();
   const isStaffPicks = category === ('staff_picks' as never);
-  const { data, isLoading, error } = usePostsFeed(isStaffPicks ? undefined : category, isStaffPicks ? 60 : 20);
+
+  const { data: staffPicksData, isLoading: staffPicksLoading, error: staffPicksError } = usePostsFeed(isStaffPicks ? undefined : undefined, isStaffPicks ? 60 : 0);
+  const { posts: paginatedPosts, isLoading, isLoadingMore, error, hasMore, loadMore } = usePostsFeedPaginated(isStaffPicks ? undefined : category, 20);
   const { data: selfOwnData } = usePostsFeed('self_owned');
   const topSelfOwn = selfOwnData?.posts?.[0] ?? null;
 
-  const posts = data?.posts ?? [];
-
-  // Staff picks: filter to curated slugs in editorial order
+  // Staff picks: filter curated slugs from a full fetch; regular feed uses paginated posts
   const displayPosts = isStaffPicks
-    ? STAFF_PICKS_SLUGS.map(slug => posts.find(p => p.slug === slug)).filter(Boolean) as typeof posts
-    : (data?.posts && data.posts.length > 0)
-      ? posts
-      : (category ? posts.filter(p => p.category === category) : posts);
+    ? STAFF_PICKS_SLUGS.map(slug => (staffPicksData?.posts ?? []).find(p => p.slug === slug)).filter(Boolean) as typeof paginatedPosts
+    : paginatedPosts;
+
+  const feedIsLoading = isStaffPicks ? staffPicksLoading : isLoading;
+  const feedError = isStaffPicks ? staffPicksError : error;
 
   return (
     <Layout onCategoryChange={setCategory} activeCategory={category}>
@@ -63,12 +64,12 @@ export default function Home() {
               </div>
             </div>
 
-            {isLoading ? (
+            {feedIsLoading ? (
               <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
                 <Loader2 className="w-10 h-10 animate-spin mb-4 text-primary" />
                 <p className="font-bold">Digging up the receipts...</p>
               </div>
-            ) : error ? (
+            ) : feedError ? (
               <div className="bg-red-50 border border-red-200 rounded-xl p-8 text-center text-red-800">
                 <AlertCircle className="w-10 h-10 mx-auto mb-3" />
                 <h3 className="font-bold text-lg mb-1">Failed to load feed</h3>
@@ -97,12 +98,22 @@ export default function Home() {
               </div>
             )}
             
-            {/* Infinite Scroll loading indicator placeholder */}
-            {!isLoading && displayPosts.length > 0 && (
+            {/* Load More */}
+            {!isStaffPicks && displayPosts.length > 0 && (hasMore || isLoadingMore) && (
               <div className="py-12 flex justify-center">
-                <button className="bg-white border-2 border-border text-foreground hover:border-primary hover:text-primary font-bold px-8 py-3 rounded-xl transition-colors shadow-sm">
-                  Load More Cases
-                </button>
+                {isLoadingMore ? (
+                  <div className="flex items-center gap-3 text-muted-foreground">
+                    <Loader2 className="w-5 h-5 animate-spin text-primary" />
+                    <span className="font-bold text-sm">Loading more cases...</span>
+                  </div>
+                ) : (
+                  <button
+                    onClick={loadMore}
+                    className="bg-white border-2 border-border text-foreground hover:border-primary hover:text-primary font-bold px-8 py-3 rounded-xl transition-colors shadow-sm"
+                  >
+                    Load More Cases
+                  </button>
+                )}
               </div>
             )}
           </div>

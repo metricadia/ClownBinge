@@ -32,6 +32,57 @@ export function usePostsFeed(category?: ListPostsCategory, limit = 20) {
   });
 }
 
+export function usePostsFeedPaginated(category?: ListPostsCategory, pageSize = 20) {
+  const [offset, setOffset] = useState(0);
+  const [allPosts, setAllPosts] = useState<any[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const isLoadingMore = useRef(false);
+
+  const { data, isLoading, error, isFetching } = useListPosts({
+    limit: pageSize,
+    offset,
+    ...(category ? { category } : {})
+  });
+
+  useEffect(() => {
+    setOffset(0);
+    setAllPosts([]);
+    setHasMore(true);
+    isLoadingMore.current = false;
+  }, [category]);
+
+  useEffect(() => {
+    if (!data?.posts) return;
+    if (offset === 0) {
+      setAllPosts(data.posts);
+    } else {
+      setAllPosts(prev => {
+        const existingIds = new Set(prev.map((p: any) => p.id));
+        const fresh = data.posts.filter((p: any) => !existingIds.has(p.id));
+        return [...prev, ...fresh];
+      });
+    }
+    setHasMore(data.posts.length === pageSize);
+    isLoadingMore.current = false;
+  }, [data, offset, pageSize]);
+
+  const loadMore = useCallback(() => {
+    if (isFetching || !hasMore) return;
+    isLoadingMore.current = true;
+    setOffset(prev => prev + pageSize);
+  }, [isFetching, hasMore, pageSize]);
+
+  return {
+    posts: allPosts,
+    isLoading: isLoading && offset === 0,
+    isLoadingMore: isFetching && offset > 0,
+    error,
+    hasMore,
+    loadMore,
+    total: data?.total,
+  };
+}
+
 export function usePostDetail(slug: string) {
   return useGetPost(slug);
 }
