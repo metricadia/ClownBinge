@@ -132,11 +132,23 @@ cd scripts && pnpm sitemap                                    # Regenerate sitem
 
 ### Main Feed Curation Rules
 
-- Feed sort order in `artifacts/api-server/src/routes/posts.ts`: `pinned DESC`, then `CASE WHEN category IN ('religion','nerd_out') THEN -1 ELSE 0 END` (ASC -- negated so religion/nerd_out sort first), then `publishedAt DESC`
-- Religion and nerd_out articles are in the same priority tier (CASE=-1), interleaved by publishedAt
-- **IMPORTANT:** Drizzle ORM sql`` CASE expressions in `.orderBy()` default to ASC. Use negated values (-1 < 0) to achieve DESC-equivalent behavior without wrapping in `desc()`
-- CB-000060 (NerdOut Black Americans) is slotted via `publishedAt='2026-03-22T03:22:20'` to land after the 2 religion articles
-- **Main feed religion cap:** Only the 2 most recent religion articles appear on the main feed. Implemented via subquery in the `else` branch of the category filter in `posts.ts`. Religion tab still shows all religion articles.
+- **Main feed sort (3-tier system) in `artifacts/api-server/src/routes/posts.ts`:**
+  - `pinned DESC` always first
+  - CASE (ASC, negated): Tier A `self_owned`/`anti_racist_heroes` = -2, Tier B `nerd_out` = -1, Tier C everything else = 0
+  - `publishedAt DESC` within each tier
+  - **IMPORTANT:** Drizzle ORM sql`` CASE in `.orderBy()` defaults ASC. Use negated values so -2 < -1 < 0 achieves correct priority.
+- **Religion: EXCLUDED from main feed entirely.** Religion tab shows all religion articles.
+- **Tier A publishedAt timestamps (editorial curation):**
+  - CB-000007 (Ted Cruz): 2026-03-22T09:00 (Tier A #1)
+  - CB-000010 (Brian Carn): 2026-03-22T08:30 (Tier A #2)
+  - CB-000001 (Whitmore): 2026-03-22T08:00 (Tier A #3)
+  - CB-000006 (Afroman): 2026-03-22T07:30 (Tier A #4)
+  - CB-000003 (Donahue): 2026-03-22T07:00 (Tier A #5)
+  - CB-000009 (Tuberville): 2026-03-22T06:30 (Tier A #6)
+  - CB-000008 (Corker): 2026-03-22T06:00 (Tier A #7)
+  - CB-000002 (Hartwick): 2026-03-22T05:30 (Tier A #8)
+  - CB-000005 (Holden): 2026-03-22T05:00 (Tier A #9)
+- CB-000060 (NerdOut Black Americans) slotted at 2026-03-22T03:22:20 (Tier B #2)
 - Explicitly selecting the Religion category tab shows all religion articles
 - 15 categories (DB enum `category`): `self_owned`, `law_and_justice`, `money_and_power`, `us_constitution`, `women_and_girls`, `anti_racist_heroes`, `us_history`, `religion`, `investigations`, `war_and_inhumanity`, `health_and_healing`, `technology`, `censorship`, `global_south`, `how_it_works`
 - Categories where subjectName/subjectTitle NOT required: `us_history`, `us_constitution`, `investigations`, `how_it_works`, `war_and_inhumanity`, `health_and_healing`, `technology`, `censorship`, `global_south`, `women_and_girls`

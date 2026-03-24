@@ -62,13 +62,8 @@ router.get("/posts", async (req, res) => {
     } else if (category) {
       conditions.push(eq(postsTable.category, category as any));
     } else {
-      // Main feed: cap religion at the 2 most recent articles only
-      conditions.push(
-        sql`(${postsTable.category} != 'religion' OR ${postsTable.publishedAt} >= (
-          SELECT COALESCE(MIN(t.published_at), '1970-01-01'::timestamptz)
-          FROM (SELECT published_at FROM posts WHERE category = 'religion' AND status = 'published' ORDER BY published_at DESC LIMIT 2) t
-        ))`
-      );
+      // Main feed: religion excluded entirely (religion tab only)
+      conditions.push(sql`${postsTable.category} != 'religion'`);
     }
 
     const where = conditions.length === 1 ? conditions[0] : and(...conditions);
@@ -79,10 +74,10 @@ router.get("/posts", async (req, res) => {
         .from(postsTable)
         .where(where)
         .orderBy(
-          // Pinned articles always first; religion and nerd_out both tier-1 (interleaved by publishedAt); else tier-0
-          // Negated values so default ASC sorts tier-1 (-1) before tier-0 (0)
+          // Pinned first. Tier A (self_owned, anti_racist_heroes)=-2, Tier B (nerd_out)=-1, Tier C=0
+          // Negated so ASC sort puts -2 before -1 before 0
           desc(postsTable.pinned),
-          sql`CASE WHEN ${postsTable.category} = 'religion' THEN -1 WHEN ${postsTable.category} = 'nerd_out' THEN -1 ELSE 0 END`,
+          sql`CASE WHEN ${postsTable.category} IN ('self_owned','anti_racist_heroes') THEN -2 WHEN ${postsTable.category} = 'nerd_out' THEN -1 ELSE 0 END`,
           desc(postsTable.publishedAt)
         )
         .limit(Number(limit))
