@@ -1,7 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { AdminNav } from "@/components/AdminNav";
 import { Link } from "wouter";
-import { Send, MapPin, Mail, MessageSquare, FileText } from "lucide-react";
+import { Send, MapPin, Mail, MessageSquare, FileText, Megaphone } from "lucide-react";
 
 export default function Contact() {
   return (
@@ -32,6 +32,24 @@ export default function Contact() {
           <Link href="/submit" className="shrink-0 inline-flex items-center gap-2 font-bold px-6 py-3 rounded-full transition-opacity hover:opacity-90 text-sm" style={{ background: "#F5C518", color: "#1A3A8F" }}>
             <FileText className="w-4 h-4" />
             Submit a Post
+          </Link>
+        </div>
+
+        {/* Advertising */}
+        <div className="mb-8 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-6 border border-gray-200 bg-white">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <Megaphone className="w-4 h-4 text-primary" />
+              <p className="text-xs font-bold tracking-widest uppercase text-primary">Advertising</p>
+            </div>
+            <h2 className="font-bold text-xl text-header mb-2">Reach a Verified Audience</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              ClownBinge readers are educators, researchers, journalists, and engaged citizens who value documented facts over opinion. Advertising inquiries, sponsorship, and bulk report orders.
+            </p>
+          </div>
+          <Link href="/advertise" className="shrink-0 inline-flex items-center gap-2 font-bold px-6 py-3 rounded-full transition-opacity hover:opacity-90 text-sm text-white" style={{ background: "#1A3A8F" }}>
+            <Megaphone className="w-4 h-4" />
+            Advertising Info
           </Link>
         </div>
 

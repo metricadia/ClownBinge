@@ -125,14 +125,11 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/store" className={`text-sm font-bold uppercase tracking-wider hover:text-secondary transition-colors ${location === '/store' ? 'text-secondary' : 'text-white/70'}`}>
               Books
             </Link>
-            <Link href="/advertise" className={`text-sm font-bold uppercase tracking-wider hover:text-secondary transition-colors ${location === '/advertise' ? 'text-secondary' : 'text-white/70'}`}>
-              Advertise
-            </Link>
-            <Link href="/contact" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/contact' ? 'text-white' : 'text-white/70'}`}>
-              Contact / Help
+            <Link href="/support" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/support' ? 'text-white' : 'text-white/70'}`}>
+              Support
             </Link>
             <Link href="/support" className={`text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full border-2 transition-colors ${location === '/support' ? 'border-secondary bg-secondary text-gray-900' : 'border-secondary/80 text-secondary hover:bg-secondary hover:text-gray-900'}`}>
-              Support Us
+              Donate Now
             </Link>
           </nav>
 
@@ -153,9 +150,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           <nav className="flex flex-col items-center justify-center flex-1 gap-8 p-6">
             <Link href="/about" className="text-2xl font-bold text-white uppercase tracking-widest">About</Link>
             <Link href="/store" className="text-2xl font-bold text-secondary uppercase tracking-widest">Books</Link>
-            <Link href="/advertise" className="text-2xl font-bold text-secondary uppercase tracking-widest">Advertise</Link>
-            <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Contact / Help</Link>
-            <Link href="/support" className="text-2xl font-bold border-2 border-secondary text-secondary uppercase tracking-widest px-8 py-3 rounded-full">Support Us</Link>
+            <Link href="/support" className="text-2xl font-bold text-white uppercase tracking-widest">Support</Link>
+            <Link href="/support" className="text-2xl font-bold border-2 border-secondary text-secondary uppercase tracking-widest px-8 py-3 rounded-full">Donate Now</Link>
           </nav>
         </div>
       )}
@@ -335,7 +331,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             style={{ color: "#F5C518", borderTop: "1px solid rgba(255,255,255,0.1)" }}
           >
             <Heart className="w-3 h-3" />
-            <span>Support Our Work</span>
+            <span>Donate Now</span>
           </Link>
         </div>
       </div>
@@ -375,7 +371,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 style={{ color: "#F5C518", borderTop: "1px solid rgba(255,255,255,0.1)" }}
               >
                 <Heart className="w-3 h-3" />
-                <span>Support Our Work</span>
+                <span>Donate Now</span>
               </Link>
             </div>
           </div>
