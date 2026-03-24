@@ -13,6 +13,7 @@ import { AdSlot } from "@/components/AdSlot";
 import { ClownCheckCTA } from "@/components/ClownCheckCTA";
 import { SponsorBar } from "@/components/SponsorBar";
 import { useCategorySponsor } from "@/hooks/use-sponsor";
+import { RelatedArticles } from "@/components/RelatedArticles";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { format } from "date-fns";
@@ -442,6 +443,8 @@ export default function PostDetail() {
             ))}
           </div>
         )}
+
+        <RelatedArticles currentSlug={post.slug} />
 
         <div className="mt-14">
           <NewsletterSignup source={`post_${post.id}`} />
