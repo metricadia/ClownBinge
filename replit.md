@@ -294,7 +294,7 @@ Every article with `category = "nerd_out"` automatically receives the following 
 
 **Redundant Truth principle:** The phrase "NerdOut Academic Analysis" must appear in the title tag, image alt, JSON-LD schema, AND the rendered page DOM. All four simultaneously. This is intentional SEO architecture.
 
-**Current NerdOut articles (as of March 2026):** CB-000053 (Foucault/Durkheim/Trump)
+**Current NerdOut articles (as of March 2026):** CB-000053 (Foucault/Durkheim/Trump), CB-000060 (Black Americans/Crime/Racist Narrative)
 
 ### What to Never Do
 
