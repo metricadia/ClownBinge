@@ -240,12 +240,6 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <p className="text-white/70 font-medium max-w-sm mb-6 leading-relaxed">
                 Verified accountability journalism. Primary sources only. The receipts don't lie.
               </p>
-              <div className="text-xs text-white/50 font-mono leading-relaxed">
-                © {new Date().getFullYear()} ClownBinge
-              </div>
-              <div className="text-xs text-white/40 mt-1 leading-relaxed">
-                Primary Source Analytics, LLC
-              </div>
             </div>
             
             <div>
@@ -285,6 +279,17 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 <li><a href="/ethics#self-own-methodology" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Scoring Methodology</a></li>
               </ul>
             </div>
+          </div>
+
+          <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <p className="text-xs font-mono text-white/50 leading-relaxed">
+              &copy; {new Date().getFullYear()} <span className="text-white/70 font-semibold">ClownBinge</span>
+              <span className="mx-2 text-white/20">|</span>
+              <span className="text-white/50">Primary Source Analytics, LLC</span>
+            </p>
+            <p className="text-[10px] font-mono tracking-[0.18em] uppercase" style={{ color: "#F5C518" }}>
+              Independent<span className="opacity-60">.</span> Verified<span className="opacity-60">.</span> The Primary Source<span className="opacity-60">.</span>
+            </p>
           </div>
         </div>
       </footer>
