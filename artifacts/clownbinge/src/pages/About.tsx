@@ -13,7 +13,7 @@ export default function About() {
           <h1 className="font-sans font-extrabold text-4xl sm:text-5xl text-header leading-tight mb-3">
             The news cycle is a clown farm.
           </h1>
-          <p className="font-sans font-bold text-2xl sm:text-3xl mb-8" style={{ color: "#F5C518" }}>
+          <p className="font-sans font-bold text-2xl sm:text-3xl mb-8" style={{ color: "#C9980A" }}>
             We binge it so you don't have to.
           </p>
 
@@ -23,7 +23,7 @@ export default function About() {
 
           <div className="rounded-2xl px-6 py-5 mb-8 border-2" style={{ background: "#1A3A8F", borderColor: "#1A3A8F" }}>
             <p className="font-mono font-bold text-base sm:text-lg text-white tracking-wide">
-              65,000 global sources<span style={{ color: "#F5C518" }}>.</span> Zero opinions<span style={{ color: "#F5C518" }}>.</span> One standard: the primary source record<span style={{ color: "#F5C518" }}>.</span>
+              <span style={{ color: "#F5C518" }}>65,000</span> global sources<span style={{ color: "#F5C518" }}>.</span> Zero opinions<span style={{ color: "#F5C518" }}>.</span> One standard: the primary source record<span style={{ color: "#F5C518" }}>.</span>
             </p>
           </div>
 
