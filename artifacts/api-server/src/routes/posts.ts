@@ -71,8 +71,8 @@ router.get("/posts", async (req, res) => {
         .from(postsTable)
         .where(where)
         .orderBy(
-          // Main feed: religion articles sink to the bottom; all other categories sort by recency
-          sql`CASE WHEN ${postsTable.category} = 'religion' THEN 1 ELSE 0 END`,
+          // Main feed priority: standard articles first, nerd_out second, religion last
+          sql`CASE WHEN ${postsTable.category} = 'religion' THEN 2 WHEN ${postsTable.category} = 'nerd_out' THEN 1 ELSE 0 END`,
           desc(postsTable.publishedAt)
         )
         .limit(Number(limit))
