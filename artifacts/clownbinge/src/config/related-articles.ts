@@ -273,6 +273,13 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
     "diversity-denial-primary-source-record-what-was-lost",
   ],
 
+  // --- Woke: Black liberation and language reclamation ---
+  "woke-is-not-a-slur-chronology-black-liberation-survival": [
+    "diversity-denial-primary-source-record-what-was-lost",
+    "dei-label-clinical-cost-documented-inventory",
+    "ketanji-brown-jackson-federal-record-confirmation-hearing",
+  ],
+
   // --- Healing / well-being: placed after heavy reads ---
   "the-strongest-thing-research-love-healing-long-life": [
     "beyond-social-security-what-to-build-before-the-clock-runs-out",
