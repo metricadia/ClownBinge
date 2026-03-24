@@ -82,6 +82,7 @@ async function main() {
     "global_south",
     "women_and_girls",
     "nerd_out",
+    "money_and_power",
   ];
   const subjectRequired = noSubjectCategories.includes(article.category) ? [] : ["subjectName", "subjectTitle"];
   const required = [...alwaysRequired, ...subjectRequired];
