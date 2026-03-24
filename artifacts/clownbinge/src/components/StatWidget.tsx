@@ -35,9 +35,10 @@ function useCountUp(target: number, duration = 1400) {
   return value;
 }
 
-function Stat({
+function StatRow({
   value,
   label,
+  description,
   prefix = "",
   suffix = "",
   decimals = 0,
@@ -45,6 +46,7 @@ function Stat({
 }: {
   value: number;
   label: string;
+  description: string;
   prefix?: string;
   suffix?: string;
   decimals?: number;
@@ -56,16 +58,21 @@ function Stat({
     : `${prefix}${animated.toLocaleString()}${suffix}`;
 
   return (
-    <div className="flex flex-col items-center text-center px-4 py-6">
-      <span
-        className="font-display font-black text-4xl sm:text-5xl tabular-nums leading-none mb-2"
+    <div className="flex items-center gap-6 px-6 py-5 border-t border-white/10">
+      <div
+        className="font-display font-black text-4xl sm:text-5xl tabular-nums leading-none shrink-0 w-28 text-right"
         style={{ color: "#F5C518" }}
       >
         {display}
-      </span>
-      <span className="text-white/80 font-semibold text-xs sm:text-sm uppercase tracking-widest leading-snug max-w-[160px]">
-        {label}
-      </span>
+      </div>
+      <div className="flex flex-col">
+        <span className="text-white font-bold text-sm uppercase tracking-widest leading-snug">
+          {label}
+        </span>
+        <span className="text-white/55 text-sm mt-1 leading-snug">
+          {description}
+        </span>
+      </div>
     </div>
   );
 }
@@ -93,7 +100,7 @@ export function StatWidget() {
       className="rounded-xl overflow-hidden my-10 border border-white/10"
       style={{ background: "#0f2060" }}
     >
-      <div className="px-6 pt-6 pb-2 text-center">
+      <div className="px-6 pt-6 pb-4 text-center">
         <p
           className="text-xs font-mono font-bold uppercase tracking-[0.2em]"
           style={{ color: "#F5C518" }}
@@ -103,12 +110,29 @@ export function StatWidget() {
         <p className="text-white/50 text-xs mt-1">Live data. Updated continuously.</p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-white/10 border-t border-white/10 mt-4">
-        <Stat value={stats.totalArticles} label="Verified Records Published" />
-        <Stat value={stats.totalCitations} label="Primary Sources Cited" />
-        <Stat value={stats.historicSelfOwns} label="Historic 10/10 Self-Owns" />
-        <Stat value={0} label="PAC / Dark Money Accepted" prefix="$" suffix=".00" isCurrency decimals={2} />
-      </div>
+      <StatRow
+        value={stats.totalArticles}
+        label="Verified Records Published"
+        description="Every article sourced to primary documents before publication. No exceptions."
+      />
+      <StatRow
+        value={stats.totalCitations}
+        label="Primary Sources Cited"
+        description="Court records, government filings, original data, and declassified documents."
+      />
+      <StatRow
+        value={stats.historicSelfOwns}
+        label="Historic 10/10 Self-Owns"
+        description="Public figures caught on their own documented record contradicting themselves."
+      />
+      <StatRow
+        value={0}
+        label="PAC / Dark Money Accepted"
+        description="We take no money from political action committees or anonymous donors. Our independence is structural."
+        prefix="$"
+        isCurrency
+        decimals={2}
+      />
     </div>
   );
 }
