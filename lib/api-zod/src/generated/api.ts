@@ -38,6 +38,7 @@ export const ListPostsQueryParams = zod.object({
       "censorship",
       "global_south",
       "how_it_works",
+      "nerd_out",
     ])
     .optional(),
   limit: zod.coerce.number().default(listPostsQueryLimitDefault),
@@ -69,6 +70,7 @@ export const ListPostsResponse = zod.object({
         "censorship",
         "global_south",
         "how_it_works",
+        "nerd_out",
       ]),
       subjectName: zod.string().nullish(),
       subjectTitle: zod.string().nullish(),
@@ -122,6 +124,7 @@ export const GetPostResponse = zod.object({
     "censorship",
     "global_south",
     "how_it_works",
+    "nerd_out",
   ]),
   subjectName: zod.string().nullish(),
   subjectTitle: zod.string().nullish(),
