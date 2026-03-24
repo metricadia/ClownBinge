@@ -273,6 +273,18 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
     "diversity-denial-primary-source-record-what-was-lost",
   ],
 
+  // --- Healing / well-being: placed after heavy reads ---
+  "the-strongest-thing-research-love-healing-long-life": [
+    "beyond-social-security-what-to-build-before-the-clock-runs-out",
+    "ketanji-brown-jackson-federal-record-confirmation-hearing",
+    "columbus-george-washington-illegal-american-chronology-displacement",
+  ],
+  "columbus-george-washington-illegal-american-chronology-displacement": [
+    "the-strongest-thing-research-love-healing-long-life",
+    "cb-000041-united-states-built-by-immigrants-record-confirms-it",
+    "first-nations-survival-census-record-us-history",
+  ],
+
   // --- First Nations companion pieces ---
   "first-nations-survival-census-record-us-history": [
     "first-nations-knowledge-inventory-medicine-ecology-engineering",
