@@ -18,7 +18,7 @@ export default function About() {
           </p>
 
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-            ClownBinge was built on a simple premise: traditional media has become a circus of misinformation, performance, and manufactured narrative. We don't editorialize the chaos. We navigate it. Our team binges the entire information ecosystem, from fringe to mainstream, from local court records to international wire services, extracting only what survives the only test that matters: the primary source. If it can't be verified against an original document, it doesn't exist here.
+            <strong>ClownBinge was built on a simple premise:</strong> traditional media has become a circus of misinformation, performance, and manufactured narrative. We don't editorialize the chaos. We navigate it. Our team binges the entire information ecosystem, from fringe to mainstream, from local court records to international wire services, extracting only what survives the only test that matters: the primary source. If it can't be verified against an original document, it doesn't exist here.
           </p>
 
           <div className="rounded-2xl px-6 py-5 mb-8 border-2" style={{ background: "#1A3A8F", borderColor: "#1A3A8F" }}>
