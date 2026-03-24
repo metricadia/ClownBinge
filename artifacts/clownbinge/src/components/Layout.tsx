@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Menu, X, ChevronDown, Heart } from "lucide-react";
+import { Menu, X, ChevronDown, Heart, Home } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
 
@@ -88,7 +88,16 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         ${scrolled ? 'bg-header/95 backdrop-blur-md shadow-lg' : 'bg-header'}
       `}>
         <div className="cb-container h-20 sm:h-24 flex items-center justify-between">
-          {/* Logo */}
+          {/* Home icon + Logo */}
+          <div className="flex items-center gap-4">
+          <Link
+            href="/"
+            onClick={() => { onCategoryChange?.('all'); setCatDropdownOpen(false); }}
+            className={`transition-colors ${location === '/' ? 'text-white' : 'text-white/50 hover:text-white'}`}
+            title="Home"
+          >
+            <Home className="w-6 h-6" />
+          </Link>
           <Link
             href="/"
             onClick={() => { onCategoryChange?.('all'); setCatDropdownOpen(false); }}
@@ -106,29 +115,24 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               Independent<span className="text-[#F5C518]">.</span> Verified<span className="text-[#F5C518]">.</span> The Primary Source<span className="text-[#F5C518]">.</span>
             </span>
           </Link>
+          </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6 ml-10">
-            <Link href="/" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/' ? 'text-white' : 'text-white/70'}`}>
-              Home
-            </Link>
             <Link href="/about" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/about' ? 'text-white' : 'text-white/70'}`}>
               About
             </Link>
             <Link href="/store" className={`text-sm font-bold uppercase tracking-wider hover:text-secondary transition-colors ${location === '/store' ? 'text-secondary' : 'text-white/70'}`}>
               Books
             </Link>
-            <Link href="/contact" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/contact' ? 'text-white' : 'text-white/70'}`}>
-              Contact
-            </Link>
             <Link href="/advertise" className={`text-sm font-bold uppercase tracking-wider hover:text-secondary transition-colors ${location === '/advertise' ? 'text-secondary' : 'text-white/70'}`}>
               Advertise
             </Link>
+            <Link href="/contact" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/contact' ? 'text-white' : 'text-white/70'}`}>
+              Contact / Help
+            </Link>
             <Link href="/support" className={`text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full border-2 transition-colors ${location === '/support' ? 'border-secondary bg-secondary text-gray-900' : 'border-secondary/80 text-secondary hover:bg-secondary hover:text-gray-900'}`}>
               Support Us
-            </Link>
-            <Link href="/submit" className={`text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full transition-colors ${location === '/submit' ? 'bg-secondary text-gray-900' : 'bg-secondary/90 text-gray-900 hover:bg-secondary'}`}>
-              Submit a Post
             </Link>
           </nav>
 
@@ -147,13 +151,11 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
       {mobileMenuOpen && (
         <div className="fixed inset-0 top-20 sm:top-24 z-40 bg-header/95 backdrop-blur-xl flex flex-col md:hidden">
           <nav className="flex flex-col items-center justify-center flex-1 gap-8 p-6">
-            <Link href="/" className="text-2xl font-bold text-white uppercase tracking-widest">Home</Link>
             <Link href="/about" className="text-2xl font-bold text-white uppercase tracking-widest">About</Link>
             <Link href="/store" className="text-2xl font-bold text-secondary uppercase tracking-widest">Books</Link>
-            <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Contact</Link>
             <Link href="/advertise" className="text-2xl font-bold text-secondary uppercase tracking-widest">Advertise</Link>
+            <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Contact / Help</Link>
             <Link href="/support" className="text-2xl font-bold border-2 border-secondary text-secondary uppercase tracking-widest px-8 py-3 rounded-full">Support Us</Link>
-            <Link href="/submit" className="text-2xl font-bold bg-secondary text-gray-900 uppercase tracking-widest px-8 py-3 rounded-full">Submit a Post</Link>
           </nav>
         </div>
       )}
