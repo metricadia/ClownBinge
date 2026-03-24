@@ -65,7 +65,7 @@ export default function Advertise() {
           <p className="text-xs font-bold tracking-widest uppercase text-secondary mb-4">
             Advertise with ClownBinge
           </p>
-          <h1 className="font-sans font-black text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6 max-w-4xl">
+          <h1 className="font-sans font-black text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6 max-w-4xl text-white">
             Your brand, next to the{" "}
             <span className="text-secondary">primary source.</span>
           </h1>
