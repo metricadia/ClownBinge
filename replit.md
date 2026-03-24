@@ -272,6 +272,30 @@ Rules:   lowercase, hyphens only, no stop words, max 75 chars
 - Core Web Vitals: LCP < 2.5s, FID < 100ms, CLS < 0.1, TTFB < 800ms
 - Publication velocity anomaly detection (alert if > 2 articles same day)
 
+### NerdOut Academic Category -- Systemic SEO Treatment (REQUIRED)
+
+Every article with `category = "nerd_out"` automatically receives the following treatment via code. This is NOT per-article config -- it is enforced at the component and hook level. No manual action needed on insert. Confirm these are in place if any refactor touches the components below.
+
+**PostCard.tsx** (feed tile):
+- Grey "Academic" pill badge (slate-500, rounded-full) in the badge row
+- "Scholarly Read" pill label next to the source in the footer
+- "Academic" pill has a tooltip: "Academic-level analysis for researchers, educators, and the deeply curious. Longer read. Heavier sourcing. Worth it."
+
+**PostDetail.tsx** (article page):
+- Descriptor line immediately below the H1: `NERDOUT ACADEMIC ANALYSIS -- PRIMARY SOURCES -- SCHOLARLY READ` (visible in DOM, read by crawlers)
+
+**use-seo-head.ts** (metadata):
+- `<title>` tag: `[Article Title] | NerdOut Academic Analysis | ClownBinge`
+- `og:image:alt`: `[Article Title] -- NerdOut Academic Analysis | ClownBinge`
+- JSON-LD `@type`: `["NewsArticle", "ScholarlyArticle"]` (dual type)
+- JSON-LD `articleSection`: `"NerdOut Academic Analysis"`
+- JSON-LD `genre`: `"Academic Analysis"`
+- JSON-LD `educationalLevel`: `"advanced"`
+
+**Redundant Truth principle:** The phrase "NerdOut Academic Analysis" must appear in the title tag, image alt, JSON-LD schema, AND the rendered page DOM. All four simultaneously. This is intentional SEO architecture.
+
+**Current NerdOut articles (as of March 2026):** CB-000053 (Foucault/Durkheim/Trump)
+
 ### What to Never Do
 
 - Never publish > 2 articles in a calendar day
