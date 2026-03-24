@@ -21,15 +21,15 @@ export default function Contact() {
 
         <AdminNav />
 
-        <div className="mb-10 bg-primary/5 border border-primary/20 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-6">
+        <div className="mb-10 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-6" style={{ background: "#1A3A8F" }}>
           <div className="flex-1">
-            <p className="text-xs font-bold tracking-widest uppercase text-primary mb-1">Got Receipts?</p>
-            <h2 className="font-bold text-xl text-header mb-2">Submit a Post</h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Know of a politician or religious leader who has betrayed their constituents? Submit your post with a primary source and we will review it for publication.
+            <p className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: "#F5C518" }}>Got Receipts?</p>
+            <h2 className="font-bold text-xl text-white mb-2">Submit a Post</h2>
+            <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.75)" }}>
+              Have a primary source the public needs to see? A documented vote, court filing, government record, peer-reviewed study, or verified fact on any public figure, institution, or claim. Submit it and we will review it for publication.
             </p>
           </div>
-          <Link href="/submit" className="shrink-0 inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-bold px-6 py-3 rounded-lg transition-colors text-sm">
+          <Link href="/submit" className="shrink-0 inline-flex items-center gap-2 font-bold px-6 py-3 rounded-full transition-opacity hover:opacity-90 text-sm" style={{ background: "#F5C518", color: "#1A3A8F" }}>
             <FileText className="w-4 h-4" />
             Submit a Post
           </Link>
