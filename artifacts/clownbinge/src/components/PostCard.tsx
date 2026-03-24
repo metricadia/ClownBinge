@@ -7,6 +7,7 @@ import { UserSubmittedBadge } from "./UserSubmittedBadge";
 import { SelfOwnScoreBadge } from "./SelfOwnScoreBadge";
 import { abbreviateSource } from "@/lib/source-abbrev";
 import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const CATEGORY_LABELS: Record<string, string> = {
   self_owned:         "Self-Owned",
@@ -83,9 +84,21 @@ export function PostCard({ post }: { post: Post }) {
                 </span>
               )}
               {post.category === "nerd_out" && (
-                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-slate-500 text-white">
-                  Academic
-                </span>
+                <TooltipProvider delayDuration={200}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-slate-500 text-white cursor-help">
+                        Academic
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      side="bottom"
+                      className="max-w-[220px] text-center bg-slate-800 text-white border-0 leading-snug py-2.5 px-3"
+                    >
+                      Academic-level analysis for researchers, educators, and the deeply curious. Longer read. Heavier sourcing. Worth it.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               )}
               <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
             </div>
