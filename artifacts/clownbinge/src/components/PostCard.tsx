@@ -82,6 +82,11 @@ export function PostCard({ post }: { post: Post }) {
                   ★ Staff Pick
                 </span>
               )}
+              {post.category === "nerd_out" && (
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-slate-500 text-white">
+                  Academic
+                </span>
+              )}
               <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
             </div>
           </div>
@@ -118,8 +123,13 @@ export function PostCard({ post }: { post: Post }) {
 
           {/* Footer Info */}
           <div className="flex items-center justify-between mt-auto pt-4 border-t border-current/10 gap-4">
-            <div className={`text-xs font-medium truncate min-w-0 ${mutedTextClasses}`}>
-              {abbreviateSource(post.verifiedSource, true)}
+            <div className={`flex items-center gap-2 text-xs font-medium truncate min-w-0 ${mutedTextClasses}`}>
+              <span className="truncate">{abbreviateSource(post.verifiedSource, true)}</span>
+              {post.category === "nerd_out" && (
+                <span className="shrink-0 inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest bg-slate-100 text-slate-500 border border-slate-300">
+                  Scholarly Read
+                </span>
+              )}
             </div>
             <div className="text-xs font-bold uppercase tracking-wider text-primary group-hover:translate-x-1 transition-transform">
               Read More &gt;
