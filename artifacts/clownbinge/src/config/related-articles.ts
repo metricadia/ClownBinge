@@ -262,8 +262,15 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
   ],
   "dei-label-clinical-cost-documented-inventory": [
     "diversity-denial-primary-source-record-what-was-lost",
-    "cnn-vanishing-act-wbd-debt-eeoc-audit",
+    "fake-news-foucault-durkheim-trump-prophetic-roots",
     "arithmetic-of-presence-census-2020-2025-white-america",
+  ],
+
+  // --- NerdOut academic analysis ---
+  "fake-news-foucault-durkheim-trump-prophetic-roots": [
+    "dei-label-clinical-cost-documented-inventory",
+    "cnn-vanishing-act-wbd-debt-eeoc-audit",
+    "diversity-denial-primary-source-record-what-was-lost",
   ],
 
   // --- First Nations companion pieces ---

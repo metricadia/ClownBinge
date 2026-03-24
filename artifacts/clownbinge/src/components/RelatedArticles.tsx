@@ -18,6 +18,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   censorship:         "Censorship",
   global_south:       "Global South",
   how_it_works:       "How It Works",
+  nerd_out:           "NerdOut",
 };
 
 const CATEGORY_COLOR: Record<string, string> = {
@@ -36,6 +37,7 @@ const CATEGORY_COLOR: Record<string, string> = {
   censorship:         "bg-gray-700/10 text-gray-700",
   global_south:       "bg-teal-700/10 text-teal-700",
   how_it_works:       "bg-violet-700/10 text-violet-700",
+  nerd_out:           "bg-fuchsia-900/10 text-fuchsia-900",
 };
 
 interface RelatedArticlesProps {

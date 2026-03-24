@@ -24,4 +24,5 @@ export const PostCategory = {
   censorship: "censorship",
   global_south: "global_south",
   how_it_works: "how_it_works",
+  nerd_out: "nerd_out",
 } as const;

@@ -131,6 +131,21 @@
     margin-bottom: 1.75rem;
   }
 
+  /* APA 7 References section (NerdOut articles) */
+  .cb-references {
+    border-top: 2px solid oklch(var(--border));
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+  }
+  .cb-references p {
+    padding-left: 2rem;
+    text-indent: -2rem;
+    text-align: left !important;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem !important;
+  }
+
   /* Factoid Popup */
   .cb-factoid-popup {
     position: absolute;

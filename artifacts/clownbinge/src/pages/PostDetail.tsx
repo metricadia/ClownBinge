@@ -266,6 +266,9 @@ export default function PostDetail() {
                   </>
                 )}
               </div>
+              {post.category === "nerd_out" && (
+                <p className="text-xs italic text-fuchsia-900 font-medium mt-1">Academic analysis. Primary sources. For the seriously curious.</p>
+              )}
             </div>
             <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
               {post.userSubmitted && <UserSubmittedBadge />}

@@ -70,6 +70,7 @@ async function main() {
     "censorship",
     "global_south",
     "women_and_girls",
+    "nerd_out",
   ];
   const subjectRequired = noSubjectCategories.includes(article.category) ? [] : ["subjectName", "subjectTitle"];
   const required = [...alwaysRequired, ...subjectRequired];

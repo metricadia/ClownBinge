@@ -24,6 +24,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   censorship:         "Censorship",
   global_south:       "Global South",
   how_it_works:       "How It Works",
+  nerd_out:           "NerdOut",
 };
 
 const CATEGORY_BORDER: Record<string, string> = {
@@ -42,6 +43,7 @@ const CATEGORY_BORDER: Record<string, string> = {
   censorship:         "border-zinc-700 shadow-lg shadow-zinc-700/20",
   global_south:       "border-cyan-700 shadow-lg shadow-cyan-700/20",
   how_it_works:       "border-slate-600 shadow-lg shadow-slate-600/20",
+  nerd_out:           "border-fuchsia-900 shadow-lg shadow-fuchsia-900/20",
 };
 
 export function PostCard({ post }: { post: Post }) {
