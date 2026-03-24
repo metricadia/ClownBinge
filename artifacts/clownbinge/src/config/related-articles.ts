@@ -273,6 +273,13 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
     "diversity-denial-primary-source-record-what-was-lost",
   ],
 
+  // --- American statesman / bipartisan governance ---
+  "a-roadmap-home-requiem-american-statesman": [
+    "woke-is-not-a-slur-chronology-black-liberation-survival",
+    "we-hold-these-truths-2026-constitutional-record",
+    "ketanji-brown-jackson-federal-record-confirmation-hearing",
+  ],
+
   // --- Woke: Black liberation and language reclamation ---
   "woke-is-not-a-slur-chronology-black-liberation-survival": [
     "diversity-denial-primary-source-record-what-was-lost",
