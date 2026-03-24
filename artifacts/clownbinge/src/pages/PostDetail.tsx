@@ -239,6 +239,7 @@ export default function PostDetail() {
   const isSelfOwned = post.category === "self_owned";
   const isVideo = post.hasVideo;
   const isHero = post.category === "anti_racist_heroes";
+  const isNerdOut = post.category === "nerd_out";
 
   return (
     <Layout>
@@ -308,9 +309,15 @@ export default function PostDetail() {
           </div>
           <div className="border-b-2 border-border mb-4" />
 
-          <h1 className={`font-sans font-bold text-xl sm:text-2xl lg:text-3xl leading-tight tracking-tight mb-5 ${isSelfOwned ? "text-primary" : "text-header"}`}>
+          <h1 className={`font-sans font-bold text-xl sm:text-2xl lg:text-3xl leading-tight tracking-tight mb-3 ${isSelfOwned ? "text-primary" : "text-header"}`}>
             {post.title}
           </h1>
+
+          {isNerdOut && (
+            <p className="text-xs font-black uppercase tracking-widest text-slate-500 mb-4">
+              NerdOut Academic Analysis &mdash; Primary Sources &mdash; Scholarly Read
+            </p>
+          )}
 
           <p className="text-base sm:text-lg text-muted-foreground font-medium leading-relaxed border-l-4 border-secondary pl-5">
             {post.teaser}

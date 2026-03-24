@@ -69,8 +69,11 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     const categoryLabel = CATEGORY_LABELS[post.category] ?? post.category;
     const isSelfOwned = post.category === "self_owned";
     const isHero = post.category === "anti_racist_heroes";
+    const isNerdOut = post.category === "nerd_out";
 
-    document.title = `${post.title} | ClownBinge`;
+    document.title = isNerdOut
+      ? `${post.title} | NerdOut Academic Analysis | ClownBinge`
+      : `${post.title} | ClownBinge`;
 
     setLink("canonical", canonical);
 
@@ -81,6 +84,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     setMeta("og:type",        "article",    "property");
     setMeta("og:url",         canonical,    "property");
     setMeta("og:image",       ogImage,      "property");
+    setMeta("og:image:alt",   isNerdOut ? `${post.title} — NerdOut Academic Analysis | ClownBinge` : `${post.title} | ClownBinge`, "property");
     setMeta("og:site_name",   "ClownBinge", "property");
 
     setMeta("twitter:card",        "summary_large_image");
@@ -125,14 +129,16 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     // NewsArticle schema
     const articleSchema: Record<string, unknown> = {
       "@context": "https://schema.org",
-      "@type": "NewsArticle",
+      "@type": isNerdOut ? ["NewsArticle", "ScholarlyArticle"] : "NewsArticle",
       "headline": post.title,
       "description": description,
       "datePublished": post.publishedAt ?? post.createdAt,
       "dateModified":  post.publishedAt ?? post.createdAt,
       "mainEntityOfPage": { "@type": "WebPage", "@id": canonical },
       "url": canonical,
-      "articleSection": categoryLabel,
+      "articleSection": isNerdOut ? "NerdOut Academic Analysis" : categoryLabel,
+      "genre": isNerdOut ? "Academic Analysis" : "Accountability Journalism",
+      "educationalLevel": isNerdOut ? "advanced" : undefined,
       "keywords": Array.isArray(post.tags) ? post.tags.join(", ") : "",
       "author": {
         "@type": "Organization",
