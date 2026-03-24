@@ -132,7 +132,10 @@ cd scripts && pnpm sitemap                                    # Regenerate sitem
 
 ### Main Feed Curation Rules
 
-- Religion articles only appear on main feed if `selfOwnScore >= 10` (perfect score)
+- Feed sort order in `artifacts/api-server/src/routes/posts.ts`: `pinned DESC`, then `CASE WHEN category IN ('religion','nerd_out') THEN -1 ELSE 0 END` (ASC -- negated so religion/nerd_out sort first), then `publishedAt DESC`
+- Religion and nerd_out articles are in the same priority tier (CASE=-1), interleaved by publishedAt
+- **IMPORTANT:** Drizzle ORM sql`` CASE expressions in `.orderBy()` default to ASC. Use negated values (-1 < 0) to achieve DESC-equivalent behavior without wrapping in `desc()`
+- CB-000060 (NerdOut Black Americans) is slotted at position #8 via `publishedAt='2026-03-22T03:22:20'` between the 6th and 7th religion articles
 - Explicitly selecting the Religion category tab shows all religion articles
 - 15 categories (DB enum `category`): `self_owned`, `law_and_justice`, `money_and_power`, `us_constitution`, `women_and_girls`, `anti_racist_heroes`, `us_history`, `religion`, `investigations`, `war_and_inhumanity`, `health_and_healing`, `technology`, `censorship`, `global_south`, `how_it_works`
 - Categories where subjectName/subjectTitle NOT required: `us_history`, `us_constitution`, `investigations`, `how_it_works`, `war_and_inhumanity`, `health_and_healing`, `technology`, `censorship`, `global_south`, `women_and_girls`
