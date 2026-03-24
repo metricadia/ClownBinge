@@ -7,6 +7,17 @@ import { useHomeSeoHead } from "@/hooks/use-seo-head";
 import { Loader2, AlertCircle } from "lucide-react";
 import type { Post } from "@workspace/api-client-react";
 
+const STAFF_PICKS_SLUGS = [
+  "arithmetic-of-presence-census-2020-2025-white-america",
+  "give-me-your-tired-us-foreign-policy-immigration-global-south",
+  "we-hold-these-truths-2026-constitutional-record",
+  "second-amendment-racial-disparity-philando-castile",
+  "national-debt-military-spending-interest-payments-generational-cost",
+  "diversity-denial-primary-source-record-what-was-lost",
+  "ted-haggard-male-escort-meth-nae-resignation-2006",
+  "cable-news-binary-media-bias-cnn-msnbc-fox-documented-record-2026",
+];
+
 // Mock data to ensure beautiful UI even if API fails or is empty initially
 const MOCK_POSTS: Post[] = [
   {
@@ -69,17 +80,20 @@ const MOCK_POSTS: Post[] = [
 export default function Home() {
   useHomeSeoHead();
   const { category, setCategory } = usePostsFilter();
-  const { data, isLoading, error } = usePostsFeed(category);
+  const isStaffPicks = category === ('staff_picks' as never);
+  const { data, isLoading, error } = usePostsFeed(isStaffPicks ? undefined : category, isStaffPicks ? 60 : 20);
   const { data: selfOwnData } = usePostsFeed('self_owned');
   const topSelfOwn = selfOwnData?.posts?.[0] ?? null;
 
   // Use real data if available and not empty, otherwise fallback to mock for demonstration
   const posts = (data?.posts && data.posts.length > 0) ? data.posts : MOCK_POSTS;
-  
-  // Filter mock posts if using mock data and category is set
-  const displayPosts = (data?.posts && data.posts.length > 0) 
-    ? posts 
-    : (category ? posts.filter(p => p.category === category) : posts);
+
+  // Staff picks: filter to curated slugs in editorial order
+  const displayPosts = isStaffPicks
+    ? STAFF_PICKS_SLUGS.map(slug => posts.find(p => p.slug === slug)).filter(Boolean) as typeof posts
+    : (data?.posts && data.posts.length > 0)
+      ? posts
+      : (category ? posts.filter(p => p.category === category) : posts);
 
   return (
     <Layout onCategoryChange={setCategory} activeCategory={category}>

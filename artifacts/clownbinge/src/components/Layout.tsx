@@ -5,6 +5,7 @@ import { usePostsCount } from "@/hooks/use-posts";
 
 const CATEGORIES = [
   { id: "all",               label: "All" },
+  { id: "staff_picks",       label: "★ Staff Picks" },
   { id: "self_owned",        label: "Self-Owned" },
   { id: "law_and_justice",   label: "Law & Justice Files" },
   { id: "money_and_power",   label: "Money & Power" },
@@ -24,6 +25,7 @@ const CATEGORIES = [
 
 const PILL: Record<string, { on: string; off: string }> = {
   all:               { on: 'bg-primary text-white shadow-md ring-2 ring-primary/40',         off: 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground' },
+  staff_picks:       { on: 'bg-[#F5C518] text-[#1A3A8F] shadow-md ring-2 ring-[#F5C518]/50 font-black', off: 'bg-[#F5C518] text-[#1A3A8F] hover:bg-[#e0b400] font-black' },
   self_owned:        { on: 'bg-primary text-white shadow-md ring-2 ring-primary/40',         off: 'bg-primary text-white hover:bg-primary/80' },
   law_and_justice:   { on: 'bg-red-700 text-white shadow-md ring-2 ring-red-700/40',         off: 'bg-red-700 text-white hover:bg-red-800' },
   money_and_power:   { on: 'bg-emerald-700 text-white shadow-md ring-2 ring-emerald-700/40', off: 'bg-emerald-700 text-white hover:bg-emerald-800' },

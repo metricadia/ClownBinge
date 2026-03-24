@@ -24,9 +24,9 @@ export function usePostsFilter() {
   };
 }
 
-export function usePostsFeed(category?: ListPostsCategory) {
+export function usePostsFeed(category?: ListPostsCategory, limit = 20) {
   return useListPosts({ 
-    limit: 20, 
+    limit, 
     offset: 0,
     ...(category ? { category } : {})
   });
