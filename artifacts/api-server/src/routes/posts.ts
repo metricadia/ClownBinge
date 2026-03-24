@@ -71,9 +71,10 @@ router.get("/posts", async (req, res) => {
         .from(postsTable)
         .where(where)
         .orderBy(
-          // Pinned articles always first; then standard, nerd_out, religion
+          // Pinned articles always first, sorted purely by publishedAt (no category boost within pinned)
+          // Non-pinned: religion=2, nerd_out=1, else=0 boost, then publishedAt
           desc(postsTable.pinned),
-          sql`CASE WHEN ${postsTable.category} = 'religion' THEN 2 WHEN ${postsTable.category} = 'nerd_out' THEN 1 ELSE 0 END`,
+          sql`CASE WHEN NOT ${postsTable.pinned} AND ${postsTable.category} = 'religion' THEN 2 WHEN NOT ${postsTable.pinned} AND ${postsTable.category} = 'nerd_out' THEN 1 ELSE 0 END`,
           desc(postsTable.publishedAt)
         )
         .limit(Number(limit))
