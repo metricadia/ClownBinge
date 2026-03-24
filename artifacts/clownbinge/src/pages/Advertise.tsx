@@ -183,8 +183,9 @@ export default function Advertise() {
               </div>
               <div>
                 <p className="text-xs font-bold tracking-widest uppercase text-secondary mb-2">Brand Safety Policy</p>
-                <h2 className="font-black text-3xl sm:text-4xl leading-tight">
-                  We protect the record. That protects your brand.
+                <h2 className="font-black text-3xl sm:text-4xl leading-tight text-white">
+                  We protect the record.{" "}
+                  <span style={{ color: "#F5C518" }}>That protects your brand.</span>
                 </h2>
               </div>
             </div>
