@@ -273,6 +273,13 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
     "diversity-denial-primary-source-record-what-was-lost",
   ],
 
+  // --- Human selflessness across difference ---
+  "they-did-not-have-to-primary-source-record-human-selflessness": [
+    "a-roadmap-home-requiem-american-statesman",
+    "ketanji-brown-jackson-federal-record-confirmation-hearing",
+    "the-strongest-thing-research-love-healing-long-life",
+  ],
+
   // --- American statesman / bipartisan governance ---
   "a-roadmap-home-requiem-american-statesman": [
     "woke-is-not-a-slur-chronology-black-liberation-survival",
