@@ -44,7 +44,7 @@ function Router() {
       <Route path="/reports" component={ComprehensiveReport} />
       <Route path="/tags/:tag" component={TagIndex} />
       <Route path="/submit" component={SubmitTip} />
-      <Route path="/advertise" component={Advertise} />
+      <Route path="/advertise" component={Contact} />
       <Route path="/invest-in-us" component={Support} />
       <Route component={NotFound} />
     </Switch>
