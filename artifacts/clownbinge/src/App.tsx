@@ -14,6 +14,7 @@ import Terms from "@/pages/Terms";
 import Ethics from "@/pages/Ethics";
 import VerifyNews from "@/pages/VerifyNews";
 import ComprehensiveReport from "@/pages/ComprehensiveReport";
+import Support from "@/pages/Support";
 import TagIndex from "@/pages/TagIndex";
 import SubmitTip from "@/pages/SubmitTip";
 import Advertise from "@/pages/Advertise";
@@ -44,6 +45,7 @@ function Router() {
       <Route path="/tags/:tag" component={TagIndex} />
       <Route path="/submit" component={SubmitTip} />
       <Route path="/advertise" component={Advertise} />
+      <Route path="/support" component={Support} />
       <Route component={NotFound} />
     </Switch>
   );

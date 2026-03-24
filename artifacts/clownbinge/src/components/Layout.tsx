@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Heart } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
 
@@ -124,6 +124,9 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/advertise" className={`text-sm font-bold uppercase tracking-wider hover:text-secondary transition-colors ${location === '/advertise' ? 'text-secondary' : 'text-white/70'}`}>
               Advertise
             </Link>
+            <Link href="/support" className={`text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full border-2 transition-colors ${location === '/support' ? 'border-secondary bg-secondary text-gray-900' : 'border-secondary/80 text-secondary hover:bg-secondary hover:text-gray-900'}`}>
+              Support Us
+            </Link>
             <Link href="/submit" className={`text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full transition-colors ${location === '/submit' ? 'bg-secondary text-gray-900' : 'bg-secondary/90 text-gray-900 hover:bg-secondary'}`}>
               Submit a Post
             </Link>
@@ -149,6 +152,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/store" className="text-2xl font-bold text-secondary uppercase tracking-widest">Books</Link>
             <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Contact</Link>
             <Link href="/advertise" className="text-2xl font-bold text-secondary uppercase tracking-widest">Advertise</Link>
+            <Link href="/support" className="text-2xl font-bold border-2 border-secondary text-secondary uppercase tracking-widest px-8 py-3 rounded-full">Support Us</Link>
             <Link href="/submit" className="text-2xl font-bold bg-secondary text-gray-900 uppercase tracking-widest px-8 py-3 rounded-full">Submit a Post</Link>
           </nav>
         </div>
@@ -263,6 +267,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 <li><Link href="/store" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Books & Store</Link></li>
                 <li><Link href="/about" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">About & Mission</Link></li>
                 <li><Link href="/contact" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Contact Us</Link></li>
+                <li><Link href="/support" className="block py-1 font-bold hover:text-secondary transition-colors" style={{ color: "#F5C518" }}>Support Our Work</Link></li>
               </ul>
             </div>
             
@@ -322,6 +327,14 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <span>Full PST Report</span>
             <span className="text-xs font-semibold opacity-70">$24.95</span>
           </Link>
+          <Link
+            href="/support"
+            className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl font-bold text-xs transition-colors hover:opacity-80"
+            style={{ color: "#F5C518", borderTop: "1px solid rgba(255,255,255,0.1)" }}
+          >
+            <Heart className="w-3 h-3" />
+            <span>Support Our Work</span>
+          </Link>
         </div>
       </div>
 
@@ -352,6 +365,15 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               >
                 <span>Full PST Report</span>
                 <span className="text-xs font-semibold opacity-70">$24.95</span>
+              </Link>
+              <Link
+                href="/support"
+                onClick={() => setMobileCtaOpen(false)}
+                className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl font-bold text-xs"
+                style={{ color: "#F5C518", borderTop: "1px solid rgba(255,255,255,0.1)" }}
+              >
+                <Heart className="w-3 h-3" />
+                <span>Support Our Work</span>
               </Link>
             </div>
           </div>
