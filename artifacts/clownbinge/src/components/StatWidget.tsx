@@ -35,7 +35,7 @@ function useCountUp(target: number, duration = 1400) {
   return value;
 }
 
-function StatRow({
+function StatCard({
   value,
   label,
   description,
@@ -43,6 +43,7 @@ function StatRow({
   suffix = "",
   decimals = 0,
   isCurrency = false,
+  border = false,
 }: {
   value: number;
   label: string;
@@ -51,6 +52,7 @@ function StatRow({
   suffix?: string;
   decimals?: number;
   isCurrency?: boolean;
+  border?: boolean;
 }) {
   const animated = useCountUp(value);
   const display = isCurrency
@@ -58,20 +60,23 @@ function StatRow({
     : `${prefix}${animated.toLocaleString()}${suffix}`;
 
   return (
-    <div className="flex items-center gap-6 px-6 py-5 border-t border-white/10">
+    <div
+      className={`flex flex-col justify-between px-6 py-7 ${border ? "border-t border-white/10 sm:border-t-0 sm:border-l" : ""}`}
+    >
       <div
-        className="font-display font-black text-4xl sm:text-5xl tabular-nums leading-none shrink-0 w-28 text-right"
-        style={{ color: "#F5C518" }}
+        className="font-display font-black tabular-nums leading-none mb-3"
+        style={{ color: "#F5C518", fontSize: "clamp(2.5rem, 5vw, 3.5rem)" }}
+        aria-label={`${label}: ${display}`}
       >
         {display}
       </div>
-      <div className="flex flex-col">
-        <span className="text-white font-bold text-sm uppercase tracking-widest leading-snug">
+      <div>
+        <p className="text-white font-black text-xs uppercase tracking-widest leading-snug mb-1.5">
           {label}
-        </span>
-        <span className="text-white/55 text-sm mt-1 leading-snug">
+        </p>
+        <p className="text-white/50 text-xs leading-relaxed">
           {description}
-        </span>
+        </p>
       </div>
     </div>
   );
@@ -96,43 +101,52 @@ export function StatWidget() {
   };
 
   return (
-    <div
-      className="rounded-xl overflow-hidden my-10 border border-white/10"
+    <section
+      className="rounded-xl overflow-hidden my-12 border border-white/10"
       style={{ background: "#0f2060" }}
+      aria-label="Platform statistics"
     >
-      <div className="px-6 pt-6 pb-4 text-center">
+      <header className="px-6 pt-7 pb-5 border-b border-white/10 text-center">
         <p
-          className="text-xs font-mono font-bold uppercase tracking-[0.2em]"
+          className="text-[11px] font-mono font-black uppercase tracking-[0.25em]"
           style={{ color: "#F5C518" }}
         >
           The Record to Date
         </p>
-        <p className="text-white/50 text-xs mt-1">Live data. Updated continuously.</p>
-      </div>
+        <p className="text-white/40 text-xs mt-1 tracking-wide">
+          Live data. Updated continuously.
+        </p>
+      </header>
 
-      <StatRow
-        value={stats.totalArticles}
-        label="Verified Records Published"
-        description="Every article sourced to primary documents before publication. No exceptions."
-      />
-      <StatRow
-        value={stats.totalCitations}
-        label="Primary Sources Cited"
-        description="Court records, government filings, original data, and declassified documents."
-      />
-      <StatRow
-        value={stats.retractionsIssued}
-        label="Retractions Issued"
-        description="Every record stands. We verify before we publish. We have never had to take one back."
-      />
-      <StatRow
-        value={0}
-        label="PAC / Dark Money Accepted"
-        description="We take no money from political action committees or anonymous donors. Our independence is structural."
-        prefix="$"
-        isCurrency
-        decimals={2}
-      />
-    </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2">
+        <StatCard
+          value={stats.totalArticles}
+          label="Verified Records Published"
+          description="Every article sourced to primary documents before publication. No exceptions."
+        />
+        <StatCard
+          value={stats.totalCitations}
+          label="Primary Sources Cited"
+          description="Court records, government filings, original data, and declassified documents."
+          border
+        />
+        <div className="border-t border-white/10 col-span-1 sm:col-span-2 grid grid-cols-1 sm:grid-cols-2">
+          <StatCard
+            value={stats.retractionsIssued}
+            label="Retractions Issued"
+            description="Every record stands. We verify before we publish. We have never retracted a single record."
+          />
+          <StatCard
+            value={0}
+            label="PAC / Dark Money Accepted"
+            description="We take no money from political action committees or anonymous donors. Our independence is structural."
+            prefix="$"
+            isCurrency
+            decimals={2}
+            border
+          />
+        </div>
+      </div>
+    </section>
   );
 }
