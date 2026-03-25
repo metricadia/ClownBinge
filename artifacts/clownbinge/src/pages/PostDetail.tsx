@@ -22,23 +22,7 @@ import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
 
 function linkifySource(text: string): React.ReactNode {
-  const urlRegex = /(https?:\/\/[^\s,;)]+)/g;
-  const parts = text.split(urlRegex);
-  return parts.map((part, i) =>
-    /^https?:\/\//.test(part) ? (
-      <a
-        key={i}
-        href={part}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-primary underline underline-offset-2 hover:text-primary/80 break-all"
-      >
-        {part}
-      </a>
-    ) : (
-      <span key={i}>{part}</span>
-    )
-  );
+  return <span>{text}</span>;
 }
 
 function abbreviateTitle(title: string): string {
@@ -429,16 +413,9 @@ export default function PostDetail() {
                     <li key={ref.href} className="flex gap-4">
                       <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
                       <div>
-                        <a
-                          href={ref.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-bold text-[#1A3A8F] hover:underline text-sm leading-snug block mb-1"
-                        >
-                          {ref.title}
-                        </a>
+                        <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{ref.title}</p>
                         <p className="text-sm text-foreground/75 leading-relaxed m-0">{ref.summary}</p>
-                        <a href={ref.href} target="_blank" rel="noopener noreferrer" className="text-xs text-foreground/45 font-mono break-all hover:text-[#1A3A8F] hover:underline transition-colors">{ref.href}</a>
+                        <p className="text-xs text-foreground/45 font-mono break-all m-0">{ref.href}</p>
                       </div>
                     </li>
                   ))
@@ -447,15 +424,8 @@ export default function PostDetail() {
                     <li className="flex gap-4">
                       <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">1.</span>
                       <div>
-                        <a
-                          href={post.sourceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-bold text-[#1A3A8F] hover:underline text-sm leading-snug block mb-1"
-                        >
-                          {abbreviateSource(post.verifiedSource)}
-                        </a>
-                        <a href={post.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-foreground/45 font-mono break-all hover:text-[#1A3A8F] hover:underline transition-colors">{post.sourceUrl}</a>
+                        <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{abbreviateSource(post.verifiedSource)}</p>
+                        <p className="text-xs text-foreground/45 font-mono break-all m-0">{post.sourceUrl}</p>
                       </div>
                     </li>
                   )
@@ -467,20 +437,9 @@ export default function PostDetail() {
                       <li key={i} className="flex gap-4">
                         <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
                         <div>
-                          {url ? (
-                            <a
-                              href={url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="font-bold text-[#1A3A8F] hover:underline text-sm leading-snug block mb-1"
-                            >
-                              {label || url}
-                            </a>
-                          ) : (
-                            <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{label}</p>
-                          )}
+                          <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{label || url}</p>
                           {url && (
-                            <a href={url} target="_blank" rel="noopener noreferrer" className="text-xs text-foreground/45 font-mono break-all hover:text-[#1A3A8F] hover:underline transition-colors">{url}</a>
+                            <p className="text-xs text-foreground/45 font-mono break-all m-0">{url}</p>
                           )}
                         </div>
                       </li>
