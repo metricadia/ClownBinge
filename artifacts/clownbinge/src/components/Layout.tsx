@@ -111,7 +111,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 Newsroom
               </span>
             </div>
-            <span className="text-white text-[16px] sm:text-xs font-mono tracking-tight sm:tracking-[0.2em] uppercase mt-0.5 transition-colors">
+            <span className="text-white text-[13px] sm:text-xs font-mono tracking-tight sm:tracking-[0.2em] uppercase mt-0.5 transition-colors">
               Independent<span className="text-[#F5C518]">.</span> Verified<span className="text-[#F5C518]">.</span> The Primary Source<span className="text-[#F5C518]">.</span>
             </span>
           </Link>
