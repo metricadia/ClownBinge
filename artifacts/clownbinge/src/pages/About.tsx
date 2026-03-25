@@ -8,28 +8,33 @@ export default function About() {
       <div className="max-w-3xl mx-auto px-4 py-12">
         {/* Brand Manifesto Hero */}
         <div className="mb-12">
-          <p className="text-xs font-bold tracking-widest uppercase text-primary mb-4">About ClownBinge</p>
+          <p className="text-xs font-bold tracking-widest uppercase text-primary mb-6">About ClownBinge</p>
+
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl">
+            <strong className="text-foreground">ClownBinge was built on a simple premise:</strong> traditional media has become a circus of misinformation, performance, and manufactured narrative. We don't editorialize the chaos. We navigate it. Our team binges the entire information ecosystem, from fringe to mainstream, from local court records to international wire services, extracting only what survives the only test that matters: the primary source. If it can't be verified against an original document, it doesn't exist here.
+          </p>
 
           <h1 className="font-sans font-extrabold text-4xl sm:text-5xl text-header leading-tight mb-3">
-            The news cycle is a clown farm.
+            The News Cycle Is a Clown Farm.
           </h1>
-          <p className="font-sans font-bold text-2xl sm:text-3xl mb-8" style={{ color: "#C9980A" }}>
-            We binge it so you don't have to.
+          <p className="font-sans font-bold text-xl sm:text-2xl mb-7" style={{ color: "#C9980A" }}>
+            We binge it to curate and verify primary sourced information.
           </p>
 
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl">
-            <strong>ClownBinge was built on a simple premise:</strong> traditional media has become a circus of misinformation, performance, and manufactured narrative. We don't editorialize the chaos. We navigate it. Our team binges the entire information ecosystem, from fringe to mainstream, from local court records to international wire services, extracting only what survives the only test that matters: the primary source. If it can't be verified against an original document, it doesn't exist here.
-          </p>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-10">
+            {["No Emotion", "No Opinion", "No Slander"].map((item, i) => (
+              <span key={i} className="flex items-center gap-2">
+                <span className="text-sm font-black uppercase tracking-widest text-header">{item}</span>
+                {i < 2 && <span className="text-[#F5C518] font-black text-lg leading-none">&#183;</span>}
+              </span>
+            ))}
+          </div>
 
           <div className="rounded-2xl px-6 py-5 mb-8 border-2" style={{ background: "#1A3A8F", borderColor: "#1A3A8F" }}>
             <p className="font-mono font-bold text-base sm:text-lg text-white tracking-wide">
               <span style={{ color: "#F5C518" }}>65,000</span> global sources<span style={{ color: "#F5C518" }}>.</span> Zero opinions<span style={{ color: "#F5C518" }}>.</span> One standard: the primary source record<span style={{ color: "#F5C518" }}>.</span>
             </p>
           </div>
-
-          <p className="font-sans font-extrabold text-xl sm:text-2xl text-header mb-8">
-            ClownBinge isn't commentary. It's the receipt.
-          </p>
 
           <div className="h-1 w-full bg-[#F5C518] rounded-full" />
         </div>
