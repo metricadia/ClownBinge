@@ -55,7 +55,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
   const [catDropdownOpen, setCatDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [footerOpen, setFooterOpen] = useState<Record<string, boolean>>({});
-  const [mobileCtaOpen, setMobileCtaOpen] = useState(false);
+  const [ctaOpen, setCtaOpen] = useState(false);
   const catDropdownRef = useRef<HTMLDivElement>(null);
   const { data: postCount } = usePostsCount();
 
@@ -301,48 +301,11 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         </div>
       </footer>
 
-      {/* Floating Support CTA -- desktop: low-opacity, reveal on hover */}
-      <div
-        className="hidden lg:flex fixed bottom-6 left-6 z-30 flex-col shadow-2xl rounded-2xl overflow-hidden border border-white/15 opacity-20 hover:opacity-100 transition-opacity duration-300 w-64"
-        style={{ background: "#1A3A8F" }}
-      >
-        <div className="px-4 pt-3 pb-2 flex items-center justify-between">
-          <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Donate</p>
-          <Heart className="w-3.5 h-3.5 text-[#F5C518]" />
-        </div>
-        <div className="px-4 pb-1">
-          <p className="text-base font-black text-white leading-tight">Any Amount</p>
-        </div>
-        <div className="px-4 pb-3">
-          <p className="text-[11px] text-white/70 leading-relaxed">
-            No product. No deliverable. Just you deciding that verified, independent journalism is worth keeping alive.
-          </p>
-          <ul className="mt-2 flex flex-col gap-1">
-            {["Funds original research", "Supports editorial independence", "Keeps the site free"].map((item) => (
-              <li key={item} className="flex items-center gap-1.5">
-                <span className="text-[#F5C518] text-[10px]">&#10003;</span>
-                <span className="text-[10px] text-white/80">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="px-3 pb-3">
-          <Link
-            href="/invest-in-us"
-            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-black text-sm text-[#1A3A8F] hover:opacity-90 transition-opacity"
-            style={{ background: "#F5C518" }}
-          >
-            <span>I Want to Help</span>
-            <Heart className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-      </div>
-
-      {/* Floating Support CTA -- mobile: tap to reveal */}
-      <div className="flex lg:hidden fixed bottom-5 left-4 z-30 flex-col items-start">
-        {mobileCtaOpen && (
+      {/* Floating Donate CTA -- click to expand, works on all sizes */}
+      <div className="fixed bottom-6 left-6 z-30 flex flex-col items-start">
+        {ctaOpen && (
           <div
-            className="mb-2 w-60 flex flex-col shadow-2xl rounded-2xl overflow-hidden border border-white/15 animate-in fade-in slide-in-from-bottom-2 duration-200"
+            className="mb-2 w-64 flex flex-col shadow-2xl rounded-2xl overflow-hidden border border-white/15 animate-in fade-in slide-in-from-bottom-2 duration-200"
             style={{ background: "#1A3A8F" }}
           >
             <div className="px-4 pt-3 pb-2 flex items-center justify-between">
@@ -368,8 +331,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <div className="px-3 pb-3">
               <Link
                 href="/invest-in-us"
-                onClick={() => setMobileCtaOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-black text-sm text-[#1A3A8F]"
+                onClick={() => setCtaOpen(false)}
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-black text-sm text-[#1A3A8F] hover:opacity-90 transition-opacity"
                 style={{ background: "#F5C518" }}
               >
                 <span>I Want to Help</span>
@@ -379,14 +342,16 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </div>
         )}
         <button
-          onClick={() => setMobileCtaOpen((o) => !o)}
+          onClick={() => setCtaOpen((o) => !o)}
           className="flex items-center gap-1.5 px-4 py-2 rounded-full font-bold text-xs text-[#1A3A8F] shadow-lg transition-transform active:scale-95"
           style={{ background: "#F5C518" }}
         >
-          {mobileCtaOpen ? "Close" : (
+          {ctaOpen ? (
+            "Close"
+          ) : (
             <>
               <Heart className="w-3 h-3" />
-              <span>Support Us</span>
+              <span>Donate Today</span>
             </>
           )}
         </button>
