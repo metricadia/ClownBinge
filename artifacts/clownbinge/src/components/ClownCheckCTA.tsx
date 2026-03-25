@@ -1,40 +1,67 @@
-import { GraduationCap } from "lucide-react";
+import { useState } from "react";
+import { Heart, ChevronDown, ChevronUp } from "lucide-react";
 import { Link } from "wouter";
 
 export function ClownCheckCTA() {
-  return (
-    <div
-      className="my-10 border border-[#F5C518] rounded-xl bg-[#FEFCE8] px-6 py-5 flex flex-col sm:flex-row sm:items-center gap-5"
-      aria-label="Support ClownBinge"
-    >
-      <div className="flex-1 min-w-0">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-[#B8860B] mb-1.5">
-          Grad Student Project &mdash; Sick of Fake News
-        </p>
-        <p className="text-sm font-bold text-[#1A3A8F] leading-snug">
-          Every donation directly funds PhD researchers documenting the primary source record.
-        </p>
-      </div>
+  const [open, setOpen] = useState(false);
 
-      <div className="flex items-center gap-3 shrink-0">
-        <GraduationCap className="w-8 h-8 text-[#1A3A8F] opacity-25 hidden sm:block" />
-        <div className="flex flex-col sm:flex-row gap-2">
+  return (
+    <div className="my-8 rounded-xl overflow-hidden border border-[#F5C518]/60">
+      {/* Collapsed bar -- always visible */}
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="w-full flex items-center justify-between px-5 py-3 bg-[#FEFCE8] hover:bg-[#fef9d0] transition-colors"
+        aria-expanded={open}
+      >
+        <div className="flex items-center gap-2">
+          <Heart className="w-3.5 h-3.5 text-[#B8860B] shrink-0" />
+          <span className="text-xs font-bold uppercase tracking-widest text-[#B8860B]">
+            Donate Today &mdash; Keep Independent Research Alive
+          </span>
+        </div>
+        {open
+          ? <ChevronUp className="w-4 h-4 text-[#B8860B] shrink-0" />
+          : <ChevronDown className="w-4 h-4 text-[#B8860B] shrink-0" />
+        }
+      </button>
+
+      {/* Expanded panel */}
+      {open && (
+        <div
+          className="px-6 py-5 flex flex-col gap-4"
+          style={{ background: "#1A3A8F" }}
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-white/50 mb-1">Donate</p>
+              <p className="text-xl font-black text-white leading-tight">Any Amount</p>
+            </div>
+            <Heart className="w-5 h-5 text-[#F5C518] shrink-0 mt-0.5" />
+          </div>
+
+          <p className="text-sm text-white/75 leading-relaxed">
+            No product. No deliverable. Just you deciding that verified, independent journalism is worth keeping alive.
+          </p>
+
+          <ul className="flex flex-col gap-1.5">
+            {["Funds original research", "Supports editorial independence", "Keeps the site free"].map((item) => (
+              <li key={item} className="flex items-center gap-2">
+                <span className="text-[#F5C518] font-bold text-xs">&#10003;</span>
+                <span className="text-sm text-white/80">{item}</span>
+              </li>
+            ))}
+          </ul>
+
           <Link
             href="/invest-in-us"
-            className="inline-flex flex-col items-center justify-center px-4 py-2.5 rounded-lg bg-[#1A3A8F] text-white font-bold text-sm hover:bg-[#162f74] transition-colors leading-tight text-center"
+            className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-black text-base text-[#1A3A8F] hover:opacity-90 transition-opacity"
+            style={{ background: "#F5C518" }}
           >
-            <span>Support Our Work</span>
-            <span className="text-[10px] font-normal opacity-60 mt-0.5">Fund a Student Analyst</span>
-          </Link>
-          <Link
-            href="/invest-in-us"
-            className="inline-flex flex-col items-center justify-center px-4 py-2.5 rounded-lg bg-[#F5C518] text-[#1A3A8F] font-black text-sm hover:bg-[#e0b315] transition-colors leading-tight text-center"
-          >
-            <span>DONATE NOW</span>
-            <span className="text-[10px] font-normal opacity-60 mt-0.5">All proceeds to researchers</span>
+            I Want to Help
+            <Heart className="w-4 h-4" />
           </Link>
         </div>
-      </div>
+      )}
     </div>
   );
 }
