@@ -52,6 +52,7 @@ export const postsTable = pgTable("posts", {
   shareCount: integer("share_count").notNull().default(0),
   userSubmitted: boolean("user_submitted").notNull().default(false),
   pinned: boolean("pinned").notNull().default(false),
+  locked: boolean("locked").notNull().default(false),
 });
 
 export const insertPostSchema = createInsertSchema(postsTable).omit({ id: true, createdAt: true, updatedAt: true });

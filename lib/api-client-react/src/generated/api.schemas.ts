@@ -70,6 +70,10 @@ export interface Post {
   createdAt: string;
   viewCount: number;
   shareCount: number;
+  sourceUrl?: string | null;
+  userSubmitted: boolean;
+  pinned: boolean;
+  locked: boolean;
 }
 
 export interface PostListResponse {

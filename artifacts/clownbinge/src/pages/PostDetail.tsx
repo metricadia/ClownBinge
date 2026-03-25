@@ -17,7 +17,7 @@ import { RelatedArticles } from "@/components/RelatedArticles";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { format } from "date-fns";
-import { Loader2, AlertTriangle, ArrowLeft, Copy, Check, Share2 } from "lucide-react";
+import { Loader2, AlertTriangle, ArrowLeft, Copy, Check, Share2, Lock } from "lucide-react";
 import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
 
@@ -299,8 +299,21 @@ export default function PostDetail() {
                 date={post.dateOfIncident ? format(new Date(post.dateOfIncident), "MMM d, yyyy") : undefined}
               />
               {references.length > 0 && <CitedBadge count={references.length} />}
+              {post.locked && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-900 text-white text-[11px] font-bold uppercase tracking-wider">
+                  <Lock className="w-3 h-3" /> Record Locked
+                </span>
+              )}
             </div>
           </div>
+
+          {/* Locked banner */}
+          {post.locked && (
+            <div className="mt-4 flex items-center gap-2 px-4 py-2.5 rounded-lg bg-gray-900 text-white text-xs font-bold uppercase tracking-widest">
+              <Lock className="w-3.5 h-3.5 shrink-0" />
+              This record has been locked. No changes can be made.
+            </div>
+          )}
 
           {/* Action links strip */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 py-2">

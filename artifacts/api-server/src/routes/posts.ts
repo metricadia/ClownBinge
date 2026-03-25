@@ -110,6 +110,9 @@ router.get("/posts", async (req, res) => {
       createdAt: p.createdAt.toISOString(),
       viewCount: p.viewCount,
       shareCount: p.shareCount,
+      userSubmitted: p.userSubmitted,
+      pinned: p.pinned,
+      locked: p.locked,
     }));
 
     res.json({
@@ -173,6 +176,9 @@ router.get("/posts/:slug", async (req, res) => {
       createdAt: p.createdAt.toISOString(),
       viewCount: p.viewCount,
       shareCount: p.shareCount,
+      userSubmitted: p.userSubmitted,
+      pinned: p.pinned,
+      locked: p.locked,
     });
   } catch (err) {
     req.log.error({ err }, "Error fetching post");
