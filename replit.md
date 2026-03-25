@@ -320,6 +320,37 @@ Every article with `category = "nerd_out"` automatically receives the following 
 
 **Current NerdOut articles (as of March 2026):** CB-000053 (Foucault/Durkheim/Trump), CB-000060 (Black Americans/Crime/Racist Narrative)
 
+### MANDATORY: Link Verification Before Every Article Publish
+
+This is non-negotiable. Before inserting any article, verify every cb-factoid href returns a live response:
+
+```bash
+# Quick check for a single article's links after writing it
+echo "PASTE_URLS_HERE" | while read url; do
+  code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 -L -A "Mozilla/5.0" "$url")
+  echo "$code  $url"
+done
+```
+
+**Accept:** 200, 302, 403 (bot-blocked but live), 429 (rate-limited but live)
+**Reject and replace:** 404, 410, 000 (unreachable)
+
+**Dead URL patterns to watch:**
+- `help.senate.gov/hearings/...` -- frequently dead; use `trumpwhitehouse.archives.gov/people/` instead
+- `banking.senate.gov/nominations/...` -- use White House archives or congress.gov
+- `energy.gov/articles/...` -- use agency pages or academic sources
+- `nea.gov/...` -- use `arts.gov` equivalent instead
+- `nrcs.usda.gov/programs-initiatives/...` -- frequently dead; use program-specific alternatives
+- `nal.usda.gov/collections/...` -- use `/exhibits/ipd/` path instead
+- `tuskegee.edu/...` -- use NPS Tuskegee sites instead
+- `holc.densitydesign.org` -- dead; use `dsl.richmond.edu/panorama/redlining/`
+- `nsarchive.gwu.edu/briefing-book/...` -- use `/nsa/` path instead
+- `yadvashem.org/...` -- use USHMM encyclopedia or Jewish Virtual Library
+- `census.gov/newsroom/...` -- press releases die; use `census.gov/topics/` instead
+- `archives.gov/education/lessons/...` -- many dead; use `/exhibits/` or `/research/` paths
+
+**Site-wide link audit (March 2026):** 54 dead links found and replaced across 61 articles. All cb-factoid hrefs verified clean.
+
 ### What to Never Do
 
 - Never publish > 2 articles in a calendar day
