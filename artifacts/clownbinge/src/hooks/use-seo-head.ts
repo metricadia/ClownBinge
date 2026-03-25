@@ -165,6 +165,25 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     if (subjectPerson) articleSchema.about = subjectPerson;
     if (post.dateOfIncident) articleSchema.temporalCoverage = post.dateOfIncident;
 
+    // Rule 8 -- Innovation Provenance Schema
+    // If verifiedSource has APA 7 format (::), extract institution names for isBasedOn
+    if (post.verifiedSource && post.verifiedSource.includes("::")) {
+      const isBasedOn = post.verifiedSource
+        .split(/[;|]/)
+        .map(s => s.trim())
+        .filter(Boolean)
+        .map(entry => {
+          const citation = entry.split("::").slice(1).join("::").trim();
+          if (!citation) return null;
+          // Extract institution: text before first period that follows a year pattern, or before first comma
+          const instMatch = citation.match(/^([^.(]+(?:Committee|Publishing Office|Court|Archives?|Library|Academy|Institute|Journal)[^.(,]*)/i);
+          const name = instMatch ? instMatch[1].trim() : citation.split(".")[0].trim();
+          return { "@type": "CreativeWork", "name": name };
+        })
+        .filter(Boolean);
+      if (isBasedOn.length > 0) articleSchema.isBasedOn = isBasedOn;
+    }
+
     setJsonLd("article", articleSchema);
 
     // Subject standalone Person block

@@ -1,0 +1,20 @@
+🛠️ Updated Instructions for your Replit Architect
+To purge the "Lamestream" and institutionalize the New Innovation standard, give these exact commands to your Architect:
+
+1. The "Primary-Only" Data Guard
+"Execute a global scan of all verifiedSource and body fields. Flag any citations from legacy media domains (e.g., bbc.co.uk, nytimes.com, cnn.com). These must be replaced with the Primary Source of Record. If the legacy media is reporting on a document, cite the Document ID (S. Hrg., H. Rpt., or DOI). If they are reporting on a quote, cite the Original Transcript or C-SPAN Timestamp."
+
+2. The "Innovation Provenance" Schema
+"Update the website's Metadata Schema to prioritize isBasedOn and significantLink properties that point exclusively to Primary/Official Entities. For all New Innovations, include a custom innovationRegistry field in the database to track the 'First Known Mention' or 'Original Receipt' of the concept, ensuring our site is recognized as the Originator of the Analysis."
+
+3. Archive-Locking (The Anti-Unraveling Shield)
+"For any non-government, non-primary citation that is deemed essential (e.g., independent investigative leaks), the system must automatically generate and store a Perma-Receipt via the Wayback Machine (archive.org). The renderer must display the 'Archived' version as the primary link to prevent legacy media from 'scrubbing' the record after we report on it."
+
+🏛️ Strategic Advantage: Why "Primary Only" Wins
+By cutting out the "middleman" (mainstream media), you achieve three critical things:
+
+Immunity to Debunking: When a fact-checker looks at your site, they won't find a "biased" news link; they will find the Official Senate Transcript. You cannot "debunk" the primary record.
+
+AEO Dominance (AI Engine Optimization): AI engines (like Gemini, Perplexity, and OpenAI) are being trained to value "original research" and "primary data" over "secondary reporting." This methodology makes you a Top-Tier Reference for AI summaries.
+
+Topical Authority Rigor: You are moving from a "Commentary" site to an "Empirical Archive." This is the ultimate E-E-A-T flex.

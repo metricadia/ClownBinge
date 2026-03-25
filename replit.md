@@ -185,6 +185,42 @@ Nobel Prize in Physics (1997): Steven Chu :: Nobel Prize Outreach AB. (1997). St
 4. verifiedSource plain text   → show as-is (fallback)
 ```
 
+---
+
+### Citation Cardinal Rule -- Addendum: Primary-Only Data Guard (Gemini Protocol)
+
+#### RULE 7 -- PRIMARY-ONLY DATA GUARD
+No legacy media outlet (nytimes.com, bbc.co.uk, cnn.com, texastribune.org, washingtonpost.com, etc.) may appear in `verifiedSource` as a citation. Legacy media is a middleman. Cite the DOCUMENT, not the reporter.
+
+**Substitution logic:**
+- Legacy media reporting on a government document → cite the document: S. Hrg. #, H. Rpt. #, court case number, or DOI
+- Legacy media reporting on a quote or speech → cite the original transcript, C-SPAN timestamp, or Congressional Record volume/page
+- Legacy media reporting on a criminal case → cite the Grand Jury Indictment or Court Filing (jurisdiction + case)
+- Academic/science citations → use PMID (PubMed ID) as the permanent archival ID. PMIDs are assigned by the National Library of Medicine (a U.S. federal agency) and are as permanent as S. Hrg. numbers.
+
+**Banned in verifiedSource:** Any string containing `http`, any domain ending in `.com`, `.org`, `.net`, `.co.uk` unless it is an official government or archival domain (.gov, .edu, sunnah.com is also banned -- use Hadith number only).
+
+**Data Guard Scan:** Run periodically: `SELECT case_number, slug FROM posts WHERE verified_source ILIKE '%http%' ORDER BY case_number`. Any results are violations requiring immediate remediation.
+
+#### RULE 8 -- INNOVATION PROVENANCE SCHEMA (JSON-LD)
+All article pages emit `isBasedOn` in their JSON-LD structured data, pointing to the official institutions cited in `verifiedSource`. This tells Google's Knowledge Graph that ClownBinge's analysis is derived from official archival sources, not secondary reporting.
+
+**Implemented in:** `artifacts/clownbinge/src/hooks/use-seo-head.ts`
+- For APA 7 formatted verifiedSource (contains `::`): extract institution names from citation bodies and emit as `isBasedOn` entities
+- Standard institutions recognized: U.S. Senate Committees, U.S. Government Publishing Office, Nobel Prize Outreach AB, National Library of Medicine (via PMID), Congressional Record
+
+**Planned DB field:** `innovation_registry` -- tracks "First Known Mention" or "Original Receipt" for analyses originated by Primary Source Analytics. Not yet implemented; awaiting schema migration approval.
+
+#### RULE 9 -- ARCHIVE-LOCKING (Anti-Unraveling Shield)
+For any citation that references a non-government source deemed essential (e.g., investigative leaks, whistleblower documents), the system must store a Wayback Machine Perma-Receipt. The renderer displays the archived version, not the live URL. This prevents legacy media from "scrubbing" the record after we report on it.
+
+**Status:** Pending implementation. Requires archive.org Save Page Now API integration. Non-government URLs are currently BANNED (Zero-URL Policy), so this rule applies only to future exceptions approved by Primary Source Analytics.
+
+**Priority document types for archive-locking when implemented:**
+1. Whistleblower filings not in public government archives
+2. Corporate internal documents obtained via FOIA
+3. State court records not yet digitized in PACER
+
 ### Article Workflow
 
 ```bash
