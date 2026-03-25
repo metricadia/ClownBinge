@@ -110,22 +110,29 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 
 ### CITATION AUDIT STATUS (March 2026)
 
-**COMPREHENSIVE AUDIT COMPLETED.** All 62 published articles audited against all Cardinal Citation Rules. 58 articles in full APA 7 `Label :: APA 7 body` format.
+**COMPREHENSIVE AUDIT COMPLETED -- March 25, 2026.** All 62 published articles verified against every Cardinal Citation Rule including the new No-Description Rule.
 
-**Data Guard Results (post-audit):**
+**Final Data Guard Results (definitive individual-pull scan):**
 - URL violations: **ZERO** (Rule 1 -- Zero-URL Policy)
 - Legacy media sole citations: **ZERO** (Rule 7 -- Primary-Only Data Guard)
+- Parenthetical descriptions in citation body: **ZERO** (Rule 9 -- Permanent Citation Only, No Description)
 - APA 7 formatted entries: **58 of 62 articles**
-- Plain-text (satirical placeholder): **4 articles** -- CB-000001, CB-000002, CB-000003, CB-000005 are satirical/illustrative articles featuring fictional politicians. Their citations ("Congressional Record", "C-SPAN", "Court Records", "Palmetto County Board Records") are illustrative institutional references, not citations to real events.
+- Plain-text (satirical placeholder): **4 articles** -- CB-000001, CB-000002, CB-000003, CB-000005 are satirical/illustrative articles featuring fictional politicians. Their citations ("Congressional Record", "C-SPAN", "Court Records", "Palmetto County Board Records") are illustrative institutional references, not real events.
 
-**What was fixed:**
-- All religion articles (CB-000015 through CB-000034 + CB-000046): Replaced sole newspaper citations with church official statements, arrest records, sheriff's office reports, court filings, and ministry's own fundraising documents
-- Mixed-source articles (CB-000007-010, CB-000035-036, CB-000057): Stripped legacy media from multi-source citations, keeping only government/institutional sources
+**Known Data Guard false positive:**
+- CB-000038 will always match `%Fox News%` because the verified_source cites the court case *US Dominion, Inc. et al. v. Fox News Network, LLC et al.* -- Fox News is the DEFENDANT in a court filing, not the source. This is correct primary source usage. The actual source is the Delaware Superior Court record.
 
-**The Data Guard scan command:**
+**What was fixed across all audit phases:**
+- Phase 1: All religion articles (CB-000015 through CB-000034 + CB-000046): Replaced sole newspaper citations with church official statements, arrest records, court filings, ministry fundraising documents
+- Phase 2: All 33 plain-text articles upgraded to APA 7 `Label :: APA 7 body` format (58 articles total)
+- Phase 3: 25 articles had parenthetical description text stripped from citation bodies. Only Author. (Year). Title. Publisher. remains -- no narrative descriptions of what the source says.
+- CB-000048: Cherokee Nation v. Georgia (1831) and Worcester v. Georgia (1832) promoted to individual named entries rather than a parenthetical inside a broader case records entry.
+
+**The Data Guard scan command (use individual-pull method for accurate results):**
 ```sql
 SELECT case_number FROM posts WHERE status = 'published' AND (verified_source ILIKE '%http%' OR verified_source ILIKE '%Rolling Stone%' OR verified_source ILIKE '%New York Times%' OR verified_source ILIKE '%Washington Post%' OR verified_source ILIKE '%The Guardian%' OR verified_source ILIKE '%NBC News%' OR verified_source ILIKE '%CNN%' OR verified_source ILIKE '%The Atlantic%' OR verified_source ILIKE '%Chicago Tribune%' OR verified_source ILIKE '%HuffPost%' OR verified_source ILIKE '%BBC%') ORDER BY case_number;
 ```
+**Note:** Multi-line SQL output parsing can miss violations in multi-source citations. Always use individual-pull per article for the description parenthetical check.
 
 ---
 
