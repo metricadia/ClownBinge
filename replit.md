@@ -161,6 +161,30 @@ Nobel Prize in Physics (1997): Steven Chu :: Nobel Prize Outreach AB. (1997). St
 
 **FACT CHECK RULE:** Before inserting credentials, cross-reference against official university alumni databases. Never predict or assume a degree. Verify first.
 
+---
+
+#### SOVEREIGN OVERRIDE (Implemented Permanently in Renderer -- Never Revert)
+
+**Rule:** If `verifiedSource` contains APA 7 data (detected by presence of `::`), it **completely suppresses** all other source signals on the page. No exceptions.
+
+**Three-part implementation:**
+
+1. **Logic Shift** -- Renderer checks `verifiedSource.includes("::")` FIRST, before checking `references` (cb-factoid array) or `sourceUrl`. If APA 7 data is present, the APA 7 list renders. All other source logic is skipped.
+
+2. **Factoid Sanitization** -- Inline `cb-factoid` links in the article body REMAIN interactive (hover popups work). But their source attributes are NOT used in the Primary Sources section at the bottom. The APA 7 `verifiedSource` is the only content shown in Primary Sources.
+
+3. **Receipts Always Rule** -- For any case with a `CB-` case number, `verifiedSource` is the Single Source of Truth for the entire page. The bottom Primary Sources section is the permanent archival record.
+
+**Why permanence matters:** If `verifiedSource` and cb-factoids ever conflict, Google sees "inconsistent signals" and devalues the page. The Sovereign Override ensures Google only sees the high-authority archival data (S. Hrg. numbers, Nobel Prize archives, GPO publications). This cannot be accidentally broken by adding new factoids to an article body.
+
+**Rendering priority (code law, file: PostDetail.tsx):**
+```
+1. verifiedSource contains "::" → show APA 7 list (SOVEREIGN)
+2. references.length > 0       → show factoid list (SUPPRESSED when #1 active)
+3. post.sourceUrl              → show single source (SUPPRESSED when #1 active)
+4. verifiedSource plain text   → show as-is (fallback)
+```
+
 ### Article Workflow
 
 ```bash

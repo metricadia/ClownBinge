@@ -408,43 +408,55 @@ export default function PostDetail() {
               Primary Sources
             </h2>
             <ol className="space-y-5 list-none p-0 m-0">
-              {references.length > 0
-                ? references.map((ref, i) => (
-                    <li key={ref.href} className="flex gap-4">
-                      <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
-                      <div>
-                        <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{ref.title}</p>
-                        <p className="text-sm text-foreground/75 leading-relaxed m-0">{ref.summary}</p>
-                      </div>
-                    </li>
-                  ))
-                : post.sourceUrl
-                  ? (
-                    <li className="flex gap-4">
-                      <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">1.</span>
-                      <div>
-                        <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{abbreviateSource(post.verifiedSource)}</p>
-                      </div>
-                    </li>
-                  )
-                  : post.verifiedSource!.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
-                    const urlMatch = entry.match(/(https?:\/\/[^\s,;)]+)/);
-                    const url = urlMatch ? urlMatch[1] : null;
-                    const cleaned = url ? entry.replace(url, "").replace(/\s+$/, "").trim() : entry;
-                    const hasSplit = cleaned.includes("::");
-                    const heading = hasSplit ? cleaned.split("::")[0].trim() : cleaned;
-                    const citation = hasSplit ? cleaned.split("::").slice(1).join("::").trim() : null;
-                    const displayHeading = heading || (url ? new URL(url).hostname.replace(/^www\./, "") : entry);
+              {/* verifiedSource with APA 7 format (::) always takes priority */}
+              {post.verifiedSource && post.verifiedSource.includes("::")
+                ? post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
+                    const cleaned = entry.replace(/(https?:\/\/[^\s,;)]+)/, "").trim();
+                    const heading = cleaned.split("::")[0].trim();
+                    const citation = cleaned.split("::").slice(1).join("::").trim();
                     return (
                       <li key={i} className="flex gap-4">
                         <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
                         <div>
-                          <p className="font-bold text-sm text-foreground/80 leading-snug mb-0.5 m-0">{displayHeading}</p>
+                          <p className="font-bold text-sm text-foreground/80 leading-snug mb-0.5 m-0">{heading}</p>
                           {citation && <p className="text-sm text-foreground/65 leading-snug m-0 italic">{citation}</p>}
                         </div>
                       </li>
                     );
                   })
+                : references.length > 0
+                  ? references.map((ref, i) => (
+                      <li key={ref.href} className="flex gap-4">
+                        <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
+                        <div>
+                          <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{ref.title}</p>
+                          <p className="text-sm text-foreground/75 leading-relaxed m-0">{ref.summary}</p>
+                        </div>
+                      </li>
+                    ))
+                  : post.sourceUrl
+                    ? (
+                      <li className="flex gap-4">
+                        <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">1.</span>
+                        <div>
+                          <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{abbreviateSource(post.verifiedSource)}</p>
+                        </div>
+                      </li>
+                    )
+                    : post.verifiedSource!.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
+                        const urlMatch = entry.match(/(https?:\/\/[^\s,;)]+)/);
+                        const url = urlMatch ? urlMatch[1] : null;
+                        const cleaned = url ? entry.replace(url, "").replace(/\s+$/, "").trim() : entry;
+                        const displayLabel = cleaned || (url ? new URL(url).hostname.replace(/^www\./, "") : entry);
+                        return (
+                          <li key={i} className="flex gap-4">
+                            <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
+                            <div>
+                              <p className="font-bold text-sm text-foreground/80 leading-snug m-0">{displayLabel}</p>
+                            </div>
+                          </li>
+                        );
+                      })
               }
             </ol>
           </section>
