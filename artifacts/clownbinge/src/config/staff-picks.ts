@@ -9,4 +9,5 @@ export const STAFF_PICKS_SLUGS = [
   "diversity-denial-primary-source-record-what-was-lost",
   "ted-haggard-male-escort-meth-nae-resignation-2006",
   "cable-news-binary-media-bias-cnn-msnbc-fox-documented-record-2026",
+  "beyond-social-security-what-to-build-before-the-clock-runs-out",
 ];
