@@ -21,7 +21,7 @@ const CATEGORIES = [
   { id: "censorship",        label: "Censorship" },
   { id: "global_south",      label: "Global South" },
   { id: "how_it_works",      label: "How It Works" },
-  { id: "nerd_out",          label: "NerdOut" },
+  { id: "nerd_out",          label: "NerdOut / Academic" },
 ];
 
 const PILL: Record<string, { on: string; off: string }> = {

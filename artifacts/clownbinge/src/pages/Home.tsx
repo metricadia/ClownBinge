@@ -24,7 +24,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   censorship:          "Censorship",
   global_south:        "Global South",
   how_it_works:        "How It Works",
-  nerd_out:            "NerdOut",
+  nerd_out:            "NerdOut / Academic",
 };
 import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
 
