@@ -57,14 +57,14 @@ export default function Home() {
           <div className="flex-1 max-w-3xl mx-auto lg:mx-0 w-full">
             <div className="pt-2 pb-4">
               {category && category !== 'all' && (
-                <div className="mb-3">
-                  <div className="h-px w-full bg-[#F5C518] mb-3 rounded-full" />
-                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-primary">
+                <div className="mb-5">
+                  <p className="text-[11px] font-black uppercase tracking-[0.22em] text-primary mb-2">
                     Viewing:&nbsp;
                     <span style={{ color: "#C9980A" }}>
                       {category === 'staff_picks' ? '★ Staff Picks' : (CATEGORY_LABELS[category] ?? category)}
                     </span>
                   </p>
+                  <div className="h-px w-full bg-[#F5C518] rounded-full" />
                 </div>
               )}
               <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-snug max-w-xl">
