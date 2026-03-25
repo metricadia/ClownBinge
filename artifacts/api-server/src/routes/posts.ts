@@ -71,13 +71,15 @@ router.get("/posts", async (req, res) => {
         .from(postsTable)
         .where(where)
         .orderBy(
-          // Tier -3: pinned (all pinned sort purely by publishedAt, ignoring category tier)
-          // Tier -2: self_owned, anti_racist_heroes
-          // Tier -1: nerd_out
-          // Tier  0: everything else
-          // Negated so ASC puts -3 first
-          sql`CASE WHEN ${postsTable.pinned} = true THEN -3 WHEN ${postsTable.category} IN ('self_owned','anti_racist_heroes') THEN -2 WHEN ${postsTable.category} = 'nerd_out' THEN -1 ELSE 0 END`,
-          desc(postsTable.publishedAt)
+          // Category and tag feeds: newest first, no curation weighting
+          // Main feed only: tier sort (pinned > self_owned > nerd_out > everything else)
+          ...(category || tag
+            ? [desc(postsTable.publishedAt)]
+            : [
+                sql`CASE WHEN ${postsTable.pinned} = true THEN -3 WHEN ${postsTable.category} IN ('self_owned','anti_racist_heroes') THEN -2 WHEN ${postsTable.category} = 'nerd_out' THEN -1 ELSE 0 END`,
+                desc(postsTable.publishedAt),
+              ]
+          )
         )
         .limit(Number(limit))
         .offset(Number(offset)),
