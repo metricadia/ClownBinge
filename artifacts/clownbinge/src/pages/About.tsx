@@ -28,7 +28,7 @@ export default function About() {
             <span style={{ color: "#F5C518" }}>The clown farm is.</span>
           </h2>
           <p className="text-sm sm:text-base text-white/75 leading-relaxed">
-            The modern news cycle has become a performance industry: outrage manufactured for engagement, facts subordinated to narrative, journalism repackaged as entertainment and sold to corporate interests. We do not participate in that system. We audit it. Every record we publish is extracted from primary sources: court filings, congressional transcripts, federal agency data, declassified documents. The performance is in the farm. The record is in the archive.
+            <span className="text-white">The modern news cycle has become a performance industry:</span> outrage manufactured for engagement, facts subordinated to narrative, journalism repackaged as entertainment and sold to corporate interests. We do not participate in that system. We audit it. Every record we publish is extracted from primary sources: court filings, congressional transcripts, federal agency data, declassified documents. The performance is in the farm. The record is in the archive.
           </p>
         </div>
 
