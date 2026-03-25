@@ -108,33 +108,58 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 - **ClownCheck** — $1.95/verification
 - **Comprehensive Reports** — $24.95/PDF
 
-### Citation Cardinal Rule (LAW -- never change)
+### Citation Cardinal Rule (LAW -- Google's Protocol. NEVER change without explicit authorization.)
 
-**Source:** Primary Source Analytics / Gemini "Permanent Receipt" Protocol
+**Source:** Primary Source Analytics / Gemini "Permanent Receipt" Protocol -- Google Algorithm Compliance
 
-**ZERO-URL POLICY:** No hyperlinks, no URLs anywhere in verified_source. Federal URLs are prone to link rot between administrations.
+---
 
-**FORMAT:** Each citation entry uses `::` to separate a bold label from the APA 7 body. Entries are separated by `;`.
+#### RULE 1 -- ZERO-URL POLICY (Absolute)
+No hyperlinks. No URLs. Not even plain-text URLs in `verified_source`. Federal URLs are administration-dependent and subject to link rot. URLs are a liability. Text-based citations are permanent.
+
+#### RULE 2 -- LABEL FORMAT (Exact)
+Each label uses a **colon** between Subject and Role:
+```
+Subject: Role
+```
+Examples:
+- `Nobel Prize in Physics (1997): Steven Chu`
+- `Dr. Ernest Moniz: 13th Secretary of Energy`
+- `Rick Perry: Energy Secretary Confirmation`
+
+NOT a comma. A colon. This is Google's "entity relationship" signal.
+
+#### RULE 3 -- ENTRY STRUCTURE (Exact)
+Each citation entry = `Label :: APA 7 citation body`
+Multiple entries separated by `; ` (semicolon + space).
 
 ```
-Label :: APA 7 citation text.; Next Label :: Next citation.
+Subject: Role :: Publisher. (Year). Full document title (S. Hrg. NNN-NN). U.S. Government Publishing Office.; Subject: Role :: Next citation.
 ```
 
-**APA 7 for Congressional Documents (mandatory elements):**
-- Specific Committee (e.g., Senate HELP Committee)
-- Congress Number (e.g., 115th Congress)
-- Document ID (e.g., S. Hrg. 115-46)
-- Date of testimony or confirmation
+#### RULE 4 -- S. Hrg. NUMBERS MUST BE VISIBLE ON FRONT END (Critical for Google)
+The S. Hrg. number (e.g., `S. Hrg. 115-32`) must appear in the rendered APA citation body. The PostDetail renderer displays the italic APA body text below each bold label. This is non-negotiable. The S. Hrg. number is the "Sovereign's native language" -- the exact string Google's Knowledge Graph uses to index U.S. Congressional history. Displaying it makes ClownBinge an Academic Repository in Google's classification.
 
-**Example (CB-000061 DEI Ruse):**
+#### RULE 5 -- APA 7 MANDATORY ELEMENTS (Congressional Documents)
+1. Full committee name (never an acronym in the citation body)
+2. Year in parentheses
+3. Full document title as it appears in the GPO record
+4. S. Hrg. number in parentheses
+5. Publisher: `U.S. Government Publishing Office.`
+
+**For non-Congressional sources:** Publisher. (Year). Title. Institution/Archive.
+
+#### RULE 6 -- THE "UN-UNRAVELABLE" PRINCIPLE
+When text-based S. Hrg. citations are on the page, any attack on ClownBinge's credibility is an attack on the U.S. Government's own archived records. That is a fight attackers will lose. This is why we do not link -- links can be disputed; government hearing numbers cannot.
+
+---
+
+**CANONICAL EXAMPLE (CB-000061 -- DEI Ruse -- 9 citations):**
 ```
-Nobel Prize in Physics (1997): Steven Chu :: Nobel Prize Outreach AB. (1997). Steven Chu: Biographical. Official Nobel Prize Archives.;
-Dr. Ernest Moniz, 13th Secretary of Energy :: U.S. Senate Committee on Energy and Natural Resources. (2013). Nomination of Dr. Ernest Moniz to be Secretary of Energy (S. Hrg. 113-52). U.S. Government Publishing Office.
+Nobel Prize in Physics (1997): Steven Chu :: Nobel Prize Outreach AB. (1997). Steven Chu: Biographical. Official Nobel Prize Archives.; Dr. Ernest Moniz: 13th Secretary of Energy :: U.S. Senate Committee on Energy and Natural Resources. (2013). Nomination of Dr. Ernest Moniz to be Secretary of Energy (S. Hrg. 113-52). U.S. Government Publishing Office.; Rick Perry: Energy Secretary Confirmation :: U.S. Senate Committee on Energy and Natural Resources. (2017). Nomination of the Honorable Rick Perry to be Secretary of Energy (S. Hrg. 115-32). U.S. Government Publishing Office.
 ```
 
-**Why this matters for SEO/credibility:** S. Hrg. numbers are the exact language Google's Knowledge Graph uses for U.S. History. Text-based entity association with "U.S. Senate" and "Nobel Prize Committee" is more stable than any .gov URL.
-
-**FACT CHECK rule:** Before outputting, cross-reference appointee degrees against official university alumni databases. Never predict credentials.
+**FACT CHECK RULE:** Before inserting credentials, cross-reference against official university alumni databases. Never predict or assume a degree. Verify first.
 
 ### Article Workflow
 
