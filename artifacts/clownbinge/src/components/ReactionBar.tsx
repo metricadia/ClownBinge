@@ -2,7 +2,7 @@ import { usePostReactions } from "@/hooks/use-reactions";
 import { AddReactionRequestType } from "@workspace/api-client-react";
 
 const STANDARD_REACTIONS = [
-  { id: "clowned", emoji: "🤡", label: "Clowned" },
+  { id: "clowned", emoji: "🎪", label: "Clowned" },
   { id: "side_eye", emoji: "👀", label: "Side Eye" },
   { id: "receipts", emoji: "🔥", label: "Receipts" },
   { id: "dead", emoji: "💀", label: "Dead" },
