@@ -37,7 +37,7 @@ function categoryLabel(cat: string): string {
   return cat.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-const PASS = "cbfix2026";
+const PASS = "HeIsTheWay26#9";
 
 export default function FixMe() {
   const [authed, setAuthed] = useState(() => localStorage.getItem("cbfix-auth") === PASS);
