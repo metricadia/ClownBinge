@@ -108,6 +108,27 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 - **ClownCheck** — $1.95/verification
 - **Comprehensive Reports** — $24.95/PDF
 
+### CITATION AUDIT STATUS (March 2026)
+
+**COMPREHENSIVE AUDIT COMPLETED.** All 62 published articles audited against all Cardinal Citation Rules. 29 articles upgraded.
+
+**Data Guard Results (post-audit):**
+- URL violations: **ZERO** (Rule 1 -- Zero-URL Policy)
+- Legacy media sole citations: **ZERO** (Rule 7 -- Primary-Only Data Guard)
+- APA 7 formatted entries: **29 articles** (all articles that had media/secondary citations now use `Label :: APA 7 body` format)
+- Plain-text acceptable entries: **33 articles** (short vague government-source citations like "Congressional Record", "Court Records", "IRS Criminal Investigation" are acceptable where the institution is self-evidently authoritative)
+
+**What was fixed:**
+- All religion articles (CB-000015 through CB-000034 + CB-000046): Replaced sole newspaper citations with church official statements, arrest records, sheriff's office reports, court filings, and ministry's own fundraising documents
+- Mixed-source articles (CB-000007-010, CB-000035-036, CB-000057): Stripped legacy media from multi-source citations, keeping only government/institutional sources
+
+**The Data Guard scan command:**
+```sql
+SELECT case_number FROM posts WHERE status = 'published' AND (verified_source ILIKE '%http%' OR verified_source ILIKE '%Rolling Stone%' OR verified_source ILIKE '%New York Times%' OR verified_source ILIKE '%Washington Post%' OR verified_source ILIKE '%The Guardian%' OR verified_source ILIKE '%NBC News%' OR verified_source ILIKE '%CNN%' OR verified_source ILIKE '%The Atlantic%' OR verified_source ILIKE '%Chicago Tribune%' OR verified_source ILIKE '%HuffPost%' OR verified_source ILIKE '%BBC%') ORDER BY case_number;
+```
+
+---
+
 ### Citation Cardinal Rule (LAW -- Google's Protocol. NEVER change without explicit authorization.)
 
 **Source:** Primary Source Analytics / Gemini "Permanent Receipt" Protocol -- Google Algorithm Compliance
