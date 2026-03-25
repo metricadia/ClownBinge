@@ -104,14 +104,14 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             className="flex flex-col leading-none hover:opacity-90 transition-opacity group"
           >
             <div className="flex items-baseline gap-0">
-              <span className="logo-text text-[1.7rem] sm:text-4xl text-white tracking-tight">Clown</span>
-              <span className="logo-text text-[1.7rem] sm:text-4xl text-secondary tracking-tight">Binge</span>
+              <span className="logo-text text-[2rem] sm:text-4xl text-white tracking-tight">Clown</span>
+              <span className="logo-text text-[2rem] sm:text-4xl text-secondary tracking-tight">Binge</span>
               <span className="text-white/40 text-xl sm:text-3xl font-sans font-light mx-1.5 sm:mx-2">|</span>
-              <span className="text-white/80 text-[0.95rem] sm:text-2xl font-sans font-semibold tracking-wider sm:tracking-widest uppercase">
+              <span className="text-white/80 text-[1.1rem] sm:text-2xl font-sans font-semibold tracking-wider sm:tracking-widest uppercase">
                 Newsroom
               </span>
             </div>
-            <span className="text-white text-[10px] sm:text-xs font-mono tracking-[0.2em] uppercase mt-0.5 transition-colors">
+            <span className="text-white text-[11px] sm:text-xs font-mono tracking-tight sm:tracking-[0.2em] uppercase mt-0.5 transition-colors">
               Independent<span className="text-[#F5C518]">.</span> Verified<span className="text-[#F5C518]">.</span> The Primary Source<span className="text-[#F5C518]">.</span>
             </span>
           </Link>
@@ -135,7 +135,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
 
           {/* Mobile Menu Toggle */}
           <button 
-            className="md:hidden text-white p-2"
+            className="md:hidden text-white p-2 self-start pt-3"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
