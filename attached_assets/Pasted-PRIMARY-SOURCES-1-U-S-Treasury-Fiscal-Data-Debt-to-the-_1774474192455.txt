@@ -1,0 +1,35 @@
+PRIMARY SOURCES
+
+1.
+U.S. Treasury Fiscal Data: Debt to the Penny
+The U.S. Treasury Department reports the total outstanding debt of the federal government daily through its Fiscal Data portal. The Debt to the Penny dataset tracks both debt held by the public and intragovernmental holdings. The data is updated each business day and is publicly accessible at fiscaldata.treasury.gov.
+2.
+GAO: Financial Audit: Bureau of the Fiscal Service FY 2025 Schedules of Federal Debt
+The Government Accountability Office conducts annual financial audits of the Bureau of the Fiscal Service
+3.
+Joint Economic Committee: Monthly Debt Update
+The Joint Economic Committee of the U.S. Congress publishes a monthly debt update tracking the gross national debt, its rate of growth, and the per-person and per-household burden. As of March 2026, the debt was growing at an average of $7.23 billion per day, $301 million per hour, and $83,720 per second. The update is available at jec.senate.gov.
+4.
+Congressional Record: Official Record of U.S. Congressional Proceedings
+The Congressional Record is the official record of the proceedings and debates of the United States Congress. It has been published daily since 1873 and contains all floor statements, votes, and proceedings of the Senate and House of Representatives. It is searchable and publicly accessible through Congress.gov.
+5.
+Bipartisan Policy Center: Federal Budget Deficit Tracker
+The Bipartisan Policy Center publishes a monthly federal budget deficit tracker drawing on data from the Congressional Budget Office and the Treasury Department. The tracker documents monthly spending by category, deficit totals, and year-over-year comparisons. Available at bipartisanpolicy.org.
+6.
+Congressional Budget Office: Budget and Economic Outlook 2025 to 2035
+The Congressional Budget Office published this budget and economic outlook in January 2025, projecting the federal budget deficit at $1.9 trillion for fiscal year 2025, growing to $2.7 trillion by 2035. The report projects debt held by the public rising from 100 percent of GDP in 2025 to 118 percent by 2035, the highest level in the nation
+7.
+Senate Appropriations Committee: FY 2025 Defense Appropriations Act Summary
+The Senate Appropriations Committee published the summary of the Fiscal Year 2025 Defense Appropriations Act, which provides $852.2 billion in total funding, a $27.2 billion or 3.3 percent increase over fiscal year 2024. The summary details funding allocations by category including readiness, personnel, and equipment. Available at appropriations.senate.gov.
+8.
+Brown University Watson Institute: Costs of War Project
+The Costs of War Project at Brown University
+9.
+Department of Veterans Affairs: National Veteran Suicide Prevention Annual Report Data
+The Department of Veterans Affairs publishes an annual National Veteran Suicide Prevention Report drawing on national death certificate data. The 2025 report covers data from 2001 to 2023. In 2023, 6,398 veterans died by suicide, an average of 17.5 per day. The suicide rate per 100,000 veterans was 35.2, more than double the rate among non-veteran adults. Sixty-one percent of veterans who died by suicide were not receiving VA health care in the year before their death. Available at mentalhealth.va.gov.
+10.
+Congressional Budget Office: The Long-Term Budget Outlook 2025 to 2055
+The Congressional Budget Office published its long-term budget outlook in March 2025, projecting federal debt held by the public rising from 100 percent of GDP in 2025 to 156 percent of GDP by 2055. The report projects deficits will exceed 5 percent of GDP in every year between now and 2055, a level previously sustained only during World War II, the 2008 financial crisis, and the COVID-19 pandemic. Available at cbo.gov.
+11.
+Peter G. Peterson Foundation: Interest Costs on the National Debt
+The Peter G. Peterson Foundation, a nonpartisan organization focused on fiscal sustainability, published this analysis of interest costs on the national debt drawing on CBO projections. The analysis documents that interest costs in 2025 totaled $970 billion, with CBO projecting $1 trillion in 2026. The Treasury pays an average of $2.8 billion per day in interest. By 2036, CBO projects that will rise to $5.9 billion per day. Available at pgpf.org.

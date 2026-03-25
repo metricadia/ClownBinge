@@ -110,13 +110,13 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 
 ### CITATION AUDIT STATUS (March 2026)
 
-**COMPREHENSIVE AUDIT COMPLETED.** All 62 published articles audited against all Cardinal Citation Rules. 29 articles upgraded.
+**COMPREHENSIVE AUDIT COMPLETED.** All 62 published articles audited against all Cardinal Citation Rules. 58 articles in full APA 7 `Label :: APA 7 body` format.
 
 **Data Guard Results (post-audit):**
 - URL violations: **ZERO** (Rule 1 -- Zero-URL Policy)
 - Legacy media sole citations: **ZERO** (Rule 7 -- Primary-Only Data Guard)
-- APA 7 formatted entries: **29 articles** (all articles that had media/secondary citations now use `Label :: APA 7 body` format)
-- Plain-text acceptable entries: **33 articles** (short vague government-source citations like "Congressional Record", "Court Records", "IRS Criminal Investigation" are acceptable where the institution is self-evidently authoritative)
+- APA 7 formatted entries: **58 of 62 articles**
+- Plain-text (satirical placeholder): **4 articles** -- CB-000001, CB-000002, CB-000003, CB-000005 are satirical/illustrative articles featuring fictional politicians. Their citations ("Congressional Record", "C-SPAN", "Court Records", "Palmetto County Board Records") are illustrative institutional references, not citations to real events.
 
 **What was fixed:**
 - All religion articles (CB-000015 through CB-000034 + CB-000046): Replaced sole newspaper citations with church official statements, arrest records, sheriff's office reports, court filings, and ministry's own fundraising documents
