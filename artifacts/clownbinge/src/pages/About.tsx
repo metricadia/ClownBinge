@@ -6,7 +6,25 @@ export default function About() {
   return (
     <Layout>
       <div className="max-w-3xl mx-auto px-4 py-12">
-        {/* Brand Manifesto Hero */}
+
+        {/* Name Defense -- dark navy opener */}
+        <div
+          className="rounded-2xl px-7 py-8 mb-10 border border-white/10"
+          style={{ background: "#1A3A8F" }}
+        >
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 mb-3">
+            Why the Name
+          </p>
+          <h2 className="font-sans font-black text-2xl sm:text-3xl text-white leading-tight mb-4">
+            ClownBinge is not a joke.<br />
+            <span style={{ color: "#F5C518" }}>The clown farm is.</span>
+          </h2>
+          <p className="text-sm sm:text-base text-white/75 leading-relaxed">
+            We named this platform after the thing we document. The modern news cycle has become a performance industry: outrage manufactured for engagement, facts subordinated to narrative, journalism repackaged as entertainment and sold to the highest corporate bidder. We don't participate in that system. We audit it. Every record we publish is extracted from primary sources -- court filings, congressional transcripts, federal agency data, declassified documents. The clowns are in the farm. We are in the archive.
+          </p>
+        </div>
+
+        {/* Brand Manifesto */}
         <div className="mb-12">
           <p className="text-xs font-bold tracking-widest uppercase text-primary mb-6">About ClownBinge</p>
 
@@ -30,13 +48,38 @@ export default function About() {
             ))}
           </div>
 
-          <div className="rounded-2xl px-6 py-5 mb-8 border-2" style={{ background: "#1A3A8F", borderColor: "#1A3A8F" }}>
-            <p className="font-mono font-bold text-base sm:text-lg text-white tracking-wide">
-              <span style={{ color: "#F5C518" }}>65,000</span> global sources<span style={{ color: "#F5C518" }}>.</span> Zero opinions<span style={{ color: "#F5C518" }}>.</span> One standard: the primary source record<span style={{ color: "#F5C518" }}>.</span>
+          <div className="rounded-2xl px-6 py-5 mb-8 border border-[#F5C518]/30 bg-[#FEFCE8]">
+            <p className="font-mono font-bold text-base sm:text-lg tracking-wide" style={{ color: "#1A3A8F" }}>
+              <span style={{ color: "#C9980A" }}>65,000</span> global sources<span style={{ color: "#C9980A" }}>.</span> Zero opinions<span style={{ color: "#C9980A" }}>.</span> One standard: the primary source record<span style={{ color: "#C9980A" }}>.</span>
             </p>
           </div>
 
           <div className="h-1 w-full bg-[#F5C518] rounded-full" />
+        </div>
+
+        {/* Prime Directive Block */}
+        <div className="mb-12 border-l-4 border-[#F5C518] pl-6 py-1">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-2">
+            Our Prime Directive
+          </p>
+          <h2 className="font-sans font-black text-3xl sm:text-4xl text-header mb-4">
+            Ethicality.
+          </h2>
+          <p className="text-base text-muted-foreground leading-relaxed mb-6 max-w-2xl">
+            Not as a marketing claim. As a structural commitment. ClownBinge is operated by Primary Source Analytics, LLC -- a company that accepts zero funding from political action committees, dark money organizations, corporate underwriters, or foundations with editorial interests. Our editorial decisions are made by researchers, not revenue managers. Our coverage is not subject to advertiser approval. Our independence is not a promise. It is the financial architecture of this organization.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[
+              { label: "Not PAC-Funded", desc: "Zero dollars accepted from political action committees or anonymous donors." },
+              { label: "Not Corporate-Owned", desc: "No media conglomerate. No hedge fund. No parent company with editorial interests." },
+              { label: "Not Advertiser-Controlled", desc: "Coverage decisions are made against the primary source record. Not the ad buy." },
+            ].map(({ label, desc }) => (
+              <div key={label} className="rounded-xl border border-border bg-muted/40 px-4 py-4">
+                <p className="text-xs font-black uppercase tracking-widest text-header mb-1">{label}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <AdminNav />
@@ -78,14 +121,14 @@ export default function About() {
             actually say.
           </p>
           <p>
-            The archive covers fifteen categories of documented public interest: self-contradiction in
+            The archive covers sixteen categories of documented public interest: self-contradiction in
             public life, law and justice, money and power, constitutional history, the documented
             contributions of American women, anti-racist figures and their historical record, United
             States history, religion and public accountability, original investigations, war and its
             documented human cost, health policy, technology and its institutional consequences,
-            censorship, the global south as covered by primary sources, and explanatory journalism
-            on how systems work. The categories exist because the primary source record requires them.
-            Not one of them is a political position.
+            censorship, the global south as covered by primary sources, explanatory journalism
+            on how systems work, and data-driven analysis. The categories exist because the primary
+            source record requires them. Not one of them is a political position.
           </p>
           <p>
             A survey of our published archive reflects this breadth. We have documented United States
@@ -149,11 +192,10 @@ export default function About() {
           </p>
           <p>
             We are not partisan. We do not have a preferred political outcome. Our archive documents
-            hypocrisy, institutional contradiction, and the gap between stated values and documented
-            conduct wherever that gap appears in the primary source record. That includes Democrats,
-            Republicans, religious leaders, corporations, federal agencies, and the bipartisan
-            Congressional voting record that built the national debt. The record is not partisan.
-            Neither are we.
+            institutional contradiction and the gap between stated values and documented conduct wherever
+            that gap appears in the primary source record. That includes Democrats, Republicans, religious
+            leaders, corporations, federal agencies, and the bipartisan Congressional voting record that
+            built the national debt. The record is not partisan. Neither are we.
           </p>
 
           <h2>Legal Architecture</h2>
@@ -179,7 +221,7 @@ export default function About() {
 
           <p className="text-sm text-muted-foreground">
             Primary Source Analytics, LLC &mdash; ClownBinge.com<br />
-            <em>Independent. Primary Sourced. Journalism.</em>
+            <em>Independent. Verified. The Primary Source.</em>
           </p>
 
         </div>
