@@ -152,8 +152,20 @@ export default function Home() {
                     
                     {/* Insert ad slot placeholder after 3rd post */}
                     {index === 2 && (
-                      <div className="my-10 bg-muted/50 border border-border/50 h-[250px] rounded-xl flex items-center justify-center">
-                        <span className="text-xs uppercase tracking-widest text-muted-foreground font-bold">Advertisement Space</span>
+                      <div className="my-10">
+                        <a
+                          href="/contact"
+                          className="block w-full overflow-hidden rounded-xl cursor-pointer"
+                          aria-label="Advertise on ClownBinge"
+                          title="Your ad could be here. Click to learn about advertising with ClownBinge."
+                        >
+                          <img
+                            src={`${import.meta.env.BASE_URL}images/ad-coming-soon.jpg`}
+                            alt="Your Ad Here - Advertise on ClownBinge. Full-width placement available. High visibility."
+                            className="w-full h-auto object-cover"
+                            loading="lazy"
+                          />
+                        </a>
                       </div>
                     )}
                   </div>
@@ -222,8 +234,20 @@ export default function Home() {
               </div>
               
               {/* Sidebar Ad Slot */}
-              <div className="mt-8 bg-muted/50 border border-border/50 h-[600px] rounded-xl flex items-center justify-center">
-                <span className="text-xs uppercase tracking-widest text-muted-foreground font-bold">Sticky Ad Space</span>
+              <div className="mt-8">
+                <a
+                  href="/contact"
+                  className="block w-full overflow-hidden rounded-xl cursor-pointer"
+                  aria-label="Advertise on ClownBinge"
+                  title="Your ad could be here. Click to learn about advertising with ClownBinge."
+                >
+                  <img
+                    src={`${import.meta.env.BASE_URL}images/ad-coming-soon.jpg`}
+                    alt="Your Ad Here - Advertise on ClownBinge. Full-width placement available. High visibility."
+                    className="w-full h-auto object-cover"
+                    loading="lazy"
+                  />
+                </a>
               </div>
             </div>
           </aside>
