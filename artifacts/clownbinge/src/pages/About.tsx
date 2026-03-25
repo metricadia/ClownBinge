@@ -2,6 +2,14 @@ import { Layout } from "@/components/Layout";
 import { AdminNav } from "@/components/AdminNav";
 import { StatWidget } from "@/components/StatWidget";
 
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-4 mt-12 pt-6 border-t border-border">
+      {children}
+    </p>
+  );
+}
+
 export default function About() {
   return (
     <Layout>
@@ -84,9 +92,9 @@ export default function About() {
 
         <AdminNav />
 
+        {/* What ClownBinge Is */}
+        <SectionLabel>What ClownBinge Is</SectionLabel>
         <div className="prose prose-slate max-w-none cb-article-body">
-
-          <h2>What ClownBinge Is</h2>
           <p>
             ClownBinge is an independent, primary source journalism platform operated by Primary Source Analytics, LLC. We publish documented accounts of public events, institutional conduct, and structural contradictions in American civic, religious, political, and financial life.
           </p>
@@ -96,14 +104,13 @@ export default function About() {
           <p>
             Our revenue comes directly from readers and from the verification and research services we provide. We accept no funding from political action committees, dark money organizations, political parties, foundations with policy agendas, or corporate underwriters with editorial interests. That structure is not incidental to our editorial independence. It is the condition of it.
           </p>
-
         </div>
 
         <StatWidget />
 
+        {/* What the Archive Documents */}
+        <SectionLabel>What the Archive Documents</SectionLabel>
         <div className="prose prose-slate max-w-none cb-article-body">
-
-          <h2>What the Archive Documents</h2>
           <p>
             The ClownBinge archive documents the gap between the public record and the conduct, statements, and decisions of public figures and institutions. That gap is the story.
           </p>
@@ -113,48 +120,56 @@ export default function About() {
           <p>
             Our published archive reflects this breadth. We have documented United States senators on both sides of the aisle voting against legislation they publicly championed. We have documented the financial conduct of prominent religious institutions against their own public teachings. We have documented the structural history of American women's legal rights against primary sources held by the Library of Congress and the National Archives. We have documented the national debt against audits produced by the Government Accountability Office and projections by the Congressional Budget Office. The archive does not have a party affiliation. It has a source standard.
           </p>
+        </div>
 
-          <h2>The Source Standard</h2>
+        {/* The Source Standard */}
+        <SectionLabel>The Source Standard</SectionLabel>
+        <div className="prose prose-slate max-w-none cb-article-body">
           <p>
             Every claim published on ClownBinge is verified against a primary source before publication. We recognize three source tiers:
           </p>
+        </div>
 
-          <dl className="not-prose my-6 flex flex-col gap-0 border border-border rounded-xl overflow-hidden">
-            {[
-              {
-                tier: "Tier One",
-                summary: "Original Government and Legal Records",
-                detail: "Official government records, court documents, congressional voting records, federal agency publications, FEC filings, judicial records maintained by the Federal Judicial Center, and official legislative transcripts including the Congressional Record.",
-              },
-              {
-                tier: "Tier Two",
-                summary: "Peer-Reviewed Research and Nonpartisan Analysis",
-                detail: "Peer-reviewed academic research and nonpartisan research institutions with documented, publicly available methodology, including the Government Accountability Office, the Congressional Budget Office, the Bipartisan Policy Center, and university-based research centers with published sourcing standards.",
-              },
-              {
-                tier: "Tier Three",
-                summary: "Recognized News Organizations (Context Only)",
-                detail: "Recognized news organizations with published editorial standards, a documented corrections policy, and identifiable editorial leadership. Tier Three sources establish context, not primary facts. Primary facts trace to Tier One.",
-              },
-            ].map(({ tier, summary, detail }, i) => (
-              <div
-                key={tier}
-                className={`flex flex-col sm:flex-row gap-0 ${i > 0 ? "border-t border-border" : ""}`}
-              >
-                <dt className="shrink-0 w-full sm:w-36 px-5 py-4 bg-muted/60 flex flex-col justify-start gap-0.5 border-b sm:border-b-0 sm:border-r border-border">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-primary">{tier}</span>
-                  <span className="text-xs font-semibold text-foreground leading-snug">{summary}</span>
-                </dt>
-                <dd className="px-5 py-4 text-sm text-muted-foreground leading-relaxed m-0">{detail}</dd>
-              </div>
-            ))}
-          </dl>
+        <dl className="my-6 flex flex-col gap-0 border border-border rounded-xl overflow-hidden">
+          {[
+            {
+              tier: "Tier One",
+              summary: "Government & Legal Records",
+              detail: "Official government records, court documents, congressional voting records, federal agency publications, FEC filings, judicial records maintained by the Federal Judicial Center, and official legislative transcripts including the Congressional Record.",
+            },
+            {
+              tier: "Tier Two",
+              summary: "Peer-Reviewed & Nonpartisan",
+              detail: "Peer-reviewed academic research and nonpartisan research institutions with documented, publicly available methodology, including the Government Accountability Office, the Congressional Budget Office, the Bipartisan Policy Center, and university-based research centers with published sourcing standards.",
+            },
+            {
+              tier: "Tier Three",
+              summary: "Context Sources Only",
+              detail: "Recognized news organizations with published editorial standards, a documented corrections policy, and identifiable editorial leadership. Tier Three sources establish context, not primary facts. Primary facts trace to Tier One.",
+            },
+          ].map(({ tier, summary, detail }, i) => (
+            <div
+              key={tier}
+              className={`flex flex-col sm:flex-row gap-0 ${i > 0 ? "border-t border-border" : ""}`}
+            >
+              <dt className="shrink-0 w-full sm:w-44 px-5 py-4 bg-muted/60 flex flex-col justify-start gap-0.5 border-b sm:border-b-0 sm:border-r border-border">
+                <span className="text-[10px] font-black uppercase tracking-widest text-primary">{tier}</span>
+                <span className="text-xs font-semibold text-foreground leading-snug">{summary}</span>
+              </dt>
+              <dd className="px-5 py-4 text-sm text-muted-foreground leading-relaxed m-0">{detail}</dd>
+            </div>
+          ))}
+        </dl>
 
+        <div className="prose prose-slate max-w-none cb-article-body">
           <p>
             Primary sources are linked directly within article text. Readers can verify every factual claim in every article independently without leaving the page. We do not ask readers to trust us. We ask them to check the source.
           </p>
+        </div>
 
-          <h2>What ClownBinge Is Not</h2>
+        {/* What ClownBinge Is Not */}
+        <SectionLabel>What ClownBinge Is Not</SectionLabel>
+        <div className="prose prose-slate max-w-none cb-article-body">
           <p>
             We do not publish anonymous tips, unverified allegations, or content that cannot be traced to a named, public, verifiable source. A story without documentation is not a ClownBinge story.
           </p>
@@ -167,13 +182,19 @@ export default function About() {
           <p>
             We are not partisan. Our archive documents institutional contradiction wherever it appears in the primary source record. That includes Democrats, Republicans, religious leaders, corporations, federal agencies, and the bipartisan Congressional record. The record is not partisan. Neither are we.
           </p>
+        </div>
 
-          <h2>Legal Architecture</h2>
+        {/* Legal Architecture */}
+        <SectionLabel>Legal Architecture</SectionLabel>
+        <div className="prose prose-slate max-w-none cb-article-body">
           <p>
             ClownBinge operates under the strongest First Amendment protections available in the United States. <em>New York Times Co. v. Sullivan</em>, 376 U.S. 254 (1964) establishes the actual malice standard for public figures. Because ClownBinge publishes only verified primary source documentation, actual malice cannot be established against this platform by design. We do not speculate. We do not fabricate. We cite. The citations are in the article. The article is in the archive.
           </p>
+        </div>
 
-          <h2>Corrections</h2>
+        {/* Corrections */}
+        <SectionLabel>Corrections</SectionLabel>
+        <div className="prose prose-slate max-w-none cb-article-body">
           <p>
             If a factual error is identified in any published record, a correction is appended to the article within 48 hours of confirmation. The original text and the correction are both preserved in the public record. Corrections are never deleted or obscured. Submissions identifying potential errors may be sent through the contact form. We respond to all credible error reports within 48 hours.
           </p>
@@ -184,8 +205,8 @@ export default function About() {
             Primary Source Analytics, LLC &mdash; ClownBinge.com<br />
             <em>Independent. Verified. The Primary Source.</em>
           </p>
-
         </div>
+
       </div>
     </Layout>
   );
