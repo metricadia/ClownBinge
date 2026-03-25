@@ -67,11 +67,11 @@ export default function Home() {
                   <div className="h-px w-full bg-[#F5C518] rounded-full" />
                 </div>
               )}
-              <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-snug max-w-xl">
+              <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-snug max-w-xl text-center sm:text-left">
                 <span className="block">A Public Accountability News Platform.</span>
                 <span className="block font-bold">Verified Across 65,000 Global Sources.</span>
               </h1>
-              <div className="mt-3 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2">
+              <div className="mt-3 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 items-center sm:items-start">
                 <div className="flex gap-2">
                   <a
                     href="/clowncheck"
@@ -88,7 +88,7 @@ export default function Home() {
                     <span className="text-[10px] font-semibold opacity-70 ml-0.5">$24.95</span>
                   </a>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 justify-center sm:justify-start">
                   <span className="text-muted-foreground/30 text-sm hidden sm:inline px-1">|</span>
                   <a href="/submit" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit a Post</a>
                   <span className="text-muted-foreground/30">|</span>
