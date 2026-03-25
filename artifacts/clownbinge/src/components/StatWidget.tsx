@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 interface PlatformStats {
   totalArticles: number;
   totalCitations: number;
-  historicSelfOwns: number;
+  retractionsIssued: number;
   darkMoneyAccepted: number;
 }
 
@@ -91,7 +91,7 @@ export function StatWidget() {
   const stats = data ?? {
     totalArticles: 0,
     totalCitations: 0,
-    historicSelfOwns: 0,
+    retractionsIssued: 0,
     darkMoneyAccepted: 0,
   };
 
@@ -121,9 +121,9 @@ export function StatWidget() {
         description="Court records, government filings, original data, and declassified documents."
       />
       <StatRow
-        value={stats.historicSelfOwns}
-        label="Historic 10/10 Self-Owns"
-        description="Public figures caught on their own documented record contradicting themselves."
+        value={stats.retractionsIssued}
+        label="Retractions Issued"
+        description="Every record stands. We verify before we publish. We have never had to take one back."
       />
       <StatRow
         value={0}

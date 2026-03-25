@@ -24,20 +24,17 @@ router.get("/posts/count", async (_req, res) => {
 
 router.get("/posts/stats", async (_req, res) => {
   try {
-    const [articlesResult, citationsResult, historicResult] = await Promise.all([
+    const [articlesResult, citationsResult] = await Promise.all([
       db.select({ count: count() }).from(postsTable).where(eq(postsTable.status, "published")),
       db.execute(
         sql`SELECT COALESCE(SUM((LENGTH(body) - LENGTH(REPLACE(body, 'cb-factoid', ''))) / 9), 0)::int AS total_citations FROM posts WHERE status = 'published'`
-      ),
-      db.select({ count: count() }).from(postsTable).where(
-        and(eq(postsTable.status, "published"), eq(postsTable.selfOwnScore, 10))
       ),
     ]);
 
     res.json({
       totalArticles: Number(articlesResult[0]?.count ?? 0),
       totalCitations: Number((citationsResult.rows[0] as any)?.total_citations ?? 0),
-      historicSelfOwns: Number(historicResult[0]?.count ?? 0),
+      retractionsIssued: 0,
       darkMoneyAccepted: 0,
     });
   } catch (err) {
