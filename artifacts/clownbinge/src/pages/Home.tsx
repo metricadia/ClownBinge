@@ -2,9 +2,11 @@ import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
 import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
-import { usePostsFilter, usePostsFeed, usePostsFeedPaginated } from "@/hooks/use-posts";
+import { usePostsFilter, usePostsFeed, usePostsFeedPaginated, usePostDetail } from "@/hooks/use-posts";
 import { useHomeSeoHead } from "@/hooks/use-seo-head";
-import { Loader2, AlertCircle } from "lucide-react";
+import { Loader2, AlertCircle, TrendingUp, ArrowRight } from "lucide-react";
+
+const HIGHLY_POPULAR_SLUG = "dei-ruse-obama-trump-appointee-qualifications";
 import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
 
 
@@ -17,6 +19,7 @@ export default function Home() {
   const { posts: paginatedPosts, isLoading, isLoadingMore, error, hasMore, loadMore } = usePostsFeedPaginated(isStaffPicks ? undefined : category, 20);
   const { data: selfOwnData } = usePostsFeed('self_owned');
   const topSelfOwn = selfOwnData?.posts?.[0] ?? null;
+  const { data: highlightedPost } = usePostDetail(HIGHLY_POPULAR_SLUG);
 
   // Staff picks: filter curated slugs from a full fetch; regular feed uses paginated posts
   const displayPosts = isStaffPicks
@@ -63,6 +66,40 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+            {/* Highly Popular featured block */}
+            {highlightedPost && !category && (
+              <div
+                className="mb-8 rounded-2xl overflow-hidden border border-blue-100"
+                style={{ background: "linear-gradient(135deg, #dbeafe 0%, #e8edf5 55%, #f1f5f9 100%)" }}
+              >
+                <div className="px-6 pt-5 pb-1 flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 bg-white/80 border border-blue-200 rounded-full px-3 py-1">
+                    <TrendingUp className="w-3.5 h-3.5 text-blue-600" />
+                    <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700">Highly Popular</span>
+                  </div>
+                </div>
+                <div className="px-6 py-4">
+                  <Link href={`/case/${highlightedPost.slug}`}>
+                    <h2 className="font-sans font-extrabold text-xl sm:text-2xl text-header leading-snug mb-3 hover:text-primary transition-colors cursor-pointer">
+                      {highlightedPost.title}
+                    </h2>
+                  </Link>
+                  {highlightedPost.teaser && (
+                    <p className="text-sm text-slate-600 leading-relaxed mb-4 line-clamp-2">
+                      {highlightedPost.teaser}
+                    </p>
+                  )}
+                  <Link
+                    href={`/case/${highlightedPost.slug}`}
+                    className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline"
+                  >
+                    Read the Record
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            )}
 
             {feedIsLoading ? (
               <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
