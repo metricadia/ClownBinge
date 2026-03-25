@@ -425,7 +425,7 @@ export default function PostDetail() {
                           {ref.title}
                         </a>
                         <p className="text-sm text-foreground/75 leading-relaxed m-0">{ref.summary}</p>
-                        <span className="text-xs text-foreground/45 font-mono break-all">{ref.href}</span>
+                        <a href={ref.href} target="_blank" rel="noopener noreferrer" className="text-xs text-foreground/45 font-mono break-all hover:text-[#1A3A8F] hover:underline transition-colors">{ref.href}</a>
                       </div>
                     </li>
                   ))
@@ -442,7 +442,7 @@ export default function PostDetail() {
                         >
                           {abbreviateSource(post.verifiedSource)}
                         </a>
-                        <span className="text-xs text-foreground/45 font-mono break-all">{post.sourceUrl}</span>
+                        <a href={post.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-foreground/45 font-mono break-all hover:text-[#1A3A8F] hover:underline transition-colors">{post.sourceUrl}</a>
                       </div>
                     </li>
                   )
@@ -467,7 +467,7 @@ export default function PostDetail() {
                             <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{label}</p>
                           )}
                           {url && (
-                            <span className="text-xs text-foreground/45 font-mono break-all">{url}</span>
+                            <a href={url} target="_blank" rel="noopener noreferrer" className="text-xs text-foreground/45 font-mono break-all hover:text-[#1A3A8F] hover:underline transition-colors">{url}</a>
                           )}
                         </div>
                       </li>
