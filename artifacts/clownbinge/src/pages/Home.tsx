@@ -106,7 +106,9 @@ export default function Home() {
                 <div className="px-6 pt-5 pb-1 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-0 bg-white/80 border border-blue-200 rounded-full overflow-hidden">
                     <div className="flex items-center px-3 py-1">
-                      <span className="text-sm leading-none">👑</span>
+                      <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M1 9.5h12M1 9.5L0.5 4l3 2.5L7 1l3.5 5.5 3-2.5L13 9.5" stroke="#1d4ed8" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
                     </div>
                     <span className="text-blue-300 text-xs font-bold select-none">|</span>
                     <span className="px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-blue-500">
