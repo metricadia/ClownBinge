@@ -104,10 +104,10 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             className="flex flex-col leading-none hover:opacity-90 transition-opacity group"
           >
             <div className="flex items-baseline gap-0">
-              <span className="logo-text text-3xl sm:text-4xl text-white tracking-tight">Clown</span>
-              <span className="logo-text text-3xl sm:text-4xl text-secondary tracking-tight">Binge</span>
-              <span className="hidden sm:inline text-white/40 text-2xl sm:text-3xl font-sans font-light mx-2">|</span>
-              <span className="hidden sm:inline text-white/80 text-xl sm:text-2xl font-sans font-semibold tracking-widest uppercase">
+              <span className="logo-text text-2xl sm:text-4xl text-white tracking-tight">Clown</span>
+              <span className="logo-text text-2xl sm:text-4xl text-secondary tracking-tight">Binge</span>
+              <span className="text-white/40 text-lg sm:text-3xl font-sans font-light mx-1.5 sm:mx-2">|</span>
+              <span className="text-white/80 text-sm sm:text-2xl font-sans font-semibold tracking-wider sm:tracking-widest uppercase">
                 Newsroom
               </span>
             </div>
