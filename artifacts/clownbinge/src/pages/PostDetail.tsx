@@ -21,6 +21,26 @@ import { Loader2, AlertTriangle, ArrowLeft, Copy, Check, Share2 } from "lucide-r
 import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
 
+function linkifySource(text: string): React.ReactNode {
+  const urlRegex = /(https?:\/\/[^\s,;)]+)/g;
+  const parts = text.split(urlRegex);
+  return parts.map((part, i) =>
+    /^https?:\/\//.test(part) ? (
+      <a
+        key={i}
+        href={part}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-primary underline underline-offset-2 hover:text-primary/80 break-all"
+      >
+        {part}
+      </a>
+    ) : (
+      <span key={i}>{part}</span>
+    )
+  );
+}
+
 function abbreviateTitle(title: string): string {
   if (/senator/i.test(title)) return "Sen.";
   if (/representative/i.test(title)) return "Rep.";
@@ -429,7 +449,7 @@ export default function PostDetail() {
                   : post.verifiedSource!.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => (
                     <li key={i} className="flex gap-4">
                       <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
-                      <p className="text-sm text-foreground/75 leading-relaxed m-0">{entry}</p>
+                      <p className="text-sm text-foreground/75 leading-relaxed m-0">{linkifySource(entry)}</p>
                     </li>
                   ))
               }
