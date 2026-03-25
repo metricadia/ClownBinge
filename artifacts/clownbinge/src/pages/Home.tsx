@@ -7,6 +7,25 @@ import { useHomeSeoHead } from "@/hooks/use-seo-head";
 import { Loader2, AlertCircle, TrendingUp, ArrowRight } from "lucide-react";
 
 const HIGHLY_POPULAR_SLUG = "dei-ruse-obama-trump-appointee-qualifications";
+
+const CATEGORY_LABELS: Record<string, string> = {
+  self_owned:          "Self-Owned",
+  law_and_justice:     "Law & Justice",
+  money_and_power:     "Money & Power",
+  us_constitution:     "U.S. Constitution",
+  women_and_girls:     "Women & Girls",
+  anti_racist_heroes:  "Anti-Racist Heroes",
+  us_history:          "U.S. History",
+  religion:            "Religion",
+  investigations:      "Investigations",
+  war_and_inhumanity:  "War & Inhumanity",
+  health_and_healing:  "Health & Healing",
+  technology:          "Technology",
+  censorship:          "Censorship",
+  global_south:        "Global South",
+  how_it_works:        "How It Works",
+  nerd_out:            "NerdOut",
+};
 import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
 
 
@@ -74,9 +93,15 @@ export default function Home() {
                 style={{ background: "linear-gradient(135deg, #dbeafe 0%, #e8edf5 55%, #f1f5f9 100%)" }}
               >
                 <div className="px-6 pt-5 pb-1 flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-1.5 bg-white/80 border border-blue-200 rounded-full px-3 py-1">
-                    <TrendingUp className="w-3.5 h-3.5 text-blue-600" />
-                    <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700">CB Featured</span>
+                  <div className="flex items-center gap-0 bg-white/80 border border-blue-200 rounded-full overflow-hidden">
+                    <div className="flex items-center gap-1.5 px-3 py-1">
+                      <TrendingUp className="w-3.5 h-3.5 text-blue-600" />
+                      <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700">Featured</span>
+                    </div>
+                    <span className="text-blue-300 text-xs font-bold select-none">|</span>
+                    <span className="px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-blue-500">
+                      {CATEGORY_LABELS[highlightedPost.category] ?? highlightedPost.category}
+                    </span>
                   </div>
                   <span className="text-xs font-mono font-bold text-slate-400 tracking-wide">{highlightedPost.caseNumber}</span>
                 </div>
