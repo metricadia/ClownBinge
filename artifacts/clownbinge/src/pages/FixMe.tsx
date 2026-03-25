@@ -1,0 +1,362 @@
+import { useState, useEffect, useCallback } from "react";
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+type ArticleRow = {
+  id: string;
+  caseNumber: string;
+  title: string;
+  slug: string;
+  category: string;
+  status: string;
+  locked: boolean;
+  aiScore: number | null;
+  aiScoreTestedAt: string | null;
+  wordCount: number | null;
+};
+
+type RowState = {
+  loading: boolean;
+  action: "detect" | "reduce" | null;
+  error: string | null;
+};
+
+function scoreColor(score: number | null): string {
+  if (score === null) return "bg-gray-100 text-gray-500";
+  if (score <= 15) return "bg-green-100 text-green-800";
+  if (score <= 30) return "bg-yellow-100 text-yellow-800";
+  return "bg-red-100 text-red-800";
+}
+
+function scoreLabel(score: number | null): string {
+  if (score === null) return "Not Tested";
+  return `${score}%`;
+}
+
+function categoryLabel(cat: string): string {
+  return cat.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+const PASS = "cbfix2026";
+
+export default function FixMe() {
+  const [authed, setAuthed] = useState(() => localStorage.getItem("cbfix-auth") === PASS);
+  const [pwInput, setPwInput] = useState("");
+  const [pwError, setPwError] = useState(false);
+
+  const [articles, setArticles] = useState<ArticleRow[]>([]);
+  const [rowStates, setRowStates] = useState<Record<string, RowState>>({});
+  const [loadingList, setLoadingList] = useState(false);
+  const [listError, setListError] = useState<string | null>(null);
+  const [filter, setFilter] = useState<"all" | "untested" | "high">("all");
+  const [lastResult, setLastResult] = useState<{ slug: string; message: string } | null>(null);
+
+  const fetchArticles = useCallback(async () => {
+    setLoadingList(true);
+    setListError(null);
+    try {
+      const res = await fetch(`${BASE}/api/fixme/articles`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data: ArticleRow[] = await res.json();
+      setArticles(data);
+    } catch (e) {
+      setListError(e instanceof Error ? e.message : "Failed to load articles");
+    } finally {
+      setLoadingList(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (authed) fetchArticles();
+  }, [authed, fetchArticles]);
+
+  function handleLogin() {
+    if (pwInput === PASS) {
+      localStorage.setItem("cbfix-auth", PASS);
+      setAuthed(true);
+      setPwError(false);
+    } else {
+      setPwError(true);
+    }
+  }
+
+  function setRowState(slug: string, state: Partial<RowState>) {
+    setRowStates((prev) => ({
+      ...prev,
+      [slug]: { loading: false, action: null, error: null, ...prev[slug], ...state },
+    }));
+  }
+
+  async function handleDetect(slug: string) {
+    setRowState(slug, { loading: true, action: "detect", error: null });
+    setLastResult(null);
+    try {
+      const res = await fetch(`${BASE}/api/fixme/detect/${slug}`, { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      setArticles((prev) =>
+        prev.map((a) =>
+          a.slug === slug
+            ? { ...a, aiScore: data.score, aiScoreTestedAt: new Date().toISOString() }
+            : a
+        )
+      );
+      setLastResult({ slug, message: `${slug}: Detected at ${data.score}% (${data.flaggedCount} flagged sentences)` });
+    } catch (e) {
+      setRowState(slug, { error: e instanceof Error ? e.message : "Detection failed" });
+    } finally {
+      setRowState(slug, { loading: false, action: null });
+    }
+  }
+
+  async function handleReduce(slug: string) {
+    setRowState(slug, { loading: true, action: "reduce", error: null });
+    setLastResult(null);
+    try {
+      const res = await fetch(`${BASE}/api/fixme/reduce/${slug}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ targetScore: 15 }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      setArticles((prev) =>
+        prev.map((a) =>
+          a.slug === slug
+            ? { ...a, aiScore: data.finalScore, aiScoreTestedAt: new Date().toISOString() }
+            : a
+        )
+      );
+      setLastResult({ slug, message: data.message });
+    } catch (e) {
+      setRowState(slug, { error: e instanceof Error ? e.message : "Reduction failed" });
+    } finally {
+      setRowState(slug, { loading: false, action: null });
+    }
+  }
+
+  const filtered = articles.filter((a) => {
+    if (filter === "untested") return a.aiScore === null;
+    if (filter === "high") return a.aiScore !== null && a.aiScore > 15;
+    return true;
+  });
+
+  const stats = {
+    total: articles.length,
+    tested: articles.filter((a) => a.aiScore !== null).length,
+    passing: articles.filter((a) => a.aiScore !== null && a.aiScore <= 15).length,
+    failing: articles.filter((a) => a.aiScore !== null && a.aiScore > 15).length,
+    untested: articles.filter((a) => a.aiScore === null).length,
+  };
+
+  if (!authed) {
+    return (
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+        <div className="bg-gray-900 border border-gray-700 rounded-lg p-8 w-full max-w-sm">
+          <h1 className="text-white text-xl font-bold mb-1">CBfix</h1>
+          <p className="text-gray-400 text-sm mb-6">AI Score Reduction Dashboard</p>
+          <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+            <input
+              type="password"
+              value={pwInput}
+              onChange={(e) => setPwInput(e.target.value)}
+              placeholder="Admin password"
+              className="w-full bg-gray-800 border border-gray-600 text-white px-3 py-2 rounded text-sm mb-3 focus:outline-none focus:border-blue-500"
+            />
+            {pwError && <p className="text-red-400 text-xs mb-3">Incorrect password.</p>}
+            <button
+              type="submit"
+              className="w-full bg-blue-700 hover:bg-blue-600 text-white py-2 rounded text-sm font-semibold transition-colors"
+            >
+              Enter
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-950 text-white">
+      <div className="border-b border-gray-800 px-6 py-4 flex items-center justify-between">
+        <div>
+          <h1 className="text-lg font-bold text-white">CBfix</h1>
+          <p className="text-gray-400 text-xs">AI Score Reduction Dashboard | Target: 15%</p>
+        </div>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={fetchArticles}
+            disabled={loadingList}
+            className="text-xs bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded border border-gray-600 transition-colors disabled:opacity-50"
+          >
+            {loadingList ? "Refreshing..." : "Refresh"}
+          </button>
+          <button
+            onClick={() => { localStorage.removeItem("cbfix-auth"); setAuthed(false); }}
+            className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
+
+      <div className="px-6 py-4">
+        <div className="grid grid-cols-5 gap-3 mb-6">
+          {[
+            { label: "Total Articles", value: stats.total, color: "text-white" },
+            { label: "Tested", value: stats.tested, color: "text-blue-400" },
+            { label: "Passing (≤15%)", value: stats.passing, color: "text-green-400" },
+            { label: "Failing (>15%)", value: stats.failing, color: "text-red-400" },
+            { label: "Not Tested", value: stats.untested, color: "text-yellow-400" },
+          ].map((s) => (
+            <div key={s.label} className="bg-gray-900 border border-gray-800 rounded-lg px-4 py-3">
+              <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
+              <div className="text-gray-500 text-xs mt-0.5">{s.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {lastResult && (
+          <div className="mb-4 bg-gray-800 border border-gray-700 rounded px-4 py-2.5 text-sm text-gray-200">
+            <span className="text-gray-500 mr-2">Last result:</span>
+            {lastResult.message}
+          </div>
+        )}
+
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-gray-500 text-xs mr-1">Show:</span>
+          {(["all", "untested", "high"] as const).map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`text-xs px-3 py-1 rounded border transition-colors ${
+                filter === f
+                  ? "bg-blue-700 border-blue-600 text-white"
+                  : "bg-gray-800 border-gray-700 text-gray-400 hover:text-white"
+              }`}
+            >
+              {f === "all" ? `All (${stats.total})` : f === "untested" ? `Untested (${stats.untested})` : `Failing (${stats.failing})`}
+            </button>
+          ))}
+        </div>
+
+        {listError && (
+          <div className="mb-4 bg-red-950 border border-red-800 rounded px-4 py-3 text-red-300 text-sm">
+            {listError}
+          </div>
+        )}
+
+        {loadingList ? (
+          <div className="text-gray-500 text-sm py-12 text-center">Loading articles...</div>
+        ) : (
+          <div className="overflow-x-auto rounded-lg border border-gray-800">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-900 border-b border-gray-800">
+                  <th className="text-left px-4 py-3 text-gray-400 font-medium text-xs w-28">Case</th>
+                  <th className="text-left px-4 py-3 text-gray-400 font-medium text-xs">Title</th>
+                  <th className="text-left px-4 py-3 text-gray-400 font-medium text-xs w-32">Category</th>
+                  <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-24">Words</th>
+                  <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-28">AI Score</th>
+                  <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-48">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map((article) => {
+                  const rs = rowStates[article.slug] ?? { loading: false, action: null, error: null };
+                  return (
+                    <tr
+                      key={article.id}
+                      className="border-b border-gray-800 hover:bg-gray-900/50 transition-colors"
+                    >
+                      <td className="px-4 py-3">
+                        <span className="text-gray-400 font-mono text-xs">{article.caseNumber}</span>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="text-white text-xs leading-snug max-w-md line-clamp-2">
+                          {article.title}
+                        </div>
+                        {rs.error && (
+                          <div className="text-red-400 text-xs mt-1">{rs.error}</div>
+                        )}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="text-gray-400 text-xs">{categoryLabel(article.category)}</span>
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <span className="text-gray-500 text-xs">{article.wordCount ?? "?"}</span>
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <span
+                          className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${scoreColor(article.aiScore)}`}
+                        >
+                          {scoreLabel(article.aiScore)}
+                        </span>
+                        {article.aiScoreTestedAt && (
+                          <div className="text-gray-600 text-xs mt-0.5">
+                            {new Date(article.aiScoreTestedAt).toLocaleDateString()}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <div className="flex items-center justify-center gap-2">
+                          <button
+                            onClick={() => handleDetect(article.slug)}
+                            disabled={rs.loading}
+                            title="Run ZeroGPT detection and save score"
+                            className="text-xs px-3 py-1.5 rounded bg-gray-800 hover:bg-gray-700 border border-gray-600 text-gray-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+                          >
+                            {rs.loading && rs.action === "detect" ? (
+                              <span className="flex items-center gap-1">
+                                <span className="inline-block w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+                                Scanning...
+                              </span>
+                            ) : "Detect"}
+                          </button>
+                          <button
+                            onClick={() => handleReduce(article.slug)}
+                            disabled={rs.loading}
+                            title="Run AI reduction loop targeting 15%"
+                            className="text-xs px-3 py-1.5 rounded bg-blue-900 hover:bg-blue-800 border border-blue-700 text-blue-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+                          >
+                            {rs.loading && rs.action === "reduce" ? (
+                              <span className="flex items-center gap-1">
+                                <span className="inline-block w-3 h-3 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
+                                Reducing...
+                              </span>
+                            ) : "Reduce AI"}
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {filtered.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="text-center py-12 text-gray-600 text-sm">
+                      No articles match this filter.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        <div className="mt-6 bg-gray-900 border border-gray-800 rounded-lg px-5 py-4">
+          <h3 className="text-gray-300 text-xs font-semibold uppercase tracking-wider mb-3">How It Works</h3>
+          <div className="grid grid-cols-2 gap-4 text-xs text-gray-500">
+            <div>
+              <p className="text-gray-400 font-medium mb-1">Detect</p>
+              <p>Sends article body to ZeroGPT for AI detection. Score (0-100%) is saved to the database. Requires RAPIDAPI_KEY secret.</p>
+            </div>
+            <div>
+              <p className="text-gray-400 font-medium mb-1">Reduce AI</p>
+              <p>Runs the MajorBrain loop: detect flagged sentences, rewrite each with Claude Sonnet at temperature 0.85 using CB journalism voice, re-detect, repeat until score reaches 15% or plateaus. Citations and cb-factoid links are preserved.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

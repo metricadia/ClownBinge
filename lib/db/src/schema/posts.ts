@@ -53,6 +53,8 @@ export const postsTable = pgTable("posts", {
   userSubmitted: boolean("user_submitted").notNull().default(false),
   pinned: boolean("pinned").notNull().default(false),
   locked: boolean("locked").notNull().default(false),
+  aiScore: integer("ai_score"),
+  aiScoreTestedAt: timestamp("ai_score_tested_at"),
 });
 
 export const insertPostSchema = createInsertSchema(postsTable).omit({ id: true, createdAt: true, updatedAt: true });

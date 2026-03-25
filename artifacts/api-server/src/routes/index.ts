@@ -7,6 +7,7 @@ import subscribersRouter from "./subscribers";
 import tipsRouter from "./tips";
 import sponsorsRouter from "./sponsors";
 import verifyRouter from "./verify";
+import fixmeRouter from "./fixme";
 
 const router: IRouter = Router();
 
@@ -18,5 +19,6 @@ router.use(subscribersRouter);
 router.use(tipsRouter);
 router.use(sponsorsRouter);
 router.use(verifyRouter);
+router.use(fixmeRouter);
 
 export default router;
