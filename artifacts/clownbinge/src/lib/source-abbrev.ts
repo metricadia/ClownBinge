@@ -159,6 +159,12 @@ export const SOURCE_ABBREV: [RegExp, string][] = [
   [/New Yorker[^;]*/gi,                               "New Yorker"],
 ];
 
+/** Extract the display label from an entry that may use "Label :: APA citation" format */
+function extractLabel(entry: string): string {
+  if (entry.includes("::")) return entry.split("::")[0].trim();
+  return entry;
+}
+
 export function abbreviateSource(raw: string | null | undefined, prefix = false): string {
   if (!raw) return prefix ? "Source: Verified Public Record" : "Verified Public Record";
 
@@ -167,7 +173,7 @@ export function abbreviateSource(raw: string | null | undefined, prefix = false)
 
   // Tile mode: first segment only, hard 38-char cap
   if (prefix) {
-    let s = segments[0] || raw;
+    let s = extractLabel(segments[0] || raw);
     for (const [pattern, abbr] of SOURCE_ABBREV) s = s.replace(pattern, abbr);
     s = s.replace(/\s+/g, " ").trim();
     if (s.length > 38) s = s.slice(0, 35).trimEnd() + "...";
@@ -176,7 +182,7 @@ export function abbreviateSource(raw: string | null | undefined, prefix = false)
 
   // Detail / non-tile: up to 2 segments, abbreviated
   const shortened = segments.slice(0, 2).map(seg => {
-    let s = seg;
+    let s = extractLabel(seg);
     for (const [pattern, abbr] of SOURCE_ABBREV) s = s.replace(pattern, abbr);
     return s.replace(/\s+/g, " ").trim();
   });

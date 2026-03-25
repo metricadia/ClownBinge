@@ -430,13 +430,17 @@ export default function PostDetail() {
                   : post.verifiedSource!.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
                     const urlMatch = entry.match(/(https?:\/\/[^\s,;)]+)/);
                     const url = urlMatch ? urlMatch[1] : null;
-                    const label = url ? entry.replace(url, "").replace(/\s+$/, "").trim() : entry;
-                    const displayLabel = label || (url ? new URL(url).hostname.replace(/^www\./, "") : entry);
+                    const cleaned = url ? entry.replace(url, "").replace(/\s+$/, "").trim() : entry;
+                    const hasSplit = cleaned.includes("::");
+                    const heading = hasSplit ? cleaned.split("::")[0].trim() : cleaned;
+                    const citation = hasSplit ? cleaned.split("::").slice(1).join("::").trim() : null;
+                    const displayHeading = heading || (url ? new URL(url).hostname.replace(/^www\./, "") : entry);
                     return (
                       <li key={i} className="flex gap-4">
                         <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
                         <div>
-                          <p className="font-bold text-sm text-foreground/80 leading-snug m-0">{displayLabel}</p>
+                          <p className="font-bold text-sm text-foreground/80 leading-snug mb-0.5 m-0">{displayHeading}</p>
+                          {citation && <p className="text-sm text-foreground/65 leading-snug m-0 italic">{citation}</p>}
                         </div>
                       </li>
                     );

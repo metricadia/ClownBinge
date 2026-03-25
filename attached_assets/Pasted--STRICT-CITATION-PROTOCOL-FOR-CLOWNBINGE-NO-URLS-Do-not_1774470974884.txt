@@ -1,0 +1,47 @@
+"STRICT CITATION PROTOCOL FOR CLOWNBINGE:
+
+NO URLS: Do not generate hyperlinks. Instead, provide the formal S. Hrg. (Senate Hearing) or H. Rpt. (House Report) number.
+
+APA 7 STANDARDS: Use the APA 7th Edition format specifically for 'Congressional Hearings and Administrative Documents.'
+
+MANDATORY ELEMENTS: Every citation for a Cabinet nominee must include:
+
+The specific Committee (e.g., Senate HELP Committee).
+
+The Congress Number (e.g., 115th Congress).
+
+The Document ID (e.g., S. Hrg. 115-46).
+
+The Date of the testimony or confirmation.
+
+FACT CHECK: Before outputting, cross-reference the appointee's degree against the official University Alumni database. Do not 'predict' degrees."
+
+🏛️ Fixed "Primary Sources" List (APA 7 — URL-Free)
+Here is how your citations should look on the site to maintain PhD-level integrity:
+
+1. Nobel Prize in Physics 1997: Steven Chu
+Nobel Prize Outreach AB. (1997). Steven Chu: Biographical. NobelPrize.org.
+
+2. Ernest Moniz, 13th Secretary of Energy
+U.S. Senate Committee on Energy and Natural Resources. (2013). Nomination of Dr. Ernest Moniz to be Secretary of Energy (S. Hrg. 113-52). U.S. Government Publishing Office.
+
+3. Rick Perry Energy Secretary Confirmation
+U.S. Senate Committee on Energy and Natural Resources. (2017, January 19). Nomination of the Honorable Rick Perry to be Secretary of Energy (S. Hrg. 115-32). U.S. Government Publishing Office.
+
+4. Betsy DeVos Education Secretary Confirmation
+U.S. Senate Committee on Health, Education, Labor, and Pensions. (2017, January 17). Nomination of Betsy DeVos to serve as Secretary of Education (S. Hrg. 115-46). U.S. Government Publishing Office.
+
+5. Linda McMahon Education Secretary Nomination
+U.S. Senate Committee on Health, Education, Labor, and Pensions. (2025). Nomination of Linda McMahon to be Secretary of Education (S. Hrg. 119-XX). U.S. Government Publishing Office.
+
+6. Ben Carson HUD Secretary Confirmation
+U.S. Senate Committee on Banking, Housing, and Urban Affairs. (2017, January 12). Nomination of Benjamin S. Carson, Sr., M.D., to be Secretary of the U.S. Department of Housing and Urban Development (S. Hrg. 115-10). U.S. Government Publishing Office.
+
+7. Scott Pruitt EPA Administrator Confirmation
+U.S. Senate Committee on Environment and Public Works. (2017, January 18). Nomination of Edward Scott Pruitt to be Administrator of the U.S. Environmental Protection Agency (S. Hrg. 115-29). U.S. Government Publishing Office.
+
+8. RFK Jr. HHS Secretary Nomination
+U.S. Senate Committee on Finance. (2025, January 29). Hearing on the Nomination of Robert F. Kennedy Jr. to be Secretary of Health and Human Services. 119th Congress.
+
+9. Matt Gaetz Attorney General Nomination (Withdrawal)
+U.S. Senate Judiciary Committee. (2024, November 21). Executive Communication regarding the withdrawal of the nomination of Matthew L. Gaetz II. Congressional Record, Vol. 170.

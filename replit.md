@@ -108,6 +108,34 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 - **ClownCheck** — $1.95/verification
 - **Comprehensive Reports** — $24.95/PDF
 
+### Citation Cardinal Rule (LAW -- never change)
+
+**Source:** Primary Source Analytics / Gemini "Permanent Receipt" Protocol
+
+**ZERO-URL POLICY:** No hyperlinks, no URLs anywhere in verified_source. Federal URLs are prone to link rot between administrations.
+
+**FORMAT:** Each citation entry uses `::` to separate a bold label from the APA 7 body. Entries are separated by `;`.
+
+```
+Label :: APA 7 citation text.; Next Label :: Next citation.
+```
+
+**APA 7 for Congressional Documents (mandatory elements):**
+- Specific Committee (e.g., Senate HELP Committee)
+- Congress Number (e.g., 115th Congress)
+- Document ID (e.g., S. Hrg. 115-46)
+- Date of testimony or confirmation
+
+**Example (CB-000061 DEI Ruse):**
+```
+Nobel Prize in Physics (1997): Steven Chu :: Nobel Prize Outreach AB. (1997). Steven Chu: Biographical. Official Nobel Prize Archives.;
+Dr. Ernest Moniz, 13th Secretary of Energy :: U.S. Senate Committee on Energy and Natural Resources. (2013). Nomination of Dr. Ernest Moniz to be Secretary of Energy (S. Hrg. 113-52). U.S. Government Publishing Office.
+```
+
+**Why this matters for SEO/credibility:** S. Hrg. numbers are the exact language Google's Knowledge Graph uses for U.S. History. Text-based entity association with "U.S. Senate" and "Nobel Prize Committee" is more stable than any .gov URL.
+
+**FACT CHECK rule:** Before outputting, cross-reference appointee degrees against official university alumni databases. Never predict credentials.
+
 ### Article Workflow
 
 ```bash
