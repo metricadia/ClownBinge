@@ -4,7 +4,7 @@ import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { usePostsFilter, usePostsFeed, usePostsFeedPaginated, usePostDetail } from "@/hooks/use-posts";
 import { useHomeSeoHead } from "@/hooks/use-seo-head";
-import { Loader2, AlertCircle, TrendingUp, ArrowRight } from "lucide-react";
+import { Loader2, AlertCircle, ArrowRight } from "lucide-react";
 
 const HIGHLY_POPULAR_SLUG = "dei-ruse-obama-trump-appointee-qualifications";
 
@@ -105,9 +105,8 @@ export default function Home() {
               >
                 <div className="px-6 pt-5 pb-1 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-0 bg-white/80 border border-blue-200 rounded-full overflow-hidden">
-                    <div className="flex items-center gap-1.5 px-3 py-1">
-                      <TrendingUp className="w-3.5 h-3.5 text-blue-600" />
-                      <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700">Featured</span>
+                    <div className="flex items-center px-3 py-1">
+                      <span className="text-sm leading-none">👑</span>
                     </div>
                     <span className="text-blue-300 text-xs font-bold select-none">|</span>
                     <span className="px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-blue-500">
