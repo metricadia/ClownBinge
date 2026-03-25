@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
+import { usePageSeoHead } from "@/hooks/use-seo-head";
 import {
   CheckCircle, XCircle, HelpCircle, AlertTriangle, EyeOff,
   ArrowRight, Shield, Globe, Newspaper, Radio, Loader2, ExternalLink, Lock
@@ -91,6 +92,12 @@ async function runVerification(query: string): Promise<PSTReport> {
 }
 
 export default function VerifyNews() {
+  usePageSeoHead({
+    title: "Verify ANY News Story — $4.95",
+    description: "Submit any news story and ClownBinge will verify it against primary government and institutional sources. Is it real? Is it suppressed? Get the documented answer for $4.95.",
+    path: "/clowncheck",
+    schemaType: "WebPage",
+  });
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState<PSTReport | null>(null);

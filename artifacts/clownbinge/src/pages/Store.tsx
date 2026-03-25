@@ -1,7 +1,14 @@
 import { Layout } from "@/components/Layout";
 import { ShoppingCart, CheckCircle2, ShieldCheck, Download } from "lucide-react";
+import { usePageSeoHead } from "@/hooks/use-seo-head";
 
 export default function Store() {
+  usePageSeoHead({
+    title: "Verify ANY News Story — ClownBinge Store",
+    description: "Verify any news story for $4.95, or get a Full Primary Source Report on any public figure for $24.95. Sourced from court records, federal data, and congressional transcripts.",
+    path: "/store",
+    schemaType: "ItemPage",
+  });
   return (
     <Layout>
       {/* Store Hero */}

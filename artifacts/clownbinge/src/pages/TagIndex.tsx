@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import { useRoute } from "wouter";
 import { Layout } from "@/components/Layout";
 import { PostCard } from "@/components/PostCard";
 import { Loader2, AlertCircle, Tag, FileText } from "lucide-react";
 import { useListPosts } from "@workspace/api-client-react";
+import { useTagSeoHead } from "@/hooks/use-seo-head";
 
 export default function TagIndex() {
   const [, params] = useRoute("/tags/:tag");
@@ -16,11 +16,7 @@ export default function TagIndex() {
   const posts = data?.posts ?? [];
   const total = data?.total ?? 0;
 
-  useEffect(() => {
-    if (tag) {
-      document.title = `#${tag} — All Records | ClownBinge`;
-    }
-  }, [tag]);
+  useTagSeoHead(tag, total);
 
   return (
     <Layout>

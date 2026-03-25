@@ -1,6 +1,13 @@
 import { Layout } from "@/components/Layout";
+import { usePageSeoHead } from "@/hooks/use-seo-head";
 
 export default function Privacy() {
+  usePageSeoHead({
+    title: "Privacy Policy",
+    description: "ClownBinge Privacy Policy — how Primary Source Analytics, LLC collects, uses, and protects your data.",
+    path: "/privacy",
+    schemaType: "WebPage",
+  });
   return (
     <Layout>
       <div className="cb-container py-16 sm:py-24 max-w-3xl mx-auto">

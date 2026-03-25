@@ -1,7 +1,14 @@
 import { Layout } from "@/components/Layout";
 import { AdminNav } from "@/components/AdminNav";
+import { usePageSeoHead } from "@/hooks/use-seo-head";
 
 export default function Ethics() {
+  usePageSeoHead({
+    title: "Editorial Standards & Ethics",
+    description: "ClownBinge editorial standards, fact-checking methodology, and sourcing policy. All content sourced from primary government and institutional documents. Primary Source Analytics, LLC.",
+    path: "/ethics",
+    schemaType: "WebPage",
+  });
   return (
     <Layout>
       <div className="max-w-3xl mx-auto px-4 py-12">

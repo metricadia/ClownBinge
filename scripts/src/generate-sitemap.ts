@@ -16,13 +16,18 @@ const OUT_PATH = resolve(
   "../../artifacts/clownbinge/public/sitemap.xml"
 );
 
+const TODAY = new Date().toISOString().split("T")[0];
+
 const STATIC_PAGES = [
-  { loc: "/",         priority: "1.0", changefreq: "daily"   },
-  { loc: "/about",    priority: "0.5", changefreq: "monthly" },
-  { loc: "/ethics",   priority: "0.5", changefreq: "monthly" },
-  { loc: "/store",    priority: "0.6", changefreq: "monthly" },
-  { loc: "/clowncheck", priority: "0.6", changefreq: "monthly" },
-  { loc: "/reports",  priority: "0.6", changefreq: "monthly" },
+  { loc: "/",          priority: "1.0", changefreq: "daily",   lastmod: TODAY },
+  { loc: "/about",     priority: "0.7", changefreq: "monthly", lastmod: TODAY },
+  { loc: "/ethics",    priority: "0.8", changefreq: "monthly", lastmod: TODAY },
+  { loc: "/store",     priority: "0.7", changefreq: "weekly",  lastmod: TODAY },
+  { loc: "/clowncheck",priority: "0.8", changefreq: "weekly",  lastmod: TODAY },
+  { loc: "/reports",   priority: "0.7", changefreq: "weekly",  lastmod: TODAY },
+  { loc: "/contact",   priority: "0.5", changefreq: "monthly", lastmod: TODAY },
+  { loc: "/privacy",   priority: "0.3", changefreq: "yearly",  lastmod: TODAY },
+  { loc: "/terms",     priority: "0.3", changefreq: "yearly",  lastmod: TODAY },
 ];
 
 function esc(s: string) {
@@ -49,6 +54,7 @@ async function main() {
 
   const staticUrls = STATIC_PAGES.map((p) => `  <url>
     <loc>${esc(DOMAIN)}${p.loc}</loc>
+    <lastmod>${p.lastmod}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority}</priority>
   </url>`);

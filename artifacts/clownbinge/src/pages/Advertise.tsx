@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { CheckCircle, Users, FileText, Shield, TrendingUp, Mail, BarChart3, BookOpen } from "lucide-react";
+import { usePageSeoHead } from "@/hooks/use-seo-head";
 
 const FORMATS = [
   {
@@ -57,6 +58,12 @@ const BRAND_SAFE = [
 ];
 
 export default function Advertise() {
+  usePageSeoHead({
+    title: "Advertise on ClownBinge",
+    description: "Reach an audience of engaged readers who trust verified, primary-source journalism. Category sponsorships, native placements, and more. Contact ClownBinge to advertise.",
+    path: "/advertise",
+    schemaType: "WebPage",
+  });
   return (
     <Layout>
       {/* Hero */}

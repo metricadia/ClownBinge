@@ -326,7 +326,7 @@ export default function PostDetail() {
           </div>
           <div className="border-b-2 border-border mb-4" />
 
-          <h1 className={`font-sans font-bold text-xl sm:text-2xl lg:text-3xl leading-tight tracking-tight mb-3 ${isSelfOwned ? "text-primary" : "text-header"}`}>
+          <h1 data-speakable-headline className={`font-sans font-bold text-xl sm:text-2xl lg:text-3xl leading-tight tracking-tight mb-3 ${isSelfOwned ? "text-primary" : "text-header"}`}>
             {post.title}
           </h1>
 
@@ -336,7 +336,7 @@ export default function PostDetail() {
             </p>
           )}
 
-          <p className="text-base sm:text-lg text-muted-foreground font-medium leading-relaxed border-l-4 border-secondary pl-5">
+          <p data-speakable-lede className="text-base sm:text-lg text-muted-foreground font-medium leading-relaxed border-l-4 border-secondary pl-5">
             {post.teaser}
           </p>
         </header>

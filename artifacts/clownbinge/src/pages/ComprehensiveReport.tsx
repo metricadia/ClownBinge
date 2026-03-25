@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { ArrowRight, FileText, Shield, BookOpen, CheckCircle, Lock, Clock, Mail } from "lucide-react";
+import { usePageSeoHead } from "@/hooks/use-seo-head";
 
 const reportSections = [
   {
@@ -55,6 +56,12 @@ const reportSections = [
 ];
 
 export default function ComprehensiveReport() {
+  usePageSeoHead({
+    title: "Full PST Comprehensive Report — $24.95",
+    description: "Get a Full Primary Source Report on any public figure for $24.95. Voting record, legal history, financial disclosures, and documented contradictions — all from primary sources.",
+    path: "/reports",
+    schemaType: "ItemPage",
+  });
   return (
     <Layout>
       <div className="max-w-3xl mx-auto px-4 py-12">

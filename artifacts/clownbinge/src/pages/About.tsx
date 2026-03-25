@@ -1,6 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { AdminNav } from "@/components/AdminNav";
 import { StatWidget } from "@/components/StatWidget";
+import { usePageSeoHead } from "@/hooks/use-seo-head";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -11,6 +12,12 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 export default function About() {
+  usePageSeoHead({
+    title: "About ClownBinge",
+    description: "ClownBinge is verified accountability journalism by Primary Source Analytics, LLC. We document real incidents where public figures contradict their own documented record. Primary sources only.",
+    path: "/about",
+    schemaType: "AboutPage",
+  });
   return (
     <Layout>
       <div className="max-w-3xl mx-auto px-4 py-12">

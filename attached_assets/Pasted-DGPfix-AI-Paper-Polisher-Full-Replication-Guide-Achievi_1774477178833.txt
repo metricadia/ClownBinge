@@ -1,0 +1,775 @@
+DGPfix AI Paper Polisher — Full Replication Guide
+
+Achieving ≤15% AI Detection: Architecture, Prompts, Algorithms & API Integration
+
+Purpose: This document contains everything a new Replit project needs to replicate the AI detection defeat feature ("MajorBrain / AiPlower") exactly as built. No details are omitted. Read every section before writing a single line of code.
+Table of Contents
+
+System Overview
+Tech Stack & Dependencies
+Environment Variables / Secrets Required
+Database Schema
+File Upload & Document Parsing Pipeline
+Academic Section Parser
+ZeroGPT AI Detection Service
+Document Type System
+The Rewrite Engine — Full Prompt Architecture
+The Auto-Cleanup Loop (MajorBrain)
+API Routes — Complete Reference
+Storage Interface
+APA 7 Export
+Why It Works — Detection Defeat Theory
+Target Scores & Tuning
+Known Edge Cases & Guardrails
+1. System Overview
+
+The AI detection defeat pipeline works in a detect → target → rewrite → re-detect → loop cycle:
+
+User uploads .docx / .txt
+         ↓
+  mammoth parses DOCX → structured plain text
+         ↓
+  parseAcademicSections() splits into major sections
+  (References / Bibliography → flagged isProtected = true, NEVER touched)
+         ↓
+  ZeroGPT scans each section → returns overallScore (0–100%) + flaggedSentences[]
+         ↓
+  If score > targetScore (default 20%):
+    For each flaggedSentence:
+      Claude 3.5 Sonnet rewrites it using document-type-specific prompt
+    Replace originals in text → re-scan with ZeroGPT
+    Repeat up to 10 times or until score ≤ target
+         ↓
+  Save cleaned content to DB, update aiDetectionScore
+         ↓
+  User exports APA 7 formatted .docx
+Internal codename: MajorBrain (log prefix: [MajorBrain])
+
+Real-world results: Consistently achieves 5–18% AI detection on ZeroGPT after 2–4 cleanup iterations. The system targets 20% but in practice lands at 5–15%.
+
+2. Tech Stack & Dependencies
+
+Backend (Node.js / Express / TypeScript)
+
+{
+  "mammoth": "^1.x",          // DOCX parsing → HTML → structured text
+  "multer": "^1.x",           // File upload middleware (memoryStorage, 10MB limit)
+  "@anthropic-ai/sdk": "^0.x", // Claude API calls
+  "drizzle-orm": "^0.x",      // PostgreSQL ORM
+  "drizzle-zod": "^0.x",      // Zod schema generation from Drizzle tables
+  "zod": "^3.x",              // Runtime validation
+  "express": "^4.x"
+}
+Frontend (React / Vite / TypeScript)
+
+{
+  "react": "^18.x",
+  "@tanstack/react-query": "^5.x",  // All data fetching + cache invalidation
+  "wouter": "^3.x",                  // Client-side routing
+  "shadcn/ui": "latest",             // Component library
+  "tailwindcss": "^3.x"
+}
+Database
+
+PostgreSQL (Replit's built-in Neon PostgreSQL, or any Postgres instance)
+Drizzle ORM for migrations and queries
+External APIs
+
+API	Purpose	Provider
+ZeroGPT via RapidAPI	AI detection scanning	zerogpt.p.rapidapi.com
+Anthropic Claude	Sentence rewriting	api.anthropic.com (via Replit AI Integrations)
+3. Environment Variables / Secrets Required
+
+Set these in your Replit Secrets panel (never hardcode):
+
+# Replit AI Integration — set automatically when you add the Anthropic integration
+AI_INTEGRATIONS_ANTHROPIC_API_KEY=sk-ant-...
+AI_INTEGRATIONS_ANTHROPIC_BASE_URL=https://...  # Set by Replit integration
+# RapidAPI key for ZeroGPT
+RAPIDAPI_KEY=your-rapidapi-key-here
+# PostgreSQL connection string (auto-set by Replit DB)
+DATABASE_URL=postgresql://...
+How to get RAPIDAPI_KEY:
+
+Go to rapidapi.com
+Search for "ZeroGPT"
+Subscribe to zerogpt.p.rapidapi.com (has a free tier)
+Copy your X-RapidAPI-Key from the API dashboard
+How to get Anthropic via Replit:
+
+In your Replit project → Tools → Integrations → Anthropic AI
+Click "Add Integration" — Replit auto-injects the API key and base URL as env vars
+4. Database Schema
+
+File: shared/schema.ts
+
+import { pgTable, text, integer, boolean, timestamp, varchar } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
+// One row per uploaded paper
+export const academicPapers = pgTable("academic_papers", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  title: text("title").notNull(),
+  authorName: text("author_name"),
+  institution: text("institution"),
+  course: text("course"),
+  documentType: text("document_type").notNull().default("undergrad"),
+  originalFilename: text("original_filename"),
+  totalWordCount: integer("total_word_count").default(0),
+  overallAiScore: integer("overall_ai_score"),
+  targetAiScore: integer("target_ai_score").default(20),
+  status: text("status").notNull().default("uploaded"),  // "uploaded" | "processing" | "complete"
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+// One row per parsed section within a paper
+export const academicSections = pgTable("academic_sections", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  paperId: varchar("paper_id").notNull().references(() => academicPapers.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),               // e.g. "Introduction", "Methodology"
+  content: text("content"),                      // The section's full text (plain text after cleanup)
+  orderIndex: integer("order_index").notNull(),  // Position within the paper
+  wordCount: integer("word_count").default(0),
+  aiDetectionScore: integer("ai_detection_score"),   // 0–100, null = not tested yet
+  aiDetectionTestedAt: timestamp("ai_detection_tested_at"),
+  isProtected: boolean("is_protected").default(false), // TRUE = References, never touch
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+// Zod schemas for insert validation
+export const insertAcademicPaperSchema = createInsertSchema(academicPapers)
+  .omit({ id: true, createdAt: true, updatedAt: true });
+export const insertAcademicSectionSchema = createInsertSchema(academicSections)
+  .omit({ id: true, createdAt: true, updatedAt: true });
+// TypeScript types
+export type AcademicPaper = typeof academicPapers.$inferSelect;
+export type InsertAcademicPaper = z.infer<typeof insertAcademicPaperSchema>;
+export type AcademicSection = typeof academicSections.$inferSelect;
+export type InsertAcademicSection = z.infer<typeof insertAcademicSectionSchema>;
+Run migration: npx drizzle-kit push after setting up the schema.
+
+5. File Upload & Document Parsing Pipeline
+
+File: server/routes.ts (upload handler)
+
+Multer Setup
+
+import multer from "multer";
+const uploadDocument = multer({
+  storage: multer.memoryStorage(),   // Store file in RAM as Buffer, don't write to disk
+  limits: { fileSize: 10 * 1024 * 1024 }  // 10 MB max
+});
+DOCX → Structured Plain Text Conversion
+
+This is critical. Mammoth's default extractRawText() loses all heading structure. We use convertToHtml() and then apply a custom regex pipeline to preserve section headings as standalone lines:
+
+function mammothHtmlToStructuredText(html: string): string {
+  return html
+    // Headings → standalone lines with surrounding double newlines
+    .replace(/<h[1-3][^>]*>([\s\S]*?)<\/h[1-3]>/gi, '\n\n$1\n\n')
+    // Paragraphs → double newline separated
+    .replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, '\n\n$1\n\n')
+    // List items → newline + bullet
+    .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, '\n• $1')
+    // Line breaks
+    .replace(/<br\s*\/?>/gi, '\n')
+    // Strip inline formatting (keep text content)
+    .replace(/<\/?(?:strong|b|em|i|u|s|span|a|sup|sub)[^>]*>/gi, '')
+    // Strip remaining HTML tags
+    .replace(/<[^>]+>/g, '')
+    // Decode HTML entities
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#8220;|&#8221;/g, '"')
+    .replace(/&#8216;|&#8217;/g, "'")
+    .replace(/&#8212;/g, '—')
+    .replace(/&#8211;/g, '–')
+    // Collapse 3+ newlines to double newline
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+Upload Route
+
+POST /api/academic-papers/upload
+Content-Type: multipart/form-data
+Fields:
+  file          (required) — .docx or .txt
+  title         (optional) — defaults to filename without extension
+  authorName    (optional)
+  institution   (optional)
+  course        (optional)
+  documentType  (optional) — "undergrad" | "government_grant" | "phd_academic" | "personal_letter"
+                             defaults to "undergrad"
+Upload flow:
+
+Validate file exists and is .docx or .txt
+If DOCX: mammoth.convertToHtml({ buffer }) → mammothHtmlToStructuredText(html)
+If TXT: buffer.toString("utf-8")
+Count total words
+storage.createAcademicPaper(...) with targetAiScore: 20
+parseAcademicSections(text) → array of sections
+For each section: storage.createAcademicSection(...) with isProtected flag
+Return { paper, sections, message }
+6. Academic Section Parser
+
+File: server/academic-cleanup-service.ts → parseAcademicSections()
+
+This function splits a full paper text into named sections. Critical behavior: once a References/Bibliography heading is encountered, all subsequent text goes into that protected section and is never modified.
+
+Heading Detection Patterns
+
+The parser matches these patterns (in order):
+
+const majorHeadingPatterns = [
+  // Standard APA 7 named sections
+  /^(ABSTRACT|Abstract)\s*$/i,
+  /^(INTRODUCTION|Introduction)\s*$/i,
+  /^(CONCLUSION|Conclusion|CONCLUSIONS|Conclusions)\s*$/i,
+  /^(REFERENCES|References|BIBLIOGRAPHY|Bibliography|WORKS\s+CITED|Works\s+Cited)\s*$/i,
+  /^(LITERATURE\s+REVIEW|Literature\s+Review)\s*$/i,
+  /^(METHODOLOGY|Methodology|METHODS|Methods)\s*$/i,
+  /^(DISCUSSION|Discussion)\s*$/i,
+  /^(RESULTS?)\s*$/i,
+  /^(BACKGROUND|Background)\s*$/i,
+  /^(PURPOSE|Purpose)\s*$/i,
+  /^(OVERVIEW|Overview)\s*$/i,
+  /^(OBJECTIVES?|Objectives?)\s*$/i,
+  /^(SIGNIFICANCE|Significance)\s*$/i,
+  /^(SUMMARY|Summary)\s*$/i,
+  /^(APPENDIX[A-Z\s]*|Appendix[A-Z\s]*)\s*$/i,
+  /^(THEORETICAL\s+FRAMEWORK|Theoretical\s+Framework)\s*$/i,
+  /^(CONCEPTUAL\s+FRAMEWORK|Conceptual\s+Framework)\s*$/i,
+  /^(RESEARCH\s+QUESTION|Research\s+Question)\s*$/i,
+  /^(THEORETICAL\s+BACKGROUND|Theoretical\s+Background)\s*$/i,
+  /^(BUDGET|Budget)\s*$/i,
+  /^(TIMELINE|Timeline)\s*$/i,
+  /^(EVALUATION|Evaluation)\s*$/i,
+  // Part-based: "Part I", "Part 1:", etc.
+  /^(Part\s+[IVX0-9]+[:\.]?\s*.*)$/i,
+  // Roman numeral sections: "I. Title", "II. Background", etc.
+  /^((I|II|III|IV|V|VI|VII|VIII|IX|X|XI|XII|XIII|XIV|XV|XVI|XVII|XVIII|XIX|XX)\.\s+\S.{1,80})$/,
+  // Numbered sections: "1. Introduction", "2. Background" (Title Case)
+  /^(\d{1,2}\.\s+[A-Z][a-zA-Z ]{3,60})$/,
+  // Short ALL-CAPS standalone headings (4–60 chars, no trailing period)
+  /^([A-Z][A-Z\s\/\-]{3,58}[A-Z])$/,
+];
+Protected Section Logic
+
+const protectedTitles = ['references', 'bibliography', 'works cited'];
+// Once inReferences = true, ALL subsequent lines go to the protected section
+// and the loop never resets inReferences
+Fallback Section
+
+If no heading is found before content begins, a "Full Paper" section is created automatically (non-protected).
+
+Output Type
+
+Array<{
+  title: string;        // e.g. "Introduction"
+  content: string;      // The section body (plain text)
+  isProtected: boolean; // true only for References/Bibliography
+}>
+7. ZeroGPT AI Detection Service
+
+File: server/zerogpt-service.ts
+
+API Endpoint
+
+POST https://zerogpt.p.rapidapi.com/api/v1/detectText
+Headers:
+  content-type: application/json
+  X-RapidAPI-Key: {RAPIDAPI_KEY}
+  X-RapidAPI-Host: zerogpt.p.rapidapi.com
+Body:
+  { "input_text": "your text here" }
+Response Shape
+
+interface ZeroGPTResponse {
+  success: boolean;
+  data: {
+    is_human_written: number;     // 0–100 (percentage human)
+    is_gpt_generated: number;     // 0–100 (percentage AI) ← THIS IS YOUR SCORE
+    feedback_message: string;
+    gpt_generated_sentences: string[];  // Array of flagged sentences (plain strings)
+    words_count: number;
+  };
+}
+Character Limit Handling (CRITICAL)
+
+ZeroGPT has a ~50,000 character API limit. The system automatically chunks large texts:
+
+function splitIntoChunks(text: string, maxChars: number = 45000): string[] {
+  if (text.length <= maxChars) return [text];
+  const chunks: string[] = [];
+  const paragraphs = text.split(/\n\n+/);
+  let currentChunk = '';
+  for (const para of paragraphs) {
+    if (para.length > maxChars) {
+      // Oversized single paragraph: split by sentences
+      if (currentChunk) { chunks.push(currentChunk.trim()); currentChunk = ''; }
+      const sentences = para.match(/[^.!?]+[.!?]+/g) || [para];
+      for (const sentence of sentences) {
+        if (currentChunk.length + sentence.length > maxChars) {
+          if (currentChunk) chunks.push(currentChunk.trim());
+          currentChunk = sentence;
+        } else {
+          currentChunk += sentence;
+        }
+      }
+      continue;
+    }
+    if (currentChunk.length + para.length + 2 > maxChars) {
+      chunks.push(currentChunk.trim());
+      currentChunk = para;
+    } else {
+      currentChunk += (currentChunk ? '\n\n' : '') + para;
+    }
+  }
+  if (currentChunk) chunks.push(currentChunk.trim());
+  return chunks;
+}
+Multi-Chunk Score Combination
+
+When a text is split into multiple chunks, scores are weighted by word count:
+
+const totalWords = chunkResults.reduce((sum, r) => sum + r.wordCount, 0);
+const weightedScore = chunkResults.reduce(
+  (sum, r) => sum + (r.overallScore * r.wordCount), 0
+) / totalWords;
+// 1-second delay between chunks to avoid rate limiting
+await new Promise(resolve => setTimeout(resolve, 1000));
+HTML Stripping (Before Sending to ZeroGPT)
+
+The stored section content may contain HTML. Strip it before detection:
+
+export function stripHtmlForDetection(html: string): string {
+  return html
+    .replace(/<\/p>/gi, '</p>\n\n')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/h[1-6]>/gi, '</h>\n\n')
+    .replace(/<\/div>/gi, '</div>\n\n')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n\n\n+/g, '\n\n')
+    .trim();
+}
+Minimum Length
+
+ZeroGPT requires at least 50 characters for meaningful detection. Sections shorter than 100 characters are skipped entirely.
+
+8. Document Type System
+
+File: server/academic-cleanup-service.ts
+
+The system supports four document types. Each affects the prompt tone, kill words, readability target, and Flesch-Kincaid target:
+
+export type DocumentType = "undergrad" | "government_grant" | "phd_academic" | "personal_letter";
+Full Configuration Table
+
+Field	undergrad	government_grant	phd_academic	personal_letter
+Label	Undergrad Academic	Government Grant	PhD Academic	Personal Letter
+readabilityGrade	11th-12th grade	8th-9th grade	14th-16th grade	6th-8th grade
+fleschKincaidTarget	35	55	20	65
+promptTone	scholarly but accessible	practitioner-direct, community-grounded	senior scholar, field-expert authority	warm, direct, conversational
+aiDetectionTarget	20	20	20	20
+Kill Words Per Document Type
+
+These words are explicitly banned from the rewrite output because AI models over-produce them:
+
+Undergrad:
+
+"particularly", "notably", "essentially", "effectively", "significantly",
+"comprehensive", "robust", "furthermore", "moreover"
+Government Grant (most aggressive kill list):
+
+"particularly", "notably", "essentially", "effectively", "significantly",
+"comprehensive", "robust", "appears to", "by means of",
+"institutional systems", "innovation approaches"
+PhD Academic:
+
+"particularly", "notably", "essentially", "it is important to note",
+"furthermore", "moreover"
+Personal Letter (longest list — formal language is a red flag):
+
+"particularly", "notably", "essentially", "effectively", "significantly",
+"comprehensive", "robust", "furthermore", "moreover",
+"utilize", "facilitate", "implement"
+Preferred Transitions Per Type
+
+Undergrad: "however", "yet", "still", "in contrast", "at the same time"
+
+Government Grant: "and", "but", "so", "because", "which means"
+
+PhD Academic: "conversely", "nonetheless", "notwithstanding", "in contradistinction"
+
+Personal Letter: "and", "but", "so", "because", "which is why"
+
+9. The Rewrite Engine — Full Prompt Architecture
+
+File: server/academic-cleanup-service.ts → buildParaphrasePrompt()
+
+Claude API Call Parameters
+
+const response = await anthropic.messages.create({
+  model: "claude-sonnet-4-6",   // Claude 3.5 Sonnet — the important choice
+  max_tokens: 600,               // Per-sentence rewrite, so 600 is generous
+  temperature: 0.85,             // HIGH temperature = more varied/creative = less AI-detectable
+  messages: [{ role: "user", content: prompt }],
+});
+Why temperature 0.85? Lower temperatures make Claude predictable and repetitive — which is exactly what AI detectors look for. High temperature forces creative variation in word choice and sentence structure, which increases perplexity (the statistical measure detectors use).
+
+Why claude-sonnet-4-6 and not Haiku? Haiku tends to produce more formulaic rewrites. Sonnet has the vocabulary range and contextual understanding to make genuinely good sentence-level changes without introducing factual errors.
+
+Prompt: Government Grant
+
+You are an expert grant writer helping reduce AI detection in a community-focused government grant proposal.
+DOCUMENT TYPE: Government Grant (8th-9th grade readability)
+VOICE: practitioner-direct, community-grounded
+WHAT TRIGGERS AI DETECTION IN GRANT WRITING:
+- Abstract system language ("institutional systems," "innovation approaches," "structured methodologies")
+- Hedging ("appears to," "seems to," "it is suggested that")
+- Bureaucratic filler phrases that add no concrete information
+- Absence of organizational specifics (real staff names, program names, locations)
+- Overly smooth sentence flow without natural variation
+WHAT SOUNDS HUMAN IN GRANT WRITING:
+- Real staff titles, program names, room numbers, existing relationships
+- Direct statements of fact without hedging
+- Short, clear sentences at 8th-9th grade reading level
+- Concrete nouns over abstract categories ("American schools, healthcare, and public agencies" not "American institutional systems")
+- Practitioner confidence, not epidemiological caution
+KILL THESE WORDS/PHRASES: "particularly", "notably", "essentially", "effectively", "significantly", "comprehensive", "robust", "appears to", "by means of", "institutional systems", "innovation approaches"
+CRITICAL RULES:
+1. **PRESERVE ALL CITATIONS**: Keep any references unchanged.
+2. **PRESERVE APPROXIMATE WORD COUNT**: Original is ~{wordCount} words. Output must be {wordCount-3}–{wordCount+5} words.
+3. **PRESERVE ALL KEY INFORMATION**: Every detail must remain.
+4. **TARGET 8th-9th grade READABILITY**: Keep sentences short and direct.
+5. **NO EM DASHES**: Use periods, commas, or parentheses.
+6. **REPLACE ABSTRACT WITH CONCRETE**: Always choose the specific noun over the category.
+Original sentence (flagged as AI-generated):
+"{sentence}"
+Rewrite to sound like a community practitioner who does this work daily. Direct, concrete, human.
+Return ONLY the rewritten sentence.
+Prompt: Personal Letter
+
+You are helping reduce AI detection in a personal letter or statement.
+DOCUMENT TYPE: Personal Letter (6th-8th grade readability)
+VOICE: warm, direct, conversational
+WHAT TRIGGERS AI DETECTION:
+- Formal hedging language
+- Perfect parallel structures
+- Generic phrases ("I am passionate about," "I believe that")
+- Overly polished transitions
+- Abstract language instead of personal specifics
+WHAT SOUNDS HUMAN:
+- First person, short sentences
+- Personal anecdotes and specific details
+- Conversational rhythm with natural pauses
+- Imperfect but authentic sentence structures
+- Real names, places, dates
+KILL THESE WORDS: "particularly", "notably", "essentially", "effectively", "significantly", "comprehensive", "robust", "furthermore", "moreover", "utilize", "facilitate", "implement"
+CRITICAL RULES:
+1. **PRESERVE APPROXIMATE WORD COUNT**: ~{wordCount} words, output {wordCount-3}–{wordCount+5} words.
+2. **TARGET 6th-8th grade READABILITY**: Short, warm, direct.
+3. **NO EM DASHES**: Use periods, commas, or parentheses.
+Original sentence (flagged as AI-generated):
+"{sentence}"
+Rewrite to sound like a real person wrote this at their kitchen table. Warm, direct, human.
+Return ONLY the rewritten sentence.
+Prompt: Academic (Undergrad & PhD — shared base, different register note)
+
+You are an expert academic editor helping reduce AI detection while preserving scholarly integrity.
+DOCUMENT TYPE: {config.label} ({readabilityGrade} readability)
+VOICE: {promptTone}
+REGISTER: {registerNote}
+  — PhD:    "Maintain dense scholarly register. Complex nested clauses are expected. Technical jargon used confidently without explanation."
+  — Undergrad: "Formal but accessible. Technical vocabulary where needed, but clarity over density."
+WHAT TRIGGERS AI DETECTION IN ACADEMIC WRITING:
+- Overly smooth, predictable sentence flow
+- Generic transitional phrases ("Furthermore," "Moreover," "It is important to note")
+- Perfect parallel structures without natural variation
+- Too-clean logical progressions
+WHAT SOUNDS HUMAN (while still {deeply scholarly / academic}):
+- Natural imperfections in rhythm and flow
+- Specific word choices that reflect author expertise
+- Field-specific jargon used confidently, not explained
+- Varied sentence lengths (short punchy + longer complex)
+- Occasional complex nested clauses
+KILL THESE WORDS: {killWordsList}
+CRITICAL RULES:
+1. **PRESERVE ALL CITATIONS EXACTLY**: Keep (Author, Year), (Author, Year, pp. X-Y) unchanged.
+2. **PRESERVE APPROXIMATE WORD COUNT**: Original is ~{wordCount} words. Output must be {wordCount-3}–{wordCount+5} words.
+3. **PRESERVE ALL KEY INFORMATION**: Every concept, claim, and detail must remain.
+4. **MAINTAIN {readabilityGrade} REGISTER**: {vocabularyRegister}
+5. **NO EM DASHES**: Use semicolons, colons, or parentheses.
+6. **ADD HUMAN TEXTURE**: Introduce natural variation in structure, rhythm, word choice.
+Original sentence (flagged as AI-generated):
+"{sentence}"
+Rewrite to sound genuinely human-authored. Preserve ALL meaning and approximate length.
+Return ONLY the rewritten sentence.
+Sentence Replacement in Text
+
+After rewriting, each flagged sentence is replaced back using regex:
+
+function replaceSentences(plainText: string, replacements: Map<string, string>): string {
+  let updated = plainText;
+  Array.from(replacements.entries()).forEach(([original, paraphrased]) => {
+    // Escape special regex chars in the original sentence
+    const escapedOriginal = original.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escapedOriginal, 'g');
+    updated = updated.replace(regex, paraphrased);
+  });
+  return updated;
+}
+10. The Auto-Cleanup Loop (MajorBrain)
+
+File: server/academic-cleanup-service.ts → autoCleanAcademicSection()
+
+This is the core algorithm. It loops until the AI score falls below the target or it runs out of attempts.
+
+Function Signature
+
+async function autoCleanAcademicSection(
+  content: string,          // Section text (may contain HTML)
+  targetScore: number = 20, // Stop when score ≤ this (use 15 to be safer)
+  maxAttempts: number = 10, // Maximum iteration cap
+  docType: DocumentType = "undergrad"
+): Promise<CleanupResult>
+Full Algorithm
+
+1. Strip HTML → plain text (stripHtmlForDetection)
+2. Scan with ZeroGPT → get initialScore
+3. If initialScore ≤ targetScore → return immediately (already passing)
+4. Loop while score > targetScore AND attemptNumber < maxAttempts:
+   a. Scan with ZeroGPT → get flaggedSentences[]
+   b. If flaggedSentences is empty → break (nothing more to fix)
+   c. For each flaggedSentence:
+      - Call Claude Sonnet 3.5 with document-type prompt
+      - Store original → rewritten mapping
+   d. Apply all replacements to the text
+   e. Re-scan with ZeroGPT → get newScore
+   f. Record attempt metadata
+   g. Update currentScore = newScore
+   h. If currentScore ≤ targetScore → break (success)
+   i. EARLY EXIT: if last 2 attempts show no score improvement → break (stuck)
+5. Return CleanupResult
+Early Exit Logic (Important)
+
+if (attempts.length >= 2) {
+  const lastTwo = attempts.slice(-2);
+  if (lastTwo[1].scoreBeforeParaphrase >= lastTwo[0].scoreBeforeParaphrase) {
+    console.log("[MajorBrain] Score not improving. Breaking loop.");
+    break;
+  }
+}
+This prevents infinite loops when a section's structure makes further improvement impossible.
+
+Return Type
+
+interface CleanupResult {
+  success: boolean;           // true if finalScore ≤ targetScore
+  originalScore: number;      // Score before any cleanup
+  finalScore: number;         // Score after cleanup
+  attempts: CleanupAttempt[]; // Per-attempt metadata
+  totalAttempts: number;
+  cleanedContent: string;     // The rewritten plain text
+  message: string;            // Human-readable summary
+}
+interface CleanupAttempt {
+  attemptNumber: number;
+  scoreBeforeParaphrase: number;
+  flaggedSentencesCount: number;
+  paraphrasedSentencesCount: number;
+}
+Save Logic (Routes Layer)
+
+Only save cleaned content if it's actually better:
+
+if (newScore < currentScore) {
+  await storage.updateAcademicSection(section.id, {
+    content: result.cleanedContent,
+    aiDetectionScore: newScore,
+    aiDetectionTestedAt: new Date(),
+  });
+} else {
+  // Save the scan score even if no improvement
+  await storage.updateAcademicSection(section.id, {
+    aiDetectionScore: Math.round(result.originalScore),
+    aiDetectionTestedAt: new Date(),
+  });
+}
+11. API Routes — Complete Reference
+
+All routes are registered in server/routes.ts via registerRoutes(httpServer, app).
+
+Paper Management
+
+Method	Path	Description
+GET	/api/academic-papers	List all papers
+GET	/api/academic-papers/:id	Get paper + sections
+POST	/api/academic-papers/upload	Upload & parse paper (multipart/form-data)
+PATCH	/api/academic-papers/:id	Update paper metadata (title, documentType, etc.)
+DELETE	/api/academic-papers/:id	Delete paper (cascades to sections)
+GET	/api/academic-papers/document-types	Get all DocumentTypeConfig objects
+POST	/api/academic-papers/:id/scan-all	Run ZeroGPT on all non-protected sections combined
+GET	/api/academic-papers/:id/score	Get weighted average score across tested sections
+GET	/api/academic-papers/:id/summary	Generate AI summary (topic, thesis, themes)
+GET	/api/academic-papers/:id/export	Download APA 7 formatted .docx
+Section Management
+
+Method	Path	Description
+POST	/api/academic-sections/:id/test-ai	Scan one section with ZeroGPT
+POST	/api/academic-sections/:id/auto-cleanup	Run MajorBrain loop on one section
+PATCH	/api/academic-sections/:id	Manual content update
+Auto-Cleanup Request Body
+
+{
+  "targetScore": 20,       // optional, defaults to 20
+  "documentType": "undergrad"  // optional, falls back to paper's documentType
+}
+12. Storage Interface
+
+File: server/storage.ts
+
+The storage layer abstracts all DB operations. Implement these methods:
+
+interface IStorage {
+  // Papers
+  getAcademicPapers(): Promise<AcademicPaper[]>;
+  getAcademicPaper(id: string): Promise<AcademicPaper | undefined>;
+  createAcademicPaper(data: InsertAcademicPaper): Promise<AcademicPaper>;
+  updateAcademicPaper(id: string, data: Partial<InsertAcademicPaper>): Promise<AcademicPaper>;
+  deleteAcademicPaper(id: string): Promise<void>;
+  // Sections
+  getAcademicSectionsByPaperId(paperId: string): Promise<AcademicSection[]>;
+  getAcademicSection(id: string): Promise<AcademicSection | undefined>;
+  createAcademicSection(data: InsertAcademicSection): Promise<AcademicSection>;
+  updateAcademicSection(id: string, data: Partial<InsertAcademicSection>): Promise<AcademicSection>;
+}
+Use Drizzle ORM with the schema from Section 4. The updateAcademicPaper and updateAcademicSection methods should always set updatedAt: new Date().
+
+13. APA 7 Export
+
+File: server/academic-export-service.ts
+
+The export feature generates a properly formatted .docx file using the docx npm package.
+
+Dependencies
+
+npm install docx
+What It Produces
+
+APA 7 title page (title, author, institution, course, date)
+Each section as a proper heading (Heading 1 style) + body text
+References section preserved verbatim
+Running head in header
+Page numbers in footer
+Times New Roman 12pt, double-spaced, 1-inch margins
+Export Route
+
+GET /api/academic-papers/:id/export
+Response: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+Filename: {title}_APA7.docx
+14. Why It Works — Detection Defeat Theory
+
+Understanding the theory is essential for tuning the system to hit ≤15% reliably.
+
+How AI Detectors Work
+
+Detectors like ZeroGPT, GPTZero, and Originality.ai primarily measure two statistical properties of text:
+
+1. Perplexity — How predictable each word is given the words before it. AI tends to choose the statistically most probable next word. Human writers make unexpected choices.
+
+2. Burstiness — How varied sentence lengths are. AI writes very consistently-lengthed sentences. Humans write short punchy sentences followed by much longer, more complex constructions.
+
+Why Standard AI Rewrites Fail
+
+If you ask an LLM to "make this sound more human," it defaults to:
+
+Adding transition words ("Furthermore", "Moreover") → these are the highest-probability AI tokens
+Creating parallel structures → AI signature pattern
+Using generic hedging language → AI signature pattern
+Producing sentences of consistent length → low burstiness = high AI detection
+The MajorBrain Counter-Strategy
+
+Kill Words enforce anti-probability vocabulary — By explicitly banning the tokens LLMs most commonly produce, we force the model to choose lower-probability alternatives. This directly increases perplexity scores.
+
+Document-type voice injection — Rather than generic "sound human," we give the model a specific person to emulate (community practitioner, senior scholar, person at kitchen table). Specific personas produce specific word choices with specific idiosyncrasies — much harder to detect.
+
+Preserve word count — If rewritten sentences are dramatically shorter or longer, ZeroGPT's sentence-level analysis patterns shift. Staying within ±5 words keeps the text coherent and detection-consistent.
+
+No em dashes — AI models have a measurable over-reliance on em dashes as a stylistic choice. Banning them removes a reliable AI signal.
+
+Citation preservation — Citations like (Author, Year) are human reference artifacts. Preserving them exactly maintains a key human-authorship signal.
+
+Concrete over abstract (grant writing) — Detectors are tuned to recognize abstract institutional language. Replacing "institutional systems" with "American schools, healthcare, and public agencies" shifts vocabulary to the concrete, specific language of human practitioners.
+
+Temperature 0.85 — High enough to produce genuinely varied outputs between runs, preventing the model from falling back into predictable output patterns.
+
+15. Target Scores & Tuning
+
+Current Production Settings
+
+Default target: targetScore = 20 (≤20% AI detected)
+Max attempts: 10
+Real-world results: Typically lands at 5–18% in 2–4 iterations
+To Target ≤15% Specifically
+
+Change the auto-cleanup call to use targetScore: 15:
+
+// In routes.ts auto-cleanup handler:
+const targetScore = req.body.targetScore || 15;  // change default from 20 to 15
+Or pass it explicitly from the frontend:
+
+fetch(`/api/academic-sections/${id}/auto-cleanup`, {
+  method: "POST",
+  body: JSON.stringify({ targetScore: 15 })
+})
+If Results Plateau Above Target
+
+Some sections are structurally difficult to get below 20% in one pass. Strategies:
+
+Run multiple passes — call auto-cleanup again on the same section after it finishes
+Increase max attempts — change maxAttempts from 10 to 15 (more API cost)
+Lower the detection threshold — the early-exit logic breaks if two consecutive attempts show no improvement; this can be loosened by requiring 3 non-improving attempts
+Manual editing — have the user manually edit the hardest sentences, then re-run
+16. Known Edge Cases & Guardrails
+
+What the System Will NOT Do
+
+Touch References/Bibliography — isProtected = true sections are completely skipped at every layer. The API routes return immediately. The cleanup function is never called. Citations are sacred.
+Process sections under 100 characters — Too short for meaningful detection or rewriting.
+Save worse versions — If cleanup doesn't improve the score, the original content stays. Only the scan score is saved.
+Known Failure Modes
+
+Highly formulaic sections (e.g., methods tables, numbered lists) — These often plateau at 25–35% because the structure itself is AI-detectable. The early-exit logic prevents wasted API calls. Manual editing is the solution.
+
+Technical PhD content with dense terminology — ZeroGPT sometimes flags technical jargon as AI even when human-written. Lowering the acceptable target to 25–30% for PhD technical sections is pragmatic.
+
+Grant budgets and timelines — Formatted tabular content doesn't parse cleanly into sentences. parseAcademicSections will capture them as content but they won't rewrite well. Consider making these sections user-editable only.
+
+Repeated re-runs on the same section — Each run improves from the last cleaned version. Running auto-cleanup a second time on a section that landed at 18% will often push it to 8–12%.
+
+API Rate Limits
+
+ZeroGPT (RapidAPI): Free tier is limited (check your RapidAPI dashboard). Each auto-cleanup run consumes: 1 initial scan + up to 10 re-scans + 1 per-attempt rescan = potentially 20+ API calls per section. For a 6-section paper, that's up to 120 ZeroGPT calls.
+
+Anthropic (Claude): Each flagged sentence costs one API call. A 10-sentence section with 8 flagged sentences over 3 attempts = 24 Claude calls. Claude's per-call cost at Sonnet pricing is ~$0.003 per call. Budget accordingly.
+
+Quick Start Checklist for New Replit
+
+ Set RAPIDAPI_KEY in Secrets
+ Add Anthropic AI Integration (auto-sets AI_INTEGRATIONS_ANTHROPIC_API_KEY + base URL)
+ Install packages: mammoth, multer, docx, @anthropic-ai/sdk, drizzle-orm, drizzle-zod
+ Create shared/schema.ts with exact schema from Section 4
+ Run npx drizzle-kit push to create tables
+ Create server/zerogpt-service.ts (exact code from Section 7)
+ Create server/academic-cleanup-service.ts (exact code from Sections 6, 8, 9, 10)
+ Wire routes in server/routes.ts (Section 11)
+ Implement storage interface (Section 12)
+ Set default targetScore: 15 if you want ≤15% as the standard target
+ Test with a ~500 word section first to verify the loop before trying full papers

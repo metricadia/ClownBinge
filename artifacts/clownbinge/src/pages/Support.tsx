@@ -1,8 +1,15 @@
 import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
 import { Heart, Shield, FileText, ArrowRight, CheckCircle, Lock, Globe } from "lucide-react";
+import { usePageSeoHead } from "@/hooks/use-seo-head";
 
 export default function Support() {
+  usePageSeoHead({
+    title: "Support Independent Journalism",
+    description: "Support ClownBinge — the only accountability journalism platform sourced exclusively from primary government and institutional records. Every dollar funds verified reporting.",
+    path: "/contact",
+    schemaType: "WebPage",
+  });
   return (
     <Layout>
 

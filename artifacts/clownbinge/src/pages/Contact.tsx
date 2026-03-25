@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
+import { usePageSeoHead } from "@/hooks/use-seo-head";
 import { AdminNav } from "@/components/AdminNav";
 import { Link } from "wouter";
 import {
@@ -54,6 +55,12 @@ const BRAND_SAFE = [
 type Tab = "contact" | "submit" | "advertising";
 
 export default function Contact() {
+  usePageSeoHead({
+    title: "Contact ClownBinge",
+    description: "Contact ClownBinge, submit a tip, or inquire about advertising. Primary Source Analytics, LLC — independent accountability journalism.",
+    path: "/contact",
+    schemaType: "ContactPage",
+  });
   const [activeTab, setActiveTab] = useState<Tab>("contact");
 
   const tabs: { id: Tab; label: string; icon: React.ElementType; desc: string }[] = [
