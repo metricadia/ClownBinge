@@ -415,7 +415,6 @@ export default function PostDetail() {
                       <div>
                         <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{ref.title}</p>
                         <p className="text-sm text-foreground/75 leading-relaxed m-0">{ref.summary}</p>
-                        <p className="text-xs text-foreground/45 font-mono break-all m-0">{ref.href}</p>
                       </div>
                     </li>
                   ))
@@ -425,7 +424,6 @@ export default function PostDetail() {
                       <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">1.</span>
                       <div>
                         <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{abbreviateSource(post.verifiedSource)}</p>
-                        <p className="text-xs text-foreground/45 font-mono break-all m-0">{post.sourceUrl}</p>
                       </div>
                     </li>
                   )
@@ -433,14 +431,12 @@ export default function PostDetail() {
                     const urlMatch = entry.match(/(https?:\/\/[^\s,;)]+)/);
                     const url = urlMatch ? urlMatch[1] : null;
                     const label = url ? entry.replace(url, "").replace(/\s+$/, "").trim() : entry;
+                    const displayLabel = label || (url ? new URL(url).hostname.replace(/^www\./, "") : entry);
                     return (
                       <li key={i} className="flex gap-4">
                         <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
                         <div>
-                          <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{label || url}</p>
-                          {url && (
-                            <p className="text-xs text-foreground/45 font-mono break-all m-0">{url}</p>
-                          )}
+                          <p className="font-bold text-sm text-foreground/80 leading-snug m-0">{displayLabel}</p>
                         </div>
                       </li>
                     );
