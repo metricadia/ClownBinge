@@ -73,11 +73,12 @@ export default function Home() {
                 className="mb-8 rounded-2xl overflow-hidden border border-blue-100"
                 style={{ background: "linear-gradient(135deg, #dbeafe 0%, #e8edf5 55%, #f1f5f9 100%)" }}
               >
-                <div className="px-6 pt-5 pb-1 flex items-center gap-2">
+                <div className="px-6 pt-5 pb-1 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5 bg-white/80 border border-blue-200 rounded-full px-3 py-1">
                     <TrendingUp className="w-3.5 h-3.5 text-blue-600" />
-                    <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700">Highly Popular</span>
+                    <span className="text-xs font-extrabold uppercase tracking-widest text-blue-700">CB Featured</span>
                   </div>
+                  <span className="text-xs font-mono font-bold text-slate-400 tracking-wide">{highlightedPost.caseNumber}</span>
                 </div>
                 <div className="px-6 py-4">
                   <Link href={`/case/${highlightedPost.slug}`}>
