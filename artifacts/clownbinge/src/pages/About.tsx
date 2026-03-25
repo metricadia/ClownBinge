@@ -94,7 +94,7 @@ export default function About() {
 
         {/* What ClownBinge Is */}
         <SectionLabel>What ClownBinge Is</SectionLabel>
-        <div className="prose prose-slate max-w-none cb-article-body">
+        <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
             ClownBinge is an independent, primary source journalism platform operated by Primary Source Analytics, LLC. We publish documented accounts of public events, institutional conduct, and structural contradictions in American civic, religious, political, and financial life.
           </p>
@@ -110,7 +110,7 @@ export default function About() {
 
         {/* What the Archive Documents */}
         <SectionLabel>What the Archive Documents</SectionLabel>
-        <div className="prose prose-slate max-w-none cb-article-body">
+        <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
             The ClownBinge archive documents the gap between the public record and the conduct, statements, and decisions of public figures and institutions. That gap is the story.
           </p>
@@ -124,7 +124,7 @@ export default function About() {
 
         {/* The Source Standard */}
         <SectionLabel>The Source Standard</SectionLabel>
-        <div className="prose prose-slate max-w-none cb-article-body">
+        <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
             Every claim published on ClownBinge is verified against a primary source before publication. We recognize three source tiers:
           </p>
@@ -161,7 +161,7 @@ export default function About() {
           ))}
         </dl>
 
-        <div className="prose prose-slate max-w-none cb-article-body">
+        <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
             Primary sources are linked directly within article text. Readers can verify every factual claim in every article independently without leaving the page. We do not ask readers to trust us. We ask them to check the source.
           </p>
@@ -169,7 +169,7 @@ export default function About() {
 
         {/* What ClownBinge Is Not */}
         <SectionLabel>What ClownBinge Is Not</SectionLabel>
-        <div className="prose prose-slate max-w-none cb-article-body">
+        <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
             We do not publish anonymous tips, unverified allegations, or content that cannot be traced to a named, public, verifiable source. A story without documentation is not a ClownBinge story.
           </p>
@@ -186,7 +186,7 @@ export default function About() {
 
         {/* Legal Architecture */}
         <SectionLabel>Legal Architecture</SectionLabel>
-        <div className="prose prose-slate max-w-none cb-article-body">
+        <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
             ClownBinge operates under the strongest First Amendment protections available in the United States. <em>New York Times Co. v. Sullivan</em>, 376 U.S. 254 (1964) establishes the actual malice standard for public figures. Because ClownBinge publishes only verified primary source documentation, actual malice cannot be established against this platform by design. We do not speculate. We do not fabricate. We cite. The citations are in the article. The article is in the archive.
           </p>
@@ -194,7 +194,7 @@ export default function About() {
 
         {/* Corrections */}
         <SectionLabel>Corrections</SectionLabel>
-        <div className="prose prose-slate max-w-none cb-article-body">
+        <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
             If a factual error is identified in any published record, a correction is appended to the article within 48 hours of confirmation. The original text and the correction are both preserved in the public record. Corrections are never deleted or obscured. Submissions identifying potential errors may be sent through the contact form. We respond to all credible error reports within 48 hours.
           </p>
