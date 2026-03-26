@@ -43,6 +43,12 @@ export default function About() {
         <div className="mb-12">
           <p className="text-xs font-bold tracking-widest uppercase text-primary mb-6">About ClownBinge</p>
 
+          <div className="rounded-2xl px-6 py-8 mb-8 border-l-4" style={{ borderColor: "#F5C518", backgroundColor: "rgba(245, 197, 24, 0.03)" }}>
+            <p className="text-base sm:text-lg text-foreground leading-relaxed font-medium">
+              ClownBinge does the work most news organizations won't: systematically searching through fake news, foreign state propaganda, and AI-generated misinformation so you don't have to. We binge on primary sources—court documents, congressional records, federal filings—and curate the next generation of accountability journalism, where every claim is certified against government records or peer-reviewed research. The record is our only authority.
+            </p>
+          </div>
+
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl">
             <strong className="text-foreground">ClownBinge was built on a single premise:</strong> the gap between what public figures say and what the documented record shows is the most important story in American civic life. We do not manufacture that gap. We do not speculate about it. We measure it, source it, and publish it against one standard: the primary source document.
           </p>

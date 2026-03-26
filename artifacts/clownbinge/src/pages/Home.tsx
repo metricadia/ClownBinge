@@ -77,6 +77,12 @@ export default function Home() {
                 <span className="text-muted-foreground/30">|</span>
                 <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
               </div>
+
+              <div className="mt-5 pt-5 border-t border-border text-center sm:text-left">
+                <p className="text-sm text-muted-foreground leading-relaxed mb-2">
+                  We search through fake news, foreign state propaganda, and misinformation so you don't have to. We binge on primary sources and curate accountability journalism certified against government records and peer-reviewed research.
+                </p>
+              </div>
             </div>
 
             {/* Highly Popular featured block */}
