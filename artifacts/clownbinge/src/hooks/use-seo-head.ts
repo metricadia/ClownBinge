@@ -217,9 +217,9 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     if (subjectPerson) articleSchema.mentions = subjectPerson;
     if (post.dateOfIncident) articleSchema.temporalCoverage = post.dateOfIncident;
 
-    // Sovereign Override: isBasedOn from APA 7 citation data
+    // Sovereign Override: isBasedOn + citation from APA 7 citation data
     if (post.verifiedSource && post.verifiedSource.includes("::")) {
-      const isBasedOn = post.verifiedSource
+      const parsedSources = post.verifiedSource
         .split(/[;|]/)
         .map(s => s.trim())
         .filter(Boolean)
@@ -233,13 +233,36 @@ export function useArticleSeoHead(post: Post | null | undefined) {
           const name = instMatch ? instMatch[1].trim() : citation.split(".")[0].trim();
           const isGov = /\b(U\.S\.|Department|Bureau|Congress|Senate|House|Federal|National|State|Court|Archives)\b/i.test(citation);
           return {
-            "@type": isGov ? ["CreativeWork", "GovernmentPermit"] : "CreativeWork",
-            "name": name || label,
-            "description": label
+            type: isGov ? ["CreativeWork", "GovernmentPermit"] : "CreativeWork",
+            name: name || label,
+            description: label,
+            citation: citation
           };
         })
-        .filter(Boolean);
-      if (isBasedOn.length > 0) articleSchema.isBasedOn = isBasedOn;
+        .filter(Boolean) as { type: string | string[]; name: string; description: string; citation: string }[];
+
+      if (parsedSources.length > 0) {
+        articleSchema.isBasedOn = parsedSources.map(s => ({
+          "@type": s.type,
+          "name": s.name,
+          "description": s.description
+        }));
+        // citation field: formal bibliographic reference strings for Google
+        articleSchema.citation = parsedSources.map(s => ({
+          "@type": "CreativeWork",
+          "name": s.name,
+          "description": s.citation
+        }));
+      }
+    } else if (post.verifiedSource) {
+      // Non-APA sources: emit citation as plain string array
+      const sources = post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean);
+      if (sources.length > 0) {
+        articleSchema.citation = sources.map(s => ({
+          "@type": "CreativeWork",
+          "name": s
+        }));
+      }
     }
 
     setJsonLd("article", articleSchema);

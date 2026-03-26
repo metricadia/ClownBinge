@@ -479,7 +479,7 @@ export default function PostDetail() {
           </div>
         )}
 
-        <RelatedArticles currentSlug={post.slug} />
+        <RelatedArticles currentSlug={post.slug} category={post.category} />
 
         <div className="mt-14">
           <NewsletterSignup source={`post_${post.id}`} />

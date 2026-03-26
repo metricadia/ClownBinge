@@ -42,27 +42,46 @@ const CATEGORY_COLOR: Record<string, string> = {
 
 interface RelatedArticlesProps {
   currentSlug: string;
+  category?: string;
 }
 
-export function RelatedArticles({ currentSlug }: RelatedArticlesProps) {
+export function RelatedArticles({ currentSlug, category }: RelatedArticlesProps) {
   const relatedSlugs = RELATED_ARTICLES[currentSlug] ?? [];
+  const usingManual = relatedSlugs.length > 0;
 
   const { data } = useListPosts({ limit: 100, offset: 0 });
 
-  if (!relatedSlugs.length || !data?.posts?.length) return null;
+  if (!data?.posts?.length) return null;
 
-  const related = relatedSlugs
-    .map(slug => data.posts.find(p => p.slug === slug))
-    .filter(Boolean)
-    .slice(0, 3) as NonNullable<typeof data.posts>;
+  let related: typeof data.posts;
+  let clusterLabel: string;
+
+  if (usingManual) {
+    related = relatedSlugs
+      .map(slug => data.posts.find(p => p.slug === slug))
+      .filter(Boolean)
+      .slice(0, 3) as typeof data.posts;
+    clusterLabel = "Also in the Record";
+  } else if (category) {
+    const label = CATEGORY_LABELS[category] ?? category.replace(/_/g, " ");
+    related = data.posts
+      .filter(p => p.category === category && p.slug !== currentSlug)
+      .slice(0, 3) as typeof data.posts;
+    clusterLabel = `More from ${label}`;
+  } else {
+    return null;
+  }
 
   if (!related.length) return null;
 
   return (
-    <section className="mt-14 pt-10 border-t-2 border-[#1A3A8F]/15">
+    <section
+      className="mt-14 pt-10 border-t-2 border-[#1A3A8F]/15"
+      aria-label={clusterLabel}
+    >
       <h2 className="text-xs font-black uppercase tracking-widest text-[#1A3A8F] mb-6 flex items-center gap-2">
         <span className="inline-block w-5 h-0.5 bg-[#F5C518]" />
-        Also in the Record
+        {clusterLabel}
       </h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {related.map(post => (
