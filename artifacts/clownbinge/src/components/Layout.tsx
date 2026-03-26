@@ -125,10 +125,10 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/contact" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/contact' || location === '/advertise' ? 'text-white' : 'text-white/70'}`}>
               Support
             </Link>
-            <Link href="/reports" className={`text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full transition-colors ${location === '/reports' ? 'bg-[#F5C518] text-[#1A3A8F] shadow-md' : 'bg-[#F5C518] text-[#1A3A8F] hover:bg-[#e0b400]'}`}>
+            <Link href="/reports" className={`text-sm font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/reports' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
               Buy Reports
             </Link>
-            <Link href="/invest-in-us" className={`text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full transition-colors ${location === '/invest-in-us' ? 'bg-[#F5C518] text-[#1A3A8F] shadow-md' : 'bg-[#F5C518] text-[#1A3A8F] hover:bg-[#e0b400]'}`}>
+            <Link href="/invest-in-us" className={`text-sm font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/invest-in-us' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
               Donate Now
             </Link>
           </nav>
@@ -150,8 +150,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           <nav className="flex flex-col items-center justify-center flex-1 gap-8 p-6">
             <Link href="/about" className="text-2xl font-bold text-white uppercase tracking-widest">About</Link>
             <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Support</Link>
-            <Link href="/reports" className="text-2xl font-bold uppercase tracking-widest px-8 py-3 rounded-full bg-[#F5C518] text-[#1A3A8F] hover:bg-[#e0b400] transition-colors">Buy Reports</Link>
-            <Link href="/invest-in-us" className="text-2xl font-bold uppercase tracking-widest px-8 py-3 rounded-full bg-[#F5C518] text-[#1A3A8F] hover:bg-[#e0b400] transition-colors">Donate Now</Link>
+            <Link href="/reports" className="text-2xl font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Buy Reports</Link>
+            <Link href="/invest-in-us" className="text-2xl font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Donate Now</Link>
           </nav>
         </div>
       )}
