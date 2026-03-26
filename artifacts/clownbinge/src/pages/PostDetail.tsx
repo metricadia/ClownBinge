@@ -17,7 +17,7 @@ import { RelatedArticles } from "@/components/RelatedArticles";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { format } from "date-fns";
-import { Loader2, AlertTriangle, ArrowLeft, Copy, Check, Share2, Lock } from "lucide-react";
+import { Loader2, AlertTriangle, Copy, Check, Share2, Lock } from "lucide-react";
 import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
 
@@ -263,11 +263,6 @@ export default function PostDetail() {
   return (
     <Layout>
       <article className="cb-container py-8 sm:py-12 max-w-3xl mx-auto pb-32">
-
-        <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors mb-8">
-          <ArrowLeft className="w-4 h-4" />
-          Back to Feed
-        </Link>
 
         <header className="mb-10">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-border pb-5 mb-0">
