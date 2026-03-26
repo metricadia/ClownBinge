@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
 import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { usePostsFilter, usePostsFeed, usePostsFeedPaginated, usePostDetail } from "@/hooks/use-posts";
 import { useHomeSeoHead } from "@/hooks/use-seo-head";
-import { Loader2, AlertCircle, ArrowRight } from "lucide-react";
+import { Loader2, AlertCircle, ArrowRight, X } from "lucide-react";
 
 const HIGHLY_POPULAR_SLUG = "dei-ruse-obama-trump-appointee-qualifications";
 
@@ -31,6 +32,7 @@ import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
 
 export default function Home() {
   useHomeSeoHead();
+  const [showNerdoutModal, setShowNerdoutModal] = useState(false);
   const { category, setCategory } = usePostsFilter();
   const isStaffPicks = category === ('staff_picks' as never);
 
@@ -80,10 +82,89 @@ export default function Home() {
 
               <div className="mt-5 pt-5 border-t border-border text-center sm:text-left">
                 <p className="text-sm leading-relaxed">
-                  <span className="font-bold text-primary">Next Generation Verified Research.</span>
+                  <button
+                    onClick={() => setShowNerdoutModal(true)}
+                    className="font-bold text-primary hover:underline cursor-pointer transition-opacity hover:opacity-75"
+                  >
+                    Next Generation Verified Research.
+                  </button>
                   <span className="text-muted-foreground"> We search through fake news, foreign state propaganda, and misinformation so you don't have to. We binge on primary sources and curate accountability journalism certified against government records and peer-reviewed research.</span>
                 </p>
               </div>
+            </div>
+
+            {/* NerdOut Modal */}
+            {showNerdoutModal && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+                <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-primary/20">
+                  {/* Header */}
+                  <div className="sticky top-0 bg-gradient-to-r from-primary to-primary/80 text-white px-6 py-5 flex items-center justify-between border-b border-white/10">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-widest text-white/60 mb-1">NerdOut / Academic</p>
+                      <h2 className="text-2xl font-bold">Next Generation Verified Research</h2>
+                    </div>
+                    <button
+                      onClick={() => setShowNerdoutModal(false)}
+                      className="text-white hover:bg-white/10 rounded-full p-2 transition-colors"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+
+                  {/* Content */}
+                  <div className="px-6 py-8 space-y-6 text-sm text-muted-foreground leading-relaxed">
+                    <div>
+                      <h3 className="text-lg font-bold text-header mb-2">What It Means</h3>
+                      <p>
+                        "Next Generation Verified Research" is accountability journalism redesigned for the AI era. Instead of waiting for traditional news cycles to catch institutional contradictions, we systematically aggregate and verify claims against primary sources in real time, then present findings in formats that are immediately verifiable and academically defensible.
+                      </p>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-bold text-header mb-2">The Architecture</h3>
+                      <ul className="space-y-3">
+                        <li>
+                          <strong className="text-header">Multi-Source Verification:</strong> Every claim is cross-referenced against government records, court filings, legislative transcripts, and peer-reviewed research before publication. No single source. No speculation.
+                        </li>
+                        <li>
+                          <strong className="text-header">Canonical Source Links:</strong> We emit schema-resolved citations as resolvable government URLs (congress.gov, supremecourt.gov, law.cornell.edu) so Google's AI can crawl and verify authority at the source level.
+                        </li>
+                        <li>
+                          <strong className="text-header">APA 7 Formatting:</strong> Every article is structured to be immediately citable in scholarly work, academic papers, and legal proceedings. The bibliography is built in.
+                        </li>
+                        <li>
+                          <strong className="text-header">Topical Authority Signaling:</strong> We use structured data (ScholarlyArticle, ClaimReview, Wikidata sameAs links) to signal topical expertise to semantic search engines and AI models evaluating source authority.
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h3 className="text-lg font-bold text-header mb-2">Why It Matters</h3>
+                      <p>
+                        In an era where misinformation scales faster than traditional fact-checking can respond, the only effective defense is direct access to the primary source record. We don't interpret the record. We organize it, verify it, and make it searchable. The next generation of research happens at the source layer, not the commentary layer.
+                      </p>
+                    </div>
+
+                    <div className="rounded-xl bg-primary/5 border border-primary/20 p-4">
+                      <p className="text-xs uppercase tracking-widest font-bold text-primary mb-2">The Standard</p>
+                      <p className="text-sm text-header">
+                        If a claim cannot be traced to a government document, court filing, legislative record, or peer-reviewed research—it is not published on ClownBinge. The record is our only authority.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Footer */}
+                  <div className="bg-muted/40 px-6 py-4 border-t border-border flex justify-end gap-3">
+                    <button
+                      onClick={() => setShowNerdoutModal(false)}
+                      className="px-6 py-2 rounded-full font-semibold text-header border border-border hover:bg-muted transition-colors"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
             </div>
 
             {/* Highly Popular featured block */}
