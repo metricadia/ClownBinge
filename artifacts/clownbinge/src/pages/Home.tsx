@@ -173,7 +173,6 @@ export default function Home() {
                 </div>
               </div>
             )}
-            </div>
 
             {/* Highly Popular featured block */}
             {highlightedPost && !category && (
