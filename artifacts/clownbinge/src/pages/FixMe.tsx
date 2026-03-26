@@ -120,17 +120,33 @@ export default function FixMe() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
-      setArticles((prev) =>
-        prev.map((a) =>
-          a.slug === slug
-            ? { ...a, aiScore: data.finalScore, aiScoreTestedAt: new Date().toISOString() }
-            : a
-        )
-      );
-      setLastResult({ slug, message: data.message });
+
+      setLastResult({ slug, message: "Reduction running in background. Score will update when complete..." });
+
+      const poll = setInterval(async () => {
+        try {
+          const statusRes = await fetch(`${BASE}/api/fixme/reduce/status/${slug}`);
+          const status = await statusRes.json();
+          if (status.status === "idle") {
+            clearInterval(poll);
+            setRowState(slug, { loading: false, action: null });
+            const listRes = await fetch(`${BASE}/api/fixme/articles`);
+            if (listRes.ok) {
+              const updated: ArticleRow[] = await listRes.json();
+              const article = updated.find((a) => a.slug === slug);
+              setArticles(updated);
+              if (article?.aiScore !== null && article?.aiScore !== undefined) {
+                setLastResult({ slug, message: `Done. New score: ${article.aiScore}%` });
+              }
+            }
+          }
+        } catch {
+          clearInterval(poll);
+          setRowState(slug, { loading: false, action: null });
+        }
+      }, 6000);
     } catch (e) {
       setRowState(slug, { error: e instanceof Error ? e.message : "Reduction failed" });
-    } finally {
       setRowState(slug, { loading: false, action: null });
     }
   }

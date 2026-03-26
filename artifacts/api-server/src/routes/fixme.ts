@@ -65,9 +65,26 @@ router.post("/fixme/detect/:slug", async (req, res) => {
   }
 });
 
+const activeJobs = new Map<string, { startedAt: Date; initialScore?: number }>();
+
+router.get("/fixme/reduce/status/:slug", (req, res) => {
+  const { slug } = req.params as { slug: string };
+  const job = activeJobs.get(slug);
+  if (job) {
+    res.json({ status: "processing", startedAt: job.startedAt, initialScore: job.initialScore });
+  } else {
+    res.json({ status: "idle" });
+  }
+});
+
 router.post("/fixme/reduce/:slug", async (req, res) => {
   const { slug } = req.params as { slug: string };
   const targetScore: number = typeof req.body?.targetScore === "number" ? req.body.targetScore : 15;
+
+  if (activeJobs.has(slug)) {
+    res.json({ status: "processing", message: "Reduction already in progress." });
+    return;
+  }
 
   try {
     const [post] = await db
@@ -81,33 +98,32 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
       return;
     }
 
-    const result = await reduceAI(post.body, targetScore);
+    activeJobs.set(slug, { startedAt: new Date() });
+    res.json({ status: "processing", message: "Reduction started. Polling for score updates..." });
 
-    if (result.finalScore < (result.initialScore)) {
-      await db
-        .update(postsTable)
-        .set({
-          body: result.cleanedBody,
-          aiScore: result.finalScore,
-          aiScoreTestedAt: new Date(),
-        })
-        .where(eq(postsTable.id, post.id));
-    } else {
-      await db
-        .update(postsTable)
-        .set({ aiScore: result.initialScore, aiScoreTestedAt: new Date() })
-        .where(eq(postsTable.id, post.id));
-    }
-
-    res.json({
-      slug,
-      success: result.success,
-      initialScore: result.initialScore,
-      finalScore: result.finalScore,
-      attempts: result.attempts.length,
-      message: result.message,
-    });
+    reduceAI(post.body, targetScore)
+      .then(async (result) => {
+        if (result.finalScore < result.initialScore) {
+          await db
+            .update(postsTable)
+            .set({ body: result.cleanedBody, aiScore: result.finalScore, aiScoreTestedAt: new Date() })
+            .where(eq(postsTable.id, post.id));
+        } else {
+          await db
+            .update(postsTable)
+            .set({ aiScore: result.initialScore, aiScoreTestedAt: new Date() })
+            .where(eq(postsTable.id, post.id));
+        }
+        console.log(`[CBReduce] Done: ${result.initialScore}% -> ${result.finalScore}% | ${result.message}`);
+      })
+      .catch((err) => {
+        console.error("[CBReduce] Background job failed:", err);
+      })
+      .finally(() => {
+        activeJobs.delete(slug);
+      });
   } catch (err: unknown) {
+    activeJobs.delete(slug);
     console.error("[FixMe] reduce error:", err);
     const message = err instanceof Error ? err.message : "Reduction failed";
     res.status(500).json({ error: message });
