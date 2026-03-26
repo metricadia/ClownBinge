@@ -128,6 +128,9 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/contact" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/contact' || location === '/advertise' ? 'text-white' : 'text-white/70'}`}>
               Support
             </Link>
+            <Link href="/reports" className={`text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full border-2 transition-colors ${location === '/reports' ? 'border-secondary/70 bg-secondary/10 text-secondary' : 'border-secondary/70 text-secondary/80 hover:text-secondary hover:border-secondary'}`}>
+              Buy Reports
+            </Link>
             <Link href="/invest-in-us" className={`text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full border-2 transition-colors ${location === '/invest-in-us' ? 'border-secondary bg-secondary text-gray-900' : 'border-secondary/80 text-secondary hover:bg-secondary hover:text-gray-900'}`}>
               Donate Now
             </Link>
@@ -151,6 +154,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/about" className="text-2xl font-bold text-white uppercase tracking-widest">About</Link>
             <Link href="/store" className="text-2xl font-bold text-secondary uppercase tracking-widest">Books</Link>
             <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Support</Link>
+            <Link href="/reports" className="text-2xl font-bold border-2 border-secondary/70 text-secondary/80 uppercase tracking-widest px-8 py-3 rounded-full">Buy Reports</Link>
             <Link href="/invest-in-us" className="text-2xl font-bold border-2 border-secondary text-secondary uppercase tracking-widest px-8 py-3 rounded-full">Donate Now</Link>
           </nav>
         </div>
