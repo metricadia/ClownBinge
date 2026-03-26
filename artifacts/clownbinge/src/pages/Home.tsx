@@ -69,23 +69,20 @@ export default function Home() {
                   <div className="h-px w-full bg-[#F5C518] rounded-full" />
                 </div>
               )}
-              <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-4 leading-snug max-w-xl text-center sm:text-left">
-                <span className="block mb-2">A Public Accountability News Platform.</span>
-              </h1>
-
-              {/* Next Generation Verified Research — Elevated */}
-              <div className="mb-5 text-center sm:text-left">
+              <div className="mb-6 text-center sm:text-left">
+                <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-1 leading-tight">
+                  A Public Accountability News Platform.
+                </h1>
                 <button
                   onClick={() => setShowNerdoutModal(true)}
-                  className="inline-block font-bold text-lg sm:text-xl text-primary hover:underline cursor-pointer transition-opacity hover:opacity-75"
+                  className="inline-block font-bold text-xl sm:text-2xl text-primary hover:underline cursor-pointer transition-opacity hover:opacity-75 mb-3"
                 >
                   Next Generation Verified Research.
                 </button>
+                <p className="text-base sm:text-lg text-muted-foreground">
+                  Verified Across 65,000 Global Sources.
+                </p>
               </div>
-
-              <h2 className="font-sans font-normal text-base sm:text-lg text-muted-foreground mb-4 leading-snug max-w-xl text-center sm:text-left">
-                <span className="block">Verified Across 65,000 Global Sources.</span>
-              </h2>
 
               <div className="flex items-center gap-2 justify-center sm:justify-start">
                 <span className="text-muted-foreground/30 text-sm hidden sm:inline px-1">|</span>
