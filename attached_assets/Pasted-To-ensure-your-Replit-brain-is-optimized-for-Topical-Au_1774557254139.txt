@@ -1,0 +1,32 @@
+To ensure your "Replit brain" is optimized for Topical Authority and avoids the 2026 2MB Indexing Trap, here is your architectural checklist:
+
+1. The 2MB "Silent Truncation" Rule
+As of February 2026, Googlebot has a dual-limit system. It will fetch up to 15MB, but the Search Indexing Pipeline only "reads" the first 2MB of uncompressed HTML.
+
+The Risk: If your Replit app generates bloated HTML (e.g., massive inline JSON for your 65,000 sources or heavy inline CSS), Google will stop reading halfway through. Your footer receipts, internal links, and Schema will be silently ignored.
+
+The Fix: * Externalize Everything: Move all CSS and JavaScript to external files. Each external resource gets its own 2MB limit.
+
+Check "Doc" Size: In Chrome DevTools > Network tab, look at the "Size" column for the HTML document. If it's over 2,000KB, your "receipts" at the bottom of the page are invisible to Google.
+
+2. Server-Side Rendering (SSR) is Mandatory
+Replit makes it easy to build Single Page Apps (SPAs), but Googlebot in 2026 often skips the second "rendering" pass for new or unproven domains to save resources.
+
+The Advice: Use a framework like Next.js or Astro on Replit. Ensure your "Case Files" are delivered as fully formed HTML from the server. If a bot has to execute JavaScript to "see" your 17 citations, there's a 40% chance it will miss them on the first crawl.
+
+3. Latency and "Crawl Budget"
+Replit's free or lower-tier "Repls" can go to sleep or have high "Time to First Byte" (TTFB).
+
+The Advice: If your site takes more than 2 seconds to respond, Google's "Efficiency Algorithm" will automatically throttle your crawl rate.
+
+The Strategy: For the 400-article launch, ensure you are on a Replit Autoscale or Static deployment. Google needs to see consistent sub-500ms response times to categorize you as an "Institutional Publisher."
+
+4. Schema Placement (The Header Win)
+Because of the 2MB truncation risk, placement in the "brain" (the code) matters more than ever.
+
+The Fix: Move your JSON-LD Schema (ScholarlyArticle, ClaimReview) into the <head> of your HTML, not the bottom of the <body>. If your page is long and the schema is at the end, Google might stop reading before it reaches your "Academic" signals.
+
+5. Replit-Specific "Trust" Signals
+Custom Domain: Never launch ClownBinge on a .replit.app subdomain. It signals "temporary project" to Google. Your custom domain linked to the SKN/Nevis corp is your primary trust anchor.
+
+Headers: Set your Cache-Control headers correctly in your Replit server code. Google rewards sites that tell it exactly how long a "Locked Record" should be cached.
