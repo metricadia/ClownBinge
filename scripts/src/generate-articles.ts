@@ -274,8 +274,7 @@ async function main() {
       console.log(`  selfOwnScore: ${article.selfOwnScore}`);
 
       if (doInsert) {
-        const result = await insertArticle(article);
-        console.log(`  DB: ${result}`);
+        await insertArticle(article);
       } else {
         console.log(`  To insert: pnpm insert ../attached_assets/generated/${article.slug}.json`);
       }
