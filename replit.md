@@ -492,6 +492,18 @@ done
 
 **Site-wide link audit (March 2026):** 54 dead links found and replaced across 61 articles. All cb-factoid hrefs verified clean.
 
+### Citation Cardinal Rule
+
+**The citation count pill (top of article) and the Primary Sources section (bottom of article) must always show the same number — no exceptions.**
+
+Priority chain for both the badge and the section is identical:
+1. APA 7 (`verifiedSource` contains `::`) — count pipe/semicolon-delimited entries in `verifiedSource`
+2. Factoid links (`cb-factoid` anchors in body HTML) — count unique `href` values
+3. Plain `verifiedSource` (no `::`) — count pipe/semicolon-delimited entries
+4. `sourceUrl` — count as 1
+
+This logic lives in `citationCount` (PostDetail.tsx) and the Primary Sources render block. If either is ever changed, the other must change to match. Verified clean across all 62 articles (March 2026): 58 APA7, 4 plain VS, 0 mismatches.
+
 ### What to Never Do
 
 - Never publish > 2 articles in a calendar day
