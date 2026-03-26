@@ -79,8 +79,9 @@ export default function Home() {
               </div>
 
               <div className="mt-5 pt-5 border-t border-border text-center sm:text-left">
-                <p className="text-sm text-muted-foreground leading-relaxed mb-2">
-                  We search through fake news, foreign state propaganda, and misinformation so you don't have to. We binge on primary sources and curate accountability journalism certified against government records and peer-reviewed research.
+                <p className="text-sm leading-relaxed">
+                  <span className="font-bold text-primary">Next Generation Verified Research.</span>
+                  <span className="text-muted-foreground"> We search through fake news, foreign state propaganda, and misinformation so you don't have to. We binge on primary sources and curate accountability journalism certified against government records and peer-reviewed research.</span>
                 </p>
               </div>
             </div>
