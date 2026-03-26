@@ -120,6 +120,11 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
       return;
     }
 
+    if (post.locked) {
+      res.status(403).json({ error: "Article is locked. Unlock it before reducing." });
+      return;
+    }
+
     jobs.set(slug, { phase: "processing", startedAt: new Date() });
     res.json({ status: "processing", message: "Reduction started. Polling for updates..." });
 
@@ -162,6 +167,35 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
     jobs.delete(slug);
     console.error("[FixMe] reduce error:", err);
     const message = err instanceof Error ? err.message : "Reduction failed";
+    res.status(500).json({ error: message });
+  }
+});
+
+router.post("/fixme/lock/:slug", async (req, res) => {
+  const { slug } = req.params as { slug: string };
+  const { locked } = req.body as { locked: boolean };
+
+  if (typeof locked !== "boolean") {
+    res.status(400).json({ error: "locked must be a boolean" });
+    return;
+  }
+
+  try {
+    const [post] = await db
+      .select({ id: postsTable.id })
+      .from(postsTable)
+      .where(eq(postsTable.slug, slug))
+      .limit(1);
+
+    if (!post) {
+      res.status(404).json({ error: "Article not found" });
+      return;
+    }
+
+    await db.update(postsTable).set({ locked }).where(eq(postsTable.id, post.id));
+    res.json({ slug, locked });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Lock toggle failed";
     res.status(500).json({ error: message });
   }
 });

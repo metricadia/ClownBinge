@@ -17,7 +17,7 @@ type ArticleRow = {
 
 type RowState = {
   loading: boolean;
-  action: "detect" | "reduce" | null;
+  action: "detect" | "reduce" | "lock" | null;
   error: string | null;
   elapsed: number;
 };
@@ -144,6 +144,28 @@ export default function FixMe() {
       setRowState(slug, { error: e instanceof Error ? e.message : "Detection failed" });
     } finally {
       stopElapsedTimer(slug);
+      setRowState(slug, { loading: false, action: null });
+    }
+  }
+
+  async function handleToggleLock(slug: string, currentLocked: boolean) {
+    setRowState(slug, { loading: true, action: "lock", error: null });
+    try {
+      const res = await fetch(`${BASE}/api/fixme/lock/${slug}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ locked: !currentLocked }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      const listRes = await fetch(`${BASE}/api/fixme/articles`);
+      if (listRes.ok) {
+        const updated: ArticleRow[] = await listRes.json();
+        setArticles(updated);
+      }
+    } catch (e) {
+      setRowState(slug, { error: e instanceof Error ? e.message : "Lock toggle failed" });
+    } finally {
       setRowState(slug, { loading: false, action: null });
     }
   }
@@ -366,6 +388,18 @@ export default function FixMe() {
                       <td className="px-4 py-3 text-center">
                         <div className="flex items-center justify-center gap-2">
                           <button
+                            onClick={() => handleToggleLock(article.slug, article.locked)}
+                            disabled={rs.loading}
+                            title={article.locked ? "Unlock article for editing" : "Lock article"}
+                            className={`text-xs px-2 py-1.5 rounded border transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap ${
+                              article.locked
+                                ? "bg-yellow-900 hover:bg-yellow-800 border-yellow-700 text-yellow-300"
+                                : "bg-gray-800 hover:bg-gray-700 border-gray-600 text-gray-400"
+                            }`}
+                          >
+                            {rs.loading && rs.action === "lock" ? "..." : article.locked ? "Unlock" : "Lock"}
+                          </button>
+                          <button
                             onClick={() => handleDetect(article.slug)}
                             disabled={rs.loading}
                             title="Run ZeroGPT detection and save score"
@@ -380,8 +414,8 @@ export default function FixMe() {
                           </button>
                           <button
                             onClick={() => handleReduce(article.slug)}
-                            disabled={rs.loading}
-                            title="Run AI reduction loop targeting 15%"
+                            disabled={rs.loading || article.locked}
+                            title={article.locked ? "Unlock article first" : "Run AI reduction loop targeting 15%"}
                             className="text-xs px-3 py-1.5 rounded bg-blue-900 hover:bg-blue-800 border border-blue-700 text-blue-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
                           >
                             {rs.loading && rs.action === "reduce" ? (
