@@ -78,12 +78,13 @@ export async function detectAI(htmlBody: string): Promise<ZeroGPTResult> {
         fakePercentage?: number;
         textWords?: number;
         sentences?: string[];
+        h?: string[];
       };
     };
 
     const score = data?.data?.fakePercentage ?? 0;
     const wordCount = data?.data?.textWords ?? chunk.split(/\s+/).length;
-    const sentences = data?.data?.sentences ?? [];
+    const sentences = data?.data?.h ?? data?.data?.sentences ?? [];
 
     chunkResults.push({ score, wordCount, sentences });
 
