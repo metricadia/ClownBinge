@@ -4,7 +4,7 @@
  */
 
 import { pool } from "@workspace/db";
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 
 interface Article {
   slug: string;
@@ -30,8 +30,16 @@ function extractUrls(text: string): string[] {
 
 function verifyUrl(url: string): number {
   try {
-    const code = execSync(
-      `curl -s -o /dev/null -w "%{http_code}" --max-time 10 -L -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" "${url}"`,
+    const code = execFileSync(
+      "curl",
+      [
+        "-s", "-o", "/dev/null",
+        "-w", "%{http_code}",
+        "--max-time", "10",
+        "-L",
+        "-A", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        url,
+      ],
       { timeout: 15000, encoding: "utf8" }
     ).trim();
     return parseInt(code, 10) || 0;
