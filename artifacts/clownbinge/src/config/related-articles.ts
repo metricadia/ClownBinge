@@ -317,4 +317,11 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
     "diversity-denial-primary-source-record-what-was-lost",
     "cb-000041-united-states-built-by-immigrants-record-confirms-it",
   ],
+
+  // --- Congressional appropriations & foreign policy ---
+  "treasure-reveals-heart-congressional-appropriations-four-year-analysis": [
+    "national-debt-military-spending-interest-payments-generational-cost",
+    "give-me-your-tired-us-foreign-policy-immigration-global-south",
+    "meta-anti-palestine-investigation-documents-bsr-hrw-drop-site",
+  ],
 };
