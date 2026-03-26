@@ -66,7 +66,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 const PUBLISHER_BLOCK = {
-  "@type": "NewsMediaOrganization",
+  "@type": ["NewsMediaOrganization", "ResearchOrganization"],
   "@id": ORG_ID,
   "name": "ClownBinge",
   "alternateName": "Primary Source Analytics, LLC",
@@ -77,6 +77,18 @@ const PUBLISHER_BLOCK = {
     "width": 400,
     "height": 60
   },
+  "description": "Primary Source Analytics, LLC publishes accountability journalism grounded exclusively in primary sources — court opinions, legislative records, peer-reviewed research, and official government documents. No editorializing. No fabrications. The record speaks for itself.",
+  "foundingDate": "2024",
+  "knowsAbout": [
+    "U.S. Constitutional Law",
+    "Accountability Journalism",
+    "Primary Source Research",
+    "Voting Rights",
+    "Ancient History",
+    "Global South",
+    "Health Policy",
+    "Fact-Checking"
+  ],
   "publishingPrinciples": `${DOMAIN}/ethics`,
   "verificationFactCheckingPolicy": `${DOMAIN}/ethics`,
   "actionableFeedbackPolicy": `${DOMAIN}/contact`,
@@ -101,6 +113,10 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     const isSelfOwned = post.category === "self_owned";
     const isHero = post.category === "anti_racist_heroes";
     const isNerdOut = post.category === "nerd_out";
+    const isConstitution = post.category === "us_constitution";
+    const isGlobalSouth = post.category === "global_south";
+    const isScholarlyDeepDive = isNerdOut || isConstitution || isGlobalSouth;
+    const hasApaCitations = !!(post.verifiedSource && post.verifiedSource.includes("::"));
     const pageTitle = isNerdOut
       ? `${post.title} | NerdOut Academic Analysis | ClownBinge`
       : `${post.title} | ClownBinge`;
@@ -170,11 +186,44 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       });
     }
 
+    // Backstory for deep-dive articles — signals primary-source mission to Google AI
+    const backstoryProp: Record<string, unknown> = {
+      "@type": "PropertyValue",
+      "name": "backstory",
+      "value": "ClownBinge is published by Primary Source Analytics, LLC, an independent accountability journalism operation. Every article is built exclusively on primary sources: court opinions, legislative hearing transcripts, peer-reviewed research, and official government documents. The mission is to make the documented record accessible without editorializing — the evidence speaks for itself."
+    };
+
+    // Article @type — ScholarlyArticle for deep legal/historical/academic dives
+    let articleType: string | string[];
+    if (isScholarlyDeepDive) {
+      articleType = ["NewsArticle", "ScholarlyArticle", "AnalysisNewsArticle"];
+    } else {
+      articleType = "NewsArticle";
+    }
+
+    if (isScholarlyDeepDive) {
+      additionalProps.push(backstoryProp);
+    }
+
+    // About entities — subject person or derived constitutional/legal entities
+    const CONSTITUTION_ENTITIES = [
+      { "@type": "GovernmentOrganization", "name": "Supreme Court of the United States", "sameAs": "https://www.wikidata.org/wiki/Q11201" },
+      { "@type": "Legislation", "name": "Voting Rights Act of 1965", "sameAs": "https://www.wikidata.org/wiki/Q902948" },
+      { "@type": "Legislation", "name": "Fourteenth Amendment to the United States Constitution", "sameAs": "https://www.wikidata.org/wiki/Q192155" },
+      { "@type": "Legislation", "name": "Fifteenth Amendment to the United States Constitution", "sameAs": "https://www.wikidata.org/wiki/Q192165" }
+    ];
+
+    const GLOBAL_SOUTH_ENTITIES = [
+      { "@type": "Thing", "name": "Archaeological Record" },
+      { "@type": "Thing", "name": "Primary Source History" },
+      { "@type": "Place", "name": "Global South" }
+    ];
+
     // NewsArticle schema
     const wordCount = estimateWordCount(post.body ?? "");
     const articleSchema: Record<string, unknown> = {
       "@context": "https://schema.org",
-      "@type": isNerdOut ? ["NewsArticle", "ScholarlyArticle"] : "NewsArticle",
+      "@type": articleType,
       "@id": articleId,
       "headline": post.title,
       "name": post.title,
@@ -185,9 +234,9 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       "wordCount": wordCount,
       "mainEntityOfPage": { "@type": "WebPage", "@id": canonical },
       "url": canonical,
-      "articleSection": isNerdOut ? "NerdOut Academic Analysis" : categoryLabel,
-      "genre": isNerdOut ? "Academic Analysis" : "Accountability Journalism",
-      "educationalLevel": isNerdOut ? "advanced" : undefined,
+      "articleSection": isScholarlyDeepDive ? (isNerdOut ? "NerdOut Academic Analysis" : categoryLabel) : categoryLabel,
+      "genre": isScholarlyDeepDive ? "Academic Analysis" : "Accountability Journalism",
+      "educationalLevel": isScholarlyDeepDive ? "advanced" : undefined,
       "keywords": Array.isArray(post.tags) ? post.tags.join(", ") : "",
       "author": PUBLISHER_BLOCK,
       "publisher": PUBLISHER_BLOCK,
@@ -213,8 +262,15 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       "additionalProperty": additionalProps
     };
 
-    if (subjectPerson) articleSchema.about = subjectPerson;
-    if (subjectPerson) articleSchema.mentions = subjectPerson;
+    if (subjectPerson) {
+      articleSchema.about = subjectPerson;
+      articleSchema.mentions = subjectPerson;
+    } else if (isConstitution) {
+      articleSchema.about = CONSTITUTION_ENTITIES;
+    } else if (isGlobalSouth) {
+      articleSchema.about = GLOBAL_SOUTH_ENTITIES;
+    }
+
     if (post.dateOfIncident) articleSchema.temporalCoverage = post.dateOfIncident;
 
     // Sovereign Override: isBasedOn + citation from APA 7 citation data
@@ -301,7 +357,9 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     }
 
     // ClaimReview — Google rich result for fact-check / accountability journalism
-    if (post.subjectName) {
+    // Fires for: articles with a named subject, AND deep-dive scholarly articles with primary sources
+    const claimReviewEligible = !!(post.subjectName || (isScholarlyDeepDive && hasApaCitations));
+    if (claimReviewEligible) {
       let ratingValue: number;
       let alternateName: string;
       if (isHero) {
@@ -310,10 +368,19 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       } else if (isSelfOwned && post.selfOwnScore != null) {
         ratingValue = Math.min(5, Math.round(post.selfOwnScore / 2));
         alternateName = `Self-Owned — Severity ${post.selfOwnScore}/10`;
+      } else if (!post.subjectName && isScholarlyDeepDive) {
+        ratingValue = 4;
+        alternateName = "Documented — Primary Sources Only";
       } else {
         ratingValue = 4;
         alternateName = "Verified — Documented";
       }
+
+      const claimAuthor = subjectPerson ?? {
+        "@type": "GovernmentOrganization",
+        "name": "U.S. Federal Government",
+        "sameAs": "https://www.wikidata.org/wiki/Q30"
+      };
 
       setJsonLd("claimreview", {
         "@context": "https://schema.org",
@@ -322,7 +389,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
         "claimReviewed": post.title,
         "datePublished": post.publishedAt ?? post.createdAt,
         "author": {
-          "@type": "NewsMediaOrganization",
+          "@type": ["NewsMediaOrganization", "ResearchOrganization"],
           "@id": ORG_ID,
           "name": "ClownBinge",
           "url": DOMAIN,
@@ -330,7 +397,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
         },
         "itemReviewed": {
           "@type": "Claim",
-          "author": subjectPerson,
+          "author": claimAuthor,
           "datePublished": post.dateOfIncident ?? (post.publishedAt ?? post.createdAt),
           "name": post.title
         },
@@ -406,7 +473,7 @@ export function useHomeSeoHead() {
 
     setJsonLd("organization", {
       "@context": "https://schema.org",
-      "@type": "NewsMediaOrganization",
+      "@type": ["NewsMediaOrganization", "ResearchOrganization"],
       "@id": ORG_ID,
       "name": "ClownBinge",
       "alternateName": "Primary Source Analytics, LLC",
@@ -421,6 +488,16 @@ export function useHomeSeoHead() {
       "foundingDate": "2024",
       "inLanguage": "en-US",
       "areaServed": "US",
+      "knowsAbout": [
+        "U.S. Constitutional Law",
+        "Accountability Journalism",
+        "Primary Source Research",
+        "Voting Rights",
+        "Ancient History",
+        "Global South",
+        "Health Policy",
+        "Fact-Checking"
+      ],
       "publishingPrinciples": `${DOMAIN}/ethics`,
       "verificationFactCheckingPolicy": `${DOMAIN}/ethics`,
       "actionableFeedbackPolicy": `${DOMAIN}/contact`,
