@@ -277,6 +277,14 @@ export default function PostDetail() {
               </div>
               <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-muted-foreground">
                 <span className="uppercase tracking-widest">{post.category.replace(/_/g, " ")}</span>
+                {processedBody && processedBody.length > 5000 && (
+                  <>
+                    <span>•</span>
+                    <span className="text-xs font-semibold text-header/70">
+                      {Math.ceil(processedBody.replace(/<[^>]*>/g, "").split(/\s+/).filter(Boolean).length / 200)} MIN READ | {citationCount} PRIMARY SOURCES
+                    </span>
+                  </>
+                )}
                 <span>•</span>
                 <span>Source: <span className="text-foreground">{abbreviateSource(post.verifiedSource)}</span></span>
                 {post.dateOfIncident && (
