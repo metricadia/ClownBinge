@@ -71,29 +71,11 @@ export default function Home() {
                 <span className="block">A Public Accountability News Platform.</span>
                 <span className="block font-bold">Verified Across 65,000 Global Sources.</span>
               </h1>
-              <div className="mt-3 flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 items-center sm:items-start">
-                <div className="flex gap-2">
-                  <a
-                    href="/clowncheck"
-                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors"
-                  >
-                    Verify ANY News
-                    <span className="text-[10px] font-semibold opacity-70 ml-0.5">$4.95</span>
-                  </a>
-                  <a
-                    href="/reports"
-                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors"
-                  >
-                    Full PST Report
-                    <span className="text-[10px] font-semibold opacity-70 ml-0.5">$24.95</span>
-                  </a>
-                </div>
-                <div className="flex items-center gap-2 justify-center sm:justify-start">
-                  <span className="text-muted-foreground/30 text-sm hidden sm:inline px-1">|</span>
-                  <a href="/submit" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit a Post</a>
-                  <span className="text-muted-foreground/30">|</span>
-                  <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
-                </div>
+              <div className="mt-3 flex items-center gap-2 justify-center sm:justify-start">
+                <span className="text-muted-foreground/30 text-sm hidden sm:inline px-1">|</span>
+                <a href="/submit" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit a Post</a>
+                <span className="text-muted-foreground/30">|</span>
+                <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
               </div>
             </div>
 
