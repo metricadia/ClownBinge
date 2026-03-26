@@ -90,12 +90,6 @@ export default function Home() {
                 <span className="text-muted-foreground/30">|</span>
                 <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
               </div>
-
-              <div className="mt-6 text-center sm:text-left">
-                <p className="text-base sm:text-lg text-header leading-relaxed max-w-3xl font-medium">
-                  We search through fake news, foreign state propaganda, and AI-generated misinformation so you don't have to. We binge on primary sources—government records, court filings, legislative transcripts, peer-reviewed research—and publish only what survives verification against documented public record. We are accountability journalism redesigned for the era when misinformation scales faster than fact-checks can respond.
-                </p>
-              </div>
             </div>
 
             {/* NerdOut Modal */}
