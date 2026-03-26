@@ -69,26 +69,34 @@ export default function Home() {
                   <div className="h-px w-full bg-[#F5C518] rounded-full" />
                 </div>
               )}
-              <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-2 leading-snug max-w-xl text-center sm:text-left">
-                <span className="block">A Public Accountability News Platform.</span>
-                <span className="block font-bold">Verified Across 65,000 Global Sources.</span>
+              <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-4 leading-snug max-w-xl text-center sm:text-left">
+                <span className="block mb-2">A Public Accountability News Platform.</span>
               </h1>
-              <div className="mt-3 flex items-center gap-2 justify-center sm:justify-start">
+
+              {/* Next Generation Verified Research — Elevated */}
+              <div className="mb-5 text-center sm:text-left">
+                <button
+                  onClick={() => setShowNerdoutModal(true)}
+                  className="inline-block font-bold text-lg sm:text-xl text-primary hover:underline cursor-pointer transition-opacity hover:opacity-75"
+                >
+                  Next Generation Verified Research.
+                </button>
+              </div>
+
+              <h2 className="font-sans font-normal text-base sm:text-lg text-muted-foreground mb-4 leading-snug max-w-xl text-center sm:text-left">
+                <span className="block">Verified Across 65,000 Global Sources.</span>
+              </h2>
+
+              <div className="flex items-center gap-2 justify-center sm:justify-start">
                 <span className="text-muted-foreground/30 text-sm hidden sm:inline px-1">|</span>
                 <a href="/submit" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit a Post</a>
                 <span className="text-muted-foreground/30">|</span>
                 <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
               </div>
 
-              <div className="mt-5 pt-5 border-t border-border text-center sm:text-left">
-                <p className="text-sm leading-relaxed">
-                  <button
-                    onClick={() => setShowNerdoutModal(true)}
-                    className="font-bold text-primary hover:underline cursor-pointer transition-opacity hover:opacity-75"
-                  >
-                    Next Generation Verified Research.
-                  </button>
-                  <span className="text-muted-foreground"> We search through fake news, foreign state propaganda, and misinformation so you don't have to. We binge on primary sources and curate accountability journalism certified against government records and peer-reviewed research.</span>
+              <div className="mt-6 text-center sm:text-left">
+                <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+                  We search through fake news, foreign state propaganda, and misinformation so you don't have to. We binge on primary sources and curate accountability journalism certified against government records and peer-reviewed research.
                 </p>
               </div>
 
