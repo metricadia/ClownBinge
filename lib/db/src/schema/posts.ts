@@ -52,6 +52,7 @@ export const postsTable = pgTable("posts", {
   shareCount: integer("share_count").notNull().default(0),
   userSubmitted: boolean("user_submitted").notNull().default(false),
   pinned: boolean("pinned").notNull().default(false),
+  staffPick: boolean("staff_pick").notNull().default(false),
   locked: boolean("locked").notNull().default(false),
   aiScore: integer("ai_score"),
   aiScoreTestedAt: timestamp("ai_score_tested_at"),
