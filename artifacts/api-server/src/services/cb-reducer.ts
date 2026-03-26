@@ -1,6 +1,28 @@
 import { detectAI } from "./zerogpt";
 import { rewriteSentence } from "./cb-rewriter";
 
+function shouldSkipSentence(sentence: string): boolean {
+  if (sentence.length < 20) return true;
+
+  if (/[""]/.test(sentence)) return true;
+
+  if (/\b\d{4}\b/.test(sentence)) return true;
+
+  if (/\d+%/.test(sentence)) return true;
+
+  if (/\$[\d,]+/.test(sentence)) return true;
+
+  if (/\b\d[\d,]*\s*(people|men|women|workers|cases|votes|seats|years|months|days|miles|acres|dollars|million|billion|trillion)\b/i.test(sentence)) return true;
+
+  if (/\b(v\.|vs\.|U\.S\.\s+\d|P\.L\.|S\.\s+Hrg|No\.\s+\d|§\s*\d)/i.test(sentence)) return true;
+
+  if (/\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d/i.test(sentence)) return true;
+
+  if (/\b(Section|Article|Amendment|Act|Resolution|Statute|Code|Title)\s+\d/i.test(sentence)) return true;
+
+  return false;
+}
+
 export interface ReduceAttempt {
   attemptNumber: number;
   scoreBeforeRewrite: number;
@@ -79,7 +101,11 @@ async function rewriteBatch(
   concurrency = 8
 ): Promise<Map<string, string>> {
   const results = new Map<string, string>();
-  const valid = sentences.filter((s) => s.trim().length >= 20);
+  const skipped = sentences.filter((s) => shouldSkipSentence(s.trim()));
+  if (skipped.length > 0) {
+    console.log(`[CBReduce] Pre-filter skipping ${skipped.length} high-risk sentences (numbers/quotes/dates/legal).`);
+  }
+  const valid = sentences.filter((s) => !shouldSkipSentence(s.trim()) && s.trim().length >= 20);
 
   for (let i = 0; i < valid.length; i += concurrency) {
     const batch = valid.slice(i, i + concurrency);

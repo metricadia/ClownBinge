@@ -70,7 +70,7 @@ export async function rewriteSentence(sentence: string): Promise<string> {
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-5",
       max_tokens: 500,
-      temperature: 0.85,
+      temperature: 0.6,
       messages: [{ role: "user", content: prompt }],
     });
 
