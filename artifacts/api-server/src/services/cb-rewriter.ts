@@ -53,6 +53,7 @@ NON-NEGOTIABLE RULES:
 9. NO NEW FACTS: never add information not present in the original sentence
 10. NO SOFTENING: do not reduce specificity to make the sentence sound gentler
 11. NO CLAIM INVERSION: "not fringe" means NOT fringe — do not rewrite it as "was mainstream" or any positive framing that changes the logical structure
+12. NO ABBREVIATIONS: never abbreviate any proper noun or organization name. If the original says "Jewish Voice for Peace" write "Jewish Voice for Peace" — not "JVP". If the original says "International Holocaust Remembrance Alliance" write "International Holocaust Remembrance Alliance" — not "IHRA". Spell it out exactly as given
 
 Original sentence (flagged as AI-generated):
 "${sentence}"

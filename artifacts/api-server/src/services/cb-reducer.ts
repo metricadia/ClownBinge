@@ -24,6 +24,8 @@ function shouldSkipSentence(sentence: string): boolean {
 
   if (/\b(Section|Article|Amendment|Act|Resolution|Statute|Code|Title)\s+\d/i.test(sentence)) return true;
 
+  if (/\b([A-Z][a-z]+\s+){3,}[A-Z][a-z]+\b/.test(sentence)) return true;
+
   return false;
 }
 
