@@ -314,30 +314,11 @@ export default function PostDetail() {
             </div>
           )}
 
-          {/* Action links strip */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 py-2">
-            <div className="flex gap-2 justify-center">
-              <a
-                href="/clowncheck"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors"
-              >
-                Verify ANY News
-                <span className="text-[10px] font-semibold opacity-70 ml-0.5">$4.95</span>
-              </a>
-              <a
-                href="/reports"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-full text-sm font-bold bg-secondary text-gray-900 hover:bg-secondary/80 transition-colors"
-              >
-                Full PST Report
-                <span className="text-[10px] font-semibold opacity-70 ml-0.5">$24.95</span>
-              </a>
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-muted-foreground/30 text-sm hidden sm:inline px-1">|</span>
-              <a href="/submit" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit a Post</a>
-              <span className="text-muted-foreground/30">|</span>
-              <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
-            </div>
+          <div className="flex items-center justify-center gap-2 py-2">
+            <span className="text-muted-foreground/30 text-sm hidden sm:inline px-1">|</span>
+            <a href="/submit" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Submit a Post</a>
+            <span className="text-muted-foreground/30">|</span>
+            <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
           </div>
           <div className="border-b-2 border-border mb-4" />
 
@@ -493,6 +474,41 @@ export default function PostDetail() {
             ))}
           </div>
         )}
+
+        {/* Explore Further — Professional CTA */}
+        <section className="mt-16 pt-12 border-t border-border space-y-6">
+          <div>
+            <h2 className="font-mono font-bold text-lg tracking-tight text-header mb-4 uppercase">
+              Explore Further
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-6">
+              <a
+                href="/clowncheck"
+                className="group block p-6 rounded-lg border border-border/50 hover:border-border hover:bg-muted/30 transition-all"
+              >
+                <h3 className="font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                  Analyze Any News Story
+                </h3>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Submit a claim or news story for independent verification against primary sources.
+                </p>
+                <span className="text-xs font-semibold text-primary">$4.95</span>
+              </a>
+              <a
+                href="/reports"
+                className="group block p-6 rounded-lg border border-border/50 hover:border-border hover:bg-muted/30 transition-all"
+              >
+                <h3 className="font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                  Full Dossier on Any Public Figure
+                </h3>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Comprehensive report: verified incidents, contradictions, voting record, documented record.
+                </p>
+                <span className="text-xs font-semibold text-primary">$24.95</span>
+              </a>
+            </div>
+          </div>
+        </section>
 
         <RelatedArticles currentSlug={post.slug} category={post.category} />
 
