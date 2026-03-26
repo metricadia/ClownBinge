@@ -43,13 +43,16 @@ KILL THESE WORDS/PHRASES: ${CB_KILL_WORDS}
 
 NON-NEGOTIABLE RULES:
 1. PRESERVE ALL PROPER NOUNS EXACTLY: names, titles, agency names, legislation names, case names, locations
-2. PRESERVE ALL NUMBERS EXACTLY: vote counts, dollar amounts, dates, years, percentages, case numbers
-3. PRESERVE ALL QUOTED TEXT EXACTLY: any content inside quotation marks stays verbatim
-4. PRESERVE APPROXIMATE WORD COUNT: original is ~${wordCount} words; stay within ${wordCount - 3} to ${wordCount + 5} words
-5. NO EM DASHES: use periods, commas, colons, or semicolons
-6. NO HEDGING: if a government record documents it, state it as fact, not as possibility
-7. NO NEW FACTS: never add information not present in the original sentence
-8. NO SOFTENING: do not reduce specificity to make the sentence sound gentler
+2. PRESERVE ALL NUMBERS EXACTLY: vote counts, dollar amounts, dates, years, percentages, case numbers, membership counts — if the number is there, it stays
+3. PRESERVE QUALIFIER WORDS EXACTLY: "approximately", "about", "roughly", "nearly", "almost", "over", "under", "more than", "fewer than", "less than" are factual precision markers — do NOT swap one for another. "approximately 15,000" must stay "approximately 15,000" not "about 15,000"
+4. PRESERVE ALL QUOTED TEXT EXACTLY: any content inside quotation marks stays verbatim
+5. PRESERVE APPROXIMATE WORD COUNT: original is ~${wordCount} words; stay within ${wordCount - 3} to ${wordCount + 5} words
+6. FRAGMENTS STAY FRAGMENTS: if the original is an incomplete sentence or noun phrase ("about 15,000 members"), rewrite it as a fragment too — do NOT expand it into a full sentence
+7. NO EM DASHES: use periods, commas, colons, or semicolons
+8. NO HEDGING: if a government record documents it, state it as fact, not as possibility
+9. NO NEW FACTS: never add information not present in the original sentence
+10. NO SOFTENING: do not reduce specificity to make the sentence sound gentler
+11. NO CLAIM INVERSION: "not fringe" means NOT fringe — do not rewrite it as "was mainstream" or any positive framing that changes the logical structure
 
 Original sentence (flagged as AI-generated):
 "${sentence}"

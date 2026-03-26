@@ -12,7 +12,11 @@ function shouldSkipSentence(sentence: string): boolean {
 
   if (/\$[\d,]+/.test(sentence)) return true;
 
-  if (/\b\d[\d,]*\s*(people|men|women|workers|cases|votes|seats|years|months|days|miles|acres|dollars|million|billion|trillion)\b/i.test(sentence)) return true;
+  if (/\b\d{1,3}(,\d{3})+\b/.test(sentence)) return true;
+
+  if (/\b(approximately|roughly|nearly|almost|over|under|more than|fewer than|less than)\s+[\d$]/i.test(sentence)) return true;
+
+  if (/\b\d[\d,]*\s*(people|men|women|workers|cases|votes|seats|years|months|days|miles|acres|dollars|members|delegates|staff|employees|officials|troops|soldiers|million|billion|trillion)\b/i.test(sentence)) return true;
 
   if (/\b(v\.|vs\.|U\.S\.\s+\d|P\.L\.|S\.\s+Hrg|No\.\s+\d|§\s*\d)/i.test(sentence)) return true;
 
