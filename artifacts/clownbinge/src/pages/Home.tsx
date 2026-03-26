@@ -5,7 +5,7 @@ import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { usePostsFilter, usePostsFeed, usePostsFeedPaginated, usePostDetail } from "@/hooks/use-posts";
 import { useHomeSeoHead } from "@/hooks/use-seo-head";
-import { Loader2, AlertCircle, ArrowRight, X } from "lucide-react";
+import { Loader2, AlertCircle, ArrowRight, X, HelpCircle } from "lucide-react";
 
 const HIGHLY_POPULAR_SLUG = "dei-ruse-obama-trump-appointee-qualifications";
 
@@ -75,9 +75,10 @@ export default function Home() {
                 </h1>
                 <button
                   onClick={() => setShowNerdoutModal(true)}
-                  className="inline-block font-bold text-xl sm:text-2xl text-primary hover:underline cursor-pointer transition-opacity hover:opacity-75 mb-3"
+                  className="inline-flex items-center gap-2 font-bold text-xl sm:text-2xl text-primary hover:underline cursor-pointer transition-opacity hover:opacity-75 mb-3"
                 >
                   Next Generation Verified Research.
+                  <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 opacity-50 hover:opacity-100 transition-opacity" strokeWidth={1.5} />
                 </button>
                 <p className="text-base sm:text-lg text-muted-foreground">
                   Verified Across 65,000 Global Sources.
