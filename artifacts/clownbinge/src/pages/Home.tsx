@@ -78,7 +78,7 @@ export default function Home() {
                   className="inline-flex items-center gap-2 font-bold text-xl sm:text-2xl text-primary hover:underline cursor-pointer transition-opacity hover:opacity-75 mb-3"
                 >
                   Next Generation Verified Research.
-                  <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 opacity-50 hover:opacity-100 transition-opacity" strokeWidth={1.5} />
+                  <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 opacity-70 hover:opacity-100 transition-opacity" style={{ color: "#F5C518" }} strokeWidth={1.5} />
                 </button>
                 <p className="text-base sm:text-lg text-muted-foreground">
                   Verified Across 65,000 Global Sources.
