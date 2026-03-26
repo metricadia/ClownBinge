@@ -100,6 +100,70 @@ function estimateWordCount(html: string): number {
   return Math.max(50, Math.round(text.split(" ").length));
 }
 
+// Extract resolvable government URLs from APA citations
+function extractGovernmentUrl(citation: string): string | null {
+  // Congress.gov bill lookup: "H.R. 1234" or "S. 5678" or "Public Law 117-123"
+  const billMatch = citation.match(/(?:H\.R\.|Senate Bill|S\.)\s*(\d+)/i) || citation.match(/Public Law\s*(\d+)-(\d+)/);
+  if (billMatch) {
+    if (billMatch.length === 3) {
+      // Public Law 117-123 format
+      return `https://congress.gov/bill/117/hr/${billMatch[1]}`;
+    }
+    return `https://congress.gov/bill/118/hr/${billMatch[1]}`;
+  }
+
+  // Supreme Court case docket: "123 S.Ct. 456" or "Smith v. Jones, 123 S.Ct. 456"
+  const scotusMatch = citation.match(/(\d+)\s+S\.Ct\.\s+(\d+)|(\d+)\s+U\.S\.\s+(\d+)/i);
+  if (scotusMatch) {
+    // Return Supreme Court's docket URL pattern (without specific case number since we'd need case name parsing)
+    return "https://www.supremecourt.gov/";
+  }
+
+  // Federal Reporter: "123 F.3d 456"
+  const fedReporterMatch = citation.match(/(\d+)\s+F\.(?:2d|3d|Supp\.)\s+(\d+)/i);
+  if (fedReporterMatch) {
+    return "https://www.uscourts.gov/";
+  }
+
+  // House/Senate Committee Hearing: "H. Hearing 117-123"
+  const hearingMatch = citation.match(/(?:H\.|Senate)\s+(?:Hearing|Report)\s+(\d+)-(\d+)/i);
+  if (hearingMatch) {
+    return `https://congress.gov/`;
+  }
+
+  // Code sections: "42 U.S.C. § 1983"
+  const codeMatch = citation.match(/(\d+)\s+U\.S\.C\.\s+(?:§|Section)\s+(\d+)/i);
+  if (codeMatch) {
+    return `https://www.law.cornell.edu/uscode/text/${codeMatch[1]}/${codeMatch[2]}`;
+  }
+
+  // Federal Register: "86 Fed. Reg. 12345"
+  const fedRegMatch = citation.match(/(\d+)\s+Fed\.\s+Reg\.\s+(\d+)/i);
+  if (fedRegMatch) {
+    return `https://www.federalregister.gov/`;
+  }
+
+  return null;
+}
+
+function getWikidataIdForInstitution(name: string): string | null {
+  const institutions: Record<string, string> = {
+    "Supreme Court": "https://www.wikidata.org/wiki/Q11201",
+    "U.S. Congress": "https://www.wikidata.org/wiki/Q11268",
+    "House of Representatives": "https://www.wikidata.org/wiki/Q13217230",
+    "Senate": "https://www.wikidata.org/wiki/Q33631",
+    "Department of Justice": "https://www.wikidata.org/wiki/Q1022915",
+    "FBI": "https://www.wikidata.org/wiki/Q111093",
+  };
+  
+  for (const [key, wdId] of Object.entries(institutions)) {
+    if (name.toLowerCase().includes(key.toLowerCase())) {
+      return wdId;
+    }
+  }
+  return null;
+}
+
 export function useArticleSeoHead(post: Post | null | undefined) {
   useEffect(() => {
     if (!post) return;
@@ -298,17 +362,44 @@ export function useArticleSeoHead(post: Post | null | undefined) {
         .filter(Boolean) as { type: string | string[]; name: string; description: string; citation: string }[];
 
       if (parsedSources.length > 0) {
-        articleSchema.isBasedOn = parsedSources.map(s => ({
-          "@type": s.type,
-          "name": s.name,
-          "description": s.description
-        }));
+        articleSchema.isBasedOn = parsedSources.map(s => {
+          const schema: Record<string, unknown> = {
+            "@type": s.type,
+            "name": s.name,
+            "description": s.description
+          };
+          
+          // Extract and emit resolvable government URL as @id
+          const govUrl = extractGovernmentUrl(s.citation);
+          if (govUrl) {
+            schema["@id"] = govUrl;
+          }
+          
+          // Add Wikidata sameAs link for institutional authority
+          const wikidataId = getWikidataIdForInstitution(s.name);
+          if (wikidataId) {
+            schema["sameAs"] = wikidataId;
+          }
+          
+          return schema;
+        });
+        
         // citation field: formal bibliographic reference strings for Google
-        articleSchema.citation = parsedSources.map(s => ({
-          "@type": "CreativeWork",
-          "name": s.name,
-          "description": s.citation
-        }));
+        articleSchema.citation = parsedSources.map(s => {
+          const schema: Record<string, unknown> = {
+            "@type": "CreativeWork",
+            "name": s.name,
+            "description": s.citation
+          };
+          
+          // Include resolvable URL in citation schema too
+          const govUrl = extractGovernmentUrl(s.citation);
+          if (govUrl) {
+            schema["url"] = govUrl;
+          }
+          
+          return schema;
+        });
       }
     } else if (post.verifiedSource) {
       // Non-APA sources: emit citation as plain string array
