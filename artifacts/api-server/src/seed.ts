@@ -1,10 +1,6 @@
 import { db, postsTable } from "@workspace/db";
 import { sql } from "drizzle-orm";
-import { readFileSync } from "fs";
-import { fileURLToPath } from "url";
-import path from "path";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import seedData from "./posts-seed.json";
 
 export async function seedIfEmpty(): Promise<void> {
   try {
@@ -16,13 +12,8 @@ export async function seedIfEmpty(): Promise<void> {
       return;
     }
 
-    console.log("[Seed] Database is empty. Loading seed data...");
-
-    const seedPath = path.join(__dirname, "posts-seed.json");
-    const raw = readFileSync(seedPath, "utf-8");
-    const posts: Record<string, unknown>[] = JSON.parse(raw);
-
-    console.log(`[Seed] Inserting ${posts.length} posts...`);
+    const posts = seedData as Record<string, unknown>[];
+    console.log(`[Seed] Database is empty. Inserting ${posts.length} posts...`);
 
     for (const post of posts) {
       await db.insert(postsTable).values({
@@ -57,7 +48,7 @@ export async function seedIfEmpty(): Promise<void> {
       }).onConflictDoNothing();
     }
 
-    console.log(`[Seed] Done. Inserted ${posts.length} posts into the database.`);
+    console.log(`[Seed] Done. ${posts.length} posts inserted.`);
   } catch (err) {
     console.error("[Seed] Error during seed:", err);
   }
