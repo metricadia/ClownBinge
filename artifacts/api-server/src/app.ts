@@ -29,6 +29,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Cache-Control for locked records (immutable, long-term cache)
+app.use((req, res, next) => {
+  // Locked records (case files) can be cached indefinitely since they don't change
+  if (req.path.includes("/api/posts/") || req.path.includes("/api/list")) {
+    res.setHeader("Cache-Control", "public, max-age=86400, immutable");
+  }
+  next();
+});
+
 app.use("/api", router);
 
 export default app;
