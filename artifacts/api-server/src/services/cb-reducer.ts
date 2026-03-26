@@ -8,6 +8,11 @@ export interface ReduceAttempt {
   sentencesRewritten: number;
 }
 
+export interface SentenceDiff {
+  before: string;
+  after: string;
+}
+
 export interface ReduceResult {
   success: boolean;
   initialScore: number;
@@ -15,6 +20,7 @@ export interface ReduceResult {
   attempts: ReduceAttempt[];
   cleanedBody: string;
   message: string;
+  diffs: SentenceDiff[];
 }
 
 function replaceInHtml(html: string, original: string, replacement: string): string {
@@ -112,6 +118,7 @@ export async function reduceAI(
       finalScore: scan1Score,
       attempts: [],
       cleanedBody: htmlBody,
+      diffs: [],
       message: `Already at target. Score: ${scan1Score}%`,
     };
   }
@@ -131,6 +138,7 @@ export async function reduceAI(
       finalScore: scan2Score,
       attempts: [],
       cleanedBody: htmlBody,
+      diffs: [],
       message: `Variance check passed. Scan 1: ${scan1Score}%, Scan 2: ${scan2Score}% — no reduction needed.`,
     };
   }
@@ -139,6 +147,7 @@ export async function reduceAI(
   let currentBody = htmlBody;
   let currentScore = confirmedScore;
   const attempts: ReduceAttempt[] = [];
+  const allDiffs: SentenceDiff[] = [];
 
   let flaggedSentences = scan2Flagged.length > 0 ? scan2Flagged : scan1Flagged;
 
@@ -153,6 +162,9 @@ export async function reduceAI(
     const rewrites = await rewriteBatch(flaggedSentences);
 
     for (const [original, replacement] of rewrites) {
+      if (original !== replacement) {
+        allDiffs.push({ before: original, after: replacement });
+      }
       currentBody = replaceInHtml(currentBody, original, replacement);
     }
 
@@ -191,6 +203,7 @@ export async function reduceAI(
     finalScore: currentScore,
     attempts,
     cleanedBody: currentBody,
+    diffs: allDiffs,
     message: success
       ? `Reduced from ${initialScore}% to ${currentScore}% in ${attempts.length} attempt(s).`
       : `Reduced from ${initialScore}% to ${currentScore}% after ${attempts.length} attempt(s). Target of ${targetScore}% not reached.`,

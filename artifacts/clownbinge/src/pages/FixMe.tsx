@@ -127,17 +127,28 @@ export default function FixMe() {
         try {
           const statusRes = await fetch(`${BASE}/api/fixme/reduce/status/${slug}`);
           const status = await statusRes.json();
-          if (status.status === "idle") {
+          if (status.status === "done" || status.status === "idle") {
             clearInterval(poll);
             setRowState(slug, { loading: false, action: null });
             const listRes = await fetch(`${BASE}/api/fixme/articles`);
             if (listRes.ok) {
               const updated: ArticleRow[] = await listRes.json();
-              const article = updated.find((a) => a.slug === slug);
               setArticles(updated);
-              if (article?.aiScore !== null && article?.aiScore !== undefined) {
-                setLastResult({ slug, message: `Done. New score: ${article.aiScore}%` });
-              }
+            }
+            if (status.status === "done") {
+              const { initialScore, finalScore, diffsCount, qualityApproved, qualityReason, saved } = status;
+              const gate = qualityApproved
+                ? `Quality gate: PASSED`
+                : `Quality gate: REJECTED — ${qualityReason}`;
+              const saveNote = saved
+                ? "Article saved."
+                : qualityApproved
+                ? "Score logged, no rewrites applied."
+                : "Original preserved.";
+              setLastResult({
+                slug,
+                message: `${initialScore}% → ${finalScore}% | ${diffsCount} rewrites | ${gate} | ${saveNote}`,
+              });
             }
           }
         } catch {

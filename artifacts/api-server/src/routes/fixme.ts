@@ -1,8 +1,9 @@
 import { Router, type IRouter } from "express";
 import { db, postsTable } from "@workspace/db";
-import { eq, desc, isNull, asc, sql } from "drizzle-orm";
+import { eq, desc, asc, sql } from "drizzle-orm";
 import { detectAI } from "../services/zerogpt";
 import { reduceAI } from "../services/cb-reducer";
+import { assessQuality } from "../services/cb-quality-gate";
 
 const router: IRouter = Router();
 
@@ -65,23 +66,42 @@ router.post("/fixme/detect/:slug", async (req, res) => {
   }
 });
 
-const activeJobs = new Map<string, { startedAt: Date; initialScore?: number }>();
+type JobStatus =
+  | { phase: "processing"; startedAt: Date; initialScore?: number }
+  | {
+      phase: "done";
+      initialScore: number;
+      finalScore: number;
+      diffsCount: number;
+      qualityApproved: boolean;
+      qualityReason: string;
+      saved: boolean;
+      message: string;
+    };
+
+const jobs = new Map<string, JobStatus>();
 
 router.get("/fixme/reduce/status/:slug", (req, res) => {
   const { slug } = req.params as { slug: string };
-  const job = activeJobs.get(slug);
-  if (job) {
-    res.json({ status: "processing", startedAt: job.startedAt, initialScore: job.initialScore });
-  } else {
+  const job = jobs.get(slug);
+  if (!job) {
     res.json({ status: "idle" });
+    return;
   }
+  if (job.phase === "processing") {
+    res.json({ status: "processing", startedAt: job.startedAt, initialScore: job.initialScore });
+    return;
+  }
+  res.json({ status: "done", ...job });
 });
 
 router.post("/fixme/reduce/:slug", async (req, res) => {
   const { slug } = req.params as { slug: string };
-  const targetScore: number = typeof req.body?.targetScore === "number" ? req.body.targetScore : 15;
+  const targetScore: number =
+    typeof req.body?.targetScore === "number" ? req.body.targetScore : 15;
 
-  if (activeJobs.has(slug)) {
+  const existing = jobs.get(slug);
+  if (existing?.phase === "processing") {
     res.json({ status: "processing", message: "Reduction already in progress." });
     return;
   }
@@ -98,32 +118,66 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
       return;
     }
 
-    activeJobs.set(slug, { startedAt: new Date() });
-    res.json({ status: "processing", message: "Reduction started. Polling for score updates..." });
+    jobs.set(slug, { phase: "processing", startedAt: new Date() });
+    res.json({ status: "processing", message: "Reduction started. Polling for updates..." });
 
-    reduceAI(post.body, targetScore)
-      .then(async (result) => {
-        if (result.finalScore < result.initialScore) {
-          await db
-            .update(postsTable)
-            .set({ body: result.cleanedBody, aiScore: result.finalScore, aiScoreTestedAt: new Date() })
-            .where(eq(postsTable.id, post.id));
+    (async () => {
+      try {
+        const result = await reduceAI(post.body, targetScore);
+
+        const scoreImproved = result.finalScore < result.initialScore;
+        let qualityApproved = false;
+        let qualityReason = "No rewrites made.";
+        let saved = false;
+
+        if (scoreImproved && result.diffs.length > 0) {
+          const gate = await assessQuality(result.diffs);
+          qualityApproved = gate.approved;
+          qualityReason = gate.reason;
+
+          if (qualityApproved) {
+            await db
+              .update(postsTable)
+              .set({ body: result.cleanedBody, aiScore: result.finalScore, aiScoreTestedAt: new Date() })
+              .where(eq(postsTable.id, post.id));
+            saved = true;
+            console.log(`[CBReduce] Saved. ${result.initialScore}% -> ${result.finalScore}%. Gate: ${qualityReason}`);
+          } else {
+            await db
+              .update(postsTable)
+              .set({ aiScore: result.finalScore, aiScoreTestedAt: new Date() })
+              .where(eq(postsTable.id, post.id));
+            console.log(`[CBReduce] Quality gate REJECTED. Score NOT saved. Reason: ${qualityReason}`);
+          }
         } else {
           await db
             .update(postsTable)
-            .set({ aiScore: result.initialScore, aiScoreTestedAt: new Date() })
+            .set({ aiScore: result.finalScore, aiScoreTestedAt: new Date() })
             .where(eq(postsTable.id, post.id));
+          qualityApproved = true;
+          qualityReason = result.diffs.length === 0
+            ? "No rewrites were needed or possible."
+            : "Score did not improve — no changes applied.";
+          saved = false;
         }
-        console.log(`[CBReduce] Done: ${result.initialScore}% -> ${result.finalScore}% | ${result.message}`);
-      })
-      .catch((err) => {
+
+        jobs.set(slug, {
+          phase: "done",
+          initialScore: result.initialScore,
+          finalScore: result.finalScore,
+          diffsCount: result.diffs.length,
+          qualityApproved,
+          qualityReason,
+          saved,
+          message: result.message,
+        });
+      } catch (err) {
         console.error("[CBReduce] Background job failed:", err);
-      })
-      .finally(() => {
-        activeJobs.delete(slug);
-      });
+        jobs.delete(slug);
+      }
+    })();
   } catch (err: unknown) {
-    activeJobs.delete(slug);
+    jobs.delete(slug);
     console.error("[FixMe] reduce error:", err);
     const message = err instanceof Error ? err.message : "Reduction failed";
     res.status(500).json({ error: message });
