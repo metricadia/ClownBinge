@@ -145,9 +145,9 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
           } else {
             await db
               .update(postsTable)
-              .set({ aiScore: result.finalScore, aiScoreTestedAt: new Date() })
+              .set({ aiScore: result.initialScore, aiScoreTestedAt: new Date() })
               .where(eq(postsTable.id, post.id));
-            console.log(`[CBReduce] Quality gate REJECTED. Score NOT saved. Reason: ${qualityReason}`);
+            console.log(`[CBReduce] Quality gate REJECTED. Body unchanged. Score restored to ${result.initialScore}%. Reason: ${qualityReason}`);
           }
         } else {
           await db
