@@ -20,37 +20,52 @@ export interface ReduceResult {
 function replaceInHtml(html: string, original: string, replacement: string): string {
   if (!original || !replacement || original === replacement) return html;
 
-  const escaped = original.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  let changed = false;
 
-  if (new RegExp(escaped).test(html)) {
-    return html.replace(new RegExp(escaped, "g"), replacement);
-  }
+  const result = html.replace(
+    /(<(?:p|h[1-6]|li|blockquote)(?:\s[^>]*)?>)([\s\S]*?)(<\/(?:p|h[1-6]|li|blockquote)>)/gi,
+    (match, openTag: string, content: string, closeTag: string) => {
+      type Anchor = { placeholder: string; openTag: string; innerText: string; closeTag: string };
+      const anchors: Anchor[] = [];
 
-  return html.replace(/<p>([\s\S]*?)<\/p>/gi, (match, content) => {
-    const anchors: Array<{ placeholder: string; full: string; text: string }> = [];
-    const collapsed = content.replace(/(<a[^>]*?>)([\s\S]*?)(<\/a>)/gi, (full: string, _open: string, text: string) => {
-      const placeholder = `\x00LINK${anchors.length}\x00`;
-      anchors.push({ placeholder, full, text });
-      return placeholder;
-    });
+      const collapsed = content.replace(
+        /(<a(?:\s[^>]*)?>)([\s\S]*?)(<\/a>)/gi,
+        (_full: string, aOpen: string, aText: string, aClose: string) => {
+          const placeholder = `\x00LINK${anchors.length}\x00`;
+          anchors.push({ placeholder, openTag: aOpen, innerText: aText, closeTag: aClose });
+          return placeholder;
+        }
+      );
 
-    const plainVersion = anchors.reduce(
-      (s, { placeholder, text }) => s.replace(placeholder, text),
-      collapsed
-    );
+      const plainVersion = anchors.reduce(
+        (s, { placeholder, innerText }) => s.replace(placeholder, innerText),
+        collapsed
+      );
 
-    if (!plainVersion.includes(original)) return match;
+      if (!plainVersion.includes(original)) return match;
 
-    let newPlain = plainVersion.replace(original, replacement);
+      let newPlain = plainVersion.replace(original, replacement);
+      changed = true;
 
-    anchors.forEach(({ full, text }) => {
-      if (newPlain.includes(text)) {
-        newPlain = newPlain.replace(text, full);
+      for (const anchor of anchors) {
+        const wasAnchorText = anchor.innerText === original || anchor.innerText.includes(original);
+        if (wasAnchorText) {
+          const newAnchorText = anchor.innerText.replace(original, replacement);
+          newPlain = newPlain.replace(replacement, `${anchor.openTag}${newAnchorText}${anchor.closeTag}`);
+        } else if (newPlain.includes(anchor.innerText)) {
+          newPlain = newPlain.replace(
+            anchor.innerText,
+            `${anchor.openTag}${anchor.innerText}${anchor.closeTag}`
+          );
+        }
       }
-    });
 
-    return `<p>${newPlain}</p>`;
-  });
+      return `${openTag}${newPlain}${closeTag}`;
+    }
+  );
+
+  if (!changed) return html;
+  return result;
 }
 
 async function rewriteBatch(
