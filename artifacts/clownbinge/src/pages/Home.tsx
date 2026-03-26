@@ -94,17 +94,9 @@ export default function Home() {
                 <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
               </div>
 
-              <div className="mt-6 text-center sm:text-left">
+              <div className="mt-4 text-center sm:text-left">
                 <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
                   We search through fake news, foreign state propaganda, and misinformation so you don't have to. We binge on primary sources and curate accountability journalism certified against government records and peer-reviewed research.
-                </p>
-              </div>
-
-              {/* Why This Matters Factoid */}
-              <div className="mt-6 rounded-xl border-l-4 p-5" style={{ borderColor: "#F5C518", backgroundColor: "rgba(245, 197, 24, 0.02)" }}>
-                <p className="text-xs uppercase font-bold tracking-widest text-primary mb-2">Why This Matters</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Misinformation scales exponentially—false claims spread faster than fact-checks can respond<sup className="text-primary cursor-help" title="2023 MIT Media Lab study">¹</sup>—yet 86% of Americans trust primary government documents more than news commentary<sup className="text-primary cursor-help" title="Pew Research Center, 2024">²</sup>. By cutting out the editorial middleman and serving government records, court filings, and legislative transcripts directly, we flip the verification model: readers check the source themselves rather than trusting an outlet's interpretation. The record becomes the authority<sup className="text-primary cursor-help" title="Structural approach: ClownBinge publishes only verified primary sources with direct links to canonical government domains">³</sup>.
                 </p>
               </div>
             </div>
