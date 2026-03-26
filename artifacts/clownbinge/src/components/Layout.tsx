@@ -122,9 +122,6 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/about" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/about' ? 'text-white' : 'text-white/70'}`}>
               About
             </Link>
-            <Link href="/store" className={`text-sm font-bold uppercase tracking-wider hover:text-secondary transition-colors ${location === '/store' ? 'text-secondary' : 'text-white/70'}`}>
-              Books
-            </Link>
             <Link href="/contact" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/contact' || location === '/advertise' ? 'text-white' : 'text-white/70'}`}>
               Support
             </Link>
@@ -152,7 +149,6 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         <div className="fixed inset-0 top-20 sm:top-24 z-40 bg-header/95 backdrop-blur-xl flex flex-col md:hidden">
           <nav className="flex flex-col items-center justify-center flex-1 gap-8 p-6">
             <Link href="/about" className="text-2xl font-bold text-white uppercase tracking-widest">About</Link>
-            <Link href="/store" className="text-2xl font-bold text-secondary uppercase tracking-widest">Books</Link>
             <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Support</Link>
             <Link href="/reports" className="text-2xl font-bold border-2 border-secondary/70 text-secondary/80 uppercase tracking-widest px-8 py-3 rounded-full">Buy Reports</Link>
             <Link href="/invest-in-us" className="text-2xl font-bold border-2 border-secondary text-secondary uppercase tracking-widest px-8 py-3 rounded-full">Donate Now</Link>
