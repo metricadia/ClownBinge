@@ -118,6 +118,21 @@ export default function PostDetail() {
 
   const references = useMemo(() => extractReferences(post?.body ?? ""), [post?.body]);
 
+  // Citation count that matches what the Primary Sources section actually renders.
+  // Priority: APA 7 (::) entries > factoid links in body > plain verifiedSource entries > sourceUrl.
+  const citationCount = useMemo(() => {
+    if (!post) return 0;
+    if (post.verifiedSource && post.verifiedSource.includes("::")) {
+      return post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).length;
+    }
+    if (references.length > 0) return references.length;
+    if (post.verifiedSource) {
+      return post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).length || 1;
+    }
+    if (post.sourceUrl) return 1;
+    return 0;
+  }, [post, references]);
+
   const { data: sponsor } = useCategorySponsor(post?.category);
   const popupRef = useRef<HTMLDivElement>(null);
   const [factoid, setFactoid] = useState<FactoidState | null>(null);
@@ -282,7 +297,7 @@ export default function PostDetail() {
                 source={post.verifiedSource}
                 date={post.dateOfIncident ? format(new Date(post.dateOfIncident), "MMM d, yyyy") : undefined}
               />
-              {references.length > 0 && <CitedBadge count={references.length} />}
+              {citationCount > 0 && <CitedBadge count={citationCount} />}
               {post.locked && (
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-900 text-white text-[11px] font-bold uppercase tracking-wider">
                   <Lock className="w-3 h-3" /> Record Locked
