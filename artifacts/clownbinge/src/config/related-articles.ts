@@ -319,7 +319,7 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
   ],
 
   // --- Congressional appropriations & foreign policy ---
-  "treasure-reveals-heart-congressional-appropriations-four-year-analysis": [
+  "congress-appropriations-ukraine-palestine-yemen-syria-sudan": [
     "national-debt-military-spending-interest-payments-generational-cost",
     "give-me-your-tired-us-foreign-policy-immigration-global-south",
     "meta-anti-palestine-investigation-documents-bsr-hrw-drop-site",
