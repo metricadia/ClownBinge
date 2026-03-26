@@ -91,9 +91,9 @@ export default function Home() {
                 <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
               </div>
 
-              <div className="mt-4 text-center sm:text-left">
-                <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-                  We search through fake news, foreign state propaganda, and misinformation so you don't have to. We binge on primary sources and curate accountability journalism certified against government records and peer-reviewed research.
+              <div className="mt-6 text-center sm:text-left">
+                <p className="text-base sm:text-lg text-header leading-relaxed max-w-3xl font-medium">
+                  We search through fake news, foreign state propaganda, and AI-generated misinformation so you don't have to. We binge on primary sources—government records, court filings, legislative transcripts, peer-reviewed research—and publish only what survives verification against documented public record. We are accountability journalism redesigned for the era when misinformation scales faster than fact-checks can respond.
                 </p>
               </div>
             </div>
