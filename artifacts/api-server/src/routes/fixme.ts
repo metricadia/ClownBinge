@@ -66,14 +66,12 @@ router.post("/fixme/detect/:slug", async (req, res) => {
 });
 
 type JobStatus =
-  | { phase: "processing"; startedAt: Date; initialScore?: number }
+  | { phase: "processing"; startedAt: Date; currentAttempt?: number; currentScore?: number }
   | {
       phase: "done";
       initialScore: number;
       finalScore: number;
       diffsCount: number;
-      qualityApproved: boolean;
-      qualityReason: string;
       saved: boolean;
       message: string;
     };
@@ -88,7 +86,12 @@ router.get("/fixme/reduce/status/:slug", (req, res) => {
     return;
   }
   if (job.phase === "processing") {
-    res.json({ status: "processing", startedAt: job.startedAt, initialScore: job.initialScore });
+    res.json({
+      status: "processing",
+      startedAt: job.startedAt,
+      currentAttempt: job.currentAttempt,
+      currentScore: job.currentScore,
+    });
     return;
   }
   res.json({ status: "done", ...job });
@@ -125,8 +128,6 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
         const result = await reduceAI(post.body, targetScore);
 
         const scoreImproved = result.finalScore < result.initialScore;
-        let qualityApproved = true;
-        let qualityReason = "Per-sentence gate enforced during rewrite.";
         let saved = false;
 
         if (scoreImproved && result.diffs.length > 0) {
@@ -135,15 +136,13 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
             .set({ body: result.cleanedBody, aiScore: result.finalScore, aiScoreTestedAt: new Date() })
             .where(eq(postsTable.id, post.id));
           saved = true;
-          console.log(`[CBReduce] Saved. ${result.initialScore}% -> ${result.finalScore}%. ${result.diffs.length} rewrites (each passed per-sentence gate).`);
+          console.log(`[CBReduce] Saved. ${result.initialScore}% -> ${result.finalScore}%. ${result.diffs.length} rewrites.`);
         } else {
           await db
             .update(postsTable)
             .set({ aiScore: result.finalScore, aiScoreTestedAt: new Date() })
             .where(eq(postsTable.id, post.id));
-          qualityReason = result.diffs.length === 0
-            ? "No rewrites were needed or possible."
-            : "Score did not improve — no changes applied.";
+          console.log(`[CBReduce] No save. ${result.initialScore}% -> ${result.finalScore}%. Score did not improve.`);
         }
 
         jobs.set(slug, {
@@ -151,8 +150,6 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
           initialScore: result.initialScore,
           finalScore: result.finalScore,
           diffsCount: result.diffs.length,
-          qualityApproved,
-          qualityReason,
           saved,
           message: result.message,
         });

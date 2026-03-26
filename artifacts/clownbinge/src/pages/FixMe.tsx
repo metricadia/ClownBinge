@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -19,6 +19,7 @@ type RowState = {
   loading: boolean;
   action: "detect" | "reduce" | null;
   error: string | null;
+  elapsed: number;
 };
 
 function scoreColor(score: number | null): string {
@@ -37,6 +38,11 @@ function categoryLabel(cat: string): string {
   return cat.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+function fmtElapsed(seconds: number): string {
+  if (seconds < 60) return `${seconds}s`;
+  return `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
+}
+
 const PASS = "HeIsTheWay26#9";
 
 export default function FixMe() {
@@ -49,7 +55,9 @@ export default function FixMe() {
   const [loadingList, setLoadingList] = useState(false);
   const [listError, setListError] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "untested" | "high">("all");
-  const [lastResult, setLastResult] = useState<{ slug: string; message: string } | null>(null);
+  const [lastResult, setLastResult] = useState<{ slug: string; message: string; ok: boolean } | null>(null);
+
+  const timerRefs = useRef<Record<string, ReturnType<typeof setInterval>>>({});
 
   const fetchArticles = useCallback(async () => {
     setLoadingList(true);
@@ -70,6 +78,12 @@ export default function FixMe() {
     if (authed) fetchArticles();
   }, [authed, fetchArticles]);
 
+  useEffect(() => {
+    return () => {
+      Object.values(timerRefs.current).forEach(clearInterval);
+    };
+  }, []);
+
   function handleLogin() {
     if (pwInput === PASS) {
       localStorage.setItem("cbfix-auth", PASS);
@@ -83,12 +97,32 @@ export default function FixMe() {
   function setRowState(slug: string, state: Partial<RowState>) {
     setRowStates((prev) => ({
       ...prev,
-      [slug]: { loading: false, action: null, error: null, ...prev[slug], ...state },
+      [slug]: { loading: false, action: null, error: null, elapsed: 0, ...prev[slug], ...state },
     }));
   }
 
+  function startElapsedTimer(slug: string) {
+    if (timerRefs.current[slug]) clearInterval(timerRefs.current[slug]);
+    const start = Date.now();
+    timerRefs.current[slug] = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - start) / 1000);
+      setRowStates((prev) => ({
+        ...prev,
+        [slug]: { ...prev[slug], elapsed },
+      }));
+    }, 1000);
+  }
+
+  function stopElapsedTimer(slug: string) {
+    if (timerRefs.current[slug]) {
+      clearInterval(timerRefs.current[slug]);
+      delete timerRefs.current[slug];
+    }
+  }
+
   async function handleDetect(slug: string) {
-    setRowState(slug, { loading: true, action: "detect", error: null });
+    setRowState(slug, { loading: true, action: "detect", error: null, elapsed: 0 });
+    startElapsedTimer(slug);
     setLastResult(null);
     try {
       const res = await fetch(`${BASE}/api/fixme/detect/${slug}`, { method: "POST" });
@@ -101,16 +135,22 @@ export default function FixMe() {
             : a
         )
       );
-      setLastResult({ slug, message: `${slug}: Detected at ${data.score}% (${data.flaggedCount} flagged sentences)` });
+      setLastResult({
+        slug,
+        ok: true,
+        message: `${slug}: ${data.score}% — ${data.flaggedCount} flagged sentences`,
+      });
     } catch (e) {
       setRowState(slug, { error: e instanceof Error ? e.message : "Detection failed" });
     } finally {
+      stopElapsedTimer(slug);
       setRowState(slug, { loading: false, action: null });
     }
   }
 
   async function handleReduce(slug: string) {
-    setRowState(slug, { loading: true, action: "reduce", error: null });
+    setRowState(slug, { loading: true, action: "reduce", error: null, elapsed: 0 });
+    startElapsedTimer(slug);
     setLastResult(null);
     try {
       const res = await fetch(`${BASE}/api/fixme/reduce/${slug}`, {
@@ -121,14 +161,13 @@ export default function FixMe() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
-      setLastResult({ slug, message: "Reduction running in background. Score will update when complete..." });
-
       const poll = setInterval(async () => {
         try {
           const statusRes = await fetch(`${BASE}/api/fixme/reduce/status/${slug}`);
           const status = await statusRes.json();
           if (status.status === "done" || status.status === "idle") {
             clearInterval(poll);
+            stopElapsedTimer(slug);
             setRowState(slug, { loading: false, action: null });
             const listRes = await fetch(`${BASE}/api/fixme/articles`);
             if (listRes.ok) {
@@ -136,29 +175,28 @@ export default function FixMe() {
               setArticles(updated);
             }
             if (status.status === "done") {
-              const { initialScore, finalScore, diffsCount, qualityApproved, qualityReason, saved } = status;
-              const gate = qualityApproved
-                ? `Quality gate: PASSED`
-                : `Quality gate: REJECTED — ${qualityReason}`;
+              const { initialScore, finalScore, diffsCount, saved } = status;
+              const delta = initialScore - finalScore;
               const saveNote = saved
-                ? "Article saved."
-                : qualityApproved
-                ? "Score logged, no rewrites applied."
-                : "Original preserved.";
+                ? `Saved — article updated.`
+                : `Score logged, no body changes.`;
+              const ok = finalScore <= 15 || delta > 0;
               setLastResult({
                 slug,
-                message: `${initialScore}% → ${finalScore}% | ${diffsCount} rewrites | ${gate} | ${saveNote}`,
+                ok,
+                message: `${initialScore}% → ${finalScore}% (${delta > 0 ? `-${delta}` : "no change"}) | ${diffsCount} rewrites | ${saveNote}`,
               });
             }
           }
         } catch {
           clearInterval(poll);
+          stopElapsedTimer(slug);
           setRowState(slug, { loading: false, action: null });
         }
-      }, 6000);
+      }, 3000);
     } catch (e) {
-      setRowState(slug, { error: e instanceof Error ? e.message : "Reduction failed" });
-      setRowState(slug, { loading: false, action: null });
+      stopElapsedTimer(slug);
+      setRowState(slug, { error: e instanceof Error ? e.message : "Reduction failed", loading: false, action: null });
     }
   }
 
@@ -208,7 +246,7 @@ export default function FixMe() {
       <div className="border-b border-gray-800 px-6 py-4 flex items-center justify-between">
         <div>
           <h1 className="text-lg font-bold text-white">CBfix</h1>
-          <p className="text-gray-400 text-xs">AI Score Reduction Dashboard | Target: 15%</p>
+          <p className="text-gray-400 text-xs">AI Score Reduction Dashboard | Target: 15% | JS-gated rewrites | 20x concurrency</p>
         </div>
         <div className="flex items-center gap-4">
           <button
@@ -244,8 +282,8 @@ export default function FixMe() {
         </div>
 
         {lastResult && (
-          <div className="mb-4 bg-gray-800 border border-gray-700 rounded px-4 py-2.5 text-sm text-gray-200">
-            <span className="text-gray-500 mr-2">Last result:</span>
+          <div className={`mb-4 border rounded px-4 py-2.5 text-sm ${lastResult.ok ? "bg-gray-800 border-gray-700 text-gray-200" : "bg-red-950 border-red-800 text-red-300"}`}>
+            <span className="text-gray-500 mr-2">Result:</span>
             {lastResult.message}
           </div>
         )}
@@ -283,14 +321,14 @@ export default function FixMe() {
                   <th className="text-left px-4 py-3 text-gray-400 font-medium text-xs w-28">Case</th>
                   <th className="text-left px-4 py-3 text-gray-400 font-medium text-xs">Title</th>
                   <th className="text-left px-4 py-3 text-gray-400 font-medium text-xs w-32">Category</th>
-                  <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-24">Words</th>
+                  <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-20">Words</th>
                   <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-28">AI Score</th>
-                  <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-48">Actions</th>
+                  <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-52">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((article) => {
-                  const rs = rowStates[article.slug] ?? { loading: false, action: null, error: null };
+                  const rs = rowStates[article.slug] ?? { loading: false, action: null, error: null, elapsed: 0 };
                   return (
                     <tr
                       key={article.id}
@@ -336,7 +374,7 @@ export default function FixMe() {
                             {rs.loading && rs.action === "detect" ? (
                               <span className="flex items-center gap-1">
                                 <span className="inline-block w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
-                                Scanning...
+                                {rs.elapsed > 0 ? fmtElapsed(rs.elapsed) : "Scanning..."}
                               </span>
                             ) : "Detect"}
                           </button>
@@ -349,7 +387,7 @@ export default function FixMe() {
                             {rs.loading && rs.action === "reduce" ? (
                               <span className="flex items-center gap-1">
                                 <span className="inline-block w-3 h-3 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
-                                Reducing...
+                                {rs.elapsed > 0 ? fmtElapsed(rs.elapsed) : "Starting..."}
                               </span>
                             ) : "Reduce AI"}
                           </button>
@@ -375,11 +413,11 @@ export default function FixMe() {
           <div className="grid grid-cols-2 gap-4 text-xs text-gray-500">
             <div>
               <p className="text-gray-400 font-medium mb-1">Detect</p>
-              <p>Sends article body text (body only, no UI chrome) to ZeroGPT for AI detection. Score (0-100%) is saved to the database.</p>
+              <p>Sends article body to ZeroGPT. Runs two scans and averages them (tiebreaker scan if variance exceeds 20 points). Score (0-100%) is saved to the database.</p>
             </div>
             <div>
               <p className="text-gray-400 font-medium mb-1">Reduce AI</p>
-              <p>Runs the MajorBrain loop: detect flagged sentences, rewrite each with Claude Sonnet at temperature 0.85 using CB journalism voice, re-detect, repeat until score reaches 15% or plateaus. Citations and cb-factoid links are preserved.</p>
+              <p>ZeroGPT flags sentences. Claude Sonnet rewrites each one at temperature 0.85 — 20 at a time in parallel. JavaScript validates numbers, qualifiers, fragments, and negatives instantly. Re-scans after each pass. Repeats until 15% or score plateaus. Target: 2-5 minutes per article.</p>
             </div>
           </div>
         </div>
