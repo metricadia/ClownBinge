@@ -212,8 +212,8 @@ export async function reduceAI(
     }
 
     currentPlainText = applySentenceReplacements(plainText, masterReplacements);
-    currentHtml = htmlBody;
-    for (const [original, replacement] of masterReplacements) {
+
+    for (const [original, replacement] of newRewrites) {
       currentHtml = replaceInHtml(currentHtml, original, replacement);
     }
 
