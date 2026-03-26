@@ -69,7 +69,7 @@ export default function ComprehensiveReport() {
         <section className="relative py-20 px-4 bg-gradient-to-b from-header to-header/95">
           <div className="max-w-6xl mx-auto text-center mb-16">
             <p className="text-xs font-semibold tracking-widest uppercase text-secondary mb-4">Primary Source Intelligence</p>
-            <h1 className="font-sans font-bold text-4xl sm:text-5xl text-white leading-tight mb-4">
+            <h1 className="font-sans font-bold text-5xl sm:text-6xl text-secondary leading-tight mb-4">
               Truth Has a Paper Trail.
             </h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
@@ -88,13 +88,13 @@ export default function ComprehensiveReport() {
                     <Zap className="w-4 h-4 text-secondary" />
                     <span className="text-xs font-bold text-secondary uppercase tracking-wider">Quick Check</span>
                   </div>
-                  <h2 className="font-display font-bold text-2xl text-header">Analyze Any Claim</h2>
+                  <h2 className="font-sans font-bold text-2xl text-primary">Analyze Any Claim</h2>
                 </div>
               </div>
               <p className="text-header text-base mb-6 leading-relaxed">
                 Submit a news story, quote, or claim. We verify it against primary sources and show you what's accurate, what's missing, and what's contradicted by the record.
               </p>
-              <div className="font-display font-extrabold text-4xl text-header mb-1">$4.95</div>
+              <div className="font-sans font-extrabold text-4xl text-secondary mb-1">$4.95</div>
               <p className="text-sm text-header mb-8">Instant results. Cited sources.</p>
               <button
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-white text-sm transition-opacity hover:opacity-90"
@@ -127,13 +127,13 @@ export default function ComprehensiveReport() {
                     <FileText className="w-4 h-4 text-secondary" />
                     <span className="text-xs font-bold text-secondary uppercase tracking-wider">Comprehensive</span>
                   </div>
-                  <h2 className="font-display font-bold text-2xl text-header">Full Public Dossier</h2>
+                  <h2 className="font-sans font-bold text-2xl text-primary">Full Public Dossier</h2>
                 </div>
               </div>
               <p className="text-header text-base mb-6 leading-relaxed">
                 A 20-page professionally compiled report on any public figure: voting record, financial disclosures, legal history, documented contradictions, conflict-of-interest assessment. Every claim verified and APA 7 cited.
               </p>
-              <div className="font-display font-extrabold text-4xl text-header mb-1">$24.95</div>
+              <div className="font-sans font-extrabold text-4xl text-secondary mb-1">$24.95</div>
               <p className="text-sm text-header mb-8">20 pages. 24-hour delivery.</p>
               <button
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-white text-sm transition-opacity hover:opacity-90"
@@ -163,7 +163,7 @@ export default function ComprehensiveReport() {
         {/* Authority Quotes */}
         <section className="py-16 px-4 bg-slate-50 border-b">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-display font-bold text-2xl text-header text-center mb-12">Why This Matters</h2>
+            <h2 className="font-sans font-bold text-2xl text-header text-center mb-12">Why This Matters</h2>
             <div className="space-y-8">
               <blockquote className="flex flex-col sm:flex-row gap-6 p-8 bg-white rounded-xl border-l-4" style={{ borderColor: "#F5C518" }}>
                 <div className="text-4xl text-secondary/30 font-serif leading-none flex-shrink-0">"</div>
@@ -207,7 +207,7 @@ export default function ComprehensiveReport() {
         {/* Trust Signals */}
         <section className="py-16 px-4 bg-white border-b">
           <div className="max-w-6xl mx-auto">
-            <h2 className="font-display font-bold text-2xl text-header text-center mb-12">Why Researchers & Journalists Trust ClownBinge</h2>
+            <h2 className="font-sans font-bold text-2xl text-header text-center mb-12">Why Researchers & Journalists Trust ClownBinge</h2>
             <div className="grid sm:grid-cols-3 gap-6">
               <div className="flex flex-col items-center text-center p-6 rounded-xl border bg-slate-50">
                 <Shield className="w-8 h-8 text-primary mb-3" />
@@ -237,7 +237,7 @@ export default function ComprehensiveReport() {
         {/* Full Report Contents */}
         <section className="py-16 px-4 bg-slate-50">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-display font-bold text-2xl text-header mb-3">Inside a Full Report</h2>
+            <h2 className="font-sans font-bold text-2xl text-header mb-3">Inside a Full Report</h2>
             <p className="text-header mb-8">
               Ten comprehensive sections. Every section sourced to the verified public record. Ready for citation, presentation, or publication.
             </p>
@@ -254,7 +254,7 @@ export default function ComprehensiveReport() {
                     {section.number}
                   </div>
                   <div>
-                    <div className="font-display font-bold text-header text-base mb-1">{section.title}</div>
+                    <div className="font-sans font-bold text-header text-base mb-1">{section.title}</div>
                     <p className="text-header text-sm leading-relaxed">{section.description}</p>
                   </div>
                 </div>
@@ -266,7 +266,7 @@ export default function ComprehensiveReport() {
         {/* The Spectrum of Users */}
         <section className="py-16 px-4 bg-white">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-display font-bold text-2xl text-header mb-10">From Fact-Checkers to Researchers</h2>
+            <h2 className="font-sans font-bold text-2xl text-header mb-10">From Fact-Checkers to Researchers</h2>
             <div className="grid sm:grid-cols-2 gap-6">
               {[
                 { label: "Casual Truth-Seekers", text: "You see a viral claim that doesn't sit right. $4.95 gets you the verified record in minutes.", price: "$4.95" },
@@ -289,7 +289,7 @@ export default function ComprehensiveReport() {
         {/* Process */}
         <section className="py-16 px-4 bg-slate-50">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-display font-bold text-2xl text-header mb-2">How It Works</h2>
+            <h2 className="font-sans font-bold text-2xl text-header mb-2">How It Works</h2>
             <p className="text-header text-sm mb-10">No account. No complexity. Two paths, same integrity.</p>
             <div className="grid sm:grid-cols-2 gap-8">
               {/* Quick Verify Process */}
@@ -306,7 +306,7 @@ export default function ComprehensiveReport() {
                         {item.step}
                       </div>
                       <div>
-                        <div className="font-semibold text-header text-sm mb-0.5">{item.title}</div>
+                        <div className="font-semibold text-primary text-sm mb-0.5">{item.title}</div>
                         <p className="text-sm text-header">{item.text}</p>
                       </div>
                     </div>
@@ -328,7 +328,7 @@ export default function ComprehensiveReport() {
                         {item.step}
                       </div>
                       <div>
-                        <div className="font-semibold text-header text-sm mb-0.5">{item.title}</div>
+                        <div className="font-semibold text-primary text-sm mb-0.5">{item.title}</div>
                         <p className="text-sm text-header">{item.text}</p>
                       </div>
                     </div>
@@ -351,7 +351,7 @@ export default function ComprehensiveReport() {
 
         {/* Final CTA */}
         <section className="py-20 px-4 bg-gradient-to-r from-header to-header/95 text-white text-center">
-          <h2 className="font-display font-bold text-3xl mb-4">
+          <h2 className="font-sans font-bold text-4xl mb-4">
             The Record Is Public. We Make It Accessible.
           </h2>
           <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
