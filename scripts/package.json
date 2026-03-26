@@ -9,6 +9,7 @@
     "insert": "tsx ./src/insert-article.ts",
     "generate": "tsx ./src/generate-articles.ts",
     "sitemap": "tsx ./src/generate-sitemap.ts",
+    "expand": "tsx ./src/expand-short-articles.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

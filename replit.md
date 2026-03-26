@@ -492,6 +492,20 @@ done
 
 **Site-wide link audit (March 2026):** 54 dead links found and replaced across 61 articles. All cb-factoid hrefs verified clean.
 
+### Word Count Cardinal Rule
+
+**All articles must reach 1,000 words minimum.** The only two exempt categories are:
+- **Religion** — not a current content focus; existing articles stand as-is
+- **Self-Owned** — short-form precision articles; format does not support padding
+
+Every other category must clear 1,000 words before locking. Expansion must use CB voice: dry, forensic, primary-source-based, no emotion, no opinion. Use `claude-sonnet-4-6` via `scripts/src/expand-short-articles.ts`.
+
+Verified clean: all 30 non-exempt articles at 1,000+ words (March 2026). Lowest is CB-000046 CNN Vanishing Act at 1,016 words.
+
+### No External Hyperlinks Cardinal Rule
+
+**No `<a href="http...">` tags in article bodies pointing to external URLs.** Citations are permanent archival references rendered as static text in the Primary Sources section. The `sourceUrl` field is stored for provenance but never rendered as a clickable link. The `cb-factoid` anchors are internal popup triggers only (navigation blocked via `e.preventDefault()`). ClownBinge does not link out. The record is self-contained.
+
 ### Citation Cardinal Rule
 
 **The citation count pill (top of article) and the Primary Sources section (bottom of article) must always show the same number — no exceptions.**
