@@ -8,42 +8,40 @@ function buildCBPrompt(sentence: string): string {
 
 YOUR ONLY JOB: Make this sentence sound more human. Change sentence structure, rhythm, syntax. Nothing else.
 
-=== ABSOLUTE PROHIBITIONS — WILL CAUSE REJECTION ===
+=== ABSOLUTE PROHIBITIONS — YOU WILL BE CHECKED ===
 
-1. QUALIFIER WORDS: Do not change any qualifier word to a synonym.
-   - "approximately" must stay "approximately" — NOT "about" / "roughly" / "around"
+1. QUALIFIER WORDS: Every qualifier must be CHARACTER-FOR-CHARACTER identical.
+   - "approximately" stays "approximately" — NOT "about" / "roughly" / "around"
    - "nearly" stays "nearly" — NOT "almost"
    - "over" stays "over" — NOT "more than"
+   - "more than" stays "more than" — NOT "over"
    - "under" stays "under" — NOT "fewer than"
-   The qualifier word must be IDENTICAL to the original. Copy it character for character.
+   - "mainly" stays "mainly" — NOT "mostly"
 
-2. PROPER NOUNS AND ORG NAMES: Copy every name exactly as written. No abbreviations.
-   - If the original says "International Holocaust Remembrance Alliance" — output must say "International Holocaust Remembrance Alliance"
-   - If the original says "Jewish Voice for Peace" — output must say "Jewish Voice for Peace"
-   - Never abbreviate to initials (IHRA, JVP, etc.) even if that is standard journalistic practice
+2. PROPER NOUNS AND ORG NAMES: Copy every name exactly. No abbreviations, no capitalization changes.
    - Never shorten, paraphrase, or alter any organization name, person name, or case name
+   - Capitalization must be identical to the original
 
-3. FRAGMENTS STAY FRAGMENTS: If the input has no period/question mark/exclamation at the end, it is a fragment. Output must also be a fragment. Do NOT turn it into a complete sentence.
-   - Input: "About 15,000 members" means output must also be a fragment, not "Peak membership hit 15,000."
+3. FRAGMENTS STAY FRAGMENTS: If input has no period/question mark/exclamation at the end — it is a fragment. Output must also be a fragment. Do NOT turn it into a complete sentence.
 
-4. NEGATIVE CONSTRUCTIONS STAY NEGATIVE: If the original uses "not" or "never" or "no," the output must also use a negative construction. Do not convert to a positive equivalent.
-   - "not fringe" must stay "not fringe" — NOT "was mainstream"
-   - "not a religious text" must stay structured as a negative — NOT "is a secular document"
+4. NEGATIVE CONSTRUCTIONS STAY NEGATIVE: If original uses "not," "never," or "no" — output must also use a negative construction. Do not convert to a positive equivalent.
+   - "not fringe" → must stay negative. "was mainstream" is WRONG.
 
-5. NUMBERS AND STATISTICS: Copy every number character for character.
+5. NUMBERS: Copy every number character for character.
    - "15,000" stays "15,000" — not "fifteen thousand"
-   - "127 years ago" stays "127 years ago"
    - "66%" stays "66%"
+
+6. NO HEDGING: Do not add "Sure," "Notably," "Of course," "It's worth noting," etc. if not in the original.
+
+7. NO SOFTENING: Do not weaken claims. "Won't" is stronger than "doesn't." Keep the original strength.
 
 === WHAT YOU SHOULD CHANGE ===
 
-These AI detection patterns are what you are fixing:
 - Uniform sentence length — vary it
-- Passive voice constructions — make active when it does not change meaning
-- Generic transition phrases ("Furthermore," "Additionally," "It is worth noting") — cut them
-- Abstract category nouns — concrete specifics
-- Overly smooth, parallel list structures — break the pattern
-- Bureaucratic filler that adds no information — cut it
+- Passive voice — make active when it does not change meaning
+- Generic transition phrases — cut them
+- Overly smooth parallel lists — break the pattern
+- Bureaucratic filler — cut it
 
 === FORMAT RULES ===
 - Output must be ${Math.max(wordCount - 2, 1)}–${wordCount + 4} words
@@ -55,47 +53,35 @@ These AI detection patterns are what you are fixing:
 ${sentence}`;
 }
 
-async function qualityGateSentence(
-  original: string,
-  rewritten: string
-): Promise<{ pass: boolean; violations: string[] }> {
-  try {
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-5",
-      max_tokens: 400,
-      temperature: 0,
-      messages: [{
-        role: "user",
-        content: `Compare these two sentences and check for violations. Return JSON only.
+const QUALIFIER_WORDS = [
+  "approximately", "nearly", "roughly", "about", "over", "under",
+  "more than", "fewer than", "less than", "mainly", "mostly",
+  "largely", "primarily", "virtually", "essentially",
+];
 
-ORIGINAL: ${original}
-REWRITTEN: ${rewritten}
+function jsGate(original: string, rewritten: string): { pass: boolean; reason?: string } {
+  if (!rewritten || rewritten.length < 5) return { pass: false, reason: "empty output" };
 
-Check each rule. Return: {"pass": true/false, "violations": ["list of violations or empty array"]}
-
-Rules:
-1. Every number in original must appear identically in rewritten
-2. Every proper noun and org name must appear identically — no abbreviations allowed
-3. If original is a fragment (no terminal punctuation), rewritten must also be a fragment
-4. Every qualifier word (approximately, nearly, roughly, about, over, under, more than, fewer than, less than) must be identical — no synonym swaps
-5. If original uses a negative construction (not, never, no), rewritten must also use a negative construction
-6. No hedging language added that was not in original
-7. No softening of claims or reduction in specificity
-
-Return only valid JSON. No explanation.`,
-      }],
-    });
-
-    const text = response.content[0].type === "text"
-      ? response.content[0].text.trim()
-      : '{"pass":false,"violations":["parse error"]}';
-
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) return { pass: false, violations: ["JSON parse error from gate"] };
-    return JSON.parse(jsonMatch[0]);
-  } catch {
-    return { pass: false, violations: ["gate error"] };
+  const origFrag = !original.trim().match(/[.!?]["']?$/);
+  const rewFrag = !rewritten.trim().match(/[.!?]["']?$/);
+  if (origFrag !== rewFrag) {
+    return { pass: false, reason: `fragment mismatch: orig=${origFrag} rew=${rewFrag}` };
   }
+
+  const numRegex = /\b\d[\d,]*\.?\d*%?\b/g;
+  const origNums = original.match(numRegex) ?? [];
+  const rewNums = rewritten.match(numRegex) ?? [];
+  for (const n of origNums) {
+    if (!rewNums.includes(n)) return { pass: false, reason: `number missing: ${n}` };
+  }
+
+  for (const q of QUALIFIER_WORDS) {
+    const origHas = new RegExp(`\\b${q}\\b`, "i").test(original);
+    const rewHas = new RegExp(`\\b${q}\\b`, "i").test(rewritten);
+    if (origHas && !rewHas) return { pass: false, reason: `qualifier removed: "${q}"` };
+  }
+
+  return { pass: true };
 }
 
 export async function rewriteSentence(sentence: string): Promise<string> {
@@ -103,9 +89,8 @@ export async function rewriteSentence(sentence: string): Promise<string> {
   if (!trimmed || trimmed.length < 20) return trimmed;
 
   const prompt = buildCBPrompt(trimmed);
-  const maxRetries = 3;
 
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+  for (let attempt = 1; attempt <= 2; attempt++) {
     try {
       const response = await anthropic.messages.create({
         model: "claude-sonnet-4-5",
@@ -120,19 +105,14 @@ export async function rewriteSentence(sentence: string): Promise<string> {
       const rewritten = content.text.trim().replace(/^["']|["']$/g, "");
       if (!rewritten || rewritten.length < 10) continue;
 
-      const gate = await qualityGateSentence(trimmed, rewritten);
+      const gate = jsGate(trimmed, rewritten);
+      if (gate.pass) return rewritten;
 
-      if (gate.pass) {
-        if (attempt > 1) console.log(`[CBRewrite] Gate PASS on attempt ${attempt}`);
-        return rewritten;
-      } else {
-        console.log(`[CBRewrite] Gate FAIL attempt ${attempt}: ${gate.violations.join("; ")}`);
-      }
+      console.log(`[CBRewrite] JS gate fail attempt ${attempt}: ${gate.reason}`);
     } catch {
       console.log(`[CBRewrite] Error on attempt ${attempt}`);
     }
   }
 
-  console.log(`[CBRewrite] All ${maxRetries} attempts failed gate. Preserving original.`);
   return trimmed;
 }

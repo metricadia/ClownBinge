@@ -82,7 +82,7 @@ function replaceInHtml(html: string, original: string, replacement: string): str
 
 async function rewriteBatch(
   sentences: string[],
-  concurrency = 8
+  concurrency = 20
 ): Promise<Map<string, string>> {
   const results = new Map<string, string>();
   const skipped = sentences.filter((s) => shouldSkipSentence(s.trim()));
@@ -133,8 +133,7 @@ export async function reduceAI(
     };
   }
 
-  console.log(`[CBReduce] Scan 1: ${scan1Score}% — waiting 2s for confirmatory scan...`);
-  await new Promise((r) => setTimeout(r, 2000));
+  console.log(`[CBReduce] Scan 1: ${scan1Score}% — running confirmatory scan...`);
 
   const { score: scan2Score, flaggedSentences: scan2Flagged } = await detectAI(htmlBody);
 
@@ -145,7 +144,6 @@ export async function reduceAI(
 
   if (variance > 20) {
     console.log(`[CBReduce] High variance detected (${scan1Score}% vs ${scan2Score}%). Running tiebreaker scan 3...`);
-    await new Promise((r) => setTimeout(r, 2000));
     const { score: scan3Score } = await detectAI(htmlBody);
     console.log(`[CBReduce] Scan 3: ${scan3Score}%`);
     confirmedScore = Math.max(scan1Score, scan2Score, scan3Score);
@@ -215,7 +213,6 @@ export async function reduceAI(
       }
     }
 
-    await new Promise((r) => setTimeout(r, 300));
   }
 
   const success = currentScore <= targetScore;
