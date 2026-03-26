@@ -61,7 +61,7 @@ async function qualityGateSentence(
 ): Promise<{ pass: boolean; violations: string[] }> {
   try {
     const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-5",
       max_tokens: 400,
       temperature: 0,
       messages: [{
@@ -108,7 +108,7 @@ export async function rewriteSentence(sentence: string): Promise<string> {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       const response = await anthropic.messages.create({
-        model: "claude-sonnet-4-20250514",
+        model: "claude-sonnet-4-5",
         max_tokens: 500,
         temperature: 0.85,
         messages: [{ role: "user", content: prompt }],

@@ -4,28 +4,6 @@ import { rewriteSentence } from "./cb-rewriter";
 function shouldSkipSentence(sentence: string): boolean {
   if (sentence.length < 20) return true;
 
-  if (/[""]/.test(sentence)) return true;
-
-  if (/\b\d{4}\b/.test(sentence)) return true;
-
-  if (/\d+%/.test(sentence)) return true;
-
-  if (/\$[\d,]+/.test(sentence)) return true;
-
-  if (/\b\d{1,3}(,\d{3})+\b/.test(sentence)) return true;
-
-  if (/\b(approximately|roughly|nearly|almost|over|under|more than|fewer than|less than)\s+[\d$]/i.test(sentence)) return true;
-
-  if (/\b\d[\d,]*\s*(people|men|women|workers|cases|votes|seats|years|months|days|miles|acres|dollars|members|delegates|staff|employees|officials|troops|soldiers|million|billion|trillion)\b/i.test(sentence)) return true;
-
-  if (/\b(v\.|vs\.|U\.S\.\s+\d|P\.L\.|S\.\s+Hrg|No\.\s+\d|§\s*\d)/i.test(sentence)) return true;
-
-  if (/\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d/i.test(sentence)) return true;
-
-  if (/\b(Section|Article|Amendment|Act|Resolution|Statute|Code|Title)\s+\d/i.test(sentence)) return true;
-
-  if (/\b([A-Z][a-z]+\s+){3,}[A-Z][a-z]+\b/.test(sentence)) return true;
-
   return false;
 }
 
