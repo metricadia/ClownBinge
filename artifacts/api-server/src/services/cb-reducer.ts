@@ -67,25 +67,39 @@ function replaceInHtml(html: string, original: string, replacement: string): str
         collapsed
       );
 
-      if (!plainVersion.includes(original)) return match;
+      const strippedVersion = plainVersion.replace(/<[^>]+>/g, "");
 
-      let newPlain = plainVersion.replace(original, replacement);
-      changed = true;
+      if (!strippedVersion.includes(original)) return match;
 
-      for (const anchor of anchors) {
-        const wasAnchorText = anchor.innerText === original || anchor.innerText.includes(original);
-        if (wasAnchorText) {
-          const newAnchorText = anchor.innerText.replace(original, replacement);
-          newPlain = newPlain.replace(replacement, `${anchor.openTag}${newAnchorText}${anchor.closeTag}`);
-        } else if (newPlain.includes(anchor.innerText)) {
-          newPlain = newPlain.replace(
-            anchor.innerText,
-            `${anchor.openTag}${anchor.innerText}${anchor.closeTag}`
-          );
+      if (plainVersion.includes(original)) {
+        let newPlain = plainVersion.replace(original, replacement);
+        changed = true;
+
+        for (const anchor of anchors) {
+          const wasAnchorText = anchor.innerText === original || anchor.innerText.includes(original);
+          if (wasAnchorText) {
+            const newAnchorText = anchor.innerText.replace(original, replacement);
+            newPlain = newPlain.replace(replacement, `${anchor.openTag}${newAnchorText}${anchor.closeTag}`);
+          } else if (newPlain.includes(anchor.innerText)) {
+            newPlain = newPlain.replace(
+              anchor.innerText,
+              `${anchor.openTag}${anchor.innerText}${anchor.closeTag}`
+            );
+          }
         }
+
+        return `${openTag}${newPlain}${closeTag}`;
       }
 
-      return `${openTag}${newPlain}${closeTag}`;
+      const escapedWords = original
+        .split(/\s+/)
+        .map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+        .join("(?:<[^>]*?>\\s*)*\\s+(?:<[^>]*?>\\s*)*");
+      const flexRegex = new RegExp(escapedWords);
+      const newContent = content.replace(flexRegex, replacement);
+      if (newContent === content) return match;
+      changed = true;
+      return `${openTag}${newContent}${closeTag}`;
     }
   );
 
@@ -196,6 +210,17 @@ export async function reduceAI(
   let currentPlainText = plainText;
 
   let flaggedSentences = scan2Flagged.length > 0 ? scan2Flagged : scan1Flagged;
+
+  if (flaggedSentences.length === 0 && confirmedScore > targetScore) {
+    const fallback = currentPlainText
+      .match(/[^.!?]+[.!?]+/g)
+      ?.map((s) => s.trim())
+      .filter((s) => s.length >= 20) ?? [];
+    if (fallback.length > 0) {
+      console.log(`[CBReduce] No flagged sentences from detector (score ${confirmedScore}%) — falling back to full-text rewrite of ${fallback.length} sentences`);
+      flaggedSentences = fallback;
+    }
+  }
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     if (flaggedSentences.length === 0) {
