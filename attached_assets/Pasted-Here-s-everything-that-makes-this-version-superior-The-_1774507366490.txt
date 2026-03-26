@@ -1,0 +1,218 @@
+Here's everything that makes this version superior. The two functions the other Replit is missing are the big ones:
+
+Why This One Is Faster and Better — The Two Secret Functions
+Secret 1: parseAcademicSections — The Chunk Splitter
+This is what the other version doesn't have. Instead of feeding the whole document to ZeroGPT as one blob, this splits it first:
+
+export function parseAcademicSections(text: string): Array<{title: string; content: string; isProtected: boolean}> {
+  const sections: Array<{title: string; content: string; isProtected: boolean}> = [];
+  
+  const protectedTitles = ['references', 'bibliography', 'works cited'];
+  function isProtectedTitle(title: string): boolean {
+    const lower = title.toLowerCase().trim();
+    return protectedTitles.some(pt => lower.includes(pt));
+  }
+  function isHeadingLine(line: string, nextLine: string | undefined, prevLine: string | undefined): string | null {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.length > 120) return null;
+    const knownHeadings = [
+      /^(abstract)\s*$/i,
+      /^(introduction)\s*$/i,
+      /^(conclusion|conclusions)\s*$/i,
+      /^(references|bibliography|works\s+cited)\s*$/i,
+      /^(literature\s+review)\s*$/i,
+      /^(methodology|methods|method)\s*$/i,
+      /^(discussion)\s*$/i,
+      /^(results)\s*$/i,
+      /^(findings)\s*$/i,
+      /^(background)\s*$/i,
+      /^(theoretical\s+framework)\s*$/i,
+      /^(data\s+analysis)\s*$/i,
+      /^(limitations)\s*$/i,
+      /^(recommendations)\s*$/i,
+      /^(acknowledgements?)\s*$/i,
+      /^(appendix|appendices)\s*:?\s*.*$/i,
+      /^(executive\s+summary)\s*$/i,
+      /^(statement\s+of\s+need)\s*$/i,
+      /^(project\s+narrative)\s*$/i,
+      /^(budget\s+narrative)\s*$/i,
+      /^(evaluation\s+plan)\s*$/i,
+      /^(sustainability\s+plan)\s*$/i,
+      /^(goals?\s+and\s+objectives?)\s*$/i,
+    ];
+    for (const pattern of knownHeadings) {
+      const match = trimmed.match(pattern);
+      if (match) return match[1].trim();
+    }
+    const partMatch = trimmed.match(/^((?:Part|Section|Chapter)\s+[IVXivx0-9]+[:\.]?\s*.*)$/i);
+    if (partMatch) return partMatch[1].trim();
+    const numberedMatch = trimmed.match(/^([IVXivx0-9]+(?:\.[0-9]+)*[\.\)]\s+.{2,60})$/);
+    if (numberedMatch) {
+      const candidate = numberedMatch[1].trim();
+      if (!candidate.match(/[.!?]$/) || candidate.match(/\.$/)) {
+        const prevEmpty = !prevLine || prevLine.trim() === '';
+        const nextEmpty = !nextLine || nextLine.trim() === '';
+        if (prevEmpty || nextEmpty) return candidate;
+      }
+    }
+    if (trimmed === trimmed.toUpperCase() && trimmed.length >= 3 && trimmed.length <= 80 && /[A-Z]/.test(trimmed)) {
+      if (!trimmed.match(/[.!?,;:]$/)) {
+        const prevEmpty = !prevLine || prevLine.trim() === '';
+        const nextEmpty = !nextLine || nextLine.trim() === '';
+        if (prevEmpty || nextEmpty) return trimmed;
+      }
+    }
+    if (trimmed.length >= 3 && trimmed.length <= 60) {
+      if (!trimmed.match(/[.!?;,]$/)) {
+        const prevEmpty = !prevLine || prevLine.trim() === '';
+        const nextEmpty = !nextLine || nextLine.trim() === '';
+        if (prevEmpty && nextEmpty) {
+          if (trimmed.split(/\s+/).length <= 8) return trimmed;
+        }
+      }
+    }
+    return null;
+  }
+  
+  const lines = text.split('\n');
+  let currentSection: {title: string; content: string[]; isProtected: boolean} | null = null;
+  let inReferences = false;
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmedLine = line.trim();
+    const prevLine = i > 0 ? lines[i - 1] : undefined;
+    const nextLine = i < lines.length - 1 ? lines[i + 1] : undefined;
+    
+    if (inReferences) {
+      currentSection?.content.push(line);
+      continue;
+    }
+    
+    const headingTitle = isHeadingLine(line, nextLine, prevLine);
+    
+    if (headingTitle) {
+      if (currentSection && currentSection.content.length > 0) {
+        sections.push({
+          title: currentSection.title,
+          content: currentSection.content.join('\n').trim(),
+          isProtected: currentSection.isProtected
+        });
+      }
+      const isProtected = isProtectedTitle(headingTitle);
+      if (isProtected) inReferences = true;
+      currentSection = { title: headingTitle, content: [], isProtected };
+    } else if (currentSection) {
+      currentSection.content.push(line);
+    } else {
+      if (trimmedLine) {
+        currentSection = { title: 'Front Matter', content: [line], isProtected: false };
+      }
+    }
+  }
+  
+  if (currentSection && currentSection.content.length > 0) {
+    sections.push({
+      title: currentSection.title,
+      content: currentSection.content.join('\n').trim(),
+      isProtected: currentSection.isProtected
+    });
+  }
+  
+  const result = sections.filter(s => s.content.trim().length > 0);
+  // FALLBACK: If no sections found, chunk by ~800 words
+  if (result.length === 1 && result[0].title === 'Front Matter') {
+    const fullText = result[0].content;
+    const words = fullText.split(/\s+/);
+    
+    if (words.length > 1500) {
+      const paragraphs = fullText.split(/\n\n+/).filter(p => p.trim().length > 0);
+      
+      if (paragraphs.length >= 3) {
+        const chunkedSections: Array<{title: string; content: string; isProtected: boolean}> = [];
+        const targetChunkWords = 800;
+        let currentChunk: string[] = [];
+        let currentWordCount = 0;
+        let chunkIndex = 1;
+        for (const para of paragraphs) {
+          const paraWords = para.split(/\s+/).length;
+          currentChunk.push(para);
+          currentWordCount += paraWords;
+          if (currentWordCount >= targetChunkWords && chunkIndex < Math.ceil(words.length / targetChunkWords)) {
+            chunkedSections.push({ title: `Section ${chunkIndex}`, content: currentChunk.join('\n\n').trim(), isProtected: false });
+            currentChunk = [];
+            currentWordCount = 0;
+            chunkIndex++;
+          }
+        }
+        if (currentChunk.length > 0) {
+          chunkedSections.push({ title: `Section ${chunkIndex}`, content: currentChunk.join('\n\n').trim(), isProtected: false });
+        }
+        if (chunkedSections.length > 1) return chunkedSections;
+      }
+    }
+  }
+  return result;
+}
+Secret 2: autoCleanWholeDocument — Whole-Doc Scoring, Section-Level Fixes
+This is what produces accuracy. ZeroGPT scores the combined full document (accurate holistic score), but replacements are tracked per-section so they can be written back individually:
+
+export async function autoCleanWholeDocument(
+  sections: Array<{ id: string; content: string | null; isProtected: boolean }>,
+  targetScore: number = 20,
+  maxAttempts: number = 10,
+  docType: DocumentType = "undergrad"
+) {
+  const cleanable = sections.filter(s => !s.isProtected && s.content && s.content.trim().length >= 50);
+  
+  if (cleanable.length === 0) {
+    return { success: false, originalScore: 0, finalScore: 0, totalAttempts: 0, message: "No cleanable sections", updatedSections: [] };
+  }
+  // Combine ALL sections for an accurate holistic ZeroGPT score
+  const combinedText = cleanable.map(s => stripHtmlForDetection(s.content!)).join("\n\n");
+  const initialScan = await scanWithZeroGPT(combinedText);
+  let currentScore = initialScan.overallScore;
+  const originalScore = currentScore;
+  if (currentScore <= targetScore) {
+    return { success: true, originalScore, finalScore: currentScore, totalAttempts: 0, message: `Already meets target`, updatedSections: [] };
+  }
+  const masterReplacements = new Map<string, string>();
+  let currentCombined = combinedText;
+  let attemptNumber = 0;
+  while (currentScore > targetScore && attemptNumber < maxAttempts) {
+    attemptNumber++;
+    const scanResult = await scanWithZeroGPT(currentCombined);
+    const flaggedSentences = scanResult.flaggedSentences;
+    if (flaggedSentences.length === 0) break;
+    for (const sentence of flaggedSentences) {
+      const paraphrased = await paraphraseAcademicSentence(sentence, docType);
+      masterReplacements.set(sentence, paraphrased);
+    }
+    currentCombined = replaceSentences(currentCombined, masterReplacements);
+    const rescan = await scanWithZeroGPT(currentCombined);
+    const newScore = rescan.overallScore;
+    if (newScore >= currentScore && attemptNumber >= 2) break;
+    currentScore = newScore;
+    if (currentScore <= targetScore) break;
+  }
+  // Write replacements back to each individual section
+  const updatedSections: Array<{ id: string; cleanedContent: string }> = [];
+  for (const section of cleanable) {
+    const originalContent = stripHtmlForDetection(section.content!);
+    const cleaned = replaceSentences(originalContent, masterReplacements);
+    if (cleaned !== originalContent) {
+      updatedSections.push({ id: section.id, cleanedContent: cleaned });
+    }
+  }
+  return {
+    success: currentScore <= targetScore,
+    originalScore,
+    finalScore: currentScore,
+    totalAttempts: attemptNumber,
+    message: currentScore <= targetScore
+      ? `Reduced ${originalScore}% → ${currentScore}% in ${attemptNumber} attempt(s).`
+      : `Reduced ${originalScore}% → ${currentScore}% after ${attemptNumber} attempt(s). Target not reached.`,
+    updatedSections,
+  };
+}
+The critical difference in plain terms: The other version probably feeds each section to ZeroGPT separately, which gives inaccurate scores because ZeroGPT scores holistically. This version combines everything into one document for the scan, gets an accurate number, then applies fixes and tracks which section each replacement belongs to. That's why the score actually goes down instead of just shuffling around.

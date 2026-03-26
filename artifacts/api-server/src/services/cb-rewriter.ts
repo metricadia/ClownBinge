@@ -1,57 +1,6 @@
 import { anthropic } from "@workspace/integrations-anthropic-ai";
 
-function buildCBPrompt(sentence: string): string {
-  const wordCount = sentence.split(/\s+/).length;
-  const isFragment = !sentence.trim().match(/[.!?]$/);
-
-  return `You are rewriting a single sentence from a primary-source accountability journalism article to reduce AI detection. The article is built from government records, congressional transcripts, court filings, and official databases. The voice is direct, documented, and sardonic.
-
-YOUR ONLY JOB: Make this sentence sound more human. Change sentence structure, rhythm, syntax. Nothing else.
-
-=== ABSOLUTE PROHIBITIONS — YOU WILL BE CHECKED ===
-
-1. QUALIFIER WORDS: Every qualifier must be CHARACTER-FOR-CHARACTER identical.
-   - "approximately" stays "approximately" — NOT "about" / "roughly" / "around"
-   - "nearly" stays "nearly" — NOT "almost"
-   - "over" stays "over" — NOT "more than"
-   - "more than" stays "more than" — NOT "over"
-   - "under" stays "under" — NOT "fewer than"
-   - "mainly" stays "mainly" — NOT "mostly"
-
-2. PROPER NOUNS AND ORG NAMES: Copy every name exactly. No abbreviations, no capitalization changes.
-   - Never shorten, paraphrase, or alter any organization name, person name, or case name
-   - Capitalization must be identical to the original
-
-3. FRAGMENTS STAY FRAGMENTS: If input has no period/question mark/exclamation at the end — it is a fragment. Output must also be a fragment. Do NOT turn it into a complete sentence.
-
-4. NEGATIVE CONSTRUCTIONS STAY NEGATIVE: If original uses "not," "never," or "no" — output must also use a negative construction. Do not convert to a positive equivalent.
-   - "not fringe" → must stay negative. "was mainstream" is WRONG.
-
-5. NUMBERS: Copy every number character for character.
-   - "15,000" stays "15,000" — not "fifteen thousand"
-   - "66%" stays "66%"
-
-6. NO HEDGING: Do not add "Sure," "Notably," "Of course," "It's worth noting," etc. if not in the original.
-
-7. NO SOFTENING: Do not weaken claims. "Won't" is stronger than "doesn't." Keep the original strength.
-
-=== WHAT YOU SHOULD CHANGE ===
-
-- Uniform sentence length — vary it
-- Passive voice — make active when it does not change meaning
-- Generic transition phrases — cut them
-- Overly smooth parallel lists — break the pattern
-- Bureaucratic filler — cut it
-
-=== FORMAT RULES ===
-- Output must be ${Math.max(wordCount - 2, 1)}–${wordCount + 4} words
-- ${isFragment ? "Input is a FRAGMENT. Output must also be a fragment (no terminal punctuation)." : "Input is a complete sentence. Output must also be a complete sentence."}
-- No em dashes. Use periods, commas, colons, or semicolons instead.
-- Return ONLY the rewritten sentence. No explanation. No quotes around it. Just the sentence.
-
-=== INPUT ===
-${sentence}`;
-}
+export type DocType = "journalism" | "academic" | "undergrad";
 
 const QUALIFIER_WORDS = [
   "approximately", "nearly", "roughly", "about", "over", "under",
@@ -84,18 +33,62 @@ function jsGate(original: string, rewritten: string): { pass: boolean; reason?: 
   return { pass: true };
 }
 
-export async function rewriteSentence(sentence: string): Promise<string> {
+function buildParaphrasePrompt(sentence: string, docType: DocType): string {
+  const wordCount = sentence.split(/\s+/).length;
+  const isFragment = !sentence.trim().match(/[.!?]$/);
+
+  const docContext = {
+    journalism: "accountability journalism — primary-source, sardonic, direct. Short declarative sentences. No bureaucratic smoothing.",
+    academic: "academic writing — authoritative but varied. Technical terms stay exact. Sentence rhythm should vary.",
+    undergrad: "undergraduate academic writing — clear, informative, varied cadence. Avoid stiff formal transitions.",
+  }[docType];
+
+  return `You are an expert at paraphrasing ${docContext}
+
+Your task: Rewrite this single sentence so ZeroGPT no longer flags it as AI-generated, while keeping every fact, number, and technical term identical.
+
+WHAT ACTUALLY CAUSES AI FLAGS — fix these:
+- Uniform sentence length across a document (vary the rhythm)
+- Passive voice where active is natural
+- Smooth, parallel list structures (break them up)
+- Generic academic transitions: "Furthermore," "Additionally," "It is worth noting" — cut them
+- Subject-verb-object uniformity — try leading with a clause, a qualifier, or the object
+- Overly formal register that never relaxes
+
+HARD RULES — these will be checked and will cause rejection:
+1. Every number must appear identically: "15,000" stays "15,000", "66%" stays "66%"
+2. Every proper noun, person name, org name, journal name stays character-for-character identical
+3. All technical/scientific terms stay identical (thymoquinone, NF-kB, MRSA, etc.)
+4. If input has no terminal punctuation (fragment) — output must also be a fragment
+5. If input uses "not" / "never" / "no" — output must also use a negative construction
+6. Every qualifier word stays identical: "approximately" ≠ "about", "mainly" ≠ "mostly", "over" ≠ "more than"
+7. No em dashes. Use commas, colons, semicolons, or periods instead.
+8. No hedging added: no "Sure," "Notably," "Of course," "Worth mentioning"
+
+OUTPUT RULES:
+- ${Math.max(wordCount - 3, 1)}–${wordCount + 5} words
+- ${isFragment ? "Input is a FRAGMENT (no terminal punctuation). Output must also be a fragment." : "Input is a complete sentence. Output must end with terminal punctuation."}
+- Return ONLY the rewritten sentence. No explanation. No surrounding quotes.
+
+SENTENCE TO REWRITE:
+${sentence}`;
+}
+
+export async function paraphraseAcademicSentence(
+  sentence: string,
+  docType: DocType = "journalism"
+): Promise<string> {
   const trimmed = sentence.trim();
   if (!trimmed || trimmed.length < 20) return trimmed;
 
-  const prompt = buildCBPrompt(trimmed);
+  const prompt = buildParaphrasePrompt(trimmed, docType);
 
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
       const response = await anthropic.messages.create({
         model: "claude-sonnet-4-5",
         max_tokens: 500,
-        temperature: 0.85,
+        temperature: 0.9,
         messages: [{ role: "user", content: prompt }],
       });
 
@@ -108,7 +101,9 @@ export async function rewriteSentence(sentence: string): Promise<string> {
       const gate = jsGate(trimmed, rewritten);
       if (gate.pass) return rewritten;
 
-      console.log(`[CBRewrite] JS gate fail attempt ${attempt}: ${gate.reason}`);
+      if (attempt === 1) {
+        console.log(`[CBRewrite] JS gate fail attempt 1: ${gate.reason} — retrying`);
+      }
     } catch {
       console.log(`[CBRewrite] Error on attempt ${attempt}`);
     }

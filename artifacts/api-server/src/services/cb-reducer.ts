@@ -1,10 +1,23 @@
 import { detectAI } from "./zerogpt";
-import { rewriteSentence } from "./cb-rewriter";
+import { paraphraseAcademicSentence, type DocType } from "./cb-rewriter";
+
+export type { DocType };
+
+export function stripHtmlForDetection(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 function shouldSkipSentence(sentence: string): boolean {
-  if (sentence.length < 20) return true;
-
-  return false;
+  return sentence.trim().length < 20;
 }
 
 export interface ReduceAttempt {
@@ -80,23 +93,30 @@ function replaceInHtml(html: string, original: string, replacement: string): str
   return result;
 }
 
+function applySentenceReplacements(text: string, replacements: Map<string, string>): string {
+  let result = text;
+  for (const [original, replacement] of replacements) {
+    if (result.includes(original)) {
+      result = result.split(original).join(replacement);
+    }
+  }
+  return result;
+}
+
 async function rewriteBatch(
   sentences: string[],
+  docType: DocType,
   concurrency = 20
 ): Promise<Map<string, string>> {
   const results = new Map<string, string>();
-  const skipped = sentences.filter((s) => shouldSkipSentence(s.trim()));
-  if (skipped.length > 0) {
-    console.log(`[CBReduce] Pre-filter skipping ${skipped.length} high-risk sentences (numbers/quotes/dates/legal).`);
-  }
-  const valid = sentences.filter((s) => !shouldSkipSentence(s.trim()) && s.trim().length >= 20);
+  const valid = sentences.filter((s) => !shouldSkipSentence(s.trim()));
 
   for (let i = 0; i < valid.length; i += concurrency) {
     const batch = valid.slice(i, i + concurrency);
     const settled = await Promise.allSettled(
       batch.map(async (sentence) => {
         const trimmed = sentence.trim();
-        const rewritten = await rewriteSentence(trimmed);
+        const rewritten = await paraphraseAcademicSentence(trimmed, docType);
         return { original: trimmed, rewritten };
       })
     );
@@ -117,9 +137,12 @@ async function rewriteBatch(
 export async function reduceAI(
   htmlBody: string,
   targetScore = 15,
-  maxAttempts = 4
+  maxAttempts = 4,
+  docType: DocType = "journalism"
 ): Promise<ReduceResult> {
-  const { score: scan1Score, flaggedSentences: scan1Flagged } = await detectAI(htmlBody);
+  const plainText = stripHtmlForDetection(htmlBody);
+
+  const { score: scan1Score, flaggedSentences: scan1Flagged } = await detectAI(plainText);
 
   if (scan1Score <= targetScore) {
     return {
@@ -133,9 +156,9 @@ export async function reduceAI(
     };
   }
 
-  console.log(`[CBReduce] Scan 1: ${scan1Score}% — running confirmatory scan...`);
+  console.log(`[CBReduce] Scan 1 (plain text): ${scan1Score}% — running confirmatory scan...`);
 
-  const { score: scan2Score, flaggedSentences: scan2Flagged } = await detectAI(htmlBody);
+  const { score: scan2Score, flaggedSentences: scan2Flagged } = await detectAI(plainText);
 
   const variance = Math.abs(scan1Score - scan2Score);
   console.log(`[CBReduce] Scan 2: ${scan2Score}% — variance: ${variance} points`);
@@ -143,11 +166,11 @@ export async function reduceAI(
   let confirmedScore: number;
 
   if (variance > 20) {
-    console.log(`[CBReduce] High variance detected (${scan1Score}% vs ${scan2Score}%). Running tiebreaker scan 3...`);
-    const { score: scan3Score } = await detectAI(htmlBody);
+    console.log(`[CBReduce] High variance. Running tiebreaker scan 3...`);
+    const { score: scan3Score } = await detectAI(plainText);
     console.log(`[CBReduce] Scan 3: ${scan3Score}%`);
     confirmedScore = Math.max(scan1Score, scan2Score, scan3Score);
-    console.log(`[CBReduce] High-variance: using max of three scans = ${confirmedScore}%`);
+    console.log(`[CBReduce] Using max of three = ${confirmedScore}%`);
   } else {
     confirmedScore = Math.round((scan1Score + scan2Score) / 2);
   }
@@ -160,15 +183,17 @@ export async function reduceAI(
       attempts: [],
       cleanedBody: htmlBody,
       diffs: [],
-      message: `Confirmed passing. Scans: ${scan1Score}%, ${scan2Score}% — confirmed ${confirmedScore}% — no reduction needed.`,
+      message: `Confirmed passing at ${confirmedScore}% — no reduction needed.`,
     };
   }
 
   const initialScore = confirmedScore;
-  let currentBody = htmlBody;
+  let currentHtml = htmlBody;
   let currentScore = confirmedScore;
   const attempts: ReduceAttempt[] = [];
-  const allDiffs: SentenceDiff[] = [];
+
+  const masterReplacements = new Map<string, string>();
+  let currentPlainText = plainText;
 
   let flaggedSentences = scan2Flagged.length > 0 ? scan2Flagged : scan1Flagged;
 
@@ -180,25 +205,28 @@ export async function reduceAI(
 
     console.log(`[CBReduce] Attempt ${attempt}: score=${currentScore}%, flagged=${flaggedSentences.length}`);
 
-    const rewrites = await rewriteBatch(flaggedSentences);
+    const newRewrites = await rewriteBatch(flaggedSentences, docType);
 
-    for (const [original, replacement] of rewrites) {
-      if (original !== replacement) {
-        allDiffs.push({ before: original, after: replacement });
-      }
-      currentBody = replaceInHtml(currentBody, original, replacement);
+    for (const [original, replacement] of newRewrites) {
+      masterReplacements.set(original, replacement);
     }
 
-    const { score: newScore, flaggedSentences: newFlagged } = await detectAI(currentBody);
+    currentPlainText = applySentenceReplacements(plainText, masterReplacements);
+    currentHtml = htmlBody;
+    for (const [original, replacement] of masterReplacements) {
+      currentHtml = replaceInHtml(currentHtml, original, replacement);
+    }
+
+    const { score: newScore, flaggedSentences: newFlagged } = await detectAI(currentPlainText);
 
     attempts.push({
       attemptNumber: attempt,
       scoreBeforeRewrite: currentScore,
       scoreAfterRewrite: newScore,
-      sentencesRewritten: rewrites.size,
+      sentencesRewritten: newRewrites.size,
     });
 
-    console.log(`[CBReduce] Attempt ${attempt} result: ${currentScore}% -> ${newScore}% (rewrote ${rewrites.size} sentences)`);
+    console.log(`[CBReduce] Attempt ${attempt} result: ${currentScore}% -> ${newScore}% (rewrote ${newRewrites.size} sentences, ${masterReplacements.size} total accumulated)`);
 
     flaggedSentences = newFlagged;
     currentScore = newScore;
@@ -212,7 +240,11 @@ export async function reduceAI(
         break;
       }
     }
+  }
 
+  const allDiffs: SentenceDiff[] = [];
+  for (const [before, after] of masterReplacements) {
+    allDiffs.push({ before, after });
   }
 
   const success = currentScore <= targetScore;
@@ -222,7 +254,7 @@ export async function reduceAI(
     initialScore,
     finalScore: currentScore,
     attempts,
-    cleanedBody: currentBody,
+    cleanedBody: currentHtml,
     diffs: allDiffs,
     message: success
       ? `Reduced from ${initialScore}% to ${currentScore}% in ${attempts.length} attempt(s).`
