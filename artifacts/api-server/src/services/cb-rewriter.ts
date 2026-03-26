@@ -1,91 +1,138 @@
 import { anthropic } from "@workspace/integrations-anthropic-ai";
 
-const CB_KILL_WORDS = [
-  "particularly", "notably", "essentially", "effectively", "significantly",
-  "comprehensive", "robust", "furthermore", "moreover",
-  "it is important to note", "it is worth noting", "it should be noted",
-  "increasingly", "this underscores", "this highlights", "this demonstrates",
-  "it is clear that", "it becomes apparent", "needless to say",
-  "as a result of this", "in light of this", "to this end",
-  "plays a crucial role", "plays an important role", "serves as a reminder",
-  "has long been", "have long been", "a wide range of", "a variety of",
-].join(", ");
+function buildCBPrompt(sentence: string): string {
+  const wordCount = sentence.split(/\s+/).length;
+  const isFragment = !sentence.trim().match(/[.!?]$/);
 
-function buildCBPrompt(sentence: string, wordCount: number): string {
-  return `You are editing a sentence for ClownBinge.com — a PRIMARY SOURCE accountability journalism platform run by Primary Source Analytics, LLC. Tagline: "INDEPENDENT. VERIFIED. THE PRIMARY SOURCE."
+  return `You are rewriting a single sentence from a primary-source accountability journalism article to reduce AI detection. The article is built from government records, congressional transcripts, court filings, and official databases. The voice is direct, documented, and sardonic.
 
-WHAT THIS PLATFORM DOES:
-ClownBinge publishes documented evidence journalism. Every article is built from government records, congressional transcripts, court filings, census data, USCIS records, C-SPAN footage, immigration databases, and other official primary sources. Writers are researchers reading actual documents — not reporters paraphrasing what someone said about a document.
+YOUR ONLY JOB: Make this sentence sound more human. Change sentence structure, rhythm, syntax. Nothing else.
 
-THE HUMAN VOICE IN PRIMARY SOURCE JOURNALISM:
-This is NOT conversational writing. It IS direct, documented, and slightly sardonic. The voice is a researcher who has the file open on their desk and is telling you exactly what it says. Human markers in this genre are:
-- Observational asides ("The record does not explain why. It just logs that it happened.")
-- The researcher's reaction to what they found ("That is the record. It does not offer an opinion.")
-- Varied sentence rhythm — short declarative, then the longer implication
-- Concrete specificity — not "immigration records" but "a displaced persons visa filed in November 1951"
-- Editorial discipline — state the fact, then let one sentence land the punch
+=== ABSOLUTE PROHIBITIONS — WILL CAUSE REJECTION ===
 
-WHAT TRIGGERS AI DETECTION IN THIS GENRE:
-- Perfectly smooth sequential fact-listing with no human texture between items
-- Generic transition phrases between facts ("Furthermore," "Additionally," "It is worth noting")
-- Passive constructions that distance the writer from the record ("It was documented that...")
-- Parallel sentence structures of identical length (three 18-word sentences in a row)
-- Abstract category nouns instead of specific named things
+1. QUALIFIER WORDS: Do not change any qualifier word to a synonym.
+   - "approximately" must stay "approximately" — NOT "about" / "roughly" / "around"
+   - "nearly" stays "nearly" — NOT "almost"
+   - "over" stays "over" — NOT "more than"
+   - "under" stays "under" — NOT "fewer than"
+   The qualifier word must be IDENTICAL to the original. Copy it character for character.
 
-WHAT SOUNDS HUMAN HERE:
-- Short sentence. Then a slightly longer one that draws the implication.
-- Active, direct: "The record shows X" not "X was shown by the record"
-- The researcher's dry observation: "They did not respond." or "The document is still public."
-- Sentence length variation — punchy then expansive, not lockstep
-- Named specifics over categories: "Nogales, Arizona" not "the border crossing"
+2. PROPER NOUNS AND ORG NAMES: Copy every name exactly as written. No abbreviations.
+   - If the original says "International Holocaust Remembrance Alliance" — output must say "International Holocaust Remembrance Alliance"
+   - If the original says "Jewish Voice for Peace" — output must say "Jewish Voice for Peace"
+   - Never abbreviate to initials (IHRA, JVP, etc.) even if that is standard journalistic practice
+   - Never shorten, paraphrase, or alter any organization name, person name, or case name
 
-KILL THESE WORDS/PHRASES: ${CB_KILL_WORDS}
+3. FRAGMENTS STAY FRAGMENTS: If the input has no period/question mark/exclamation at the end, it is a fragment. Output must also be a fragment. Do NOT turn it into a complete sentence.
+   - Input: "About 15,000 members" means output must also be a fragment, not "Peak membership hit 15,000."
 
-NON-NEGOTIABLE RULES:
-1. PRESERVE ALL PROPER NOUNS EXACTLY: names, titles, agency names, legislation names, case names, locations
-2. PRESERVE ALL NUMBERS EXACTLY: vote counts, dollar amounts, dates, years, percentages, case numbers, membership counts — if the number is there, it stays
-3. PRESERVE QUALIFIER WORDS EXACTLY: "approximately", "about", "roughly", "nearly", "almost", "over", "under", "more than", "fewer than", "less than" are factual precision markers — do NOT swap one for another. "approximately 15,000" must stay "approximately 15,000" not "about 15,000"
-4. PRESERVE ALL QUOTED TEXT EXACTLY: any content inside quotation marks stays verbatim
-5. PRESERVE APPROXIMATE WORD COUNT: original is ~${wordCount} words; stay within ${wordCount - 3} to ${wordCount + 5} words
-6. FRAGMENTS STAY FRAGMENTS: if the original is an incomplete sentence or noun phrase ("about 15,000 members"), rewrite it as a fragment too — do NOT expand it into a full sentence
-7. NO EM DASHES: use periods, commas, colons, or semicolons
-8. NO HEDGING: if a government record documents it, state it as fact, not as possibility
-9. NO NEW FACTS: never add information not present in the original sentence
-10. NO SOFTENING: do not reduce specificity to make the sentence sound gentler
-11. NO CLAIM INVERSION: "not fringe" means NOT fringe — do not rewrite it as "was mainstream" or any positive framing that changes the logical structure
-12. NO ABBREVIATIONS: never abbreviate any proper noun or organization name. If the original says "Jewish Voice for Peace" write "Jewish Voice for Peace" — not "JVP". If the original says "International Holocaust Remembrance Alliance" write "International Holocaust Remembrance Alliance" — not "IHRA". Spell it out exactly as given
+4. NEGATIVE CONSTRUCTIONS STAY NEGATIVE: If the original uses "not" or "never" or "no," the output must also use a negative construction. Do not convert to a positive equivalent.
+   - "not fringe" must stay "not fringe" — NOT "was mainstream"
+   - "not a religious text" must stay structured as a negative — NOT "is a secular document"
 
-Original sentence (flagged as AI-generated):
-"${sentence}"
+5. NUMBERS AND STATISTICS: Copy every number character for character.
+   - "15,000" stays "15,000" — not "fifteen thousand"
+   - "127 years ago" stays "127 years ago"
+   - "66%" stays "66%"
 
-Rewrite this so it sounds like a ClownBinge researcher who just pulled up the source document and is telling the reader exactly what it says — dry, documented, slightly sardonic, with natural human rhythm.
+=== WHAT YOU SHOULD CHANGE ===
 
-Return ONLY the rewritten sentence. No explanation, no quotation marks around the output.`;
+These AI detection patterns are what you are fixing:
+- Uniform sentence length — vary it
+- Passive voice constructions — make active when it does not change meaning
+- Generic transition phrases ("Furthermore," "Additionally," "It is worth noting") — cut them
+- Abstract category nouns — concrete specifics
+- Overly smooth, parallel list structures — break the pattern
+- Bureaucratic filler that adds no information — cut it
+
+=== FORMAT RULES ===
+- Output must be ${Math.max(wordCount - 2, 1)}–${wordCount + 4} words
+- ${isFragment ? "Input is a FRAGMENT. Output must also be a fragment (no terminal punctuation)." : "Input is a complete sentence. Output must also be a complete sentence."}
+- No em dashes. Use periods, commas, colons, or semicolons instead.
+- Return ONLY the rewritten sentence. No explanation. No quotes around it. Just the sentence.
+
+=== INPUT ===
+${sentence}`;
+}
+
+async function qualityGateSentence(
+  original: string,
+  rewritten: string
+): Promise<{ pass: boolean; violations: string[] }> {
+  try {
+    const response = await anthropic.messages.create({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 400,
+      temperature: 0,
+      messages: [{
+        role: "user",
+        content: `Compare these two sentences and check for violations. Return JSON only.
+
+ORIGINAL: ${original}
+REWRITTEN: ${rewritten}
+
+Check each rule. Return: {"pass": true/false, "violations": ["list of violations or empty array"]}
+
+Rules:
+1. Every number in original must appear identically in rewritten
+2. Every proper noun and org name must appear identically — no abbreviations allowed
+3. If original is a fragment (no terminal punctuation), rewritten must also be a fragment
+4. Every qualifier word (approximately, nearly, roughly, about, over, under, more than, fewer than, less than) must be identical — no synonym swaps
+5. If original uses a negative construction (not, never, no), rewritten must also use a negative construction
+6. No hedging language added that was not in original
+7. No softening of claims or reduction in specificity
+
+Return only valid JSON. No explanation.`,
+      }],
+    });
+
+    const text = response.content[0].type === "text"
+      ? response.content[0].text.trim()
+      : '{"pass":false,"violations":["parse error"]}';
+
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) return { pass: false, violations: ["JSON parse error from gate"] };
+    return JSON.parse(jsonMatch[0]);
+  } catch {
+    return { pass: false, violations: ["gate error"] };
+  }
 }
 
 export async function rewriteSentence(sentence: string): Promise<string> {
   const trimmed = sentence.trim();
   if (!trimmed || trimmed.length < 20) return trimmed;
 
-  const wordCount = trimmed.split(/\s+/).length;
-  const prompt = buildCBPrompt(trimmed, wordCount);
+  const prompt = buildCBPrompt(trimmed);
+  const maxRetries = 3;
 
-  try {
-    const response = await anthropic.messages.create({
-      model: "claude-sonnet-4-5",
-      max_tokens: 500,
-      temperature: 0.6,
-      messages: [{ role: "user", content: prompt }],
-    });
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await anthropic.messages.create({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 500,
+        temperature: 0.85,
+        messages: [{ role: "user", content: prompt }],
+      });
 
-    const content = response.content[0];
-    if (content.type !== "text") return trimmed;
+      const content = response.content[0];
+      if (content.type !== "text") continue;
 
-    const result = content.text.trim().replace(/^["']|["']$/g, "");
-    if (!result || result.length < 10) return trimmed;
+      const rewritten = content.text.trim().replace(/^["']|["']$/g, "");
+      if (!rewritten || rewritten.length < 10) continue;
 
-    return result;
-  } catch {
-    return trimmed;
+      const gate = await qualityGateSentence(trimmed, rewritten);
+
+      if (gate.pass) {
+        if (attempt > 1) console.log(`[CBRewrite] Gate PASS on attempt ${attempt}`);
+        return rewritten;
+      } else {
+        console.log(`[CBRewrite] Gate FAIL attempt ${attempt}: ${gate.violations.join("; ")}`);
+      }
+    } catch {
+      console.log(`[CBRewrite] Error on attempt ${attempt}`);
+    }
   }
+
+  console.log(`[CBRewrite] All ${maxRetries} attempts failed gate. Preserving original.`);
+  return trimmed;
 }

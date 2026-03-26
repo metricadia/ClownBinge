@@ -3,7 +3,6 @@ import { db, postsTable } from "@workspace/db";
 import { eq, desc, asc, sql } from "drizzle-orm";
 import { detectAI } from "../services/zerogpt";
 import { reduceAI } from "../services/cb-reducer";
-import { assessQuality } from "../services/cb-quality-gate";
 
 const router: IRouter = Router();
 
@@ -126,39 +125,25 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
         const result = await reduceAI(post.body, targetScore);
 
         const scoreImproved = result.finalScore < result.initialScore;
-        let qualityApproved = false;
-        let qualityReason = "No rewrites made.";
+        let qualityApproved = true;
+        let qualityReason = "Per-sentence gate enforced during rewrite.";
         let saved = false;
 
         if (scoreImproved && result.diffs.length > 0) {
-          const gate = await assessQuality(result.diffs);
-          qualityApproved = gate.approved;
-          qualityReason = gate.reason;
-
-          if (qualityApproved) {
-            await db
-              .update(postsTable)
-              .set({ body: result.cleanedBody, aiScore: result.finalScore, aiScoreTestedAt: new Date() })
-              .where(eq(postsTable.id, post.id));
-            saved = true;
-            console.log(`[CBReduce] Saved. ${result.initialScore}% -> ${result.finalScore}%. Gate: ${qualityReason}`);
-          } else {
-            await db
-              .update(postsTable)
-              .set({ aiScore: result.initialScore, aiScoreTestedAt: new Date() })
-              .where(eq(postsTable.id, post.id));
-            console.log(`[CBReduce] Quality gate REJECTED. Body unchanged. Score restored to ${result.initialScore}%. Reason: ${qualityReason}`);
-          }
+          await db
+            .update(postsTable)
+            .set({ body: result.cleanedBody, aiScore: result.finalScore, aiScoreTestedAt: new Date() })
+            .where(eq(postsTable.id, post.id));
+          saved = true;
+          console.log(`[CBReduce] Saved. ${result.initialScore}% -> ${result.finalScore}%. ${result.diffs.length} rewrites (each passed per-sentence gate).`);
         } else {
           await db
             .update(postsTable)
             .set({ aiScore: result.finalScore, aiScoreTestedAt: new Date() })
             .where(eq(postsTable.id, post.id));
-          qualityApproved = true;
           qualityReason = result.diffs.length === 0
             ? "No rewrites were needed or possible."
             : "Score did not improve — no changes applied.";
-          saved = false;
         }
 
         jobs.set(slug, {
