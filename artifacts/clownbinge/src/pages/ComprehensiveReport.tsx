@@ -82,7 +82,7 @@ export default function ComprehensiveReport() {
                   </div>
                   <h2 className="font-sans font-bold text-2xl text-primary mb-3">Full Public Report</h2>
                   <p className="text-header text-base mb-4 leading-relaxed">
-                    20-page verified dossier: voting record, finances, legal history, conflict assessment.
+                    Up to 20-page verified dossier: voting record, finances, legal history, conflict assessment.
                   </p>
                   <div className="font-sans font-extrabold text-4xl text-secondary mb-1">$24.95</div>
                   <p className="text-sm text-header mb-6">24-hour delivery. APA 7 cited.</p>
@@ -112,9 +112,9 @@ export default function ComprehensiveReport() {
                 </p>
               </div>
               <div className="p-6 rounded-xl border bg-slate-50">
-                <div className="font-bold text-header mb-2">APA 7 Citations</div>
+                <div className="font-bold text-header mb-2">Report Honesty</div>
                 <p className="text-header text-sm leading-relaxed">
-                  Every claim is numbered. Every number links to the original source. Ready for scholarly work, journalism, or legal proceedings.
+                  We cannot guarantee the content of any report. We report what the public record contains. That's all we can promise.
                 </p>
               </div>
               <div className="p-6 rounded-xl border bg-slate-50">
@@ -167,7 +167,7 @@ export default function ComprehensiveReport() {
               {[
                 { label: "Casual Truth-Seekers", text: "You see a viral claim. $4.95 gets you the verified record in minutes." },
                 { label: "Student Researchers", text: "Building a paper? Start with Quick Verify, expand to Full Report for your bibliography." },
-                { label: "Journalists", text: "Before an interview, get a comprehensive dossier. 20 pages. APA 7 citations. Ready to publish." },
+                { label: "Journalists", text: "Before an interview, get a comprehensive dossier. Up to 20 pages. APA 7 citations. Ready to publish." },
                 { label: "Academics & Think Tanks", text: "Baseline research drawn from primary sources. Citable. Defensible. Archival." },
                 { label: "Civic Organizations", text: "Evaluating elected officials? Compare candidates using identical, verified dossiers." },
                 { label: "Debate Prep", text: "See where the record contradicts the narrative. Instant ammunition for arguments." },
@@ -215,7 +215,7 @@ export default function ComprehensiveReport() {
                   {[
                     { step: "1", title: "Order Your Report", text: "Provide the public figure's name and office." },
                     { step: "2", title: "We Compile the Record", text: "10 sections from government filings, court records, verified sources." },
-                    { step: "3", title: "Receive Your PDF", text: "20-page APA 7-formatted report within 24 hours." },
+                    { step: "3", title: "Receive Your PDF", text: "Up to 20-page APA 7-formatted report within 24 hours." },
                   ].map((item) => (
                     <div key={item.step} className="flex gap-4 items-start p-4 rounded-lg bg-white border">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-white shrink-0" style={{ background: "#1A3A8F" }}>
@@ -237,9 +237,14 @@ export default function ComprehensiveReport() {
         <section className="py-12 px-4 bg-white">
           <div className="max-w-4xl mx-auto p-6 rounded-xl bg-slate-50 border text-sm text-header leading-relaxed flex gap-3">
             <Lock className="w-4 h-4 shrink-0 mt-0.5 text-primary" />
-            <p>
-              ClownBinge Verify & Reports are compiled exclusively from publicly available legal records, government filings, court documents, official disclosures, and verified news sources. We do not obtain, use, or include private, non-public, or illegally obtained information. All findings reflect the documented public record as of the compilation date.
-            </p>
+            <div>
+              <p className="mb-3">
+                <strong>Report Content Disclaimer:</strong> We cannot guarantee the content of any report. We report only what the publicly available record contains—voting records, legal filings, campaign finance data, news archives. That's our promise: the record, nothing more.
+              </p>
+              <p>
+                ClownBinge Verify & Reports are compiled exclusively from publicly available legal records, government filings, court documents, official disclosures, and verified news sources. We do not obtain, use, or include private, non-public, or illegally obtained information. All findings reflect the documented public record as of the compilation date.
+              </p>
+            </div>
           </div>
         </section>
 
