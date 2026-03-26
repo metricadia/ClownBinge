@@ -67,7 +67,7 @@ router.post("/fixme/detect/:slug", async (req, res) => {
 
 router.post("/fixme/reduce/:slug", async (req, res) => {
   const { slug } = req.params as { slug: string };
-  const targetScore: number = typeof req.body.targetScore === "number" ? req.body.targetScore : 15;
+  const targetScore: number = typeof req.body?.targetScore === "number" ? req.body.targetScore : 15;
 
   try {
     const [post] = await db

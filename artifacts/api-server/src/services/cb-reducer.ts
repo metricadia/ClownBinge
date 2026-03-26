@@ -1,4 +1,4 @@
-import { detectAI, stripHtmlForDetection } from "./zerogpt";
+import { detectAI } from "./zerogpt";
 import { rewriteSentence } from "./cb-rewriter";
 
 export interface ReduceAttempt {
@@ -53,10 +53,40 @@ function replaceInHtml(html: string, original: string, replacement: string): str
   });
 }
 
+async function rewriteBatch(
+  sentences: string[],
+  concurrency = 8
+): Promise<Map<string, string>> {
+  const results = new Map<string, string>();
+  const valid = sentences.filter((s) => s.trim().length >= 20);
+
+  for (let i = 0; i < valid.length; i += concurrency) {
+    const batch = valid.slice(i, i + concurrency);
+    const settled = await Promise.allSettled(
+      batch.map(async (sentence) => {
+        const trimmed = sentence.trim();
+        const rewritten = await rewriteSentence(trimmed);
+        return { original: trimmed, rewritten };
+      })
+    );
+
+    for (const result of settled) {
+      if (result.status === "fulfilled") {
+        const { original, rewritten } = result.value;
+        if (rewritten !== original) {
+          results.set(original, rewritten);
+        }
+      }
+    }
+  }
+
+  return results;
+}
+
 export async function reduceAI(
   htmlBody: string,
   targetScore = 15,
-  maxAttempts = 8
+  maxAttempts = 4
 ): Promise<ReduceResult> {
   const { score: initialScore, flaggedSentences: initialFlagged } = await detectAI(htmlBody);
 
@@ -85,16 +115,10 @@ export async function reduceAI(
 
     console.log(`[CBReduce] Attempt ${attempt}: score=${currentScore}%, flagged=${flaggedSentences.length}`);
 
-    let rewriteCount = 0;
-    for (const sentence of flaggedSentences) {
-      const trimmed = sentence.trim();
-      if (!trimmed || trimmed.length < 20) continue;
+    const rewrites = await rewriteBatch(flaggedSentences);
 
-      const rewritten = await rewriteSentence(trimmed);
-      if (rewritten !== trimmed) {
-        currentBody = replaceInHtml(currentBody, trimmed, rewritten);
-        rewriteCount++;
-      }
+    for (const [original, replacement] of rewrites) {
+      currentBody = replaceInHtml(currentBody, original, replacement);
     }
 
     const { score: newScore, flaggedSentences: newFlagged } = await detectAI(currentBody);
@@ -103,17 +127,15 @@ export async function reduceAI(
       attemptNumber: attempt,
       scoreBeforeRewrite: currentScore,
       scoreAfterRewrite: newScore,
-      sentencesRewritten: rewriteCount,
+      sentencesRewritten: rewrites.size,
     });
 
-    console.log(`[CBReduce] Attempt ${attempt} result: ${currentScore}% -> ${newScore}%`);
+    console.log(`[CBReduce] Attempt ${attempt} result: ${currentScore}% -> ${newScore}% (rewrote ${rewrites.size} sentences)`);
 
     flaggedSentences = newFlagged;
+    currentScore = newScore;
 
-    if (newScore <= targetScore) {
-      currentScore = newScore;
-      break;
-    }
+    if (newScore <= targetScore) break;
 
     if (attempts.length >= 2) {
       const lastTwo = attempts.slice(-2);
@@ -123,8 +145,7 @@ export async function reduceAI(
       }
     }
 
-    currentScore = newScore;
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, 300));
   }
 
   const success = currentScore <= targetScore;
