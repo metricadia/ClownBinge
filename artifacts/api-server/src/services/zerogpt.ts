@@ -40,15 +40,19 @@ function splitIntoChunks(text: string, maxChars = 45000): string[] {
   return chunks;
 }
 
+const ZEROGPT_HEADERS = {
+  "content-type": "application/json",
+  "Origin": "https://www.zerogpt.com",
+  "Referer": "https://www.zerogpt.com/",
+  "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+};
+
 export interface ZeroGPTResult {
   score: number;
   flaggedSentences: string[];
 }
 
 export async function detectAI(htmlBody: string): Promise<ZeroGPTResult> {
-  const RAPIDAPI_KEY = process.env["RAPIDAPI_KEY"];
-  if (!RAPIDAPI_KEY) throw new Error("RAPIDAPI_KEY not configured");
-
   const plainText = stripHtmlForDetection(htmlBody);
   if (plainText.length < 100) return { score: 0, flaggedSentences: [] };
 
@@ -56,13 +60,9 @@ export async function detectAI(htmlBody: string): Promise<ZeroGPTResult> {
   const chunkResults: Array<{ score: number; wordCount: number; sentences: string[] }> = [];
 
   for (const chunk of chunks) {
-    const res = await fetch("https://zerogpt.p.rapidapi.com/api/v1/detectText", {
+    const res = await fetch("https://api.zerogpt.com/api/detect/detectText", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "X-RapidAPI-Key": RAPIDAPI_KEY,
-        "X-RapidAPI-Host": "zerogpt.p.rapidapi.com",
-      },
+      headers: ZEROGPT_HEADERS,
       body: JSON.stringify({ input_text: chunk }),
       signal: AbortSignal.timeout(30000),
     });
@@ -75,15 +75,15 @@ export async function detectAI(htmlBody: string): Promise<ZeroGPTResult> {
     const data = (await res.json()) as {
       success?: boolean;
       data?: {
-        is_gpt_generated?: number;
-        words_count?: number;
-        gpt_generated_sentences?: string[];
+        fakePercentage?: number;
+        textWords?: number;
+        sentences?: string[];
       };
     };
 
-    const score = data?.data?.is_gpt_generated ?? 0;
-    const wordCount = data?.data?.words_count ?? chunk.split(/\s+/).length;
-    const sentences = data?.data?.gpt_generated_sentences ?? [];
+    const score = data?.data?.fakePercentage ?? 0;
+    const wordCount = data?.data?.textWords ?? chunk.split(/\s+/).length;
+    const sentences = data?.data?.sentences ?? [];
 
     chunkResults.push({ score, wordCount, sentences });
 

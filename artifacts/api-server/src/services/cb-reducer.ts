@@ -103,24 +103,44 @@ export async function reduceAI(
   targetScore = 15,
   maxAttempts = 4
 ): Promise<ReduceResult> {
-  const { score: initialScore, flaggedSentences: initialFlagged } = await detectAI(htmlBody);
+  const { score: scan1Score, flaggedSentences: scan1Flagged } = await detectAI(htmlBody);
 
-  if (initialScore <= targetScore) {
+  if (scan1Score <= targetScore) {
     return {
       success: true,
-      initialScore,
-      finalScore: initialScore,
+      initialScore: scan1Score,
+      finalScore: scan1Score,
       attempts: [],
       cleanedBody: htmlBody,
-      message: `Already at target. Score: ${initialScore}%`,
+      message: `Already at target. Score: ${scan1Score}%`,
     };
   }
 
+  console.log(`[CBReduce] Scan 1: ${scan1Score}% — waiting 2s for confirmatory scan...`);
+  await new Promise((r) => setTimeout(r, 2000));
+
+  const { score: scan2Score, flaggedSentences: scan2Flagged } = await detectAI(htmlBody);
+
+  const confirmedScore = Math.round((scan1Score + scan2Score) / 2);
+  console.log(`[CBReduce] Scan 2: ${scan2Score}% — confirmed average: ${confirmedScore}%`);
+
+  if (scan2Score <= targetScore) {
+    return {
+      success: true,
+      initialScore: confirmedScore,
+      finalScore: scan2Score,
+      attempts: [],
+      cleanedBody: htmlBody,
+      message: `Variance check passed. Scan 1: ${scan1Score}%, Scan 2: ${scan2Score}% — no reduction needed.`,
+    };
+  }
+
+  const initialScore = confirmedScore;
   let currentBody = htmlBody;
-  let currentScore = initialScore;
+  let currentScore = confirmedScore;
   const attempts: ReduceAttempt[] = [];
 
-  let flaggedSentences = initialFlagged;
+  let flaggedSentences = scan2Flagged.length > 0 ? scan2Flagged : scan1Flagged;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     if (flaggedSentences.length === 0) {

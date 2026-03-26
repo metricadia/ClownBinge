@@ -364,7 +364,7 @@ export default function FixMe() {
           <div className="grid grid-cols-2 gap-4 text-xs text-gray-500">
             <div>
               <p className="text-gray-400 font-medium mb-1">Detect</p>
-              <p>Sends article body to ZeroGPT for AI detection. Score (0-100%) is saved to the database. Requires RAPIDAPI_KEY secret.</p>
+              <p>Sends article body text (body only, no UI chrome) to ZeroGPT for AI detection. Score (0-100%) is saved to the database.</p>
             </div>
             <div>
               <p className="text-gray-400 font-medium mb-1">Reduce AI</p>
