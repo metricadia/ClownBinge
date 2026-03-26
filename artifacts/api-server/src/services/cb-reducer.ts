@@ -154,18 +154,31 @@ export async function reduceAI(
 
   const { score: scan2Score, flaggedSentences: scan2Flagged } = await detectAI(htmlBody);
 
-  const confirmedScore = Math.round((scan1Score + scan2Score) / 2);
-  console.log(`[CBReduce] Scan 2: ${scan2Score}% — confirmed average: ${confirmedScore}%`);
+  const variance = Math.abs(scan1Score - scan2Score);
+  console.log(`[CBReduce] Scan 2: ${scan2Score}% — variance: ${variance} points`);
 
-  if (scan2Score <= targetScore) {
+  let confirmedScore: number;
+
+  if (variance > 20) {
+    console.log(`[CBReduce] High variance detected (${scan1Score}% vs ${scan2Score}%). Running tiebreaker scan 3...`);
+    await new Promise((r) => setTimeout(r, 2000));
+    const { score: scan3Score } = await detectAI(htmlBody);
+    console.log(`[CBReduce] Scan 3: ${scan3Score}%`);
+    confirmedScore = Math.max(scan1Score, scan2Score, scan3Score);
+    console.log(`[CBReduce] High-variance: using max of three scans = ${confirmedScore}%`);
+  } else {
+    confirmedScore = Math.round((scan1Score + scan2Score) / 2);
+  }
+
+  if (confirmedScore <= targetScore) {
     return {
       success: true,
       initialScore: confirmedScore,
-      finalScore: scan2Score,
+      finalScore: confirmedScore,
       attempts: [],
       cleanedBody: htmlBody,
       diffs: [],
-      message: `Variance check passed. Scan 1: ${scan1Score}%, Scan 2: ${scan2Score}% — no reduction needed.`,
+      message: `Confirmed passing. Scans: ${scan1Score}%, ${scan2Score}% — confirmed ${confirmedScore}% — no reduction needed.`,
     };
   }
 
