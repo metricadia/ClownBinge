@@ -13,4 +13,5 @@ export const STAFF_PICKS_SLUGS = [
   "america-not-taught-same-chapter-cross-racial-solidarity-documented-record",
   "spirituality-human-psyche-health-outcomes-harvard-johns-hopkins-investigation",
   "america-resource-wars-iraq-iran-libya-petrodollar-race",
+  "do-unto-others-no-more-economic-wars-children-will-hate-us",
 ];
