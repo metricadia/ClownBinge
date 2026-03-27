@@ -104,7 +104,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             className="flex flex-col leading-none hover:opacity-90 transition-opacity group"
           >
             <div className="flex items-baseline gap-0">
-              <span className="logo-text text-[2rem] sm:text-4xl tracking-tight" style={{ color: "#F5C518" }}>Citatious</span>
+              <span className="logo-text text-[2rem] sm:text-4xl tracking-tight" style={{ color: "#F5C518" }}>citatious</span>
               <span className="text-white/40 text-2xl sm:text-3xl font-sans font-light mx-1.5 sm:mx-2">|</span>
               <span className="text-white/80 text-[1rem] sm:text-2xl font-sans font-semibold tracking-wider sm:tracking-widest uppercase">
                 Newsroom
@@ -239,7 +239,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <div className="col-span-1 md:col-span-2">
               <Link href="/" className="flex flex-col leading-none mb-4 inline-flex hover:opacity-90 transition-opacity">
                 <div className="flex items-baseline gap-0">
-                  <span className="logo-text text-3xl tracking-tight" style={{ color: "#F5C518" }}>Citatious</span>
+                  <span className="logo-text text-3xl tracking-tight" style={{ color: "#F5C518" }}>citatious</span>
                   <span className="text-white/40 text-2xl font-sans font-light mx-2">|</span>
                   <span className="text-white/80 text-xl font-sans font-semibold tracking-widest uppercase">
                     Newsroom
