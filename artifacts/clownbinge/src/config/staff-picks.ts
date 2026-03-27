@@ -12,4 +12,5 @@ export const STAFF_PICKS_SLUGS = [
   "beyond-social-security-what-to-build-before-the-clock-runs-out",
   "america-not-taught-same-chapter-cross-racial-solidarity-documented-record",
   "spirituality-human-psyche-health-outcomes-harvard-johns-hopkins-investigation",
+  "america-resource-wars-iraq-iran-libya-petrodollar-race",
 ];
