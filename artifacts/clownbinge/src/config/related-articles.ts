@@ -325,14 +325,7 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
     "meta-anti-palestine-investigation-documents-bsr-hrw-drop-site",
   ],
 
-  // --- Founding statement / self-determination ---
-  "respectability-is-unremarkable": [
-    "they-did-not-have-to-primary-source-record-human-selflessness",
-    "a-roadmap-home-requiem-american-statesman",
-    "ketanji-brown-jackson-federal-record-confirmation-hearing",
-  ],
   "they-did-not-have-to-primary-source-record-human-selflessness": [
-    "respectability-is-unremarkable",
     "first-nations-survival-census-record-us-history",
     "second-amendment-racial-disparity-philando-castile",
   ],
