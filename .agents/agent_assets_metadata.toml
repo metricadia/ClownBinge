@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "xg1Z4amkhe-FC5G2Uhxpz"
+uri = "file://clownbinge-content-export.csv"
+type = "table"
+title = "ClownBinge Content Export — All 74 Articles"
