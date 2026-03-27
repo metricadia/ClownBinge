@@ -14,4 +14,5 @@ export const STAFF_PICKS_SLUGS = [
   "spirituality-human-psyche-health-outcomes-harvard-johns-hopkins-investigation",
   "america-resource-wars-iraq-iran-libya-petrodollar-race",
   "do-unto-others-no-more-economic-wars-children-will-hate-us",
+  "negativity-is-killing-you-hatred-stress-obesity-health-case",
 ];
