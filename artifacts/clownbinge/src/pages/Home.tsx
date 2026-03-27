@@ -42,6 +42,7 @@ export default function Home() {
   const { data: selfOwnData } = usePostsFeed('self_owned');
   const topSelfOwn = selfOwnData?.posts?.[0] ?? null;
   const { data: highlightedPost } = usePostDetail(HIGHLY_POPULAR_SLUG);
+  const { data: foundingDoc } = usePostDetail('respectability-is-unremarkable');
 
   // Staff picks: filter curated slugs from a full fetch; regular feed uses paginated posts
   // Religion articles are excluded from the "all" feed — they only appear when the religion category is explicitly selected
@@ -282,6 +283,51 @@ export default function Home() {
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block w-[320px] shrink-0 space-y-8">
             <div className="sticky top-[96px]">
+              {/* Founding Document block */}
+              {foundingDoc && (
+                <div className="mb-6 rounded-xl overflow-hidden" style={{ border: "2px solid #B8860B" }}>
+                  {/* Header strip */}
+                  <div className="px-4 py-3 flex items-center justify-between" style={{ background: "#1A3A8F" }}>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[9px] font-black uppercase tracking-[0.25em]" style={{ color: "#F5C518" }}>
+                        Official Record
+                      </span>
+                      <span style={{ color: "rgba(245,197,24,0.4)" }} className="text-xs">|</span>
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-white/50">
+                        {foundingDoc.caseNumber}
+                      </span>
+                    </div>
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                      <rect x="1" y="1" width="11" height="11" rx="2" stroke="#F5C518" strokeWidth="1.2"/>
+                      <path d="M3.5 4.5h6M3.5 6.5h6M3.5 8.5h4" stroke="#F5C518" strokeWidth="1.1" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+
+                  {/* Body */}
+                  <div className="px-4 py-4" style={{ background: "#0d1a3a" }}>
+                    <p className="text-[9px] font-black uppercase tracking-[0.3em] mb-2" style={{ color: "#B8860B" }}>
+                      Founding Document
+                    </p>
+                    <Link href={`/case/${foundingDoc.slug}`}>
+                      <h3 className="font-sans font-extrabold text-sm text-white leading-snug mb-3 hover:opacity-80 transition-opacity cursor-pointer">
+                        {foundingDoc.title}
+                      </h3>
+                    </Link>
+                    <p className="text-[11px] leading-relaxed mb-4 line-clamp-3" style={{ color: "rgba(255,255,255,0.55)" }}>
+                      Why this platform was built. Who built the machine we are standing against. And exactly how we intend to beat it.
+                    </p>
+                    <Link
+                      href={`/case/${foundingDoc.slug}`}
+                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-opacity hover:opacity-85"
+                      style={{ background: "#B8860B", color: "#fff" }}
+                    >
+                      Read the Origin Story
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </div>
+                </div>
+              )}
+
               {/* Top Self-Own card -- pulls real data */}
               {topSelfOwn && (
                 <div className="bg-primary text-white rounded-xl p-6 shadow-xl shadow-primary/20 mb-8 border border-primary-foreground/10">
