@@ -104,7 +104,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             className="flex flex-col leading-none hover:opacity-90 transition-opacity group"
           >
             <div className="flex items-baseline gap-0">
-              <span className="logo-text text-[2rem] sm:text-4xl tracking-tight" style={{ color: "#F5C518" }}>citatious</span>
+              <span className="logo-text text-[2rem] sm:text-4xl text-white tracking-tight">Clown</span>
+              <span className="logo-text text-[2rem] sm:text-4xl text-secondary tracking-tight">Binge</span>
               <span className="text-white/40 text-2xl sm:text-3xl font-sans font-light mx-1.5 sm:mx-2">|</span>
               <span className="text-white/80 text-[1rem] sm:text-2xl font-sans font-semibold tracking-wider sm:tracking-widest uppercase">
                 Newsroom
@@ -224,7 +225,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         {location !== '/' && (
           <div className="cb-container pt-4 pb-0">
             <p className="text-xs text-muted-foreground/60 font-medium tracking-wide">
-              <span className="font-bold text-header/70">Citatious</span> is A Public Accountability News Platform.
+              <span className="font-bold text-header/70">ClownBinge</span> is A Public Accountability News Platform.
             </p>
             <div className="h-px w-full bg-[#F5C518]/30 mt-2" />
           </div>
@@ -239,7 +240,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <div className="col-span-1 md:col-span-2">
               <Link href="/" className="flex flex-col leading-none mb-4 inline-flex hover:opacity-90 transition-opacity">
                 <div className="flex items-baseline gap-0">
-                  <span className="logo-text text-3xl tracking-tight" style={{ color: "#F5C518" }}>citatious</span>
+                  <span className="logo-text text-3xl text-white tracking-tight">Clown</span>
+                  <span className="logo-text text-3xl text-secondary tracking-tight">Binge</span>
                   <span className="text-white/40 text-2xl font-sans font-light mx-2">|</span>
                   <span className="text-white/80 text-xl font-sans font-semibold tracking-widest uppercase">
                     Newsroom
@@ -296,7 +298,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
 
           <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <p className="text-xs font-mono text-white/50 leading-relaxed">
-              &copy; {new Date().getFullYear()} <span className="text-white/70 font-semibold">Citatious</span>
+              &copy; {new Date().getFullYear()} <span className="text-white/70 font-semibold">ClownBinge</span>
               <span className="mx-2 text-white/20">|</span>
               <span className="text-white/50">Primary Source Analytics, LLC</span>
             </p>

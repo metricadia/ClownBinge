@@ -4,7 +4,7 @@ import { usePageSeoHead } from "@/hooks/use-seo-head";
 export default function Privacy() {
   usePageSeoHead({
     title: "Privacy Policy",
-    description: "Citatious Privacy Policy — how Primary Source Analytics, LLC collects, uses, and protects your data.",
+    description: "ClownBinge Privacy Policy — how Primary Source Analytics, LLC collects, uses, and protects your data.",
     path: "/privacy",
     schemaType: "WebPage",
   });
@@ -24,7 +24,7 @@ export default function Privacy() {
 
           <h2>1. Information We Collect</h2>
           <p>
-            <strong>Information you provide to us:</strong> When you subscribe to our newsletter, use our contact form, or purchase a book, you may provide us with your email address, name, and payment information. <em>Note: Payment information is processed securely by Stripe; Citatious does not store your credit card details.</em>
+            <strong>Information you provide to us:</strong> When you subscribe to our newsletter, use our contact form, or purchase a book, you may provide us with your email address, name, and payment information. <em>Note: Payment information is processed securely by Stripe; ClownBinge does not store your credit card details.</em>
           </p>
           <p>
             <strong>Information collected automatically:</strong> We use standard analytics and advertising partners (Ezoic) that may collect IP addresses, browser types, device information, and interaction data using cookies and similar technologies.
@@ -53,14 +53,14 @@ export default function Privacy() {
 
           <h2>5. Your Rights</h2>
           <p>
-            You have the right to unsubscribe from our newsletter at any time using the link at the bottom of every email. You may also request deletion of your account/data by contacting us at privacy@citatious.com.
+            You have the right to unsubscribe from our newsletter at any time using the link at the bottom of every email. You may also request deletion of your account/data by contacting us at privacy@clownbinge.com.
           </p>
 
           <h2>6. Contact Us</h2>
           <p>
             If you have questions about this Privacy Policy, please contact us at:
             <br />Primary Source Analytics, LLC
-            <br />privacy@citatious.com
+            <br />privacy@clownbinge.com
           </p>
 
         </div>

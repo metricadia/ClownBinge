@@ -25,7 +25,7 @@ export function VerifiedBadge({ source, date }: { source?: string | null, date?:
               </DialogTitle>
             </div>
             <DialogDescription className="text-base text-foreground font-sans pt-2">
-              Every factual claim on Citatious traces to a verified public source. We do not use unverified sources, we do not fabricate claims, and we do not target private individuals.
+              Every factual claim on ClownBinge traces to a verified public source. We do not use unverified sources, we do not fabricate claims, and we do not target private individuals.
             </DialogDescription>
           </DialogHeader>
           

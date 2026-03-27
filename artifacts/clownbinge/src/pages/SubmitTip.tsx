@@ -124,7 +124,7 @@ export default function SubmitTip() {
             Submit a <span className="text-[#F5C518]">Post</span>
           </h1>
           <p className="text-white/75 text-sm sm:text-base max-w-lg leading-relaxed">
-            Citatious runs on primary sources. If you have a verifiable incident where a public figure contradicted their own documented record, we want it.
+            ClownBinge runs on primary sources. If you have a verifiable incident where a public figure contradicted their own documented record, we want it.
           </p>
           <div className="mt-6 flex flex-wrap gap-4 text-xs font-bold text-white/60 uppercase tracking-wider">
             <span>Independent</span>

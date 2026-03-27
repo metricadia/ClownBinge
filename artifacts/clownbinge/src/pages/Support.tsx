@@ -6,7 +6,7 @@ import { usePageSeoHead } from "@/hooks/use-seo-head";
 export default function Support() {
   usePageSeoHead({
     title: "Support Independent Journalism",
-    description: "Support Citatious — the only accountability journalism platform sourced exclusively from primary government and institutional records. Every dollar funds verified reporting.",
+    description: "Support ClownBinge — the only accountability journalism platform sourced exclusively from primary government and institutional records. Every dollar funds verified reporting.",
     path: "/contact",
     schemaType: "WebPage",
   });
@@ -36,7 +36,7 @@ export default function Support() {
             </p>
 
             <p className="text-white/75 text-lg leading-relaxed mb-8">
-              We built Citatious because we were done waiting for someone else to fix it.
+              We built ClownBinge because we were done waiting for someone else to fix it.
             </p>
 
             <div className="grid grid-cols-3 gap-6 border-t pt-8" style={{ borderColor: "rgba(255,255,255,0.15)" }}>
@@ -83,7 +83,7 @@ export default function Support() {
                   ))}
                 </div>
                 <a
-                  href="mailto:support@citatious.com?subject=I%20want%20to%20support%20Citatious"
+                  href="mailto:support@clownbinge.com?subject=I%20want%20to%20support%20ClownBinge"
                   className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-extrabold text-sm transition-opacity hover:opacity-90"
                   style={{ background: "#F5C518", color: "#1A3A8F" }}
                 >

@@ -13,25 +13,14 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 export default function About() {
   usePageSeoHead({
-    title: "About Citatious",
-    description: "Citatious is a knowledge movement. Primary sources used only. Always. We are the standard CNN, Fox News, and Reuters don't meet.",
+    title: "About ClownBinge",
+    description: "ClownBinge is verified accountability journalism by Primary Source Analytics, LLC. We document real incidents where public figures contradict their own documented record. Primary sources only.",
     path: "/about",
     schemaType: "AboutPage",
   });
   return (
     <Layout>
       <div className="max-w-3xl mx-auto px-4 py-12">
-
-        {/* Hero Statement */}
-        <div className="mb-10">
-          <h1 className="font-sans font-black text-4xl sm:text-5xl text-foreground leading-tight mb-3">
-            Citatious is a<br />
-            <span style={{ color: "#F5C518" }}>Knowledge Movement.</span>
-          </h1>
-          <p className="font-sans text-lg sm:text-xl text-foreground/70 font-medium tracking-wide">
-            Primary Sources Used Only. Always.
-          </p>
-        </div>
 
         {/* Why the Name */}
         <div
@@ -42,48 +31,31 @@ export default function About() {
             Why the Name
           </p>
           <h2 className="font-sans font-black text-2xl sm:text-3xl text-white leading-tight mb-4">
-            Citatious is a compliment.<br />
-            <span style={{ color: "#F5C518" }}>We took it as one.</span>
+            ClownBinge is not a joke.<br />
+            <span style={{ color: "#F5C518" }}>The clown farm is.</span>
           </h2>
-          <p className="text-sm sm:text-base text-white/75 leading-relaxed mb-4">
-            <span className="text-white">It is simultaneously an indictment of every newsroom that considers assertion a substitute for documentation.</span> CNN runs claims without primary source links. Fox News editorializes without filed records. Reuters moves wire copy without court document verification. This is the industry standard. We rejected it.
-          </p>
-          <p className="text-sm sm:text-base text-white/75 leading-relaxed mb-4">
-            Citatious means exactly what it sounds like: audaciously, relentlessly, structurally committed to the citation. Not as a style. Not as a differentiator. As the only legitimate basis for publishing anything at all.
-          </p>
           <p className="text-sm sm:text-base text-white/75 leading-relaxed">
-            If it cannot be traced to a primary source document, it does not exist in this archive. If it exists in this archive, the source is linked in the text. Check it yourself. That is something CNN cannot say. Neither can Fox. Neither can Reuters.
+            <span className="text-white">The modern news cycle has become a performance industry:</span> outrage manufactured for engagement, facts subordinated to narrative, journalism repackaged as entertainment and sold to corporate interests. We do not participate in that system. We audit it. Every record we publish is extracted from primary sources: court filings, congressional transcripts, federal agency data, declassified documents. The performance is in the farm. The record is in the archive.
           </p>
         </div>
 
-        {/* The Standard They Don't Meet */}
+        {/* About ClownBinge Manifesto */}
         <div className="mb-12">
-          <p className="text-xs font-bold tracking-widest uppercase text-primary mb-6">The Standard</p>
+          <p className="text-xs font-bold tracking-widest uppercase text-primary mb-6">About ClownBinge</p>
 
           <div className="rounded-2xl px-6 py-8 mb-8 border-l-4" style={{ borderColor: "#F5C518", backgroundColor: "rgba(245, 197, 24, 0.03)" }}>
             <p className="text-base sm:text-lg text-foreground leading-relaxed font-medium">
-              Every major news organization in the United States operates without a mandatory primary source requirement. Broadcasts are filed. Wire copy moves. Chyrons run. None of it is required to trace to a government document, a court filing, or a verifiable public record. Citatious has one rule: primary sources only. Always. That rule is not aspirational. It is structural. Nothing publishes here without it.
+              ClownBinge does the work most news organizations won't: systematically searching through fake news, foreign state propaganda, and AI-generated misinformation so you don't have to. We binge on primary sources—court documents, congressional records, federal filings—and curate the next generation of accountability journalism, where every claim is certified against government records or peer-reviewed research. The record is our only authority.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-            {[
-              { org: "CNN", fact: "No mandatory primary source citation standard. Opinion and analysis run without document links." },
-              { org: "Fox News", fact: "No mandatory primary source citation standard. Editorialized framing runs without filed records." },
-              { org: "Reuters", fact: "No mandatory primary source citation standard. Wire copy moves without court document verification." },
-            ].map(({ org, fact }) => (
-              <div key={org} className="rounded-xl border border-border bg-muted/40 px-4 py-4">
-                <p className="text-xs font-black uppercase tracking-widest text-header mb-2">{org}</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">{fact}</p>
-              </div>
-            ))}
-          </div>
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl">
+            <strong className="text-foreground">ClownBinge was built on a single premise:</strong> the gap between what public figures say and what the documented record shows is the most important story in American civic life. We do not manufacture that gap. We do not speculate about it. We measure it, source it, and publish it against one standard: the primary source document.
+          </p>
 
-          <div className="rounded-2xl px-6 py-5 mb-8 border border-[#F5C518]/30 bg-[#FEFCE8]">
-            <p className="font-mono font-bold text-base sm:text-lg tracking-wide" style={{ color: "#1A3A8F" }}>
-              <span style={{ color: "#C9980A" }}>Citatious</span> has a primary source requirement<span style={{ color: "#C9980A" }}>.</span> None of them do<span style={{ color: "#C9980A" }}>.</span>
-            </p>
-          </div>
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl">
+            Our team monitors over 65,000 global sources across the full information ecosystem, from local court records to international wire services, extracting only what survives verification against original documentation. If it cannot be traced to a primary source, it does not exist in this archive.
+          </p>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-8">
             {["No Emotion", "No Opinion", "No Slander"].map((item, i) => (
@@ -92,6 +64,12 @@ export default function About() {
                 {i < 2 && <span className="text-[#F5C518] font-black text-lg leading-none">&#183;</span>}
               </span>
             ))}
+          </div>
+
+          <div className="rounded-2xl px-6 py-5 mb-8 border border-[#F5C518]/30 bg-[#FEFCE8]">
+            <p className="font-mono font-bold text-base sm:text-lg tracking-wide" style={{ color: "#1A3A8F" }}>
+              <span style={{ color: "#C9980A" }}>65,000</span> global sources<span style={{ color: "#C9980A" }}>.</span> Zero opinions<span style={{ color: "#C9980A" }}>.</span> One standard: the primary source record<span style={{ color: "#C9980A" }}>.</span>
+            </p>
           </div>
 
           <div className="h-1 w-full bg-[#F5C518] rounded-full" />
@@ -109,7 +87,7 @@ export default function About() {
             Not as a marketing claim. As a structural commitment.
           </p>
           <p className="text-base text-muted-foreground leading-relaxed mb-6 max-w-2xl">
-            Citatious is operated by Primary Source Analytics, LLC, a company that accepts zero funding from political action committees, dark money organizations, corporate underwriters, or foundations with editorial interests. Editorial decisions are made by researchers, not revenue managers. Coverage is not subject to advertiser approval. Our independence is not a promise. It is the financial architecture of this organization.
+            ClownBinge is operated by Primary Source Analytics, LLC, a company that accepts zero funding from political action committees, dark money organizations, corporate underwriters, or foundations with editorial interests. Editorial decisions are made by researchers, not revenue managers. Coverage is not subject to advertiser approval. Our independence is not a promise. It is the financial architecture of this organization.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
@@ -127,11 +105,11 @@ export default function About() {
 
         <AdminNav />
 
-        {/* What Citatious Is */}
-        <SectionLabel>What Citatious Is</SectionLabel>
+        {/* What ClownBinge Is */}
+        <SectionLabel>What ClownBinge Is</SectionLabel>
         <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
-            Citatious is an independent, primary source journalism platform and knowledge movement operated by Primary Source Analytics, LLC. We publish documented accounts of public events, institutional conduct, and structural contradictions in American civic, religious, political, and financial life.
+            ClownBinge is an independent, primary source journalism platform operated by Primary Source Analytics, LLC. We publish documented accounts of public events, institutional conduct, and structural contradictions in American civic, religious, political, and financial life.
           </p>
           <p>
             We are not a commentary platform. We are not an opinion publication. We do not characterize, editorialize, or assign motive. We document. Every factual claim traces to a verifiable primary source before publication. The documents speak. We organize, source, and present them without interpretation.
@@ -147,7 +125,7 @@ export default function About() {
         <SectionLabel>What the Archive Documents</SectionLabel>
         <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
-            The Citatious archive documents the gap between the public record and the conduct, statements, and decisions of public figures and institutions. That gap is the story.
+            The ClownBinge archive documents the gap between the public record and the conduct, statements, and decisions of public figures and institutions. That gap is the story.
           </p>
           <p>
             The archive covers sixteen categories of documented public interest: self-contradiction in public life, law and justice, money and power, constitutional history, the documented contributions of American women, anti-racist figures and their historical record, United States history, religion and public accountability, original investigations, war and its documented human cost, health policy, technology and its institutional consequences, censorship, the global south as covered by primary sources, explanatory journalism on how systems work, and data-driven analysis. The categories exist because the primary source record requires them. Not one of them is a political position.
@@ -161,7 +139,7 @@ export default function About() {
         <SectionLabel>The Source Standard</SectionLabel>
         <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
-            Every claim published on Citatious is verified against a primary source before publication. We recognize three source tiers:
+            Every claim published on ClownBinge is verified against a primary source before publication. We recognize three source tiers:
           </p>
         </div>
 
@@ -202,14 +180,14 @@ export default function About() {
           </p>
         </div>
 
-        {/* What Citatious Is Not */}
-        <SectionLabel>What Citatious Is Not</SectionLabel>
+        {/* What ClownBinge Is Not */}
+        <SectionLabel>What ClownBinge Is Not</SectionLabel>
         <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
-            We do not publish anonymous tips, unverified allegations, or content that cannot be traced to a named, public, verifiable source. A story without documentation is not a Citatious story.
+            We do not publish anonymous tips, unverified allegations, or content that cannot be traced to a named, public, verifiable source. A story without documentation is not a ClownBinge story.
           </p>
           <p>
-            We do not publish opinion or analysis that depends on inference about intent, character, or motivation. We report what the record shows. When the record is ambiguous, we say so. When the record is silent, we do not fill the silence. The Citatious standard: the record speaks. We transcribe it.
+            We do not publish opinion or analysis that depends on inference about intent, character, or motivation. We report what the record shows. When the record is ambiguous, we say so. When the record is silent, we do not fill the silence. The ClownBinge standard: the record speaks. We transcribe it.
           </p>
           <p>
             We do not cover private individuals. Public accountability journalism applies to public figures and institutions that have accepted positions of public trust, public authority, or public financial stewardship.
@@ -223,7 +201,7 @@ export default function About() {
         <SectionLabel>Legal Architecture</SectionLabel>
         <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
-            Citatious operates under the strongest First Amendment protections available in the United States. <em>New York Times Co. v. Sullivan</em>, 376 U.S. 254 (1964) establishes the actual malice standard for public figures. Because Citatious publishes only verified primary source documentation, actual malice cannot be established against this platform by design. We do not speculate. We do not fabricate. We cite. The citations are in the article. The article is in the archive.
+            ClownBinge operates under the strongest First Amendment protections available in the United States. <em>New York Times Co. v. Sullivan</em>, 376 U.S. 254 (1964) establishes the actual malice standard for public figures. Because ClownBinge publishes only verified primary source documentation, actual malice cannot be established against this platform by design. We do not speculate. We do not fabricate. We cite. The citations are in the article. The article is in the archive.
           </p>
         </div>
 
@@ -237,7 +215,7 @@ export default function About() {
           <div className="h-1 w-full bg-[#F5C518] rounded-full my-10" />
 
           <p className="text-sm text-muted-foreground">
-            Primary Source Analytics, LLC &mdash; Citatious.com<br />
+            Primary Source Analytics, LLC &mdash; ClownBinge.com<br />
             <em>Independent. Verified. The Primary Source.</em>
           </p>
         </div>

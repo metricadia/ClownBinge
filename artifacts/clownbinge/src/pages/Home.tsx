@@ -148,7 +148,7 @@ export default function Home() {
                     <div className="rounded-xl bg-primary/5 border border-primary/20 p-4">
                       <p className="text-xs uppercase tracking-widest font-bold text-primary mb-2">The Standard</p>
                       <p className="text-sm text-header">
-                        If a claim cannot be traced to a government document, court filing, legislative record, or peer-reviewed research—it is not published on Citatious. The record is our only authority.
+                        If a claim cannot be traced to a government document, court filing, legislative record, or peer-reviewed research—it is not published on ClownBinge. The record is our only authority.
                       </p>
                     </div>
                   </div>
@@ -237,12 +237,12 @@ export default function Home() {
                         <a
                           href="/contact"
                           className="block w-full overflow-hidden rounded-xl cursor-pointer"
-                          aria-label="Advertise on Citatious"
-                          title="Your ad could be here. Click to learn about advertising with Citatious."
+                          aria-label="Advertise on ClownBinge"
+                          title="Your ad could be here. Click to learn about advertising with ClownBinge."
                         >
                           <img
                             src={`${import.meta.env.BASE_URL}images/ad-coming-soon.jpg`}
-                            alt="Your Ad Here - Advertise on Citatious. Full-width placement available. High visibility."
+                            alt="Your Ad Here - Advertise on ClownBinge. Full-width placement available. High visibility."
                             className="w-full h-auto object-cover"
                             loading="lazy"
                           />
@@ -319,12 +319,12 @@ export default function Home() {
                 <a
                   href="/contact"
                   className="block w-full overflow-hidden rounded-xl cursor-pointer"
-                  aria-label="Advertise on Citatious"
-                  title="Your ad could be here. Click to learn about advertising with Citatious."
+                  aria-label="Advertise on ClownBinge"
+                  title="Your ad could be here. Click to learn about advertising with ClownBinge."
                 >
                   <img
                     src={`${import.meta.env.BASE_URL}images/ad-coming-soon.jpg`}
-                    alt="Your Ad Here - Advertise on Citatious. Full-width placement available. High visibility."
+                    alt="Your Ad Here - Advertise on ClownBinge. Full-width placement available. High visibility."
                     className="w-full h-auto object-cover"
                     loading="lazy"
                   />

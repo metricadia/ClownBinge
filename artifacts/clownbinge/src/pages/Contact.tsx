@@ -13,7 +13,7 @@ const FORMATS = [
     icon: BookOpen,
     color: "#1A3A8F",
     title: "Category Sponsorship",
-    description: "Own an entire editorial category. Your brand appears as the presenting sponsor of every article published under a Citatious category.",
+    description: "Own an entire editorial category. Your brand appears as the presenting sponsor of every article published under a ClownBinge category.",
     details: ["Persistent logo placement across category", "Included in category social amplification", "Monthly audience delivery report"],
     rate: "From $2,500 / month",
   },
@@ -21,7 +21,7 @@ const FORMATS = [
     icon: FileText,
     color: "#7c2d12",
     title: "Sponsored Research Brief",
-    description: "Commission a Citatious-standard primary-source research brief, clearly labeled as sponsored content, on a topic of documented public interest.",
+    description: "Commission a ClownBinge-standard primary-source research brief, clearly labeled as sponsored content, on a topic of documented public interest.",
     details: ["Full editorial independence maintained", "Clearly labeled sponsored content", "Primary sources cited, methodology documented"],
     rate: "From $3,500 / placement",
   },
@@ -56,8 +56,8 @@ type Tab = "contact" | "submit" | "advertising";
 
 export default function Contact() {
   usePageSeoHead({
-    title: "Contact Citatious",
-    description: "Contact Citatious, submit a tip, or inquire about advertising. Primary Source Analytics, LLC — independent accountability journalism.",
+    title: "Contact ClownBinge",
+    description: "Contact ClownBinge, submit a tip, or inquire about advertising. Primary Source Analytics, LLC — independent accountability journalism.",
     path: "/contact",
     schemaType: "ContactPage",
   });
@@ -75,11 +75,11 @@ export default function Contact() {
 
         {/* Page header */}
         <div className="mb-8">
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">Citatious Newsroom</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">ClownBinge Newsroom</p>
           <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-2">
             Contact, Support &amp; Advertising Center
           </h1>
-          <p className="text-muted-foreground text-sm">Primary Source Analytics, LLC &mdash; Citatious.com</p>
+          <p className="text-muted-foreground text-sm">Primary Source Analytics, LLC &mdash; ClownBinge.com</p>
           <div className="h-1 w-full bg-[#F5C518] rounded-full mt-5" />
         </div>
 
@@ -140,8 +140,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-bold text-sm text-foreground">General Inquiries</p>
-                      <a href="mailto:contact@citatious.com" className="text-sm text-primary hover:underline mt-1 block">
-                        contact@citatious.com
+                      <a href="mailto:contact@clownbinge.com" className="text-sm text-primary hover:underline mt-1 block">
+                        contact@clownbinge.com
                       </a>
                     </div>
                   </div>
@@ -162,8 +162,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-bold text-sm text-foreground">Advertising</p>
-                      <a href="mailto:advertising@citatious.com" className="text-sm text-primary hover:underline mt-1 block">
-                        advertising@citatious.com
+                      <a href="mailto:advertising@clownbinge.com" className="text-sm text-primary hover:underline mt-1 block">
+                        advertising@clownbinge.com
                       </a>
                     </div>
                   </div>
@@ -207,7 +207,7 @@ export default function Contact() {
                     Submit to Editorial
                   </button>
                   <p className="text-xs text-center text-muted-foreground">
-                    By submitting, you acknowledge that Citatious is a journalistic entity and any tips submitted may be investigated for publication.
+                    By submitting, you acknowledge that ClownBinge is a journalistic entity and any tips submitted may be investigated for publication.
                   </p>
                 </form>
               </div>
@@ -267,16 +267,16 @@ export default function Contact() {
             <div className="rounded-2xl p-7 mb-6" style={{ background: "#1A3A8F" }}>
               <div className="flex flex-col sm:flex-row sm:items-end gap-6">
                 <div className="flex-1">
-                  <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "#F5C518" }}>Advertise with Citatious</p>
+                  <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: "#F5C518" }}>Advertise with ClownBinge</p>
                   <h2 className="font-black text-2xl sm:text-3xl text-white leading-tight mb-3">
                     Your brand, next to the <span style={{ color: "#F5C518" }}>primary source.</span>
                   </h2>
                   <p className="text-white/70 text-sm leading-relaxed max-w-xl">
-                    Citatious readers are educators, researchers, journalists, and engaged citizens who verify. Average session: 6+ minutes. Post-graduate majority audience.
+                    ClownBinge readers are educators, researchers, journalists, and engaged citizens who verify. Average session: 6+ minutes. Post-graduate majority audience.
                   </p>
                 </div>
                 <a
-                  href="mailto:advertising@citatious.com"
+                  href="mailto:advertising@clownbinge.com"
                   className="shrink-0 inline-flex items-center gap-2 font-bold px-7 py-3.5 rounded-full transition-opacity hover:opacity-90 text-sm"
                   style={{ background: "#F5C518", color: "#1A3A8F" }}
                 >
@@ -345,7 +345,7 @@ export default function Contact() {
                 <div>
                   <p className="font-black text-sm mb-3 text-red-400">We do not accept</p>
                   <ul className="space-y-1.5 text-xs text-white/70">
-                    {["Political campaigns, PACs, or dark money organizations", "Advertising that contradicts documented public record", "Products or services Citatious has reported on critically", "Any entity that has attempted to misrepresent primary sources"].map((i) => (
+                    {["Political campaigns, PACs, or dark money organizations", "Advertising that contradicts documented public record", "Products or services ClownBinge has reported on critically", "Any entity that has attempted to misrepresent primary sources"].map((i) => (
                       <li key={i} className="flex items-start gap-2"><span className="text-red-400 font-black shrink-0">&#x2715;</span>{i}</li>
                     ))}
                   </ul>
@@ -362,12 +362,12 @@ export default function Contact() {
               <h3 className="font-black text-2xl text-header mb-2">Ready to be next to the source?</h3>
               <p className="text-muted-foreground text-sm mb-5 max-w-md mx-auto">All advertising inquiries are reviewed by our editorial team. We respond within two business days.</p>
               <a
-                href="mailto:advertising@citatious.com"
+                href="mailto:advertising@clownbinge.com"
                 className="inline-flex items-center gap-2 text-white font-bold px-10 py-4 rounded-full text-sm hover:opacity-90 transition-opacity shadow-lg"
                 style={{ background: "#1A3A8F" }}
               >
                 <Mail className="w-4 h-4" />
-                advertising@citatious.com
+                advertising@clownbinge.com
               </a>
               <p className="text-xs text-muted-foreground mt-4">Primary Source Analytics, LLC &nbsp;&middot;&nbsp; All advertising subject to editorial review.</p>
             </div>

@@ -5,8 +5,8 @@ import type { Post } from "@workspace/api-client-react";
 export function ShareButtons({ post }: { post: Post }) {
   const [copied, setCopied] = useState(false);
 
-  const url = `https://citatious.com/case/${post.slug}`;
-  const title = `Case ${post.caseNumber}: ${post.title} - Citatious`;
+  const url = `https://clownbinge.com/case/${post.slug}`;
+  const title = `Case ${post.caseNumber}: ${post.title} - ClownBinge`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(url);
@@ -15,7 +15,7 @@ export function ShareButtons({ post }: { post: Post }) {
   };
 
   const shareLinks = {
-    x: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}&hashtags=Citatious,TheRecord`,
+    x: `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}&hashtags=ClownBinge,TheRecord`,
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
     whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(title + " " + url)}`,
   };

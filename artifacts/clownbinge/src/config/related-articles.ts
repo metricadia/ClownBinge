@@ -1,5 +1,5 @@
 /**
- * Editorial relationship map for Citatious internal cross-linking.
+ * Editorial relationship map for ClownBinge internal cross-linking.
  * Max 3 per article. Only genuine thematic connections -- never forced.
  * Maps slug -> [related slugs in priority order].
  */

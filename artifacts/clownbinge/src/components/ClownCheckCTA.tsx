@@ -5,7 +5,7 @@ export function ClownCheckCTA() {
   return (
     <div
       className="my-10 border border-[#F5C518] rounded-xl bg-[#FEFCE8] px-6 py-5 flex flex-col sm:flex-row sm:items-center gap-5"
-      aria-label="Support Citatious"
+      aria-label="Support ClownBinge"
     >
       <div className="flex-1 min-w-0">
         <p className="text-[10px] font-bold uppercase tracking-widest text-[#B8860B] mb-1.5">

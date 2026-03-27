@@ -28,7 +28,7 @@ export function UserSubmittedBadge() {
               </DialogTitle>
             </div>
             <DialogDescription className="text-base text-foreground font-sans pt-2">
-              This case originated from a tip submitted by a Citatious reader. Before publication, our team independently verified every factual claim against government records, court filings, and peer-reviewed sources. Reader tips accelerate our work — they do not replace it.
+              This case originated from a tip submitted by a ClownBinge reader. Before publication, our team independently verified every factual claim against government records, court filings, and peer-reviewed sources. Reader tips accelerate our work — they do not replace it.
             </DialogDescription>
           </DialogHeader>
 

@@ -47,7 +47,7 @@ async function assessWithClaude(tip: {
     messages: [
       {
         role: "user",
-        content: `You are a senior news editor for Citatious, a verified accountability journalism platform documenting real incidents where politicians and religious leaders contradict their own words and votes.
+        content: `You are a senior news editor for ClownBinge, a verified accountability journalism platform documenting real incidents where politicians and religious leaders contradict their own words and votes.
 
 Assess this public tip submission for editorial merit. Be strict -- only verifiable incidents involving named public figures qualify.
 

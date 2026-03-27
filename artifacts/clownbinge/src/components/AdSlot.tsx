@@ -26,12 +26,12 @@ export function AdSlot({ id, className = "" }: AdSlotProps) {
       id={id}
       href="/contact"
       className={`block w-full overflow-hidden rounded-xl cursor-pointer ${className}`}
-      aria-label="Advertise on Citatious"
-      title="Your ad could be here. Click to learn about advertising with Citatious."
+      aria-label="Advertise on ClownBinge"
+      title="Your ad could be here. Click to learn about advertising with ClownBinge."
     >
       <img
         src={`${import.meta.env.BASE_URL}images/ad-coming-soon.jpg`}
-        alt="Your Ad Here - Advertise on Citatious. Showcase your brand with Citatious. Full-width placement available. High visibility."
+        alt="Your Ad Here - Advertise on ClownBinge. Showcase your brand with ClownBinge. Full-width placement available. High visibility."
         className="w-full h-auto object-cover"
         loading="lazy"
       />
