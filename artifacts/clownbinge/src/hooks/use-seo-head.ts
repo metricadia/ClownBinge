@@ -63,6 +63,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   global_south:       "Global South",
   how_it_works:       "How It Works",
   nerd_out:           "NerdOut",
+  disarming_hate:     "Disarming Hate",
 };
 
 const PUBLISHER_BLOCK = {
@@ -179,7 +180,8 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     const isNerdOut = post.category === "nerd_out";
     const isConstitution = post.category === "us_constitution";
     const isGlobalSouth = post.category === "global_south";
-    const isScholarlyDeepDive = isNerdOut || isConstitution || isGlobalSouth;
+    const isDisarmingHate = post.category === "disarming_hate";
+    const isScholarlyDeepDive = isNerdOut || isConstitution || isGlobalSouth || isDisarmingHate;
     const hasApaCitations = !!(post.verifiedSource && post.verifiedSource.includes("::"));
     const pageTitle = isNerdOut
       ? `${post.title} | NerdOut Academic Analysis | ClownBinge`
