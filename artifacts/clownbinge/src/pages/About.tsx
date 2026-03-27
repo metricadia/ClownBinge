@@ -22,6 +22,17 @@ export default function About() {
     <Layout>
       <div className="max-w-3xl mx-auto px-4 py-12">
 
+        {/* Hero Statement */}
+        <div className="mb-10">
+          <h1 className="font-sans font-black text-4xl sm:text-5xl text-foreground leading-tight mb-3">
+            Citatious is a<br />
+            <span style={{ color: "#F5C518" }}>Knowledge Movement.</span>
+          </h1>
+          <p className="font-sans text-lg sm:text-xl text-foreground/70 font-medium tracking-wide">
+            Primary Sources Used Only. Always.
+          </p>
+        </div>
+
         {/* Why the Name */}
         <div
           className="rounded-2xl px-7 py-8 mb-10 border border-white/10"
