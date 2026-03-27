@@ -369,7 +369,7 @@ export default function PostDetail() {
         {/* Article body split at paragraph 3 with ClownCheck CTA injected mid-article */}
         <div
           ref={bodyRef}
-          className="cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-a:font-bold prose-strong:text-header prose-p:leading-relaxed mb-12"
+          className="cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-extrabold prose-headings:tracking-tight prose-a:text-primary prose-strong:text-header prose-p:leading-relaxed mb-12"
         >
           <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
           <ClownCheckCTA />
