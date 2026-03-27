@@ -15,4 +15,5 @@ export const STAFF_PICKS_SLUGS = [
   "america-resource-wars-iraq-iran-libya-petrodollar-race",
   "do-unto-others-no-more-economic-wars-children-will-hate-us",
   "negativity-is-killing-you-hatred-stress-obesity-health-case",
+  "white-dei-wdei-discrimination-exclusion-ignorance-republican-merit",
 ];
