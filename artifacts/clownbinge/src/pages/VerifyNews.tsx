@@ -94,7 +94,7 @@ async function runVerification(query: string): Promise<PSTReport> {
 export default function VerifyNews() {
   usePageSeoHead({
     title: "Verify ANY News Story — $4.95",
-    description: "Submit any news story and ClownBinge will verify it against primary government and institutional sources. Is it real? Is it suppressed? Get the documented answer for $4.95.",
+    description: "Submit any news story and Citatious will verify it against primary government and institutional sources. Is it real? Is it suppressed? Get the documented answer for $4.95.",
     path: "/clowncheck",
     schemaType: "WebPage",
   });

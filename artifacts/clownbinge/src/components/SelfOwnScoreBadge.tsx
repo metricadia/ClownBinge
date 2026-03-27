@@ -44,7 +44,7 @@ export function SelfOwnScoreBadge({ score }: { score: number }) {
           </DialogHeader>
 
           <p className="text-sm text-muted-foreground mt-1 mb-4">
-            ClownBinge rates each self-own from 1 to 10. A score of 1 is a minor documented inconsistency. A score of 10 is a historic, career-defining act of public hypocrisy with irrefutable receipts.
+            Citatious rates each self-own from 1 to 10. A score of 1 is a minor documented inconsistency. A score of 10 is a historic, career-defining act of public hypocrisy with irrefutable receipts.
           </p>
 
           <div className="space-y-1.5 max-h-72 overflow-y-auto pr-1">

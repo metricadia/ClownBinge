@@ -5,7 +5,7 @@ import { usePageSeoHead } from "@/hooks/use-seo-head";
 export default function Ethics() {
   usePageSeoHead({
     title: "Editorial Standards & Ethics",
-    description: "ClownBinge editorial standards, fact-checking methodology, and sourcing policy. All content sourced from primary government and institutional documents. Primary Source Analytics, LLC.",
+    description: "Citatious editorial standards, fact-checking methodology, and sourcing policy. All content sourced from primary government and institutional documents. Primary Source Analytics, LLC.",
     path: "/ethics",
     schemaType: "WebPage",
   });
@@ -18,7 +18,7 @@ export default function Ethics() {
             Editorial Standards, Ethics, and Analytical Methodology
           </h1>
           <p className="text-muted-foreground text-sm">
-            Primary Source Analytics, LLC &mdash; ClownBinge.com &mdash; Updated March 2026
+            Primary Source Analytics, LLC &mdash; Citatious.com &mdash; Updated March 2026
           </p>
           <div className="h-1 w-full bg-[#F5C518] rounded-full mt-6" />
         </div>
@@ -32,15 +32,15 @@ export default function Ethics() {
             The proliferation of fabricated news, state-sponsored disinformation, and politically engineered
             misinformation constitutes one of the most consequential threats to democratic governance in the
             twenty-first century. This policy document outlines the editorial ethics, sourcing standards, and
-            verification methodology that govern ClownBinge, a public accountability platform operated by
+            verification methodology that govern Citatious, a public accountability platform operated by
             Primary Source Analytics, LLC. Drawing on peer-reviewed research in political communication, media
-            studies, and democratic theory, this document establishes the empirical basis for ClownBinge's
+            studies, and democratic theory, this document establishes the empirical basis for Citatious's
             mission and articulates the standards to which it holds itself and the public figures it covers.
           </p>
 
           <h2>Platform Framework: Satire as Analytical Lens</h2>
           <p>
-            ClownBinge operates within an established tradition of accountability journalism that employs
+            Citatious operates within an established tradition of accountability journalism that employs
             satirical framing as a presentational device. The platform name, visual identity, and category
             terminology use the vernacular term "clown" as a rhetorical instrument with documented roots in
             democratic political commentary, consistent with its use in editorial cartooning, political satire,
@@ -89,7 +89,7 @@ export default function Ethics() {
             from opinion.
           </p>
           <p>
-            ClownBinge was founded in response to this documented crisis. Its mission is not to produce
+            Citatious was founded in response to this documented crisis. Its mission is not to produce
             opinion, commentary, or punditry, but to curate verified, cited, and sourced documentation of
             public accountability failures by elected officials and those entrusted with the public's confidence.
           </p>
@@ -130,7 +130,7 @@ export default function Ethics() {
             ideological preference but rather with the strategic goal of maximizing division.
           </p>
           <p>
-            ClownBinge does not treat foreign disinformation as a theoretical threat. Every piece of content
+            Citatious does not treat foreign disinformation as a theoretical threat. Every piece of content
             published on this platform is evaluated against the question of whether its claims can be sourced
             to verified American institutions, not to social media narratives, anonymous accounts, or sources
             that have not been independently verified by recognized journalistic or academic institutions.
@@ -166,7 +166,7 @@ export default function Ethics() {
             public figures, the manipulation of images and video through both traditional editing and
             emerging AI-generated synthetic media, and the deliberate misrepresentation of legislative
             outcomes, voting records, and policy positions. Each of these tactics is specifically targeted
-            by ClownBinge's verification methodology.
+            by Citatious's verification methodology.
           </p>
 
           <h2>4. Algorithmic Amplification and Platform Responsibility</h2>
@@ -194,11 +194,11 @@ export default function Ethics() {
             and Politics (Guess et al., 2023).
           </p>
           <p>
-            ClownBinge's response to platform-mediated amplification is structural, not merely rhetorical.
+            Citatious's response to platform-mediated amplification is structural, not merely rhetorical.
             By requiring that every factual claim on the platform be sourced to a primary government
             document, peer-reviewed research, or a recognized news organization with published editorial
             standards, and by displaying those sources transparently within the article body via the
-            platform's factoid citation system, ClownBinge creates a verifiable record that readers can
+            platform's factoid citation system, Citatious creates a verifiable record that readers can
             evaluate independently of any platform recommendation system.
           </p>
 
@@ -221,7 +221,7 @@ export default function Ethics() {
             platform economy itself.
           </p>
           <p>
-            ClownBinge's monetization model is designed to align economic incentives with accuracy rather
+            Citatious's monetization model is designed to align economic incentives with accuracy rather
             than engagement. Platform revenue is derived from book sales, membership subscriptions, and
             display advertising subject to editorial standards, not from per-impression viral amplification.
             The ClownCheck member verification feature, by design, generates revenue from the platform's
@@ -251,13 +251,13 @@ export default function Ethics() {
             speech that is inaccurate or misleading. However, constitutional protection for speech does not
             constitute protection from public documentation, and the public record of what elected officials
             have said, done, voted for, and received in campaign contributions is a matter of permanent
-            public interest. ClownBinge's coverage of elected officials is grounded in this public interest
+            public interest. Citatious's coverage of elected officials is grounded in this public interest
             mandate, not in partisan advocacy.
           </p>
 
-          <h2>7. ClownBinge Editorial Standards and Verification Methodology</h2>
+          <h2>7. Citatious Editorial Standards and Verification Methodology</h2>
           <p>
-            ClownBinge publishes accountability journalism verified against a defined three-tier source
+            Citatious publishes accountability journalism verified against a defined three-tier source
             hierarchy. No factual claim may be published without citation to at least one source within
             this hierarchy, and all citations are displayed transparently within the article body.
           </p>
@@ -292,9 +292,9 @@ export default function Ethics() {
             operates under documented journalistic standards subject to public accountability.
           </p>
 
-          <h3>7.4 The ClownBinge Citation System</h3>
+          <h3>7.4 The Citatious Citation System</h3>
           <p>
-            Every factoid link embedded within a ClownBinge article constitutes a citation. These links
+            Every factoid link embedded within a Citatious article constitutes a citation. These links
             are displayed to readers as underlined text with a dotted gold border, and clicking any such
             link opens a citation card displaying the source title, a summary of the cited material,
             and the source URL. All citations are additionally compiled automatically in the Verified
@@ -303,24 +303,24 @@ export default function Ethics() {
           </p>
           <p>
             This citation architecture serves two functions. First, it enables readers to independently
-            verify every claim made in any ClownBinge article without leaving the article or trusting
+            verify every claim made in any Citatious article without leaving the article or trusting
             the platform's characterization of any source. Second, it creates a searchable, linkable
             public record that persists independently of the social media platforms through which
-            ClownBinge content may be shared.
+            Citatious content may be shared.
           </p>
 
-          <h3>7.5 What ClownBinge Does Not Publish</h3>
+          <h3>7.5 What Citatious Does Not Publish</h3>
           <p>
-            ClownBinge does not publish anonymous tips, unverified social media posts, rumor, speculation,
-            or content that cannot be sourced within the three-tier hierarchy above. ClownBinge does not
+            Citatious does not publish anonymous tips, unverified social media posts, rumor, speculation,
+            or content that cannot be sourced within the three-tier hierarchy above. Citatious does not
             publish private information about public figures that is not relevant to their exercise of
-            public duties. ClownBinge does not publish opinion presented as fact. Satirical commentary,
+            public duties. Citatious does not publish opinion presented as fact. Satirical commentary,
             where it appears, is clearly labeled and never presented as primary sourcing.
           </p>
 
-          <h3 id="self-own-methodology">7.6 The ClownBinge Self-Own Score: A Proprietary Empirical Accountability Metric</h3>
+          <h3 id="self-own-methodology">7.6 The Citatious Self-Own Score: A Proprietary Empirical Accountability Metric</h3>
           <p>
-            The ClownBinge Self-Own Score is a proprietary analytical instrument that quantifies the magnitude
+            The Citatious Self-Own Score is a proprietary analytical instrument that quantifies the magnitude
             of documented contradiction between a public figure's stated positions and their verifiable actions
             or disclosed records. It is not a measure of political alignment, moral judgment, or editorial
             opinion. It is a measure of documentary gap: the distance, expressed in evidentiary terms, between
@@ -333,7 +333,7 @@ export default function Ethics() {
             at any level requires that the contradiction be directly legible in verified primary source
             documentation without editorial inference or interpretive mediation. A Self-Own Score may not
             be assigned on the basis of anonymous sourcing, reputation, prior reporting not independently
-            verified by ClownBinge, or circumstantial evidence. The specific primary sources supporting
+            verified by Citatious, or circumstantial evidence. The specific primary sources supporting
             the assigned score are cited in the article body and compiled in the Verified References section
             of every article, allowing independent reader verification of the evidentiary adequacy of
             any assignment.
@@ -364,7 +364,7 @@ export default function Ethics() {
 
           <h2>8. Corrections and Accountability</h2>
           <p>
-            ClownBinge maintains a published corrections policy. If a factual error is identified in any
+            Citatious maintains a published corrections policy. If a factual error is identified in any
             published piece, a correction will be appended to the article within 48 hours of confirmation,
             and a public corrections log will document the nature of the error and the corrected information.
             Corrections are never deleted or obscured; the original text and the correction are both
@@ -377,12 +377,12 @@ export default function Ethics() {
             The crisis of fabricated news, foreign interference, and politically engineered misinformation
             is not a crisis of technology alone, nor of politics alone, nor of any single actor or platform.
             It is a systemic failure of the information infrastructure on which democratic self-governance
-            depends. ClownBinge does not claim to resolve this crisis. It claims only to operate within it
+            depends. Citatious does not claim to resolve this crisis. It claims only to operate within it
             with documented standards, transparent sourcing, and an unambiguous commitment to primary
             source verification.
           </p>
           <p>
-            The public record belongs to the public. ClownBinge's function is to make it accessible,
+            The public record belongs to the public. Citatious's function is to make it accessible,
             comprehensible, and impossible to ignore.
           </p>
 

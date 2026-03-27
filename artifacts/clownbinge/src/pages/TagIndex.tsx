@@ -34,7 +34,7 @@ export default function TagIndex() {
             #{tag}
           </h1>
           <p className="text-muted-foreground text-sm max-w-xl">
-            Every verified record on ClownBinge tagged{" "}
+            Every verified record on Citatious tagged{" "}
             <strong className="text-foreground">#{tag}</strong>.
             Primary sources only. Case numbers assigned in the order the record
             was verified and published.

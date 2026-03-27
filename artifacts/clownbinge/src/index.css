@@ -7,7 +7,7 @@
   --font-display: 'Archivo Black', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* ClownBinge Design System Colors */
+  /* Citatious Design System Colors */
   --color-background: hsl(var(--page-bg));
   --color-foreground: hsl(var(--dark-text));
   
@@ -37,7 +37,7 @@
 }
 
 :root {
-  /* HSL Values for ClownBinge Palette */
+  /* HSL Values for Citatious Palette */
   --blue-deep: 224 69% 33%;      /* #1A3A8F */
   --blue-primary: 222 78% 57%;   /* #3D6FE8 */
   --yellow-accent: 47 92% 53%;   /* #F5C518 */
@@ -96,7 +96,7 @@
     @apply font-display font-extrabold tracking-tight;
   }
 
-  /* ClownBinge Factoid Links */
+  /* Citatious Factoid Links */
   a.cb-factoid {
     color: inherit;
     text-decoration: underline dotted #F5C518;

@@ -78,7 +78,7 @@ function buildPSTPrompt(
           .join("\n")
       : "No results returned from The Guardian.";
 
-  return `You are the Primary Source Triangulation (PST) engine for ClownBinge.com, a verified accountability journalism platform.
+  return `You are the Primary Source Triangulation (PST) engine for Citatious.com, a verified accountability journalism platform.
 
 QUERY: "${query}"
 

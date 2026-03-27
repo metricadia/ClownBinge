@@ -4,7 +4,7 @@ import { usePageSeoHead } from "@/hooks/use-seo-head";
 
 export default function Store() {
   usePageSeoHead({
-    title: "Verify ANY News Story — ClownBinge Store",
+    title: "Verify ANY News Story — Citatious Store",
     description: "Verify any news story for $4.95, or get a Full Primary Source Report on any public figure for $24.95. Sourced from court records, federal data, and congressional transcripts.",
     path: "/store",
     schemaType: "ItemPage",
@@ -16,7 +16,7 @@ export default function Store() {
         <div className="absolute top-0 right-0 w-1/2 h-full bg-primary opacity-20 skew-x-12 translate-x-32" />
         <div className="cb-container relative z-10">
           <div className="max-w-2xl">
-            <span className="font-mono text-secondary font-bold tracking-widest uppercase mb-4 block">ClownBinge Press</span>
+            <span className="font-mono text-secondary font-bold tracking-widest uppercase mb-4 block">Citatious Press</span>
             <h1 className="font-sans font-bold text-4xl sm:text-5xl lg:text-6xl mb-6 leading-tight">
               The Complete Archives. In Print.
             </h1>
@@ -87,11 +87,11 @@ export default function Store() {
             <div className="aspect-[4/3] bg-muted rounded-xl mb-8 flex items-center justify-center overflow-hidden relative">
               <img 
                 src={`${import.meta.env.BASE_URL}images/greatest-hits-cover.png`} 
-                alt="ClownBinge Greatest Hits Cover" 
+                alt="Citatious Greatest Hits Cover" 
                 className="h-full object-cover shadow-2xl scale-110"
               />
             </div>
-            <h3 className="font-display font-extrabold text-2xl text-header mb-3">ClownBinge Greatest Hits Vol. 1</h3>
+            <h3 className="font-display font-extrabold text-2xl text-header mb-3">Citatious Greatest Hits Vol. 1</h3>
             <p className="text-muted-foreground mb-8 flex-1">
               The 50 most brutal, undeniable Self-Owns from the archive. Perfect quick-reference guide for debates.
             </p>

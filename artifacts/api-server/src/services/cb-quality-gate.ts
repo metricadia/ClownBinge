@@ -21,7 +21,7 @@ export async function assessQuality(
     .map((d, i) => `[${i + 1}]\nBEFORE: ${d.before}\nAFTER:  ${d.after}`)
     .join("\n\n");
 
-  const prompt = `You are an editorial quality reviewer for ClownBinge.com, a PRIMARY SOURCE accountability journalism platform. Review these sentence rewrites against strict integrity standards.
+  const prompt = `You are an editorial quality reviewer for Citatious.com, a PRIMARY SOURCE accountability journalism platform. Review these sentence rewrites against strict integrity standards.
 
 FAIL immediately if ANY rewrite violates ANY of these rules:
 

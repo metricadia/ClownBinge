@@ -33,7 +33,7 @@ export default function ComprehensiveReport() {
                 </h1>
 
                 <p className="text-lg text-white/80 mb-8 leading-relaxed">
-                  Foreign governments. American politicians. AI-generated misinformation. Biased outlets with corporate owners. We built ClownBinge because we were done waiting for someone else to fix it.
+                  Foreign governments. American politicians. AI-generated misinformation. Biased outlets with corporate owners. We built Citatious because we were done waiting for someone else to fix it.
                 </p>
 
                 <div className="space-y-3 mb-8">
@@ -103,7 +103,7 @@ export default function ComprehensiveReport() {
         {/* Trust Section */}
         <section className="py-16 px-4 bg-white border-b">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-sans font-bold text-2xl text-header text-center mb-12">Why Researchers & Journalists Trust ClownBinge</h2>
+            <h2 className="font-sans font-bold text-2xl text-header text-center mb-12">Why Researchers & Journalists Trust Citatious</h2>
             <div className="grid sm:grid-cols-3 gap-6">
               <div className="p-6 rounded-xl border bg-slate-50">
                 <div className="font-bold text-header mb-2">Public Record Only</div>
@@ -242,7 +242,7 @@ export default function ComprehensiveReport() {
                 <strong>Report Content Disclaimer:</strong> We cannot guarantee the content of any report. We report only what the publicly available record contains—voting records, legal filings, campaign finance data, news archives. That's our promise: the record, nothing more.
               </p>
               <p>
-                ClownBinge Verify & Reports are compiled exclusively from publicly available legal records, government filings, court documents, official disclosures, and verified news sources. We do not obtain, use, or include private, non-public, or illegally obtained information. All findings reflect the documented public record as of the compilation date.
+                Citatious Verify & Reports are compiled exclusively from publicly available legal records, government filings, court documents, official disclosures, and verified news sources. We do not obtain, use, or include private, non-public, or illegally obtained information. All findings reflect the documented public record as of the compilation date.
               </p>
             </div>
           </div>
@@ -254,7 +254,7 @@ export default function ComprehensiveReport() {
             The Record Is Public.<br />We Make It Accessible.
           </h2>
           <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
-            Whether you're fact-checking a claim or researching a career, ClownBinge turns the verified public record into intelligence you can use.
+            Whether you're fact-checking a claim or researching a career, Citatious turns the verified public record into intelligence you can use.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button

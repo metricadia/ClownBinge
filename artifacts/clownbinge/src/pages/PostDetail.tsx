@@ -530,9 +530,9 @@ export default function PostDetail() {
           className="cb-factoid-popup"
           style={{ left: factoid.x, top: factoid.y }}
           role="dialog"
-          aria-label="ClownBinge Factoid"
+          aria-label="Citatious Factoid"
         >
-          <div className="cb-factoid-popup-label">ClownBinge Factoid</div>
+          <div className="cb-factoid-popup-label">Citatious Factoid</div>
           <div className="cb-factoid-popup-title">{factoid.title}</div>
           <div className="cb-factoid-popup-summary">{factoid.summary}</div>
 

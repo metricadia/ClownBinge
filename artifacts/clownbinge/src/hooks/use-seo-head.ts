@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import type { Post } from "@workspace/api-client-react";
 
-const DOMAIN = "https://clownbinge.com";
-const SITE_TITLE = "ClownBinge.com | Verified News. Primary Sources. For the People.";
-const SITE_DESCRIPTION = "Verified accountability journalism. ClownBinge documents real, sourced incidents where politicians and religious leaders contradict their own words and votes. Primary sources only. No fabrications.";
+const DOMAIN = "https://citatious.com";
+const SITE_TITLE = "Citatious.com | Verified News. Primary Sources. For the People.";
+const SITE_DESCRIPTION = "Verified accountability journalism. Citatious documents real, sourced incidents where public figures contradict their own documented record. Primary sources only. No fabrications.";
 const ORG_ID = `${DOMAIN}/#organization`;
 const WEBSITE_ID = `${DOMAIN}/#website`;
 
@@ -68,7 +68,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 const PUBLISHER_BLOCK = {
   "@type": ["NewsMediaOrganization", "ResearchOrganization"],
   "@id": ORG_ID,
-  "name": "ClownBinge",
+  "name": "Citatious",
   "alternateName": "Primary Source Analytics, LLC",
   "url": DOMAIN,
   "logo": {
@@ -182,8 +182,8 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     const isScholarlyDeepDive = isNerdOut || isConstitution || isGlobalSouth;
     const hasApaCitations = !!(post.verifiedSource && post.verifiedSource.includes("::"));
     const pageTitle = isNerdOut
-      ? `${post.title} | NerdOut Academic Analysis | ClownBinge`
-      : `${post.title} | ClownBinge`;
+      ? `${post.title} | NerdOut Academic Analysis | Citatious`
+      : `${post.title} | Citatious`;
 
     document.title = pageTitle;
 
@@ -199,8 +199,8 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     setMeta("og:type",        "article",    "property");
     setMeta("og:url",         canonical,    "property");
     setMeta("og:image",       ogImage,      "property");
-    setMeta("og:image:alt",   isNerdOut ? `${post.title} — NerdOut Academic Analysis | ClownBinge` : `${post.title} | ClownBinge`, "property");
-    setMeta("og:site_name",   "ClownBinge", "property");
+    setMeta("og:image:alt",   isNerdOut ? `${post.title} — NerdOut Academic Analysis | Citatious` : `${post.title} | Citatious`, "property");
+    setMeta("og:site_name",   "Citatious", "property");
     setMeta("og:locale",      "en_US",      "property");
 
     setMeta("article:published_time", post.publishedAt ?? post.createdAt ?? "", "property");
@@ -213,7 +213,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     setMeta("twitter:title",       post.title);
     setMeta("twitter:description", description);
     setMeta("twitter:image",       ogImage);
-    setMeta("twitter:site",        "@ClownBinge");
+    setMeta("twitter:site",        "@Citatious");
 
     // Build subject Person block (reused across schemas)
     let subjectPerson: Record<string, unknown> | null = null;
@@ -243,7 +243,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       additionalProps.push({
         "@type": "PropertyValue",
         "name": "SelfOwnScore",
-        "description": "ClownBinge Self-Own severity rating (1-10)",
+        "description": "Citatious Self-Own severity rating (1-10)",
         "value": post.selfOwnScore,
         "minValue": 1,
         "maxValue": 10
@@ -254,7 +254,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     const backstoryProp: Record<string, unknown> = {
       "@type": "PropertyValue",
       "name": "backstory",
-      "value": "ClownBinge is published by Primary Source Analytics, LLC, an independent accountability journalism operation. Every article is built exclusively on primary sources: court opinions, legislative hearing transcripts, peer-reviewed research, and official government documents. The mission is to make the documented record accessible without editorializing — the evidence speaks for itself."
+      "value": "Citatious is published by Primary Source Analytics, LLC, an independent accountability journalism operation. Every article is built exclusively on primary sources: court opinions, legislative hearing transcripts, peer-reviewed research, and official government documents. The mission is to make the documented record accessible without editorializing — the evidence speaks for itself."
     };
 
     // Article @type — ScholarlyArticle for deep legal/historical/academic dives
@@ -307,13 +307,13 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       "isPartOf": {
         "@type": "WebSite",
         "@id": WEBSITE_ID,
-        "name": "ClownBinge",
+        "name": "Citatious",
         "url": DOMAIN
       },
       "image": {
         "@type": "ImageObject",
         "url": ogImage,
-        "caption": `${post.title} | ClownBinge`
+        "caption": `${post.title} | Citatious`
       },
       "primaryImageOfPage": {
         "@type": "ImageObject",
@@ -422,7 +422,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "ClownBinge",
+          "name": "Citatious",
           "item": `${DOMAIN}/`
         },
         {
@@ -482,7 +482,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
         "author": {
           "@type": ["NewsMediaOrganization", "ResearchOrganization"],
           "@id": ORG_ID,
-          "name": "ClownBinge",
+          "name": "Citatious",
           "url": DOMAIN,
           "publishingPrinciples": `${DOMAIN}/ethics`
         },
@@ -535,20 +535,20 @@ export function useHomeSeoHead() {
     setMeta("og:type",        "website",         "property");
     setMeta("og:url",         `${DOMAIN}/`,      "property");
     setMeta("og:image",       `${DOMAIN}/opengraph.jpg`, "property");
-    setMeta("og:site_name",   "ClownBinge",      "property");
+    setMeta("og:site_name",   "Citatious",       "property");
     setMeta("og:locale",      "en_US",           "property");
 
     setMeta("twitter:card",        "summary_large_image");
     setMeta("twitter:title",       SITE_TITLE);
     setMeta("twitter:description", SITE_DESCRIPTION);
     setMeta("twitter:image",       `${DOMAIN}/opengraph.jpg`);
-    setMeta("twitter:site",        "@ClownBinge");
+    setMeta("twitter:site",        "@Citatious");
 
     setJsonLd("website", {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "@id": WEBSITE_ID,
-      "name": "ClownBinge",
+      "name": "Citatious",
       "url": DOMAIN,
       "description": SITE_DESCRIPTION,
       "inLanguage": "en-US",
@@ -566,7 +566,7 @@ export function useHomeSeoHead() {
       "@context": "https://schema.org",
       "@type": ["NewsMediaOrganization", "ResearchOrganization"],
       "@id": ORG_ID,
-      "name": "ClownBinge",
+      "name": "Citatious",
       "alternateName": "Primary Source Analytics, LLC",
       "url": DOMAIN,
       "logo": {
@@ -593,7 +593,7 @@ export function useHomeSeoHead() {
       "verificationFactCheckingPolicy": `${DOMAIN}/ethics`,
       "actionableFeedbackPolicy": `${DOMAIN}/contact`,
       "sameAs": [
-        "https://www.youtube.com/@ClownBinge"
+        "https://www.youtube.com/@Citatious"
       ]
     });
 
@@ -601,7 +601,7 @@ export function useHomeSeoHead() {
       "@context": "https://schema.org",
       "@type": "SiteNavigationElement",
       "name": [
-        "About ClownBinge",
+        "About Citatious",
         "Editorial Standards",
         "Verify a News Story",
         "PST Comprehensive Report",
@@ -642,7 +642,7 @@ interface PageSeoOptions {
 export function usePageSeoHead({ title, description, path, schemaType = "WebPage", noIndex = false }: PageSeoOptions) {
   useEffect(() => {
     const canonical = `${DOMAIN}${path}`;
-    const fullTitle = `${title} | ClownBinge`;
+    const fullTitle = `${title} | Citatious`;
 
     document.title = fullTitle;
 
@@ -657,14 +657,14 @@ export function usePageSeoHead({ title, description, path, schemaType = "WebPage
     setMeta("og:type",        "website",   "property");
     setMeta("og:url",         canonical,   "property");
     setMeta("og:image",       `${DOMAIN}/opengraph.jpg`, "property");
-    setMeta("og:site_name",   "ClownBinge", "property");
+    setMeta("og:site_name",   "Citatious",  "property");
     setMeta("og:locale",      "en_US",      "property");
 
     setMeta("twitter:card",        "summary_large_image");
     setMeta("twitter:title",       fullTitle);
     setMeta("twitter:description", description);
     setMeta("twitter:image",       `${DOMAIN}/opengraph.jpg`);
-    setMeta("twitter:site",        "@ClownBinge");
+    setMeta("twitter:site",        "@Citatious");
 
     setJsonLd("page", {
       "@context": "https://schema.org",
@@ -695,8 +695,8 @@ export function useTagSeoHead(tag: string, postCount: number) {
     if (!tag) return;
 
     const canonical = `${DOMAIN}/tags/${encodeURIComponent(tag)}`;
-    const fullTitle = `#${tag} — ${postCount} Verified Record${postCount !== 1 ? "s" : ""} | ClownBinge`;
-    const description = `All verified ClownBinge records tagged #${tag}. ${postCount} documented case${postCount !== 1 ? "s" : ""} sourced from primary government and institutional records. No fabrications.`;
+    const fullTitle = `#${tag} — ${postCount} Verified Record${postCount !== 1 ? "s" : ""} | Citatious`;
+    const description = `All verified Citatious records tagged #${tag}. ${postCount} documented case${postCount !== 1 ? "s" : ""} sourced from primary government and institutional records. No fabrications.`;
 
     document.title = fullTitle;
 
@@ -710,19 +710,19 @@ export function useTagSeoHead(tag: string, postCount: number) {
     setMeta("og:type",        "website",   "property");
     setMeta("og:url",         canonical,   "property");
     setMeta("og:image",       `${DOMAIN}/opengraph.jpg`, "property");
-    setMeta("og:site_name",   "ClownBinge", "property");
+    setMeta("og:site_name",   "Citatious",  "property");
     setMeta("og:locale",      "en_US",      "property");
 
     setMeta("twitter:card",        "summary");
     setMeta("twitter:title",       fullTitle);
     setMeta("twitter:description", description);
-    setMeta("twitter:site",        "@ClownBinge");
+    setMeta("twitter:site",        "@Citatious");
 
     setJsonLd("breadcrumb", {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "ClownBinge", "item": `${DOMAIN}/` },
+        { "@type": "ListItem", "position": 1, "name": "Citatious", "item": `${DOMAIN}/` },
         { "@type": "ListItem", "position": 2, "name": `#${tag}`, "item": canonical }
       ]
     });

@@ -8,7 +8,7 @@ const FORMATS = [
     color: "bg-primary",
     title: "Category Sponsorship",
     description:
-      "Own an entire editorial category. Your brand appears as the presenting sponsor of every article published under a ClownBinge category — Law & Justice, Investigations, U.S. History, and more.",
+      "Own an entire editorial category. Your brand appears as the presenting sponsor of every article published under a Citatious category — Law & Justice, Investigations, U.S. History, and more.",
     details: ["Persistent logo placement across category", "Included in category social amplification", "First-right-of-refusal for category exclusivity", "Monthly audience delivery report"],
     rate: "From $2,500 / month",
   },
@@ -17,7 +17,7 @@ const FORMATS = [
     color: "bg-red-700",
     title: "Sponsored Research Brief",
     description:
-      "Commission a ClownBinge-standard primary-source research brief, clearly labeled as sponsored content, on a topic of documented public interest aligned with your organization's mission.",
+      "Commission a Citatious-standard primary-source research brief, clearly labeled as sponsored content, on a topic of documented public interest aligned with your organization's mission.",
     details: ["Full editorial independence maintained", "Clearly labeled 'Sponsored Research'", "Primary sources cited, methodology documented", "Permanent archive placement"],
     rate: "From $3,500 / placement",
   },
@@ -35,7 +35,7 @@ const FORMATS = [
     color: "bg-violet-700",
     title: "In-Article Display",
     description:
-      "High-attention display units placed within long-form primary source articles. ClownBinge readers are deep readers — the average session length exceeds six minutes per article.",
+      "High-attention display units placed within long-form primary source articles. Citatious readers are deep readers — the average session length exceeds six minutes per article.",
     details: ["Mid-article and footer placement available", "Desktop and mobile optimized creative", "Category targeting available", "Weekly click and impression reporting"],
     rate: "From $750 / month",
   },
@@ -59,8 +59,8 @@ const BRAND_SAFE = [
 
 export default function Advertise() {
   usePageSeoHead({
-    title: "Advertise on ClownBinge",
-    description: "Reach an audience of engaged readers who trust verified, primary-source journalism. Category sponsorships, native placements, and more. Contact ClownBinge to advertise.",
+    title: "Advertise on Citatious",
+    description: "Reach an audience of engaged readers who trust verified, primary-source journalism. Category sponsorships, native placements, and more. Contact Citatious to advertise.",
     path: "/advertise",
     schemaType: "WebPage",
   });
@@ -70,20 +70,20 @@ export default function Advertise() {
       <div className="bg-header text-white">
         <div className="cb-container py-16 sm:py-24">
           <p className="text-xs font-bold tracking-widest uppercase text-secondary mb-4">
-            Advertise with ClownBinge
+            Advertise with Citatious
           </p>
           <h1 className="font-sans font-black text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6 max-w-4xl text-white">
             Your brand, next to the{" "}
             <span className="text-secondary">primary source.</span>
           </h1>
           <p className="text-white/75 text-lg sm:text-xl max-w-2xl leading-relaxed mb-10">
-            ClownBinge readers came here because they wanted to know what the record actually says.
+            Citatious readers came here because they wanted to know what the record actually says.
             They are not passive consumers of information. They are people who verify. Reaching
             them means something different than reaching any other audience.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <a
-              href="mailto:advertising@clownbinge.com"
+              href="mailto:advertising@citatious.com"
               className="inline-flex items-center gap-2 bg-secondary text-gray-900 font-bold px-8 py-4 rounded-full text-sm uppercase tracking-wider hover:bg-secondary/90 transition-colors"
             >
               <Mail className="w-4 h-4" />
@@ -117,7 +117,7 @@ export default function Advertise() {
               Readers who read to the end.
             </h2>
             <p className="text-muted-foreground text-base leading-relaxed">
-              ClownBinge publishes long-form, citation-heavy accountability journalism. Our
+              Citatious publishes long-form, citation-heavy accountability journalism. Our
               audience self-selects for exactitude. They follow up. They share primary source links.
               They are the people other people trust to know what actually happened.
             </p>
@@ -238,7 +238,7 @@ export default function Advertise() {
                   {[
                     "Political campaigns, PACs, or dark money organizations",
                     "Advertising that contradicts documented public record",
-                    "Products or services ClownBinge has reported on critically",
+                    "Products or services Citatious has reported on critically",
                     "Advertising conditioned on editorial outcomes or story suppression",
                     "Any entity that has attempted to misrepresent primary sources",
                   ].map((i) => (
@@ -271,14 +271,14 @@ export default function Advertise() {
               are discussed directly.
             </p>
             <a
-              href="mailto:advertising@clownbinge.com"
+              href="mailto:advertising@citatious.com"
               className="inline-flex items-center gap-2 bg-primary text-white font-bold px-10 py-4 rounded-full text-sm uppercase tracking-wider hover:bg-primary/90 transition-colors shadow-lg"
             >
               <Mail className="w-4 h-4" />
-              advertising@clownbinge.com
+              advertising@citatious.com
             </a>
             <p className="text-xs text-muted-foreground mt-6">
-              Primary Source Analytics, LLC &nbsp;·&nbsp; ClownBinge.com &nbsp;·&nbsp; All advertising subject to editorial review.
+              Primary Source Analytics, LLC &nbsp;·&nbsp; Citatious.com &nbsp;·&nbsp; All advertising subject to editorial review.
             </p>
           </div>
         </div>

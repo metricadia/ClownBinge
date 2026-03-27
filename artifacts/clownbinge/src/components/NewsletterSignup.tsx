@@ -41,7 +41,7 @@ export function NewsletterSignup({ source = "inline" }: { source?: string }) {
             Get The Record Delivered.
           </h3>
           <p className="text-white/80 text-sm sm:text-base">
-            Join the ClownBinge newsletter for the most documented self-owns and political hypocrisy, straight to your inbox. No spam. Just facts.
+            Join the Citatious newsletter for the most documented self-owns and political hypocrisy, straight to your inbox. No spam. Just facts.
           </p>
         </div>
         
