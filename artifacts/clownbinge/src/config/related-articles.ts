@@ -319,6 +319,11 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
   ],
 
   // --- Disarming Hate ---
+  "america-not-taught-same-chapter-cross-racial-solidarity-documented-record": [
+    "white-women-primary-beneficiaries-affirmative-action-federal-record",
+    "they-did-not-have-to-primary-source-record-human-selflessness",
+    "woke-is-not-a-slur-chronology-black-liberation-survival",
+  ],
   "white-women-primary-beneficiaries-affirmative-action-federal-record": [
     "dei-label-clinical-cost-documented-inventory",
     "diversity-denial-primary-source-record-what-was-lost",
