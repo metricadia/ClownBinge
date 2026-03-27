@@ -44,9 +44,13 @@ export default function Home() {
   const { data: highlightedPost } = usePostDetail(HIGHLY_POPULAR_SLUG);
 
   // Staff picks: filter curated slugs from a full fetch; regular feed uses paginated posts
+  // Religion articles are excluded from the "all" feed — they only appear when the religion category is explicitly selected
+  const isAllFeed = !category || category === 'all';
   const displayPosts = isStaffPicks
     ? STAFF_PICKS_SLUGS.map(slug => (staffPicksData?.posts ?? []).find(p => p.slug === slug)).filter(Boolean) as typeof paginatedPosts
-    : paginatedPosts;
+    : isAllFeed
+      ? paginatedPosts.filter(p => p.category !== 'religion')
+      : paginatedPosts;
 
   const feedIsLoading = isStaffPicks ? staffPicksLoading : isLoading;
   const feedError = isStaffPicks ? staffPicksError : error;
