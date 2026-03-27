@@ -26,4 +26,5 @@ export const ListPostsCategory = {
   global_south: "global_south",
   how_it_works: "how_it_works",
   nerd_out: "nerd_out",
+  disarming_hate: "disarming_hate",
 } as const;

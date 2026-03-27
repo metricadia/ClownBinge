@@ -318,6 +318,13 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
     "cb-000041-united-states-built-by-immigrants-record-confirms-it",
   ],
 
+  // --- Disarming Hate ---
+  "white-women-primary-beneficiaries-affirmative-action-federal-record": [
+    "dei-label-clinical-cost-documented-inventory",
+    "diversity-denial-primary-source-record-what-was-lost",
+    "ketanji-brown-jackson-federal-record-confirmation-hearing",
+  ],
+
   // --- Congressional appropriations & foreign policy ---
   "congress-appropriations-ukraine-palestine-yemen-syria-sudan": [
     "national-debt-military-spending-interest-payments-generational-cost",

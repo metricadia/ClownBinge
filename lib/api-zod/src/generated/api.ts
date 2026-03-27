@@ -39,6 +39,7 @@ export const ListPostsQueryParams = zod.object({
       "global_south",
       "how_it_works",
       "nerd_out",
+      "disarming_hate",
     ])
     .optional(),
   limit: zod.coerce.number().default(listPostsQueryLimitDefault),

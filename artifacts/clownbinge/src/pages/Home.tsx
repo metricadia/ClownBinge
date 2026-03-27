@@ -26,6 +26,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   global_south:        "Global South",
   how_it_works:        "How It Works",
   nerd_out:            "NerdOut / Academic",
+  disarming_hate:      "Disarming Hate",
 };
 import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
 
