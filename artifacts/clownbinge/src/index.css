@@ -99,7 +99,7 @@
   /* ClownBinge Factoid Links */
   a.cb-factoid {
     color: inherit;
-    text-decoration: underline dotted #F5C518;
+    text-decoration: underline dotted #B8860B;
     text-underline-offset: 5px;
     text-decoration-thickness: 2px;
     cursor: pointer;
@@ -107,13 +107,14 @@
   }
 
   a.cb-factoid:hover {
-    text-decoration-color: #F5C518;
+    text-decoration-color: #8B6508;
     text-decoration-style: dotted;
   }
 
   .prose a.cb-factoid {
     color: inherit !important;
-    text-decoration: underline dotted #F5C518 !important;
+    font-weight: 700 !important;
+    text-decoration: underline dotted #B8860B !important;
     text-underline-offset: 5px !important;
     text-decoration-thickness: 2px !important;
   }
