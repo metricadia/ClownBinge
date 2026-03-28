@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { Copy, Check, X, ExternalLink } from "lucide-react";
+import { Copy, Check, X, ExternalLink, Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import type { FactoidState } from "@/hooks/use-factoid-popup";
 
@@ -15,6 +15,18 @@ interface FactoidPopupProps {
 
 function sourceDomain(href: string): string {
   try { return new URL(href).hostname.replace(/^www\./, ""); } catch { return ""; }
+}
+
+function SummaryBody({ factoid }: { factoid: FactoidState }) {
+  if (factoid.isLoading) {
+    return (
+      <div className="flex items-center gap-2 text-[13px] text-gray-400 italic py-1">
+        <Loader2 size={13} className="animate-spin shrink-0" strokeWidth={2} />
+        <span>Analyzing source in context…</span>
+      </div>
+    );
+  }
+  return <>{factoid.summary}</>;
 }
 
 export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onCopy, extraFooter }: FactoidPopupProps) {
@@ -44,7 +56,9 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
 
           <div className="cb-factoid-sheet-scrollable">
             <div className="cb-factoid-popup-title cb-factoid-sheet-title">{factoid.title}</div>
-            <div className="cb-factoid-popup-summary cb-factoid-sheet-summary">{factoid.summary}</div>
+            <div className="cb-factoid-popup-summary cb-factoid-sheet-summary">
+              <SummaryBody factoid={factoid} />
+            </div>
             {domain && (
               <div className="flex items-center gap-1.5 mt-3 text-[11px] font-mono text-gray-400">
                 <ExternalLink size={10} strokeWidth={2} />
@@ -54,7 +68,11 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
           </div>
 
           <div className="cb-factoid-popup-footer cb-factoid-sheet-footer">
-            <button onClick={onCopy} className="cb-factoid-popup-copy-btn self-start">
+            <button
+              onClick={onCopy}
+              disabled={factoid.isLoading}
+              className="cb-factoid-popup-copy-btn self-start disabled:opacity-40"
+            >
               {copied
                 ? <><Check size={14} strokeWidth={3} /> Copied!</>
                 : <><Copy size={14} strokeWidth={2} /> Copy Citation</>
@@ -86,7 +104,9 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
 
       <div className="cb-factoid-popup-scrollable">
         <div className="cb-factoid-popup-title">{factoid.title}</div>
-        <div className="cb-factoid-popup-summary">{factoid.summary}</div>
+        <div className="cb-factoid-popup-summary">
+          <SummaryBody factoid={factoid} />
+        </div>
         {domain && (
           <div className="flex items-center gap-1 mt-2 text-[10px] font-mono text-gray-400">
             <ExternalLink size={9} strokeWidth={2} />
@@ -96,7 +116,11 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
       </div>
 
       <div className="cb-factoid-popup-footer">
-        <button onClick={onCopy} className="cb-factoid-popup-copy-btn self-start">
+        <button
+          onClick={onCopy}
+          disabled={factoid.isLoading}
+          className="cb-factoid-popup-copy-btn self-start disabled:opacity-40"
+        >
           {copied
             ? <><Check size={12} strokeWidth={3} /> Copied!</>
             : <><Copy size={12} strokeWidth={2} /> Copy Citation</>

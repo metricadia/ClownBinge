@@ -86,7 +86,9 @@ export default function PostDetail() {
   useArticleSeoHead(post);
   const { trackView } = useViewTracker(slug);
   const hasTrackedView = useRef(false);
-  const { containerRef, popupRef, factoid, copied, isMobile, closeFactoid, handleCopy } = useFactoidPopup();
+  const { containerRef, popupRef, factoid, copied, isMobile, closeFactoid, handleCopy } = useFactoidPopup(
+    post ? { articleTitle: post.title } : undefined,
+  );
 
   const processedBody = useMemo(() => {
     if (!post?.body) return post?.body ?? "";

@@ -6,6 +6,11 @@ export interface FactoidState {
   href: string;
   x: number;
   y: number;
+  isLoading?: boolean;
+}
+
+export interface FactoidMeta {
+  articleTitle?: string;
 }
 
 function getIsMobile() {
@@ -13,7 +18,7 @@ function getIsMobile() {
 }
 
 function isExternalLink(el: HTMLAnchorElement): boolean {
-  const href = el.getAttribute("href") || "";
+  const href = el.getAttribute("href") || el.dataset.href || "";
   if (!href || href.startsWith("#") || href.startsWith("/") || href.startsWith("javascript")) return false;
   try {
     const url = new URL(href, window.location.href);
@@ -31,7 +36,45 @@ function domainLabel(href: string): string {
   }
 }
 
-export function useFactoidPopup() {
+// Strip href/target from an anchor and store original href in data-href.
+// The browser then has no URL to navigate to — only our click handler can act.
+function patchAnchor(a: HTMLAnchorElement) {
+  if (a.dataset.cbPatched) return; // already done
+  const isCbFactoid = a.classList.contains("cb-factoid");
+  const originalHref = a.getAttribute("href") || "";
+  const isExternal =
+    originalHref &&
+    !originalHref.startsWith("#") &&
+    !originalHref.startsWith("/") &&
+    !originalHref.startsWith("javascript");
+
+  if (!isCbFactoid && !isExternal) return;
+
+  a.dataset.href = originalHref;
+  a.dataset.cbPatched = "1";
+  a.removeAttribute("href");
+  a.removeAttribute("target");
+  a.removeAttribute("rel");
+  a.style.cursor = "pointer";
+}
+
+async function fetchContextualSummary(
+  href: string,
+  linkText: string,
+  surroundingText: string,
+  articleTitle: string,
+): Promise<{ title: string; summary: string }> {
+  const base = (import.meta.env.BASE_URL as string)?.replace(/\/$/, "") ?? "";
+  const res = await fetch(`${base}/api/factoid-context`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ href, linkText, surroundingText, articleTitle }),
+  });
+  if (!res.ok) throw new Error("factoid-context failed");
+  return res.json() as Promise<{ title: string; summary: string }>;
+}
+
+export function useFactoidPopup(meta?: FactoidMeta) {
   const containerRef = useRef<HTMLElement | null>(null);
   const popupRef = useRef<HTMLDivElement>(null);
   const [factoid, setFactoid] = useState<FactoidState | null>(null);
@@ -49,69 +92,111 @@ export function useFactoidPopup() {
     setCopied(false);
   }, []);
 
-  // Belt-and-suspenders: directly patch every external anchor in the container.
-  // Strips target="_blank", removes href so browser has nothing to navigate to,
-  // and stores the original href in data-href for the popup to read.
+  // MutationObserver: patch links the instant they appear in the DOM.
+  // This handles the async article load — no timing assumption needed.
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    const anchors = Array.from(container.querySelectorAll<HTMLAnchorElement>("a[href]"));
-    anchors.forEach((a) => {
-      if (!isExternalLink(a) && !a.classList.contains("cb-factoid")) return;
-      const originalHref = a.getAttribute("href") || "";
-      if (!a.dataset.href) {
-        a.dataset.href = originalHref;
-      }
-      a.removeAttribute("href");
-      a.removeAttribute("target");
-      a.removeAttribute("rel");
-      a.style.cursor = "pointer";
-    });
+    const patchAll = () => {
+      container
+        .querySelectorAll<HTMLAnchorElement>("a[href]")
+        .forEach(patchAnchor);
+    };
+
+    patchAll(); // catch any already-present links
+
+    const observer = new MutationObserver(patchAll);
+    observer.observe(container, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
   }, []);
 
+  // Capture-phase click listener: fires before browser default and before
+  // any child handlers. Combined with the stripped href this makes navigation
+  // physically impossible.
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const handleClick = (e: MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-
       const target = (e.target as Element).closest("a") as HTMLAnchorElement | null;
       if (!target) return;
 
+      const href = target.dataset.href || "";
       const isCbFactoid = target.classList.contains("cb-factoid");
-      const href = target.dataset.href || target.getAttribute("href") || "";
 
-      // Only show factoid for cb-factoid links or links that had an external href
+      // Only intercept external or cb-factoid links
       if (!isCbFactoid && !href) return;
-      // Skip pure internal anchor/nav links
       if (!isCbFactoid && (href.startsWith("#") || href.startsWith("/"))) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
 
       const rect = target.getBoundingClientRect();
       const x = rect.left + rect.width / 2;
       const y = rect.top + window.scrollY;
 
+      // Toggle off if same link clicked twice
       if (factoid && Math.abs(factoid.x - x) < 4 && Math.abs(factoid.y - y) < 4) {
         closeFactoid();
         return;
       }
 
       const linkText = target.textContent?.trim() || domainLabel(href);
-      const title = target.dataset.title || linkText;
-      const summary = target.dataset.summary
-        || `Primary source: ${domainLabel(href)}\n\nThe full citation record for this reference is available at:\n${href}`;
+      const existingTitle = target.dataset.title || linkText;
+      const existingSummary = target.dataset.summary || "";
 
       setCopied(false);
-      setFactoid({ title, summary, href, x, y });
+
+      if (existingSummary) {
+        // Pre-written contextual summary — show immediately
+        setFactoid({ title: existingTitle, summary: existingSummary, href, x, y });
+      } else {
+        // No summary — show loading state, then fetch contextual explanation
+        setFactoid({
+          title: existingTitle,
+          summary: "",
+          href,
+          x,
+          y,
+          isLoading: true,
+        });
+
+        const surroundingText =
+          target.closest("p, li, blockquote")?.textContent?.trim() || "";
+
+        fetchContextualSummary(
+          href,
+          linkText,
+          surroundingText,
+          meta?.articleTitle || document.title || "",
+        )
+          .then(({ title, summary }) => {
+            setFactoid((prev) =>
+              prev && prev.x === x && prev.y === y
+                ? { ...prev, title, summary, isLoading: false }
+                : prev,
+            );
+          })
+          .catch(() => {
+            setFactoid((prev) =>
+              prev && prev.x === x && prev.y === y
+                ? {
+                    ...prev,
+                    summary: `Primary source reference from ${domainLabel(href)}. Visit the linked record for full documentation.`,
+                    isLoading: false,
+                  }
+                : prev,
+            );
+          });
+      }
     };
 
-    // Use capture phase so we intercept before any child handlers or browser defaults
     container.addEventListener("click", handleClick, { capture: true });
     return () => container.removeEventListener("click", handleClick, { capture: true });
-  }, [factoid, closeFactoid]);
+  }, [factoid, closeFactoid, meta?.articleTitle]);
 
   useEffect(() => {
     if (!factoid) return;

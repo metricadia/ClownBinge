@@ -8,6 +8,7 @@ import tipsRouter from "./tips";
 import sponsorsRouter from "./sponsors";
 import verifyRouter from "./verify";
 import fixmeRouter from "./fixme";
+import factoidRouter from "./factoid";
 
 const router: IRouter = Router();
 
@@ -20,5 +21,6 @@ router.use(tipsRouter);
 router.use(sponsorsRouter);
 router.use(verifyRouter);
 router.use(fixmeRouter);
+router.use(factoidRouter);
 
 export default router;
