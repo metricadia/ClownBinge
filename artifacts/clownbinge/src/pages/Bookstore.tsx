@@ -15,6 +15,7 @@ interface FactBook {
   accentFg: string;
   coverDesign: "stat" | "grid" | "split" | "bar" | "slash" | "arch" | "type" | "minimal" | "overlap" | "circle";
   subtitle?: string;
+  coverImage?: string;
   summary: string;
   bullets: string[];
 }
@@ -140,6 +141,7 @@ const BOOKS: FactBook[] = [
     bg: "#003366", fg: "#FFFFFF", accent: "#38BDF8", accentFg: "#003366",
     coverDesign: "minimal",
     subtitle: "Judaism ≠ Zionism",
+    coverImage: "/covers/vol08-cover.png",
     summary: "Judaism is a 3,500-year-old religious and cultural tradition. Zionism is a 19th-century political movement founded in Vienna in 1897. They share some overlapping adherents and some contested historical claims — but they are not the same thing. This FactBook traces each to its founding documents and lets the historical record speak without editorializing.",
     bullets: [
       "Theodor Herzl's founding documents describe Zionism explicitly as a political, not religious, project",
@@ -189,6 +191,38 @@ function CoverSVG({ book }: { book: FactBook }) {
   const mid = Math.ceil(words.length / 2);
   const line1 = words.slice(0, mid).join(" ");
   const line2 = words.slice(mid).join(" ");
+
+  if (book.coverImage) {
+    return (
+      <svg viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        <defs>
+          <linearGradient id={`photo-overlay-${book.id}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#000000" stopOpacity="0.35" />
+            <stop offset="45%" stopColor="#000000" stopOpacity="0.0" />
+            <stop offset="65%" stopColor="#000000" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="#000000" stopOpacity="0.85" />
+          </linearGradient>
+        </defs>
+        <image href={book.coverImage} x="0" y="0" width="240" height="360" preserveAspectRatio="xMidYMid slice" />
+        <rect width="240" height="360" fill={`url(#photo-overlay-${book.id})`} />
+        <text x="20" y="32" fontSize="8" fill="#FFFFFF" fontFamily="'JetBrains Mono',monospace" opacity="0.75" letterSpacing="2">
+          {vol.toUpperCase()} · CLOWNBINGE FACTBOOK™
+        </text>
+        <text x="20" y="200" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line1}</text>
+        <text x="20" y="226" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line2}</text>
+        {book.subtitle && (
+          <text x="20" y="252" fontSize="13" fill="#F5C518" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="0.3">{book.subtitle}</text>
+        )}
+        <rect x="0" y="326" width="240" height="34" fill="rgba(0,0,0,0.65)" />
+        <text x="20" y="347" fontSize="8.5" fill="#FFFFFF" fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700">
+          PRIMARY SOURCE ANALYTICS
+        </text>
+        <text x="220" y="347" fontSize="9" fill="#F5C518" fontFamily="'Archivo Black',sans-serif" textAnchor="end" fontWeight="900">
+          $24.95
+        </text>
+      </svg>
+    );
+  }
 
   return (
     <svg viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
