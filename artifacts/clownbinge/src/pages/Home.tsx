@@ -289,11 +289,11 @@ export default function Home() {
                   {/* Header strip */}
                   <div className="px-4 py-3 flex items-center justify-between" style={{ background: "#1A3A8F" }}>
                     <div className="flex items-center gap-2">
-                      <span className="text-[9px] font-black uppercase tracking-[0.25em]" style={{ color: "#F5C518" }}>
+                      <span className="text-xs font-black uppercase tracking-[0.25em]" style={{ color: "#F5C518" }}>
                         Official Record
                       </span>
-                      <span style={{ color: "rgba(245,197,24,0.4)" }} className="text-xs">|</span>
-                      <span className="text-[9px] font-bold uppercase tracking-widest text-white/50">
+                      <span style={{ color: "rgba(245,197,24,0.4)" }} className="text-sm">|</span>
+                      <span className="text-xs font-bold uppercase tracking-widest text-white/60">
                         {foundingDoc.caseNumber}
                       </span>
                     </div>
