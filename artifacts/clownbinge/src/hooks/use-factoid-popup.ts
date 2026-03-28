@@ -3,12 +3,32 @@ import { useState, useRef, useCallback, useEffect } from "react";
 export interface FactoidState {
   title: string;
   summary: string;
+  href: string;
   x: number;
   y: number;
 }
 
 function getIsMobile() {
   return typeof window !== "undefined" && window.innerWidth < 768;
+}
+
+function isExternalLink(el: HTMLAnchorElement): boolean {
+  const href = el.getAttribute("href") || "";
+  if (!href || href.startsWith("#") || href.startsWith("/") || href.startsWith("javascript")) return false;
+  try {
+    const url = new URL(href, window.location.href);
+    return url.hostname !== window.location.hostname;
+  } catch {
+    return false;
+  }
+}
+
+function domainLabel(href: string): string {
+  try {
+    return new URL(href).hostname.replace(/^www\./, "");
+  } catch {
+    return href;
+  }
 }
 
 export function useFactoidPopup() {
@@ -34,8 +54,14 @@ export function useFactoidPopup() {
     if (!container) return;
 
     const handleClick = (e: MouseEvent) => {
-      const target = (e.target as Element).closest("a.cb-factoid") as HTMLAnchorElement | null;
+      const target = (e.target as Element).closest("a") as HTMLAnchorElement | null;
       if (!target) return;
+
+      const isCbFactoid = target.classList.contains("cb-factoid");
+      const external = isExternalLink(target);
+
+      if (!isCbFactoid && !external) return;
+
       e.preventDefault();
       e.stopPropagation();
 
@@ -48,13 +74,15 @@ export function useFactoidPopup() {
         return;
       }
 
+      const href = target.getAttribute("href") || "";
+      const linkText = target.textContent?.trim() || domainLabel(href);
+
+      const title = target.dataset.title || linkText;
+      const summary = target.dataset.summary
+        || `Primary source: ${domainLabel(href)}\n\nThe full citation record for this reference is available at:\n${href}`;
+
       setCopied(false);
-      setFactoid({
-        title: target.dataset.title || "",
-        summary: target.dataset.summary || "",
-        x,
-        y,
-      });
+      setFactoid({ title, summary, href, x, y });
     };
 
     container.addEventListener("click", handleClick);
@@ -75,7 +103,7 @@ export function useFactoidPopup() {
     const handleOutside = (e: MouseEvent) => {
       const target = e.target as Element;
       if (popupRef.current?.contains(target)) return;
-      if (target.closest("a.cb-factoid")) return;
+      if (target.closest("a")) return;
       closeFactoid();
     };
     const timeout = setTimeout(() => {
