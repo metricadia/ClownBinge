@@ -533,8 +533,8 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                       {i + 1}
                     </span>
                     <div>
-                      <p className="text-sm font-bold text-gray-800 leading-snug">{ch.title}</p>
-                      <p className="text-xs text-gray-500 leading-relaxed mt-0.5">{ch.description}</p>
+                      <p className="text-sm font-bold leading-snug" style={{ color: book.accent }}>{ch.title}</p>
+                      <p className="text-xs leading-relaxed mt-0.5" style={{ color: "#111111" }}>{ch.description}</p>
                     </div>
                   </li>
                 ))}
