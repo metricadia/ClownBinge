@@ -49,7 +49,7 @@ console.log(`Parsed ${chapters.length} chapters (incl. preface)`);
 
 // ── 2. Load cover image ──────────────────────────────────────────────────────
 const coverImageBuffer = readFileSync(
-  join(__dirname, 'public/covers/vol08-cover.png')
+  join(__dirname, 'public/covers/vol08-cover-embed.jpg')
 );
 
 // ── 3. Colour palette ────────────────────────────────────────────────────────
@@ -77,8 +77,8 @@ function makeCoverPage() {
       children: [
         new ImageRun({
           data: coverImageBuffer,
-          transformation: { width: 504, height: 648 },
-          type: 'png',
+          transformation: { width: 432, height: 617 },
+          type: 'jpg',
         }),
       ],
     }),
