@@ -190,14 +190,14 @@ function CoverSVG({ book }: { book: FactBook }) {
 
       {coverDesign === "split" ? (
         <>
-          <text x="20" y="90" fontSize="22" fill={accentFg} fontFamily="'Archivo Black',sans-serif" fontWeight="900" letterSpacing="-0.5">{line1}</text>
-          <text x="20" y="118" fontSize="22" fill={accentFg} fontFamily="'Archivo Black',sans-serif" fontWeight="900" letterSpacing="-0.5">{line2}</text>
-          <text x="20" y="210" fontSize="20" fill={fg} fontFamily="'Archivo Black',sans-serif" fontWeight="900" opacity="0.9">{book.tag}</text>
+          <text x="20" y="90" fontSize="20" fill={accentFg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line1}</text>
+          <text x="20" y="114" fontSize="20" fill={accentFg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line2}</text>
+          <text x="20" y="210" fontSize="17" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="600" opacity="0.85">{book.tag}</text>
         </>
       ) : (
         <>
-          <text x="20" y="200" fontSize="24" fill={fg} fontFamily="'Archivo Black',sans-serif" fontWeight="900" letterSpacing="-0.5">{line1}</text>
-          <text x="20" y="230" fontSize="24" fill={fg} fontFamily="'Archivo Black',sans-serif" fontWeight="900" letterSpacing="-0.5">{line2}</text>
+          <text x="20" y="200" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line1}</text>
+          <text x="20" y="226" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line2}</text>
         </>
       )}
 
