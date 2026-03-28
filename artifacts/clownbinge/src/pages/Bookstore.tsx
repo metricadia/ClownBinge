@@ -3,6 +3,11 @@ import { Layout } from "@/components/Layout";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 import { BookOpen, ArrowRight, CheckCircle, Download, Package, Layers, X } from "lucide-react";
 
+interface FactBookChapter {
+  title: string;
+  description: string;
+}
+
 interface FactBook {
   id: number;
   vol: string;
@@ -16,10 +21,12 @@ interface FactBook {
   coverDesign: "stat" | "grid" | "split" | "bar" | "slash" | "arch" | "type" | "minimal" | "overlap" | "circle";
   subtitle?: string;
   coverImage?: string;
+  pages?: number;
   summary: string;
   extendedSummary?: string[];
   quote?: string;
   bullets: string[];
+  chapters?: FactBookChapter[];
 }
 
 const BOOKS: FactBook[] = [
@@ -144,6 +151,19 @@ const BOOKS: FactBook[] = [
     coverDesign: "minimal",
     subtitle: "Judaism ≠ Zionism",
     coverImage: "/covers/vol08-cover.png",
+    pages: 140,
+    chapters: [
+      { title: "Two Traditions, One Conflation", description: "The definitional problem. What Judaism is, what Zionism is, and why the distinction matters forensically." },
+      { title: "The Basel Congress, 1897", description: "Herzl's founding documents, congress proceedings, and the secular-nationalist framing in his own words." },
+      { title: "Jewish Anti-Zionism: The Internal Record", description: "Neturei Karta, the American Council for Judaism, rabbinic rulings — opposition from within, documented since 1897." },
+      { title: "The Balfour Declaration", description: "A British foreign policy letter. Who wrote it, who received it, and what the Ottoman and Arab response was." },
+      { title: "Land, Census, and Demographic Reality", description: "Ottoman land registries, British Mandate censuses, pre-1948 population distribution. The numbers as recorded." },
+      { title: "The UN Record", description: "Resolution 3379 (1975) and its reversal (1991) — the political context, the votes, the reasoning on all sides." },
+      { title: "Israeli Law: Nation vs. Faith", description: "The legal distinction between Israeli nationality and Jewish nationality in Israeli civil law. Statutory text and court records." },
+      { title: "The Conflation Strategy, Documented", description: "When and where equating anti-Zionism with antisemitism became organized policy — lobbying records and legislative campaigns." },
+      { title: "Voices From Within: Scholars, Rabbis, Organizations", description: "A sourced catalog of Jewish anti-Zionist intellectual and religious output, 1897 to present." },
+      { title: "The Primary Source Verdict", description: "What the record actually says. No opinion added. No editorial conclusion. The documents stand alone." },
+    ],
     summary: "Judaism is a 3,500-year-old religious and cultural tradition — texts, law, liturgy, diaspora, living culture. Zionism is a 19th-century secular political movement founded at the First Zionist Congress in Basel in 1897 by Theodor Herzl, a journalist who was not religiously observant. These are not the same thing.",
     extendedSummary: [
       "The founding documents of Zionism are unambiguous: this was a nationalist political project aimed at establishing a Jewish state in Palestine, not a fulfillment of religious scripture. Herzl's own diaries and congress proceedings describe it in explicitly secular, colonial-era political terms. Many of the early Zionist leaders were atheists.",
@@ -353,6 +373,9 @@ function CoverSVG({ book }: { book: FactBook }) {
 }
 
 function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
+  const [tab, setTab] = useState<"description" | "outline">("description");
+  const hasOutline = book.chapters && book.chapters.length > 0;
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
@@ -386,33 +409,29 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
             <X className="w-3.5 h-3.5 text-gray-700" />
           </button>
 
-          {/* Scrollable content — always-visible thin scrollbar */}
-          <div
-            className="overflow-y-scroll flex-1 px-6 py-5"
-            style={{ scrollbarWidth: "thin", scrollbarColor: `${book.accent}55 transparent` }}
-          >
-            {/* Vol / tag */}
-            <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase mb-2" style={{ color: book.accent }}>
+          {/* Header — always visible, not scrolled */}
+          <div className="px-6 pt-5 pb-0 shrink-0">
+            <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase mb-1" style={{ color: book.accent }}>
               {book.vol} · {book.tag}
             </p>
-
-            {/* Title */}
-            <h2 className="font-sans font-extrabold text-xl leading-tight mb-1" style={{ color: "#1A1A2E" }}>
+            <h2 className="font-sans font-extrabold text-xl leading-tight mb-0.5" style={{ color: "#1A1A2E" }}>
               {book.shortTitle}
             </h2>
-
-            {/* Subtitle */}
             {book.subtitle && (
-              <p className="font-sans font-bold text-sm mb-4" style={{ color: book.accent }}>
+              <p className="font-sans font-bold text-sm mb-3" style={{ color: book.accent }}>
                 {book.subtitle}
               </p>
             )}
-
-            {/* Price + CTA */}
-            <div className="flex items-center gap-3 mb-5 pb-5 border-b border-gray-200">
+            {/* Price + pages + CTA */}
+            <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200">
               <span className="font-extrabold text-2xl text-gray-900">$24.95</span>
+              {book.pages && (
+                <span className="font-mono text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded" style={{ background: book.accent + "18", color: book.accent }}>
+                  {book.pages} pages
+                </span>
+              )}
               <button
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85"
+                className="ml-auto inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85"
                 style={{ background: book.accent, color: book.accentFg }}
               >
                 Pre-Order
@@ -420,69 +439,107 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
               </button>
             </div>
 
-            {/* Lead summary */}
-            <p className="text-sm text-gray-800 leading-relaxed font-medium mb-4">
-              {book.summary}
-            </p>
+            {/* Tabs */}
+            {hasOutline && (
+              <div className="flex gap-0 border-b border-gray-200 mb-0">
+                {(["description", "outline"] as const).map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setTab(t)}
+                    className="px-4 py-2 text-xs font-bold tracking-wide capitalize transition-colors relative"
+                    style={{
+                      color: tab === t ? book.accent : "#9CA3AF",
+                      borderBottom: tab === t ? `2px solid ${book.accent}` : "2px solid transparent",
+                      marginBottom: "-1px",
+                    }}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
 
-            {/* Extended paragraphs */}
-            {book.extendedSummary && book.extendedSummary.map((para, i) => (
-              <p key={i} className="text-sm text-gray-600 leading-relaxed mb-3">
-                {para}
-              </p>
-            ))}
-
-            {/* Pull quote */}
-            {book.quote && (
-              <blockquote
-                className="my-5 pl-4 py-3 pr-3 rounded-r-lg text-sm font-semibold leading-snug italic"
-                style={{
-                  borderLeft: `3px solid ${book.accent}`,
-                  background: book.accent + "10",
-                  color: "#2A1A00",
-                }}
-              >
-                "{book.quote}"
-              </blockquote>
+          {/* Scrollable content — always-visible thin scrollbar */}
+          <div
+            className="overflow-y-scroll flex-1 px-6 py-4"
+            style={{ scrollbarWidth: "thin", scrollbarColor: `${book.accent}55 transparent` }}
+          >
+            {/* ── DESCRIPTION TAB ── */}
+            {tab === "description" && (
+              <>
+                <p className="text-sm text-gray-800 leading-relaxed font-medium mb-4">
+                  {book.summary}
+                </p>
+                {book.extendedSummary && book.extendedSummary.map((para, i) => (
+                  <p key={i} className="text-sm text-gray-600 leading-relaxed mb-3">
+                    {para}
+                  </p>
+                ))}
+                {book.quote && (
+                  <blockquote
+                    className="my-5 pl-4 py-3 pr-3 rounded-r-lg text-sm font-semibold leading-snug italic"
+                    style={{ borderLeft: `3px solid ${book.accent}`, background: book.accent + "10", color: "#2A1A00" }}
+                  >
+                    "{book.quote}"
+                  </blockquote>
+                )}
+                <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3 mt-4">
+                  What This FactBook Documents
+                </p>
+                <ul className="space-y-2.5 mb-6">
+                  {book.bullets.map((bullet, i) => (
+                    <li key={i} className="flex gap-3 text-xs text-gray-700 leading-relaxed">
+                      <span
+                        className="mt-0.5 w-4 h-4 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px]"
+                        style={{ background: book.accent + "28", color: book.accent }}
+                      >
+                        {i + 1}
+                      </span>
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+                <div
+                  className="rounded-xl p-4 flex items-center justify-between"
+                  style={{ background: book.accent + "12", border: `1px solid ${book.accent}30` }}
+                >
+                  <div>
+                    <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-0.5" style={{ color: book.accent }}>
+                      Digital PDF · APA 7 Citations
+                    </p>
+                    <p className="text-xs text-gray-500">Instant delivery. 100% primary sourced.</p>
+                  </div>
+                  <button
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85 shrink-0"
+                    style={{ background: book.accent, color: book.accentFg }}
+                  >
+                    $24.95 — Pre-Order
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </>
             )}
 
-            {/* Bullets */}
-            <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3 mt-4">
-              What This FactBook Documents
-            </p>
-            <ul className="space-y-2.5 mb-6">
-              {book.bullets.map((bullet, i) => (
-                <li key={i} className="flex gap-3 text-xs text-gray-700 leading-relaxed">
-                  <span
-                    className="mt-0.5 w-4 h-4 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px]"
-                    style={{ background: book.accent + "28", color: book.accent }}
-                  >
-                    {i + 1}
-                  </span>
-                  {bullet}
-                </li>
-              ))}
-            </ul>
-
-            {/* Bottom CTA */}
-            <div
-              className="rounded-xl p-4 flex items-center justify-between"
-              style={{ background: book.accent + "12", border: `1px solid ${book.accent}30` }}
-            >
-              <div>
-                <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-0.5" style={{ color: book.accent }}>
-                  Digital PDF · APA 7 Citations
-                </p>
-                <p className="text-xs text-gray-500">Instant delivery. 100% primary sourced.</p>
-              </div>
-              <button
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85 shrink-0"
-                style={{ background: book.accent, color: book.accentFg }}
-              >
-                $24.95 — Pre-Order
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
+            {/* ── OUTLINE TAB ── */}
+            {tab === "outline" && book.chapters && (
+              <ol className="space-y-3 mb-6">
+                {book.chapters.map((ch, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span
+                      className="mt-0.5 shrink-0 font-mono text-[10px] font-bold w-6 h-6 rounded flex items-center justify-center"
+                      style={{ background: book.accent + "20", color: book.accent }}
+                    >
+                      {i + 1}
+                    </span>
+                    <div>
+                      <p className="text-sm font-bold text-gray-800 leading-snug">{ch.title}</p>
+                      <p className="text-xs text-gray-500 leading-relaxed mt-0.5">{ch.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            )}
           </div>
         </div>
       </div>
