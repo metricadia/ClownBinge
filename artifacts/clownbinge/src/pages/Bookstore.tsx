@@ -244,7 +244,7 @@ function CoverSVG({ book }: { book: FactBook }) {
         <rect width="240" height="360" fill={`url(#fade-${book.id})`} />
         {/* VOL label — top */}
         <text x="20" y="28" fontSize="8" fill="#FFFFFF" fontFamily="'JetBrains Mono',monospace" opacity="0.82" letterSpacing="1">
-          {vol.toUpperCase()} · PRIMARY SOURCE ANALYTICS™
+          {vol.toUpperCase()} · FACTBOOK SERIES
         </text>
         {/* Title — centered, mid-bottom */}
         <text x="120" y="248" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line1}</text>
@@ -341,7 +341,7 @@ function CoverSVG({ book }: { book: FactBook }) {
       )}
 
       <text x="20" y="32" fontSize="8" fill={fg} fontFamily="'JetBrains Mono',monospace" opacity="0.82" letterSpacing="1">
-        {vol.toUpperCase()} · PRIMARY SOURCE ANALYTICS™
+        {vol.toUpperCase()} · FACTBOOK SERIES
       </text>
 
       {coverDesign === "split" ? (
