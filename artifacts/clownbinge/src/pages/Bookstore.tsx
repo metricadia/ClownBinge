@@ -8,6 +8,7 @@ interface FactBookChapter {
   description: string;
   isPreface?: boolean;
   content?: string[];
+  sources?: string[];
 }
 
 interface FactBook {
@@ -164,7 +165,33 @@ const BOOKS: FactBook[] = [
     pages: 140,
     price: "$39.95",
     chapters: [
-      { isPreface: true, title: "Preface", description: "Why this book was written. The distinction between a religion and a political movement, and why it matters now." },
+      {
+        isPreface: true,
+        title: "Preface: What the Record Requires",
+        description: "Why this book was written. The distinction between a religion and a political movement, and why it matters now.",
+        content: [
+          "A document published in the Jewish Chronicle on July 9, 1897 contains the following declaration, issued by the Executive Committee of the Union of Rabbis in Germany: \"The efforts of so-called Zionists to create a Jewish National State in Palestine are antagonistic to the messianic promises of Judaism, as contained in Holy Writ and in later religious sources.\"",
+          "That document is 128 years old. It was written by rabbis. It was written about Zionism. It was written in the same year Zionism was founded. The Executive Committee did not require a century of hindsight to reach its conclusion. It required one reading of the Basel Congress agenda.",
+          "This FactBook exists because that document exists. Because Leviticus 19:34 exists. Because Theodor Herzl's diary entry of September 3, 1897 exists. Because the Sheikh Jarrah eviction orders exist. Because the Israeli Supreme Court's three-track citizenship ruling exists. Because the Ottoman land registries exist. Because UN Resolution 3379 exists, and its reversal exists, and the vote tallies for both exist. Because 128 years of documented Jewish anti-Zionist scholarship, rabbinic ruling, and institutional opposition exist and have been continuously published and continuously ignored in the dominant political discourse about what Judaism requires.",
+          "The documents have not been hidden. They have been available. This FactBook assembles them in one place, in chronological order, with full citation, so that the argument, if there is to be one, must be conducted against the primary sources rather than against this volume.",
+          "This book is written from respect for Judaism. That respect is the reason it was written. A tradition that has produced 3,500 years of documented ethical obligation, legal reasoning, prophetic literature, and moral philosophy deserves to be evaluated on the terms of its own textual record. The conflation of that tradition with a secular nationalist political movement founded in 1897 by a journalist who described his project explicitly in the language of European colonial enterprise does not serve Judaism. The primary sources of Judaism say so. Repeatedly. In multiple languages. Across multiple centuries. Before and after 1897.",
+          "Zionism is 128 years old. Judaism is not.",
+          "That is not an editorial position. It is an arithmetic observation derived from two documented dates. The Torah's first codified obligations toward the stranger predate the First Zionist Congress by approximately three millennia. Leviticus 19:34 was not written in response to the Basel Program. The Basel Program was written without apparent reference to Leviticus 19:34. Both documents are in the record. ClownBinge reports both.",
+          "The claim that criticizing Zionism constitutes antisemitism is itself a documented political strategy with a documented legislative history, a documented lobbying record, and a documented institutional architecture. That claim is examined in Chapter 8 of this volume using the primary sources that produced it. The claim is not characterized here. It is documented. The documentation is sufficient.",
+          "What this FactBook does not do is argue that Jewish people are responsible for the actions of a political movement that many Jewish people have opposed, in writing, in public, since the movement's founding year. The record of that opposition is long. It begins in 1897. It has never stopped. Chapter 3 documents it in full.",
+          "What this FactBook does is place the primary sources of Judaism alongside the primary sources of Zionism and report what each says. The Torah says what it says about the stranger. The eviction orders say what they say about the grandmother in Sheikh Jarrah. The Israeli Supreme Court says what it says about the three tracks of citizenship. The Protestrabbiner declaration says what it says about the messianic promise. Theodor Herzl's diary says what it says about the colonial model he was explicitly following.",
+          "The reader will find no conclusion in this volume. The documents provide their own.",
+        ],
+        sources: [
+          "Executive Committee of the Union of Rabbis in Germany. (1897, July 9). Protest against Zionism [Declaration]. The Jewish Chronicle, p. 9. https://www.posenlibrary.com/entry/protest-against-zionism",
+          "Herzl, T. (1960). The complete diaries of Theodor Herzl (R. Patai, Ed.; H. Zohn, Trans.; Vols. 1–5). Herzl Press. https://archive.org/details/TheCompleteDiariesOfTheodorHerzl_201606",
+          "Jewish Virtual Library. (n.d.). First Zionist Congress and the Basel Program, 1897. https://jewishvirtuallibrary.org/first-zionist-congress-and-basel-program-1897",
+          "Ornan v. Ministry of the Interior, HCJ 212/03 (Supreme Court of Israel 2013). https://versa.cardozo.yu.edu/opinions/ornan-v-ministry-interior",
+          "Adalah – The Legal Center for Arab Minority Rights in Israel. (2021, July 8). Israeli Supreme Court upholds the Jewish Nation-State Basic Law. https://www.adalah.org/en/content/view/10379",
+          "Turkish Directorate of Ottoman Archives. (2018). Ottoman land registry archive: Palestine, 1516–1917 [140,000 digitized documents]. https://www.aa.com.tr/en/culture/ottoman-archive-palestines-weapon-against-occupation/1720151",
+          "Holy Bible, New Jewish Publication Society Translation. (1985). Leviticus 19:34. Jewish Publication Society.",
+        ],
+      },
       { title: "Two Traditions, One Conflation", description: "The definitional problem. What Judaism is, what Zionism is, and why the distinction matters forensically." },
       { title: "The Basel Congress, 1897", description: "Herzl's founding documents, congress proceedings, and the secular-nationalist framing in his own words." },
       { title: "Jewish Anti-Zionism: The Internal Record", description: "Neturei Karta, the American Council for Judaism, rabbinic rulings: opposition from within, documented since 1897." },
@@ -577,10 +604,20 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                         )}
                       </button>
                       {isOpen && hasContent && (
-                        <div className="px-4 pb-5 pt-1 border-t" style={{ borderColor: book.accent + "20" }}>
+                        <div className="px-4 pb-5 pt-3 border-t" style={{ borderColor: book.accent + "20" }}>
                           {ch.content!.map((para, pi) => (
-                            <p key={pi} className="text-sm leading-relaxed text-gray-800 mb-3 last:mb-0">{para}</p>
+                            <p key={pi} className="text-sm leading-relaxed text-gray-800 mb-4 last:mb-0">{para}</p>
                           ))}
+                          {ch.sources && ch.sources.length > 0 && (
+                            <div className="mt-5 pt-4 border-t" style={{ borderColor: book.accent + "20" }}>
+                              <p className="text-[9px] font-bold font-mono tracking-widest uppercase mb-2" style={{ color: book.accent }}>APA 7 Primary Sources</p>
+                              <ul className="space-y-1.5">
+                                {ch.sources.map((src, si) => (
+                                  <li key={si} className="text-[10px] leading-relaxed text-gray-500 font-mono">{src}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
                         </div>
                       )}
                       {isOpen && !hasContent && (
