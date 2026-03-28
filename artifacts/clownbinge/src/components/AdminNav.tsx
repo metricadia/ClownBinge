@@ -21,7 +21,7 @@ export function AdminNav() {
           <span key={href} className="flex items-center gap-1">
             <Link
               href={href}
-              className={`text-[10px] font-black uppercase tracking-[0.18em] px-3 py-1.5 rounded-full transition-colors ${
+              className={`text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-colors ${
                 isActive
                   ? "bg-primary text-white"
                   : "text-muted-foreground hover:text-primary hover:bg-primary/10"
