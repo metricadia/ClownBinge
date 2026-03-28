@@ -34,7 +34,7 @@ const BOOKS: FactBook[] = [
   {
     id: 1, vol: "Vol. 01",
     shortTitle: "The Manufactured Threat",
-    fullTitle: "The Manufactured Threat: How America Criminalized Blackness With Fabricated Data",
+    fullTitle: "The Manufactured Threat: Debunking the Racist Lie of Native Black Criminality",
     tag: "NerdOut / Data",
     bg: "#0F0F0F", fg: "#FFFFFF", accent: "#FF0099", accentFg: "#FFFFFF",
     coverDesign: "stat",
