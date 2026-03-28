@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Layout } from "@/components/Layout";
+import { AdminNav } from "@/components/AdminNav";
 import { Send, AlertCircle, CheckCircle2, Loader2, Link2, Zap } from "lucide-react";
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY ?? "1x00000000000000000000AA";
@@ -144,6 +145,11 @@ export default function SubmitTip() {
             A primary source URL (news article, official record, court document, video) dramatically increases your tip's chance of publication.
           </p>
         </div>
+      </div>
+
+      {/* Admin nav */}
+      <div className="max-w-2xl mx-auto px-4 pt-8">
+        <AdminNav />
       </div>
 
       {/* Form */}

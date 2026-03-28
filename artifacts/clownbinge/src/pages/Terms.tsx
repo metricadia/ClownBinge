@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { AdminNav } from "@/components/AdminNav";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 
 export default function Terms() {
@@ -11,6 +12,7 @@ export default function Terms() {
   return (
     <Layout>
       <div className="cb-container py-16 sm:py-24 max-w-3xl mx-auto">
+        <AdminNav />
         <div className="prose prose-lg max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:text-header prose-p:leading-relaxed">
           
           <h1 className="text-4xl sm:text-5xl mb-8">Terms of Service</h1>

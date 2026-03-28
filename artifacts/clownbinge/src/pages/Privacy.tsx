@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { AdminNav } from "@/components/AdminNav";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 import { Shield, Lock, Globe, FileText, Eye, EyeOff, Server } from "lucide-react";
 
@@ -59,6 +60,8 @@ export default function Privacy() {
             ))}
           </div>
         </div>
+
+        <AdminNav />
 
         {/* Opening */}
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl">
