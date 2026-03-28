@@ -23,7 +23,7 @@ function LockedBadge() {
 }
 
 export default function Privacy() {
-  const { containerRef, popupRef, factoid, copied, closeFactoid, handleCopy } = useFactoidPopup();
+  const { containerRef, popupRef, factoid, copied, isMobile, closeFactoid, handleCopy } = useFactoidPopup();
   usePageSeoHead({
     title: "Privacy & Free Speech Jurisdiction Policy — ClownBinge",
     description: "ClownBinge operates under the legal jurisdiction of St. Kitts & Nevis and is hosted exclusively on Icelandic sovereign infrastructure. This page documents our jurisdictional firewall, data sovereignty architecture, and zero-inference privacy commitment.",
@@ -254,6 +254,7 @@ export default function Privacy() {
           factoid={factoid}
           popupRef={popupRef}
           copied={copied}
+          isMobile={isMobile}
           onClose={closeFactoid}
           onCopy={handleCopy}
         />

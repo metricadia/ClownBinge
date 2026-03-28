@@ -7,11 +7,22 @@ export interface FactoidState {
   y: number;
 }
 
+function getIsMobile() {
+  return typeof window !== "undefined" && window.innerWidth < 768;
+}
+
 export function useFactoidPopup() {
   const containerRef = useRef<HTMLElement | null>(null);
   const popupRef = useRef<HTMLDivElement>(null);
   const [factoid, setFactoid] = useState<FactoidState | null>(null);
   const [copied, setCopied] = useState(false);
+  const [isMobile, setIsMobile] = useState(getIsMobile);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(getIsMobile());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   const closeFactoid = useCallback(() => {
     setFactoid(null);
@@ -85,5 +96,5 @@ export function useFactoidPopup() {
     });
   }, [factoid]);
 
-  return { containerRef, popupRef, factoid, copied, closeFactoid, handleCopy };
+  return { containerRef, popupRef, factoid, copied, isMobile, closeFactoid, handleCopy };
 }

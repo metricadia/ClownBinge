@@ -14,10 +14,11 @@ import { ClownCheckCTA } from "@/components/ClownCheckCTA";
 import { SponsorBar } from "@/components/SponsorBar";
 import { useCategorySponsor } from "@/hooks/use-sponsor";
 import { RelatedArticles } from "@/components/RelatedArticles";
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useRef, useMemo } from "react";
 import { format } from "date-fns";
-import { Loader2, AlertTriangle, Copy, Check, Share2, Lock, X } from "lucide-react";
+import { Loader2, AlertTriangle, Lock } from "lucide-react";
+import { useFactoidPopup } from "@/hooks/use-factoid-popup";
+import { FactoidPopup } from "@/components/FactoidPopup";
 import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
 
@@ -76,13 +77,6 @@ function boldFirstMention(html: string, name: string, label: string): string {
 }
 
 
-interface FactoidState {
-  title: string;
-  summary: string;
-  x: number;
-  y: number;
-}
-
 export default function PostDetail() {
   const [, params] = useRoute("/case/:slug");
   const slug = params?.slug || "";
@@ -90,8 +84,8 @@ export default function PostDetail() {
   const { data: post, isLoading, error } = usePostDetail(slug);
   useArticleSeoHead(post);
   const { trackView } = useViewTracker(slug);
-  const bodyRef = useRef<HTMLDivElement>(null);
   const hasTrackedView = useRef(false);
+  const { containerRef, popupRef, factoid, copied, isMobile, closeFactoid, handleCopy } = useFactoidPopup();
 
   const processedBody = useMemo(() => {
     if (!post?.body) return post?.body ?? "";
@@ -134,96 +128,13 @@ export default function PostDetail() {
   }, [post, references]);
 
   const { data: sponsor } = useCategorySponsor(post?.category);
-  const popupRef = useRef<HTMLDivElement>(null);
-  const [factoid, setFactoid] = useState<FactoidState | null>(null);
-  const [copied, setCopied] = useState(false);
+
   useEffect(() => {
     if (post && !hasTrackedView.current) {
       hasTrackedView.current = true;
       trackView();
     }
   }, [post?.id]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const closeFactoid = useCallback(() => {
-    setFactoid(null);
-    setCopied(false);
-  }, []);
-
-  // Click on factoid links — open popup, prevent navigation
-  useEffect(() => {
-    const container = bodyRef.current;
-    if (!container) return;
-
-    const handleClick = (e: MouseEvent) => {
-      const target = (e.target as Element).closest("a.cb-factoid") as HTMLAnchorElement | null;
-      if (!target) return;
-      e.preventDefault();
-      e.stopPropagation();
-
-      const rect = target.getBoundingClientRect();
-      const x = rect.left + rect.width / 2;
-      const y = rect.top + window.scrollY;
-
-      // Toggle off if clicking same factoid
-      if (
-        factoid &&
-        Math.abs(factoid.x - x) < 4 &&
-        Math.abs(factoid.y - y) < 4
-      ) {
-        closeFactoid();
-        return;
-      }
-
-      setCopied(false);
-      setFactoid({
-        title: target.dataset.title || "",
-        summary: target.dataset.summary || "",
-        x,
-        y,
-      });
-    };
-
-    container.addEventListener("click", handleClick);
-    return () => container.removeEventListener("click", handleClick);
-  }, [post, factoid, closeFactoid]);
-
-  // Escape key dismisses popup
-  useEffect(() => {
-    if (!factoid) return;
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeFactoid();
-    };
-    document.addEventListener("keydown", handleKey);
-    return () => document.removeEventListener("keydown", handleKey);
-  }, [factoid, closeFactoid]);
-
-  // Click outside popup and outside factoid links dismisses popup
-  useEffect(() => {
-    if (!factoid) return;
-    const handleOutside = (e: MouseEvent) => {
-      const target = e.target as Element;
-      if (popupRef.current?.contains(target)) return;
-      if (target.closest("a.cb-factoid")) return;
-      closeFactoid();
-    };
-    // Small delay so the click that opened the popup doesn't immediately close it
-    const timeout = setTimeout(() => {
-      document.addEventListener("click", handleOutside);
-    }, 50);
-    return () => {
-      clearTimeout(timeout);
-      document.removeEventListener("click", handleOutside);
-    };
-  }, [factoid, closeFactoid]);
-
-  const handleCopy = useCallback(() => {
-    if (!factoid) return;
-    const text = `${factoid.title}\n\n${factoid.summary}`;
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  }, [factoid]);
 
   if (isLoading) {
     return (
@@ -368,7 +279,7 @@ export default function PostDetail() {
 
         {/* Article body split at paragraph 3 with ClownCheck CTA injected mid-article */}
         <div
-          ref={bodyRef}
+          ref={containerRef as React.RefObject<HTMLDivElement>}
           className="cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-strong:text-header prose-p:leading-relaxed mb-12"
         >
           <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
@@ -523,100 +434,36 @@ export default function PostDetail() {
       </article>
 
 
-      {/* Factoid Popup Portal */}
-      {factoid && createPortal(
-        <div
-          ref={popupRef}
-          className="cb-factoid-popup"
-          style={{ left: factoid.x, top: factoid.y }}
-          role="dialog"
-          aria-label="ClownBinge Factoid"
-        >
-          <button className="cb-factoid-popup-close" onClick={closeFactoid} aria-label="Close">
-            <X size={11} strokeWidth={2.5} />
-          </button>
-
-          <div className="cb-factoid-popup-header">
-            <div className="cb-factoid-popup-label">ClownBinge Factoid</div>
-          </div>
-
-          <div className="cb-factoid-popup-scrollable">
-            <div className="cb-factoid-popup-title">{factoid.title}</div>
-            <div className="cb-factoid-popup-summary">{factoid.summary}</div>
-          </div>
-
-          {/* Action bar: Copy then Share on second line */}
-          <div className="cb-factoid-popup-footer">
-          <div className="flex flex-col gap-2">
-            <button onClick={handleCopy} className="cb-factoid-popup-copy-btn self-start">
-              {copied
-                ? <><Check size={12} strokeWidth={3} /> Copied!</>
-                : <><Copy size={12} strokeWidth={2} /> Copy Factoid</>
-              }
-            </button>
-
-            <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/50 flex-shrink-0">Share Article</span>
-
-            {/* X / Twitter */}
-            <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post?.title ?? "")}&url=${encodeURIComponent(typeof window !== "undefined" ? window.location.href : "")}`}
-              target="_blank" rel="noopener noreferrer"
-              title="Share on X"
-              className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-white font-bold text-[11px] hover:opacity-80 transition-opacity"
-              style={{ background: "#000" }}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.26 5.632L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-
-            {/* Facebook */}
-            <a
-              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(typeof window !== "undefined" ? window.location.href : "")}`}
-              target="_blank" rel="noopener noreferrer"
-              title="Share on Facebook"
-              className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-white font-bold hover:opacity-80 transition-opacity"
-              style={{ background: "#1877F2" }}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
-
-            {/* LinkedIn */}
-            <a
-              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(typeof window !== "undefined" ? window.location.href : "")}`}
-              target="_blank" rel="noopener noreferrer"
-              title="Share on LinkedIn"
-              className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-white font-bold hover:opacity-80 transition-opacity"
-              style={{ background: "#0A66C2" }}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </a>
-
-            {/* WhatsApp */}
-            <a
-              href={`https://wa.me/?text=${encodeURIComponent((post?.title ?? "") + " " + (typeof window !== "undefined" ? window.location.href : ""))}`}
-              target="_blank" rel="noopener noreferrer"
-              title="Share on WhatsApp"
-              className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-white hover:opacity-80 transition-opacity"
-              style={{ background: "#25D366" }}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            </a>
-
-            {/* Telegram */}
-            <a
-              href={`https://t.me/share/url?url=${encodeURIComponent(typeof window !== "undefined" ? window.location.href : "")}&text=${encodeURIComponent(post?.title ?? "")}`}
-              target="_blank" rel="noopener noreferrer"
-              title="Share on Telegram"
-              className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-white hover:opacity-80 transition-opacity"
-              style={{ background: "#26A5E4" }}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-            </a>
+      {/* Factoid Popup / Bottom Sheet */}
+      {factoid && (
+        <FactoidPopup
+          factoid={factoid}
+          popupRef={popupRef}
+          copied={copied}
+          isMobile={isMobile}
+          onClose={closeFactoid}
+          onCopy={handleCopy}
+          extraFooter={post ? (
+            <div className="flex items-center gap-2 mt-2">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-white/50 flex-shrink-0">Share</span>
+              <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title ?? "")}&url=${encodeURIComponent(typeof window !== "undefined" ? window.location.href : "")}`} target="_blank" rel="noopener noreferrer" title="Share on X" className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-white hover:opacity-80 transition-opacity" style={{ background: "#000" }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.26 5.632L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+              <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(typeof window !== "undefined" ? window.location.href : "")}`} target="_blank" rel="noopener noreferrer" title="Share on Facebook" className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-white hover:opacity-80 transition-opacity" style={{ background: "#1877F2" }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(typeof window !== "undefined" ? window.location.href : "")}`} target="_blank" rel="noopener noreferrer" title="Share on LinkedIn" className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-white hover:opacity-80 transition-opacity" style={{ background: "#0A66C2" }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+              <a href={`https://wa.me/?text=${encodeURIComponent((post.title ?? "") + " " + (typeof window !== "undefined" ? window.location.href : ""))}`} target="_blank" rel="noopener noreferrer" title="Share on WhatsApp" className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-white hover:opacity-80 transition-opacity" style={{ background: "#25D366" }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </a>
+              <a href={`https://t.me/share/url?url=${encodeURIComponent(typeof window !== "undefined" ? window.location.href : "")}&text=${encodeURIComponent(post.title ?? "")}`} target="_blank" rel="noopener noreferrer" title="Share on Telegram" className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-white hover:opacity-80 transition-opacity" style={{ background: "#26A5E4" }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              </a>
             </div>
-          </div>
-          </div>
-        </div>,
-        document.body
+          ) : undefined}
+        />
       )}
     </Layout>
   );
