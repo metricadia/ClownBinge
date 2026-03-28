@@ -426,7 +426,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
             <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200">
               <span className="font-extrabold text-2xl text-gray-900">$24.95</span>
               {book.pages && (
-                <span className="font-mono text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded" style={{ background: book.accent + "18", color: book.accent }}>
+                <span className="font-mono text-sm font-extrabold px-3 py-1 rounded-full" style={{ background: book.accent, color: book.accentFg }}>
                   {book.pages} pages
                 </span>
               )}
