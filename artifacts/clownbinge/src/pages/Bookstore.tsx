@@ -196,28 +196,35 @@ function CoverSVG({ book }: { book: FactBook }) {
     return (
       <svg viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
         <defs>
-          <linearGradient id={`photo-overlay-${book.id}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#000000" stopOpacity="0.35" />
-            <stop offset="45%" stopColor="#000000" stopOpacity="0.0" />
-            <stop offset="65%" stopColor="#000000" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="#000000" stopOpacity="0.85" />
-          </linearGradient>
+          <clipPath id={`photo-clip-${book.id}`}>
+            <rect x="14" y="42" width="212" height="172" />
+          </clipPath>
         </defs>
-        <image href={book.coverImage} x="0" y="0" width="240" height="360" preserveAspectRatio="xMidYMid slice" />
-        <rect width="240" height="360" fill={`url(#photo-overlay-${book.id})`} />
-        <text x="20" y="32" fontSize="8" fill="#FFFFFF" fontFamily="'JetBrains Mono',monospace" opacity="0.75" letterSpacing="2">
+        {/* Solid bg — same as other covers */}
+        <rect width="240" height="360" fill={bg} />
+        {/* Top accent stripe */}
+        <rect x="0" y="0" width="240" height="4" fill={accent} />
+        {/* VOL label */}
+        <text x="20" y="32" fontSize="8" fill={fg} fontFamily="'JetBrains Mono',monospace" opacity="0.55" letterSpacing="2">
           {vol.toUpperCase()} · CLOWNBINGE FACTBOOK™
         </text>
-        <text x="20" y="200" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line1}</text>
-        <text x="20" y="226" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line2}</text>
+        {/* Photo panel — contained, not full-bleed */}
+        <image href={book.coverImage} x="14" y="42" width="212" height="172"
+          preserveAspectRatio="xMidYMid slice" clipPath={`url(#photo-clip-${book.id})`} />
+        {/* Thin accent border around photo */}
+        <rect x="14" y="42" width="212" height="172" fill="none" stroke={accent} strokeWidth="1.5" opacity="0.6" />
+        {/* Title block on solid bg */}
+        <text x="20" y="244" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line1}</text>
+        <text x="20" y="270" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line2}</text>
         {book.subtitle && (
-          <text x="20" y="252" fontSize="13" fill="#F5C518" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="0.3">{book.subtitle}</text>
+          <text x="20" y="294" fontSize="12" fill="#F5C518" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="0.5">{book.subtitle}</text>
         )}
-        <rect x="0" y="326" width="240" height="34" fill="rgba(0,0,0,0.65)" />
-        <text x="20" y="347" fontSize="8.5" fill="#FFFFFF" fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700">
+        {/* Footer bar */}
+        <rect x="0" y="326" width="240" height="34" fill={accent} />
+        <text x="20" y="347" fontSize="8.5" fill={accentFg} fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700">
           PRIMARY SOURCE ANALYTICS
         </text>
-        <text x="220" y="347" fontSize="9" fill="#F5C518" fontFamily="'Archivo Black',sans-serif" textAnchor="end" fontWeight="900">
+        <text x="220" y="347" fontSize="9" fill={accentFg} fontFamily="'Archivo Black',sans-serif" textAnchor="end" fontWeight="900">
           $24.95
         </text>
       </svg>
