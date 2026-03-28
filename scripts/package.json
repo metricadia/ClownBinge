@@ -14,8 +14,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
-    "@workspace/db": "workspace:*",
-    "xlsx": "^0.18.5"
+    "@workspace/db": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "catalog:",
