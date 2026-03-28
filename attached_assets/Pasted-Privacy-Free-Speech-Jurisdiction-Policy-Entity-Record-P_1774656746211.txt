@@ -1,0 +1,34 @@
+Privacy & Free Speech Jurisdiction Policy
+Entity Record: Primary Source Analytics, LLC
+
+Jurisdiction: St. Kitts & Nevis (SKN)
+
+Infrastructure: Icelandic Sovereign Hosting
+
+Status: [RECORD LOCKED]
+
+1. The Jurisdictional Firewall: Strategic Necessity
+Primary Source Analytics, LLC operates under the legal jurisdiction of St. Kitts & Nevis. This is an intentional architectural decision based on a forensic audit of global litigation trends.
+
+The Nevis LLC Act provides a "Legal Moat" designed to prevent "Nuisance Litigation"—the documented practice of using meritless lawsuits to drain the resources of independent research platforms. By requiring a $100,000 (XCD/USD equivalent) cash bond from any foreign plaintiff seeking to bring an action against the entity, the jurisdiction ensures that only historically and legally substantiated claims can penetrate the corporate veil. We do not operate from this jurisdiction to evade the law; we operate here to ensure the law cannot be weaponized against the Primary Source Record.
+
+2. The Infrastructure: Icelandic Data Sovereignty
+The ClownBinge newsroom and the Primary Source Analytics archive are hosted exclusively on Icelandic servers.
+
+Iceland is the documented global leader in Modern Media Initiatives and data privacy legislation. By positioning our digital assets within the Icelandic "Privacy Wall," we ensure that our 40,000+ global sources and internal research methodologies are protected by a parliament that has formally prioritized the safety of investigative journalism. This dual-layer structure—SKN for the legal entity and Iceland for the data—creates a Sovereign Moat that allows our researchers to document the "WDEI" and the "Global South" without fear of extrajudicial censorship or "tagging" by partisan interests.
+
+3. The Paradox of Professionalism: Why We Left
+It is a documented paradox of the 21st century that to protect the founding principles of Western Intellectual Inquiry, one must frequently move outside of Western administrative reach.
+
+The United States currently operates under a "Respectability Framework" that often prioritizes performed legitimacy over empirical truth. Primary Source Analytics, LLC has declined to participate in this performance. Our corporate authorship model and international structure are designed to solve for Durability. We have built a platform that cannot be "canceled" by a credit card processor, "shadow-banned" by a domestic host, or "doxed" by a digital actor.
+
+4. Zero-Inference Data Policy
+Consistent with our Truth-Based rules of engagement:
+
+We do not track: We do not utilize invasive "User Persona" tracking or behavioral analytics.
+
+We do not disclose: As a Nevis-domiciled entity, we do not respond to foreign extrajudicial data requests. We only comply with orders issued by the High Court of St. Kitts & Nevis.
+
+The Record is Sovereign: Our primary loyalty is to the Primary Source. Our privacy policy exists to protect the researchers who document it and the readers who seek it.
+
+"Not everything that is faced can be changed, but nothing can be changed until it is faced." — James Baldwin (1962). We have faced the structural vulnerabilities of modern journalism and built the firewall required to survive them.
