@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
-import { BookOpen, ArrowRight, CheckCircle, Download, Package, Layers } from "lucide-react";
+import { BookOpen, ArrowRight, CheckCircle, Download, Package, Layers, X } from "lucide-react";
 
 interface FactBook {
   id: number;
@@ -13,6 +14,8 @@ interface FactBook {
   accent: string;
   accentFg: string;
   coverDesign: "stat" | "grid" | "split" | "bar" | "slash" | "arch" | "type" | "minimal" | "overlap" | "circle";
+  summary: string;
+  bullets: string[];
 }
 
 const BOOKS: FactBook[] = [
@@ -23,6 +26,14 @@ const BOOKS: FactBook[] = [
     tag: "NerdOut / Data",
     bg: "#0F0F0F", fg: "#FFFFFF", accent: "#FF0099", accentFg: "#FFFFFF",
     coverDesign: "stat",
+    summary: "The narrative that Black Americans are inherently more violent is one of the most durable lies in American public life — repeated by politicians, amplified by media, and almost never challenged with actual data. This FactBook goes straight to the source: FBI crime statistics, peer-reviewed criminology, and federal data that dismantles the myth completely and traces its deliberate political origins.",
+    bullets: [
+      "FBI UCR and BJS data show violent crime tracks poverty and disinvestment — not race",
+      "Peer-reviewed criminology finds race disappears as a variable when income is controlled",
+      "The CDC links 'race and crime' framing to deliberate policy narratives dating to the 1960s",
+      "97% of Black homicide victimization is driven by economic circumstance, per DOJ data",
+      "The myth serves documented political purposes — this FactBook names them, with receipts",
+    ],
   },
   {
     id: 2, vol: "Vol. 02",
@@ -31,6 +42,14 @@ const BOOKS: FactBook[] = [
     tag: "Investigations",
     bg: "#1A3A8F", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#1A1A2E",
     coverDesign: "grid",
+    summary: "Congress has the documents. Senate intelligence committees have done the investigations. Internal communications have been leaked. Facebook, YouTube, X, and TikTok have been caught — not accused — of algorithmically amplifying disinformation for engagement revenue. This FactBook assembles the receipts from congressional testimony, whistleblower documents, and regulatory filings.",
+    bullets: [
+      "Facebook's own internal research showed the algorithm amplified outrage content by 5x",
+      "Senate Intelligence Committee reports document coordinated inauthentic behavior tolerated for profit",
+      "YouTube's recommendation engine drove radicalization at scale — per their own engineers",
+      "TikTok congressional testimony revealed state-level data access they denied existed",
+      "Every claim traces to congressional records, SEC filings, or published whistleblower testimony",
+    ],
   },
   {
     id: 3, vol: "Vol. 03",
@@ -39,6 +58,14 @@ const BOOKS: FactBook[] = [
     tag: "U.S. Constitution",
     bg: "#F8F9FC", fg: "#1A1A2E", accent: "#1A3A8F", accentFg: "#FFFFFF",
     coverDesign: "split",
+    summary: "The Second Amendment was debated, drafted, and ratified when 'the people' had a specific racial definition — and state militia laws at the time made that explicit. This FactBook doesn't argue gun policy. It reads the constitutional record, the Founders' own words, and the Supreme Court's historical analysis to surface what was actually being protected and who was being excluded.",
+    bullets: [
+      "Founders' militia writings explicitly tied gun rights to slave patrol and anti-insurrection control",
+      "State constitutional records from 1789 reveal racial exclusions baked into 'the people'",
+      "Dred Scott explicitly denied Black Americans 2nd Amendment rights — in the Court's own words",
+      "Reconstruction-era gun seizures targeting Black communities are documented in congressional testimony",
+      "Heller and Bruen's 'historical tradition' argument collapses when applied to non-white Americans",
+    ],
   },
   {
     id: 4, vol: "Vol. 04",
@@ -47,6 +74,14 @@ const BOOKS: FactBook[] = [
     tag: "Primary Source Analytics",
     bg: "#0D3320", fg: "#FFFFFF", accent: "#00D084", accentFg: "#0D3320",
     coverDesign: "bar",
+    summary: "When the Trump administration dismantled DEI programs, it framed the move as restoring merit. This FactBook compares the actual credentials — education, professional background, prior experience — of Obama-era versus Trump-era appointees across 40 agency positions, using Senate confirmation records, federal disclosures, and official biographies. The data tells a specific story.",
+    bullets: [
+      "Side-by-side credential comparisons of 40 agency appointments across both administrations",
+      "Obama appointees averaged significantly more relevant professional experience per position",
+      "Several Trump appointees had zero prior experience in the agencies they were appointed to lead",
+      "Senate confirmation transcripts reveal credential gaps that went largely unchallenged",
+      "The data shows DEI opponents installed the least credentialed appointee class in modern history",
+    ],
   },
   {
     id: 5, vol: "Vol. 05",
@@ -55,6 +90,14 @@ const BOOKS: FactBook[] = [
     tag: "Media / Investigations",
     bg: "#1A1A2E", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#1A1A2E",
     coverDesign: "slash",
+    summary: "It is no longer a matter of opinion that American cable news operates as political infrastructure. Their own internal documents, regulatory filings, and court-disclosed communications make the case. This FactBook doesn't pick a side — it applies the same evidentiary standard to CNN, MSNBC, and Fox News and lets the documents speak for themselves.",
+    bullets: [
+      "Fox News internal texts show hosts knew the 2020 election claims were false while broadcasting them",
+      "CNN's leaked 2021 editorial strategy documents show narrative shaping over news gathering",
+      "MSNBC parent NBCUniversal's FEC filings reveal systematic partisan donation patterns",
+      "Dominion v. Fox depositions are the most damning primary-source document in cable news history",
+      "All three networks have settled or faced regulatory findings — this book catalogs every one",
+    ],
   },
   {
     id: 6, vol: "Vol. 06",
@@ -63,6 +106,14 @@ const BOOKS: FactBook[] = [
     tag: "Law & Justice",
     bg: "#2A0A4A", fg: "#FFFFFF", accent: "#C084FC", accentFg: "#1A0A2E",
     coverDesign: "arch",
+    summary: "Gerrymandering has been declared constitutional by the Supreme Court — meaning politicians can now legally choose their voters. This FactBook documents how that legal framework was constructed, who built it, and what the district maps actually look like when overlaid with Census Bureau demographic data. The system is working exactly as designed.",
+    bullets: [
+      "Rucho v. Common Cause (2019) explicitly legalized partisan gerrymandering at the federal level",
+      "Census Bureau overlays show Black and Latino communities are most consistently packed or cracked",
+      "State redistricting documents reveal explicit partisan intent behind ostensibly neutral criteria",
+      "The same 3 redistricting law firms shaped maps across 12 states — documented by name",
+      "Voting Rights Act Section 2 cases catalog the legal challenge record, ruling by ruling",
+    ],
   },
   {
     id: 7, vol: "Vol. 07",
@@ -71,6 +122,14 @@ const BOOKS: FactBook[] = [
     tag: "U.S. History",
     bg: "#F5F0E8", fg: "#1A1A2E", accent: "#1A3A8F", accentFg: "#FFFFFF",
     coverDesign: "type",
+    summary: "The wealth, infrastructure, and institutional foundation of the United States was created through systematic extraction of labor and land from three groups who received none of the ownership: Indigenous nations, enslaved Africans, and immigrant workers. This FactBook uses property records, census data, congressional land grants, and economic scholarship to quantify what was taken.",
+    bullets: [
+      "Federal land grant records document 270 million acres taken from Indigenous sovereignty",
+      "Enslaved labor's economic contribution has been estimated at $14 trillion in 2023 dollars",
+      "Chinese, Irish, and Eastern European workers built the transcontinental railroad under contract fraud",
+      "Congressional records show these groups were systematically excluded from New Deal wealth programs",
+      "Property deed research traces redlining's direct lineage from slaveholder land concentration",
+    ],
   },
   {
     id: 8, vol: "Vol. 08",
@@ -79,6 +138,14 @@ const BOOKS: FactBook[] = [
     tag: "Global South / History",
     bg: "#003366", fg: "#FFFFFF", accent: "#38BDF8", accentFg: "#003366",
     coverDesign: "minimal",
+    summary: "Judaism is a 3,500-year-old religious and cultural tradition. Zionism is a 19th-century political movement founded in Vienna in 1897. They share some overlapping adherents and some contested historical claims — but they are not the same thing. This FactBook traces each to its founding documents and lets the historical record speak without editorializing.",
+    bullets: [
+      "Theodor Herzl's founding documents describe Zionism explicitly as a political, not religious, project",
+      "Anti-Zionist Jewish movements have existed continuously since 1897, documented in their own records",
+      "UN Resolution 3379 and its reversal represent a documented political — not theological — debate",
+      "Palestinian pre-1948 land records and British Mandate censuses document the demographic reality",
+      "The conflation of antisemitism and anti-Zionism is itself a documented political strategy",
+    ],
   },
   {
     id: 9, vol: "Vol. 09",
@@ -87,6 +154,14 @@ const BOOKS: FactBook[] = [
     tag: "Global South / Archaeology",
     bg: "#2D1800", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#2D1800",
     coverDesign: "overlap",
+    summary: "Herodotus — the Greek historian — wrote that the Egyptians were 'dark-skinned and woolly-haired.' He wrote this in the 5th century BCE, 2,500 years before it became politically convenient to deny. This FactBook assembles the archaeological, genetic, and written record that existed long before the politics — and has never actually been refuted.",
+    bullets: [
+      "Herodotus's original Greek texts describing Egyptian appearance have been in the record since 450 BCE",
+      "DNA studies of pre-dynastic remains (Nature, 2017) show genetic proximity to sub-Saharan populations",
+      "Ancient Egyptian art — much of it in color — depicts skin tones across the full range of African peoples",
+      "Hieroglyphic records include pharaohs' explicit self-identification with African neighbors and kin",
+      "The 'Egypt was not Black' argument emerged in 19th-century European colonial historiography, documented",
+    ],
   },
   {
     id: 10, vol: "Vol. 10",
@@ -95,6 +170,14 @@ const BOOKS: FactBook[] = [
     tag: "Money & Power",
     bg: "#082010", fg: "#FFFFFF", accent: "#00D084", accentFg: "#082010",
     coverDesign: "circle",
+    summary: "The United States currently pays $2.8 billion every single day in interest on the national debt — more than the entire discretionary budget of most federal agencies, and more than it spends on education per day. This FactBook uses Treasury Department data, CBO projections, and Federal Reserve reports to trace exactly how this happened, who benefits, and what it forecloses.",
+    bullets: [
+      "Treasury data confirms daily interest payments now exceed the daily cost of Medicaid",
+      "Top holders of U.S. debt include American pension funds, foreign governments, and the Fed itself",
+      "CBO projections show interest payments becoming the single largest federal expense by 2030",
+      "Reagan-era tax cuts and Bush-era wars are the two largest documented contributors to current debt",
+      "The $2.8 billion figure is not partisan — it comes directly from the U.S. Department of the Treasury",
+    ],
   },
 ];
 
@@ -212,6 +295,83 @@ function CoverSVG({ book }: { book: FactBook }) {
   );
 }
 
+function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.72)", backdropFilter: "blur(4px)" }}
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl"
+        style={{ background: "#ffffff" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header strip using book accent color */}
+        <div className="flex gap-6 p-6 pb-5" style={{ background: book.bg }}>
+          <div className="w-24 shrink-0 rounded overflow-hidden shadow-lg" style={{ aspectRatio: "2/3" }}>
+            <CoverSVG book={book} />
+          </div>
+          <div className="flex flex-col justify-between min-w-0 py-1">
+            <div>
+              <p className="font-mono text-xs font-bold tracking-[0.18em] uppercase mb-2" style={{ color: book.accent }}>
+                {book.vol} · {book.tag}
+              </p>
+              <h2 className="font-sans font-extrabold text-xl leading-snug" style={{ color: book.fg }}>
+                {book.shortTitle}
+              </h2>
+            </div>
+            <div className="flex items-center gap-3 mt-4">
+              <span className="font-extrabold text-2xl" style={{ color: book.fg }}>$24.95</span>
+              <button
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85"
+                style={{ background: book.accent, color: book.accentFg }}
+              >
+                Pre-Order
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
+            style={{ background: "rgba(255,255,255,0.15)" }}
+            aria-label="Close"
+          >
+            <X className="w-4 h-4" style={{ color: book.fg }} />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="p-6">
+          <p className="text-base text-gray-800 leading-relaxed mb-6">
+            {book.summary}
+          </p>
+
+          <div className="border-t border-gray-100 pt-5">
+            <p className="font-mono text-xs font-bold tracking-[0.18em] uppercase text-gray-400 mb-4">
+              Why This Book Matters
+            </p>
+            <ul className="space-y-3">
+              {book.bullets.map((bullet, i) => (
+                <li key={i} className="flex gap-3 text-sm text-gray-700 leading-relaxed">
+                  <span
+                    className="mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 font-bold text-xs"
+                    style={{ background: book.accent + "22", color: book.accent }}
+                  >
+                    {i + 1}
+                  </span>
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Bookstore() {
   usePageSeoHead({
     title: "Our Books — Knowledge Is Power | ClownBinge FactBook™",
@@ -220,8 +380,14 @@ export default function Bookstore() {
     schemaType: "ItemPage",
   });
 
+  const [selectedBook, setSelectedBook] = useState<FactBook | null>(null);
+
   return (
     <Layout>
+
+      {selectedBook && (
+        <BookModal book={selectedBook} onClose={() => setSelectedBook(null)} />
+      )}
 
       {/* Page label */}
       <div className="max-w-5xl mx-auto px-6 pt-10 pb-0">
@@ -279,7 +445,7 @@ export default function Bookstore() {
           {/* RIGHT — action cards */}
           <div className="flex flex-col gap-4">
 
-            {/* CARD 1 — Individual volume (blue gradient, yellow border — shown first) */}
+            {/* CARD 1 — Individual volume */}
             <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid #F5C518" }}>
               <div className="p-6" style={{ background: "linear-gradient(135deg, #0a1a4a 0%, #1A3A8F 100%)" }}>
                 <div className="flex items-center justify-between mb-3">
@@ -323,7 +489,7 @@ export default function Bookstore() {
               </div>
             </div>
 
-            {/* CARD 2 — Complete bundle (green gradient) */}
+            {/* CARD 2 — Complete bundle */}
             <div className="rounded-2xl overflow-hidden bg-white border border-gray-200 p-6 flex flex-col sm:flex-row gap-5 items-start">
               <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#0e3020" }}>
                 <Package className="w-5 h-5 text-white" />
@@ -347,7 +513,7 @@ export default function Bookstore() {
               </div>
             </div>
 
-            {/* CARD 3 — About the series (white) */}
+            {/* CARD 3 — About the series */}
             <div className="rounded-2xl overflow-hidden bg-white border border-gray-200 p-6 flex flex-col sm:flex-row gap-5 items-start">
               <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#0e3020" }}>
                 <Layers className="w-5 h-5 text-white" />
@@ -378,12 +544,26 @@ export default function Bookstore() {
           {BOOKS.map((book) => (
             <div key={book.id} className="group flex flex-col">
               <div className="relative mb-5">
-                <div
-                  className="w-full aspect-[2/3] rounded-sm overflow-hidden shadow-lg group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-300 ease-out"
-                  style={{ boxShadow: `0 8px 32px ${book.accent}22, 0 2px 8px rgba(0,0,0,0.18)` }}
+                <button
+                  className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-sm"
+                  style={{ "--tw-ring-color": book.accent } as React.CSSProperties}
+                  onClick={() => setSelectedBook(book)}
+                  aria-label={`Learn more about ${book.shortTitle}`}
                 >
-                  <CoverSVG book={book} />
-                </div>
+                  <div
+                    className="w-full aspect-[2/3] rounded-sm overflow-hidden shadow-lg group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer"
+                    style={{ boxShadow: `0 8px 32px ${book.accent}22, 0 2px 8px rgba(0,0,0,0.18)` }}
+                  >
+                    <CoverSVG book={book} />
+                  </div>
+                  {/* Hover hint */}
+                  <div className="absolute inset-0 rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                    style={{ background: "rgba(0,0,0,0.45)" }}>
+                    <span className="text-white text-xs font-bold tracking-widest uppercase px-3 py-1.5 rounded-full border border-white/40">
+                      Learn More
+                    </span>
+                  </div>
+                </button>
               </div>
 
               <p className="font-mono text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground mb-1.5">
