@@ -49,21 +49,46 @@ export function useFactoidPopup() {
     setCopied(false);
   }, []);
 
+  // Belt-and-suspenders: directly patch every external anchor in the container.
+  // Strips target="_blank", removes href so browser has nothing to navigate to,
+  // and stores the original href in data-href for the popup to read.
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const anchors = Array.from(container.querySelectorAll<HTMLAnchorElement>("a[href]"));
+    anchors.forEach((a) => {
+      if (!isExternalLink(a) && !a.classList.contains("cb-factoid")) return;
+      const originalHref = a.getAttribute("href") || "";
+      if (!a.dataset.href) {
+        a.dataset.href = originalHref;
+      }
+      a.removeAttribute("href");
+      a.removeAttribute("target");
+      a.removeAttribute("rel");
+      a.style.cursor = "pointer";
+    });
+  }, []);
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const handleClick = (e: MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+
       const target = (e.target as Element).closest("a") as HTMLAnchorElement | null;
       if (!target) return;
 
       const isCbFactoid = target.classList.contains("cb-factoid");
-      const external = isExternalLink(target);
+      const href = target.dataset.href || target.getAttribute("href") || "";
 
-      if (!isCbFactoid && !external) return;
-
-      e.preventDefault();
-      e.stopPropagation();
+      // Only show factoid for cb-factoid links or links that had an external href
+      if (!isCbFactoid && !href) return;
+      // Skip pure internal anchor/nav links
+      if (!isCbFactoid && (href.startsWith("#") || href.startsWith("/"))) return;
 
       const rect = target.getBoundingClientRect();
       const x = rect.left + rect.width / 2;
@@ -74,9 +99,7 @@ export function useFactoidPopup() {
         return;
       }
 
-      const href = target.getAttribute("href") || "";
       const linkText = target.textContent?.trim() || domainLabel(href);
-
       const title = target.dataset.title || linkText;
       const summary = target.dataset.summary
         || `Primary source: ${domainLabel(href)}\n\nThe full citation record for this reference is available at:\n${href}`;
@@ -85,8 +108,9 @@ export function useFactoidPopup() {
       setFactoid({ title, summary, href, x, y });
     };
 
-    container.addEventListener("click", handleClick);
-    return () => container.removeEventListener("click", handleClick);
+    // Use capture phase so we intercept before any child handlers or browser defaults
+    container.addEventListener("click", handleClick, { capture: true });
+    return () => container.removeEventListener("click", handleClick, { capture: true });
   }, [factoid, closeFactoid]);
 
   useEffect(() => {

@@ -132,19 +132,24 @@
     margin-bottom: 1.75rem;
   }
 
-  /* ALL links in article body — gold dotted, never navigate away */
+  /* ALL links in article body — gold dotted, never navigate away.
+     Covers both original a[href] AND patched a[data-href] (href removed by JS) */
   .cb-article-body a[href],
-  .cb-article-body.prose a[href] {
+  .cb-article-body a[data-href],
+  .cb-article-body.prose a[href],
+  .cb-article-body.prose a[data-href] {
     color: inherit !important;
     font-weight: 700 !important;
     text-decoration: underline dotted #F5C518 !important;
     text-underline-offset: 5px !important;
     text-decoration-thickness: 2px !important;
-    cursor: pointer;
+    cursor: pointer !important;
     transition: text-decoration-color 0.15s;
   }
   .cb-article-body a[href]:hover,
-  .cb-article-body.prose a[href]:hover {
+  .cb-article-body a[data-href]:hover,
+  .cb-article-body.prose a[href]:hover,
+  .cb-article-body.prose a[data-href]:hover {
     text-decoration-color: #B8860B !important;
     text-decoration-style: dotted !important;
   }
