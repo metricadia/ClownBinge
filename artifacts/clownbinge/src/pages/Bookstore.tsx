@@ -474,7 +474,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                   {book.summary}
                 </p>
                 {book.extendedSummary && book.extendedSummary.map((para, i) => (
-                  <p key={i} className="text-sm text-gray-600 leading-relaxed mb-3">
+                  <p key={i} className="text-sm text-gray-800 leading-relaxed mb-3">
                     {para}
                   </p>
                 ))}
@@ -491,7 +491,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                 </p>
                 <ul className="space-y-2.5 mb-6">
                   {book.bullets.map((bullet, i) => (
-                    <li key={i} className="flex gap-3 text-xs text-gray-700 leading-relaxed">
+                    <li key={i} className="flex gap-3 text-sm sm:text-xs text-gray-900 leading-relaxed">
                       <span
                         className="mt-0.5 w-4 h-4 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px]"
                         style={{ background: book.accent + "28", color: book.accent }}
@@ -510,7 +510,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                     <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-0.5" style={{ color: book.accent }}>
                       Digital PDF · APA 7 Citations
                     </p>
-                    <p className="text-xs text-gray-500">Instant delivery. 100% primary sourced.</p>
+                    <p className="text-xs text-gray-700">Instant delivery. 100% primary sourced.</p>
                   </div>
                   <button
                     className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85 shrink-0"
