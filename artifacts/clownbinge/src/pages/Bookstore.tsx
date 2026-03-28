@@ -227,7 +227,7 @@ function CoverSVG({ book }: { book: FactBook }) {
 
   if (book.coverImage) {
     return (
-      <svg viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <svg viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
         <defs>
           <linearGradient id={`fade-${book.id}`} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#000000" stopOpacity="0.1" />
@@ -380,21 +380,21 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-8"
       style={{ background: "rgba(0,0,0,0.82)", backdropFilter: "blur(6px)" }}
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl flex flex-row"
-        style={{ background: "#ffffff", maxHeight: "90vh" }}
+        className="relative w-full max-w-2xl rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl flex flex-col sm:flex-row"
+        style={{ background: "#ffffff", maxHeight: "92vh" }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* LEFT — full-height stunning cover */}
+        {/* Cover — banner on mobile, full-height left panel on desktop */}
         <div
-          className="w-[42%] shrink-0 self-stretch"
+          className="w-full h-36 shrink-0 sm:w-[42%] sm:h-auto sm:self-stretch"
           style={{ background: book.bg }}
         >
-          <div style={{ width: "100%", height: "100%", minHeight: "480px" }}>
+          <div style={{ width: "100%", height: "100%" }}>
             <CoverSVG book={book} />
           </div>
         </div>
