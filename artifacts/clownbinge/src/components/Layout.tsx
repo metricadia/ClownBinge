@@ -146,24 +146,6 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               Donate Now
             </Link>
 
-            {/* Font sizer */}
-            <div className="flex items-center gap-0 border border-white/20 rounded-full overflow-hidden ml-2" title="Adjust text size">
-              {FONT_SIZES.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setFontLevel(i)}
-                  aria-label={`Text size ${FONT_LABELS[i]}`}
-                  className={`px-2.5 py-1 transition-colors font-bold leading-none ${
-                    fontLevel === i
-                      ? "bg-white/20 text-white"
-                      : "text-white/50 hover:text-white hover:bg-white/10"
-                  }`}
-                  style={{ fontSize: i === 0 ? "10px" : i === 1 ? "13px" : "16px" }}
-                >
-                  {FONT_LABELS[i]}
-                </button>
-              ))}
-            </div>
           </nav>
 
           {/* Mobile Menu Toggle */}
@@ -186,24 +168,6 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/reports" className="text-2xl font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Buy Reports</Link>
             <Link href="/invest-in-us" className="text-2xl font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Donate Now</Link>
 
-            {/* Mobile font sizer */}
-            <div className="flex flex-col items-center gap-2 mt-2">
-              <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold">Text Size</p>
-              <div className="flex items-center gap-0 border border-white/20 rounded-full overflow-hidden">
-                {FONT_SIZES.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setFontLevel(i)}
-                    className={`px-5 py-2.5 transition-colors font-bold ${
-                      fontLevel === i ? "bg-white/20 text-white" : "text-white/50"
-                    }`}
-                    style={{ fontSize: i === 0 ? "14px" : i === 1 ? "18px" : "22px" }}
-                  >
-                    {FONT_LABELS[i]}
-                  </button>
-                ))}
-              </div>
-            </div>
           </nav>
         </div>
       )}
@@ -362,7 +326,26 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
       </footer>
 
       {/* Floating Donate CTA -- click to expand, works on all sizes */}
-      <div className="fixed bottom-6 left-6 z-30 flex flex-col items-start">
+      <div className="fixed bottom-6 left-6 z-30 flex flex-col items-start gap-2">
+        {/* Font sizer pill */}
+        <div className="flex items-center rounded-full overflow-hidden shadow-lg border border-white/15" style={{ background: "rgba(26,58,143,0.92)", backdropFilter: "blur(8px)" }}>
+          {FONT_SIZES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setFontLevel(i)}
+              aria-label={`Text size ${FONT_LABELS[i]}`}
+              title={`Text size: ${FONT_LABELS[i]}`}
+              className={`px-3 py-1.5 font-bold transition-colors leading-none ${
+                fontLevel === i
+                  ? "bg-white/20 text-white"
+                  : "text-white/45 hover:text-white hover:bg-white/10"
+              }`}
+              style={{ fontSize: i === 0 ? "10px" : i === 1 ? "13px" : "15px" }}
+            >
+              {FONT_LABELS[i]}
+            </button>
+          ))}
+        </div>
         {ctaOpen && (
           <div
             className="mb-2 w-64 flex flex-col shadow-2xl rounded-2xl overflow-hidden border border-white/15 animate-in fade-in slide-in-from-bottom-2 duration-200"
