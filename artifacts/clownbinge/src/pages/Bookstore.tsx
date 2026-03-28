@@ -14,6 +14,7 @@ interface FactBook {
   accent: string;
   accentFg: string;
   coverDesign: "stat" | "grid" | "split" | "bar" | "slash" | "arch" | "type" | "minimal" | "overlap" | "circle";
+  subtitle?: string;
   summary: string;
   bullets: string[];
 }
@@ -138,6 +139,7 @@ const BOOKS: FactBook[] = [
     tag: "Global South / History",
     bg: "#003366", fg: "#FFFFFF", accent: "#38BDF8", accentFg: "#003366",
     coverDesign: "minimal",
+    subtitle: "Judaism ≠ Zionism",
     summary: "Judaism is a 3,500-year-old religious and cultural tradition. Zionism is a 19th-century political movement founded in Vienna in 1897. They share some overlapping adherents and some contested historical claims — but they are not the same thing. This FactBook traces each to its founding documents and lets the historical record speak without editorializing.",
     bullets: [
       "Theodor Herzl's founding documents describe Zionism explicitly as a political, not religious, project",
@@ -281,6 +283,9 @@ function CoverSVG({ book }: { book: FactBook }) {
         <>
           <text x="20" y="200" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line1}</text>
           <text x="20" y="226" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line2}</text>
+          {book.subtitle && (
+            <text x="20" y="254" fontSize="13" fill="#B8860B" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="0.3">{book.subtitle}</text>
+          )}
         </>
       )}
 
