@@ -6,6 +6,8 @@ import { BookOpen, ArrowRight, CheckCircle, Download, Package, Layers, X } from 
 interface FactBookChapter {
   title: string;
   description: string;
+  isPreface?: boolean;
+  content?: string[];
 }
 
 interface FactBook {
@@ -162,6 +164,7 @@ const BOOKS: FactBook[] = [
     pages: 140,
     price: "$39.95",
     chapters: [
+      { isPreface: true, title: "Preface", description: "Why this book was written. The distinction between a religion and a political movement, and why it matters now." },
       { title: "Two Traditions, One Conflation", description: "The definitional problem. What Judaism is, what Zionism is, and why the distinction matters forensically." },
       { title: "The Basel Congress, 1897", description: "Herzl's founding documents, congress proceedings, and the secular-nationalist framing in his own words." },
       { title: "Jewish Anti-Zionism: The Internal Record", description: "Neturei Karta, the American Council for Judaism, rabbinic rulings: opposition from within, documented since 1897." },
@@ -394,6 +397,7 @@ function CoverSVG({ book }: { book: FactBook }) {
 
 function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
   const [tab, setTab] = useState<"description" | "outline">("description");
+  const [expandedChapter, setExpandedChapter] = useState<number | null>(null);
   const hasOutline = book.chapters && book.chapters.length > 0;
 
   return (
@@ -543,21 +547,51 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
 
             {/* ── OUTLINE TAB ── */}
             {tab === "outline" && book.chapters && (
-              <ol className="space-y-3 mb-6">
-                {book.chapters.map((ch, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span
-                      className="mt-0.5 shrink-0 font-mono text-[10px] font-bold w-6 h-6 rounded flex items-center justify-center"
-                      style={{ background: book.accent + "20", color: book.accent }}
-                    >
-                      {i + 1}
-                    </span>
-                    <div>
-                      <p className="text-sm font-bold leading-snug" style={{ color: book.accent }}>{ch.title}</p>
-                      <p className="text-xs leading-relaxed mt-0.5" style={{ color: "#111111" }}>{ch.description}</p>
-                    </div>
-                  </li>
-                ))}
+              <ol className="space-y-2 mb-6">
+                {book.chapters.map((ch, i) => {
+                  const chapterNum = ch.isPreface ? null : book.chapters!.filter((c, j) => !c.isPreface && j <= i).length;
+                  const badge = ch.isPreface ? "P" : String(chapterNum);
+                  const isOpen = expandedChapter === i;
+                  const hasContent = ch.content && ch.content.length > 0;
+                  return (
+                    <li key={i} className="rounded-lg overflow-hidden border" style={{ borderColor: book.accent + "30" }}>
+                      <button
+                        className="w-full flex gap-3 items-start px-3 py-3 text-left transition-colors"
+                        style={{ background: isOpen ? book.accent + "10" : "transparent" }}
+                        onClick={() => setExpandedChapter(isOpen ? null : i)}
+                      >
+                        <span
+                          className="mt-0.5 shrink-0 font-mono text-[10px] font-bold w-6 h-6 rounded flex items-center justify-center"
+                          style={{ background: book.accent + "25", color: book.accent }}
+                        >
+                          {badge}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-bold leading-snug" style={{ color: book.accent }}>{ch.title}</p>
+                          {!isOpen && <p className="text-xs leading-relaxed mt-0.5 text-gray-600">{ch.description}</p>}
+                        </div>
+                        {hasContent && (
+                          <span className="shrink-0 text-[10px] font-mono mt-1" style={{ color: book.accent + "99" }}>
+                            {isOpen ? "▲" : "▼"}
+                          </span>
+                        )}
+                      </button>
+                      {isOpen && hasContent && (
+                        <div className="px-4 pb-5 pt-1 border-t" style={{ borderColor: book.accent + "20" }}>
+                          {ch.content!.map((para, pi) => (
+                            <p key={pi} className="text-sm leading-relaxed text-gray-800 mb-3 last:mb-0">{para}</p>
+                          ))}
+                        </div>
+                      )}
+                      {isOpen && !hasContent && (
+                        <div className="px-4 pb-4 pt-2 border-t" style={{ borderColor: book.accent + "20" }}>
+                          <p className="text-xs text-gray-400 italic">{ch.description}</p>
+                          <p className="text-xs text-gray-300 mt-2">Full chapter content coming soon.</p>
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
               </ol>
             )}
           </div>
