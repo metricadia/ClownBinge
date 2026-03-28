@@ -245,8 +245,8 @@ export default function Bookstore() {
             </div>
 
             <h1 className="font-sans font-extrabold text-4xl sm:text-5xl text-white leading-tight mb-6">
-              FactBooks: Deeper Dives<br />
-              <span style={{ color: "#F5C518" }}>On Our Most Important Journalism.</span>
+              FactBooks:<br />
+              <span style={{ color: "#F5C518" }}>Deeper Dives Into Our Most Important Stories.</span>
             </h1>
 
             <p className="text-white/75 text-lg leading-relaxed mb-4">
