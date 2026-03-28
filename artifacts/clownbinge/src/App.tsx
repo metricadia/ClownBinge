@@ -20,6 +20,7 @@ import TagIndex from "@/pages/TagIndex";
 import SubmitTip from "@/pages/SubmitTip";
 import Advertise from "@/pages/Advertise";
 import FixMe from "@/pages/FixMe";
+import Bookstore from "@/pages/Bookstore";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient({
@@ -59,6 +60,7 @@ function Router() {
       <Route path="/advertise" component={Contact} />
       <Route path="/invest-in-us" component={Support} />
       <Route path="/FixMe" component={FixMe} />
+      <Route path="/bookstore" component={Bookstore} />
       <Route component={NotFound} />
     </Switch>
     </>
