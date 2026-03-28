@@ -2,6 +2,7 @@ import { GraduationCap } from "lucide-react";
 import { Link } from "wouter";
 
 export function ClownCheckCTA() {
+  return null;
   return (
     <div
       className="my-10 border border-[#F5C518] rounded-xl bg-[#FEFCE8] px-6 py-5 flex flex-col sm:flex-row sm:items-center gap-5"
