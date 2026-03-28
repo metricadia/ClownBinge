@@ -6,3 +6,9 @@ id = "xg1Z4amkhe-FC5G2Uhxpz"
 uri = "file://clownbinge-content-export.csv"
 type = "table"
 title = "ClownBinge Full Content Export — 74 Articles"
+
+[[outputs]]
+id = "Hvj2h9nnIHijqlsa-0xu6"
+uri = "file://next-steps.md"
+type = "text"
+title = "Next Steps — My Account & Save for Later"
