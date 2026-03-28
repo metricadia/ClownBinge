@@ -308,60 +308,60 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl"
+        className="relative w-full max-w-xl rounded-xl overflow-hidden shadow-2xl"
         style={{ background: "#ffffff" }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header strip using book accent color */}
-        <div className="flex gap-6 p-6 pb-5" style={{ background: book.bg }}>
-          <div className="w-24 shrink-0 rounded overflow-hidden shadow-lg" style={{ aspectRatio: "2/3" }}>
+        <div className="flex gap-4 p-4" style={{ background: book.bg }}>
+          <div className="w-16 shrink-0 rounded overflow-hidden shadow-md" style={{ aspectRatio: "2/3" }}>
             <CoverSVG book={book} />
           </div>
-          <div className="flex flex-col justify-between min-w-0 py-1">
+          <div className="flex flex-col justify-between min-w-0">
             <div>
-              <p className="font-mono text-xs font-bold tracking-[0.18em] uppercase mb-2" style={{ color: book.accent }}>
+              <p className="font-mono text-[10px] font-bold tracking-[0.18em] uppercase mb-1" style={{ color: book.accent }}>
                 {book.vol} · {book.tag}
               </p>
-              <h2 className="font-sans font-extrabold text-xl leading-snug" style={{ color: book.fg }}>
+              <h2 className="font-sans font-extrabold text-base leading-snug" style={{ color: book.fg }}>
                 {book.shortTitle}
               </h2>
             </div>
-            <div className="flex items-center gap-3 mt-4">
-              <span className="font-extrabold text-2xl" style={{ color: book.fg }}>$24.95</span>
+            <div className="flex items-center gap-2.5 mt-3">
+              <span className="font-extrabold text-lg" style={{ color: book.fg }}>$24.95</span>
               <button
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85"
                 style={{ background: book.accent, color: book.accentFg }}
               >
                 Pre-Order
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3 h-3" />
               </button>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
+            className="absolute top-3 right-3 w-7 h-7 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
             style={{ background: "rgba(255,255,255,0.15)" }}
             aria-label="Close"
           >
-            <X className="w-4 h-4" style={{ color: book.fg }} />
+            <X className="w-3.5 h-3.5" style={{ color: book.fg }} />
           </button>
         </div>
 
         {/* Body */}
-        <div className="p-6">
-          <p className="text-base text-gray-800 leading-relaxed mb-6">
+        <div className="px-5 py-4">
+          <p className="text-sm text-gray-700 leading-relaxed mb-4">
             {book.summary}
           </p>
 
-          <div className="border-t border-gray-100 pt-5">
-            <p className="font-mono text-xs font-bold tracking-[0.18em] uppercase text-gray-400 mb-4">
+          <div className="border-t border-gray-100 pt-3">
+            <p className="font-mono text-[10px] font-bold tracking-[0.18em] uppercase text-gray-400 mb-3">
               Why This Book Matters
             </p>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {book.bullets.map((bullet, i) => (
-                <li key={i} className="flex gap-3 text-sm text-gray-700 leading-relaxed">
+                <li key={i} className="flex gap-2.5 text-xs text-gray-700 leading-relaxed">
                   <span
-                    className="mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0 font-bold text-xs"
+                    className="mt-0.5 w-4 h-4 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px]"
                     style={{ background: book.accent + "22", color: book.accent }}
                   >
                     {i + 1}
