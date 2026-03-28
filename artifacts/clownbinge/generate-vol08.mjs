@@ -15,17 +15,22 @@ const src = readFileSync(
   'utf8'
 );
 
+// Strip characters that are invalid in XML 1.0
+function sanitizeXml(str) {
+  return str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\uFFFE\uFFFF]/g, '');
+}
+
 function extractStringArray(block) {
   const result = [];
   const re = /"((?:[^"\\]|\\.)*)"/g;
   let m;
   while ((m = re.exec(block)) !== null) {
-    result.push(m[1]
+    const val = m[1]
       .replace(/\\"/g, '"')
       .replace(/\\n/g, '\n')
       .replace(/\\t/g, '\t')
-      .replace(/\\\\/g, '\\')
-    );
+      .replace(/\\\\/g, '\\');
+    result.push(sanitizeXml(val));
   }
   return result;
 }
