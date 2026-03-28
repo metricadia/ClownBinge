@@ -61,6 +61,18 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
   const catDropdownRef = useRef<HTMLDivElement>(null);
   const { data: postCount } = usePostsCount();
 
+  // Font sizer: 3 levels stored in localStorage
+  const FONT_SIZES = [15, 17, 20];
+  const FONT_LABELS = ["a", "A", "A+"];
+  const [fontLevel, setFontLevel] = useState<number>(() => {
+    const saved = localStorage.getItem("cb-font-level");
+    return saved !== null ? parseInt(saved) : 1;
+  });
+  useEffect(() => {
+    document.documentElement.style.fontSize = `${FONT_SIZES[fontLevel]}px`;
+    localStorage.setItem("cb-font-level", String(fontLevel));
+  }, [fontLevel]);
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
@@ -133,6 +145,25 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/invest-in-us" className={`text-sm font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/invest-in-us' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
               Donate Now
             </Link>
+
+            {/* Font sizer */}
+            <div className="flex items-center gap-0 border border-white/20 rounded-full overflow-hidden ml-2" title="Adjust text size">
+              {FONT_SIZES.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setFontLevel(i)}
+                  aria-label={`Text size ${FONT_LABELS[i]}`}
+                  className={`px-2.5 py-1 transition-colors font-bold leading-none ${
+                    fontLevel === i
+                      ? "bg-white/20 text-white"
+                      : "text-white/50 hover:text-white hover:bg-white/10"
+                  }`}
+                  style={{ fontSize: i === 0 ? "10px" : i === 1 ? "13px" : "16px" }}
+                >
+                  {FONT_LABELS[i]}
+                </button>
+              ))}
+            </div>
           </nav>
 
           {/* Mobile Menu Toggle */}
@@ -154,6 +185,25 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Support</Link>
             <Link href="/reports" className="text-2xl font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Buy Reports</Link>
             <Link href="/invest-in-us" className="text-2xl font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Donate Now</Link>
+
+            {/* Mobile font sizer */}
+            <div className="flex flex-col items-center gap-2 mt-2">
+              <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold">Text Size</p>
+              <div className="flex items-center gap-0 border border-white/20 rounded-full overflow-hidden">
+                {FONT_SIZES.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setFontLevel(i)}
+                    className={`px-5 py-2.5 transition-colors font-bold ${
+                      fontLevel === i ? "bg-white/20 text-white" : "text-white/50"
+                    }`}
+                    style={{ fontSize: i === 0 ? "14px" : i === 1 ? "18px" : "22px" }}
+                  >
+                    {FONT_LABELS[i]}
+                  </button>
+                ))}
+              </div>
+            </div>
           </nav>
         </div>
       )}
