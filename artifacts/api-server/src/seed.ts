@@ -38,10 +38,10 @@ export async function upsertMissingPosts(): Promise<void> {
       }).onConflictDoUpdate({
         target: postsTable.caseNumber,
         set: {
+          // ── Editorial metadata — safe to sync from seed on restart ──────────
           title: post.title as string,
           slug: post.slug as string,
           teaser: (post.teaser as string) ?? "",
-          body: post.body as string,
           category: post.category as typeof postsTable.$inferInsert["category"],
           subjectName: post.subject_name as string | null,
           subjectTitle: post.subject_title as string | null,
@@ -58,17 +58,19 @@ export async function upsertMissingPosts(): Promise<void> {
           status: (post.status as typeof postsTable.$inferInsert["status"]) ?? "published",
           dateOfIncident: post.date_of_incident as string | null,
           publishedAt: post.published_at ? new Date(post.published_at as string) : new Date(),
-          viewCount: (post.view_count as number) ?? 0,
-          shareCount: (post.share_count as number) ?? 0,
           userSubmitted: (post.user_submitted as boolean) ?? false,
           pinned: (post.pinned as boolean) ?? false,
           locked: (post.locked as boolean) ?? true,
-          aiScore: post.ai_score as number | null,
-          aiScoreTestedAt: post.ai_score_tested_at ? new Date(post.ai_score_tested_at as string) : null,
+          // ── NEVER overwrite on restart — these fields are owned by CBReduce ─
+          // body:             CBReduce rewrites the body; seed is only the starting point
+          // aiScore:          CBReduce owns this after first reduction
+          // aiScoreTestedAt:  CBReduce owns this timestamp
+          // viewCount:        live engagement data — never reset from seed
+          // shareCount:       live engagement data — never reset from seed
         },
       });
     }
-    console.log(`[Seed] upsertMissingPosts: checked ${posts.length} articles.`);
+    console.log(`[Seed] upsertMissingPosts: synced metadata for ${posts.length} articles. Body and AI scores preserved.`);
   } catch (err) {
     console.error("[Seed] Error in upsertMissingPosts:", err);
   }
