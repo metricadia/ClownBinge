@@ -1,5 +1,6 @@
 import { detectAI } from "./zerogpt";
 import { paraphraseAcademicSentence, type DocType } from "./cb-rewriter";
+import { assessQuality } from "./cb-quality-gate";
 
 export type { DocType };
 
@@ -42,6 +43,23 @@ export interface ReduceResult {
   diffs: SentenceDiff[];
 }
 
+/** Count cb-factoid anchors in HTML for integrity check */
+function countFactoidAnchors(html: string): number {
+  return (html.match(/<a[^>]+cb-factoid[^>]*>/gi) ?? []).length;
+}
+
+/**
+ * Replace the FIRST occurrence of `original` in `html`, anchored-safely.
+ *
+ * Strategy (per block-level element):
+ * 1. Collapse all <a> tags to opaque placeholders.
+ * 2. If `original` appears in the collapsed text (outside anchors), replace the
+ *    first occurrence there only, then rehydrate placeholders.
+ * 3. Otherwise, if `original` appears inside exactly one anchor's inner text,
+ *    replace the first occurrence inside that anchor's text only, then rehydrate.
+ * 4. No flex-regex cross-tag fallback — if the sentence can't be placed
+ *    unambiguously, skip the block to avoid corruption.
+ */
 function replaceInHtml(html: string, original: string, replacement: string): string {
   if (!original || !replacement || original === replacement) return html;
 
@@ -50,7 +68,12 @@ function replaceInHtml(html: string, original: string, replacement: string): str
   const result = html.replace(
     /(<(?:p|h[1-6]|li|blockquote)(?:\s[^>]*)?>)([\s\S]*?)(<\/(?:p|h[1-6]|li|blockquote)>)/gi,
     (match, openTag: string, content: string, closeTag: string) => {
-      type Anchor = { placeholder: string; openTag: string; innerText: string; closeTag: string };
+      type Anchor = {
+        placeholder: string;
+        openTag: string;
+        innerText: string;
+        closeTag: string;
+      };
       const anchors: Anchor[] = [];
 
       const collapsed = content.replace(
@@ -62,56 +85,55 @@ function replaceInHtml(html: string, original: string, replacement: string): str
         }
       );
 
-      const plainVersion = anchors.reduce(
-        (s, { placeholder, innerText }) => s.replace(placeholder, innerText),
-        collapsed
-      );
+      const rehydrate = (text: string, anchorList: Anchor[]): string =>
+        anchorList.reduce(
+          (s, { placeholder, openTag: aOpen, innerText, closeTag: aClose }) =>
+            s.split(placeholder).join(`${aOpen}${innerText}${aClose}`),
+          text
+        );
 
-      const strippedVersion = plainVersion.replace(/<[^>]+>/g, "");
-
-      if (!strippedVersion.includes(original)) return match;
-
-      if (plainVersion.includes(original)) {
-        let newPlain = plainVersion.replace(original, replacement);
+      // ── Path A: sentence lives outside all anchors ──────────────────────────
+      if (collapsed.includes(original)) {
+        // .replace(string, string) replaces the FIRST occurrence only
+        const newCollapsed = collapsed.replace(original, replacement);
         changed = true;
-
-        for (const anchor of anchors) {
-          const wasAnchorText = anchor.innerText === original || anchor.innerText.includes(original);
-          if (wasAnchorText) {
-            const newAnchorText = anchor.innerText.replace(original, replacement);
-            newPlain = newPlain.replace(replacement, `${anchor.openTag}${newAnchorText}${anchor.closeTag}`);
-          } else if (newPlain.includes(anchor.innerText)) {
-            newPlain = newPlain.replace(
-              anchor.innerText,
-              `${anchor.openTag}${anchor.innerText}${anchor.closeTag}`
-            );
-          }
-        }
-
-        return `${openTag}${newPlain}${closeTag}`;
+        return `${openTag}${rehydrate(newCollapsed, anchors)}${closeTag}`;
       }
 
-      const escapedWords = original
-        .split(/\s+/)
-        .map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
-        .join("(?:<[^>]*?>\\s*)*\\s+(?:<[^>]*?>\\s*)*");
-      const flexRegex = new RegExp(escapedWords);
-      const newContent = content.replace(flexRegex, replacement);
-      if (newContent === content) return match;
+      // ── Path B: sentence lives inside one anchor's inner text ───────────────
+      let anchorChanged = false;
+      const newAnchors = anchors.map((anchor) => {
+        if (!anchorChanged && anchor.innerText.includes(original)) {
+          anchorChanged = true;
+          return {
+            ...anchor,
+            innerText: anchor.innerText.replace(original, replacement),
+          };
+        }
+        return anchor;
+      });
+
+      if (!anchorChanged) return match; // not found — leave block untouched
+
       changed = true;
-      return `${openTag}${newContent}${closeTag}`;
+      return `${openTag}${rehydrate(collapsed, newAnchors)}${closeTag}`;
     }
   );
 
-  if (!changed) return html;
-  return result;
+  return changed ? result : html;
 }
 
+/**
+ * Apply sentence replacements to plain text.
+ * Uses first-occurrence replacement (not global split/join) to prevent
+ * cascading duplication when a phrase appears in multiple positions.
+ */
 function applySentenceReplacements(text: string, replacements: Map<string, string>): string {
   let result = text;
   for (const [original, replacement] of replacements) {
     if (result.includes(original)) {
-      result = result.split(original).join(replacement);
+      // String.replace(string, string) replaces the FIRST occurrence only
+      result = result.replace(original, replacement);
     }
   }
   return result;
@@ -222,6 +244,8 @@ export async function reduceAI(
     }
   }
 
+  const originalFactoidCount = countFactoidAnchors(htmlBody);
+
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     if (flaggedSentences.length === 0) {
       console.log(`[CBReduce] Attempt ${attempt}: no flagged sentences. Stopping.`);
@@ -236,7 +260,13 @@ export async function reduceAI(
       masterReplacements.set(original, replacement);
     }
 
-    currentPlainText = applySentenceReplacements(plainText, masterReplacements);
+    // Apply only the NEW rewrites to currentPlainText (not masterReplacements from scratch)
+    // to avoid cascading global replacements on already-rewritten text
+    for (const [original, replacement] of newRewrites) {
+      currentPlainText = currentPlainText.includes(original)
+        ? currentPlainText.replace(original, replacement)
+        : currentPlainText;
+    }
 
     for (const [original, replacement] of newRewrites) {
       currentHtml = replaceInHtml(currentHtml, original, replacement);
@@ -270,6 +300,41 @@ export async function reduceAI(
   const allDiffs: SentenceDiff[] = [];
   for (const [before, after] of masterReplacements) {
     allDiffs.push({ before, after });
+  }
+
+  // ── HTML integrity gate ───────────────────────────────────────────────────
+  const finalFactoidCount = countFactoidAnchors(currentHtml);
+  if (finalFactoidCount !== originalFactoidCount) {
+    console.error(
+      `[CBReduce] INTEGRITY FAIL: factoid anchor count changed ${originalFactoidCount} → ${finalFactoidCount}. Discarding rewrites.`
+    );
+    return {
+      success: false,
+      initialScore,
+      finalScore: initialScore,
+      attempts,
+      cleanedBody: htmlBody,
+      diffs: [],
+      message: `Integrity check failed: factoid anchor count changed (${originalFactoidCount} → ${finalFactoidCount}). Original preserved.`,
+    };
+  }
+
+  // ── Editorial quality gate ────────────────────────────────────────────────
+  if (allDiffs.length > 0) {
+    const quality = await assessQuality(allDiffs);
+    if (!quality.approved) {
+      console.warn(`[CBReduce] Quality gate REJECTED rewrites: ${quality.reason}`);
+      return {
+        success: false,
+        initialScore,
+        finalScore: initialScore,
+        attempts,
+        cleanedBody: htmlBody,
+        diffs: allDiffs,
+        message: `Quality gate rejected rewrites: ${quality.reason}. Original preserved.`,
+      };
+    }
+    console.log(`[CBReduce] Quality gate approved. Reason: ${quality.reason}`);
   }
 
   const success = currentScore <= targetScore;
