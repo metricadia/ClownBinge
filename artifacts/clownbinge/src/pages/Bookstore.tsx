@@ -17,6 +17,8 @@ interface FactBook {
   subtitle?: string;
   coverImage?: string;
   summary: string;
+  extendedSummary?: string[];
+  quote?: string;
   bullets: string[];
 }
 
@@ -142,13 +144,22 @@ const BOOKS: FactBook[] = [
     coverDesign: "minimal",
     subtitle: "Judaism ≠ Zionism",
     coverImage: "/covers/vol08-cover.png",
-    summary: "Judaism is a 3,500-year-old religious and cultural tradition. Zionism is a 19th-century political movement founded in Vienna in 1897. They share some overlapping adherents and some contested historical claims — but they are not the same thing. This FactBook traces each to its founding documents and lets the historical record speak without editorializing.",
+    summary: "Judaism is a 3,500-year-old religious and cultural tradition — texts, law, liturgy, diaspora, living culture. Zionism is a 19th-century secular political movement founded at the First Zionist Congress in Basel in 1897 by Theodor Herzl, a journalist who was not religiously observant. These are not the same thing.",
+    extendedSummary: [
+      "The founding documents of Zionism are unambiguous: this was a nationalist political project aimed at establishing a Jewish state in Palestine, not a fulfillment of religious scripture. Herzl's own diaries and congress proceedings describe it in explicitly secular, colonial-era political terms. Many of the early Zionist leaders were atheists.",
+      "Significant Jewish opposition to Zionism has existed since the movement's founding in 1897. Orthodox groups — including Neturei Karta and the American Council for Judaism — opposed Zionism on religious grounds, arguing that Jewish statehood before the coming of the Messiah was a theological violation. That opposition is documented in their own publications and rabbinic rulings.",
+      "The political strategy of equating criticism of Israeli state policy with antisemitism is itself a documented modern development — traceable to specific policy decisions, lobbying strategies, and legislative campaigns. This FactBook names the documents, the dates, and the actors. The primary source record does not support the equation.",
+    ],
+    quote: "Zionism is a political program. Judaism is a faith. Conflating them serves power — not truth. The primary source record makes the distinction clear.",
     bullets: [
-      "Theodor Herzl's founding documents describe Zionism explicitly as a political, not religious, project",
-      "Anti-Zionist Jewish movements have existed continuously since 1897, documented in their own records",
-      "UN Resolution 3379 and its reversal represent a documented political — not theological — debate",
-      "Palestinian pre-1948 land records and British Mandate censuses document the demographic reality",
-      "The conflation of antisemitism and anti-Zionism is itself a documented political strategy",
+      "Herzl's Basel Congress proceedings (1897) describe Zionism explicitly as a political, not religious, program",
+      "Anti-Zionist Jewish movements — including Neturei Karta — have existed and published continuously since 1897",
+      "UN Resolution 3379 (1975) and its reversal (1991) are documented political acts — not theological ones",
+      "British Mandate census records and Ottoman land registries document pre-1948 Palestinian demographic reality",
+      "The Balfour Declaration (1917) was a letter from a British foreign secretary to a banker — a political document",
+      "Israeli civil law distinguishes 'Israeli nationality' from 'Jewish nationality' — a legal, not religious, construction",
+      "The IHRA definition of antisemitism — and its political deployment — is itself a subject of documented academic and legal debate",
+      "Jewish scholars, rabbis, and organizations publishing anti-Zionist positions are cited throughout with full sourcing",
     ],
   },
   {
@@ -375,8 +386,11 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
             <X className="w-3.5 h-3.5 text-gray-700" />
           </button>
 
-          {/* Scrollable content */}
-          <div className="overflow-y-auto flex-1 px-6 py-5">
+          {/* Scrollable content — always-visible thin scrollbar */}
+          <div
+            className="overflow-y-scroll flex-1 px-6 py-5"
+            style={{ scrollbarWidth: "thin", scrollbarColor: `${book.accent}55 transparent` }}
+          >
             {/* Vol / tag */}
             <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase mb-2" style={{ color: book.accent }}>
               {book.vol} · {book.tag}
@@ -406,16 +420,37 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
               </button>
             </div>
 
-            {/* Summary */}
-            <p className="text-sm text-gray-700 leading-relaxed mb-5">
+            {/* Lead summary */}
+            <p className="text-sm text-gray-800 leading-relaxed font-medium mb-4">
               {book.summary}
             </p>
 
+            {/* Extended paragraphs */}
+            {book.extendedSummary && book.extendedSummary.map((para, i) => (
+              <p key={i} className="text-sm text-gray-600 leading-relaxed mb-3">
+                {para}
+              </p>
+            ))}
+
+            {/* Pull quote */}
+            {book.quote && (
+              <blockquote
+                className="my-5 pl-4 py-3 pr-3 rounded-r-lg text-sm font-semibold leading-snug italic"
+                style={{
+                  borderLeft: `3px solid ${book.accent}`,
+                  background: book.accent + "10",
+                  color: "#2A1A00",
+                }}
+              >
+                "{book.quote}"
+              </blockquote>
+            )}
+
             {/* Bullets */}
-            <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3">
-              Why This Book Matters
+            <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3 mt-4">
+              What This FactBook Documents
             </p>
-            <ul className="space-y-2.5">
+            <ul className="space-y-2.5 mb-6">
               {book.bullets.map((bullet, i) => (
                 <li key={i} className="flex gap-3 text-xs text-gray-700 leading-relaxed">
                   <span
@@ -428,6 +463,26 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                 </li>
               ))}
             </ul>
+
+            {/* Bottom CTA */}
+            <div
+              className="rounded-xl p-4 flex items-center justify-between"
+              style={{ background: book.accent + "12", border: `1px solid ${book.accent}30` }}
+            >
+              <div>
+                <p className="font-mono text-[10px] font-bold tracking-[0.15em] uppercase mb-0.5" style={{ color: book.accent }}>
+                  Digital PDF · APA 7 Citations
+                </p>
+                <p className="text-xs text-gray-500">Instant delivery. 100% primary sourced.</p>
+              </div>
+              <button
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85 shrink-0"
+                style={{ background: book.accent, color: book.accentFg }}
+              >
+                $24.95 — Pre-Order
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
