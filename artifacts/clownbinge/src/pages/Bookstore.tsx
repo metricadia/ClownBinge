@@ -325,6 +325,11 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
               <h2 className="font-sans font-extrabold text-base leading-snug" style={{ color: book.fg }}>
                 {book.shortTitle}
               </h2>
+              {book.subtitle && (
+                <p className="font-sans font-bold text-xs mt-0.5" style={{ color: "#B8860B" }}>
+                  {book.subtitle}
+                </p>
+              )}
             </div>
             <div className="flex items-center gap-2.5 mt-3">
               <span className="font-extrabold text-lg" style={{ color: book.fg }}>$24.95</span>
