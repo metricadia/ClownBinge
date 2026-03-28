@@ -1,6 +1,8 @@
 import { Layout } from "@/components/Layout";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
+import { useFactoidPopup } from "@/hooks/use-factoid-popup";
+import { FactoidPopup } from "@/components/FactoidPopup";
 import { Shield, Lock, Globe, FileText, Eye, EyeOff, Server } from "lucide-react";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -21,6 +23,7 @@ function LockedBadge() {
 }
 
 export default function Privacy() {
+  const { containerRef, popupRef, factoid, copied, closeFactoid, handleCopy } = useFactoidPopup();
   usePageSeoHead({
     title: "Privacy & Free Speech Jurisdiction Policy — ClownBinge",
     description: "ClownBinge operates under the legal jurisdiction of St. Kitts & Nevis and is hosted exclusively on Icelandic sovereign infrastructure. This page documents our jurisdictional firewall, data sovereignty architecture, and zero-inference privacy commitment.",
@@ -30,7 +33,7 @@ export default function Privacy() {
 
   return (
     <Layout>
-      <div className="max-w-3xl mx-auto px-4 py-12 sm:py-20">
+      <div className="max-w-3xl mx-auto px-4 py-12 sm:py-20" ref={(el) => { containerRef.current = el; }}>
 
         <AdminPageHeader title="Privacy & Free Speech Jurisdiction Policy" />
 
@@ -245,6 +248,16 @@ export default function Privacy() {
         </div>
 
       </div>
+
+      {factoid && (
+        <FactoidPopup
+          factoid={factoid}
+          popupRef={popupRef}
+          copied={copied}
+          onClose={closeFactoid}
+          onCopy={handleCopy}
+        />
+      )}
     </Layout>
   );
 }
