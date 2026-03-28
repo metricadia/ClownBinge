@@ -138,7 +138,7 @@ const BOOKS: FactBook[] = [
     shortTitle: "Ancient Faith, Modern Politics",
     fullTitle: "Ancient Faith, Modern Politics: The Documented Separation of Judaism and Zionism",
     tag: "Global South / History",
-    bg: "#003366", fg: "#FFFFFF", accent: "#38BDF8", accentFg: "#003366",
+    bg: "#0D0500", fg: "#FFFFFF", accent: "#6B3520", accentFg: "#F5C518",
     coverDesign: "minimal",
     subtitle: "Judaism ≠ Zionism",
     coverImage: "/covers/vol08-cover.png",
@@ -344,71 +344,83 @@ function CoverSVG({ book }: { book: FactBook }) {
 function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(0,0,0,0.72)", backdropFilter: "blur(4px)" }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
+      style={{ background: "rgba(0,0,0,0.82)", backdropFilter: "blur(6px)" }}
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-xl rounded-xl overflow-hidden shadow-2xl"
-        style={{ background: "#ffffff" }}
+        className="relative w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl flex flex-row"
+        style={{ background: "#ffffff", maxHeight: "90vh" }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header strip using book accent color */}
-        <div className="flex gap-4 p-4" style={{ background: book.bg }}>
-          <div className="w-16 shrink-0 rounded overflow-hidden shadow-md" style={{ aspectRatio: "2/3" }}>
+        {/* LEFT — full-height stunning cover */}
+        <div
+          className="w-[42%] shrink-0 self-stretch"
+          style={{ background: book.bg }}
+        >
+          <div style={{ width: "100%", height: "100%", minHeight: "480px" }}>
             <CoverSVG book={book} />
           </div>
-          <div className="flex flex-col justify-between min-w-0">
-            <div>
-              <p className="font-mono text-[10px] font-bold tracking-[0.18em] uppercase mb-1" style={{ color: book.accent }}>
-                {book.vol} · {book.tag}
+        </div>
+
+        {/* RIGHT — text panel */}
+        <div className="flex-1 flex flex-col overflow-hidden" style={{ background: "#FAFAFA" }}>
+          {/* Close */}
+          <button
+            onClick={onClose}
+            className="absolute top-3 right-3 z-10 w-7 h-7 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
+            style={{ background: "rgba(0,0,0,0.12)" }}
+            aria-label="Close"
+          >
+            <X className="w-3.5 h-3.5 text-gray-700" />
+          </button>
+
+          {/* Scrollable content */}
+          <div className="overflow-y-auto flex-1 px-6 py-5">
+            {/* Vol / tag */}
+            <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase mb-2" style={{ color: book.accent }}>
+              {book.vol} · {book.tag}
+            </p>
+
+            {/* Title */}
+            <h2 className="font-sans font-extrabold text-xl leading-tight mb-1" style={{ color: "#1A1A2E" }}>
+              {book.shortTitle}
+            </h2>
+
+            {/* Subtitle */}
+            {book.subtitle && (
+              <p className="font-sans font-bold text-sm mb-4" style={{ color: book.accent }}>
+                {book.subtitle}
               </p>
-              <h2 className="font-sans font-extrabold text-base leading-snug" style={{ color: book.fg }}>
-                {book.shortTitle}
-              </h2>
-              {book.subtitle && (
-                <p className="font-sans font-bold text-xs mt-0.5" style={{ color: "#B8860B" }}>
-                  {book.subtitle}
-                </p>
-              )}
-            </div>
-            <div className="flex items-center gap-2.5 mt-3">
-              <span className="font-extrabold text-lg" style={{ color: book.fg }}>$24.95</span>
+            )}
+
+            {/* Price + CTA */}
+            <div className="flex items-center gap-3 mb-5 pb-5 border-b border-gray-200">
+              <span className="font-extrabold text-2xl text-gray-900">$24.95</span>
               <button
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85"
                 style={{ background: book.accent, color: book.accentFg }}
               >
                 Pre-Order
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
-          </div>
-          <button
-            onClick={onClose}
-            className="absolute top-3 right-3 w-7 h-7 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
-            style={{ background: "rgba(255,255,255,0.15)" }}
-            aria-label="Close"
-          >
-            <X className="w-3.5 h-3.5" style={{ color: book.fg }} />
-          </button>
-        </div>
 
-        {/* Body */}
-        <div className="px-5 py-4">
-          <p className="text-sm text-gray-700 leading-relaxed mb-4">
-            {book.summary}
-          </p>
+            {/* Summary */}
+            <p className="text-sm text-gray-700 leading-relaxed mb-5">
+              {book.summary}
+            </p>
 
-          <div className="border-t border-gray-100 pt-3">
-            <p className="font-mono text-[10px] font-bold tracking-[0.18em] uppercase text-gray-400 mb-3">
+            {/* Bullets */}
+            <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 mb-3">
               Why This Book Matters
             </p>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {book.bullets.map((bullet, i) => (
-                <li key={i} className="flex gap-2.5 text-xs text-gray-700 leading-relaxed">
+                <li key={i} className="flex gap-3 text-xs text-gray-700 leading-relaxed">
                   <span
                     className="mt-0.5 w-4 h-4 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px]"
-                    style={{ background: book.accent + "22", color: book.accent }}
+                    style={{ background: book.accent + "28", color: book.accent }}
                   >
                     {i + 1}
                   </span>
