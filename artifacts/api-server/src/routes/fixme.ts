@@ -110,7 +110,7 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
 
   try {
     const [post] = await db
-      .select({ id: postsTable.id, body: postsTable.body, locked: postsTable.locked })
+      .select({ id: postsTable.id, body: postsTable.body })
       .from(postsTable)
       .where(eq(postsTable.slug, slug))
       .limit(1);
@@ -120,42 +120,49 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
       return;
     }
 
-    if (post.locked) {
-      res.status(403).json({ error: "Article is locked. Unlock it before reducing." });
-      return;
-    }
-
     jobs.set(slug, { phase: "processing", startedAt: new Date() });
     res.json({ status: "processing", message: "Reduction started. Polling for updates..." });
 
     (async () => {
       try {
-        const result = await reduceAI(post.body, targetScore);
+        let totalSaved = 0;
+
+        const result = await reduceAI(
+          post.body,
+          targetScore,
+          4,
+          "journalism",
+          async (body: string, score: number) => {
+            await db
+              .update(postsTable)
+              .set({ body, aiScore: score, aiScoreTestedAt: new Date() })
+              .where(eq(postsTable.id, post.id));
+            totalSaved++;
+          }
+        );
 
         const scoreImproved = result.finalScore < result.initialScore;
-        let saved = false;
 
-        if (scoreImproved && result.diffs.length > 0) {
-          await db
-            .update(postsTable)
-            .set({ body: result.cleanedBody, aiScore: result.finalScore, aiScoreTestedAt: new Date() })
-            .where(eq(postsTable.id, post.id));
-          saved = true;
-          console.log(`[CBReduce] Saved. ${result.initialScore}% -> ${result.finalScore}%. ${result.diffs.length} rewrites.`);
-        } else {
+        if (!scoreImproved) {
           await db
             .update(postsTable)
             .set({ aiScore: result.finalScore, aiScoreTestedAt: new Date() })
             .where(eq(postsTable.id, post.id));
-          console.log(`[CBReduce] No save. ${result.initialScore}% -> ${result.finalScore}%. Score did not improve.`);
         }
+
+        await db
+          .update(postsTable)
+          .set({ locked: true })
+          .where(eq(postsTable.id, post.id));
+
+        console.log(`[CBReduce] Complete. ${result.initialScore}% → ${result.finalScore}%. Saves: ${totalSaved}. Auto-locked.`);
 
         jobs.set(slug, {
           phase: "done",
           initialScore: result.initialScore,
           finalScore: result.finalScore,
           diffsCount: result.diffs.length,
-          saved,
+          saved: scoreImproved,
           message: result.message,
         });
       } catch (err) {

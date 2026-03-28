@@ -26,6 +26,7 @@ export interface ReduceAttempt {
   scoreBeforeRewrite: number;
   scoreAfterRewrite: number;
   sentencesRewritten: number;
+  sentencesRejected: number;
 }
 
 export interface SentenceDiff {
@@ -43,23 +44,10 @@ export interface ReduceResult {
   diffs: SentenceDiff[];
 }
 
-/** Count cb-factoid anchors in HTML for integrity check */
 function countFactoidAnchors(html: string): number {
   return (html.match(/<a[^>]+cb-factoid[^>]*>/gi) ?? []).length;
 }
 
-/**
- * Replace the FIRST occurrence of `original` in `html`, anchored-safely.
- *
- * Strategy (per block-level element):
- * 1. Collapse all <a> tags to opaque placeholders.
- * 2. If `original` appears in the collapsed text (outside anchors), replace the
- *    first occurrence there only, then rehydrate placeholders.
- * 3. Otherwise, if `original` appears inside exactly one anchor's inner text,
- *    replace the first occurrence inside that anchor's text only, then rehydrate.
- * 4. No flex-regex cross-tag fallback — if the sentence can't be placed
- *    unambiguously, skip the block to avoid corruption.
- */
 function replaceInHtml(html: string, original: string, replacement: string): string {
   if (!original || !replacement || original === replacement) return html;
 
@@ -92,15 +80,12 @@ function replaceInHtml(html: string, original: string, replacement: string): str
           text
         );
 
-      // ── Path A: sentence lives outside all anchors ──────────────────────────
       if (collapsed.includes(original)) {
-        // .replace(string, string) replaces the FIRST occurrence only
         const newCollapsed = collapsed.replace(original, replacement);
         changed = true;
         return `${openTag}${rehydrate(newCollapsed, anchors)}${closeTag}`;
       }
 
-      // ── Path B: sentence lives inside one anchor's inner text ───────────────
       let anchorChanged = false;
       const newAnchors = anchors.map((anchor) => {
         if (!anchorChanged && anchor.innerText.includes(original)) {
@@ -113,7 +98,7 @@ function replaceInHtml(html: string, original: string, replacement: string): str
         return anchor;
       });
 
-      if (!anchorChanged) return match; // not found — leave block untouched
+      if (!anchorChanged) return match;
 
       changed = true;
       return `${openTag}${rehydrate(collapsed, newAnchors)}${closeTag}`;
@@ -121,22 +106,6 @@ function replaceInHtml(html: string, original: string, replacement: string): str
   );
 
   return changed ? result : html;
-}
-
-/**
- * Apply sentence replacements to plain text.
- * Uses first-occurrence replacement (not global split/join) to prevent
- * cascading duplication when a phrase appears in multiple positions.
- */
-function applySentenceReplacements(text: string, replacements: Map<string, string>): string {
-  let result = text;
-  for (const [original, replacement] of replacements) {
-    if (result.includes(original)) {
-      // String.replace(string, string) replaces the FIRST occurrence only
-      result = result.replace(original, replacement);
-    }
-  }
-  return result;
 }
 
 async function rewriteBatch(
@@ -174,7 +143,8 @@ export async function reduceAI(
   htmlBody: string,
   targetScore = 15,
   maxAttempts = 4,
-  docType: DocType = "journalism"
+  docType: DocType = "journalism",
+  onSave?: (body: string, score: number) => Promise<void>
 ): Promise<ReduceResult> {
   const plainText = stripHtmlForDetection(htmlBody);
 
@@ -224,27 +194,25 @@ export async function reduceAI(
   }
 
   const initialScore = confirmedScore;
-  let currentHtml = htmlBody;
-  let currentScore = confirmedScore;
-  const attempts: ReduceAttempt[] = [];
+  const originalFactoidCount = countFactoidAnchors(htmlBody);
 
-  const masterReplacements = new Map<string, string>();
-  let currentPlainText = plainText;
+  let bestHtml = htmlBody;
+  let bestScore = confirmedScore;
+  const allSavedDiffs: SentenceDiff[] = [];
+  const attempts: ReduceAttempt[] = [];
 
   let flaggedSentences = scan2Flagged.length > 0 ? scan2Flagged : scan1Flagged;
 
   if (flaggedSentences.length === 0 && confirmedScore > targetScore) {
-    const fallback = currentPlainText
+    const fallback = plainText
       .match(/[^.!?]+[.!?]+/g)
       ?.map((s) => s.trim())
       .filter((s) => s.length >= 20) ?? [];
     if (fallback.length > 0) {
-      console.log(`[CBReduce] No flagged sentences from detector (score ${confirmedScore}%) — falling back to full-text rewrite of ${fallback.length} sentences`);
+      console.log(`[CBReduce] No flagged sentences — falling back to full-text rewrite of ${fallback.length} sentences`);
       flaggedSentences = fallback;
     }
   }
-
-  const originalFactoidCount = countFactoidAnchors(htmlBody);
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     if (flaggedSentences.length === 0) {
@@ -252,102 +220,129 @@ export async function reduceAI(
       break;
     }
 
-    console.log(`[CBReduce] Attempt ${attempt}: score=${currentScore}%, flagged=${flaggedSentences.length}`);
+    console.log(`[CBReduce] Attempt ${attempt}: score=${bestScore}%, flagged=${flaggedSentences.length}`);
 
     const newRewrites = await rewriteBatch(flaggedSentences, docType);
-
-    for (const [original, replacement] of newRewrites) {
-      masterReplacements.set(original, replacement);
+    if (newRewrites.size === 0) {
+      console.log(`[CBReduce] Attempt ${attempt}: no rewrites produced. Stopping.`);
+      break;
     }
 
-    // Apply only the NEW rewrites to currentPlainText (not masterReplacements from scratch)
-    // to avoid cascading global replacements on already-rewritten text
-    for (const [original, replacement] of newRewrites) {
-      currentPlainText = currentPlainText.includes(original)
-        ? currentPlainText.replace(original, replacement)
-        : currentPlainText;
+    // ── Surgical quality gate ─────────────────────────────────────────────────
+    const diffs: SentenceDiff[] = [...newRewrites.entries()].map(([before, after]) => ({ before, after }));
+    const quality = await assessQuality(diffs);
+
+    const goodRewrites = new Map(newRewrites);
+    let rejected = 0;
+
+    if (quality.failingIndices.length > 0) {
+      for (const idx of quality.failingIndices) {
+        const diff = diffs[idx - 1];
+        if (diff) {
+          goodRewrites.delete(diff.before);
+          rejected++;
+          console.log(`[CBReduce] Rejected rewrite [${idx}]: "${diff.before.slice(0, 60)}..." — ${quality.reason}`);
+        }
+      }
+      console.log(`[CBReduce] Quality gate: ${rejected} rejected, ${goodRewrites.size} accepted`);
+    } else {
+      console.log(`[CBReduce] Quality gate: all ${goodRewrites.size} rewrites accepted`);
     }
 
-    for (const [original, replacement] of newRewrites) {
-      currentHtml = replaceInHtml(currentHtml, original, replacement);
+    if (goodRewrites.size === 0) {
+      console.log(`[CBReduce] Attempt ${attempt}: all rewrites rejected. Skipping.`);
+      attempts.push({
+        attemptNumber: attempt,
+        scoreBeforeRewrite: bestScore,
+        scoreAfterRewrite: bestScore,
+        sentencesRewritten: 0,
+        sentencesRejected: rejected,
+      });
+      continue;
     }
 
-    const { score: newScore, flaggedSentences: newFlagged } = await detectAI(currentPlainText);
+    // ── Apply good rewrites to a working copy ─────────────────────────────────
+    let workingHtml = bestHtml;
+    let workingText = stripHtmlForDetection(bestHtml);
+
+    for (const [original, replacement] of goodRewrites) {
+      workingHtml = replaceInHtml(workingHtml, original, replacement);
+      if (workingText.includes(original)) {
+        workingText = workingText.replace(original, replacement);
+      }
+    }
+
+    // ── Factoid integrity check ───────────────────────────────────────────────
+    const newFactoidCount = countFactoidAnchors(workingHtml);
+    if (newFactoidCount !== originalFactoidCount) {
+      console.error(`[CBReduce] Integrity fail attempt ${attempt}: factoid count ${originalFactoidCount} → ${newFactoidCount}. Discarding.`);
+      attempts.push({
+        attemptNumber: attempt,
+        scoreBeforeRewrite: bestScore,
+        scoreAfterRewrite: bestScore,
+        sentencesRewritten: 0,
+        sentencesRejected: rejected,
+      });
+      continue;
+    }
+
+    // ── Re-detect ─────────────────────────────────────────────────────────────
+    const { score: newScore, flaggedSentences: newFlagged } = await detectAI(workingText);
 
     attempts.push({
       attemptNumber: attempt,
-      scoreBeforeRewrite: currentScore,
+      scoreBeforeRewrite: bestScore,
       scoreAfterRewrite: newScore,
-      sentencesRewritten: newRewrites.size,
+      sentencesRewritten: goodRewrites.size,
+      sentencesRejected: rejected,
     });
 
-    console.log(`[CBReduce] Attempt ${attempt} result: ${currentScore}% -> ${newScore}% (rewrote ${newRewrites.size} sentences, ${masterReplacements.size} total accumulated)`);
+    console.log(`[CBReduce] Attempt ${attempt}: ${bestScore}% → ${newScore}% (${goodRewrites.size} saved, ${rejected} rejected)`);
 
-    flaggedSentences = newFlagged;
-    currentScore = newScore;
+    if (newScore < bestScore) {
+      // Score improved — commit this attempt
+      bestHtml = workingHtml;
+      bestScore = newScore;
+      flaggedSentences = newFlagged;
 
-    if (newScore <= targetScore) break;
+      for (const [before, after] of goodRewrites) {
+        allSavedDiffs.push({ before, after });
+      }
 
-    if (attempts.length >= 2) {
-      const lastTwo = attempts.slice(-2);
-      if (lastTwo[1].scoreAfterRewrite >= lastTwo[0].scoreAfterRewrite) {
-        console.log("[CBReduce] Score not improving. Stopping.");
+      if (onSave) {
+        await onSave(workingHtml, newScore);
+        console.log(`[CBReduce] Saved to DB: ${newScore}%`);
+      }
+
+      if (newScore <= targetScore) {
+        console.log(`[CBReduce] Target reached at ${newScore}%.`);
         break;
+      }
+    } else {
+      console.log(`[CBReduce] Score didn't improve (${bestScore}% → ${newScore}%). Discarding attempt.`);
+      flaggedSentences = newFlagged.length > 0 ? newFlagged : flaggedSentences;
+
+      if (attempts.length >= 2) {
+        const lastTwo = attempts.slice(-2);
+        if (lastTwo[1].scoreAfterRewrite >= lastTwo[0].scoreBeforeRewrite) {
+          console.log("[CBReduce] No progress trend. Stopping.");
+          break;
+        }
       }
     }
   }
 
-  const allDiffs: SentenceDiff[] = [];
-  for (const [before, after] of masterReplacements) {
-    allDiffs.push({ before, after });
-  }
-
-  // ── HTML integrity gate ───────────────────────────────────────────────────
-  const finalFactoidCount = countFactoidAnchors(currentHtml);
-  if (finalFactoidCount !== originalFactoidCount) {
-    console.error(
-      `[CBReduce] INTEGRITY FAIL: factoid anchor count changed ${originalFactoidCount} → ${finalFactoidCount}. Discarding rewrites.`
-    );
-    return {
-      success: false,
-      initialScore,
-      finalScore: initialScore,
-      attempts,
-      cleanedBody: htmlBody,
-      diffs: [],
-      message: `Integrity check failed: factoid anchor count changed (${originalFactoidCount} → ${finalFactoidCount}). Original preserved.`,
-    };
-  }
-
-  // ── Editorial quality gate ────────────────────────────────────────────────
-  if (allDiffs.length > 0) {
-    const quality = await assessQuality(allDiffs);
-    if (!quality.approved) {
-      console.warn(`[CBReduce] Quality gate REJECTED rewrites: ${quality.reason}`);
-      return {
-        success: false,
-        initialScore,
-        finalScore: initialScore,
-        attempts,
-        cleanedBody: htmlBody,
-        diffs: allDiffs,
-        message: `Quality gate rejected rewrites: ${quality.reason}. Original preserved.`,
-      };
-    }
-    console.log(`[CBReduce] Quality gate approved. Reason: ${quality.reason}`);
-  }
-
-  const success = currentScore <= targetScore;
+  const success = bestScore <= targetScore;
 
   return {
     success,
     initialScore,
-    finalScore: currentScore,
+    finalScore: bestScore,
     attempts,
-    cleanedBody: currentHtml,
-    diffs: allDiffs,
-    message: success
-      ? `Reduced from ${initialScore}% to ${currentScore}% in ${attempts.length} attempt(s).`
-      : `Reduced from ${initialScore}% to ${currentScore}% after ${attempts.length} attempt(s). Target of ${targetScore}% not reached.`,
+    cleanedBody: bestHtml,
+    diffs: allSavedDiffs,
+    message: bestScore < initialScore
+      ? `Reduced from ${initialScore}% to ${bestScore}% in ${attempts.length} attempt(s).`
+      : `No improvement after ${attempts.length} attempt(s). Score remains ${initialScore}%.`,
   };
 }

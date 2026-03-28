@@ -7,6 +7,7 @@ export interface SentenceDiff {
 
 export interface QualityGateResult {
   approved: boolean;
+  failingIndices: number[];
   reason: string;
 }
 
@@ -14,7 +15,7 @@ export async function assessQuality(
   diffs: SentenceDiff[]
 ): Promise<QualityGateResult> {
   if (diffs.length === 0) {
-    return { approved: true, reason: "No sentences were rewritten." };
+    return { approved: true, failingIndices: [], reason: "No sentences were rewritten." };
   }
 
   const diffBlock = diffs
@@ -23,7 +24,7 @@ export async function assessQuality(
 
   const prompt = `You are an editorial quality reviewer for ClownBinge.com, a PRIMARY SOURCE accountability journalism platform. Review these sentence rewrites against strict integrity standards.
 
-FAIL immediately if ANY rewrite violates ANY of these rules:
+FAIL a rewrite if it violates ANY of these rules:
 
 1. STATISTICS AND NUMBERS — Every number, percentage, dollar amount, vote count, date, year, and census figure must be identical to the original. No rounding, no paraphrasing.
 
@@ -44,31 +45,38 @@ ${diffBlock}
 
 Respond with EXACTLY this format — nothing else:
 APPROVED: YES or NO
-REASON: one sentence (if NO, name the specific rule number and rewrite number that failed)`;
+FAILED_REWRITES: comma-separated rewrite numbers that failed (e.g. "3,17,42") or "none"
+REASON: one sentence identifying the first violation found (or "All rewrites passed." if approved)`;
 
   try {
     const response = await anthropic.messages.create({
       model: "claude-sonnet-4-5",
-      max_tokens: 150,
+      max_tokens: 200,
       temperature: 0,
       messages: [{ role: "user", content: prompt }],
     });
 
     const content = response.content[0];
     if (content.type !== "text") {
-      return { approved: false, reason: "Quality gate returned non-text response." };
+      return { approved: false, failingIndices: [], reason: "Quality gate returned non-text response." };
     }
 
     const text = content.text.trim();
     const approvedLine = text.match(/^APPROVED:\s*(YES|NO)/im);
+    const failedLine = text.match(/^FAILED_REWRITES:\s*(.+)/im);
     const reasonLine = text.match(/^REASON:\s*(.+)/im);
 
     const approved = approvedLine?.[1]?.toUpperCase() === "YES";
     const reason = reasonLine?.[1]?.trim() ?? text;
 
-    return { approved, reason };
+    const failedRaw = failedLine?.[1]?.trim() ?? "none";
+    const failingIndices: number[] = failedRaw.toLowerCase() === "none"
+      ? []
+      : failedRaw.split(",").map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n));
+
+    return { approved, failingIndices, reason };
   } catch (err) {
     console.error("[QualityGate] Assessment failed:", err);
-    return { approved: false, reason: "Quality gate check failed — keeping original to be safe." };
+    return { approved: false, failingIndices: [], reason: "Quality gate check failed — keeping original to be safe." };
   }
 }
