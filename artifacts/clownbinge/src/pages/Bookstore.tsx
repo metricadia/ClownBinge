@@ -35,6 +35,7 @@ const BOOKS: FactBook[] = [
     id: 1, vol: "Vol. 01",
     shortTitle: "The Manufactured Threat",
     fullTitle: "The Manufactured Threat: Debunking the Racist Lie of Native Black Criminality",
+    subtitle: "Debunking the Racist Lie of Native Black Criminality",
     tag: "NerdOut / Data",
     bg: "#0F0F0F", fg: "#FFFFFF", accent: "#FF0099", accentFg: "#FFFFFF",
     coverDesign: "stat",
@@ -51,6 +52,7 @@ const BOOKS: FactBook[] = [
     id: 2, vol: "Vol. 02",
     shortTitle: "Merchants of Chaos",
     fullTitle: "Merchants of Chaos: Facebook, X, YouTube & TikTok as the World's Largest Disinformation Infrastructure",
+    subtitle: "Facebook, X, YouTube & TikTok as the World's Largest Disinformation Infrastructure",
     tag: "Investigations",
     bg: "#1A3A8F", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#1A1A2E",
     coverDesign: "grid",
@@ -67,6 +69,7 @@ const BOOKS: FactBook[] = [
     id: 3, vol: "Vol. 03",
     shortTitle: "A Well-Regulated Exclusion",
     fullTitle: "A Well-Regulated Exclusion: The Second Amendment's Race Problem on the Constitutional Record",
+    subtitle: "The Second Amendment's Race Problem on the Constitutional Record",
     tag: "U.S. Constitution",
     bg: "#F8F9FC", fg: "#1A1A2E", accent: "#1A3A8F", accentFg: "#FFFFFF",
     coverDesign: "split",
@@ -83,6 +86,7 @@ const BOOKS: FactBook[] = [
     id: 4, vol: "Vol. 04",
     shortTitle: "The Great Grift",
     fullTitle: "The Great Grift: The Attack on DEI Was a Ruse — Obama vs. Trump Appointees, Side by Side",
+    subtitle: "The Attack on DEI Was a Ruse — Obama vs. Trump Appointees, Side by Side",
     tag: "Primary Source Analytics",
     bg: "#0D3320", fg: "#FFFFFF", accent: "#00D084", accentFg: "#0D3320",
     coverDesign: "bar",
@@ -99,6 +103,7 @@ const BOOKS: FactBook[] = [
     id: 5, vol: "Vol. 05",
     shortTitle: "All Propaganda, All the Time",
     fullTitle: "All Propaganda, All the Time: CNN, MSNBC, and Fox News — What the Documents Confirm",
+    subtitle: "CNN, MSNBC, and Fox News — What the Documents Confirm",
     tag: "Media / Investigations",
     bg: "#1A1A2E", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#1A1A2E",
     coverDesign: "slash",
@@ -115,6 +120,7 @@ const BOOKS: FactBook[] = [
     id: 6, vol: "Vol. 06",
     shortTitle: "Stolen Maps",
     fullTitle: "Stolen Maps: The Documented Legality of Gerrymandering and Who It Was Designed to Silence",
+    subtitle: "The Documented Legality of Gerrymandering and Who It Was Designed to Silence",
     tag: "Law & Justice",
     bg: "#2A0A4A", fg: "#FFFFFF", accent: "#C084FC", accentFg: "#1A0A2E",
     coverDesign: "arch",
@@ -131,6 +137,7 @@ const BOOKS: FactBook[] = [
     id: 7, vol: "Vol. 07",
     shortTitle: "The Uncredited Builders",
     fullTitle: "The Uncredited Builders: Indigenous Nations, Enslaved Africans, and Immigrants Who Made America",
+    subtitle: "Indigenous Nations, Enslaved Africans, and Immigrants Who Made America",
     tag: "U.S. History",
     bg: "#F5F0E8", fg: "#1A1A2E", accent: "#1A3A8F", accentFg: "#FFFFFF",
     coverDesign: "type",
@@ -218,12 +225,30 @@ const BOOKS: FactBook[] = [
   },
 ];
 
+function wrapText(text: string, maxChars: number): string[] {
+  const words = text.split(" ");
+  const lines: string[] = [];
+  let current = "";
+  for (const word of words) {
+    const candidate = current ? `${current} ${word}` : word;
+    if (candidate.length > maxChars && current) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = candidate;
+    }
+  }
+  if (current) lines.push(current);
+  return lines;
+}
+
 function CoverSVG({ book }: { book: FactBook }) {
   const { bg, fg, accent, accentFg, coverDesign, vol, shortTitle } = book;
   const words = shortTitle.split(" ");
   const mid = Math.ceil(words.length / 2);
   const line1 = words.slice(0, mid).join(" ");
   const line2 = words.slice(mid).join(" ");
+  const subtitleLines = book.subtitle ? wrapText(book.subtitle, 27) : [];
 
   if (book.coverImage) {
     return (
@@ -243,11 +268,11 @@ function CoverSVG({ book }: { book: FactBook }) {
         {/* Fade photo into black */}
         <rect width="240" height="360" fill={`url(#fade-${book.id})`} />
         {/* Title — centered, mid-bottom */}
-        <text x="120" y="248" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line1}</text>
-        <text x="120" y="272" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line2}</text>
-        {book.subtitle && (
-          <text x="120" y="294" fontSize="12" fill="#F5C518" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="0.5" textAnchor="middle">{book.subtitle}</text>
-        )}
+        <text x="120" y="240" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line1}</text>
+        <text x="120" y="263" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line2}</text>
+        {subtitleLines.map((l, i) => (
+          <text key={i} x="120" y={284 + i * 13} fontSize="9.5" fill="#F5C518" fontFamily="'JetBrains Mono',monospace" fontWeight="700" letterSpacing="0.3" textAnchor="middle">{l}</text>
+        ))}
         {/* Blue footer bar */}
         <rect x="0" y="326" width="240" height="34" fill={accent} />
         <text x="20" y="347" fontSize="8.5" fill={accentFg} fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700">
@@ -344,15 +369,18 @@ function CoverSVG({ book }: { book: FactBook }) {
         <>
           <text x="20" y="90" fontSize="20" fill={accentFg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line1}</text>
           <text x="20" y="114" fontSize="20" fill={accentFg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line2}</text>
+          {subtitleLines.map((l, i) => (
+            <text key={i} x="20" y={138 + i * 13} fontSize="9" fill={accentFg} fontFamily="'JetBrains Mono',monospace" fontWeight="700" opacity="0.85">{l}</text>
+          ))}
           <text x="20" y="210" fontSize="17" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="600" opacity="0.85">{book.tag}</text>
         </>
       ) : (
         <>
-          <text x="20" y="200" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line1}</text>
-          <text x="20" y="226" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line2}</text>
-          {book.subtitle && (
-            <text x="20" y="254" fontSize="13" fill="#B8860B" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="0.3">{book.subtitle}</text>
-          )}
+          <text x="20" y="195" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line1}</text>
+          <text x="20" y="219" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line2}</text>
+          {subtitleLines.map((l, i) => (
+            <text key={i} x="20" y={241 + i * 13} fontSize="9" fill={accent} fontFamily="'JetBrains Mono',monospace" fontWeight="700" opacity="0.9">{l}</text>
+          ))}
         </>
       )}
 
