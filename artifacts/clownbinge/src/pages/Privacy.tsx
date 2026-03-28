@@ -65,7 +65,7 @@ export default function Privacy() {
 
         {/* Opening */}
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl">
-          This document is not a standard privacy policy. It is a structural accounting of the deliberate architectural decisions made by Primary Source Analytics, LLC to protect the integrity of independent journalism, the privacy of its researchers, and the safety of the readers who depend on verified information in an era defined by the weaponization of legal process, data surveillance, and corporate platform censorship.
+          This document is not a standard privacy policy. It is a structural accounting of the deliberate architectural decisions made by <strong className="text-foreground">Primary Source Analytics, LLC</strong> to protect the integrity of independent journalism, the privacy of its researchers, and the safety of the readers who depend on verified information in an era defined by the weaponization of legal process, data surveillance, and corporate platform censorship.
         </p>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-10 max-w-2xl">
           Each decision documented here was made after forensic review of global litigation trends, data sovereignty law, and the documented history of how independent journalism platforms have been dismantled not by the falsity of their reporting but by the cost of defending it. We built around those vulnerabilities before they could be exploited.
@@ -81,20 +81,20 @@ export default function Privacy() {
           </p>
         </div>
 
-        <div className="prose prose-base prose-slate max-w-none">
-          <p>
+        <div className="space-y-5">
+          <p className="text-base text-muted-foreground leading-relaxed">
             Primary Source Analytics, LLC is incorporated under the jurisdiction of St. Kitts and Nevis. This is not a tax strategy. It is not an evasion. It is a documented legal architecture designed to protect verified accountability journalism from a specific and well-documented threat: nuisance litigation.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             Nuisance litigation -- sometimes called SLAPP litigation (Strategic Lawsuits Against Public Participation) -- is the documented practice of filing meritless legal actions against journalists, researchers, and independent publishers not with any expectation of prevailing in court but with the calculated intent of exhausting the target's financial resources before the case reaches adjudication. It is a suppression tool. It is effective. And in the United States, where first-amendment protections are nominally the strongest in the world, it operates with documented regularity against precisely the kind of primary source accountability journalism ClownBinge publishes.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             The Nevis LLC Act creates what we have termed a Legal Moat. Any foreign plaintiff -- any party operating outside the jurisdiction of St. Kitts and Nevis -- who wishes to bring a legal action against Primary Source Analytics, LLC must first post a $100,000 cash bond with the High Court of St. Kitts and Nevis before proceedings can be initiated. This structural requirement performs a function that no first-amendment protection in U.S. courts currently provides: it ensures that only claims with genuine legal and financial substance behind them can reach the point of requiring our response.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             We do not operate from this jurisdiction to evade accountability. Our journalism is accountable. Every claim we publish is traceable to a named primary source document that any reader can independently verify. We operate from this jurisdiction because the documented record of how independent journalism platforms have been legally silenced in the United States -- not through the failure of their journalism but through the success of weaponized litigation -- required a structural response. This is that response.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             We comply with orders issued by the High Court of St. Kitts and Nevis. We do not comply with foreign subpoenas, extrajudicial data requests, or informal legal pressure from jurisdictions whose courts we are not subject to. This is not non-compliance. This is jurisdiction.
           </p>
         </div>
@@ -122,17 +122,17 @@ export default function Privacy() {
           </div>
         </div>
 
-        <div className="prose prose-base prose-slate max-w-none">
-          <p>
+        <div className="space-y-5">
+          <p className="text-base text-muted-foreground leading-relaxed">
             The ClownBinge newsroom and the Primary Source Analytics research archive are hosted exclusively on servers physically located in Iceland. This is the second layer of what we refer to as the Sovereign Moat: a dual-jurisdiction structure in which the legal entity operates from St. Kitts and Nevis and the physical data infrastructure operates from Iceland.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             Iceland's position as a global leader in press freedom and data privacy is not rhetorical. It is legislated. The Icelandic parliament has formally identified the protection of investigative journalism infrastructure as a national priority. Iceland consistently ranks in the top three countries globally for press freedom, as documented by Reporters Without Borders. Its domestic privacy law aligns with the European Economic Area's General Data Protection Regulation while extending additional sovereign protections that exceed those requirements.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             Specifically: foreign governments and private parties seeking access to data stored on Icelandic servers cannot obtain that access through informal legal channels, subpoenas issued by non-Icelandic courts, or the kind of extrajudicial pressure that major domestic hosting providers in the United States routinely comply with. An Icelandic court order, issued through Icelandic legal process, is required. The structure is not theoretical. It has been tested by other investigative journalism platforms operating under similar threat models and has held.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             Our 40,000-plus global source monitoring infrastructure, our internal research methodologies, our unpublished editorial work product, and the data of every reader who engages with this platform are stored within this architecture. They are not on AWS. They are not on Google Cloud. They are not subject to the National Security Letters or informal FBI/DOJ data requests that U.S.-hosted providers have historically complied with without notifying their users. This is intentional. This is the structure.
           </p>
         </div>
@@ -145,17 +145,17 @@ export default function Privacy() {
           <footer className="text-sm font-bold text-header mt-2 not-italic">-- Primary Source Analytics, LLC</footer>
         </blockquote>
 
-        <div className="prose prose-base prose-slate max-w-none">
-          <p>
+        <div className="space-y-5">
+          <p className="text-base text-muted-foreground leading-relaxed">
             The United States was founded on a theory of press freedom that has no formal parallel in the legal architecture of any other nation on earth. The First Amendment does not merely permit free speech. It prohibits Congress from abridging it. This is not incidental. It is the structural premise of American civic life, rooted in the explicit recognition by the founding generation that the ability of journalists and citizens to speak truthfully about power was the precondition for everything else the republic was supposed to be.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             The documented reality of American journalism in 2025 is that this architecture has been substantially hollowed out -- not by the repeal of the First Amendment but by the economic architecture of media consolidation, the legal architecture of SLAPP litigation, the technical architecture of platform-controlled distribution, and the social architecture of what we have termed the Respectability Framework: the systematic enforcement of performed legitimacy as a condition of institutional access.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             The Respectability Framework operates through informal social and professional sanction rather than formal legal prohibition. It does not ban journalism that makes powerful institutions uncomfortable. It does not need to. It accomplishes the same result by ensuring that journalism which transgresses the boundaries of performed acceptability cannot access the payment processors, hosting providers, domain registrars, and social distribution platforms that contemporary media infrastructure requires to function. A publication that cannot accept payments, cannot maintain a domain, cannot host its content, and cannot distribute it is not protected by the First Amendment. It simply does not exist.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             Primary Source Analytics, LLC has built an architecture that cannot be disabled through any of these vectors. We cannot be cancelled by a credit card processor because our corporate domicile is not subject to the informal pressure campaigns that have historically caused domestic processors to terminate independent journalism accounts. We cannot be shadow-banned by a domestic host because we do not have a domestic host. We cannot be doxed through a data request to our hosting provider because our hosting provider operates under Icelandic sovereignty and does not respond to foreign extrajudicial requests. We have not built this architecture because we anticipate publishing anything that cannot withstand scrutiny. We have built it because the documented history of independent journalism in the contemporary media environment demonstrates that the ability to withstand scrutiny is not the variable that determines survival.
           </p>
         </div>
@@ -163,9 +163,7 @@ export default function Privacy() {
         {/* Section 4 */}
         <SectionLabel>4. Zero-Inference Data Policy</SectionLabel>
 
-        <div className="prose prose-base prose-slate max-w-none">
-          <p>Consistent with our Truth-Based rules of engagement, we operate under a Zero-Inference data policy. This policy has four operative principles:</p>
-        </div>
+        <p className="text-base text-muted-foreground leading-relaxed">Consistent with our Truth-Based rules of engagement, we operate under a Zero-Inference data policy. This policy has four operative principles:</p>
 
         <div className="my-8 flex flex-col gap-4">
           {[
@@ -205,17 +203,17 @@ export default function Privacy() {
         {/* Section 5 - Reader Rights */}
         <SectionLabel>5. Your Rights Under This Policy</SectionLabel>
 
-        <div className="prose prose-base prose-slate max-w-none mb-10">
-          <p>
-            You may request deletion of any personally identifiable data you have provided to this platform at any time by contacting us at <strong>privacy@clownbinge.com</strong>. Requests are processed within 48 hours. You will receive written confirmation of deletion.
+        <div className="space-y-5 mb-10">
+          <p className="text-base text-muted-foreground leading-relaxed">
+            You may request deletion of any personally identifiable data you have provided to this platform at any time by contacting us at <strong className="text-foreground">privacy@clownbinge.com</strong>. Requests are processed within 48 hours. You will receive written confirmation of deletion.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             You may unsubscribe from our newsletter at any time using the unsubscribe link in any newsletter email. Your address will be permanently removed from our mailing list within 24 hours of the request.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             You may request a copy of any personally identifiable data we hold about you. In the overwhelming majority of cases, the answer will be: your email address, submitted voluntarily. We do not hold behavioral profiles, demographic inferences, or third-party appended data. We cannot provide data we do not have.
           </p>
-          <p>
+          <p className="text-base text-muted-foreground leading-relaxed">
             You may contact us with any privacy-related concern and receive a response from a human within 48 hours. We do not route privacy inquiries through automated systems. The person who reads your request is also the person who will respond to it.
           </p>
         </div>
