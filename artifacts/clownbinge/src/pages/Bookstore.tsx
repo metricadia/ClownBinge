@@ -380,18 +380,18 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-8"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 md:p-10 lg:p-12"
       style={{ background: "rgba(0,0,0,0.82)", backdropFilter: "blur(6px)" }}
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl flex flex-col sm:flex-row"
+        className="relative w-full max-w-2xl md:max-w-3xl lg:max-w-4xl rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl flex flex-col sm:flex-row"
         style={{ background: "#ffffff", maxHeight: "92vh" }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Cover — banner on mobile, full-height left panel on desktop */}
+        {/* Cover — banner on mobile, full-height left panel on sm+; grows with modal on md/lg */}
         <div
-          className="w-full h-36 shrink-0 sm:w-[42%] sm:h-auto sm:self-stretch"
+          className="w-full h-40 shrink-0 sm:w-[42%] md:w-[44%] lg:w-[46%] sm:h-auto sm:self-stretch"
           style={{ background: book.bg }}
         >
           <div style={{ width: "100%", height: "100%" }}>
@@ -491,7 +491,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                 </p>
                 <ul className="space-y-2.5 mb-6">
                   {book.bullets.map((bullet, i) => (
-                    <li key={i} className="flex gap-3 text-sm sm:text-xs text-gray-900 leading-relaxed">
+                    <li key={i} className="flex gap-3 text-sm text-gray-900 leading-relaxed">
                       <span
                         className="mt-0.5 w-4 h-4 rounded-full flex items-center justify-center shrink-0 font-bold text-[10px]"
                         style={{ background: book.accent + "28", color: book.accent }}
