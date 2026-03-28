@@ -244,8 +244,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
       <main className="flex-1 w-full relative">
         {location !== '/' && (
           <div className="cb-container pt-4 pb-0">
-            <p className="text-xs text-muted-foreground/60 font-medium tracking-wide">
-              <span className="font-bold text-header/70">ClownBinge</span> is A Public Accountability News Platform.
+            <p className="text-sm text-foreground/70 font-medium tracking-wide">
+              <span className="font-bold text-header">ClownBinge</span> is A Public Accountability News Platform.
             </p>
             <div className="h-px w-full bg-[#F5C518]/30 mt-2" />
           </div>
