@@ -389,16 +389,14 @@ export default function Bookstore() {
         <BookModal book={selectedBook} onClose={() => setSelectedBook(null)} />
       )}
 
-      {/* Page label */}
-      <div className="max-w-5xl mx-auto px-6 pt-10 pb-0">
-        <h2 className="font-mono text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">
-          Our Books / FactBook™ Series
-        </h2>
-      </div>
-
-      {/* ── Two-column hero — mirrors Donate Now structure exactly ── */}
+      {/* ── Two-column hero ── */}
       <div className="w-full" style={{ background: "linear-gradient(135deg, #071a0e 0%, #0e3020 55%, #0a2818 100%)" }}>
-        <div className="max-w-6xl mx-auto px-6 py-14 grid lg:grid-cols-2 gap-12 items-start">
+        <div className="max-w-6xl mx-auto px-6 pt-5 pb-14 grid lg:grid-cols-2 gap-12 items-start">
+          <div className="lg:col-span-2 mb-2">
+            <h2 className="font-mono text-xs font-bold tracking-[0.2em] uppercase" style={{ color: "rgba(255,255,255,0.35)" }}>
+              Our Books / FactBook™ Series
+            </h2>
+          </div>
 
           {/* LEFT — brand statement */}
           <div>
