@@ -2,57 +2,153 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://clownbinge.com/</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-03-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/about</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-03-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/ethics</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-03-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://clownbinge.com/store</loc>
-    <lastmod>2026-03-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://clownbinge.com/clowncheck</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-03-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/reports</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-03-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/store</loc>
+    <lastmod>2026-03-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/contact</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-03-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/privacy</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-03-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/terms</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-03-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/how-many-times-denied-truth-fit-in-ancestors-conformity-groupthink</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/white-dei-wdei-discrimination-exclusion-ignorance-republican-merit</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/negativity-is-killing-you-hatred-stress-obesity-health-case</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/do-unto-others-no-more-economic-wars-children-will-hate-us</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/america-resource-wars-iraq-iran-libya-petrodollar-race</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/racism-never-ok-family-accountability-difficult-conversations-disarming-hate</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/who-built-america-stolen-land-stolen-labor-wealth-gap-economic-record</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/jury-of-peers-equal-protection-constitutional-lie-documented-record</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/spirituality-human-psyche-health-outcomes-harvard-johns-hopkins-investigation</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/america-not-taught-same-chapter-cross-racial-solidarity-documented-record</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/white-women-primary-beneficiaries-affirmative-action-federal-record</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/respectability-is-unremarkable</loc>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/hijacking-voice-gerrymandering-minority-political-autonomy-supreme-court</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/herodotus-witness-kemet-black-african-civilization-seat-human-knowledge</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/jericho-9000-bce-archaeological-record-palestinian-civilization</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://clownbinge.com/case/congress-appropriations-ukraine-palestine-yemen-syria-sudan</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/black-seed-oil-nigella-sativa-science-global-south-1400-years</loc>
@@ -64,61 +160,61 @@
     <loc>https://clownbinge.com/case/death-penalty-barbaric-state-sanctioned-revenge-evidence</loc>
     <lastmod>2026-03-25</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/dei-ruse-obama-trump-appointee-qualifications</loc>
     <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/beyond-social-security-what-to-build-before-the-clock-runs-out</loc>
     <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/fake-news-foucault-durkheim-trump-prophetic-roots</loc>
     <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/dei-label-clinical-cost-documented-inventory</loc>
     <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/arithmetic-of-presence-census-2020-2025-white-america</loc>
     <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/give-me-your-tired-us-foreign-policy-immigration-global-south</loc>
     <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/first-nations-knowledge-inventory-medicine-ecology-engineering</loc>
     <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/first-nations-survival-census-record-us-history</loc>
     <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/second-amendment-racial-disparity-philando-castile</loc>
     <lastmod>2026-03-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/cnn-vanishing-act-wbd-debt-eeoc-audit</loc>
@@ -130,49 +226,49 @@
     <loc>https://clownbinge.com/case/cb-000041-united-states-built-by-immigrants-record-confirms-it</loc>
     <lastmod>2026-03-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/we-hold-these-truths-2026-constitutional-record</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/gentleman-lady-chivalry-history-primary-source-american-women</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/national-debt-military-spending-interest-payments-generational-cost</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/ketanji-brown-jackson-federal-record-confirmation-hearing</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>1.0</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/columbus-george-washington-illegal-american-chronology-displacement</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/a-roadmap-home-requiem-american-statesman</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/woke-is-not-a-slur-chronology-black-liberation-survival</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/the-strongest-thing-research-love-healing-long-life</loc>
@@ -184,85 +280,85 @@
     <loc>https://clownbinge.com/case/ted-cruz-christ-is-king-antisemitic-aipac</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/they-did-not-have-to-primary-source-record-human-selflessness</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/diversity-denial-primary-source-record-what-was-lost</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/fbi-crime-data-race-what-it-actually-says</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/brian-carn-false-prophecy-irs-guilty-plea-sexual-misconduct</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/cable-news-binary-media-bias-cnn-msnbc-fox-documented-record-2026</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/james-whitmore-voted-for-bill-he-publicly-denied</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/judaism-zionism-distinction-documented-record-2026</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/afroman-sued-harassers-into-museum-exhibit</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/rick-donahue-texas-ag-suing-companies-own-law-firm-did</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/tommy-tuberville-broadband-infrastructure-vote-biden-mockery</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/bob-corker-tax-cuts-jobs-act-deficit-vote-flip</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/dale-hartwick-immigration-bill-political-theater-cspan</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/patricia-holden-diversity-book-ban-daughter-dei-university</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/rodney-howard-browne-arrested-covid-church-services-tampa-2020</loc>
@@ -298,7 +394,7 @@
     <loc>https://clownbinge.com/case/no-black-americans-violent-crime-racist-narrative-2024</loc>
     <lastmod>2026-03-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/perry-noble-newspring-church-fired-alcohol-abuse-2016</loc>
@@ -412,7 +508,7 @@
     <loc>https://clownbinge.com/case/meta-anti-palestine-investigation-documents-bsr-hrw-drop-site</loc>
     <lastmod>2026-03-21</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://clownbinge.com/case/social-media-disinformation-platforms-facebook-x-youtube-tiktok-receipts</loc>
