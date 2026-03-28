@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import {
-  Document, Packer, Paragraph, TextRun, ImageRun,
+  Document, Packer, Paragraph, TextRun,
   HeadingLevel, AlignmentType, PageBreak,
   convertInchesToTwip, BorderStyle,
 } from 'docx';
@@ -47,10 +47,6 @@ function parseChapters() {
 const chapters = parseChapters();
 console.log(`Parsed ${chapters.length} chapters (incl. preface)`);
 
-// ── 2. Load cover image ──────────────────────────────────────────────────────
-const coverImageBuffer = readFileSync(
-  join(__dirname, 'public/covers/vol08-cover-embed.jpg')
-);
 
 // ── 3. Colour palette ────────────────────────────────────────────────────────
 const GOLD       = 'C9A227';
@@ -71,15 +67,33 @@ function makePageBreak() {
 
 function makeCoverPage() {
   return [
+    new Paragraph({ text: '', spacing: { before: convertInchesToTwip(3) } }),
+    new Paragraph({
+      alignment: AlignmentType.CENTER,
+      spacing: { before: 0, after: 200 },
+      children: [
+        new TextRun({ text: 'VOLUME 08', bold: true, size: 24, color: GOLD, font: 'Georgia', allCaps: true }),
+      ],
+    }),
+    new Paragraph({
+      alignment: AlignmentType.CENTER,
+      spacing: { before: 0, after: 160 },
+      children: [
+        new TextRun({ text: 'Ancient Faith, Modern Politics', bold: true, size: 52, color: NEAR_BLACK, font: 'Georgia' }),
+      ],
+    }),
+    new Paragraph({
+      alignment: AlignmentType.CENTER,
+      spacing: { before: 0, after: 400 },
+      children: [
+        new TextRun({ text: 'Judaism Is Not Zionism', size: 32, color: CHOCOLATE, font: 'Georgia', italics: true }),
+      ],
+    }),
     new Paragraph({
       alignment: AlignmentType.CENTER,
       spacing: { before: 0, after: 0 },
       children: [
-        new ImageRun({
-          data: coverImageBuffer,
-          transformation: { width: 432, height: 617 },
-          type: 'jpg',
-        }),
+        new TextRun({ text: 'ClownBinge FactBook Series', size: 22, color: MID_GREY, font: 'Georgia' }),
       ],
     }),
     makePageBreak(),
