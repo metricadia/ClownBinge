@@ -176,8 +176,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         </div>
       )}
 
-      {/* Category sub-bar -- sticky below nav, hidden on /about */}
-      <div className={`sticky top-[80px] z-40 bg-white border-b shadow-sm relative ${location === '/about' ? 'hidden' : ''}`} ref={catDropdownRef}>
+      {/* Category sub-bar -- sticky below nav, home feed only */}
+      <div className={`sticky top-[80px] z-40 bg-white border-b shadow-sm relative ${location !== '/' ? 'hidden' : ''}`} ref={catDropdownRef}>
         <div className="cb-container">
 
           {/* Desktop: two-row wrap (md+) */}
