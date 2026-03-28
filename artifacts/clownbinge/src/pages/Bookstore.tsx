@@ -22,6 +22,7 @@ interface FactBook {
   subtitle?: string;
   coverImage?: string;
   pages?: number;
+  price?: string;
   summary: string;
   extendedSummary?: string[];
   quote?: string;
@@ -152,6 +153,7 @@ const BOOKS: FactBook[] = [
     subtitle: "Judaism ≠ Zionism",
     coverImage: "/covers/vol08-cover.png",
     pages: 140,
+    price: "$39.95",
     chapters: [
       { title: "Two Traditions, One Conflation", description: "The definitional problem. What Judaism is, what Zionism is, and why the distinction matters forensically." },
       { title: "The Basel Congress, 1897", description: "Herzl's founding documents, congress proceedings, and the secular-nationalist framing in his own words." },
@@ -424,7 +426,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
             )}
             {/* Price + pages + CTA */}
             <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-200">
-              <span className="font-extrabold text-2xl text-gray-900">$24.95</span>
+              <span className="font-extrabold text-2xl text-gray-900">{book.price ?? "$24.95"}</span>
               {book.pages && (
                 <span className="font-mono text-sm font-extrabold px-3 py-1 rounded-full" style={{ background: book.accent, color: book.accentFg }}>
                   {book.pages} pages
@@ -514,7 +516,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                     className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85 shrink-0"
                     style={{ background: book.accent, color: book.accentFg }}
                   >
-                    $24.95 — Pre-Order
+                    {book.price ?? "$24.95"} — Pre-Order
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
