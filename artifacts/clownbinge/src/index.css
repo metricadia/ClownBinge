@@ -132,6 +132,23 @@
     margin-bottom: 1.75rem;
   }
 
+  /* ALL links in article body — gold dotted, never navigate away */
+  .cb-article-body a[href],
+  .cb-article-body.prose a[href] {
+    color: inherit !important;
+    font-weight: 700 !important;
+    text-decoration: underline dotted #F5C518 !important;
+    text-underline-offset: 5px !important;
+    text-decoration-thickness: 2px !important;
+    cursor: pointer;
+    transition: text-decoration-color 0.15s;
+  }
+  .cb-article-body a[href]:hover,
+  .cb-article-body.prose a[href]:hover {
+    text-decoration-color: #B8860B !important;
+    text-decoration-style: dotted !important;
+  }
+
   /* APA 7 References section (NerdOut articles) */
   .cb-references {
     border-top: 2px solid oklch(var(--border));
