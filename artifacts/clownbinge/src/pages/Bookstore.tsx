@@ -227,7 +227,7 @@ function CoverSVG({ book }: { book: FactBook }) {
 
   if (book.coverImage) {
     return (
-      <svg viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
+      <svg viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id={`fade-${book.id}`} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#000000" stopOpacity="0.1" />
@@ -242,10 +242,6 @@ function CoverSVG({ book }: { book: FactBook }) {
         <image href={book.coverImage} x="0" y="0" width="240" height="360" preserveAspectRatio="xMidYMid slice" />
         {/* Fade photo into black */}
         <rect width="240" height="360" fill={`url(#fade-${book.id})`} />
-        {/* VOL label — top */}
-        <text x="20" y="28" fontSize="8" fill="#FFFFFF" fontFamily="'JetBrains Mono',monospace" opacity="0.82" letterSpacing="1">
-          {vol.toUpperCase()} · FACTBOOK SERIES
-        </text>
         {/* Title — centered, mid-bottom */}
         <text x="120" y="248" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line1}</text>
         <text x="120" y="272" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line2}</text>
