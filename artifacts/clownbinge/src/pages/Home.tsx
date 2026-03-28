@@ -305,20 +305,20 @@ export default function Home() {
 
                   {/* Body */}
                   <div className="px-4 py-4 bg-white">
-                    <p className="text-[9px] font-black uppercase tracking-[0.3em] mb-2" style={{ color: "#B8860B" }}>
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] mb-2" style={{ color: "#B8860B" }}>
                       Founding Document
                     </p>
                     <Link href={`/case/${foundingDoc.slug}`}>
-                      <h3 className="font-sans font-extrabold text-sm leading-snug mb-3 hover:opacity-70 transition-opacity cursor-pointer" style={{ color: "#1A3A8F" }}>
+                      <h3 className="font-sans font-extrabold text-base leading-snug mb-3 hover:opacity-70 transition-opacity cursor-pointer" style={{ color: "#1A3A8F" }}>
                         {foundingDoc.title}
                       </h3>
                     </Link>
-                    <p className="text-[11px] leading-relaxed mb-4 line-clamp-3 text-slate-500">
+                    <p className="text-sm leading-relaxed mb-4 line-clamp-3 text-slate-500">
                       Why this platform was built. Who built the machine we are standing against. And exactly how we intend to beat it.
                     </p>
                     <Link
                       href={`/case/${foundingDoc.slug}`}
-                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-opacity hover:opacity-85"
+                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-xs font-black uppercase tracking-widest transition-opacity hover:opacity-85"
                       style={{ background: "#B8860B", color: "#fff" }}
                     >
                       Read the Origin Story
