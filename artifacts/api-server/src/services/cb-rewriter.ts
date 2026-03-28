@@ -8,6 +8,26 @@ const QUALIFIER_WORDS = [
   "largely", "primarily", "virtually", "essentially",
 ];
 
+function extractProtectedTerms(text: string): string[] {
+  const terms = new Set<string>();
+
+  const multiWord = text.match(/\b[A-Z][a-zA-Z\-]+(?:\s+[A-Z][a-zA-Z\-]+)+\b/g) ?? [];
+  for (const t of multiWord) {
+    const stripped = t.replace(/^(?:The|A|An)\s+/, "");
+    if (stripped.includes(" ")) {
+      terms.add(stripped);
+    } else if (stripped !== t) {
+    } else {
+      terms.add(t);
+    }
+  }
+
+  const acronyms = text.match(/\b[A-Z]{3,}\b/g) ?? [];
+  for (const a of acronyms) terms.add(a);
+
+  return [...terms];
+}
+
 function jsGate(original: string, rewritten: string): { pass: boolean; reason?: string } {
   if (!rewritten || rewritten.length < 5) return { pass: false, reason: "empty output" };
 
@@ -30,6 +50,13 @@ function jsGate(original: string, rewritten: string): { pass: boolean; reason?: 
     if (origHas && !rewHas) return { pass: false, reason: `qualifier removed: "${q}"` };
   }
 
+  const protectedTerms = extractProtectedTerms(original);
+  for (const term of protectedTerms) {
+    if (!rewritten.includes(term)) {
+      return { pass: false, reason: `protected term missing: "${term}"` };
+    }
+  }
+
   return { pass: true };
 }
 
@@ -43,6 +70,11 @@ function buildParaphrasePrompt(sentence: string, docType: DocType): string {
     undergrad: "undergraduate academic writing — clear, informative, varied cadence. Avoid stiff formal transitions.",
   }[docType];
 
+  const protectedTerms = extractProtectedTerms(sentence);
+  const protectedBlock = protectedTerms.length > 0
+    ? `\nPROTECTED TERMS — copy these character-for-character into your output, no substitutions:\n${protectedTerms.map(t => `• "${t}"`).join("\n")}\n`
+    : "";
+
   return `You are an expert at paraphrasing ${docContext}
 
 Your task: Rewrite this single sentence so ZeroGPT no longer flags it as AI-generated, while keeping every fact, number, and technical term identical.
@@ -54,10 +86,10 @@ WHAT ACTUALLY CAUSES AI FLAGS — fix these:
 - Generic academic transitions: "Furthermore," "Additionally," "It is worth noting" — cut them
 - Subject-verb-object uniformity — try leading with a clause, a qualifier, or the object
 - Overly formal register that never relaxes
-
+${protectedBlock}
 HARD RULES — these will be checked and will cause rejection:
 1. Every number must appear identically: "15,000" stays "15,000", "66%" stays "66%"
-2. Every proper noun, person name, org name, journal name stays character-for-character identical
+2. Every proper noun, person name, org name, journal name, study name, historical document name stays character-for-character identical — do not paraphrase, abbreviate, or substitute
 3. All technical/scientific terms stay identical (thymoquinone, NF-kB, MRSA, etc.)
 4. If input has no terminal punctuation (fragment) — output must also be a fragment
 5. If input uses "not" / "never" / "no" — output must also use a negative construction
