@@ -245,8 +245,8 @@ export default function Bookstore() {
             </div>
 
             <h1 className="font-sans font-extrabold text-4xl sm:text-5xl text-white leading-tight mb-6">
-              Knowledge Is Power.<br />
-              <span style={{ color: "#F5C518" }}>The Receipts Prove It.</span>
+              The Most Relevant<br />
+              <span style={{ color: "#F5C518" }}>FactBooks of this Decade.</span>
             </h1>
 
             <p className="text-white/75 text-lg leading-relaxed mb-4">
@@ -279,29 +279,29 @@ export default function Bookstore() {
           {/* RIGHT — action cards */}
           <div className="flex flex-col gap-4">
 
-            {/* PRIMARY CARD — Bundle (yellow border, blue bg) */}
+            {/* CARD 1 — Individual volume (blue gradient, yellow border — shown first) */}
             <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid #F5C518" }}>
-              <div className="p-6" style={{ background: "linear-gradient(135deg, #0a2a14 0%, #163d22 100%)" }}>
+              <div className="p-6" style={{ background: "linear-gradient(135deg, #0a1a4a 0%, #1A3A8F 100%)" }}>
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <div className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: "#F5C518" }}>
-                      Complete Library
+                      Individual Volume
                     </div>
-                    <div className="font-extrabold text-3xl text-white">All 10 FactBooks™</div>
+                    <div className="font-extrabold text-3xl text-white">Any FactBook™</div>
                   </div>
                   <div
                     className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: "#F5C518" }}
                   >
-                    <Package className="w-6 h-6" style={{ color: "#0a2a14" }} />
+                    <BookOpen className="w-6 h-6" style={{ color: "#0a1a4a" }} />
                   </div>
                 </div>
                 <p className="text-white/65 text-sm leading-relaxed mb-4">
-                  Every volume. Every primary source. Every receipt. The complete Primary Source
-                  Analytics library — yours permanently as a digital PDF archive.
+                  Pick the topic that matters most to you. Each volume stands completely alone —
+                  fully cited, primary sourced, and delivered instantly as a digital PDF.
                 </p>
                 <div className="flex flex-wrap gap-x-4 gap-y-1 mb-2">
-                  {["10 full research volumes", "100% primary sourced", "Instant PDF delivery", "APA 7 citations throughout"].map((item) => (
+                  {["100% primary sourced", "Instant PDF delivery", "APA 7 citations", "Evergreen research"].map((item) => (
                     <div key={item} className="flex items-center gap-1.5 text-xs" style={{ color: "#F5C518" }}>
                       <CheckCircle className="w-3 h-3 shrink-0" />
                       {item}
@@ -309,36 +309,12 @@ export default function Bookstore() {
                   ))}
                 </div>
                 <div className="flex items-baseline gap-3 mb-5 mt-4">
-                  <span className="text-white/40 text-sm line-through">$249.50</span>
-                  <span className="font-extrabold text-4xl text-white">$149</span>
+                  <span className="font-extrabold text-4xl text-white">$24.95</span>
+                  <span className="text-white/50 text-sm">per volume</span>
                 </div>
                 <button
                   className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-extrabold text-sm transition-opacity hover:opacity-90"
-                  style={{ background: "#F5C518", color: "#0a2a14" }}
-                >
-                  Pre-Order the Complete Bundle
-                  <Download className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* SECONDARY CARD — Individual volume (white) */}
-            <div className="rounded-2xl overflow-hidden bg-white border border-gray-200 p-6 flex flex-col sm:flex-row gap-5 items-start">
-              <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#0e3020" }}>
-                <BookOpen className="w-5 h-5 text-white" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between gap-3 mb-1 flex-wrap">
-                  <div className="text-xs font-bold tracking-widest uppercase text-muted-foreground">Individual Volume</div>
-                  <div className="font-extrabold text-2xl" style={{ color: "#0e3020" }}>$24.95</div>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                  Pick the topic that matters most to you. Each volume stands alone as a
-                  complete, fully cited primary source research document.
-                </p>
-                <button
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-extrabold text-sm text-white transition-opacity hover:opacity-90"
-                  style={{ background: "#0e3020" }}
+                  style={{ background: "#F5C518", color: "#0a1a4a" }}
                   onClick={() => document.getElementById("all-volumes")?.scrollIntoView({ behavior: "smooth" })}
                 >
                   Browse All 10 Volumes
@@ -347,15 +323,37 @@ export default function Bookstore() {
               </div>
             </div>
 
-            {/* TERTIARY CARD — Series note (white) */}
+            {/* CARD 2 — Complete bundle (green gradient) */}
+            <div className="rounded-2xl overflow-hidden bg-white border border-gray-200 p-6 flex flex-col sm:flex-row gap-5 items-start">
+              <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#0e3020" }}>
+                <Package className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-3 mb-1 flex-wrap">
+                  <div className="text-xs font-bold tracking-widest uppercase text-muted-foreground">Complete Library</div>
+                  <div className="font-extrabold text-2xl" style={{ color: "#0e3020" }}>$149</div>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-1">
+                  All 10 FactBooks™ in one archive. Save $100 off individual pricing.
+                </p>
+                <p className="text-xs text-muted-foreground mb-4">Instant PDF · 100% primary sourced · APA 7 citations throughout</p>
+                <button
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-extrabold text-sm text-white transition-opacity hover:opacity-90"
+                  style={{ background: "#0e3020" }}
+                >
+                  Pre-Order the Complete Bundle
+                  <Download className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* CARD 3 — About the series (white) */}
             <div className="rounded-2xl overflow-hidden bg-white border border-gray-200 p-6 flex flex-col sm:flex-row gap-5 items-start">
               <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#0e3020" }}>
                 <Layers className="w-5 h-5 text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between gap-3 mb-1 flex-wrap">
-                  <div className="text-xs font-bold tracking-widest uppercase text-muted-foreground">About the Series</div>
-                </div>
+                <div className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-2">About the Series</div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   The FactBook™ series is produced by the same PhD researchers behind ClownBinge's
                   documented journalism — expanded into full research volumes with extended sourcing,
