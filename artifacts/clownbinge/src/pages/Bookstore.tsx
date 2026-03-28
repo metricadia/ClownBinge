@@ -361,31 +361,31 @@ function CoverSVG({ book }: { book: FactBook }) {
         </>
       )}
 
-      <text x="20" y="32" fontSize="8" fill={fg} fontFamily="'JetBrains Mono',monospace" opacity="0.82" letterSpacing="1">
+      <text x="120" y="32" fontSize="8" fill={fg} fontFamily="'JetBrains Mono',monospace" opacity="0.82" letterSpacing="1" textAnchor="middle">
         {vol.toUpperCase()} · FACTBOOK SERIES
       </text>
 
       {coverDesign === "split" ? (
         <>
-          <text x="20" y="90" fontSize="20" fill={accentFg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line1}</text>
-          <text x="20" y="114" fontSize="20" fill={accentFg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line2}</text>
+          <text x="120" y="90" fontSize="20" fill={accentFg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line1}</text>
+          <text x="120" y="114" fontSize="20" fill={accentFg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line2}</text>
           {subtitleLines.map((l, i) => (
-            <text key={i} x="20" y={138 + i * 13} fontSize="9" fill={accentFg} fontFamily="'JetBrains Mono',monospace" fontWeight="700" opacity="0.85">{l}</text>
+            <text key={i} x="120" y={138 + i * 14} fontSize="11" fill={accentFg} fontFamily="'JetBrains Mono',monospace" fontWeight="700" opacity="0.9" textAnchor="middle">{l}</text>
           ))}
-          <text x="20" y="210" fontSize="17" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="600" opacity="0.85">{book.tag}</text>
+          <text x="120" y="218" fontSize="17" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="600" opacity="0.85" textAnchor="middle">{book.tag}</text>
         </>
       ) : (
         <>
-          <text x="20" y="195" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line1}</text>
-          <text x="20" y="219" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2">{line2}</text>
+          <text x="120" y="192" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line1}</text>
+          <text x="120" y="216" fontSize="21" fill={fg} fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line2}</text>
           {subtitleLines.map((l, i) => (
-            <text key={i} x="20" y={241 + i * 13} fontSize="9" fill={accent} fontFamily="'JetBrains Mono',monospace" fontWeight="700" opacity="0.9">{l}</text>
+            <text key={i} x="120" y={240 + i * 14} fontSize="11" fill={fg} fontFamily="'JetBrains Mono',monospace" fontWeight="700" opacity="0.75" textAnchor="middle">{l}</text>
           ))}
         </>
       )}
 
       <rect x="0" y="326" width="240" height="34" fill={accent} />
-      <text x="20" y="347" fontSize="8.5" fill={accentFg} fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700">
+      <text x="120" y="347" fontSize="8.5" fill={accentFg} fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700" textAnchor="middle">
         PRIMARY SOURCE ANALYTICS
       </text>
     </svg>
