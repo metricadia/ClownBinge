@@ -9,9 +9,15 @@
 
 ---
 
-## Book Purpose
+## Author's Point of View
 
-To establish, using only primary source documents, that Judaism (a 3,500-year-old religious and cultural tradition) and Zionism (a 19th-century secular political movement) are distinct, separate, and non-equivalent — and that the conflation of the two is itself a documented political strategy, not a theological truth.
+This book is written from love of Judaism — its texts, its covenant, its 3,500 years of survival, its liturgical depth, its insistence on justice. That love is the reason this book had to be written.
+
+A secular political movement founded in the 1890s has spent over a century conducting its operations in Judaism's sacred name — and the conflation has done two kinds of damage: it has provided political cover for acts that Judaism's own moral tradition would reject, and it has made honest critique of those acts nearly impossible by weaponizing the charge of antisemitism against the critics.
+
+This FactBook's argument is not against Jewish people. It is for them. It is a primary source defense of a tradition that deserves to be seen clearly, on its own terms, separated from the political project that has claimed its identity.
+
+The horror is not that people criticize Israel. The horror is that a living, ancient, sacred tradition has been made into a shield for a political program — and that the tradition itself has been obscured in the process. These documents name that obscuring for what it is, and let the record speak.
 
 ---
 
