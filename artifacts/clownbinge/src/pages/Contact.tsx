@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
-import { AdminNav } from "@/components/AdminNav";
+import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { Link } from "wouter";
 import {
   Send, MapPin, Mail, MessageSquare, FileText, CheckCircle,
@@ -73,17 +73,7 @@ export default function Contact() {
     <Layout>
       <div className="max-w-5xl mx-auto px-4 py-10">
 
-        {/* Page header */}
-        <div className="mb-8">
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">ClownBinge Newsroom</p>
-          <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-2">
-            Contact, Support &amp; Advertising Center
-          </h1>
-          <p className="text-muted-foreground text-sm">Primary Source Analytics, LLC &mdash; ClownBinge.com</p>
-          <div className="h-1 w-full bg-[#F5C518] rounded-full mt-5" />
-        </div>
-
-        <AdminNav />
+        <AdminPageHeader title="Contact, Support & Advertising Center" />
 
         {/* Tab selector */}
         <div className="grid grid-cols-3 gap-3 mb-8 mt-4">

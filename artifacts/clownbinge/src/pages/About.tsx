@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { AdminNav } from "@/components/AdminNav";
+import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { StatWidget } from "@/components/StatWidget";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 
@@ -21,6 +21,8 @@ export default function About() {
   return (
     <Layout>
       <div className="max-w-3xl mx-auto px-4 py-12">
+
+        <AdminPageHeader title="About ClownBinge" />
 
         {/* Why the Name */}
         <div
@@ -102,8 +104,6 @@ export default function About() {
             ))}
           </div>
         </div>
-
-        <AdminNav />
 
         {/* What ClownBinge Is */}
         <SectionLabel>What ClownBinge Is</SectionLabel>

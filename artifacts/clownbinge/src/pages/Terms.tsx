@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { AdminNav } from "@/components/AdminNav";
+import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 
 export default function Terms() {
@@ -11,11 +11,9 @@ export default function Terms() {
   });
   return (
     <Layout>
-      <div className="cb-container py-16 sm:py-24 max-w-3xl mx-auto">
-        <AdminNav />
+      <div className="cb-container py-12 max-w-3xl mx-auto">
+        <AdminPageHeader title="Terms of Service" />
         <div className="prose prose-lg max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:text-header prose-p:leading-relaxed">
-          
-          <h1 className="text-4xl sm:text-5xl mb-8">Terms of Service</h1>
           <p className="text-muted-foreground font-mono text-sm border-l-2 border-border pl-4">Last Updated: October 2023</p>
 
           <h2>1. Acceptance of Terms</h2>

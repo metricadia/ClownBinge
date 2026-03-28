@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { AdminNav } from "@/components/AdminNav";
+import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 
 export default function Ethics() {
@@ -12,18 +12,10 @@ export default function Ethics() {
   return (
     <Layout>
       <div className="max-w-3xl mx-auto px-4 py-12">
-        <div className="mb-10">
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">Editorial Standards</p>
-          <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-4">
-            Editorial Standards, Ethics, and Analytical Methodology
-          </h1>
-          <p className="text-muted-foreground text-sm">
-            Primary Source Analytics, LLC &mdash; ClownBinge.com &mdash; Updated March 2026
-          </p>
-          <div className="h-1 w-full bg-[#F5C518] rounded-full mt-6" />
-        </div>
-
-        <AdminNav />
+        <AdminPageHeader
+          title="Editorial Standards, Ethics, and Analytical Methodology"
+          subtitle="Primary Source Analytics, LLC — ClownBinge.com — Updated March 2026"
+        />
 
         <div className="prose prose-slate max-w-none cb-article-body">
 

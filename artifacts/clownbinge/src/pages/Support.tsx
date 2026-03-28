@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
-import { AdminNav } from "@/components/AdminNav";
+import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { Heart, Shield, FileText, ArrowRight, CheckCircle, Lock, Globe } from "lucide-react";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 
@@ -13,6 +13,10 @@ export default function Support() {
   });
   return (
     <Layout>
+
+      <div className="max-w-5xl mx-auto px-6 pt-10">
+        <AdminPageHeader title="Support Independent Journalism" />
+      </div>
 
       {/* Two-column hero: story left, options right */}
       <div className="w-full" style={{ background: "#0d1f54" }}>
@@ -150,9 +154,6 @@ export default function Support() {
       </div>
 
       {/* Closing */}
-      <div className="max-w-3xl mx-auto px-6 pt-12">
-        <AdminNav />
-      </div>
       <div className="max-w-2xl mx-auto px-6 py-16 text-center">
         <Globe className="w-8 h-8 mx-auto mb-6 text-muted-foreground" />
         <p className="text-muted-foreground text-base leading-relaxed mb-4">

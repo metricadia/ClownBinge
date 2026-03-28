@@ -1,5 +1,5 @@
 import { Layout } from "@/components/Layout";
-import { AdminNav } from "@/components/AdminNav";
+import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 import { Shield, Lock, Globe, FileText, Eye, EyeOff, Server } from "lucide-react";
 
@@ -32,36 +32,27 @@ export default function Privacy() {
     <Layout>
       <div className="max-w-3xl mx-auto px-4 py-12 sm:py-20">
 
-        {/* Hero */}
-        <div className="rounded-2xl px-7 py-8 mb-12 border border-white/10" style={{ background: "#1A3A8F" }}>
-          <div className="flex items-start justify-between gap-4 mb-5">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/40 mb-2">Entity Record</p>
-              <h1 className="font-sans font-black text-2xl sm:text-3xl text-white leading-tight">
-                Privacy &amp; Free Speech<br />
-                <span style={{ color: "#F5C518" }}>Jurisdiction Policy</span>
-              </h1>
-            </div>
-            <LockedBadge />
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 border-t border-white/10 pt-6">
-            {[
-              { icon: <Shield className="w-4 h-4" />, label: "Legal Entity", value: "Primary Source Analytics, LLC" },
-              { icon: <Globe className="w-4 h-4" />, label: "Jurisdiction", value: "St. Kitts & Nevis (SKN)" },
-              { icon: <Server className="w-4 h-4" />, label: "Infrastructure", value: "Icelandic Sovereign Hosting" },
-            ].map(({ icon, label, value }) => (
-              <div key={label} className="flex flex-col gap-1">
-                <div className="flex items-center gap-1.5 text-white/40">
-                  {icon}
-                  <span className="text-[9px] font-bold uppercase tracking-widest">{label}</span>
-                </div>
-                <p className="text-white text-sm font-semibold leading-snug">{value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+        <AdminPageHeader title="Privacy & Free Speech Jurisdiction Policy" />
 
-        <AdminNav />
+        {/* Entity record strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-border rounded-xl overflow-hidden border border-border mb-10">
+          {[
+            { icon: <Shield className="w-3.5 h-3.5" />, label: "Legal Entity", value: "Primary Source Analytics, LLC" },
+            { icon: <Globe className="w-3.5 h-3.5" />, label: "Jurisdiction", value: "St. Kitts & Nevis (SKN)" },
+            { icon: <Server className="w-3.5 h-3.5" />, label: "Infrastructure", value: "Icelandic Sovereign Hosting" },
+          ].map(({ icon, label, value }) => (
+            <div key={label} className="bg-muted/40 px-5 py-4 flex flex-col gap-1">
+              <div className="flex items-center gap-1.5 text-muted-foreground">
+                {icon}
+                <span className="text-[10px] font-bold uppercase tracking-widest">{label}</span>
+              </div>
+              <p className="text-sm font-bold text-header">{value}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-end mb-8 -mt-6">
+          <LockedBadge />
+        </div>
 
         {/* Opening */}
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 max-w-2xl">
