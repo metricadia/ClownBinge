@@ -12,3 +12,9 @@ id = "Hvj2h9nnIHijqlsa-0xu6"
 uri = "file://next-steps.md"
 type = "text"
 title = "Next Steps — My Account & Save for Later"
+
+[[outputs]]
+id = "uF2QnjMlL9UHfEJ5OnhA0"
+uri = "file://artifacts/clownbinge/public/Vol08-AncientFaith-ModernPolitics.docx"
+type = "word_document"
+title = "Vol. 08 — Ancient Faith, Modern Politics (Word Document)"
