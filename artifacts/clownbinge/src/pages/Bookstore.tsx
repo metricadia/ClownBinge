@@ -231,7 +231,7 @@ export default function Bookstore() {
       </div>
 
       {/* ── Two-column hero — mirrors Donate Now structure exactly ── */}
-      <div className="w-full" style={{ background: "#0d1f54" }}>
+      <div className="w-full" style={{ background: "linear-gradient(135deg, #071a0e 0%, #0e3020 55%, #0a2818 100%)" }}>
         <div className="max-w-6xl mx-auto px-6 py-14 grid lg:grid-cols-2 gap-12 items-start">
 
           {/* LEFT — brand statement */}
@@ -281,7 +281,7 @@ export default function Bookstore() {
 
             {/* PRIMARY CARD — Bundle (yellow border, blue bg) */}
             <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid #F5C518" }}>
-              <div className="p-6" style={{ background: "#1A3A8F" }}>
+              <div className="p-6" style={{ background: "linear-gradient(135deg, #0a2a14 0%, #163d22 100%)" }}>
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <div className="text-xs font-bold tracking-widest uppercase mb-1" style={{ color: "#F5C518" }}>
@@ -293,7 +293,7 @@ export default function Bookstore() {
                     className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: "#F5C518" }}
                   >
-                    <Package className="w-6 h-6" style={{ color: "#1A3A8F" }} />
+                    <Package className="w-6 h-6" style={{ color: "#0a2a14" }} />
                   </div>
                 </div>
                 <p className="text-white/65 text-sm leading-relaxed mb-4">
@@ -314,7 +314,7 @@ export default function Bookstore() {
                 </div>
                 <button
                   className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-extrabold text-sm transition-opacity hover:opacity-90"
-                  style={{ background: "#F5C518", color: "#1A3A8F" }}
+                  style={{ background: "#F5C518", color: "#0a2a14" }}
                 >
                   Pre-Order the Complete Bundle
                   <Download className="w-4 h-4" />
@@ -324,13 +324,13 @@ export default function Bookstore() {
 
             {/* SECONDARY CARD — Individual volume (white) */}
             <div className="rounded-2xl overflow-hidden bg-white border border-gray-200 p-6 flex flex-col sm:flex-row gap-5 items-start">
-              <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#1A3A8F" }}>
+              <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#0e3020" }}>
                 <BookOpen className="w-5 h-5 text-white" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-3 mb-1 flex-wrap">
                   <div className="text-xs font-bold tracking-widest uppercase text-muted-foreground">Individual Volume</div>
-                  <div className="font-extrabold text-2xl" style={{ color: "#1A3A8F" }}>$24.95</div>
+                  <div className="font-extrabold text-2xl" style={{ color: "#0e3020" }}>$24.95</div>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                   Pick the topic that matters most to you. Each volume stands alone as a
@@ -338,7 +338,7 @@ export default function Bookstore() {
                 </p>
                 <button
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-extrabold text-sm text-white transition-opacity hover:opacity-90"
-                  style={{ background: "#1A3A8F" }}
+                  style={{ background: "#0e3020" }}
                   onClick={() => document.getElementById("all-volumes")?.scrollIntoView({ behavior: "smooth" })}
                 >
                   Browse All 10 Volumes
@@ -349,7 +349,7 @@ export default function Bookstore() {
 
             {/* TERTIARY CARD — Series note (white) */}
             <div className="rounded-2xl overflow-hidden bg-white border border-gray-200 p-6 flex flex-col sm:flex-row gap-5 items-start">
-              <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#1A3A8F" }}>
+              <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#0e3020" }}>
                 <Layers className="w-5 h-5 text-white" />
               </div>
               <div className="flex-1 min-w-0">
