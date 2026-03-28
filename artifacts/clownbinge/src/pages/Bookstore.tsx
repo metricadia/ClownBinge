@@ -257,9 +257,6 @@ function CoverSVG({ book }: { book: FactBook }) {
         <text x="20" y="347" fontSize="8.5" fill={accentFg} fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700">
           PRIMARY SOURCE ANALYTICS
         </text>
-        <text x="220" y="347" fontSize="9" fill={accentFg} fontFamily="'Archivo Black',sans-serif" textAnchor="end" fontWeight="900">
-          $24.95
-        </text>
       </svg>
     );
   }
@@ -367,9 +364,6 @@ function CoverSVG({ book }: { book: FactBook }) {
       <text x="20" y="347" fontSize="8.5" fill={accentFg} fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700">
         PRIMARY SOURCE ANALYTICS
       </text>
-      <text x="220" y="347" fontSize="9" fill={accentFg} fontFamily="'Archivo Black',sans-serif" textAnchor="end" fontWeight="900">
-        $24.95
-      </text>
     </svg>
   );
 }
@@ -385,13 +379,13 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl md:max-w-3xl lg:max-w-4xl rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl flex flex-col sm:flex-row"
+        className="relative w-full max-w-2xl md:max-w-4xl lg:max-w-5xl rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl flex flex-col sm:flex-row"
         style={{ background: "#ffffff", maxHeight: "92vh" }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Cover — banner on mobile, full-height left panel on sm+; grows with modal on md/lg */}
+        {/* Cover — banner on mobile, full-height left panel on sm+; editorial-dominant on md/lg */}
         <div
-          className="w-full h-40 shrink-0 sm:w-[42%] md:w-[44%] lg:w-[46%] sm:h-auto sm:self-stretch"
+          className="w-full h-40 shrink-0 sm:w-[42%] md:w-[50%] lg:w-[54%] sm:h-auto sm:self-stretch"
           style={{ background: book.bg }}
         >
           <div style={{ width: "100%", height: "100%" }}>
