@@ -247,7 +247,7 @@ export default function Home() {
                           title="Your ad could be here. Click to learn about advertising with ClownBinge."
                         >
                           <img
-                            src={`${import.meta.env.BASE_URL}images/ad-coming-soon.jpg`}
+                            src={`${import.meta.env.BASE_URL}images/ad-placeholder.png`}
                             alt="Your Ad Here - Advertise on ClownBinge. Full-width placement available. High visibility."
                             className="w-full h-auto object-cover"
                             loading="lazy"
@@ -374,7 +374,7 @@ export default function Home() {
                   title="Your ad could be here. Click to learn about advertising with ClownBinge."
                 >
                   <img
-                    src={`${import.meta.env.BASE_URL}images/ad-coming-soon.jpg`}
+                    src={`${import.meta.env.BASE_URL}images/ad-placeholder.png`}
                     alt="Your Ad Here - Advertise on ClownBinge. Full-width placement available. High visibility."
                     className="w-full h-auto object-cover"
                     loading="lazy"
