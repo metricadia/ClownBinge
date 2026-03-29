@@ -57,6 +57,24 @@ const BODY_PHRASES: string[] = [
   "moreover, it is",
   "notably,",
   "of course,",
+  // Conceptual looping / back-reference phrases
+  "as previously mentioned",
+  "as previously noted",
+  "as noted earlier",
+  "as mentioned earlier",
+  "as discussed earlier",
+  "as stated earlier",
+  "as mentioned above",
+  "as noted above",
+  "as stated above",
+  "as we discussed",
+  "as mentioned previously",
+  "as discussed previously",
+  "recall that",
+  "as you may recall",
+  "returning to",
+  "as I mentioned",
+  "as we have seen",
 ];
 
 const BODY_PHRASE_REGEXES: RegExp[] = BODY_PHRASES.map(

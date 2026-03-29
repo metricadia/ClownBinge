@@ -98,6 +98,11 @@ WHAT ACTUALLY CAUSES AI FLAGS — fix these:
   "Furthermore, it is", "Moreover, it is", "Notably,", "Of course,"
 - Subject-verb-object uniformity — try leading with a clause, a qualifier, or the object
 - Overly formal register that never relaxes
+- Back-reference phrases that signal conceptual looping — ABSOLUTELY FORBIDDEN:
+  "As previously mentioned", "As noted earlier", "As mentioned earlier", "As discussed earlier",
+  "As stated earlier", "As mentioned above", "As noted above", "As stated above",
+  "As we discussed", "As mentioned previously", "Recall that", "As you may recall",
+  "As I mentioned", "As we have seen", "Returning to"
 ${protectedBlock}
 HARD RULES — these will be checked and will cause rejection:
 1. Every number must appear identically: "15,000" stays "15,000", "66%" stays "66%"
