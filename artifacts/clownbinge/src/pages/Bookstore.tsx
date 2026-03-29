@@ -186,8 +186,10 @@ const BOOKS: FactBook[] = [
     fullTitle: "The Uncredited Builders: Indigenous Nations, Enslaved Africans, and Immigrants Who Made America",
     subtitle: "Indigenous Nations, Enslaved Africans, and Immigrants Who Made America",
     tag: "U.S. History",
-    bg: "#F5F0E8", fg: "#1A1A2E", accent: "#1A3A8F", accentFg: "#FFFFFF",
-    coverDesign: "type",
+    bg: "#0A0A0A", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF",
+    coverDesign: "split",
+    coverImage: "/covers/vol07-cover.jpg",
+    coverAnchor: "xMidYMid slice",
     summary: "The wealth, infrastructure, and institutional foundation of the United States was created through systematic extraction of labor and land from three groups who received none of the ownership: Indigenous nations, enslaved Africans, and immigrant workers. This FactBook uses property records, census data, congressional land grants, and economic scholarship to quantify what was taken.",
     bullets: [
       "Federal land grant records document 270 million acres taken from Indigenous sovereignty",
