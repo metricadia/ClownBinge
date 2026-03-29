@@ -1150,7 +1150,8 @@ function CoverSVG({ book }: { book: FactBook }) {
 }
 
 function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
-  const [tab, setTab] = useState<"description" | "outline">("description");
+  const isVol08 = book.vol === "Vol. 08";
+  const [tab, setTab] = useState<"description" | "outline" | "video" | "ideal">("description");
   const [expandedChapter, setExpandedChapter] = useState<number | null>(null);
   const hasOutline = book.chapters && book.chapters.length > 0;
 
@@ -1218,20 +1219,27 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
             </div>
 
             {/* Tabs */}
-            {hasOutline && (
-              <div className="flex gap-0 border-b border-gray-200 mb-0">
-                {(["description", "outline"] as const).map((t) => (
+            {(hasOutline || isVol08) && (
+              <div className="flex gap-0 border-b border-gray-200 mb-0 flex-wrap">
+                {([
+                  { key: "description" as const, label: "Description" },
+                  ...(hasOutline ? [{ key: "outline" as const, label: "Outline" }] : []),
+                  ...(isVol08 ? [
+                    { key: "video" as const, label: "Video" },
+                    { key: "ideal" as const, label: "Ideal Reader" },
+                  ] : []),
+                ]).map(({ key, label }) => (
                   <button
-                    key={t}
-                    onClick={() => setTab(t)}
-                    className="px-4 py-2 text-xs font-bold tracking-wide capitalize transition-colors relative"
+                    key={key}
+                    onClick={() => setTab(key)}
+                    className="px-4 py-2 text-xs font-bold tracking-wide transition-colors relative whitespace-nowrap"
                     style={{
-                      color: tab === t ? book.accent : "#9CA3AF",
-                      borderBottom: tab === t ? `2px solid ${book.accent}` : "2px solid transparent",
+                      color: tab === key ? book.accent : "#9CA3AF",
+                      borderBottom: tab === key ? `2px solid ${book.accent}` : "2px solid transparent",
                       marginBottom: "-1px",
                     }}
                   >
-                    {t}
+                    {label}
                   </button>
                 ))}
               </div>
@@ -1297,6 +1305,111 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                   </button>
                 </div>
               </>
+            )}
+
+            {/* ── VIDEO TAB ── */}
+            {tab === "video" && (
+              <div className="flex flex-col items-center justify-center py-14 px-6 text-center min-h-[260px]">
+                <div
+                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6"
+                  style={{ background: book.accent + "18", border: `2px solid ${book.accent}35` }}
+                >
+                  <Video className="w-9 h-9" style={{ color: book.accent }} />
+                </div>
+                <p className="font-mono text-[10px] font-bold tracking-[0.3em] uppercase mb-3" style={{ color: book.accent }}>
+                  Coming Soon
+                </p>
+                <h3 className="font-sans font-extrabold text-lg text-gray-900 leading-tight mb-3 max-w-xs">
+                  The Author on Ancient Faith, Modern Politics
+                </h3>
+                <p className="text-sm text-gray-500 leading-relaxed max-w-sm">
+                  A video introduction to the primary source record. The evidence that separates a 3,500-year religion from a 127-year political movement, presented by the author.
+                </p>
+                <div
+                  className="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold"
+                  style={{ background: book.accent + "14", color: book.accent }}
+                >
+                  <Video className="w-3.5 h-3.5" />
+                  Notify Me When Available
+                </div>
+              </div>
+            )}
+
+            {/* ── IDEAL READER TAB ── */}
+            {tab === "ideal" && (
+              <div className="pb-6">
+                <div className="mb-5">
+                  <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase mb-2" style={{ color: book.accent }}>
+                    Who Needs This Book
+                  </p>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    This volume was written for people who already sense something is wrong with the argument. The lie that Judaism and Zionism are the same thing has done real damage. It has silenced critics. It has weaponized religious identity. It has made a political position unsayable in newsrooms, classrooms, and boardrooms. The primary source record corrects that, in the original documents.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  {[
+                    {
+                      icon: <Users className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
+                      title: "The Person Who Has Been Silenced",
+                      body: "You criticized Israeli government policy and someone called it antisemitism. You did not have the primary source record that separates a religion from a political movement. This book is that record. The argument no longer requires your opinion. It only requires Herzl's diary, the Basel Program, and the rabbinical texts that predate them both.",
+                    },
+                    {
+                      icon: <BookOpen className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
+                      title: "The Jewish Reader Whose Faith Has Been Claimed",
+                      body: "You are Jewish and you have watched a secular nationalist movement use your religious identity to shield itself from political accountability. Chapter 9 of this volume documents 127 years of Jewish scholars, rabbis, and institutions who made exactly that observation. The Satmar tradition. Judith Butler. The Bund. The Neturei Karta. You are not a fringe position. You are the documented majority in the tradition's own textual record.",
+                    },
+                    {
+                      icon: <Users className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
+                      title: "The Educator Who Needs Primary Sources",
+                      body: "You teach history, political science, religious studies, or international law. Your students ask why criticizing a state is prosecuted as a hate crime in some jurisdictions. This volume answers that question from the founding documents of both traditions and the legislative record of the institutions that engineered the conflation.",
+                    },
+                    {
+                      icon: <Users className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
+                      title: "The Journalist or Policy Professional",
+                      body: "You cover the Israel-Palestine conflict, campus speech codes, or the IHRA definition. Chapter 8 of this volume documents the institutional architecture of the IHRA working definition from its own lobbying records, legislative history, and adopting jurisdiction filings. You need this before your next assignment.",
+                    },
+                    {
+                      icon: <Users className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
+                      title: "The Religious Leader Seeking Doctrinal Clarity",
+                      body: "You are a pastor, imam, rabbi, or lay leader. Your congregation asks where Judaism ends and Zionism begins. The answer from the primary sources of Judaism goes back to 1897. The Protestrabbiner declaration was published three weeks before the First Zionist Congress met in Basel. This book collects that record.",
+                    },
+                    {
+                      icon: <Users className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
+                      title: "The Person Who Watched and Could Not Explain",
+                      body: "You saw the news from Sheikh Jarrah. Someone told you it had nothing to do with Judaism. You were not sure how to respond. The Ottoman land registry, the British Mandate census, the UN partition plan data, and the Israeli Supreme Court's own three-tier citizenship framework are assembled here in one place, in chronological order, with full citation.",
+                    },
+                  ].map(({ icon, title, body }) => (
+                    <div
+                      key={title}
+                      className="rounded-lg p-4"
+                      style={{ background: book.accent + "08", border: `1px solid ${book.accent}20` }}
+                    >
+                      <div className="flex items-start gap-3 mb-1.5">
+                        {icon}
+                        <p className="text-xs font-extrabold text-gray-900">{title}</p>
+                      </div>
+                      <p className="text-xs text-gray-600 leading-relaxed pl-7">{body}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div
+                  className="mt-5 rounded-xl p-4 flex items-center justify-between"
+                  style={{ background: book.accent + "12", border: `1px solid ${book.accent}30` }}
+                >
+                  <p className="text-xs text-gray-700 leading-snug">
+                    <span className="font-extrabold" style={{ color: book.accent }}>This is not a book written about history.</span> It is the history, sourced, cited, and organized so the argument ends where the evidence begins.
+                  </p>
+                  <button
+                    className="ml-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85 shrink-0"
+                    style={{ background: book.accent, color: book.accentFg }}
+                  >
+                    {book.price ?? "$39.95"} — Pre-Order
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
             )}
 
             {/* ── OUTLINE TAB ── */}
