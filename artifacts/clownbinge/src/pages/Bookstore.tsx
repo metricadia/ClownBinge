@@ -55,6 +55,40 @@ const BOOKS: FactBook[] = [
       "97% of Black homicide victimization is driven by economic circumstance, per DOJ data",
       "The myth serves documented political purposes — this FactBook names them, with receipts",
     ],
+    chapters: [
+      {
+        title: "What the FBI Data Measures: What It Counts and What It Does Not",
+        description: "The FBI Uniform Crime Report records arrests, not crimes committed. This chapter documents the structural gap between what politicians cite and what the data source actually measures.",
+      },
+      {
+        title: "The National Crime Victimization Survey: Bypassing Police Entirely",
+        description: "The Bureau of Justice Statistics asks crime victims directly, without police involvement. When you remove policing bias from the equation, the racial narrative collapses.",
+      },
+      {
+        title: "Drug Arrests as Proof of Concept",
+        description: "Drug use rates are nearly identical across racial groups. Arrest rates are not. This chapter uses federal drug data to demonstrate how policing intensity, not behavior, shapes arrest statistics.",
+      },
+      {
+        title: "The Poverty Confounder: What Happens When Researchers Control for Structural Disadvantage",
+        description: "Peer-reviewed criminology consistently finds that race disappears as a predictor of violent crime once researchers control for concentrated poverty, disinvestment, and resource deprivation.",
+      },
+      {
+        title: "The Holes in Federal Statistics: What They Are Designed Not to Count",
+        description: "Federal crime data has structural blind spots built into its methodology. This chapter documents what the official record cannot and does not measure, and why that matters.",
+      },
+      {
+        title: "Prosecutorial Overcharging and What Elevated Acquittal Rates Signal",
+        description: "Higher acquittal and dismissal rates for Black defendants are not evidence of criminality. They are evidence of overcharging, documented in court records and federal sentencing data.",
+      },
+      {
+        title: "What the Wrongful Conviction Record Says About the Reliability of Conviction Data",
+        description: "The National Registry of Exonerations shows Black Americans are exonerated at disproportionately high rates. This chapter examines what that fact does to the conviction data underlying the narrative.",
+      },
+      {
+        title: "The Empirical Record, In Full",
+        description: "A consolidated summary of what the primary sources actually show, with every claim traceable to a federal dataset, peer-reviewed study, or court record cited in full.",
+      },
+    ],
   },
   {
     id: 2, vol: "Vol. 02",
