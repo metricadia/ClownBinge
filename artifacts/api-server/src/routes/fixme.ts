@@ -4,6 +4,7 @@ import { eq, desc, asc, sql } from "drizzle-orm";
 import { detectAI } from "../services/zerogpt";
 import { reduceAI } from "../services/cb-reducer";
 import { anthropic } from "@workspace/integrations-anthropic-ai";
+import { checkContentGuard, formatViolations } from "../services/content-guard";
 
 const router: IRouter = Router();
 
@@ -134,6 +135,11 @@ router.post("/fixme/reduce/:slug", async (req, res) => {
           4,
           "journalism",
           async (body: string, score: number) => {
+            const guard = checkContentGuard(body, true);
+            if (!guard.clean) {
+              console.warn(`[CBReduce] Blocked save — banned phrases in body: ${formatViolations(guard.violations)}`);
+              return;
+            }
             await db
               .update(postsTable)
               .set({ body, aiScore: score, aiScoreTestedAt: new Date() })

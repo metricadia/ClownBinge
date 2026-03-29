@@ -1,4 +1,5 @@
 import { anthropic } from "@workspace/integrations-anthropic-ai";
+import { checkContentGuard } from "./content-guard";
 
 export type DocType = "journalism" | "academic" | "undergrad";
 
@@ -57,6 +58,12 @@ function jsGate(original: string, rewritten: string): { pass: boolean; reason?: 
     }
   }
 
+  const guard = checkContentGuard(rewritten);
+  if (!guard.clean) {
+    const phrases = guard.violations.map((v) => `"${v.phrase}"`).join(", ");
+    return { pass: false, reason: `banned phrase in rewrite: ${phrases}` };
+  }
+
   return { pass: true };
 }
 
@@ -83,7 +90,12 @@ WHAT ACTUALLY CAUSES AI FLAGS — fix these:
 - Uniform sentence length across a document (vary the rhythm)
 - Passive voice where active is natural
 - Smooth, parallel list structures (break them up)
-- Generic academic transitions: "Furthermore," "Additionally," "It is worth noting" — cut them
+- Generic academic transitions — these are ABSOLUTELY FORBIDDEN and will cause hard rejection:
+  "It is worth noting", "It's worth noting", "It is important to note", "Needless to say",
+  "It goes without saying", "To summarize", "In summary", "In conclusion", "Delve into",
+  "Shed light on", "In today's world", "In the realm of", "The tapestry of",
+  "As we navigate", "The landscape of", "Complex and multifaceted", "Nuanced issue",
+  "Furthermore, it is", "Moreover, it is", "Notably,", "Of course,"
 - Subject-verb-object uniformity — try leading with a clause, a qualifier, or the object
 - Overly formal register that never relaxes
 ${protectedBlock}
