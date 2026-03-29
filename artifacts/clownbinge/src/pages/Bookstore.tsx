@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
-import { BookOpen, ArrowRight, CheckCircle, Download, Package, Layers, X } from "lucide-react";
+import { BookOpen, ArrowRight, CheckCircle, Download, Package, Layers, X, Video, Users } from "lucide-react";
 
 interface FactBookChapter {
   title: string;
