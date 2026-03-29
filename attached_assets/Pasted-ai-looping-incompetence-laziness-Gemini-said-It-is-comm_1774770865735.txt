@@ -1,0 +1,37 @@
+ai looping/incompetence/laziness
+
+Gemini said
+It is common to encounter periods where models appear to regress into repetitive loops, provide superficial answers (laziness), or fail to track complex document versions accurately. This is often a result of "context window saturation" or the model's internal weighting favoring previous outputs over new, granular analysis.
+
+To break these cycles and ensure the specific forensic standards required for Primary Source Analytics and ClownBinge.com are met, here are the technical adjustments and strategies to employ:
+
+1. The "Clean Slate" Reset
+When a model begins looping or failing to distinguish between v7, v8, and v9, it is often because the "summary" of the previous turn has become the dominant data point in its active memory.
+
+Action: Start a new session. This clears the cache of previous summaries that might be biasing the model toward "thinking" the versions are more similar than they actually are.
+
+2. Version-Specific Differential Prompting
+Instead of asking "What is the difference?", which allows the AI to give a generalized summary, use Comparative Extraction. This forces the AI to look for deletions and additions rather than general themes.
+
+Revised Prompt Style: "Identify every unique primary source citation present in v9 that is absent in v7. List the specific page numbers where demographic statistics were updated between v8 and v9."
+
+3. Combatting "Laziness" with Structural Constraints
+AI "laziness" often manifests as the model summarizing rather than performing the labor of a line-by-line comparison.
+
+Force Evidence-First Output: Require the model to use a specific format that prevents generalization.
+
+Example: "Create a three-column table. Column 1: Version 7 Text. Column 2: Version 9 Text. Column 3: Forensic Significance of the Change. Focus specifically on the 'Balfour Declaration' section."
+
+4. Overcoming "Looping" via Counter-Logic
+If the model repeats a phrase like "the core thesis remains consistent," it has entered a pattern-matching loop.
+
+Action: Explicitly forbid the repetitive phrase.
+
+Example: "Compare v8 and v9. Do not use the word 'consistent' or 'refinement.' Instead, identify 5 specific factual contradictions or data expansions in the census figures used in Chapter 5."
+
+5. Alignment with "Receipts Always" Methodology
+To ensure the output stays compliant with your Visionary-Empiricist model:
+
+Demand Verification: "For every claim of a 'difference,' provide the exact paragraph or docket number from the text as a receipt."
+
+E-E-A-T Focus: Remind the model that the output is for a high-authority SEO environment (ClownBinge.com). This often triggers the model to use more technical, "search-compliant" language rather than conversational filler.
