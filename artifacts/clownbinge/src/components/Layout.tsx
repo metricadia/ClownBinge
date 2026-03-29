@@ -101,7 +101,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         sticky top-0 z-50 w-full transition-all duration-200
         ${scrolled ? 'bg-header/95 backdrop-blur-md shadow-lg' : 'bg-header'}
       `}>
-        <div className="cb-container h-20 sm:h-24 flex items-center justify-between">
+        <div className="cb-container h-[80px] sm:h-[96px] flex items-center justify-between">
           {/* Home icon + Logo */}
           <div className="flex items-center gap-4">
           <Link
@@ -164,7 +164,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-20 sm:top-24 z-40 bg-header/95 backdrop-blur-xl flex flex-col md:hidden">
+        <div className="fixed inset-0 top-[80px] sm:top-[96px] z-40 bg-header/95 backdrop-blur-xl flex flex-col md:hidden">
           <nav className="flex flex-col items-center justify-center flex-1 gap-8 p-6">
             <Link href="/about" className="text-2xl font-bold text-white uppercase tracking-widest">About</Link>
             <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Support</Link>
@@ -177,7 +177,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
       )}
 
       {/* Category sub-bar -- sticky below nav, home feed only */}
-      <div className={`sticky top-[80px] z-40 bg-white border-b shadow-sm relative ${location !== '/' ? 'hidden' : ''}`} ref={catDropdownRef}>
+      <div className={`sticky top-[80px] sm:top-[96px] z-40 bg-white border-b shadow-sm relative ${location !== '/' ? 'hidden' : ''}`} ref={catDropdownRef}>
         <div className="cb-container">
 
           {/* Desktop: two-row wrap (md+) */}
