@@ -39,9 +39,10 @@ export async function upsertMissingPosts(): Promise<void> {
         target: postsTable.caseNumber,
         set: {
           // ── Editorial metadata — safe to sync from seed on restart ──────────
-          title: post.title as string,
+          // NOTE: title and teaser are intentionally excluded — DB is the source
+          // of truth for those fields after initial insert. Use a DB script to
+          // update them; never rely on restart to propagate changes.
           slug: post.slug as string,
-          teaser: (post.teaser as string) ?? "",
           category: post.category as typeof postsTable.$inferInsert["category"],
           subjectName: post.subject_name as string | null,
           subjectTitle: post.subject_title as string | null,
