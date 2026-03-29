@@ -22,6 +22,7 @@ import { FactoidPopup } from "@/components/FactoidPopup";
 import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
 import { FactBookUpsell } from "@/components/FactBookUpsell";
+import { ForensicPivot } from "@/components/ForensicPivot";
 
 function linkifySource(text: string): React.ReactNode {
   return <span>{text}</span>;
@@ -289,6 +290,7 @@ export default function PostDetail() {
         >
           <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
           <ClownCheckCTA />
+          <ForensicPivot slug={slug} />
           <div dangerouslySetInnerHTML={{ __html: bodyBottom }} />
         </div>
 
