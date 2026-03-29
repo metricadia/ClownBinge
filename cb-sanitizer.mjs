@@ -424,6 +424,68 @@ async function main() {
   }
 
   // ══════════════════════════════════════════════════════════════════════════
+  // CHECK 6 — Zero Factoid Citations
+  // ClownBinge standard: every article must have at least one cb-factoid
+  // anchor. An article with no receipts violates the platform's core rule.
+  // ══════════════════════════════════════════════════════════════════════════
+  {
+    const hits = [];
+    for (const { slug, body } of rows) {
+      const count = (body.match(/cb-factoid/g) || []).length;
+      if (count === 0) hits.push({ slug });
+    }
+    section('ZERO FACTOID CITATIONS (no receipts)', hits.length);
+    hits.forEach(h =>
+      violation(h.slug, 'Article has no cb-factoid citation anchors — receipts required', '')
+    );
+    totals['Zero Factoid Citations'] = hits.length;
+    grandTotal += hits.length;
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // CHECK 7 — Overlong Sentences (AI text walls)
+  // Sentences over 55 words are a reliable AI generation signature.
+  // Human journalists break long thoughts into shorter declarative units.
+  // Source citations (bibliography paragraphs) are excluded.
+  // ══════════════════════════════════════════════════════════════════════════
+  {
+    const hits = [];
+    // Split on terminal punctuation followed by whitespace + capital letter
+    const sentSplit = /(?<=[.!?])\s+(?=[A-Z"'])/;
+    const sourceRe  = /^(Sources?:|References?:|Bibliography:|Works Cited)/i;
+
+    for (const { slug, body } of rows) {
+      const paras = getParas(body);
+      const longOnes = [];
+
+      for (const para of paras) {
+        if (sourceRe.test(para.trim())) continue; // skip bibliography blobs
+        const sentences = para.split(sentSplit).map(s => s.trim()).filter(Boolean);
+        for (const s of sentences) {
+          const wordCount = s.split(/\s+/).length;
+          if (wordCount > 55) longOnes.push({ text: s, words: wordCount });
+        }
+      }
+
+      if (longOnes.length > 0) {
+        const worst = longOnes.sort((a, b) => b.words - a.words)[0];
+        hits.push({ slug, count: longOnes.length, worst });
+      }
+    }
+
+    section(`OVERLONG SENTENCES (>55 words — AI text wall)`, hits.length);
+    hits.forEach(h =>
+      violation(
+        h.slug,
+        `${h.count} sentence(s) over 55 words — worst is ${h.worst.words} words`,
+        h.worst.text.slice(0, 160)
+      )
+    );
+    totals['Overlong Sentences'] = hits.length;
+    grandTotal += hits.length;
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
   // SUMMARY
   // ══════════════════════════════════════════════════════════════════════════
   banner('SUMMARY');
