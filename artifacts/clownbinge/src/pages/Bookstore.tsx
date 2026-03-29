@@ -1043,7 +1043,7 @@ function CoverSVG({ book }: { book: FactBook }) {
         ))}
         {/* Accent footer bar */}
         <rect x="0" y="326" width="240" height="34" fill={accent} />
-        <text x="20" y="347" fontSize="8.5" fill={accentFg} fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700">
+        <text x="120" y="347" fontSize="8.5" fill={accentFg} fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700" textAnchor="middle">
           PRIMARY SOURCE ANALYTICS
         </text>
       </svg>
