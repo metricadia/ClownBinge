@@ -162,7 +162,7 @@ const BOOKS: FactBook[] = [
     coverDesign: "minimal",
     subtitle: "Judaism ≠ Zionism",
     coverImage: "/covers/vol08-cover.png",
-    pages: 140,
+    pages: 128,
     price: "$39.95",
     chapters: [
       {
@@ -905,7 +905,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "The Primary Source Verdict",
-        description: "What the record actually says. No opinion added. No editorial conclusion. The documents stand alone.",
+        description: "Seven documented findings applied to the central question: chronological, textual, demographic, legal, conflation, opposition, and verdict. The record answers. This chapter applies it.",
         content: [
           "The preceding nine chapters assembled the primary source record of two distinct traditions, one ancient and religious, one recent and political, alongside the documented strategy through which they have been conflated. This chapter does not add to that record. It applies the record to the question the volume was designed to answer: whether the equation of Judaism with Zionism can be sustained against the primary source documentation of both traditions.",
           "SECTION 10.1: THE CHRONOLOGICAL FINDING.",
