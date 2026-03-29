@@ -58,7 +58,7 @@ const BOOKS: FactBook[] = [
     id: 2, vol: "Vol. 02",
     shortTitle: "Merchants of Chaos",
     fullTitle: "Merchants of Chaos: Facebook, X, YouTube & TikTok as the World's Largest Disinformation Infrastructure",
-    subtitle: "Facebook, X, YouTube & TikTok as the World's Largest Disinformation Infrastructure",
+    subtitle: "Social Media as the World's Largest Disinformation Infrastructure",
     tag: "Investigations",
     bg: "#1A3A8F", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#1A1A2E",
     coverDesign: "grid",
@@ -1032,10 +1032,15 @@ function CoverSVG({ book }: { book: FactBook }) {
         <div className="absolute inset-0" style={{
           background: `linear-gradient(to bottom, transparent 55%, ${accent}30 84%, ${accent}99 100%)`
         }} />
-        {/* Title */}
-        <div className="absolute left-0 right-0 text-center px-[6%]" style={{ bottom: "11.5%" }}>
+        {/* Title + subtitle stacked just above footer */}
+        <div className="absolute left-0 right-0 text-center px-[6%]" style={{ bottom: "9.5%" }}>
           <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.8cqh", letterSpacing: "-0.2px" }}>{line1}</div>
           {line2 && <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.8cqh", letterSpacing: "-0.2px", marginTop: "0.8cqh" }}>{line2}</div>}
+          {book.subtitle && (
+            <div className="font-bold" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "2.5cqh", color: accent, letterSpacing: "0.3px", marginTop: "1.2cqh", lineHeight: 1.4 }}>
+              {book.subtitle}
+            </div>
+          )}
         </div>
         {/* Footer bar */}
         <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center" style={{ height: "9.4%", background: accent }}>
