@@ -314,7 +314,7 @@ export default function Home() {
                       </h3>
                     </Link>
                     <p className="text-sm leading-relaxed mb-4 line-clamp-3 text-slate-500">
-                      Why this platform was built. Who built the machine we are standing against. And exactly how we intend to beat it.
+                      {foundingDoc.teaser}
                     </p>
                     <Link
                       href={`/case/${foundingDoc.slug}`}
