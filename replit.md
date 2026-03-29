@@ -116,7 +116,7 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 - URL violations: **ZERO** (Rule 1 -- Zero-URL Policy)
 - Legacy media sole citations: **ZERO** (Rule 7 -- Primary-Only Data Guard)
 - Parenthetical descriptions in citation body: **ZERO** (Rule 9 -- Permanent Citation Only, No Description)
-- APA 7 formatted entries: **58 of 62 articles**
+- CB citation format entries (Label :: Body): **58 of 62 articles**
 - Plain-text (satirical placeholder): **4 articles** -- CB-000001, CB-000002, CB-000003, CB-000005 are satirical/illustrative articles featuring fictional politicians. Their citations ("Congressional Record", "C-SPAN", "Court Records", "Palmetto County Board Records") are illustrative institutional references, not real events.
 
 **Known Data Guard false positive:**
@@ -124,7 +124,7 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 
 **What was fixed across all audit phases:**
 - Phase 1: All religion articles (CB-000015 through CB-000034 + CB-000046): Replaced sole newspaper citations with church official statements, arrest records, court filings, ministry fundraising documents
-- Phase 2: All 33 plain-text articles upgraded to APA 7 `Label :: APA 7 body` format (58 articles total)
+- Phase 2: All 33 plain-text articles upgraded to CB citation format `Label :: CB body` (58 articles total)
 - Phase 3: 25 articles had parenthetical description text stripped from citation bodies. Only Author. (Year). Title. Publisher. remains -- no narrative descriptions of what the source says.
 - CB-000048: Cherokee Nation v. Georgia (1831) and Worcester v. Georgia (1832) promoted to individual named entries rather than a parenthetical inside a broader case records entry.
 
@@ -158,7 +158,7 @@ Examples:
 NOT a comma. A colon. This is Google's "entity relationship" signal.
 
 #### RULE 3 -- ENTRY STRUCTURE (Exact)
-Each citation entry = `Label :: APA 7 citation body`
+Each citation entry = `Label :: CB citation body`
 Multiple entries separated by `; ` (semicolon + space).
 
 ```
@@ -168,7 +168,7 @@ Subject: Role :: Publisher. (Year). Full document title (S. Hrg. NNN-NN). U.S. G
 #### RULE 4 -- S. Hrg. NUMBERS MUST BE VISIBLE ON FRONT END (Critical for Google)
 The S. Hrg. number (e.g., `S. Hrg. 115-32`) must appear in the rendered APA citation body. The PostDetail renderer displays the italic APA body text below each bold label. This is non-negotiable. The S. Hrg. number is the "Sovereign's native language" -- the exact string Google's Knowledge Graph uses to index U.S. Congressional history. Displaying it makes ClownBinge an Academic Repository in Google's classification.
 
-#### RULE 5 -- APA 7 MANDATORY ELEMENTS (Congressional Documents)
+#### RULE 5 -- CB CITATION MANDATORY ELEMENTS (Congressional Documents)
 1. Full committee name (never an acronym in the citation body)
 2. Year in parentheses
 3. Full document title as it appears in the GPO record
@@ -182,7 +182,7 @@ When text-based S. Hrg. citations are on the page, any attack on ClownBinge's cr
 
 ---
 
-**CANONICAL EXAMPLE (CB-000061 -- DEI Ruse -- 9 citations):**
+**CANONICAL EXAMPLE — CB-000061 (DEI Ruse, 9 citations). This is the CB citation standard. Not APA 7:**
 ```
 Nobel Prize in Physics (1997): Steven Chu :: Nobel Prize Outreach AB. (1997). Steven Chu: Biographical. Official Nobel Prize Archives.; Dr. Ernest Moniz: 13th Secretary of Energy :: U.S. Senate Committee on Energy and Natural Resources. (2013). Nomination of Dr. Ernest Moniz to be Secretary of Energy (S. Hrg. 113-52). U.S. Government Publishing Office.; Rick Perry: Energy Secretary Confirmation :: U.S. Senate Committee on Energy and Natural Resources. (2017). Nomination of the Honorable Rick Perry to be Secretary of Energy (S. Hrg. 115-32). U.S. Government Publishing Office.
 ```
@@ -193,13 +193,13 @@ Nobel Prize in Physics (1997): Steven Chu :: Nobel Prize Outreach AB. (1997). St
 
 #### SOVEREIGN OVERRIDE (Implemented Permanently in Renderer -- Never Revert)
 
-**Rule:** If `verifiedSource` contains APA 7 data (detected by presence of `::`), it **completely suppresses** all other source signals on the page. No exceptions.
+**Rule:** If `verifiedSource` contains CB citation data (detected by presence of `::`), it **completely suppresses** all other source signals on the page. No exceptions.
 
 **Three-part implementation:**
 
-1. **Logic Shift** -- Renderer checks `verifiedSource.includes("::")` FIRST, before checking `references` (cb-factoid array) or `sourceUrl`. If APA 7 data is present, the APA 7 list renders. All other source logic is skipped.
+1. **Logic Shift** -- Renderer checks `verifiedSource.includes("::")` FIRST, before checking `references` (cb-factoid array) or `sourceUrl`. If CB citation data is present, the CB citation list renders. All other source logic is skipped.
 
-2. **Factoid Sanitization** -- Inline `cb-factoid` links in the article body REMAIN interactive (hover popups work). But their source attributes are NOT used in the Primary Sources section at the bottom. The APA 7 `verifiedSource` is the only content shown in Primary Sources.
+2. **Factoid Sanitization** -- Inline `cb-factoid` links in the article body REMAIN interactive (hover popups work). But their source attributes are NOT used in the Primary Sources section at the bottom. The CB citation `verifiedSource` is the only content shown in Primary Sources.
 
 3. **Receipts Always Rule** -- For any case with a `CB-` case number, `verifiedSource` is the Single Source of Truth for the entire page. The bottom Primary Sources section is the permanent archival record.
 
@@ -207,7 +207,7 @@ Nobel Prize in Physics (1997): Steven Chu :: Nobel Prize Outreach AB. (1997). St
 
 **Rendering priority (code law, file: PostDetail.tsx):**
 ```
-1. verifiedSource contains "::" → show APA 7 list (SOVEREIGN)
+1. verifiedSource contains "::" → show CB citation list (SOVEREIGN)
 2. references.length > 0       → show factoid list (SUPPRESSED when #1 active)
 3. post.sourceUrl              → show single source (SUPPRESSED when #1 active)
 4. verifiedSource plain text   → show as-is (fallback)

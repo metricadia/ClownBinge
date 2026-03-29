@@ -247,7 +247,7 @@ async function main() {
   await client.connect();
 
   const { rows } = await client.query(
-    `SELECT slug, body FROM posts WHERE status = 'published' ORDER BY slug`
+    `SELECT slug, body, verified_source, case_number FROM posts WHERE status = 'published' ORDER BY slug`
   );
 
   console.log(`\n${C.dim}Loaded ${rows.length} published articles from database.${C.reset}`);
@@ -486,6 +486,60 @@ async function main() {
       )
     );
     totals['Overlong Sentences'] = hits.length;
+    grandTotal += hits.length;
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // CHECK 8 — Citation Format (CB Standard)
+  //
+  // Every published article must have verified_source entries in the form:
+  //   Label :: CB citation body
+  // Separated by "; "
+  //
+  // Violations:
+  //   a) verified_source is non-empty but contains no "::" at all
+  //   b) Any individual entry is missing "::" (malformed / descriptive style)
+  //   c) Any entry contains a URL (http) — Zero-URL Policy
+  //
+  // Exempt: satirical placeholder articles (CB-000001, CB-000002, CB-000003,
+  //         CB-000005) which use institutional reference names only.
+  // ══════════════════════════════════════════════════════════════════════════
+  {
+    const SATIRICAL_EXEMPT = new Set(['CB-000001', 'CB-000002', 'CB-000003', 'CB-000005']);
+    const hits = [];
+
+    for (const { slug, verified_source, case_number } of rows) {
+      if (!verified_source || !verified_source.trim()) continue;
+      if (SATIRICAL_EXEMPT.has(case_number)) continue;
+
+      const vs = verified_source.trim();
+      const entries = vs.split(/;\s+/);
+
+      // (a) No :: anywhere in the entire field
+      if (!vs.includes('::')) {
+        hits.push({ slug, reason: 'verified_source has no :: separator — not in CB citation format', ctx: vs.slice(0, 120) });
+        continue;
+      }
+
+      for (const entry of entries) {
+        const e = entry.trim();
+        if (!e) continue;
+
+        // (b) Individual entry missing ::
+        if (!e.includes('::')) {
+          hits.push({ slug, reason: `Entry missing :: separator`, ctx: e.slice(0, 120) });
+        }
+
+        // (c) URL in citation (Zero-URL Policy)
+        if (/https?:\/\//i.test(e)) {
+          hits.push({ slug, reason: `URL found in citation — Zero-URL Policy violation`, ctx: e.slice(0, 120) });
+        }
+      }
+    }
+
+    section('CITATION FORMAT (CB Standard: Label :: Body, no URLs)', hits.length);
+    hits.forEach(h => violation(h.slug, h.reason, h.ctx));
+    totals['Citation Format'] = hits.length;
     grandTotal += hits.length;
   }
 
