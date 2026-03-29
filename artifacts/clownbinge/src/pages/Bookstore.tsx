@@ -60,6 +60,7 @@ const BOOKS: FactBook[] = [
     tag: "Investigations",
     bg: "#1A3A8F", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#1A1A2E",
     coverDesign: "grid",
+    coverImage: "/covers/vol02-cover.jpg",
     summary: "Congress has the documents. Senate intelligence committees have done the investigations. Internal communications have been leaked. Facebook, YouTube, X, and TikTok have been caught — not accused — of algorithmically amplifying disinformation for engagement revenue. This FactBook assembles the receipts from congressional testimony, whistleblower documents, and regulatory filings.",
     bullets: [
       "Facebook's own internal research showed the algorithm amplified outrage content by 5x",
