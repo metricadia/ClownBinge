@@ -18,6 +18,18 @@ interface ForensicPivotConfig {
 }
 
 const FORENSIC_PIVOT_MAP: Record<string, ForensicPivotConfig> = {
+  "no-black-americans-violent-crime-racist-narrative-2024": {
+    bookId: 1,
+    vol: "Vol. 01",
+    tag: "NerdOut / Data",
+    title: "The Manufactured Threat",
+    subtitle: "Debunking the Racist Lie of Native Black Criminality",
+    accent: "#FF0099",
+    accentFg: "#FFFFFF",
+    bg: "#0F0F0F",
+    videoSrc: "/manufacturer-threat-bg.mp4",
+    price: "$24.95",
+  },
   "social-media-disinformation-platforms-facebook-x-youtube-tiktok-receipts": {
     bookId: 2,
     vol: "Vol. 02",
