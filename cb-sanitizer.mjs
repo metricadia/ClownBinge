@@ -140,6 +140,10 @@ const BANNED_PHRASES = [
   { phrase: 'throughout this article', cat: 'meta-document' },
   { phrase: 'the reader',              cat: 'meta-document' },
 
+  // ── Typography tells (dead giveaway for AI authorship) ───────────────────
+  { phrase: '\u2014',  cat: 'em dash — AI typography tell. Use comma, period, or parentheses.' },
+  { phrase: '--',      cat: 'double hyphen — AI typography tell. Use comma, period, or parentheses.' },
+
   // ── Conceptual looping / back-reference phrases ──────────────────────────
   { phrase: 'as previously mentioned',  cat: 'conceptual loop' },
   { phrase: 'as previously noted',      cat: 'conceptual loop' },
