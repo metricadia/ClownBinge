@@ -1744,7 +1744,7 @@ export default function Bookstore() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-5 gap-y-12">
           {[...BOOKS].sort((a, b) => {
-            const ORDER = [1, 8, 2, 3, 4, 5, 6, 7, 9, 10];
+            const ORDER = [1, 8, 2, 4, 3, 5, 6, 7, 9, 10];
             return ORDER.indexOf(a.id) - ORDER.indexOf(b.id);
           }).map((book) => (
             <div key={book.id} className="group flex flex-col">
