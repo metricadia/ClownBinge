@@ -1213,18 +1213,18 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 md:p-10 lg:p-12"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-5 lg:p-8"
       style={{ background: "rgba(0,0,0,0.82)", backdropFilter: "blur(6px)" }}
       onClick={onClose}
     >
       <div
         className="relative w-full max-w-2xl md:max-w-4xl lg:max-w-5xl rounded-t-2xl sm:rounded-2xl overflow-hidden shadow-2xl flex flex-col sm:flex-row"
-        style={{ background: "#ffffff", maxHeight: "92vh" }}
+        style={{ background: "#ffffff", maxHeight: "90vh" }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cover — banner on mobile, full-height left panel on sm+; editorial-dominant on md/lg */}
         <div
-          className="w-full h-40 shrink-0 sm:w-[42%] md:w-[50%] lg:w-[54%] sm:h-auto sm:self-stretch"
+          className="w-full h-28 shrink-0 sm:w-[42%] md:w-[50%] lg:w-[54%] sm:h-auto sm:self-stretch"
           style={{ background: book.bg }}
         >
           <div style={{ width: "100%", height: "100%" }}>
