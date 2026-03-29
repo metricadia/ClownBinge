@@ -45,6 +45,7 @@ const BOOKS: FactBook[] = [
     bg: "#0F0F0F", fg: "#FFFFFF", accent: "#FF0099", accentFg: "#FFFFFF",
     coverDesign: "stat",
     coverImage: "/covers/vol01-cover.jpg",
+    coverVideo: "/manufacturer-threat-bg.mp4",
     summary: "The narrative that Black Americans are inherently more violent is one of the most durable lies in American public life — repeated by politicians, amplified by media, and almost never challenged with actual data. This FactBook goes straight to the source: FBI crime statistics, peer-reviewed criminology, and federal data that dismantles the myth completely and traces its deliberate political origins.",
     bullets: [
       "FBI UCR and BJS data show violent crime tracks poverty and disinvestment — not race",
