@@ -168,7 +168,7 @@ const BOOKS: FactBook[] = [
       {
         isPreface: true,
         title: "Preface: What the Record Requires",
-        description: "Why this book was written. The distinction between a religion and a political movement, and why it matters now.",
+        description: "The 1897 rabbinical declaration that started it all, and what the primary sources require from any honest reader of the record.",
         content: [
           "A document published in the Jewish Chronicle on July 9, 1897 contains the following declaration, issued by the Executive Committee of the Union of Rabbis in Germany: \"The efforts of so-called Zionists to create a Jewish National State in Palestine are antagonistic to the messianic promises of Judaism, as contained in Holy Writ and in later religious sources.\"",
           "That document is 128 years old. It was written by rabbis. It was written about Zionism. It was written in the same year Zionism was founded. The Executive Committee did not require a century of hindsight to reach its conclusion. It required one reading of the Basel Congress agenda.",
@@ -194,7 +194,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "Two Traditions, One Conflation",
-        description: "The definitional problem. What Judaism is, what Zionism is, and why the distinction matters forensically.",
+        description: "One word is 3,500 years old. The other is 128. The case that they are the same thing was constructed, not discovered, and the construction has a paper trail.",
         content: [
           "The word \"Judaism\" appears in the historical record approximately 2,200 years before the word \"Zionism.\" That gap is not a theological argument. It is a documented chronological fact. Two different words. Two different centuries of origin. Two different institutional architectures. Two different bodies of founding documents. The conflation of the two is not a natural linguistic evolution. It is a documented political operation with a documented starting date, a documented institutional structure, and a documented beneficiary.",
           "This chapter establishes the definitions. Not editorially. Forensically. What each tradition is, what documents produced it, and what those documents actually say.",
@@ -246,7 +246,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "The Basel Congress, 1897",
-        description: "Herzl's founding documents, congress proceedings, and the secular-nationalist framing in his own words.",
+        description: "The congress that launched Zionism was rejected by the organized Jewish community before it opened. The rejection letter is in the record. So is everything that happened next.",
         content: [
           "The First Zionist Congress convened on August 29, 1897, in the concert hall of the Stadtcasino Basel, Switzerland. It was originally scheduled for Munich, Germany. It did not take place in Munich because the organized Jewish community of Munich rejected it. The Executive Committee of the Union of Rabbis in Germany published their protest declaration before the congress convened. Both Orthodox and Reform community leadership in Munich, two wings of German Judaism that agreed on almost nothing, agreed on this: they did not want the Zionist congress in their city.",
           "Herzl moved the congress to Basel. Two hundred and eight delegates from seventeen countries attended. Twenty-six press correspondents covered it. The proceedings were conducted in German. Herzl acted as chairperson.",
@@ -313,7 +313,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "Jewish Anti-Zionism: The Internal Record",
-        description: "Neturei Karta, the American Council for Judaism, rabbinic rulings: opposition from within, documented since 1897.",
+        description: "Jewish opposition to Zionism began in 1897 and has never stopped. This chapter documents it, chapter and verse, from the primary sources of the Jewish tradition itself.",
         content: [
           "The opposition to Zionism within Judaism did not begin after 1948. It did not begin after the Six-Day War of 1967. It did not begin after the occupation of the West Bank. It began in 1897, in the same month, in the same city, in direct response to the founding congress of the movement itself. It has never stopped. It has been published continuously, in multiple languages, across multiple institutional frameworks, by Orthodox rabbis, Reform rabbis, Conservative scholars, secular Jewish intellectuals, and organized Jewish communal bodies on multiple continents for 128 consecutive years.",
           "The dominant political discourse about Judaism and Zionism does not foreground this record. This chapter does nothing except present it. The record is long because the opposition is long. The opposition is long because the theological and ethical objections are serious. The primary sources document both the objections and the institutional history of their systematic marginalization.",
@@ -399,7 +399,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "The Balfour Declaration",
-        description: "A British foreign policy letter. Who wrote it, who received it, and what the Ottoman and Arab response was.",
+        description: "Sixty-seven words from a British Foreign Secretary to a private citizen rearranged the legal status of a territory inhabited by 700,000 people. The primary sources document what happened next.",
         content: [
           "The Balfour Declaration is two hundred and seventeen words long. It was written on November 2, 1917. It was written by Arthur James Balfour, the British Foreign Secretary, on behalf of the British Cabinet. It was addressed to Walter Rothschild, the second Baron Rothschild, a prominent figure in the British Zionist Federation. It was a letter from a government minister to a private citizen representing a political lobby. It was not a treaty. It was not a statute. It was not a United Nations resolution. It was not a legal instrument of any kind recognized under international law as it existed in 1917.",
           "It is the document upon which the political Zionist movement's claim to British governmental support for a Jewish homeland in Palestine rests. It is one of the most consequential letters in the history of the twentieth century. It is also one of the most consistently mischaracterized documents in contemporary political discourse.",
@@ -473,7 +473,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "Land, Census, and Demographic Reality",
-        description: "Ottoman land registries, British Mandate censuses, pre-1948 population distribution. The numbers as recorded.",
+        description: "Land registries do not have political agendas. This chapter reads the Ottoman tapu records and British Mandate censuses and reports only what they recorded about who owned what.",
         content: [
           "A land registry does not have a political agenda. It records who owned what land, in what quantity, in what location, on what date, under what legal instrument of transfer. The Ottoman land registry system, known as the tapu, operated continuously in Palestine from 1858 to 1918. The British Mandate land administration system operated continuously from 1920 to 1948. Both systems produced primary source documents of land ownership and population distribution that exist in archives in Istanbul, London, Ramallah, and Jerusalem. Those documents are the subject of this chapter.",
           "The political discourse about Palestine before 1948 frequently describes the land as either largely empty and available for settlement or as fully owned and occupied by an existing population. Neither characterization requires editorial adjudication. The primary source record requires reading.",
@@ -547,7 +547,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "The UN Record",
-        description: "Resolution 3379 (1975) and its reversal (1991): the political context, the votes, the reasoning on all sides.",
+        description: "The same question was put to the United Nations in 1975 and again in 1991. The answers were opposite. Both votes, and the speeches that explain each one, are in the primary record.",
         content: [
           "On November 10, 1975, the United Nations General Assembly adopted Resolution 3379 by a vote of 72 in favor, 35 against, and 32 abstentions. The resolution determined that Zionism is a form of racism and racial discrimination. Sixteen years later, on December 16, 1991, the United Nations General Assembly adopted Resolution 46/86 by a vote of 111 in favor, 25 against, and 13 abstentions. Resolution 46/86 revoked Resolution 3379 in its entirety.",
           "These two votes are among the most politically significant actions in the history of the United Nations General Assembly. They are also among the most consistently mischaracterized in contemporary political discourse. Resolution 3379 is cited as evidence of institutional antisemitism at the United Nations. Resolution 46/86 is cited as evidence of American political pressure overriding the will of the international community. Both characterizations are political positions. The primary source record documents both the resolutions and the political context that produced them.",
@@ -625,7 +625,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "Israeli Law: Nation vs. Faith",
-        description: "The legal distinction between Israeli nationality and Jewish nationality in Israeli civil law. Statutory text and court records.",
+        description: "Israeli civil law does not treat Israeli nationality and Jewish nationality as the same category. The Supreme Court of Israel has said so in writing. This chapter reads the statutes and the rulings.",
         content: [
           "A state that defines itself as both Jewish and democratic has produced a legal architecture that attempts to hold both definitions simultaneously. The attempt is documented in the statutory record of the State of Israel from its founding legislation in 1948 through the Basic Law: Israel as the Nation-State of the Jewish People, adopted by the Knesset on July 19, 2018. That statutory record does not resolve the tension between the two definitions. It encodes it into law. The Israeli legal architecture is not theoretical. It is statutory. It is judicial. It is administrative. It is in the public record.",
           "This chapter reads the statutes. It reads the court opinions. It reads the dissents. It does not characterize the legal architecture it describes. The architecture characterizes itself through its own text and through the judicial reasoning that has interpreted it across seventy-six years of Israeli jurisprudence.",
@@ -716,7 +716,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "The Conflation Strategy, Documented",
-        description: "When and where equating anti-Zionism with antisemitism became organized policy. Lobbying records and legislative campaigns.",
+        description: "The argument that criticizing Zionism equals antisemitism has a documented start date, a documented institutional architecture, and a documented lobbying record. This chapter names all three.",
         content: [
           "A strategy is not a conspiracy. A strategy is a documented plan of action pursued by identified institutions using identifiable methods toward stated objectives. The strategy examined in this chapter is documented in lobbying registration records, congressional testimony transcripts, legislative history, institutional publications, and the public statements of the organizations that developed and deployed it.",
           "The strategy is this. Beginning in the late twentieth century and accelerating significantly after 2000, a set of identified organizations pursued a documented campaign to establish, through legislation, executive policy, and institutional adoption, a definition of antisemitism that includes criticism of the State of Israel and opposition to Zionism as a political movement within its parameters. The campaign produced documented legislative outcomes in the United States, the United Kingdom, and the European Union. It has produced institutional adoption of the relevant definitions at hundreds of universities. It has produced documented impacts on campus political speech. All of these outcomes are in the public record.",
@@ -818,7 +818,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "Voices From Within: Scholars, Rabbis, Organizations",
-        description: "A sourced catalog of Jewish anti-Zionist intellectual and religious output, 1897 to present.",
+        description: "128 years of Jewish anti-Zionist scholarship, rabbinic authority, and institutional dissent, assembled in chronological order from the primary sources of the tradition.",
         content: [
           "The previous eight chapters have established a primary source record. Judaism is a documented tradition. Zionism is a documented political movement. The two are not the same thing. Their conflation is a documented political strategy. The land of Palestine before 1948 is a documented demographic reality. The United Nations record on Zionism is a documented political history. Israeli law is a documented statutory architecture. The campaign to equate anti-Zionism with antisemitism is a documented institutional strategy. The primary source record establishes all of these facts.",
           "This chapter does something different from its predecessors. It does not build an argument from primary sources. It catalogs one. The catalog is the argument.",
@@ -905,7 +905,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "The Primary Source Verdict",
-        description: "Seven documented findings applied to the central question: chronological, textual, demographic, legal, conflation, opposition, and verdict. The record answers. This chapter applies it.",
+        description: "",
         content: [
           "The preceding nine chapters assembled the primary source record of two distinct traditions, one ancient and religious, one recent and political, alongside the documented strategy through which they have been conflated. This chapter does not add to that record. It applies the record to the question the volume was designed to answer: whether the equation of Judaism with Zionism can be sustained against the primary source documentation of both traditions.",
           "SECTION 10.1: THE CHRONOLOGICAL FINDING.",
@@ -1306,13 +1306,14 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                   const chapterNum = ch.isPreface ? null : book.chapters!.filter((c, j) => !c.isPreface && j <= i).length;
                   const badge = ch.isPreface ? "P" : String(chapterNum);
                   const isOpen = expandedChapter === i;
-                  const hasContent = ch.content && ch.content.length > 0;
+                  const hasContent = !!(ch.description && ch.description.trim().length > 0);
+                  const sourceCount = ch.sources?.length ?? 0;
                   return (
                     <li key={i} className="rounded-lg overflow-hidden border" style={{ borderColor: book.accent + "30" }}>
                       <button
                         className="w-full flex gap-3 items-start px-3 py-3 text-left transition-colors"
                         style={{ background: isOpen ? book.accent + "10" : "transparent" }}
-                        onClick={() => setExpandedChapter(isOpen ? null : i)}
+                        onClick={() => hasContent ? setExpandedChapter(isOpen ? null : i) : undefined}
                       >
                         <span
                           className="mt-0.5 shrink-0 font-mono text-[10px] font-bold w-6 h-6 rounded flex items-center justify-center"
@@ -1322,7 +1323,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                         </span>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-bold leading-snug" style={{ color: book.accent }}>{ch.title}</p>
-                          {!isOpen && <p className="text-xs leading-relaxed mt-0.5 text-gray-600">{ch.description}</p>}
+                          {!isOpen && ch.description && <p className="text-xs leading-relaxed mt-0.5 text-gray-600">{ch.description}</p>}
                         </div>
                         {hasContent && (
                           <span className="shrink-0 text-[10px] font-mono mt-1" style={{ color: book.accent + "99" }}>
@@ -1332,30 +1333,19 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                       </button>
                       {isOpen && hasContent && (
                         <div className="px-4 pb-5 pt-3 border-t" style={{ borderColor: book.accent + "20" }}>
-                          {ch.content!.map((para, pi) => {
-                            const isSectionHeader = /^SECTION \d+\.\d+:/.test(para);
-                            return isSectionHeader ? (
-                              <p key={pi} className="text-[10px] font-bold font-mono tracking-widest uppercase mt-5 mb-2 first:mt-0" style={{ color: book.accent }}>{para}</p>
-                            ) : (
-                              <p key={pi} className="text-sm leading-relaxed text-gray-800 mb-3 last:mb-0">{para}</p>
-                            );
-                          })}
-                          {ch.sources && ch.sources.length > 0 && (
-                            <div className="mt-5 pt-4 border-t" style={{ borderColor: book.accent + "20" }}>
-                              <p className="text-[9px] font-bold font-mono tracking-widest uppercase mb-2" style={{ color: book.accent }}>APA 7 Primary Sources</p>
-                              <ul className="space-y-1.5">
-                                {ch.sources.map((src, si) => (
-                                  <li key={si} className="text-[10px] leading-relaxed text-gray-500 font-mono">{src}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      {isOpen && !hasContent && (
-                        <div className="px-4 pb-4 pt-2 border-t" style={{ borderColor: book.accent + "20" }}>
-                          <p className="text-xs text-gray-400 italic">{ch.description}</p>
-                          <p className="text-xs text-gray-300 mt-2">Full chapter content coming soon.</p>
+                          <p className="text-sm leading-relaxed text-gray-700 mb-4">{ch.description}</p>
+                          <div className="rounded-lg p-4" style={{ background: book.accent + "0F", borderLeft: `3px solid ${book.accent}` }}>
+                            {sourceCount > 0 && (
+                              <p className="text-[9px] font-mono font-bold tracking-[0.15em] uppercase mb-1.5" style={{ color: book.accent }}>
+                                {sourceCount} Primary Source{sourceCount !== 1 ? "s" : ""} Cited
+                              </p>
+                            )}
+                            <p className="text-xs text-gray-500 leading-relaxed mb-3">Full chapter analysis, evidence, and citations are in the FactBook.</p>
+                            <button className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85" style={{ background: book.accent, color: book.accentFg }}>
+                              Vol. 08 — {book.price ?? "$39.95"} — Pre-Order
+                              <ArrowRight className="w-3 h-3" />
+                            </button>
+                          </div>
                         </div>
                       )}
                     </li>
