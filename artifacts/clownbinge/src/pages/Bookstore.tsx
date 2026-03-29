@@ -25,6 +25,7 @@ interface FactBook {
   subtitle?: string;
   coverImage?: string;
   coverAnchor?: string;
+  coverVideo?: string;
   pages?: number;
   price?: string;
   summary: string;
@@ -63,6 +64,7 @@ const BOOKS: FactBook[] = [
     coverDesign: "grid",
     coverImage: "/covers/vol02-cover.jpg",
     coverAnchor: "xMaxYMid slice",
+    coverVideo: "/vol02-bg.mp4",
     summary: "Congress has the documents. Senate intelligence committees have done the investigations. Internal communications have been leaked. Facebook, YouTube, X, and TikTok have been caught — not accused — of algorithmically amplifying disinformation for engagement revenue. This FactBook assembles the receipts from congressional testimony, whistleblower documents, and regulatory filings.",
     bullets: [
       "Facebook's own internal research showed the algorithm amplified outrage content by 5x",
@@ -1010,6 +1012,40 @@ function CoverSVG({ book }: { book: FactBook }) {
   const line1 = words.slice(0, mid).join(" ");
   const line2 = words.slice(mid).join(" ");
   const subtitleLines = book.subtitle ? wrapText(book.subtitle, 27) : [];
+
+  if (book.coverVideo) {
+    return (
+      <div className="relative w-full h-full overflow-hidden bg-black" style={{ containerType: "size" }}>
+        <video
+          src={book.coverVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* Fade to black — lower half */}
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.12) 38%, rgba(0,0,0,0.75) 68%, rgba(0,0,0,1) 100%)"
+        }} />
+        {/* Accent glow from bottom */}
+        <div className="absolute inset-0" style={{
+          background: `linear-gradient(to bottom, transparent 55%, ${accent}30 84%, ${accent}99 100%)`
+        }} />
+        {/* Title */}
+        <div className="absolute left-0 right-0 text-center px-[6%]" style={{ bottom: "11.5%" }}>
+          <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.8cqh", letterSpacing: "-0.2px" }}>{line1}</div>
+          {line2 && <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.8cqh", letterSpacing: "-0.2px", marginTop: "0.8cqh" }}>{line2}</div>}
+        </div>
+        {/* Footer bar */}
+        <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center" style={{ height: "9.4%", background: accent }}>
+          <span className="font-bold tracking-[1.5px]" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "2.3cqh", color: accentFg }}>
+            PRIMARY SOURCE ANALYTICS
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   if (book.coverImage) {
     return (
