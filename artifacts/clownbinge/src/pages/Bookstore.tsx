@@ -42,6 +42,7 @@ const BOOKS: FactBook[] = [
     tag: "NerdOut / Data",
     bg: "#0F0F0F", fg: "#FFFFFF", accent: "#FF0099", accentFg: "#FFFFFF",
     coverDesign: "stat",
+    coverImage: "/covers/vol01-cover.jpg",
     summary: "The narrative that Black Americans are inherently more violent is one of the most durable lies in American public life — repeated by politicians, amplified by media, and almost never challenged with actual data. This FactBook goes straight to the source: FBI crime statistics, peer-reviewed criminology, and federal data that dismantles the myth completely and traces its deliberate political origins.",
     bullets: [
       "FBI UCR and BJS data show violent crime tracks poverty and disinvestment — not race",
@@ -1011,26 +1012,36 @@ function CoverSVG({ book }: { book: FactBook }) {
     return (
       <svg viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
         <defs>
+          {/* Base fade-to-black across lower half */}
           <linearGradient id={`fade-${book.id}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#000000" stopOpacity="0.1" />
-            <stop offset="40%" stopColor="#000000" stopOpacity="0.15" />
-            <stop offset="72%" stopColor="#000000" stopOpacity="0.75" />
+            <stop offset="0%" stopColor="#000000" stopOpacity="0.08" />
+            <stop offset="38%" stopColor="#000000" stopOpacity="0.12" />
+            <stop offset="68%" stopColor="#000000" stopOpacity="0.72" />
             <stop offset="100%" stopColor="#000000" stopOpacity="1" />
           </linearGradient>
+          {/* Accent-color glow bleeding up from footer — gives each cover a signature hue */}
+          <linearGradient id={`glow-${book.id}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={accent} stopOpacity="0" />
+            <stop offset="55%" stopColor={accent} stopOpacity="0" />
+            <stop offset="84%" stopColor={accent} stopOpacity="0.18" />
+            <stop offset="100%" stopColor={accent} stopOpacity="0.55" />
+          </linearGradient>
         </defs>
-        {/* Black bg */}
+        {/* Black bg fallback */}
         <rect width="240" height="360" fill="#000000" />
         {/* Full-bleed photo */}
         <image href={book.coverImage} x="0" y="0" width="240" height="360" preserveAspectRatio="xMidYMid slice" />
         {/* Fade photo into black */}
         <rect width="240" height="360" fill={`url(#fade-${book.id})`} />
-        {/* Title — centered, mid-bottom */}
-        <text x="120" y="240" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line1}</text>
-        <text x="120" y="263" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line2}</text>
+        {/* Accent color glow from bottom — ties cover to brand color */}
+        <rect width="240" height="360" fill={`url(#glow-${book.id})`} />
+        {/* Title — white, seated just above footer */}
+        <text x="120" y="238" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line1}</text>
+        <text x="120" y="261" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line2}</text>
         {subtitleLines.map((l, i) => (
-          <text key={i} x="120" y={284 + i * 13} fontSize="9.5" fill="#F5C518" fontFamily="'JetBrains Mono',monospace" fontWeight="700" letterSpacing="0.3" textAnchor="middle">{l}</text>
+          <text key={i} x="120" y={282 + i * 13} fontSize="9.5" fill="#F5C518" fontFamily="'JetBrains Mono',monospace" fontWeight="700" letterSpacing="0.3" textAnchor="middle">{l}</text>
         ))}
-        {/* Blue footer bar */}
+        {/* Accent footer bar */}
         <rect x="0" y="326" width="240" height="34" fill={accent} />
         <text x="20" y="347" fontSize="8.5" fill={accentFg} fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700">
           PRIMARY SOURCE ANALYTICS
@@ -1640,7 +1651,10 @@ export default function Bookstore() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-5 gap-y-12">
-          {BOOKS.map((book) => (
+          {[...BOOKS].sort((a, b) => {
+            const ORDER = [1, 8, 2, 3, 4, 5, 6, 7, 9, 10];
+            return ORDER.indexOf(a.id) - ORDER.indexOf(b.id);
+          }).map((book) => (
             <div key={book.id} className="group flex flex-col">
               <div className="relative mb-5">
                 <button
