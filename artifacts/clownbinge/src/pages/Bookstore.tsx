@@ -24,6 +24,7 @@ interface FactBook {
   coverDesign: "stat" | "grid" | "split" | "bar" | "slash" | "arch" | "type" | "minimal" | "overlap" | "circle";
   subtitle?: string;
   coverImage?: string;
+  coverAnchor?: string;
   pages?: number;
   price?: string;
   summary: string;
@@ -61,6 +62,7 @@ const BOOKS: FactBook[] = [
     bg: "#1A3A8F", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#1A1A2E",
     coverDesign: "grid",
     coverImage: "/covers/vol02-cover.jpg",
+    coverAnchor: "xMaxYMid slice",
     summary: "Congress has the documents. Senate intelligence committees have done the investigations. Internal communications have been leaked. Facebook, YouTube, X, and TikTok have been caught — not accused — of algorithmically amplifying disinformation for engagement revenue. This FactBook assembles the receipts from congressional testimony, whistleblower documents, and regulatory filings.",
     bullets: [
       "Facebook's own internal research showed the algorithm amplified outrage content by 5x",
@@ -1031,7 +1033,7 @@ function CoverSVG({ book }: { book: FactBook }) {
         {/* Black bg fallback */}
         <rect width="240" height="360" fill="#000000" />
         {/* Full-bleed photo */}
-        <image href={book.coverImage} x="0" y="0" width="240" height="360" preserveAspectRatio="xMidYMid slice" />
+        <image href={book.coverImage} x="0" y="0" width="240" height="360" preserveAspectRatio={book.coverAnchor ?? "xMidYMid slice"} />
         {/* Fade photo into black */}
         <rect width="240" height="360" fill={`url(#fade-${book.id})`} />
         {/* Accent color glow from bottom — ties cover to brand color */}
