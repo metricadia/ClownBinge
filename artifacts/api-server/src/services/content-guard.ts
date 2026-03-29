@@ -72,7 +72,11 @@ const BODY_PHRASES: string[] = [
   "as discussed previously",
   "recall that",
   "as you may recall",
-  "returning to",
+  "returning to this",
+  "returning to our",
+  "returning to the question",
+  "returning to the topic",
+  "returning to the point",
   "as I mentioned",
   "as we have seen",
 ];
