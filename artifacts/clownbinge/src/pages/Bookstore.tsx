@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearch } from "wouter";
 import { Layout } from "@/components/Layout";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 import { BookOpen, ArrowRight, CheckCircle, Download, Package, Layers, X, Video, Users } from "lucide-react";
@@ -1538,6 +1539,16 @@ export default function Bookstore() {
   });
 
   const [selectedBook, setSelectedBook] = useState<FactBook | null>(null);
+  const search = useSearch();
+
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    const bookId = params.get("book");
+    if (bookId) {
+      const book = BOOKS.find((b) => b.id === Number(bookId));
+      if (book) setSelectedBook(book);
+    }
+  }, [search]);
 
   return (
     <Layout>

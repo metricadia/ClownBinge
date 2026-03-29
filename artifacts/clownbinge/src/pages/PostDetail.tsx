@@ -21,7 +21,6 @@ import { useFactoidPopup } from "@/hooks/use-factoid-popup";
 import { FactoidPopup } from "@/components/FactoidPopup";
 import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
-import { FactBookUpsell } from "@/components/FactBookUpsell";
 import { ForensicPivot } from "@/components/ForensicPivot";
 
 function linkifySource(text: string): React.ReactNode {
@@ -275,7 +274,6 @@ export default function PostDetail() {
           </div>
         )}
 
-        <FactBookUpsell slug={slug} />
 
         {/* Zone 1: Hero Ad — direct sponsor takes priority; programmatic slot falls back */}
         {sponsor
