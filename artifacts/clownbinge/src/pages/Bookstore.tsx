@@ -1032,8 +1032,8 @@ function CoverSVG({ book }: { book: FactBook }) {
         <div className="absolute inset-0" style={{
           background: `linear-gradient(to bottom, transparent 55%, ${accent}30 84%, ${accent}99 100%)`
         }} />
-        {/* Title + subtitle stacked just above footer */}
-        <div className="absolute left-0 right-0 text-center px-[6%]" style={{ bottom: "9.5%" }}>
+        {/* Title + subtitle anchored just below chin */}
+        <div className="absolute left-0 right-0 text-center px-[6%]" style={{ top: "57%" }}>
           <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.8cqh", letterSpacing: "-0.2px" }}>{line1}</div>
           {line2 && <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.8cqh", letterSpacing: "-0.2px", marginTop: "0.8cqh" }}>{line2}</div>}
           {book.subtitle && (
