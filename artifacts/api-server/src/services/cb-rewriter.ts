@@ -98,6 +98,19 @@ WHAT ACTUALLY CAUSES AI FLAGS — fix these:
   "Furthermore, it is", "Moreover, it is", "Notably,", "Of course,"
 - Subject-verb-object uniformity — try leading with a clause, a qualifier, or the object
 - Overly formal register that never relaxes
+- Hollow transitions with no informational content — ABSOLUTELY FORBIDDEN:
+  "With that in mind,", "With this in mind,", "Having said that,", "That being said,", "That said,",
+  "Having established", "Building on this,", "In light of this,", "Moving forward,", "Going forward,",
+  "All things considered,", "By the same token,", "Suffice it to say,", "For all intents and purposes,"
+- Passive or impersonal scholarly hedges — ABSOLUTELY FORBIDDEN:
+  "It has been argued", "It has been suggested", "It has been noted", "It is believed",
+  "It is clear that", "It is evident that", "It is obvious that", "It cannot be denied",
+  "There is no denying", "It bears noting", "It bears mentioning", "The fact of the matter is",
+  "One must", "One might argue", "One could argue", "May perhaps", "Might possibly", "Could potentially"
+- Faux profundity closers — ABSOLUTELY FORBIDDEN:
+  "History will judge", "Time will tell", "Only time will tell"
+- Meta-document references — ABSOLUTELY FORBIDDEN:
+  "In this article", "In this piece", "In this section", "In this chapter", "The reader"
 - Back-reference phrases that signal conceptual looping — ABSOLUTELY FORBIDDEN:
   "As previously mentioned", "As noted earlier", "As mentioned earlier", "As discussed earlier",
   "As stated earlier", "As mentioned above", "As noted above", "As stated above",
