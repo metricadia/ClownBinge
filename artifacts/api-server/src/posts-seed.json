@@ -3657,5 +3657,28 @@
     "ai_score": null,
     "ai_score_tested_at": null,
     "published_at": "2026-03-30T22:00:00.000Z"
+  },
+  {
+    "case_number": "CB-000092",
+    "title": "Are there Strength Differences Between Men and Women? ClownBinge Researches. The Facts Might Surprise",
+    "slug": "strength-differences-men-women-research",
+    "teaser": "The research is real, the numbers are specific, and most people get nearly all of it wrong. Physical strength, immune response, longevity, endurance, and cognition: what the primary sources actually say.",
+    "category": "nerd_out",
+    "verified_source": "Hyde, J.S. (2005). American Psychologist; Klein & Flanagan (2016). Nature Reviews Immunology; Austad & Fischer (2016). Cell Metabolism",
+    "tags": [
+      "biology",
+      "sex differences",
+      "health",
+      "research",
+      "cognition",
+      "immune system",
+      "longevity"
+    ],
+    "status": "published",
+    "pinned": false,
+    "locked": true,
+    "ai_score": null,
+    "ai_score_tested_at": null,
+    "published_at": "2026-03-30T21:58:23.561Z"
   }
 ]
