@@ -18,3 +18,9 @@ id = "uF2QnjMlL9UHfEJ5OnhA0"
 uri = "file://artifacts/clownbinge/public/Vol08-AncientFaith-ModernPolitics.docx"
 type = "word_document"
 title = "Vol. 08 — Ancient Faith, Modern Politics (Word Document)"
+
+[[outputs]]
+id = "dsjOB2NBxASo39DSDfzbx"
+uri = "file://ClownBinge-Platform-Report.md"
+type = "text"
+title = "ClownBinge Platform Intelligence Report"
