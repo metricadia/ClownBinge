@@ -1,0 +1,11 @@
+Revenue Track,Model,Price Point,Format,Current Inventory,Scales With
+1 - MediaVine Display Advertising,CPM passive,Per 1000 impressions,4 banner slots per article across the full archive,316 active slots (79 articles x 4). Every new article adds 4.,Article count and traffic. Locked records generate passive impressions indefinitely.
+2 - Reader Donations,Trust-based voluntary,Open amount,Persistent Donate Today CTA site-wide on every page,Active,Audience loyalty and trust accumulation over time
+3 - Pay-Per Reports Standard,Transactional on demand,$4.95,Verified primary source summary on any public figure,Unlimited capacity,Volume of public figure coverage requests
+3 - Pay-Per Reports Deep,Transactional on demand,$24.95,Full 29-page documented analysis with CB citation chain throughout,Unlimited capacity,Volume of public figure coverage requests
+4 - FactBook eBooks Individual,Direct digital commerce,$24.95 to $39.95,Instant PDF delivery. Fully cited primary-sourced research volume.,10 volumes. 1 published (Vol. 08). 9 pre-order.,Volume publication rate. Each new published volume adds a revenue unit.
+5 - Complete Library Bundle,Direct digital commerce,$149.00,All 10 FactBook volumes in one archive. Saves $100 vs individual.,Available now,Value grows as more volumes move from pre-order to published
+Ad: Category Sponsorship,Sponsorship,From $2500/month,Brand as presenting sponsor across entire editorial category,17 categories available,Category traffic volume
+Ad: Sponsored Research Brief,Sponsorship,From $3500/placement,CB-standard primary source brief labeled sponsored with permanent archive placement,Per placement unlimited,Demand from mission-aligned organizations
+Ad: ClownCheck Sponsorship,Sponsorship,From $1500/month,Brand co-branding on every verification report delivered,One exclusive sponsor position,Verification tool usage volume
+Ad: In-Article Display,Display,From $750/month,Mid-article and footer placements. Average session 6+ minutes.,316 positions across 79 articles 4 per article,Article count and reader session depth

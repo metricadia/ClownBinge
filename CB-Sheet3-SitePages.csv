@@ -1,0 +1,16 @@
+Page Name,Route,Page Type,Description,Public
+Home / Newsroom,/,Editorial,"Main article index. All 79 published case records. Category filter, search, and self-own ticker.",Yes
+Article Detail,/case/:slug,Editorial,"Full article view with case number, citations, factoid links, ForensicPivot mid-article CTA, and record lock status.",Yes
+Bookstore,/bookstore,Commerce,"10-volume FactBook series. Individual modals per book with Outline, Description, Ideal Reader, and Video tabs. Deep-link via ?book=N.",Yes
+ClownCheck / Verify News,/clowncheck,Tool,Verification tool. Readers submit a claim or headline for primary source cross-reference.,Yes
+Buy Reports,/reports,Commerce,Pay-per-report product. $4.95 standard summary / $24.95 full 29-page primary source report on any public figure.,Yes
+About ClownBinge,/about,Institutional,"Mission statement, platform philosophy, editorial model, and company identity (Primary Source Analytics LLC).",Yes
+Contact,/contact,Institutional,Contact form and editorial inquiry. Also mounted at /advertise.,Yes
+Advertise,/advertise,Commerce,"Ad formats: Category Sponsorship $2500/mo, Sponsored Research $3500/placement, ClownCheck Sponsorship $1500/mo, In-Article Display $750/mo.",Yes
+Invest in Us / Support,/invest-in-us,Commerce,Reader support and donation page. Persistent Donate Today CTA across all site pages.,Yes
+Submit a Tip,/submit,Editorial,Tip submission form. Readers submit documented leads for editorial review.,Yes
+Topic Tag Index,/tags/:tag,Editorial,Tag-filtered article index. Surfaces all articles sharing a given editorial tag.,Yes
+Ethics and Editorial Standards,/ethics,Legal / Editorial,"Full editorial methodology, sourcing policy, CB citation standard, AI-clean prose requirements, and verification process. Updated March 2026.",Yes
+Privacy Policy,/privacy,Legal,"Privacy policy for ClownBinge.com / Primary Source Analytics LLC. Data collection, cookie usage, and reader rights.",Yes
+Terms of Service,/terms,Legal,"Terms of service governing use of clownbinge.com, purchase terms for FactBooks and pay-per reports, and intellectual property.",Yes
+404 Not Found,*,System,Custom not-found page for unmatched routes.,Yes

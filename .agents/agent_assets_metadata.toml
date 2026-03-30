@@ -30,3 +30,33 @@ id = "a6TnNDfF2MAgRKLsqZvIj"
 uri = "file://ClownBinge-Website-Inventory.xlsx"
 type = "table"
 title = "ClownBinge Complete Website Inventory (Fixed)"
+
+[[outputs]]
+id = "Q873VkX81BEBf92gSSaz1"
+uri = "file://CB-Sheet1-Articles.csv"
+type = "table"
+title = "Sheet 1 — Articles (79)"
+
+[[outputs]]
+id = "nKoyRdXkcGaim1E9d9_dZ"
+uri = "file://CB-Sheet2-FactBooks.csv"
+type = "table"
+title = "Sheet 2 — FactBooks (10 Volumes)"
+
+[[outputs]]
+id = "4oykWR225qOcLC32qBbV6"
+uri = "file://CB-Sheet3-SitePages.csv"
+type = "table"
+title = "Sheet 3 — Site Pages and Routes"
+
+[[outputs]]
+id = "51pcxQadKw1fNHHwP8b5y"
+uri = "file://CB-Sheet4-BusinessModel.csv"
+type = "table"
+title = "Sheet 4 — Business Model"
+
+[[outputs]]
+id = "eUqmBCgKgkqafFt55aSN7"
+uri = "file://CB-Sheet5-Categories.csv"
+type = "table"
+title = "Sheet 5 — Thematic Categories"
