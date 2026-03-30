@@ -175,8 +175,8 @@ export default function Home() {
             {/* Highly Popular featured block */}
             {highlightedPost && !category && (
               <div
-                className="mb-8 rounded-2xl overflow-hidden border border-blue-100"
-                style={{ background: "linear-gradient(135deg, #dbeafe 0%, #e8edf5 55%, #f1f5f9 100%)" }}
+                className="mb-8 rounded-2xl overflow-hidden border border-blue-200"
+                style={{ background: "#E8EDF5" }}
               >
                 <div className="px-6 pt-5 pb-1 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-0 bg-white/80 border border-blue-200 rounded-full overflow-hidden">
