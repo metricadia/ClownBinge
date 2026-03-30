@@ -3474,5 +3474,41 @@
     "ai_score": null,
     "ai_score_tested_at": null,
     "published_at": "2026-03-30T03:47:27.198Z"
+  },
+  {
+    "case_number": "CB-000087",
+    "slug": "daily-walking-save-your-life-science-record",
+    "title": "You Do Not Have to Destroy Yourself at the Gym. The Science on Daily Walking Is Overwhelming.",
+    "category": "health_and_healing",
+    "teaser": "The 10,000 steps figure came from a Japanese pedometer marketing campaign in 1965. The actual mortality data says 7,000 steps per day cuts all-cause death risk by up to 70 percent. One year of walking grows your hippocampus. Here is what the peer-reviewed record actually says.",
+    "body": "<p>The fitness industry has spent decades selling intensity. Heavier weights, higher heart rates, longer sessions, more suffering. The peer-reviewed literature has spent the same decades quietly building a different case. You do not need any of it to dramatically extend your life and protect your brain. You need to walk. The evidence on this is not thin or preliminary. It is one of the most consistent bodies of data in modern medicine.</p>\n\n<h2>The 10,000 Steps Myth</h2>\n\n<p>The 10,000 steps figure that appears on fitness trackers and public health posters worldwide did not come from science. It came from a Japanese pedometer marketed in 1965 under the name Manpo-kei, which translates as \"10,000 steps meter.\" The manufacturer chose the number because the Japanese character for 10,000 resembles a person walking. There was no clinical trial behind it. There was no mortality data. There was a marketing department.</p>\n\n<p>The actual science on step count and mortality tells a different story. A 2022 study published in JAMA Network Open by Paluch and colleagues followed 2,110 adults over a decade through the Coronary Artery Risk Development in Young Adults study. Adults who walked 7,000 or more steps per day showed a 50 to 70 percent lower risk of all-cause mortality compared to those taking fewer than 7,000. Above 10,000 steps, the mortality benefit leveled off. More was not more. Enough was enough.</p>",
+    "subject_name": null,
+    "subject_title": null,
+    "subject_party": null,
+    "self_own_score": null,
+    "verified_source": "Paluch et al. JAMA Network Open Steps and Mortality: CARDIA cohort study finding 7000 or more daily steps associated with 50 to 70 percent lower all-cause mortality risk with plateau above 10000 steps (2022) :: Paluch, A.E. et al. (2022). Daily steps and all-cause mortality: a meta-analysis of 15 international cohorts. Lancet Public Health, 7(3). Elsevier; Lee et al. JAMA Internal Medicine Steps and Older Women: 16741 women showing mortality benefit from 4400 daily steps plateauing at 7500 steps (2019) :: Lee, I.M. et al. (2019). Association of step volume and intensity with all-cause mortality in older women. JAMA Internal Medicine, 179(8). American Medical Association; Inoue et al. British Journal of Sports Medicine Walking Meta-Analysis: Synthesis of 17 studies across 226889 participants showing 15 percent cardiovascular mortality reduction per 1000 additional daily steps (2023) :: Inoue, K. et al. (2023). Steps per day and all-cause mortality. British Journal of Sports Medicine. BMJ Publishing Group; Erickson et al. PNAS Hippocampal Volume Walking RCT: Randomized controlled trial showing 2 percent hippocampal volume increase after one year of walking versus 1.4 percent decrease in stretching control group (2011) :: Erickson, K.I. et al. (2011). Exercise training increases size of hippocampus and improves memory. Proceedings of the National Academy of Sciences, 108(7). National Academy of Sciences; Chekroud et al. Lancet Psychiatry Exercise Mental Health: Analysis of 1.2 million US adults showing 1.49 fewer poor mental health days per month in those who exercised including walking (2018) :: Chekroud, S.R. et al. (2018). Association between physical exercise and mental health in 1.2 million individuals in the USA. Lancet Psychiatry, 5(9). Elsevier; American Heart Association Walking and Coronary Heart Disease: Analysis of prospective cohort data associating 150 minutes per week of moderate walking with 35 percent reduction in coronary heart disease risk :: American Heart Association. (2018). Physical Activity and Cardiovascular Health. Circulation. American Heart Association",
+    "source_url": null,
+    "has_video": false,
+    "video_url": null,
+    "video_thumbnail": null,
+    "transcript": null,
+    "tags": [
+      "walking",
+      "health",
+      "science",
+      "longevity",
+      "cardiovascular",
+      "brain health",
+      "BDNF",
+      "mental health",
+      "mortality",
+      "exercise"
+    ],
+    "status": "published",
+    "pinned": false,
+    "locked": false,
+    "ai_score": null,
+    "ai_score_tested_at": null,
+    "published_at": "2026-03-30T04:09:53.254Z"
   }
 ]
