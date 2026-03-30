@@ -3573,5 +3573,42 @@
     "ai_score": null,
     "ai_score_tested_at": null,
     "published_at": "2026-03-24T12:00:00Z"
+  },
+  {
+    "case_number": "CB-000089",
+    "slug": "international-law-self-determination-land-sovereignty-defense-documented-record",
+    "title": "Beyond Discourse Theatre: What International Law Has Said About Self-Determination, Land Sovereignty, and the Right of Defense Since 1920.",
+    "category": "law_and_justice",
+    "teaser": "The debate is downstream of the documents. The Montevideo Convention codified statehood criteria in 1933. The League of Nations recognized Palestine as provisionally independent in 1922. The ICJ ruled on Article 51 in 2004. The 2024 provisional measures vote was 15 to 2. ClownBinge is publishing from the primary source record up.",
+    "body": "<p>See DB for full body.</p>",
+    "subject_name": null,
+    "subject_title": null,
+    "subject_party": null,
+    "self_own_score": null,
+    "verified_source": "Montevideo Convention on the Rights and Duties of States: Codified international standard for statehood (1933) :: Seventh International Conference of American States. (1933). Convention on the Rights and Duties of States. Montevideo. League of Nations Treaty Series; League of Nations Mandate for Palestine: Class A Mandate recognizing Palestine as provisionally independent (1922) :: League of Nations. (1922). The Palestine Mandate. Council of the League of Nations. Geneva; Fourth Geneva Convention: Binding treaty prohibiting transfer of occupying power civilian population into occupied territory under Article 49 (1949) :: ICRC. (1949). Geneva Convention Relative to the Protection of Civilian Persons in Time of War. Geneva; ICJ Advisory Opinion on the Wall 2004: Finding Article 51 has no relevance to separation barrier in occupied West Bank (2004) :: International Court of Justice. (2004). Legal Consequences of the Construction of a Wall in the Occupied Palestinian Territory. The Hague; ICJ Provisional Measures South Africa v. Israel: Plausibility finding 15 to 2 on Genocide Convention allegations (2024) :: International Court of Justice. (2024). Application of the Convention on the Prevention and Punishment of the Crime of Genocide in the Gaza Strip. The Hague",
+    "source_url": null,
+    "has_video": false,
+    "video_url": null,
+    "video_thumbnail": null,
+    "transcript": null,
+    "tags": [
+      "international law",
+      "Palestine",
+      "self-determination",
+      "Geneva Convention",
+      "ICJ",
+      "land sovereignty",
+      "Article 51",
+      "Montevideo Convention",
+      "Balfour Declaration",
+      "occupation",
+      "United Nations"
+    ],
+    "status": "published",
+    "pinned": false,
+    "locked": false,
+    "ai_score": null,
+    "ai_score_tested_at": null,
+    "published_at": "2026-03-30T18:57:41.323Z"
   }
 ]
