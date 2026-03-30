@@ -3510,5 +3510,43 @@
     "ai_score": null,
     "ai_score_tested_at": null,
     "published_at": "2026-03-30T04:09:53.254Z"
+  },
+  {
+    "case_number": "CB-000088",
+    "slug": "sugar-hfcs-obesity-disease-gut-empirical-record",
+    "title": "Sugar and High Fructose Corn Syrup Are Feeding Something. The Empirical Record on What They Are Doing to the American Body.",
+    "category": "health_and_healing",
+    "teaser": "The food industry paid Harvard researchers in the 1960s to blame fat and clear sugar. JAMA Internal Medicine found the documents in 2016. The actual biochemical record covers liver destruction, gut dysbiosis, cancer amplification, cardiovascular mortality, and a regulatory approval built on manufacturer-submitted data. Here is the full case.",
+    "body": "<p>See DB for full body.</p>",
+    "subject_name": null,
+    "subject_title": null,
+    "subject_party": null,
+    "self_own_score": null,
+    "verified_source": "Kearns et al. JAMA Internal Medicine Sugar Industry Research Manipulation: Internal Sugar Research Foundation documents showing paid manipulation of Harvard nutrition research to redirect blame from sugar to dietary fat (2016) :: Kearns, C.E. et al. (2016). Sugar Industry and Coronary Heart Disease Research: A Historical Analysis of Internal Industry Documents. JAMA Internal Medicine, 176(11). American Medical Association; Bray et al. American Journal of Clinical Nutrition HFCS Obesity Timeline: Epidemiological documentation of parallel rise in HFCS consumption and obesity prevalence in the United States from 1970 to 2000 (2004) :: Bray, G.A. et al. (2004). Consumption of high-fructose corn syrup in beverages may play a role in the epidemic of obesity. American Journal of Clinical Nutrition, 79(4). American Society for Nutrition; Stanhope et al. Journal of Clinical Investigation Fructose vs Glucose RCT: Randomized controlled trial showing greater visceral fat accumulation, triglyceride elevation, and de novo hepatic lipogenesis in fructose-consuming group versus glucose at matched caloric load (2009) :: Stanhope, K.L. et al. (2009). Consuming fructose-sweetened, not glucose-sweetened, beverages increases visceral adiposity and lipids and decreases insulin sensitivity in overweight/obese humans. Journal of Clinical Investigation, 119(5). American Society for Clinical Investigation; Imamura et al. BMJ Sugar-Sweetened Beverages Meta-Analysis: Systematic review of 17 cohort studies finding 26 percent greater type 2 diabetes risk and 35 percent greater fatal cardiovascular disease risk at one to two servings of SSBs per day (2015) :: Imamura, F. et al. (2015). Consumption of sugar sweetened beverages, artificially sweetened beverages, and fruit juice and incidence of type 2 diabetes. BMJ, 351. BMJ Publishing Group; Malik et al. Circulation Sugar-Sweetened Beverages and Cardiovascular Risk: Meta-analysis documenting consistent association between SSB consumption and cardiovascular disease risk across multiple prospective cohorts including fructose-driven triglyceride and uric acid mechanisms (2010) :: Malik, V.S. et al. (2010). Sugar-sweetened beverages and risk of metabolic syndrome and type 2 diabetes. Diabetes Care, 33(11). American Diabetes Association; Yang et al. JAMA Internal Medicine Added Sugar and Cardiovascular Mortality: NHANES analysis showing 38 percent greater cardiovascular mortality at 17 to 21 percent of calories from added sugar and doubled risk above 21 percent (2014) :: Yang, Q. et al. (2014). Added sugar intake and cardiovascular diseases mortality among US adults. JAMA Internal Medicine, 174(4). American Medical Association; Sonnenburg Lab Cell High-Sugar Diet and Gut Microbiome Diversity: Randomized human trial showing high-fermented low-sugar diet increases microbiome diversity and reduces inflammatory markers (2022) :: Wastyk, H.C. et al. (2021). Gut-microbiota-targeted diets modulate human immune status. Cell, 184(16). Cell Press",
+    "source_url": null,
+    "has_video": false,
+    "video_url": null,
+    "video_thumbnail": null,
+    "transcript": null,
+    "tags": [
+      "sugar",
+      "high fructose corn syrup",
+      "HFCS",
+      "obesity",
+      "gut health",
+      "cancer",
+      "liver disease",
+      "diabetes",
+      "cardiovascular",
+      "nutrition",
+      "metabolic health",
+      "gut microbiome"
+    ],
+    "status": "published",
+    "pinned": false,
+    "locked": false,
+    "ai_score": null,
+    "ai_score_tested_at": null,
+    "published_at": "2026-03-30T04:38:59.068Z"
   }
 ]
