@@ -189,7 +189,7 @@ const BOOKS: FactBook[] = [
     bg: "#0A0A0A", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF",
     coverDesign: "split",
     coverImage: "/covers/vol07-cover.jpg",
-    coverAnchor: "xMidYMid slice",
+    coverAnchor: "xMidYMid meet",
     summary: "The wealth, infrastructure, and institutional foundation of the United States was created through systematic extraction of labor and land from three groups who received none of the ownership: Indigenous nations, enslaved Africans, and immigrant workers. This FactBook uses property records, census data, congressional land grants, and economic scholarship to quantify what was taken.",
     bullets: [
       "Federal land grant records document 270 million acres taken from Indigenous sovereignty",
@@ -1746,7 +1746,7 @@ export default function Bookstore() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-5 gap-y-12">
           {[...BOOKS].sort((a, b) => {
-            const ORDER = [1, 8, 2, 4, 3, 5, 6, 7, 9, 10];
+            const ORDER = [1, 8, 2, 4, 7, 3, 5, 6, 9, 10];
             return ORDER.indexOf(a.id) - ORDER.indexOf(b.id);
           }).map((book) => (
             <div key={book.id} className="group flex flex-col">
