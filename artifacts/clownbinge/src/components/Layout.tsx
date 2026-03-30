@@ -388,20 +388,28 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             </div>
           </div>
         )}
-        <button
-          onClick={() => setCtaOpen((o) => !o)}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-full font-bold text-xs text-[#1A3A8F] shadow-lg transition-transform active:scale-95"
-          style={{ background: "#F5C518" }}
-        >
-          {ctaOpen ? (
-            "Close"
-          ) : (
-            <>
-              <Heart className="w-3 h-3" />
-              <span>Donate Today</span>
-            </>
-          )}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setCtaOpen((o) => !o)}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-full font-bold text-xs text-[#1A3A8F] shadow-lg transition-transform active:scale-95"
+            style={{ background: "#F5C518" }}
+          >
+            {ctaOpen ? (
+              "Close"
+            ) : (
+              <>
+                <Heart className="w-3 h-3" />
+                <span>Donate Today</span>
+              </>
+            )}
+          </button>
+          <span
+            className="font-mono text-xs font-black tabular-nums leading-none px-2 py-1 rounded-full"
+            style={{ color: "rgba(0,0,0,0.8)", background: "rgba(255,255,255,0.75)", backdropFilter: "blur(4px)" }}
+          >
+            {postCount ?? 0}/400
+          </span>
+        </div>
       </div>
     </div>
   );
