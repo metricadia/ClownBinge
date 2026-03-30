@@ -154,6 +154,8 @@ router.get("/posts/:slug", async (req, res) => {
     }
 
     const p = post[0];
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+    res.setHeader("Pragma", "no-cache");
     res.json({
       id: p.id,
       caseNumber: p.caseNumber,
