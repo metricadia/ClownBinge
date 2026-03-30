@@ -2,7 +2,6 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { 
   useListPosts, 
-  useGetPost, 
   useIncrementView,
   ListPostsCategory 
 } from "@workspace/api-client-react";
@@ -84,7 +83,16 @@ export function usePostsFeedPaginated(category?: ListPostsCategory, pageSize = 2
 }
 
 export function usePostDetail(slug: string) {
-  return useGetPost(slug);
+  return useQuery({
+    queryKey: ["post", slug],
+    queryFn: async () => {
+      const res = await fetch(`/api/posts/${slug}?_t=${Date.now()}`, { cache: "no-store" });
+      if (!res.ok) throw new Error("Post not found");
+      return res.json();
+    },
+    staleTime: 0,
+    enabled: Boolean(slug),
+  });
 }
 
 export function usePostsCount() {
