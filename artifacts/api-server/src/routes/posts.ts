@@ -63,6 +63,8 @@ router.get("/posts", async (req, res) => {
     } else {
       // Main feed: religion excluded entirely (religion tab only)
       conditions.push(sql`${postsTable.category} != 'religion'`);
+      // Main feed: nerd_out articles only appear if nerd_accessible = true
+      conditions.push(sql`(${postsTable.category} != 'nerd_out' OR ${postsTable.nerdAccessible} = true)`);
     }
 
     const where = conditions.length === 1 ? conditions[0] : and(...conditions);
