@@ -16,6 +16,8 @@ router.get("/posts/count", async (_req, res) => {
       .select({ count: count() })
       .from(postsTable)
       .where(eq(postsTable.status, "published"));
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+    res.setHeader("Pragma", "no-cache");
     res.json({ count: Number(result[0]?.count ?? 0) });
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch count" });

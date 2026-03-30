@@ -91,7 +91,7 @@ export function usePostsCount() {
   return useQuery<number>({
     queryKey: ["posts-count"],
     queryFn: async () => {
-      const res = await fetch("/api/posts/count");
+      const res = await fetch(`/api/posts/count?t=${Date.now()}`, { cache: "no-store" });
       const data = await res.json();
       return data.count as number;
     },
