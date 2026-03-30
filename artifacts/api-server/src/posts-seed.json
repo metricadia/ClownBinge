@@ -3704,5 +3704,28 @@
     "ai_score": null,
     "ai_score_tested_at": null,
     "published_at": "2026-03-30T22:05:12.203Z"
+  },
+  {
+    "case_number": "CB-000094",
+    "title": "The Science of Knowing Yourself: What Journaling Research Actually Proves About the Brain, the Body, and Behavior",
+    "slug": "science-of-knowing-yourself-journaling-research",
+    "teaser": "In 1986, a psychologist asked students to write about their worst experiences for four days. Six months later, they were healthier. What happened inside their bodies, and what thirty years of research says about why writing changes everything.",
+    "category": "health_and_healing",
+    "verified_source": "Foundational Expressive Writing Study :: Pennebaker, J.W., & Beall, S.K. (1986). Confronting a traumatic event: Toward an understanding of inhibition and disease. Journal of Abnormal Psychology. American Psychological Association.; Immune Response to Expressive Writing :: Pennebaker, J.W., Kiecolt-Glaser, J.K., & Glaser, R. (1988). Disclosure of traumas and immune function: Health implications for psychotherapy. Journal of Consulting and Clinical Psychology. American Psychological Association.; Cognitive Language and Health Outcomes :: Pennebaker, J.W., & Francis, M.E. (1996). Cognitive, emotional, and language processes in disclosure. Cognition and Emotion. Taylor & Francis.; Meta-Analysis: Expressive Writing Effects :: Smyth, J.M. (1998). Written emotional expression: Effect sizes, outcome types, and moderating variables. Journal of Consulting and Clinical Psychology. American Psychological Association.; Gratitude Journaling and Wellbeing :: Emmons, R.A., & McCullough, M.E. (2003). Counting blessings versus burdens: An experimental investigation of gratitude and subjective wellbeing. Journal of Personality and Social Psychology. American Psychological Association.; Best Possible Self Journaling :: King, L.A. (2001). The health benefits of writing about life goals. Personality and Social Psychology Bulletin. SAGE Publications.; Self-Distancing in Expressive Writing :: Kross, E., & Ayduk, O. (2011). Making meaning out of negative experiences by self-distancing. Current Directions in Psychological Science. SAGE Publications.; Emotional and Physical Health Benefits Review :: Baikie, K.A., & Wilhelm, K. (2005). Emotional and physical health benefits of expressive writing. Advances in Psychiatric Treatment. Royal College of Psychiatrists.; Self-Distancing and Adaptive Self-Reflection :: Kross, E., Ayduk, O., & Mischel, W. (2005). When asking why does not hurt: Distinguishing rumination from reflective processing of negative emotions. Psychological Science. SAGE Publications.; Journaling and Relationship Quality :: Slatcher, R.B., & Pennebaker, J.W. (2006). How do I love thee? Let me count the words. Psychological Science. SAGE Publications.; Depression and Brief Journaling Intervention :: Krpan, K.M., Kross, E., Berman, M.G., Deldin, P.J., Askren, M.K., & Jonides, J. (2013). An everyday activity as a treatment for depression. Journal of Affective Disorders. Elsevier.; Journaling for Mental Health: Systematic Review :: Sohal, M., Singh, P., Dhillon, B.S., & Gill, H.S. (2022). Efficacy of journaling in the management of mental illness: A systematic review and meta-analysis. Family Medicine and Community Health. BMJ Publishing Group.",
+    "tags": [
+      "mental health",
+      "journaling",
+      "neuroscience",
+      "psychology",
+      "health",
+      "wellbeing",
+      "research"
+    ],
+    "status": "published",
+    "pinned": false,
+    "locked": true,
+    "ai_score": null,
+    "ai_score_tested_at": null,
+    "published_at": "2026-03-30T22:26:22.578Z"
   }
 ]
