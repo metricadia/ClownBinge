@@ -95,8 +95,8 @@ export function usePostsCount() {
       const data = await res.json();
       return data.count as number;
     },
-    staleTime: 60_000,
-    refetchInterval: 5 * 60_000,
+    staleTime: 0,
+    refetchInterval: 30_000,
   });
 }
 
