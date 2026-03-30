@@ -285,45 +285,49 @@ export default function Home() {
             <div className="sticky top-[96px]">
               {/* Founding Document block */}
               {foundingDoc && (
-                <div className="mb-6 rounded-xl overflow-hidden" style={{ border: "2px solid #B8860B" }}>
-                  {/* Header strip */}
-                  <div className="px-4 py-3 flex items-center justify-between" style={{ background: "#1A3A8F" }}>
+                <div
+                  className="mb-6 rounded-2xl overflow-hidden border border-blue-200"
+                  style={{ background: "#E8EDF5" }}
+                >
+                  {/* Top row: case number + category + verified badge */}
+                  <div className="px-5 pt-5 pb-2 flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-black uppercase tracking-[0.25em]" style={{ color: "#F5C518" }}>
-                        Official Record
-                      </span>
-                      <span style={{ color: "rgba(245,197,24,0.4)" }} className="text-sm">|</span>
-                      <span className="text-xs font-bold uppercase tracking-widest text-white/60">
+                      <span className="text-xs font-black uppercase tracking-widest" style={{ color: "#1A3A8F" }}>
                         {foundingDoc.caseNumber}
                       </span>
+                      <span className="text-blue-200 text-sm select-none">|</span>
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-white/70 border border-blue-200" style={{ color: "#1A3A8F" }}>
+                        {CATEGORY_LABELS[foundingDoc.category] ?? foundingDoc.category}
+                      </span>
                     </div>
-                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-                      <rect x="1" y="1" width="11" height="11" rx="2" stroke="#F5C518" strokeWidth="1.2"/>
-                      <path d="M3.5 4.5h6M3.5 6.5h6M3.5 8.5h4" stroke="#F5C518" strokeWidth="1.1" strokeLinecap="round"/>
-                    </svg>
+                    <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-white" style={{ background: "#E91E8C" }}>
+                      Verified
+                    </span>
                   </div>
 
                   {/* Body */}
-                  <div className="px-4 py-4 bg-white">
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] mb-2" style={{ color: "#B8860B" }}>
-                      Founding Document
-                    </p>
+                  <div className="px-5 py-3">
                     <Link href={`/case/${foundingDoc.slug}`}>
-                      <h3 className="font-sans font-extrabold text-base leading-snug mb-3 hover:opacity-70 transition-opacity cursor-pointer" style={{ color: "#1A3A8F" }}>
+                      <h3 className="font-sans font-extrabold text-base leading-snug mb-3 hover:opacity-70 transition-opacity cursor-pointer" style={{ color: "#1A1A2E" }}>
                         {foundingDoc.title}
                       </h3>
                     </Link>
-                    <p className="text-sm leading-relaxed mb-4 line-clamp-3 text-slate-500">
+                    <p className="text-sm leading-relaxed mb-4 line-clamp-2 text-slate-500">
                       {foundingDoc.teaser}
                     </p>
-                    <Link
-                      href={`/case/${foundingDoc.slug}`}
-                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-xs font-black uppercase tracking-widest transition-opacity hover:opacity-85"
-                      style={{ background: "#B8860B", color: "#fff" }}
-                    >
-                      Read the Origin Story
-                      <ArrowRight className="w-3 h-3" />
-                    </Link>
+                    <div className="border-t border-blue-200 pt-3 flex items-center justify-between">
+                      <span className="text-xs text-slate-400 truncate max-w-[55%]">
+                        {foundingDoc.verifiedSource ? `Source: ${foundingDoc.verifiedSource}` : "Founding Document"}
+                      </span>
+                      <Link
+                        href={`/case/${foundingDoc.slug}`}
+                        className="text-xs font-black uppercase tracking-widest hover:opacity-70 transition-opacity flex items-center gap-1"
+                        style={{ color: "#1A3A8F" }}
+                      >
+                        Read More
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               )}
