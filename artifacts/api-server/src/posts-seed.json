@@ -3635,5 +3635,27 @@
     "ai_score": null,
     "ai_score_tested_at": null,
     "published_at": "2026-03-30T20:00:00.000Z"
+  },
+  {
+    "case_number": "CB-000091",
+    "title": "The Biological Age Gap: The Epigenetic Receipts on Why Some Bodies Are Aging Faster Than Others",
+    "slug": "biological-age-gap-epigenetic-receipts-bodies-aging-faster",
+    "teaser": "Your birth certificate documents one number. Your DNA methylation profile documents another. The gap between them is not random. The peer-reviewed record shows it correlates with documented environmental stressors, and some of those stressors have zip codes.",
+    "category": "nerd_out",
+    "verified_source": "Horvath epigenetic clock biological age measurement across human tissues (2013) :: Genome Biology. (2013). DNA Methylation Age of Human Tissues and Cell Types. University of California Los Angeles.; GrimAge mortality-predicting epigenetic clock (2019) :: Aging. (2019). DNA Methylation GrimAge Strongly Predicts Lifespan and Healthspan. University of California Los Angeles.; DunedinPACE pace-of-aging DNA methylation biomarker (2022) :: eLife. (2022). DunedinPACE, a DNA Methylation Biomarker of the Pace of Aging. Duke University.; Weathering hypothesis original formulation documenting racial biological age disparities (1992) :: Ethnicity and Disease. (1992). The Weathering Hypothesis and the Health of African-American Women and Infants. University of Michigan.; Allostatic load racial health disparities documented from national survey data (2006) :: American Journal of Public Health. (2006). Weathering and Age Patterns of Allostatic Load Scores Among Blacks and Whites in the United States. University of Michigan.; Caloric restriction slows epigenetic aging in CALERIE randomized clinical trial (2023) :: Nature Aging. (2023). Effect of Long-Term Caloric Restriction on DNA Methylation Measures of Biological Aging in Healthy Adults from the CALERIE Trial. Columbia University.; Allostatic load concept and stress adaptation model (1998) :: Annals of the New York Academy of Sciences. (1998). Stress, Adaptation, and Disease: Allostasis and Allostatic Load. Rockefeller University.; Accelerated telomere shortening documented in response to chronic life stress (2004) :: Proceedings of the National Academy of Sciences. (2004). Accelerated Telomere Shortening in Response to Life Stress. University of California San Francisco.",
+    "tags": [
+      "epigenetics",
+      "aging",
+      "biology",
+      "racism",
+      "health",
+      "science"
+    ],
+    "status": "published",
+    "pinned": false,
+    "locked": false,
+    "ai_score": null,
+    "ai_score_tested_at": null,
+    "published_at": "2026-03-30T22:00:00.000Z"
   }
 ]
