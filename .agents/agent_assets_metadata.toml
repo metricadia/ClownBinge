@@ -24,3 +24,9 @@ id = "dsjOB2NBxASo39DSDfzbx"
 uri = "file://ClownBinge-Platform-Report.md"
 type = "text"
 title = "ClownBinge Platform Intelligence Report — Updated Business Model"
+
+[[outputs]]
+id = "a6TnNDfF2MAgRKLsqZvIj"
+uri = "file://ClownBinge-Website-Inventory.xlsx"
+type = "table"
+title = "ClownBinge Complete Website Inventory"
