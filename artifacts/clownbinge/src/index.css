@@ -97,27 +97,24 @@
   }
 
   /* ClownBinge Factoid Links */
-  a.cb-factoid {
-    color: inherit;
-    font-weight: 700;
-    text-decoration: underline dotted #B8860B;
-    text-underline-offset: 5px;
-    text-decoration-thickness: 2px;
-    cursor: pointer;
+  a.cb-factoid,
+  .prose a.cb-factoid,
+  .cb-article-body a.cb-factoid {
+    color: inherit !important;
+    font-weight: 700 !important;
+    text-decoration: underline !important;
+    text-decoration-style: dotted !important;
+    text-decoration-color: #C9A227 !important;
+    text-underline-offset: 4px !important;
+    text-decoration-thickness: 2px !important;
+    cursor: pointer !important;
     transition: text-decoration-color 0.15s;
   }
 
-  a.cb-factoid:hover {
-    text-decoration-color: #8B6508;
-    text-decoration-style: dotted;
-  }
-
-  .prose a.cb-factoid {
-    color: inherit !important;
-    font-weight: 700 !important;
-    text-decoration: underline dotted #B8860B !important;
-    text-underline-offset: 5px !important;
-    text-decoration-thickness: 2px !important;
+  a.cb-factoid:hover,
+  .prose a.cb-factoid:hover,
+  .cb-article-body a.cb-factoid:hover {
+    text-decoration-color: #A07A10 !important;
   }
 
   .cb-subject-intro {
