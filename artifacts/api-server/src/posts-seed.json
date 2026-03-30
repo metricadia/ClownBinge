@@ -3680,5 +3680,29 @@
     "ai_score": null,
     "ai_score_tested_at": null,
     "published_at": "2026-03-30T21:58:23.561Z"
+  },
+  {
+    "case_number": "CB-000093",
+    "title": "Thou Shall Not Gift: What Federal Law Says About Elected Officials and Personal Gifts - All Branches of Government",
+    "slug": "federal-gift-law-elected-officials-all-branches",
+    "teaser": "The dollar limits are specific. The prohibited sources are defined. The enforcement mechanisms vary by branch. And one branch spent decades with none at all. This is what the primary sources actually say.",
+    "category": "us_constitution",
+    "verified_source": "Foreign Emoluments Clause :: U.S. Const. art. I, § 9, cl. 8. United States Constitution. National Archives.; Domestic Emoluments Clause :: U.S. Const. art. II, § 1, cl. 7. United States Constitution. National Archives.; Executive Branch Gift Standards :: 5 C.F.R. § 2635.202. Standards of Ethical Conduct for Employees of the Executive Branch. Office of Government Ethics.; Foreign Gifts and Decorations Act :: 5 U.S.C. § 7342 (1966, as amended). Foreign Gifts and Decorations Act. U.S. Congress.; Senate Gift Rule :: Senate Rule XXXV. Standing Rules of the United States Senate. U.S. Senate.; House Gift Rule :: House Rule XXV. Rules of the House of Representatives. U.S. House of Representatives.; Lobbying Reform :: Pub. L. 110-81 (2007). Honest Leadership and Open Government Act of 2007. U.S. Congress.; Ethics in Government Act :: Pub. L. 95-521 (1978). Ethics in Government Act of 1978. U.S. Congress.; Judicial Conference Code :: Code of Conduct for United States Judges (2019). Judicial Conference of the United States. United States Courts.; Supreme Court Code of Conduct :: Code of Conduct for Justices of the Supreme Court of the United States (November 2023). Supreme Court of the United States.; Bribery Statute :: 18 U.S.C. § 201. Bribery of Public Officials and Witnesses. U.S. Congress.; Judicial Conduct Procedures :: 28 U.S.C. § 351. Complaints; Judge defined. U.S. Congress.; STOCK Act :: Pub. L. 112-105 (2012). Stop Trading on Congressional Knowledge Act of 2012. U.S. Congress.",
+    "tags": [
+      "us constitution",
+      "federal law",
+      "gifts",
+      "ethics",
+      "congress",
+      "supreme court",
+      "executive branch",
+      "accountability"
+    ],
+    "status": "published",
+    "pinned": false,
+    "locked": true,
+    "ai_score": null,
+    "ai_score_tested_at": null,
+    "published_at": "2026-03-30T22:05:12.203Z"
   }
 ]
