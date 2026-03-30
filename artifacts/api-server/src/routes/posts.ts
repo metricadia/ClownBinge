@@ -12,10 +12,17 @@ const router: IRouter = Router();
 
 router.get("/posts/count", async (_req, res) => {
   try {
+    // Count only CB-prefixed journalism articles (excludes CBR founding/record docs)
+    // so the widget numerator aligns with the highest CB case number in the archive.
     const result = await db
       .select({ count: count() })
       .from(postsTable)
-      .where(eq(postsTable.status, "published"));
+      .where(
+        and(
+          eq(postsTable.status, "published"),
+          sql`${postsTable.caseNumber} LIKE 'CB-%'`
+        )
+      );
     res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
     res.setHeader("Pragma", "no-cache");
     res.json({ count: Number(result[0]?.count ?? 0) });
