@@ -51,7 +51,7 @@ const BOOKS: FactBook[] = [
     coverDesign: "stat",
     coverImage: "/covers/vol01-cover.jpg",
     coverVideo: "/manufacturer-threat-bg.mp4",
-    summary: "The narrative that Black Americans are inherently more violent is one of the most durable lies in American public life — repeated by politicians, amplified by media, and almost never challenged with actual data. This FactBook goes straight to the source: FBI crime statistics, peer-reviewed criminology, and federal data that dismantles the myth completely and traces its deliberate political origins.",
+    summary: "The claim that Black Americans are inherently more violent is one of the most durable lies in American public life. Not a recent invention. A constructed narrative built on 400 years of deliberate dehumanization, beginning with the first enslaved Africans brought to these shores in 1619. The Three-Fifths Compromise didn't create that lie. It gave it a constitutional address.\n\nPoliticians repeat it. Media amplifies it. Data destroys it.\n\nThis FactBook goes straight to the source: FBI crime statistics, peer-reviewed criminology, and federal data that dismantles the myth completely and traces its deliberate political origins back to the people who built it.",
     bullets: [
       "FBI UCR and BJS data show violent crime tracks poverty and disinvestment — not race",
       "Peer-reviewed criminology finds race disappears as a variable when income is controlled",
@@ -1353,9 +1353,11 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
             {/* ── DESCRIPTION TAB ── */}
             {tab === "description" && (
               <>
-                <p className="text-sm text-gray-800 leading-relaxed font-medium mb-4">
-                  {book.summary}
-                </p>
+                {book.summary.split("\n\n").map((para, i) => (
+                  <p key={i} className="text-sm text-gray-800 leading-relaxed font-medium mb-3">
+                    {para}
+                  </p>
+                ))}
                 {book.extendedSummary && book.extendedSummary.map((para, i) => (
                   <p key={i} className="text-sm text-gray-800 leading-relaxed mb-3">
                     {para}
