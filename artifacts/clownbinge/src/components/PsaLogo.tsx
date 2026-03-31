@@ -10,7 +10,7 @@ export function PsaLogo({ variant, className = "", style }: PsaLogoProps) {
   const navy    = isDark ? "#1A3A8F"              : "#ffffff";
   const heavy   = isDark ? "#111111"              : "#ffffff";
   const light   = isDark ? "#5A5A5A"              : "rgba(255,255,255,0.78)";
-  const dot     = "#C9A227";
+  const dot     = isDark ? "#C9A227"              : "#ffffff";
 
   const base: React.CSSProperties = {
     fontFamily: "'Montserrat', sans-serif",
