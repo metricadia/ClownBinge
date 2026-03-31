@@ -15,7 +15,7 @@ export function AdminPageHeader({
     <div className="mb-8">
       <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">{eyebrow}</p>
       <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-3">{title}</h1>
-      <div className="flex items-center gap-3 mb-1">
+      <div className="flex justify-center items-center gap-3 mb-1">
         <img
           src="/psa-logo-transparent.png"
           alt="Primary Source Analytics"
