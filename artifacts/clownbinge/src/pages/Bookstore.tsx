@@ -43,7 +43,7 @@ const BOOKS: FactBook[] = [
     fullTitle: "The Manufactured Threat: Debunking the Racist Lie of Native Black Criminality",
     subtitle: "Debunking the Racist Lie of Native Black Criminality",
     tag: "NerdOut / Data",
-    bg: "#0F0F0F", fg: "#FFFFFF", accent: "#FF0099", accentFg: "#FFFFFF",
+    bg: "#0F0F0F", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF",
     coverDesign: "stat",
     coverImage: "/covers/vol01-cover.jpg",
     coverVideo: "/manufacturer-threat-bg.mp4",

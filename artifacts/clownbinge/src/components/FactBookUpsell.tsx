@@ -13,7 +13,7 @@ const FACTBOOK_MAP: Record<string, FactBookMeta> = {
     vol: "Vol. 01",
     shortTitle: "The Manufactured Threat",
     pitch: "The full empirical record — federal crime data, peer-reviewed criminology, and the documented political history of a racist narrative.",
-    accent: "#FF0099",
+    accent: "#1A3A8F",
   },
   "social-media-disinformation-platforms-facebook-x-youtube-tiktok-receipts": {
     vol: "Vol. 02",

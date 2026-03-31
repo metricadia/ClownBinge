@@ -24,7 +24,7 @@ const FORENSIC_PIVOT_MAP: Record<string, ForensicPivotConfig> = {
     tag: "NerdOut / Data",
     title: "The Manufactured Threat",
     subtitle: "Debunking the Racist Lie of Native Black Criminality",
-    accent: "#FF0099",
+    accent: "#1A3A8F",
     accentFg: "#FFFFFF",
     bg: "#0F0F0F",
     videoSrc: "/manufacturer-threat-bg.mp4",
