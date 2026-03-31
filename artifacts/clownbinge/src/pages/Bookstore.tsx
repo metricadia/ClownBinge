@@ -28,6 +28,7 @@ interface FactBook {
   titleLines?: [string, string];
   subtitleColor?: string;
   subtitle2?: string;
+  footerDotColor?: string;
   idealReaders?: { intro: string; readers: { title: string; body: string }[] };
   coverImage?: string;
   coverAnchor?: string;
@@ -80,7 +81,7 @@ const BOOKS: FactBook[] = [
     },
     pages: 164,
     tag: "NerdOut / Data",
-    bg: "#0F0F0F", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF",
+    bg: "#0F0F0F", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF", footerDotColor: "#C9A227",
     coverDesign: "stat",
     coverImage: "/covers/vol01-cover.jpg",
     coverVideo: "/manufacturer-threat-bg.mp4",
@@ -153,7 +154,7 @@ const BOOKS: FactBook[] = [
     fullTitle: "A Well-Regulated Exclusion: The Second Amendment's Race Problem on the Constitutional Record",
     subtitle: "The Second Amendment's Race Problem on the Constitutional Record",
     tag: "U.S. Constitution",
-    bg: "#F8F9FC", fg: "#1A1A2E", accent: "#1A3A8F", accentFg: "#FFFFFF",
+    bg: "#F8F9FC", fg: "#1A1A2E", accent: "#1A3A8F", accentFg: "#FFFFFF", footerDotColor: "#C9A227",
     coverDesign: "split",
     summary: "The Second Amendment was debated, drafted, and ratified when 'the people' had a specific racial definition — and state militia laws at the time made that explicit. This FactBook doesn't argue gun policy. It reads the constitutional record, the Founders' own words, and the Supreme Court's historical analysis to surface what was actually being protected and who was being excluded.",
     bullets: [
@@ -223,7 +224,7 @@ const BOOKS: FactBook[] = [
     fullTitle: "The Uncredited Builders: Indigenous Nations, Enslaved Africans, and Immigrants Who Made America",
     subtitle: "Indigenous Nations, Enslaved Africans, and Immigrants Who Made America",
     tag: "U.S. History",
-    bg: "#0A0A0A", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF",
+    bg: "#0A0A0A", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF", footerDotColor: "#C9A227",
     coverDesign: "split",
     coverImage: "/covers/vol07-cover.jpg",
     coverAnchor: "xMidYMid slice",
@@ -241,7 +242,7 @@ const BOOKS: FactBook[] = [
     shortTitle: "Ancient Faith, Modern Politics",
     fullTitle: "Ancient Faith, Modern Politics: The Documented Separation of Judaism and Zionism",
     tag: "Global South / History",
-    bg: "#0D0500", fg: "#FFFFFF", accent: "#6B3520", accentFg: "#F5C518",
+    bg: "#0D0500", fg: "#FFFFFF", accent: "#6B3520", accentFg: "#F5C518", footerDotColor: "#FFFFFF",
     coverDesign: "minimal",
     subtitle: "Judaism ≠ Zionism",
     subtitle2: "Rescuing a 3500+ Year-Old Religion from Divisive Politics",
@@ -1085,6 +1086,7 @@ function wrapText(text: string, maxChars: number): string[] {
 
 function CoverSVG({ book }: { book: FactBook }) {
   const { bg, fg, accent, accentFg, coverDesign, vol, shortTitle } = book;
+  const dotColor = book.footerDotColor ?? accentFg;
   const words = shortTitle.split(" ");
   const mid = Math.ceil(words.length / 2);
   const line1 = book.titleLines ? book.titleLines[0] : words.slice(0, mid).join(" ");
@@ -1122,8 +1124,8 @@ function CoverSVG({ book }: { book: FactBook }) {
         </div>
         {/* Footer bar */}
         <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center" style={{ height: "9.4%", background: accent }}>
-          <span className="font-bold tracking-[1.5px]" style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "2.1cqh", color: accentFg, letterSpacing: "0.08em" }}>
-            METRICADIA RESEARCH, LLC
+          <span className="font-bold" style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "2.1cqh", color: accentFg, letterSpacing: "0.08em" }}>
+            METRICADIA <span style={{ color: dotColor }}>–</span> RESEARCH, LLC
           </span>
         </div>
       </div>
@@ -1179,7 +1181,7 @@ function CoverSVG({ book }: { book: FactBook }) {
         {/* Accent footer bar */}
         <rect x="0" y="326" width="240" height="34" fill={accent} />
         <text x="120" y="347" fontSize="8" fill={accentFg} fontFamily="'Montserrat',sans-serif" letterSpacing="1" fontWeight="700" textAnchor="middle">
-          METRICADIA RESEARCH, LLC
+          <tspan>METRICADIA </tspan><tspan fill={dotColor}>–</tspan><tspan> RESEARCH, LLC</tspan>
         </text>
       </svg>
     );
@@ -1289,7 +1291,7 @@ function CoverSVG({ book }: { book: FactBook }) {
 
       <rect x="0" y="326" width="240" height="34" fill={accent} />
       <text x="120" y="347" fontSize="8" fill={accentFg} fontFamily="'Montserrat',sans-serif" letterSpacing="1" fontWeight="700" textAnchor="middle">
-        METRICADIA RESEARCH, LLC
+        <tspan>METRICADIA </tspan><tspan fill={dotColor}>–</tspan><tspan> RESEARCH, LLC</tspan>
       </text>
     </svg>
   );
