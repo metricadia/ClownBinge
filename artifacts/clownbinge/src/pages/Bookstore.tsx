@@ -25,6 +25,7 @@ interface FactBook {
   coverDesign: "stat" | "grid" | "split" | "bar" | "slash" | "arch" | "type" | "minimal" | "overlap" | "circle";
   subtitle?: string;
   titleLines?: [string, string];
+  subtitleColor?: string;
   coverImage?: string;
   coverAnchor?: string;
   coverVideo?: string;
@@ -44,6 +45,7 @@ const BOOKS: FactBook[] = [
     fullTitle: "Three-Fifths for 400 Years: Debunking the Racist Lie of Native Black Criminality",
     subtitle: "Debunking the Racist Lie of Native Black Criminality",
     titleLines: ["Three-Fifths", "for 400 Years"],
+    subtitleColor: "#7BB3F0",
     tag: "NerdOut / Data",
     bg: "#0F0F0F", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF",
     coverDesign: "stat",
@@ -1079,7 +1081,7 @@ function CoverSVG({ book }: { book: FactBook }) {
           <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.8cqh", letterSpacing: "-0.2px" }}>{line1}</div>
           {line2 && <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.8cqh", letterSpacing: "-0.2px", marginTop: "0.8cqh" }}>{line2}</div>}
           {book.subtitle && (
-            <div className="font-bold" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "2.5cqh", color: accent, letterSpacing: "0.3px", marginTop: "1.2cqh", lineHeight: 1.4 }}>
+            <div className="font-bold" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "2.5cqh", color: book.subtitleColor ?? accent, letterSpacing: "0.3px", marginTop: "1.2cqh", lineHeight: 1.4 }}>
               {book.subtitle}
             </div>
           )}
