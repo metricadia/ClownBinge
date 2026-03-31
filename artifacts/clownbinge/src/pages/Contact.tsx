@@ -71,7 +71,7 @@ export default function Contact() {
 
   return (
     <Layout>
-      <div className="max-w-3xl mx-auto px-4 pt-10">
+      <div className="max-w-3xl mx-auto px-4 py-12">
         <AdminPageHeader title="Contact, Support & Advertising Center" />
       </div>
 
