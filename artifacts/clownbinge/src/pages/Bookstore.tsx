@@ -1770,7 +1770,7 @@ export default function Bookstore() {
       <div id="all-volumes" className="max-w-6xl mx-auto px-6 py-16 sm:py-20">
 
         <div className="flex items-center justify-between mb-10 border-b border-border pb-5 gap-6">
-          <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap">
             <span
               className="inline-flex items-center justify-center w-9 h-9 rounded font-mono font-black text-sm shrink-0"
               style={{ background: "#1A3A8F", color: "#fff" }}
@@ -1782,7 +1782,8 @@ export default function Bookstore() {
             </h2>
             <span className="text-muted-foreground text-sm font-medium shrink-0">by</span>
             <PsaLogo variant="dark" style={{ fontSize: "0.9rem" }} />
-            <span className="text-muted-foreground text-sm font-medium shrink-0">| Parent Company of</span>
+            <span className="text-muted-foreground text-sm font-medium shrink-0" style={{ marginLeft: "-2px" }}>·</span>
+            <span className="text-muted-foreground text-sm font-medium shrink-0">Parent Company of</span>
             <span className="font-extrabold text-base shrink-0" style={{ color: "#1A3A8F" }}>
               Clown<span style={{ color: "#C9A227" }}>Binge</span>
             </span>
