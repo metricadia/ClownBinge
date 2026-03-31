@@ -52,7 +52,7 @@ const FORENSIC_PIVOT_MAP: Record<string, ForensicPivotConfig> = {
     accentFg: "#1A1A2E",
     bg: "#0D0500",
     coverImage: "/covers/vol08-cover.png",
-    price: "$39.95",
+    price: "$24.95",
   },
 };
 

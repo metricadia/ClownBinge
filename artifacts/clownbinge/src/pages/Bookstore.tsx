@@ -209,7 +209,7 @@ const BOOKS: FactBook[] = [
     subtitle: "Judaism ≠ Zionism",
     coverImage: "/covers/vol08-cover.png",
     pages: 128,
-    price: "$39.95",
+    price: "$24.95",
     chapters: [
       {
         isPreface: true,
@@ -1500,7 +1500,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                     className="ml-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85 shrink-0"
                     style={{ background: book.accent, color: book.accentFg }}
                   >
-                    {book.price ?? "$39.95"} — Pre-Order
+                    {book.price ?? "$24.95"} — Pre-Order
                     <ArrowRight className="w-3 h-3" />
                   </button>
                 </div>
@@ -1550,7 +1550,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                             )}
                             <p className="text-xs text-gray-500 leading-relaxed mb-3">Full chapter analysis, evidence, and citations are in the FactBook.</p>
                             <button className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85" style={{ background: book.accent, color: book.accentFg }}>
-                              Vol. 08 — {book.price ?? "$39.95"} — Pre-Order
+                              Vol. 08 — {book.price ?? "$24.95"} — Pre-Order
                               <ArrowRight className="w-3 h-3" />
                             </button>
                           </div>
