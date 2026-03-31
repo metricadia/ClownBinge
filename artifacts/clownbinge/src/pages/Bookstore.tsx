@@ -1095,7 +1095,7 @@ function CoverSVG({ book }: { book: FactBook }) {
 
   if (book.coverVideo) {
     return (
-      <div className="relative w-full h-full overflow-hidden bg-black">
+      <div className="relative w-full h-full overflow-hidden bg-black" style={{ containerType: "size" }}>
         <video
           src={book.coverVideo}
           autoPlay
@@ -1112,12 +1112,12 @@ function CoverSVG({ book }: { book: FactBook }) {
         <div className="absolute inset-0" style={{
           background: `linear-gradient(to bottom, transparent 55%, ${accent}30 84%, ${accent}99 100%)`
         }} />
-        {/* Title + subtitle — percentage-based to match SVG proportions (viewBox 240×360) */}
+        {/* Title + subtitle — cqw matches SVG fontSize=21 in viewBox 240: 21/240*100=8.75cqw */}
         <div className="absolute left-0 right-0 text-center px-[6%]" style={{ top: "57%" }}>
-          <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.833cqw", letterSpacing: "-0.2px" }}>{line1}</div>
-          {line2 && <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.833cqw", letterSpacing: "-0.2px", marginTop: "0.8cqw" }}>{line2}</div>}
+          <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "8.75cqw", letterSpacing: "-0.2px" }}>{line1}</div>
+          {line2 && <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "8.75cqw", letterSpacing: "-0.2px", marginTop: "1.2cqw" }}>{line2}</div>}
           {book.subtitle && (
-            <div className="font-bold" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "2.5cqw", color: book.subtitleColor ?? accent, letterSpacing: "0.3px", marginTop: "1.2cqw", lineHeight: 1.4 }}>
+            <div className="font-bold" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "3.96cqw", color: book.subtitleColor ?? accent, letterSpacing: "0.3px", marginTop: "1.8cqw", lineHeight: 1.4 }}>
               {book.subtitle}
             </div>
           )}
