@@ -319,10 +319,9 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex flex-col gap-2">
               <img
-                src="/psa-logo-transparent.png"
+                src="/psa-logo-white.png"
                 alt="Primary Source Analytics"
                 className="w-80 h-auto"
-                style={{ filter: "contrast(1000) brightness(0) invert(1)" }}
               />
               <p className="text-xs font-mono text-white/40 leading-relaxed">
                 &copy; {new Date().getFullYear()} Primary Source Analytics, LLC. All rights reserved.
