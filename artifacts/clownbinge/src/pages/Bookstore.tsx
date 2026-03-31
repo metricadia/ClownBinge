@@ -76,6 +76,7 @@ const BOOKS: FactBook[] = [
         },
       ],
     },
+    pages: 164,
     tag: "NerdOut / Data",
     bg: "#0F0F0F", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF",
     coverDesign: "stat",
