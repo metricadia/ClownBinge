@@ -3751,5 +3751,28 @@
     "ai_score": null,
     "ai_score_tested_at": null,
     "published_at": "2026-03-31T16:00:00.000Z"
+  },
+  {
+    "case_number": "CB-000096",
+    "title": "Is a Wealth Tax Constitutional? What the 16th Amendment and 104 Years of Case Law Actually Say",
+    "slug": "wealth-tax-constitutional-analysis-16th-amendment",
+    "teaser": "Taxing the wealthy because they are wealthy is a policy argument. Whether Congress has constitutional authority to do it is a separate question with a documented, sourced answer rooted in three cases and one amendment.",
+    "category": "money_and_power",
+    "verified_source": "16th Amendment :: Ratification of the Sixteenth Amendment to the United States Constitution (1913) :: United States Congress; Eisner v. Macomber :: Eisner v. Macomber, 252 U.S. 189 (1920) :: United States Supreme Court; Pollock v. Farmers' Loan :: Pollock v. Farmers' Loan and Trust Co., 157 U.S. 429 (1895) :: United States Supreme Court; Moore v. United States :: Moore v. United States, 602 U.S. 572 (2024) :: United States Supreme Court; Barrett Concurrence in Moore :: Barrett, A., concurring in Moore v. United States, 602 U.S. 572 (2024) :: United States Supreme Court; Thomas Dissent in Moore :: Thomas, C., dissenting in Moore v. United States, 602 U.S. 572 (2024) :: United States Supreme Court; Direct Tax Clause :: Article I, Sections 2 and 9 of the United States Constitution (1788) :: United States Constitution; The Stakeholder Society :: Ackerman, B., and Alstott, A. (1999). The Stakeholder Society :: Yale University Press; Helvering v. Bruun :: Helvering v. Bruun, 309 U.S. 461 (1940) :: United States Supreme Court; Sixteenth Amendment History :: Congressional Research Service (2022). The Sixteenth Amendment: A Short History :: Congressional Research Service",
+    "tags": [
+      "staff-favorite",
+      "constitutional-law",
+      "taxation",
+      "wealth-tax",
+      "16th-amendment",
+      "supreme-court",
+      "money-power"
+    ],
+    "status": "published",
+    "pinned": false,
+    "locked": false,
+    "ai_score": null,
+    "ai_score_tested_at": null,
+    "published_at": "2026-03-31T18:00:00.000Z"
   }
 ]
