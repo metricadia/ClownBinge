@@ -65,21 +65,31 @@ export function PostCard({ post }: { post: Post }) {
         <div className="absolute bottom-0 left-0 w-full h-1 bg-secondary" />
 
         <div className="p-5 sm:p-6">
-          {/* Header Row */}
-          <div className="flex justify-between items-start mb-4 gap-4">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="font-mono text-sm font-semibold tracking-tight text-primary">
-                {post.caseNumber}
-              </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm border border-primary/20 text-primary bg-primary/5">
+          {/* Header — Authority Line */}
+          <div className="mb-3 pb-3 border-b border-[#1A1A2E]/10">
+            <div className="flex items-start justify-between gap-3 mb-2.5">
+              <div className="min-w-0">
+                <p className="font-mono text-lg sm:text-xl font-extrabold tracking-[0.06em] text-[#1A1A2E] leading-none">
+                  {post.caseNumber}
+                </p>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.18em] font-semibold text-[#5A5A5A]">
+                  ClownBinge Record
+                </p>
+              </div>
+              <div className="shrink-0 rounded-md border border-[#C9A227]/50 bg-[#C9A227]/10 px-2 py-1">
+                <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
+              </div>
+            </div>
+
+            {/* Metadata Line — category + optional badges */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center rounded border border-[#6B3520]/30 bg-[#6B3520]/8 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.12em] text-[#6B3520]">
                 {CATEGORY_LABELS[post.category] || post.category}
               </span>
-            </div>
-            <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
               {post.userSubmitted && <UserSubmittedBadge />}
               {post.selfOwnScore != null && <SelfOwnScoreBadge score={post.selfOwnScore} />}
               {STAFF_PICKS_SLUGS.includes(post.slug) && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-green-600 text-white">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-green-600 text-white">
                   ★ Staff Pick
                 </span>
               )}
@@ -87,7 +97,7 @@ export function PostCard({ post }: { post: Post }) {
                 <TooltipProvider delayDuration={200}>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-slate-500 text-white cursor-help">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-slate-500 text-white cursor-help">
                         Academic
                       </span>
                     </TooltipTrigger>
@@ -100,7 +110,6 @@ export function PostCard({ post }: { post: Post }) {
                   </Tooltip>
                 </TooltipProvider>
               )}
-              <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
             </div>
           </div>
 

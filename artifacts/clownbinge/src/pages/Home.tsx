@@ -289,19 +289,25 @@ export default function Home() {
                   className="mb-6 rounded-2xl overflow-hidden border border-blue-200"
                   style={{ background: "#E8EDF5" }}
                 >
-                  {/* Top row: case number + category + verified badge */}
-                  <div className="px-5 pt-5 pb-2 flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-black uppercase tracking-widest" style={{ color: "#1A3A8F" }}>
-                        {foundingDoc.caseNumber}
-                      </span>
-                      <span className="text-blue-200 text-sm select-none">|</span>
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-white/70 border border-blue-200" style={{ color: "#1A3A8F" }}>
-                        {CATEGORY_LABELS[foundingDoc.category] ?? foundingDoc.category}
-                      </span>
+                  {/* Header — two-tier authority layout */}
+                  <div className="px-5 pt-5 pb-3 border-b border-blue-200">
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <div className="min-w-0">
+                        <p className="font-mono text-base font-extrabold tracking-[0.06em] leading-none" style={{ color: "#1A1A2E" }}>
+                          {foundingDoc.caseNumber}
+                        </p>
+                        <p className="mt-1 text-[9px] uppercase tracking-[0.18em] font-semibold" style={{ color: "#5A5A5A" }}>
+                          ClownBinge Record
+                        </p>
+                      </div>
+                      <div className="shrink-0 rounded-md border px-2 py-0.5" style={{ borderColor: "rgba(201,162,39,0.5)", background: "rgba(201,162,39,0.12)" }}>
+                        <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: "#E91E8C" }}>
+                          Verified
+                        </span>
+                      </div>
                     </div>
-                    <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-white" style={{ background: "#E91E8C" }}>
-                      Verified
+                    <span className="inline-flex items-center rounded border px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em]" style={{ borderColor: "rgba(107,53,32,0.3)", background: "rgba(107,53,32,0.08)", color: "#6B3520" }}>
+                      {CATEGORY_LABELS[foundingDoc.category] ?? foundingDoc.category}
                     </span>
                   </div>
 
