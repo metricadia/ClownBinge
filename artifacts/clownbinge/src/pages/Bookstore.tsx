@@ -1084,8 +1084,8 @@ function CoverSVG({ book }: { book: FactBook }) {
         </div>
         {/* Footer bar */}
         <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center" style={{ height: "9.4%", background: accent }}>
-          <span className="font-bold tracking-[1.5px]" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "2.3cqh", color: accentFg }}>
-            PRIMARY SOURCE ANALYTICS
+          <span className="font-bold tracking-[1.5px]" style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "2.1cqh", color: accentFg, letterSpacing: "0.08em" }}>
+            PRIMARY — SOURCE ANALYTICS, LLC
           </span>
         </div>
       </div>
@@ -1127,8 +1127,8 @@ function CoverSVG({ book }: { book: FactBook }) {
         ))}
         {/* Accent footer bar */}
         <rect x="0" y="326" width="240" height="34" fill={accent} />
-        <text x="120" y="347" fontSize="8.5" fill={accentFg} fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700" textAnchor="middle">
-          PRIMARY SOURCE ANALYTICS
+        <text x="120" y="347" fontSize="8" fill={accentFg} fontFamily="'Montserrat',sans-serif" letterSpacing="1" fontWeight="700" textAnchor="middle">
+          PRIMARY — SOURCE ANALYTICS, LLC
         </text>
       </svg>
     );
@@ -1237,8 +1237,8 @@ function CoverSVG({ book }: { book: FactBook }) {
       )}
 
       <rect x="0" y="326" width="240" height="34" fill={accent} />
-      <text x="120" y="347" fontSize="8.5" fill={accentFg} fontFamily="'JetBrains Mono',monospace" letterSpacing="1.5" fontWeight="700" textAnchor="middle">
-        PRIMARY SOURCE ANALYTICS
+      <text x="120" y="347" fontSize="8" fill={accentFg} fontFamily="'Montserrat',sans-serif" letterSpacing="1" fontWeight="700" textAnchor="middle">
+        PRIMARY — SOURCE ANALYTICS, LLC
       </text>
     </svg>
   );
@@ -1611,7 +1611,7 @@ export default function Bookstore() {
               style={{ background: "#F5C518", color: "#1A3A8F" }}
             >
               <BookOpen className="w-3 h-3" />
-              Primary Source Analytics
+              Primary Source Analytics, LLC
             </div>
 
             <h1 className="font-sans font-extrabold text-4xl sm:text-5xl text-white leading-tight mb-6">
