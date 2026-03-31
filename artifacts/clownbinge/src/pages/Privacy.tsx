@@ -33,7 +33,7 @@ export default function Privacy() {
 
   return (
     <Layout>
-      <div className="max-w-3xl mx-auto px-4 py-12 sm:py-20" ref={(el) => { containerRef.current = el; }}>
+      <div className="max-w-3xl mx-auto px-4 py-12" ref={(el) => { containerRef.current = el; }}>
 
         <AdminPageHeader title="Privacy & Free Speech Jurisdiction Policy" />
 

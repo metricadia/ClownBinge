@@ -71,10 +71,11 @@ export default function Contact() {
 
   return (
     <Layout>
-      <div className="max-w-5xl mx-auto px-4 py-10">
-
+      <div className="max-w-3xl mx-auto px-4 pt-10">
         <AdminPageHeader title="Contact, Support & Advertising Center" />
+      </div>
 
+      <div className="max-w-5xl mx-auto px-4 pb-10">
         {/* Tab selector */}
         <div className="grid grid-cols-3 gap-3 mb-8 mt-4">
           {tabs.map((tab) => {

@@ -11,7 +11,7 @@ export default function Terms() {
   });
   return (
     <Layout>
-      <div className="cb-container py-12 max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto px-4 py-12">
         <AdminPageHeader title="Terms of Service" />
         <div className="prose prose-lg max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:text-header prose-p:leading-relaxed">
           <p className="text-muted-foreground font-mono text-sm border-l-2 border-border pl-4">Last Updated: October 2023</p>

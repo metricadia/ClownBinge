@@ -14,7 +14,7 @@ export default function Support() {
   return (
     <Layout>
 
-      <div className="max-w-5xl mx-auto px-6 pt-10">
+      <div className="max-w-3xl mx-auto px-4 pt-10">
         <AdminPageHeader title="Support Independent Journalism" />
       </div>
 
