@@ -321,7 +321,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <img
                 src="/psa-logo-transparent.png"
                 alt="Primary Source Analytics"
-                className="w-48 h-auto"
+                className="w-64 h-auto"
                 style={{ filter: "contrast(1000) brightness(0) invert(1)" }}
               />
               <p className="text-xs font-mono text-white/40 leading-relaxed">

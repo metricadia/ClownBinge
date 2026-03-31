@@ -19,7 +19,7 @@ export function AdminPageHeader({
         <img
           src="/psa-logo-transparent.png"
           alt="Primary Source Analytics"
-          className="w-36 h-auto"
+          className="w-64 h-auto"
         />
       </div>
       <p className="text-muted-foreground text-xs font-mono">{subtitle}</p>
