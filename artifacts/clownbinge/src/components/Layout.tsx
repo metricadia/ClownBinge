@@ -316,12 +316,18 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             </div>
           </div>
 
-          <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <p className="text-xs font-mono text-white/50 leading-relaxed">
-              &copy; {new Date().getFullYear()} <span className="text-white/70 font-semibold">ClownBinge</span>
-              <span className="mx-2 text-white/20">|</span>
-              <span className="text-white/50">Primary Source Analytics, LLC</span>
-            </p>
+          <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex flex-col gap-2">
+              <img
+                src="/psa-logo-transparent.png"
+                alt="Primary Source Analytics"
+                className="h-7 w-auto opacity-80"
+                style={{ filter: "brightness(0) invert(1)" }}
+              />
+              <p className="text-xs font-mono text-white/40 leading-relaxed">
+                &copy; {new Date().getFullYear()} Primary Source Analytics, LLC. All rights reserved.
+              </p>
+            </div>
             <p className="text-[10px] font-mono tracking-[0.18em] uppercase" style={{ color: "#F5C518" }}>
               Independent<span className="opacity-60">.</span> Verified<span className="opacity-60">.</span> The Primary Source<span className="opacity-60">.</span>
             </p>
