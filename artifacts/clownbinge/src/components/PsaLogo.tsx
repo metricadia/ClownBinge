@@ -29,7 +29,7 @@ export function PsaLogo({ variant, className = "", style }: PsaLogoProps) {
       <span
         style={{
           display: "inline-block",
-          width: "0.38em",
+          width: "0.65em",
           height: "0.13em",
           background: dot,
           borderRadius: "2px",
