@@ -1095,7 +1095,7 @@ function CoverSVG({ book }: { book: FactBook }) {
 
   if (book.coverVideo) {
     return (
-      <div className="relative w-full h-full overflow-hidden bg-black" style={{ containerType: "size" }}>
+      <div className="relative w-full h-full overflow-hidden bg-black">
         <video
           src={book.coverVideo}
           autoPlay
@@ -1112,22 +1112,27 @@ function CoverSVG({ book }: { book: FactBook }) {
         <div className="absolute inset-0" style={{
           background: `linear-gradient(to bottom, transparent 55%, ${accent}30 84%, ${accent}99 100%)`
         }} />
-        {/* Title + subtitle anchored just below chin */}
+        {/* Title + subtitle — percentage-based to match SVG proportions (viewBox 240×360) */}
         <div className="absolute left-0 right-0 text-center px-[6%]" style={{ top: "57%" }}>
-          <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.8cqh", letterSpacing: "-0.2px" }}>{line1}</div>
-          {line2 && <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.8cqh", letterSpacing: "-0.2px", marginTop: "0.8cqh" }}>{line2}</div>}
+          <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.833cqw", letterSpacing: "-0.2px" }}>{line1}</div>
+          {line2 && <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "5.833cqw", letterSpacing: "-0.2px", marginTop: "0.8cqw" }}>{line2}</div>}
           {book.subtitle && (
-            <div className="font-bold" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "2.5cqh", color: book.subtitleColor ?? accent, letterSpacing: "0.3px", marginTop: "1.2cqh", lineHeight: 1.4 }}>
+            <div className="font-bold" style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: "2.5cqw", color: book.subtitleColor ?? accent, letterSpacing: "0.3px", marginTop: "1.2cqw", lineHeight: 1.4 }}>
               {book.subtitle}
             </div>
           )}
         </div>
-        {/* Footer bar */}
-        <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center" style={{ height: "9.4%", background: accent }}>
-          <span className="font-bold" style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "2.1cqh", color: accentFg, letterSpacing: "0.08em" }}>
-            METRICADIA <span style={{ color: dotColor }}>–</span> RESEARCH, LLC
-          </span>
-        </div>
+        {/* Footer bar — SVG overlay: identical viewBox 0 0 240 360, same rect + text as image/design branches */}
+        <svg
+          viewBox="0 0 240 360"
+          xmlns="http://www.w3.org/2000/svg"
+          className="absolute inset-0 w-full h-full pointer-events-none"
+        >
+          <rect x="0" y="326" width="240" height="34" fill={accent} />
+          <text x="120" y="347" fontSize="8" fill={accentFg} fontFamily="'Montserrat',sans-serif" letterSpacing="1" fontWeight="700" textAnchor="middle">
+            <tspan>METRICADIA </tspan><tspan fill={dotColor}>–</tspan><tspan> RESEARCH, LLC</tspan>
+          </text>
+        </svg>
       </div>
     );
   }
