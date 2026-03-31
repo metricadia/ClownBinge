@@ -1,16 +1,17 @@
 interface PsaLogoProps {
   variant: "dark" | "white";
+  dotColor?: string;
   className?: string;
   style?: React.CSSProperties;
 }
 
-export function PsaLogo({ variant, className = "", style }: PsaLogoProps) {
+export function PsaLogo({ variant, dotColor, className = "", style }: PsaLogoProps) {
   const isDark = variant === "dark";
 
   const navy    = isDark ? "#1A3A8F"              : "#ffffff";
   const heavy   = isDark ? "#111111"              : "#ffffff";
   const light   = isDark ? "#5A5A5A"              : "rgba(255,255,255,0.78)";
-  const dot     = isDark ? "#C9A227"              : "#ffffff";
+  const dot     = dotColor ?? "#C9A227";
 
   const base: React.CSSProperties = {
     fontFamily: "'Montserrat', sans-serif",
