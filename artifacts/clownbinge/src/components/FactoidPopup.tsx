@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import { Copy, Check, X, ExternalLink, Loader2 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { FactoidState } from "@/hooks/use-factoid-popup";
 
 interface FactoidPopupProps {
@@ -12,6 +12,9 @@ interface FactoidPopupProps {
   onCopy: () => void;
   extraFooter?: React.ReactNode;
 }
+
+const FONT_SIZES = [11, 13, 15] as const;
+type SizeIdx = 0 | 1 | 2;
 
 function sourceDomain(href: string): string {
   try { return new URL(href).hostname.replace(/^www\./, ""); } catch { return ""; }
@@ -35,8 +38,38 @@ function SummaryBody({ factoid }: { factoid: FactoidState }) {
   return <>{factoid.summary}</>;
 }
 
+function FontSizer({ sizeIdx, onChange }: { sizeIdx: SizeIdx; onChange: (i: SizeIdx) => void }) {
+  return (
+    <div className="cb-factoid-sizer" aria-label="Text size">
+      <button
+        className={`cb-factoid-sizer-btn${sizeIdx === 0 ? " active" : ""}`}
+        style={{ fontSize: "10px" }}
+        onClick={() => onChange(0)}
+        aria-label="Small text"
+        title="Small"
+      >a</button>
+      <button
+        className={`cb-factoid-sizer-btn${sizeIdx === 1 ? " active" : ""}`}
+        style={{ fontSize: "13px" }}
+        onClick={() => onChange(1)}
+        aria-label="Medium text"
+        title="Medium"
+      >A</button>
+      <button
+        className={`cb-factoid-sizer-btn${sizeIdx === 2 ? " active" : ""}`}
+        style={{ fontSize: "16px" }}
+        onClick={() => onChange(2)}
+        aria-label="Large text"
+        title="Large"
+      >A</button>
+    </div>
+  );
+}
+
 export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onCopy, extraFooter }: FactoidPopupProps) {
   const domain = factoid.href ? sourceDomain(factoid.href) : "";
+  const [sizeIdx, setSizeIdx] = useState<SizeIdx>(1);
+  const fontSize = `${FONT_SIZES[sizeIdx]}px`;
 
   useEffect(() => {
     if (!isMobile) return;
@@ -53,11 +86,16 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
           className="cb-factoid-sheet"
           role="dialog"
           aria-label="ClownBinge Factoid"
+          style={{ "--factoid-font-size": fontSize } as React.CSSProperties}
         >
           <div className="cb-factoid-sheet-handle" aria-hidden="true" />
 
-          <div className="cb-factoid-popup-header cb-factoid-sheet-header">
+          <div className="cb-factoid-popup-header cb-factoid-sheet-header" style={{ position: "relative" }}>
             <div className="cb-factoid-popup-label">Primary Source Reference</div>
+            <FontSizer sizeIdx={sizeIdx} onChange={setSizeIdx} />
+            <button className="cb-factoid-popup-close" onClick={onClose} aria-label="Close" style={{ top: 6, right: 6 }}>
+              <X size={11} strokeWidth={2.5} />
+            </button>
           </div>
 
           <div className="cb-factoid-sheet-scrollable">
@@ -96,10 +134,11 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
     <div
       ref={popupRef}
       className="cb-factoid-popup"
-      style={{ left: factoid.x, top: factoid.y }}
+      style={{ left: factoid.x, top: factoid.y, "--factoid-font-size": fontSize } as React.CSSProperties}
       role="dialog"
       aria-label="ClownBinge Factoid"
     >
+      <FontSizer sizeIdx={sizeIdx} onChange={setSizeIdx} />
       <button className="cb-factoid-popup-close" onClick={onClose} aria-label="Close">
         <X size={11} strokeWidth={2.5} />
       </button>
