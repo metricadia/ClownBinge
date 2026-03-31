@@ -39,8 +39,8 @@ interface FactBook {
 const BOOKS: FactBook[] = [
   {
     id: 1, vol: "Vol. 01",
-    shortTitle: "Three-Fifths: 400 Years of the Manufactured Threat",
-    fullTitle: "Three-Fifths: 400 Years of the Manufactured Threat — Debunking the Racist Lie of Native Black Criminality",
+    shortTitle: "Three-Fifths: 400 Years",
+    fullTitle: "Three-Fifths: 400 Years — Debunking the Racist Lie of Native Black Criminality",
     subtitle: "Debunking the Racist Lie of Native Black Criminality",
     tag: "NerdOut / Data",
     bg: "#0F0F0F", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF",
