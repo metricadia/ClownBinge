@@ -321,8 +321,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <img
                 src="/psa-logo-transparent.png"
                 alt="Primary Source Analytics"
-                className="h-7 w-auto opacity-80"
-                style={{ filter: "brightness(0) invert(1)" }}
+                className="h-8 w-auto"
+                style={{ filter: "contrast(1000) brightness(0) invert(1)" }}
               />
               <p className="text-xs font-mono text-white/40 leading-relaxed">
                 &copy; {new Date().getFullYear()} Primary Source Analytics, LLC. All rights reserved.
