@@ -48,7 +48,7 @@ export function PsaLogo({ variant, className = "", style }: PsaLogoProps) {
           marginLeft: "0.35em",
         }}
       >
-        Analytics
+        Analytics, LLC
       </span>
     </span>
   );
