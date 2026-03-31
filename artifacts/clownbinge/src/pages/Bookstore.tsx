@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearch } from "wouter";
 import { Layout } from "@/components/Layout";
+import { PsaLogo } from "@/components/PsaLogo";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 import { BookOpen, ArrowRight, CheckCircle, Download, Package, Layers, X, Video, Users } from "lucide-react";
 
@@ -1769,7 +1770,7 @@ export default function Bookstore() {
       <div id="all-volumes" className="max-w-6xl mx-auto px-6 py-16 sm:py-20">
 
         <div className="flex items-center justify-between mb-10 border-b border-border pb-5 gap-6">
-          <div className="flex items-center gap-3 min-w-0">
+          <div className="flex items-center gap-2.5 flex-wrap">
             <span
               className="inline-flex items-center justify-center w-7 h-7 rounded font-mono font-black text-xs shrink-0"
               style={{ background: "#1A3A8F", color: "#fff" }}
@@ -1779,8 +1780,11 @@ export default function Bookstore() {
             <h2 className="font-sans font-semibold text-xl text-foreground tracking-tight shrink-0">
               FactBooks™
             </h2>
-            <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-muted-foreground truncate">
-              by Metricadia Research&nbsp;&nbsp;|&nbsp;&nbsp;Parent Company of ClownBinge.com
+            <span className="text-muted-foreground text-xs font-medium shrink-0">by</span>
+            <PsaLogo variant="dark" style={{ fontSize: "0.72rem" }} />
+            <span className="text-muted-foreground text-xs font-medium shrink-0">| Parent Company of</span>
+            <span className="font-extrabold text-sm shrink-0" style={{ color: "#1A3A8F" }}>
+              Clown<span style={{ color: "#C9A227" }}>Binge</span>
             </span>
           </div>
           <span className="font-mono text-[10px] font-bold tracking-widest uppercase shrink-0" style={{ color: "#C9A227" }}>
