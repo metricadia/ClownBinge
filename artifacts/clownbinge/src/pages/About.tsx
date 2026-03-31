@@ -2,6 +2,8 @@ import { Layout } from "@/components/Layout";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { StatWidget } from "@/components/StatWidget";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
+import { useFactoidPopup } from "@/hooks/use-factoid-popup";
+import { FactoidPopup } from "@/components/FactoidPopup";
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -12,6 +14,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 export default function About() {
+  const { containerRef, popupRef, factoid, copied, isMobile, closeFactoid, handleCopy } = useFactoidPopup();
   usePageSeoHead({
     title: "About ClownBinge",
     description: "ClownBinge is verified accountability journalism by Primary Source Analytics, LLC. We document real incidents where public figures contradict their own documented record. Primary sources only.",
@@ -20,7 +23,7 @@ export default function About() {
   });
   return (
     <Layout>
-      <div className="max-w-3xl mx-auto px-4 py-12">
+      <div className="max-w-3xl mx-auto px-4 py-12" ref={containerRef}>
 
         <AdminPageHeader title="About ClownBinge" />
 
@@ -37,7 +40,16 @@ export default function About() {
             <span style={{ color: "#F5C518" }}>The clown farm is.</span>
           </h2>
           <p className="text-sm sm:text-base text-white/75 leading-relaxed">
-            <span className="text-white">The modern news cycle has become a performance industry:</span> outrage manufactured for engagement, facts subordinated to narrative, journalism repackaged as entertainment and sold to corporate interests. We do not participate in that system. We audit it. Every record we publish is extracted from primary sources: court filings, congressional transcripts, federal agency data, declassified documents. The performance is in the farm. The record is in the archive.
+            <a
+              className="cb-factoid"
+              style={{ color: "white" }}
+              href="#"
+              data-title="Corporate Media as Performance Industry"
+              data-summary="Multiple peer-reviewed studies document the structural shift of Western mainstream journalism from accountability reporting to engagement optimization. Research from the Reuters Institute for the Study of Journalism (2022) found that 48% of global news consumers actively avoid news because it feels emotionally manipulative or engineered for reaction rather than information. A 2021 MIT Media Lab study found that false news spreads six times faster than verified reporting on social platforms -- because algorithmically optimized media rewards emotionally provocative content over factual accuracy. Six corporations control approximately 90% of U.S. media output: Comcast, Disney, News Corp, Warner Bros. Discovery, Paramount, and Apollo Global Management. When editorial decisions are subordinate to advertiser relationships and engagement metrics, the structural incentives of corporate media converge with those of state propaganda: both optimize for compliance and attention, not accountability. Professor Noam Chomsky documented this mechanism in Manufacturing Consent (1988). The primary source record it predicted has since materialized. Western mainstream media is not state-controlled by law. It is market-controlled by design -- and the market does not reward hard accountability journalism. It rewards performance."
+            >
+              The modern news cycle has become a performance industry:
+            </a>{" "}
+            outrage manufactured for engagement, facts subordinated to narrative, journalism repackaged as entertainment and sold to corporate interests. We do not participate in that system. We audit it. Every record we publish is extracted from primary sources: court filings, congressional transcripts, federal agency data, declassified documents. The performance is in the farm. The record is in the archive.
           </p>
         </div>
 
@@ -221,6 +233,16 @@ export default function About() {
         </div>
 
       </div>
+      {factoid && (
+        <FactoidPopup
+          factoid={factoid}
+          popupRef={popupRef}
+          copied={copied}
+          isMobile={isMobile}
+          onClose={closeFactoid}
+          onCopy={handleCopy}
+        />
+      )}
     </Layout>
   );
 }
