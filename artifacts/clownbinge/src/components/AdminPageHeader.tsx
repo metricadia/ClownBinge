@@ -1,4 +1,5 @@
 import { AdminNav } from "@/components/AdminNav";
+import { PsaLogo } from "@/components/PsaLogo";
 
 interface AdminPageHeaderProps {
   title: string;
@@ -13,11 +14,9 @@ export function AdminPageHeader({
 }: AdminPageHeaderProps) {
   return (
     <div className="mb-8 text-center">
-      <img
-        src="/psa-logo-main.png"
-        alt="Primary Source Analytics"
-        className="w-96 h-auto mx-auto mb-5"
-      />
+      <div className="mb-5 flex justify-center">
+        <PsaLogo variant="dark" style={{ fontSize: "1.5rem" }} />
+      </div>
       <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-2">
         {title}
       </h1>
