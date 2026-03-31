@@ -151,7 +151,7 @@ export default function ComprehensiveReport() {
                     In a world of misinformation, the journalist's job is to provide the receipts. Not interpretation. The primary source record itself.
                   </p>
                   <p className="text-base text-header italic">
-                    Primary Source Analytics approach to accountability journalism
+                    Metricadia Research approach to accountability journalism
                   </p>
                 </div>
               </blockquote>

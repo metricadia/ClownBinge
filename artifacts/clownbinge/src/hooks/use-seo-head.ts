@@ -70,7 +70,7 @@ const PUBLISHER_BLOCK = {
   "@type": ["NewsMediaOrganization", "ResearchOrganization"],
   "@id": ORG_ID,
   "name": "ClownBinge",
-  "alternateName": "Primary Source Analytics, LLC",
+  "alternateName": "Metricadia Research, LLC",
   "url": DOMAIN,
   "logo": {
     "@type": "ImageObject",
@@ -78,7 +78,7 @@ const PUBLISHER_BLOCK = {
     "width": 400,
     "height": 60
   },
-  "description": "Primary Source Analytics, LLC publishes accountability journalism grounded exclusively in primary sources — court opinions, legislative records, peer-reviewed research, and official government documents. No editorializing. No fabrications. The record speaks for itself.",
+  "description": "Metricadia Research, LLC publishes accountability journalism grounded exclusively in primary sources — court opinions, legislative records, peer-reviewed research, and official government documents. No editorializing. No fabrications. The record speaks for itself.",
   "foundingDate": "2024",
   "knowsAbout": [
     "U.S. Constitutional Law",
@@ -194,7 +194,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     setMeta("description", description);
     setMeta("robots", "index, follow");
     setMeta("language", "en-US");
-    setMeta("author", "Primary Source Analytics, LLC");
+    setMeta("author", "Metricadia Research, LLC");
 
     setMeta("og:title",       post.title,   "property");
     setMeta("og:description", description,  "property");
@@ -256,7 +256,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     const backstoryProp: Record<string, unknown> = {
       "@type": "PropertyValue",
       "name": "backstory",
-      "value": "ClownBinge is published by Primary Source Analytics, LLC, an independent accountability journalism operation. Every article is built exclusively on primary sources: court opinions, legislative hearing transcripts, peer-reviewed research, and official government documents. The mission is to make the documented record accessible without editorializing — the evidence speaks for itself."
+      "value": "ClownBinge is published by Metricadia Research, LLC, an independent accountability journalism operation. Every article is built exclusively on primary sources: court opinions, legislative hearing transcripts, peer-reviewed research, and official government documents. The mission is to make the documented record accessible without editorializing — the evidence speaks for itself."
     };
 
     // Article @type — ScholarlyArticle for deep legal/historical/academic dives
@@ -530,7 +530,7 @@ export function useHomeSeoHead() {
     setMeta("description", SITE_DESCRIPTION);
     setMeta("robots", "index, follow");
     setMeta("language", "en-US");
-    setMeta("author", "Primary Source Analytics, LLC");
+    setMeta("author", "Metricadia Research, LLC");
 
     setMeta("og:title",       SITE_TITLE,       "property");
     setMeta("og:description", SITE_DESCRIPTION, "property");
@@ -569,7 +569,7 @@ export function useHomeSeoHead() {
       "@type": ["NewsMediaOrganization", "ResearchOrganization"],
       "@id": ORG_ID,
       "name": "ClownBinge",
-      "alternateName": "Primary Source Analytics, LLC",
+      "alternateName": "Metricadia Research, LLC",
       "url": DOMAIN,
       "logo": {
         "@type": "ImageObject",
@@ -652,7 +652,7 @@ export function usePageSeoHead({ title, description, path, schemaType = "WebPage
     setMeta("description", description);
     setMeta("robots", noIndex ? "noindex, nofollow" : "index, follow");
     setMeta("language", "en-US");
-    setMeta("author", "Primary Source Analytics, LLC");
+    setMeta("author", "Metricadia Research, LLC");
 
     setMeta("og:title",       fullTitle,    "property");
     setMeta("og:description", description, "property");

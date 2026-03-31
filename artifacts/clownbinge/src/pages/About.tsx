@@ -17,7 +17,7 @@ export default function About() {
   const { containerRef, popupRef, factoid, copied, isMobile, closeFactoid, handleCopy } = useFactoidPopup();
   usePageSeoHead({
     title: "About ClownBinge",
-    description: "ClownBinge is verified accountability journalism by Primary Source Analytics, LLC. We document real incidents where public figures contradict their own documented record. Primary sources only.",
+    description: "ClownBinge is verified accountability journalism by Metricadia Research, LLC. We document real incidents where public figures contradict their own documented record. Primary sources only.",
     path: "/about",
     schemaType: "AboutPage",
   });
@@ -101,7 +101,7 @@ export default function About() {
             Not as a marketing claim. As a structural commitment.
           </p>
           <p className="text-base text-muted-foreground leading-relaxed mb-6 max-w-2xl">
-            ClownBinge is operated by Primary Source Analytics, LLC, a company that accepts zero funding from political action committees, dark money organizations, corporate underwriters, or foundations with editorial interests. Editorial decisions are made by researchers, not revenue managers. Coverage is not subject to advertiser approval. Our independence is not a promise. It is the financial architecture of this organization.
+            ClownBinge is operated by Metricadia Research, LLC, a company that accepts zero funding from political action committees, dark money organizations, corporate underwriters, or foundations with editorial interests. Editorial decisions are made by researchers, not revenue managers. Coverage is not subject to advertiser approval. Our independence is not a promise. It is the financial architecture of this organization.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
@@ -121,7 +121,7 @@ export default function About() {
         <SectionLabel>What ClownBinge Is</SectionLabel>
         <div className="prose prose-lg prose-slate max-w-none cb-article-body">
           <p>
-            ClownBinge is an independent, primary source journalism platform operated by Primary Source Analytics, LLC. We publish documented accounts of public events, institutional conduct, and structural contradictions in American civic, religious, political, and financial life.
+            ClownBinge is an independent, primary source journalism platform operated by Metricadia Research, LLC. We publish documented accounts of public events, institutional conduct, and structural contradictions in American civic, religious, political, and financial life.
           </p>
           <p>
             We are not a commentary platform. We are not an opinion publication. We do not characterize, editorialize, or assign motive. We document. Every factual claim traces to a verifiable primary source before publication. The documents speak. We organize, source, and present them without interpretation.
@@ -227,7 +227,7 @@ export default function About() {
           <div className="h-1 w-full bg-[#F5C518] rounded-full my-10" />
 
           <p className="text-sm text-muted-foreground">
-            Primary Source Analytics, LLC &mdash; ClownBinge.com<br />
+            Metricadia Research, LLC &mdash; ClownBinge.com<br />
             <em>Independent. Verified. The Primary Source.</em>
           </p>
         </div>

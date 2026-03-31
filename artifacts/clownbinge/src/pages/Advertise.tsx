@@ -278,7 +278,7 @@ export default function Advertise() {
               advertising@clownbinge.com
             </a>
             <p className="text-xs text-muted-foreground mt-6">
-              Primary Source Analytics, LLC &nbsp;·&nbsp; ClownBinge.com &nbsp;·&nbsp; All advertising subject to editorial review.
+              Metricadia Research, LLC &nbsp;·&nbsp; ClownBinge.com &nbsp;·&nbsp; All advertising subject to editorial review.
             </p>
           </div>
         </div>

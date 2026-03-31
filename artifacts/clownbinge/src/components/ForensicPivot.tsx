@@ -192,7 +192,7 @@ export function ForensicPivot({ slug }: { slug: string }) {
           {/* Bottom row — branding left, CTA right */}
           <div className="flex items-end justify-between gap-4 flex-wrap">
             <div className="text-[10px] font-mono tracking-[0.22em] uppercase text-white/30">
-              Primary Source Analytics™
+              Metricadia Research™
             </div>
             <div className="flex items-center gap-3 flex-wrap justify-end">
               <span className="text-white/40 text-sm font-mono tabular-nums">{config.price}</span>

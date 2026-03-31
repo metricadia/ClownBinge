@@ -165,7 +165,7 @@ export default function Support() {
         <p className="font-bold text-lg text-header">
           Independent. Verified. The Primary Source.
         </p>
-        <p className="text-muted-foreground text-sm mt-2">Primary Source Analytics, LLC</p>
+        <p className="text-muted-foreground text-sm mt-2">Metricadia Research, LLC</p>
       </div>
 
     </Layout>

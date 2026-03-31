@@ -5,7 +5,7 @@ import { usePageSeoHead } from "@/hooks/use-seo-head";
 export default function Terms() {
   usePageSeoHead({
     title: "Terms of Service",
-    description: "ClownBinge Terms of Service. Primary Source Analytics, LLC — verified accountability journalism platform.",
+    description: "ClownBinge Terms of Service. Metricadia Research, LLC — verified accountability journalism platform.",
     path: "/terms",
     schemaType: "WebPage",
   });
@@ -31,7 +31,7 @@ export default function Terms() {
 
           <h2>3. Intellectual Property</h2>
           <p>
-            The original commentary, compilation, design, and structure of the Site (including the "ClownBinge" name and logo) are owned by Primary Source Analytics, LLC.
+            The original commentary, compilation, design, and structure of the Site (including the "ClownBinge" name and logo) are owned by Metricadia Research, LLC.
           </p>
           <p>
             <strong>Fair Use:</strong> The Site utilizes short excerpts of video, audio, and text from public records, congressional archives (C-SPAN), and news broadcasts for the strict purpose of transformative commentary, criticism, and reporting. This constitutes Fair Use under U.S. Copyright law.
@@ -57,7 +57,7 @@ export default function Terms() {
 
           <h2>6. Limitation of Liability</h2>
           <p>
-            Primary Source Analytics, LLC shall not be liable for any indirect, incidental, special, consequential or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, resulting from your use of the Site.
+            Metricadia Research, LLC shall not be liable for any indirect, incidental, special, consequential or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, resulting from your use of the Site.
           </p>
 
           <h2>7. Governing Law</h2>

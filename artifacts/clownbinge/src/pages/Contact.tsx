@@ -57,7 +57,7 @@ type Tab = "contact" | "submit" | "advertising";
 export default function Contact() {
   usePageSeoHead({
     title: "Contact ClownBinge",
-    description: "Contact ClownBinge, submit a tip, or inquire about advertising. Primary Source Analytics, LLC — independent accountability journalism.",
+    description: "Contact ClownBinge, submit a tip, or inquire about advertising. Metricadia Research, LLC — independent accountability journalism.",
     path: "/contact",
     schemaType: "ContactPage",
   });
@@ -119,7 +119,7 @@ export default function Contact() {
                     <div>
                       <p className="font-bold text-sm text-foreground">Mailing Address</p>
                       <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                        Primary Source Analytics, LLC<br />
+                        Metricadia Research, LLC<br />
                         1309 Coffeen Avenue STE 1200<br />
                         Sheridan, Wyoming 82801
                       </p>
@@ -244,7 +244,7 @@ export default function Contact() {
               <div className="bg-gray-50 p-6 border-t border-gray-200">
                 <p className="text-sm font-bold text-header mb-2">What we review</p>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  All submissions are reviewed by our editorial team. We publish only what we can independently verify against the primary record. We do not publish anonymous allegations without corroborating documentation. Submissions become the property of Primary Source Analytics, LLC for editorial consideration.
+                  All submissions are reviewed by our editorial team. We publish only what we can independently verify against the primary record. We do not publish anonymous allegations without corroborating documentation. Submissions become the property of Metricadia Research, LLC for editorial consideration.
                 </p>
               </div>
             </div>
@@ -360,7 +360,7 @@ export default function Contact() {
                 <Mail className="w-4 h-4" />
                 advertising@clownbinge.com
               </a>
-              <p className="text-xs text-muted-foreground mt-4">Primary Source Analytics, LLC &nbsp;&middot;&nbsp; All advertising subject to editorial review.</p>
+              <p className="text-xs text-muted-foreground mt-4">Metricadia Research, LLC &nbsp;&middot;&nbsp; All advertising subject to editorial review.</p>
             </div>
           </div>
         )}

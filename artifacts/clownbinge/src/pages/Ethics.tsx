@@ -5,7 +5,7 @@ import { usePageSeoHead } from "@/hooks/use-seo-head";
 export default function Ethics() {
   usePageSeoHead({
     title: "Editorial Standards & Ethics",
-    description: "ClownBinge editorial standards, fact-checking methodology, and sourcing policy. All content sourced from primary government and institutional documents. Primary Source Analytics, LLC.",
+    description: "ClownBinge editorial standards, fact-checking methodology, and sourcing policy. All content sourced from primary government and institutional documents. Metricadia Research, LLC.",
     path: "/ethics",
     schemaType: "WebPage",
   });
@@ -14,7 +14,7 @@ export default function Ethics() {
       <div className="max-w-3xl mx-auto px-4 py-12">
         <AdminPageHeader
           title="Editorial Standards, Ethics, and Analytical Methodology"
-          subtitle="Primary Source Analytics, LLC — ClownBinge.com — Updated March 2026"
+          subtitle="Metricadia Research, LLC — ClownBinge.com — Updated March 2026"
         />
 
         <div className="prose prose-slate max-w-none cb-article-body">
@@ -25,7 +25,7 @@ export default function Ethics() {
             misinformation constitutes one of the most consequential threats to democratic governance in the
             twenty-first century. This policy document outlines the editorial ethics, sourcing standards, and
             verification methodology that govern ClownBinge, a public accountability platform operated by
-            Primary Source Analytics, LLC. Drawing on peer-reviewed research in political communication, media
+            Metricadia Research, LLC. Drawing on peer-reviewed research in political communication, media
             studies, and democratic theory, this document establishes the empirical basis for ClownBinge's
             mission and articulates the standards to which it holds itself and the public figures it covers.
           </p>

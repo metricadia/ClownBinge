@@ -7,8 +7,8 @@ interface PsaLogoProps {
 export function PsaLogo({ variant, className = "", style }: PsaLogoProps) {
   const isDark = variant === "dark";
 
-  const heavy   = isDark ? "#111111"              : "#ffffff";
   const navy    = isDark ? "#1A3A8F"              : "#ffffff";
+  const heavy   = isDark ? "#111111"              : "#ffffff";
   const light   = isDark ? "#5A5A5A"              : "rgba(255,255,255,0.78)";
   const dot     = "#C9A227";
 
@@ -25,7 +25,7 @@ export function PsaLogo({ variant, className = "", style }: PsaLogoProps) {
 
   return (
     <span className={className} style={base}>
-      <span style={{ color: heavy, fontWeight: 700 }}>Primary</span>
+      <span style={{ color: navy, fontWeight: 700 }}>Metricadia</span>
       <span
         style={{
           display: "inline-block",
@@ -39,7 +39,7 @@ export function PsaLogo({ variant, className = "", style }: PsaLogoProps) {
           flexShrink: 0,
         }}
       />
-      <span style={{ color: navy, fontWeight: 700 }}>Source</span>
+      <span style={{ color: heavy, fontWeight: 700 }}>Research</span>
       <span
         style={{
           color: light,
@@ -48,7 +48,7 @@ export function PsaLogo({ variant, className = "", style }: PsaLogoProps) {
           marginLeft: "0.35em",
         }}
       >
-        Analytics, LLC
+        LLC
       </span>
     </span>
   );

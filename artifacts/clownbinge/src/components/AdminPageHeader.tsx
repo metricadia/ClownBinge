@@ -10,7 +10,7 @@ interface AdminPageHeaderProps {
 export function AdminPageHeader({
   title,
   eyebrow = "ClownBinge Newsroom",
-  subtitle = "Primary Source Analytics, LLC \u2014 ClownBinge.com",
+  subtitle = "Metricadia Research, LLC \u2014 ClownBinge.com",
 }: AdminPageHeaderProps) {
   return (
     <div className="mb-8 text-center">

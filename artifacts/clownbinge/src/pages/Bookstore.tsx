@@ -167,7 +167,7 @@ const BOOKS: FactBook[] = [
     shortTitle: "Who Is the Chief Grifter?",
     fullTitle: "Who Is the Chief Grifter? Obama vs. Trump Appointees: The Credential Record That Ends the Merit Argument",
     subtitle: "The Credential Record That Ends the Merit Argument",
-    tag: "Primary Source Analytics",
+    tag: "Metricadia Research",
     bg: "#0D1A0D", fg: "#FFFFFF", accent: "#00D084", accentFg: "#0D1A0D",
     coverDesign: "split",
     coverImage: "/covers/vol04-cover.jpg",
@@ -1007,7 +1007,7 @@ const BOOKS: FactBook[] = [
         sources: [
           "All primary sources cited in this chapter are fully documented in the chapter-specific reference lists of Chapters One through Nine. Readers are directed to those reference lists for complete APA 7 citations of every source referenced in this concluding chapter. No new primary sources are introduced in Chapter Ten.",
           "The complete citation architecture of this volume is organized by chapter to facilitate verification of individual claims against their original sources. Every URL cited throughout this volume was confirmed as live and accessible at the time of publication. Every docket number, resolution number, vote tally, and statutory citation has been verified against the original institutional record.",
-          "Primary Source Analytics, LLC. (2026). Ancient faith, modern politics: Judaism is not Zionism (FactBook™ Series, Vol. 8). ClownBinge. https://www.clownbinge.com/factbooks/ancient-faith-modern-politics",
+          "Metricadia Research, LLC. (2026). Ancient faith, modern politics: Judaism is not Zionism (FactBook™ Series, Vol. 8). ClownBinge. https://www.clownbinge.com/factbooks/ancient-faith-modern-politics",
         ],
       },
     ],
@@ -1120,7 +1120,7 @@ function CoverSVG({ book }: { book: FactBook }) {
         {/* Footer bar */}
         <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center" style={{ height: "9.4%", background: accent }}>
           <span className="font-bold tracking-[1.5px]" style={{ fontFamily: "'Montserrat',sans-serif", fontSize: "2.1cqh", color: accentFg, letterSpacing: "0.08em" }}>
-            PRIMARY — SOURCE ANALYTICS, LLC
+            METRICADIA RESEARCH, LLC
           </span>
         </div>
       </div>
@@ -1163,7 +1163,7 @@ function CoverSVG({ book }: { book: FactBook }) {
         {/* Accent footer bar */}
         <rect x="0" y="326" width="240" height="34" fill={accent} />
         <text x="120" y="347" fontSize="8" fill={accentFg} fontFamily="'Montserrat',sans-serif" letterSpacing="1" fontWeight="700" textAnchor="middle">
-          PRIMARY — SOURCE ANALYTICS, LLC
+          METRICADIA RESEARCH, LLC
         </text>
       </svg>
     );
@@ -1273,7 +1273,7 @@ function CoverSVG({ book }: { book: FactBook }) {
 
       <rect x="0" y="326" width="240" height="34" fill={accent} />
       <text x="120" y="347" fontSize="8" fill={accentFg} fontFamily="'Montserrat',sans-serif" letterSpacing="1" fontWeight="700" textAnchor="middle">
-        PRIMARY — SOURCE ANALYTICS, LLC
+        METRICADIA RESEARCH, LLC
       </text>
     </svg>
   );
@@ -1600,7 +1600,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
 export default function Bookstore() {
   usePageSeoHead({
     title: "Our Books — Knowledge Is Power | ClownBinge FactBook™",
-    description: "The ClownBinge FactBook™ series. Primary Source Analytics on the topics that define our era. Evergreen. Documented. Sourced.",
+    description: "The ClownBinge FactBook™ series. Metricadia Research on the topics that define our era. Evergreen. Documented. Sourced.",
     path: "/bookstore",
     schemaType: "ItemPage",
   });
@@ -1640,7 +1640,7 @@ export default function Bookstore() {
               style={{ background: "#F5C518", color: "#1A3A8F" }}
             >
               <BookOpen className="w-3 h-3" />
-              Primary Source Analytics, LLC
+              Metricadia Research, LLC
             </div>
 
             <h1 className="font-sans font-extrabold text-4xl sm:text-5xl text-white leading-tight mb-6">
