@@ -3727,5 +3727,29 @@
     "ai_score": null,
     "ai_score_tested_at": null,
     "published_at": "2026-03-30T22:26:22.578Z"
+  },
+  {
+    "case_number": "CB-000095",
+    "title": "Facts Are Not Left or Right: Primary Source Journalism Can Save America from Partisan Bias and Monied Interests",
+    "slug": "facts-not-left-or-right-primary-source-journalism",
+    "teaser": "Trust in mass media fell to 34 percent in 2022. A decade of peer-reviewed research explains exactly why the collapse happened and why primary source journalism is the only structural remedy.",
+    "category": "how_it_works",
+    "verified_source": "Media Trust Decline :: Gallup, Inc. (2022). Confidence in Institutions. Gallup Organization.; What Drives Media Slant :: Gentzkow, M., & Shapiro, J.M. (2010). What Drives Media Slant? Evidence from U.S. Daily Newspapers. Econometrica, 78(1), 35-71. Econometric Society.; How Partisan Media Polarize America :: Levendusky, M. (2013). How Partisan Media Polarize America. University of Chicago Press.; Niche News and Selective Exposure :: Stroud, N.J. (2011). Niche News: The Politics of News Choice. Oxford University Press.; Post-Broadcast Democracy :: Prior, M. (2007). Post-Broadcast Democracy. Cambridge University Press.; Political Polarization and Media Habits :: Pew Research Center (2014). Political Polarization and Media Habits. Pew Research Center.; Fake News in the 2016 Election :: Allcott, H., & Gentzkow, M. (2017). Social Media and Fake News in the 2016 Election. Journal of Economic Perspectives, 31(2), 211-236. American Economic Association.; The Science of Fake News :: Lazer, D.M.J. et al. (2018). The science of fake news. Science, 359(6380), 1094-1096. American Association for the Advancement of Science.; Exposure to Untrustworthy Websites :: Guess, A., Nyhan, B., & Reifler, J. (2020). Exposure to untrustworthy websites in the 2016 U.S. election. Nature Human Behaviour, 4, 472-480. Nature Publishing Group.; Red Media Blue Media :: Iyengar, S., & Hahn, K.S. (2009). Red Media, Blue Media: Evidence of Ideological Selectivity in Media Use. Journal of Politics, 71(1), 19-39. Southern Political Science Association.; Motivated Political Reasoning :: Taber, C.S., & Lodge, M. (2006). Motivated Skepticism in the Evaluation of Political Beliefs. American Journal of Political Science, 50(3), 755-769. Midwest Political Science Association.",
+    "tags": [
+      "media",
+      "journalism",
+      "partisanship",
+      "primary sources",
+      "accountability",
+      "polarization",
+      "fake news",
+      "media literacy"
+    ],
+    "status": "published",
+    "pinned": false,
+    "locked": false,
+    "ai_score": null,
+    "ai_score_tested_at": null,
+    "published_at": "2026-03-31T16:00:00.000Z"
   }
 ]
