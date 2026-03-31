@@ -34,7 +34,7 @@ export function PsaLogo({ variant, className = "", style }: PsaLogoProps) {
           lineHeight: 0,
           position: "relative",
           top: "0.08em",
-          margin: "0 0.05em",
+          margin: "0",
         }}
       >
         .
