@@ -28,17 +28,17 @@ export function PsaLogo({ variant, className = "", style }: PsaLogoProps) {
       <span style={{ color: heavy, fontWeight: 700 }}>Primary</span>
       <span
         style={{
-          color: dot,
-          fontWeight: 700,
-          fontSize: "1.1em",
-          lineHeight: 0,
+          display: "inline-block",
+          width: "0.38em",
+          height: "0.13em",
+          background: dot,
+          borderRadius: "2px",
           position: "relative",
-          top: "0.08em",
-          margin: "0 0 0 -0.08em",
+          top: "-0.28em",
+          margin: "0 0.08em",
+          flexShrink: 0,
         }}
-      >
-        .
-      </span>
+      />
       <span style={{ color: navy, fontWeight: 700 }}>Source</span>
       <span
         style={{
