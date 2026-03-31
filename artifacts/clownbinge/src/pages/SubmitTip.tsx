@@ -17,15 +17,21 @@ declare global {
 function TurnstileWidget({ onToken, onExpire }: { onToken: (t: string) => void; onExpire: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     function mount() {
       if (ref.current && window.turnstile && !widgetId.current) {
-        widgetId.current = window.turnstile.render(ref.current, {
-          sitekey: TURNSTILE_SITE_KEY,
-          callback: onToken,
-          "expired-callback": onExpire,
-        });
+        try {
+          widgetId.current = window.turnstile.render(ref.current, {
+            sitekey: TURNSTILE_SITE_KEY,
+            callback: onToken,
+            "expired-callback": onExpire,
+            "error-callback": () => setFailed(true),
+          });
+        } catch {
+          setFailed(true);
+        }
       }
     }
     if (window.turnstile) { mount(); return; }
@@ -36,6 +42,7 @@ function TurnstileWidget({ onToken, onExpire }: { onToken: (t: string) => void; 
       script.setAttribute("data-turnstile", "1");
       script.async = true;
       script.onload = mount;
+      script.onerror = () => setFailed(true);
       document.head.appendChild(script);
     } else {
       const interval = setInterval(() => {
@@ -45,6 +52,13 @@ function TurnstileWidget({ onToken, onExpire }: { onToken: (t: string) => void; 
     }
   }, []);
 
+  if (failed) {
+    return (
+      <p className="text-sm text-muted-foreground mt-2 border border-border rounded-lg px-4 py-3 bg-muted/30">
+        Security check could not load. Please refresh and try again.
+      </p>
+    );
+  }
   return <div ref={ref} className="mt-2" />;
 }
 
