@@ -26,6 +26,7 @@ interface FactBook {
   subtitle?: string;
   titleLines?: [string, string];
   subtitleColor?: string;
+  idealReaders?: { intro: string; readers: { title: string; body: string }[] };
   coverImage?: string;
   coverAnchor?: string;
   coverVideo?: string;
@@ -46,6 +47,35 @@ const BOOKS: FactBook[] = [
     subtitle: "Debunking the Racist Lie of Native Black Criminality",
     titleLines: ["Three-Fifths", "for 400 Years"],
     subtitleColor: "#7BB3F0",
+    idealReaders: {
+      intro: "This book is not an argument. It is a record. A 400-year documented account of what was done, by whom, in what order, and why. The 'Black criminality' narrative did not emerge from the data. It preceded the data. This volume proves that — from primary sources, in chronological order, with full citation.",
+      readers: [
+        {
+          title: "The Person Who Has Said 'But What About Black-on-Black Crime'",
+          body: "You repeated a phrase with a specific political origin. This book traces that origin to the architects who invented it, in their own documents. After Chapter 4, you will know exactly who put those words in circulation, why, and what they hoped it would accomplish.",
+        },
+        {
+          title: "The Black American Who Has Been Shown the Statistics",
+          body: "You have been presented with crime data as proof of your community's pathology your entire life. This book shows what those statistics actually measure, what they structurally omit, and what 400 years of documented federal policy produced. The data doesn't lie. But the people presenting it have.",
+        },
+        {
+          title: "The Educator Told to Stay Neutral",
+          body: "You are expected to teach American history without saying what it shows. This book does not characterize. It quotes Virginia statutes, Homestead Act records, congressional votes, and John Ehrlichman by name. The primary source record is not a political opinion. It is a document.",
+        },
+        {
+          title: "The Policy Professional or Public Defender",
+          body: "You work in the system every day. You see the overcharging, the mandatory minimums, the acquittal rates. Chapter 6 traces the 1994 Crime Bill from the congressional record to the current prison population. The numbers connect. This book names the people who passed them and what they said when they did.",
+        },
+        {
+          title: "The Criminologist or Social Scientist",
+          body: "Every peer-reviewed finding in this volume is fully cited. Chapter 7 consolidates the academic record on the poverty confounder — the finding that race disappears as a variable when structure is controlled. You already know the data. This book gives you the political architecture that explains why the public doesn't.",
+        },
+        {
+          title: "The Person Who Believes the System Is Fair",
+          body: "You believe in equality under the law. So did the authors of the 13th Amendment. This book uses the constitutional record — not opinion — to show what equality under the law has meant, systematically and by statute, since 1619. The question is not whether you believe in the system. The question is whether you have read it.",
+        },
+      ],
+    },
     tag: "NerdOut / Data",
     bg: "#0F0F0F", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF",
     coverDesign: "stat",
@@ -1318,11 +1348,12 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
             </div>
 
             {/* Tabs */}
-            {(hasOutline || isVol08) && (
+            {(hasOutline || isVol08 || book.idealReaders) && (
               <div className="flex gap-0 border-b border-gray-200 mb-0 flex-wrap">
                 {([
                   { key: "description" as const, label: "Description" },
                   ...(hasOutline ? [{ key: "outline" as const, label: "Outline" }] : []),
+                  ...(book.idealReaders && !isVol08 ? [{ key: "ideal" as const, label: "Ideal Reader" }] : []),
                   ...(isVol08 ? [
                     { key: "video" as const, label: "Video" },
                     { key: "ideal" as const, label: "Ideal Reader" },
@@ -1444,53 +1475,44 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                     Who Needs This Book
                   </p>
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    This volume was written for people who already sense something is wrong with the argument. The lie that Judaism and Zionism are the same thing has done real damage. It has silenced critics. It has weaponized religious identity. It has made a political position unsayable in newsrooms, classrooms, and boardrooms. The primary source record corrects that, in the original documents.
+                    {book.idealReaders?.intro ?? "This volume was written for people who already sense something is wrong with the argument. The lie that Judaism and Zionism are the same thing has done real damage. It has silenced critics. It has weaponized religious identity. It has made a political position unsayable in newsrooms, classrooms, and boardrooms. The primary source record corrects that, in the original documents."}
                   </p>
                 </div>
 
                 <div className="space-y-3">
-                  {[
+                  {(book.idealReaders?.readers ?? [
                     {
-                      icon: <Users className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
                       title: "The Person Who Has Been Silenced",
                       body: "You criticized Israeli government policy and someone called it antisemitism. You did not have the primary source record that separates a religion from a political movement. This book is that record. The argument no longer requires your opinion. It only requires Herzl's diary, the Basel Program, and the rabbinical texts that predate them both.",
                     },
                     {
-                      icon: <BookOpen className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
                       title: "The Jewish Reader Whose Faith Has Been Claimed",
                       body: "You are Jewish and you have watched a secular nationalist movement use your religious identity to shield itself from political accountability. Chapter 9 of this volume documents 127 years of Jewish scholars, rabbis, and institutions who made exactly that observation. The Satmar tradition. Judith Butler. The Bund. The Neturei Karta. You are not a fringe position. You are the documented majority in the tradition's own textual record.",
                     },
                     {
-                      icon: <Users className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
                       title: "The Educator Who Needs Primary Sources",
                       body: "You teach history, political science, religious studies, or international law. Your students ask why criticizing a state is prosecuted as a hate crime in some jurisdictions. This volume answers that question from the founding documents of both traditions and the legislative record of the institutions that engineered the conflation.",
                     },
                     {
-                      icon: <Users className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
                       title: "The Journalist or Policy Professional",
                       body: "You cover the Israel-Palestine conflict, campus speech codes, or the IHRA definition. Chapter 8 of this volume documents the institutional architecture of the IHRA working definition from its own lobbying records, legislative history, and adopting jurisdiction filings. You need this before your next assignment.",
                     },
                     {
-                      icon: <Users className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
                       title: "The Religious Leader Seeking Doctrinal Clarity",
                       body: "You are a pastor, imam, rabbi, or lay leader. Your congregation asks where Judaism ends and Zionism begins. The answer from the primary sources of Judaism goes back to 1897. The Protestrabbiner declaration was published three weeks before the First Zionist Congress met in Basel. This book collects that record.",
                     },
                     {
-                      icon: <Users className="w-4 h-4 shrink-0 mt-0.5" style={{ color: book.accent }} />,
                       title: "The Person Who Watched and Could Not Explain",
                       body: "You saw the news from Sheikh Jarrah. Someone told you it had nothing to do with Judaism. You were not sure how to respond. The Ottoman land registry, the British Mandate census, the UN partition plan data, and the Israeli Supreme Court's own three-tier citizenship framework are assembled here in one place, in chronological order, with full citation.",
                     },
-                  ].map(({ icon, title, body }) => (
+                  ]).map(({ title, body }) => (
                     <div
                       key={title}
                       className="rounded-lg p-4"
                       style={{ background: book.accent + "08", border: `1px solid ${book.accent}20` }}
                     >
-                      <div className="flex items-start gap-3 mb-1.5">
-                        {icon}
-                        <p className="text-xs font-extrabold text-gray-900">{title}</p>
-                      </div>
-                      <p className="text-xs text-gray-600 leading-relaxed pl-7">{body}</p>
+                      <p className="text-xs font-extrabold text-gray-900 mb-1.5">{title}</p>
+                      <p className="text-xs text-gray-600 leading-relaxed">{body}</p>
                     </div>
                   ))}
                 </div>
