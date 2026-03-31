@@ -1768,27 +1768,24 @@ export default function Bookstore() {
       {/* ── All 10 volumes grid ── */}
       <div id="all-volumes" className="max-w-6xl mx-auto px-6 py-16 sm:py-20">
 
-        <div className="flex items-end justify-between mb-10 border-b border-border pb-6 gap-4">
-          <div>
-            <p className="font-mono text-[10px] font-bold tracking-[0.22em] uppercase mb-2.5" style={{ color: "#C9A227" }}>
-              Metricadia Research &nbsp;·&nbsp; Parent Company of ClownBinge.com
-            </p>
-            <div className="flex items-center gap-3">
-              <span
-                className="inline-flex items-center justify-center w-9 h-9 rounded font-mono font-black text-base shrink-0"
-                style={{ background: "#1A3A8F", color: "#fff" }}
-              >
-                10
-              </span>
-              <h2 className="font-sans font-black text-3xl text-foreground tracking-tight leading-none">
-                FactBook™ Volumes
-              </h2>
-            </div>
+        <div className="flex items-center justify-between mb-10 border-b border-border pb-5 gap-6">
+          <div className="flex items-center gap-3 min-w-0">
+            <span
+              className="inline-flex items-center justify-center w-7 h-7 rounded font-mono font-black text-xs shrink-0"
+              style={{ background: "#1A3A8F", color: "#fff" }}
+            >
+              10
+            </span>
+            <h2 className="font-sans font-semibold text-xl text-foreground tracking-tight shrink-0">
+              FactBooks™
+            </h2>
+            <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-muted-foreground truncate">
+              by Metricadia Research&nbsp;&nbsp;|&nbsp;&nbsp;Parent Company of ClownBinge.com
+            </span>
           </div>
-          <div className="text-right shrink-0">
-            <p className="font-mono text-xs font-bold tracking-widest uppercase text-muted-foreground">$24.95 Each</p>
-            <p className="font-mono text-[10px] tracking-widest uppercase mt-0.5" style={{ color: "#C9A227" }}>Digital PDF</p>
-          </div>
+          <span className="font-mono text-[10px] font-bold tracking-widest uppercase shrink-0" style={{ color: "#C9A227" }}>
+            $24.95 · Digital PDF
+          </span>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-5 gap-y-12">
