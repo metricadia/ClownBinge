@@ -16,7 +16,7 @@ export function AdminPageHeader({
       <img
         src="/psa-logo-main.png"
         alt="Primary Source Analytics"
-        className="w-72 h-auto mx-auto mb-5"
+        className="w-96 h-auto mx-auto mb-5"
       />
       <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-2">
         {title}
