@@ -61,36 +61,36 @@ const BOOKS: FactBook[] = [
     ],
     chapters: [
       {
-        title: "What the FBI Data Measures: What It Counts and What It Does Not",
-        description: "The FBI Uniform Crime Report records arrests, not crimes committed. This chapter documents the structural gap between what politicians cite and what the data source actually measures.",
+        title: "1619: The Legal Construction of Criminalized Blackness",
+        description: "Virginia statutes 1640–1705 established the legal definition of enslaved Africans as property. The Three-Fifths Compromise of 1787 gave slaveholding states the Congressional seats to write federal law. The 13th Amendment's 'except as punishment for crime' clause of 1865 preserved the mechanism. This chapter traces the founding statutory record.",
       },
       {
-        title: "The National Crime Victimization Survey: Bypassing Police Entirely",
-        description: "The Bureau of Justice Statistics asks crime victims directly, without police involvement. When you remove policing bias from the equation, the racial narrative collapses.",
+        title: "Black Codes and Convict Leasing, 1865–1941: Emancipation's Statutory Successor",
+        description: "In 1865, the same year the 13th Amendment passed, Mississippi passed its Black Codes. Vagrancy laws criminalized unemployment. Apprenticeship laws returned Black children to their former enslavers. States leased the imprisoned to the same plantations. Named companies. Named governors. Named plantations. Congressional records and state legislative archives, documented in full.",
       },
       {
-        title: "Drug Arrests as Proof of Concept",
-        description: "Drug use rates are nearly identical across racial groups. Arrest rates are not. This chapter uses federal drug data to demonstrate how policing intensity, not behavior, shapes arrest statistics.",
+        title: "Federal Disinvestment and the Architecture of Deprivation, 1865–1968",
+        description: "The Homestead Act distributed 270 million acres — to white settlers. The GI Bill funded college and homeownership — with documented racial exclusions. Federal highway construction destroyed Black neighborhoods by design. Congressional appropriations records, FHA redlining maps, and urban renewal filings show a systematic policy of extraction, not neglect.",
       },
       {
-        title: "The Poverty Confounder: What Happens When Researchers Control for Structural Disadvantage",
-        description: "Peer-reviewed criminology consistently finds that race disappears as a predictor of violent crime once researchers control for concentrated poverty, disinvestment, and resource deprivation.",
+        title: "Nixon's War on Crime: What the Architects Said on the Record",
+        description: "John Ehrlichman, Nixon's domestic policy chief, stated in 1994: 'We knew we couldn't make it illegal to be Black, but by getting the public to associate Blacks with heroin, we could disrupt those communities.' This chapter uses campaign documents, policy memos, and the administration's own record to establish the deliberate political construction of the crime-and-race narrative.",
       },
       {
-        title: "The Holes in Federal Statistics: What They Are Designed Not to Count",
-        description: "Federal crime data has structural blind spots built into its methodology. This chapter documents what the official record cannot and does not measure, and why that matters.",
+        title: "The War on Drugs as Controlled Experiment: Equal Use, Unequal Enforcement",
+        description: "Federal survey data shows drug use rates are nearly identical across racial groups. Arrest rates are not. This chapter uses DEA records, BJS data, and congressional testimony to document how enforcement intensity — not behavior — produced the disparate statistics politicians cited as evidence of inherent criminality.",
       },
       {
-        title: "Prosecutorial Overcharging and What Elevated Acquittal Rates Signal",
-        description: "Higher acquittal and dismissal rates for Black defendants are not evidence of criminality. They are evidence of overcharging, documented in court records and federal sentencing data.",
+        title: "The 1994 Crime Bill: Named Votes, Named Architects, Documented Outcomes",
+        description: "The Violent Crime Control and Law Enforcement Act of 1994 expanded mandatory minimums, funded mass incarceration infrastructure, and was passed with documented awareness of its racial impact. This chapter uses the congressional record, CBO projections, and BJS incarceration data before and after passage to trace cause and effect.",
       },
       {
-        title: "What the Wrongful Conviction Record Says About the Reliability of Conviction Data",
-        description: "The National Registry of Exonerations shows Black Americans are exonerated at disproportionately high rates. This chapter examines what that fact does to the conviction data underlying the narrative.",
+        title: "The Poverty Confounder: What the Research Record Shows When Structure Is Controlled",
+        description: "Peer-reviewed criminology consistently finds that race disappears as a predictor of violent crime when researchers control for concentrated poverty, disinvestment, and resource deprivation — conditions produced by the policies documented in the preceding chapters. This chapter assembles the academic record with full citation.",
       },
       {
-        title: "The Empirical Record, In Full",
-        description: "A consolidated summary of what the primary sources actually show, with every claim traceable to a federal dataset, peer-reviewed study, or court record cited in full.",
+        title: "2020–2026: What the Current Record Shows",
+        description: "FBI arrest data. Bureau of Justice Statistics victimization surveys. The National Registry of Exonerations. Federal sentencing commission data. This chapter presents the current empirical record — the one that exists after 400 years of the documented policy architecture in Chapters 1 through 7. The data is what it is.",
       },
     ],
   },
