@@ -300,10 +300,8 @@ export default function Home() {
                           ClownBinge Record
                         </p>
                       </div>
-                      <div className="shrink-0 rounded-md border px-2 py-0.5" style={{ borderColor: "rgba(201,162,39,0.5)", background: "rgba(201,162,39,0.12)" }}>
-                        <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: "#E91E8C" }}>
-                          Verified
-                        </span>
+                      <div className="shrink-0">
+                        <span className="verified-badge">Verified</span>
                       </div>
                     </div>
                     <span className="inline-flex items-center rounded border px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em]" style={{ borderColor: "rgba(107,53,32,0.3)", background: "rgba(107,53,32,0.08)", color: "#6B3520" }}>

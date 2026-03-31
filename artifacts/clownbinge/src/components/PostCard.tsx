@@ -26,6 +26,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   global_south:       "Global South",
   how_it_works:       "How It Works",
   nerd_out:           "NerdOut",
+  disarming_hate:     "Disarming Hate",
 };
 
 const CATEGORY_BORDER: Record<string, string> = {
@@ -45,6 +46,7 @@ const CATEGORY_BORDER: Record<string, string> = {
   global_south:       "border-cyan-700 shadow-lg shadow-cyan-700/20",
   how_it_works:       "border-slate-600 shadow-lg shadow-slate-600/20",
   nerd_out:           "border-fuchsia-900 shadow-lg shadow-fuchsia-900/20",
+  disarming_hate:     "border-pink-600 shadow-lg shadow-pink-600/20",
 };
 
 export function PostCard({ post }: { post: Post }) {
@@ -76,7 +78,7 @@ export function PostCard({ post }: { post: Post }) {
                   ClownBinge Record
                 </p>
               </div>
-              <div className="shrink-0 rounded-md border border-[#C9A227]/50 bg-[#C9A227]/10 px-2 py-1">
+              <div className="shrink-0">
                 <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
               </div>
             </div>
