@@ -27,6 +27,7 @@ interface FactBook {
   subtitle?: string;
   titleLines?: [string, string];
   subtitleColor?: string;
+  subtitle2?: string;
   idealReaders?: { intro: string; readers: { title: string; body: string }[] };
   coverImage?: string;
   coverAnchor?: string;
@@ -243,6 +244,7 @@ const BOOKS: FactBook[] = [
     bg: "#0D0500", fg: "#FFFFFF", accent: "#6B3520", accentFg: "#F5C518",
     coverDesign: "minimal",
     subtitle: "Judaism ≠ Zionism",
+    subtitle2: "Rescuing a 3500+ Year-Old Religion from Divisive Politics",
     coverImage: "/covers/vol08-cover.png",
     pages: 128,
     price: "$24.95",
@@ -1161,6 +1163,19 @@ function CoverSVG({ book }: { book: FactBook }) {
         {subtitleLines.map((l, i) => (
           <text key={i} x="120" y={282 + i * 13} fontSize="9.5" fill="#F5C518" fontFamily="'JetBrains Mono',monospace" fontWeight="700" letterSpacing="0.3" textAnchor="middle">{l}</text>
         ))}
+        {book.subtitle2 && (() => {
+          const words = book.subtitle2.split(" ");
+          const mid = Math.ceil(words.length / 2);
+          const l1 = words.slice(0, mid).join(" ");
+          const l2 = words.slice(mid).join(" ");
+          const baseY = 282 + subtitleLines.length * 13 + 8;
+          return (
+            <>
+              <text x="120" y={baseY} fontSize="7.5" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="400" letterSpacing="0.2" textAnchor="middle" opacity="0.88">{l1}</text>
+              <text x="120" y={baseY + 10} fontSize="7.5" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="400" letterSpacing="0.2" textAnchor="middle" opacity="0.88">{l2}</text>
+            </>
+          );
+        })()}
         {/* Accent footer bar */}
         <rect x="0" y="326" width="240" height="34" fill={accent} />
         <text x="120" y="347" fontSize="8" fill={accentFg} fontFamily="'Montserrat',sans-serif" letterSpacing="1" fontWeight="700" textAnchor="middle">
@@ -1328,8 +1343,13 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
               {book.shortTitle}
             </h2>
             {book.subtitle && (
-              <p className="font-sans font-bold text-sm mb-3" style={{ color: book.accent }}>
+              <p className="font-sans font-bold text-sm mb-0.5" style={{ color: book.accent }}>
                 {book.subtitle}
+              </p>
+            )}
+            {book.subtitle2 && (
+              <p className="font-sans text-xs italic text-gray-500 mb-3 leading-snug">
+                {book.subtitle2}
               </p>
             )}
             {/* Price + pages + CTA */}
