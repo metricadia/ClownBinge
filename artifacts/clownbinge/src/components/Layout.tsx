@@ -324,7 +324,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 className="w-80 h-auto"
               />
               <p className="text-xs font-mono text-white/40 leading-relaxed">
-                &copy; {new Date().getFullYear()} Primary Source Analytics, LLC. All rights reserved.
+                &copy; {new Date().getFullYear()} All rights reserved.
               </p>
             </div>
             <p className="text-[10px] font-mono tracking-[0.18em] uppercase" style={{ color: "#F5C518" }}>
