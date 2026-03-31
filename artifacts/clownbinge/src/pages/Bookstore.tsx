@@ -24,6 +24,7 @@ interface FactBook {
   accentFg: string;
   coverDesign: "stat" | "grid" | "split" | "bar" | "slash" | "arch" | "type" | "minimal" | "overlap" | "circle";
   subtitle?: string;
+  titleLines?: [string, string];
   coverImage?: string;
   coverAnchor?: string;
   coverVideo?: string;
@@ -42,6 +43,7 @@ const BOOKS: FactBook[] = [
     shortTitle: "Three-Fifths for 400 Years",
     fullTitle: "Three-Fifths for 400 Years: Debunking the Racist Lie of Native Black Criminality",
     subtitle: "Debunking the Racist Lie of Native Black Criminality",
+    titleLines: ["Three-Fifths", "for 400 Years"],
     tag: "NerdOut / Data",
     bg: "#0F0F0F", fg: "#FFFFFF", accent: "#1A3A8F", accentFg: "#FFFFFF",
     coverDesign: "stat",
@@ -1049,8 +1051,8 @@ function CoverSVG({ book }: { book: FactBook }) {
   const { bg, fg, accent, accentFg, coverDesign, vol, shortTitle } = book;
   const words = shortTitle.split(" ");
   const mid = Math.ceil(words.length / 2);
-  const line1 = words.slice(0, mid).join(" ");
-  const line2 = words.slice(mid).join(" ");
+  const line1 = book.titleLines ? book.titleLines[0] : words.slice(0, mid).join(" ");
+  const line2 = book.titleLines ? book.titleLines[1] : words.slice(mid).join(" ");
   const subtitleLines = book.subtitle ? wrapText(book.subtitle, 27) : [];
 
   if (book.coverVideo) {
