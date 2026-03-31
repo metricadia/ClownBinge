@@ -15,7 +15,7 @@ export function AdminPageHeader({
   return (
     <div className="mb-8 text-center">
       <div className="mb-5 flex justify-center">
-        <PsaLogo variant="dark" style={{ fontSize: "1.5rem" }} />
+        <PsaLogo variant="dark" className="text-[1.32rem] sm:text-[1.5rem]" />
       </div>
       <h1 className="font-sans font-bold text-3xl sm:text-4xl text-header leading-tight mb-2">
         {title}
