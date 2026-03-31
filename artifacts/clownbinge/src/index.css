@@ -172,6 +172,16 @@
     z-index: 9999;
     width: 300px;
     max-height: 65vh;
+  }
+
+  @media (min-width: 768px) {
+    .cb-factoid-popup {
+      width: 480px;
+      max-height: 70vh;
+    }
+  }
+
+  .cb-factoid-popup {
     background: #1A3A8F;
     color: white;
     border-radius: 12px;

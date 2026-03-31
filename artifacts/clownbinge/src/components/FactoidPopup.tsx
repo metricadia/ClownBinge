@@ -26,6 +26,12 @@ function SummaryBody({ factoid }: { factoid: FactoidState }) {
       </div>
     );
   }
+  const paras = typeof factoid.summary === "string"
+    ? factoid.summary.split("||").map(s => s.trim()).filter(Boolean)
+    : null;
+  if (paras && paras.length > 1) {
+    return <>{paras.map((p, i) => <p key={i} style={{ marginBottom: i < paras.length - 1 ? "0.7em" : 0 }}>{p}</p>)}</>;
+  }
   return <>{factoid.summary}</>;
 }
 
