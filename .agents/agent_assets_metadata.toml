@@ -60,3 +60,9 @@ id = "eUqmBCgKgkqafFt55aSN7"
 uri = "file://CB-Sheet5-Categories.csv"
 type = "table"
 title = "Sheet 5 — Thematic Categories"
+
+[[outputs]]
+id = "X5aXcyHOOenlu_qVptW2l"
+uri = "file://CLOWNBINGE_MASTER_BRIEF.md"
+type = "text"
+title = "ClownBinge Master Brief — Complete Reference"
