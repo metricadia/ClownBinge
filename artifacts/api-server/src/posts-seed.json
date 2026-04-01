@@ -3774,5 +3774,26 @@
     "ai_score": null,
     "ai_score_tested_at": null,
     "published_at": "2026-03-31T18:00:00.000Z"
+  },
+  {
+    "case_number": "CB-000097",
+    "slug": "women-build-too-50-business-women-changed-world",
+    "title": "Women Build Too: 50 Business Women Who Changed the World",
+    "category": "women_and_girls",
+    "teaser": "The record of women building companies, systems, technologies, and economies runs from ancient Egypt to modern physics. Fifty documented cases. Every entry is sourced. The cognitive argument makes itself.",
+    "subject_name": null,
+    "subject_title": null,
+    "subject_party": null,
+    "self_own_score": null,
+    "verified_source": "Hatshepsut Trade Records (c. 1470 BCE) :: Naville, E. (1894). The Temple of Deir el Bahari: Its plan, its founders, and its first explorers. Egypt Exploration Fund.; Hypatia of Alexandria (c. 360-415 CE) :: Dzielska, M. (1995). Hypatia of Alexandria. Harvard University Press.; Wu Zetian's State Enterprise Policy (690-705 CE) :: Fitzgerald, C. P. (1955). The Empress Wu. F.W. Cheshire.; Hildegard of Bingen Pharmaceutical Record (c. 1150) :: Strehlow, W., & Hertzka, G. (1988). Hildegard of Bingen's Medicine. Bear and Company.; Caterina de' Medici Trade Ledgers (16th Century) :: Murphy, C. (2008). The Pope's Daughter: The Extraordinary Life of Felice della Rovere. Oxford University Press.; Elizabeth I Trade Charter (1600) :: MacCaffrey, W. (1993). Elizabeth I: War and Politics, 1588-1603. Princeton University Press.; Sor Juana Ines de la Cruz (1648-1695) :: Paz, O. (1988). Sor Juana: Or, The Traps of Faith. Harvard University Press.; Mary Wollstonecraft (1759-1797) :: Todd, J. (2000). Mary Wollstonecraft: A Revolutionary Life. Columbia University Press.; Madam C.J. Walker (1867-1919) :: Bundles, A. (2001). On Her Own Ground: The Life and Times of Madam C.J. Walker. Scribner.; Marie Curie Patents and Awards (1903, 1911) :: Quinn, S. (1995). Marie Curie: A Life. Simon and Schuster.; Claudia Goldin (2023 Nobel) :: Nobel Committee for Economic Sciences (2023). Scientific Background: Claudia Goldin's Contributions to Our Understanding of Gender Differences in the Labour Market. The Royal Swedish Academy of Sciences.",
+    "tags": ["women_and_girls", "women", "business", "history", "staff-favorite", "nerd-out", "academic", "multicultural"],
+    "status": "published",
+    "staff_pick": true,
+    "nerd_accessible": true,
+    "pinned": false,
+    "locked": false,
+    "ai_score": null,
+    "ai_score_tested_at": null,
+    "published_at": "2026-04-01T12:00:00.000Z"
   }
 ]
