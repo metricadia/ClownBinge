@@ -90,11 +90,24 @@ router.get("/posts", async (req, res) => {
         .where(where)
         .orderBy(
           // Category and tag feeds: newest first, no curation weighting
-          // Main feed only: tier sort (pinned > self_owned > nerd_out > everything else)
+          // Main feed: 5-tier editorial order designed for maximum utility
+          //   Tier -4: pinned (always top)
+          //   Tier -3: self_owned, investigations (hooks — "can you believe this")
+          //   Tier -2: money_and_power, war_and_inhumanity, disarming_hate (controversy + emotional weight)
+          //   Tier -1: us_history, women_and_girls, us_constitution, law_and_justice,
+          //            anti_racist_heroes, global_south, censorship, health_and_healing
+          //            (WOW + love/healing mixed — interleaves naturally by publish date)
+          //   Tier  0: nerd_out, how_it_works, technology (deep readers)
           ...(category || tag
             ? [desc(postsTable.publishedAt)]
             : [
-                sql`CASE WHEN ${postsTable.pinned} = true THEN -3 WHEN ${postsTable.category} IN ('self_owned','anti_racist_heroes') THEN -2 WHEN ${postsTable.category} = 'nerd_out' THEN -1 ELSE 0 END`,
+                sql`CASE
+                  WHEN ${postsTable.pinned} = true THEN -4
+                  WHEN ${postsTable.category} IN ('self_owned','investigations') THEN -3
+                  WHEN ${postsTable.category} IN ('money_and_power','war_and_inhumanity','disarming_hate') THEN -2
+                  WHEN ${postsTable.category} IN ('us_history','women_and_girls','us_constitution','law_and_justice','anti_racist_heroes','global_south','censorship','health_and_healing') THEN -1
+                  ELSE 0
+                END`,
                 desc(postsTable.publishedAt),
               ]
           )
