@@ -75,9 +75,9 @@ export default function Home() {
                   <div className="h-px w-full bg-[#F5C518] rounded-full" />
                 </div>
               )}
-              <div className="mb-6 text-center sm:text-left">
+              <div className="mb-6 text-center">
                 <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-1 leading-tight">
-                  A Public Accountability News Platform.
+                  A Public Accountability News Platform by Metricadia Research LLC.
                 </h1>
                 <button
                   onClick={() => setShowNerdoutModal(true)}
