@@ -74,6 +74,11 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
     localStorage.setItem("cb-font-level", String(fontLevel));
   }, [fontLevel]);
 
+  const handleCategoryChange = (id: string) => {
+    onCategoryChange?.(id);
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+  };
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
@@ -107,7 +112,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           <div className="flex items-center gap-4">
           <Link
             href="/"
-            onClick={() => { onCategoryChange?.('all'); setCatDropdownOpen(false); }}
+            onClick={() => { handleCategoryChange('all'); setCatDropdownOpen(false); }}
             className={`transition-colors ${location === '/' ? 'text-white' : 'text-white/50 hover:text-white'}`}
             title="Home"
           >
@@ -115,7 +120,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </Link>
           <Link
             href="/"
-            onClick={() => { onCategoryChange?.('all'); setCatDropdownOpen(false); }}
+            onClick={() => { handleCategoryChange('all'); setCatDropdownOpen(false); }}
             className="flex flex-col leading-none hover:opacity-90 transition-opacity group"
           >
             <div className="flex items-baseline gap-0">
@@ -188,7 +193,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               const pill = PILL[cat.id] ?? PILL.all;
               const cls = `px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
               return onCategoryChange && location === '/' ? (
-                <button key={cat.id} onClick={() => onCategoryChange(cat.id)} className={cls}>{cat.label}</button>
+                <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={cls}>{cat.label}</button>
               ) : (
                 <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={cls}>{cat.label}</Link>
               );
@@ -225,7 +230,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                     const cls = `px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
                     const handleSelect = () => {
                       setCatDropdownOpen(false);
-                      if (onCategoryChange && location === '/') onCategoryChange(cat.id);
+                      if (location === '/') handleCategoryChange(cat.id);
                     };
                     return onCategoryChange && location === '/' ? (
                       <button key={cat.id} onClick={handleSelect} className={cls}>{cat.label}</button>
