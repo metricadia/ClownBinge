@@ -75,7 +75,7 @@ export function PostCard({ post }: { post: Post }) {
                   {post.caseNumber}
                 </p>
                 <p className="mt-1 text-[10px] uppercase tracking-[0.18em] font-semibold text-[#5A5A5A]">
-                  ClownBinge Record
+                  Metricadia Research
                 </p>
               </div>
               <div className="shrink-0">
