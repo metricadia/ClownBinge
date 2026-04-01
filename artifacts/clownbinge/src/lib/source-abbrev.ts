@@ -19,15 +19,33 @@ export const SOURCE_ABBREV: [RegExp, string][] = [
   [/U\.S\. Citizenship and Immigration Services[^;]*/gi, "USCIS"],
   [/Congressional Budget Office[^;]*/gi,              "CBO"],
   [/Congressional Record[^;]*/gi,                     "Cong. Record"],
+  [/Congressional Research Service[^;]*/gi,           "CRS"],
   [/Government Accountability Office[^;]*/gi,         "GAO"],
   [/Senate Vote #\d+[^;]*/gi,                         "GovTrack"],
   [/House Vote #\d+[^;]*/gi,                          "GovTrack"],
   [/GovTrack\b[^;]*/gi,                               "GovTrack"],
   [/senate\.gov[^;]*/gi,                              "senate.gov"],
   [/congress\.gov[^;]*/gi,                            "congress.gov"],
+  [/Department of Homeland Security[^;]*/gi,          "DHS"],
+  [/Department of Defense[^;]*/gi,                    "DOD"],
+  [/\bDOD\b[^;]*/gi,                                  "DOD"],
+  [/Department of Education[^;]*/gi,                  "Dept. of Ed."],
+  [/Environmental Protection Agency[^;]*/gi,          "EPA"],
+  [/\bEPA\b[^;]*/gi,                                  "EPA"],
+  [/Centers for Disease Control[^;]*/gi,              "CDC"],
+  [/\bCDC\b[^;]*/gi,                                  "CDC"],
+  [/National Institutes? of Health[^;]*/gi,           "NIH"],
+  [/\bNIH\b[^;]*/gi,                                  "NIH"],
+  [/Social Security Administration[^;]*/gi,           "SSA"],
+  [/Central Intelligence Agency[^;]*/gi,              "CIA"],
+  [/National Security Agency[^;]*/gi,                 "NSA"],
+  [/Bureau of Labor Statistics[^;]*/gi,               "BLS"],
+  [/Federal Reserve[^;]*/gi,                          "Fed. Reserve"],
 
   // Founding documents / constitutional
   [/Declaration of Independence[^;/]*/gi,             "Declaration (1776)"],
+  [/16th Amendment[^;/]*/gi,                          "16th Amend."],
+  [/Sixteenth Amendment[^;/]*/gi,                     "16th Amend."],
   [/14th Amendment[^;/]*/gi,                          "14th Amend."],
   [/Fourteenth Amendment[^;/]*/gi,                    "14th Amend."],
   [/Fifth Amendment[^;/]*/gi,                         "5th Amend."],
@@ -44,11 +62,14 @@ export const SOURCE_ABBREV: [RegExp, string][] = [
   [/Brookings Institution[^;/]*/gi,                   "Brookings"],
   [/Prison Policy Initiative[^;/]*/gi,                "PPI"],
   [/SCOTUSblog[^;/]*/gi,                              "SCOTUSblog"],
+  [/United States Supreme Court[^;/]*/gi,             "SCOTUS"],
   [/U\.S\. Supreme Court[^;/]*/gi,                    "SCOTUS"],
   [/Supreme Court[^;/]*/gi,                           "SCOTUS"],
   [/Dominion v\. Fox[^;/]*/gi,                        "Dominion v. Fox"],
+  [/Federal Judicial Center[^;/]*/gi,                 "FJC"],
 
   // Courts / legal
+  [/American Bar Association[^;/]*/gi,                "ABA"],
   [/U\.S\. District Court[^;]*/gi,                    "Fed. Court"],
   [/United States District Court[^;]*/gi,             "Fed. Court"],
   [/Court Records?\b[^;]*/gi,                         "Court Records"],
@@ -81,6 +102,10 @@ export const SOURCE_ABBREV: [RegExp, string][] = [
   [/Indiana University[^;]*/gi,                               "Indiana Univ."],
   [/U\.S\.\s+PIRG[^;]*/gi,                                   "US PIRG"],
   [/\bUSPIRG\b[^;]*/gi,                                       "US PIRG"],
+  [/Yale University Press[^;]*/gi,                            "Yale U.P."],
+  [/Harvard University[^;]*/gi,                               "Harvard"],
+  [/Johns Hopkins University[^;]*/gi,                         "Johns Hopkins"],
+  [/Stanford University[^;]*/gi,                              "Stanford"],
 
   // Congressional / government hearings
   [/House Energy and Commerce Committee[^;]*/gi,              "House E&C Cmte."],
@@ -165,26 +190,41 @@ function extractLabel(entry: string): string {
   return entry;
 }
 
+/** Apply all SOURCE_ABBREV patterns to a string */
+function applyAbbrev(s: string): string {
+  for (const [pattern, abbr] of SOURCE_ABBREV) s = s.replace(pattern, abbr);
+  return s.replace(/\s+/g, " ").trim();
+}
+
 export function abbreviateSource(raw: string | null | undefined, prefix = false): string {
   if (!raw) return prefix ? "Source: Verified Public Record" : "Verified Public Record";
 
-  // Split on any common separator: semicolon, pipe, or slash
-  const segments = raw.split(/[;|/]/).map(s => s.trim()).filter(Boolean);
+  // Split on semicolons (primary CB separator)
+  const segments = raw.split(";").map(s => s.trim()).filter(Boolean);
 
-  // Tile mode: first segment only, hard 38-char cap
+  // Tile mode: extract labels from first 4 segments, abbreviated, joined with "; "
+  // Build progressively — stop before the joined string exceeds ~44 chars so
+  // "READ MORE >" never wraps to a new line. Cardinal rule: no truncation ellipsis.
   if (prefix) {
-    let s = extractLabel(segments[0] || raw);
-    for (const [pattern, abbr] of SOURCE_ABBREV) s = s.replace(pattern, abbr);
-    s = s.replace(/\s+/g, " ").trim();
-    if (s.length > 38) s = s.slice(0, 35).trimEnd() + "...";
-    return `Source: ${s}`;
+    const MAX_CHARS = 44;
+    let result = "";
+    for (const seg of segments.slice(0, 4)) {
+      const label = applyAbbrev(extractLabel(seg));
+      if (!label) continue;
+      const candidate = result ? `${result}; ${label}` : label;
+      if (candidate.length > MAX_CHARS) break;
+      result = candidate;
+    }
+    if (!result) {
+      // Absolute fallback: first label hard-capped, no ellipsis
+      result = applyAbbrev(extractLabel(segments[0] || raw)).slice(0, MAX_CHARS);
+    }
+    return `Source: ${result}`;
   }
 
   // Detail / non-tile: up to 2 segments, abbreviated
   const shortened = segments.slice(0, 2).map(seg => {
-    let s = extractLabel(seg);
-    for (const [pattern, abbr] of SOURCE_ABBREV) s = s.replace(pattern, abbr);
-    return s.replace(/\s+/g, " ").trim();
+    return applyAbbrev(extractLabel(seg));
   });
   return shortened.join(" / ");
 }
