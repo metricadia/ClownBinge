@@ -90,7 +90,7 @@ export function StatWidget() {
       if (!res.ok) throw new Error("Failed to fetch stats");
       return res.json();
     },
-    staleTime: 5 * 60_000,
+    staleTime: 0,
   });
 
   const stats = data ?? {
