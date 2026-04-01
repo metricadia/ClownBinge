@@ -3795,5 +3795,26 @@
     "ai_score": null,
     "ai_score_tested_at": null,
     "published_at": "2026-04-01T12:00:00.000Z"
+  },
+  {
+    "case_number": "CB-000098",
+    "slug": "trickledown-economic-religion-jim-jones-republican-democratic-economic-record",
+    "title": "Trickledown 'economic religion' was Jim Jones without the violence: ClownBinge reviews the data of American economic conditions after republican and democratic administrations.",
+    "category": "money_and_power",
+    "teaser": "The empirical record of GDP growth, job creation, wage gains, and deficit accumulation across Republican and Democratic administrations does not support the theological claim that tax cuts for the wealthy produce broad prosperity. The data is public. The comparison is direct. The conclusions are uncomfortable only if you invested belief rather than evidence.",
+    "subject_name": null,
+    "subject_title": null,
+    "subject_party": null,
+    "self_own_score": null,
+    "verified_source": "Laffer, A. B. (2004) :: Laffer, A. B. (2004). The Laffer curve: Past, present, and future. Heritage Foundation Backgrounder, 1765. The Heritage Foundation.; Bartlett (2012) :: Bartlett, B. (2012). The benefit and the burden: Tax reform — why we need it and what it will take. Simon and Schuster.; Congressional Budget Office (1990) :: Congressional Budget Office. (1990). The economic and budget outlook: Fiscal years 1991-1995. U.S. Congress.; Bureau of Economic Analysis (2024) :: Bureau of Economic Analysis. (2024). National income and product accounts: Real gross domestic product. U.S. Department of Commerce.; Bureau of Labor Statistics (2024) :: Bureau of Labor Statistics. (2024). Current employment statistics: Total nonfarm payroll employment. U.S. Department of Labor.; Piketty and Saez (2003) :: Piketty, T., and Saez, E. (2003). Income inequality in the United States, 1913-1998. Quarterly Journal of Economics, 118(1), 1-41.; Economic Policy Institute (2021) :: Economic Policy Institute. (2021). The state of working America wages 2021. Economic Policy Institute.; Center on Budget and Policy Priorities (2017) :: Center on Budget and Policy Priorities. (2017). Kansas lawmakers end failed tax experiment. Center on Budget and Policy Priorities.; Congressional Budget Office (2018) :: Congressional Budget Office. (2018). The budget and economic outlook: 2018 to 2028. U.S. Congress.; Board of Governors of the Federal Reserve System (2023) :: Board of Governors of the Federal Reserve System. (2023). Distributional financial accounts: Distribution of household wealth in the U.S. Federal Reserve Board.",
+    "tags": ["money_and_power", "economics", "trickle-down", "republican", "democratic", "nerd-out", "academic", "how_it_works"],
+    "status": "published",
+    "staff_pick": true,
+    "nerd_accessible": true,
+    "pinned": false,
+    "locked": false,
+    "ai_score": null,
+    "ai_score_tested_at": null,
+    "published_at": "2026-04-01T14:00:00.000Z"
   }
 ]
