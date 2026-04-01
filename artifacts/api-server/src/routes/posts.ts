@@ -36,7 +36,7 @@ router.get("/posts/stats", async (_req, res) => {
     const [articlesResult, citationsResult] = await Promise.all([
       db.select({ count: count() }).from(postsTable).where(eq(postsTable.status, "published")),
       db.execute(
-        sql`SELECT COALESCE(SUM((LENGTH(body) - LENGTH(REPLACE(body, 'cb-factoid', ''))) / 9), 0)::int AS total_citations FROM posts WHERE status = 'published'`
+        sql`SELECT COALESCE(SUM(array_length(string_to_array(verified_source, ';'), 1)), 0)::int AS total_citations FROM posts WHERE status = 'published' AND verified_source IS NOT NULL AND verified_source != ''`
       ),
     ]);
 
