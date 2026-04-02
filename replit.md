@@ -493,15 +493,28 @@ done
 
 **Site-wide link audit (March 2026):** 54 dead links found and replaced across 61 articles. All cb-factoid hrefs verified clean.
 
-### Word Count Cardinal Rule
+### Word Count Prime Directive — NON-NEGOTIABLE
 
-**All articles must reach 1,000 words minimum.** The only two exempt categories are:
-- **Religion** — not a current content focus; existing articles stand as-is
-- **Self-Owned** — short-form precision articles; format does not support padding
+**1,500 words is the hard floor. 1,900 words is the sweet spot. No article ships under 1,500 words, ever.**
 
-Every other category must clear 1,000 words before locking. Expansion must use CB voice: dry, forensic, primary-source-based, no emotion, no opinion. Use `claude-sonnet-4-6` via `scripts/src/expand-short-articles.ts`.
+This is a Prime Directive. It is not a guideline, a suggestion, or a target to approximate. Every article in every category must clear 1,500 words before it is inserted into the database. The writing agent must audit word count before every DB write and must expand before committing if the count is under 1,500.
 
-Verified clean: all 30 non-exempt articles at 1,000+ words (March 2026). Lowest is CB-000046 CNN Vanishing Act at 1,016 words.
+**The 1,900-word sweet spot produces:**
+- Enough documentary depth to trace the primary source chain fully
+- Enough institutional context for the reader to understand how the record was created
+- Enough analytical framing to see the significance of the cross-reference without being told what to think
+
+**No exemptions.** Self-owned, religion, law_and_justice, money_and_power, all categories — same floor, same sweet spot. No article is too short to be substantive. If a topic cannot sustain 1,500 words of primary-source-grounded prose, the topic has not been developed enough. Develop it further.
+
+**Enforcement protocol:**
+1. Write the article body
+2. Strip HTML tags, count words
+3. If under 1,500: add sections, expand paragraphs, deepen documentary context — never pad with filler
+4. If under 1,900: add one more substantive section addressing the primary source navigation, the institutional history, or the downstream policy implications
+5. Verify count again before DB write
+6. Only then insert or update
+
+Verified clean: all 149 published articles at 1,500+ words (April 2026). Lowest passing score: CB-000005 at 1,505 words.
 
 ### No External Hyperlinks Cardinal Rule
 
