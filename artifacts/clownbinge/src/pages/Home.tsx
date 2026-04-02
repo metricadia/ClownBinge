@@ -80,7 +80,7 @@ export default function Home() {
                   onClick={() => setShowNerdoutModal(true)}
                   className="inline-flex items-center gap-2 font-bold text-xl sm:text-2xl text-primary hover:underline cursor-pointer transition-opacity hover:opacity-75 mb-3"
                 >
-                  Next Generation Verified Research.
+                  Deep Dives + Verified Research.
                   <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 opacity-60 hover:opacity-100 transition-opacity text-primary" strokeWidth={1.5} />
                 </button>
                 <p className="text-base sm:text-lg text-muted-foreground">
@@ -104,7 +104,7 @@ export default function Home() {
                   <div className="sticky top-0 bg-gradient-to-r from-primary to-primary/80 text-white px-6 py-5 flex items-center justify-between border-b border-white/10">
                     <div>
                       <p className="text-xs font-bold uppercase tracking-widest text-white/60 mb-1">NerdOut / Academic</p>
-                      <h2 className="text-2xl font-bold">Next Generation Verified Research</h2>
+                      <h2 className="text-2xl font-bold">Deep Dives + Verified Research</h2>
                     </div>
                     <button
                       onClick={() => setShowNerdoutModal(false)}
@@ -119,7 +119,7 @@ export default function Home() {
                     <div>
                       <h3 className="text-lg font-bold text-header mb-2">What It Means</h3>
                       <p>
-                        "Next Generation Verified Research" is accountability journalism redesigned for the AI era. Instead of waiting for traditional news cycles to catch institutional contradictions, we systematically aggregate and verify claims against primary sources in real time, then present findings in formats that are immediately verifiable and academically defensible.
+                        "Deep Dives + Verified Research" is accountability journalism redesigned for the AI era. Instead of waiting for traditional news cycles to catch institutional contradictions, we systematically aggregate and verify claims against primary sources in real time, then present findings in formats that are immediately verifiable and academically defensible.
                       </p>
                     </div>
 
