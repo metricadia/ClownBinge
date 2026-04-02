@@ -72,3 +72,9 @@ id = "myiK_GB6MCQeFG698l7cd"
 uri = "file://METRICADIA_LOGO_CODE.md"
 type = "text"
 title = "Metricadia Text Logo — Correct Code Instructions"
+
+[[outputs]]
+id = "DbyRBaR8nlmBLEPzV-ov5"
+uri = "file://CLOWNBINGE_PROJECT_MANIFEST.md"
+type = "text"
+title = "ClownBinge Project Manifest — Gemini Handoff"
