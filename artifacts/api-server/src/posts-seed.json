@@ -1229,7 +1229,8 @@
     "pinned": false,
     "locked": true,
     "ai_score": 9,
-    "ai_score_tested_at": "2026-03-25T22:55:43.082"
+    "ai_score_tested_at": "2026-03-25T22:55:43.082",
+    "staff_pick": true
   },
   {
     "case_number": "CB-000002",
@@ -1362,7 +1363,8 @@
     "pinned": false,
     "locked": true,
     "ai_score": 26,
-    "ai_score_tested_at": "2026-03-25T22:57:21.889"
+    "ai_score_tested_at": "2026-03-25T22:57:21.889",
+    "staff_pick": true
   },
   {
     "case_number": "CB-000003",
@@ -1406,7 +1408,8 @@
     "pinned": false,
     "locked": true,
     "ai_score": 19,
-    "ai_score_tested_at": "2026-03-25T22:54:09.164"
+    "ai_score_tested_at": "2026-03-25T22:54:09.164",
+    "staff_pick": true
   },
   {
     "case_number": "CB-000006",
@@ -1805,7 +1808,8 @@
     "pinned": true,
     "locked": true,
     "ai_score": 15,
-    "ai_score_tested_at": "2026-03-25T22:54:29.845"
+    "ai_score_tested_at": "2026-03-25T22:54:29.845",
+    "staff_pick": true
   },
   {
     "case_number": "CB-000056",

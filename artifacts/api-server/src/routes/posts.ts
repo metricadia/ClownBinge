@@ -82,6 +82,8 @@ router.get("/posts", async (req, res) => {
       conditions.push(sql`${postsTable.category} != 'religion'`);
       // Main feed: nerd_out articles only appear if nerd_accessible = true
       conditions.push(sql`(${postsTable.category} != 'nerd_out' OR ${postsTable.nerdAccessible} = true)`);
+      // Main feed: self_owned articles only appear if staff_pick = true (WOW + INSIGHTFUL + share-worthy)
+      conditions.push(sql`(${postsTable.category} != 'self_owned' OR ${postsTable.staffPick} = true)`);
     }
 
     const where = conditions.length === 1 ? conditions[0] : and(...conditions);
