@@ -4503,7 +4503,7 @@
     "subject_title": null,
     "subject_party": null,
     "pinned": false,
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false
   },
   {
