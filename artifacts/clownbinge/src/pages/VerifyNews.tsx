@@ -3,7 +3,8 @@ import { Layout } from "@/components/Layout";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 import {
   CheckCircle, XCircle, HelpCircle, AlertTriangle, EyeOff,
-  ArrowRight, Shield, Globe, Newspaper, Radio, Loader2, ExternalLink, Lock
+  ArrowRight, Shield, Globe, Newspaper, Radio, Loader2, ExternalLink, Lock,
+  FlaskConical, Landmark, BookOpen
 } from "lucide-react";
 
 type Verdict =
@@ -19,12 +20,21 @@ interface PSTSource {
   domain: string;
 }
 
+interface PSTAxis {
+  label: string;
+  finding: string;
+  sources: PSTSource[];
+}
+
 interface PSTReport {
   query: string;
   verdict: Verdict;
   verdictExplanation: string;
-  axis1: { label: string; finding: string; sources: PSTSource[] };
-  axis2: { label: string; finding: string; sources: PSTSource[] };
+  axis1: PSTAxis;
+  axis2: PSTAxis;
+  axis3: PSTAxis;
+  axis4: PSTAxis;
+  axis5: PSTAxis;
   whatTheRecordShows: string;
   whatIsNotConfirmed: string;
   suppressionFlag: boolean;
@@ -42,7 +52,7 @@ const VERDICT_CONFIG: Record<
     bg: "bg-green-50",
     border: "border-green-300",
     icon: <CheckCircle className="w-8 h-8 text-green-600" />,
-    description: "Both axes independently confirm this claim.",
+    description: "Multiple independent axes confirm this claim.",
   },
   US_SUPPRESSED: {
     label: "US SUPPRESSED",
@@ -50,7 +60,7 @@ const VERDICT_CONFIG: Record<
     bg: "bg-orange-50",
     border: "border-orange-300",
     icon: <EyeOff className="w-8 h-8 text-orange-500" />,
-    description: "US/global coverage is absent or minimal. European press has it.",
+    description: "US/global coverage is absent or minimal. Western European press has it.",
   },
   WESTERN_COORDINATED_BLACKOUT: {
     label: "WESTERN COORDINATED BLACKOUT",
@@ -58,7 +68,7 @@ const VERDICT_CONFIG: Record<
     bg: "bg-red-50",
     border: "border-red-300",
     icon: <AlertTriangle className="w-8 h-8 text-red-600" />,
-    description: "Both Western axes show coordinated silence on this topic.",
+    description: "All news axes show coordinated silence on this topic.",
   },
   CONTESTED: {
     label: "CONTESTED",
@@ -66,7 +76,7 @@ const VERDICT_CONFIG: Record<
     bg: "bg-yellow-50",
     border: "border-yellow-300",
     icon: <XCircle className="w-8 h-8 text-yellow-600" />,
-    description: "The two axes present contradictory information.",
+    description: "The axes present contradictory information.",
   },
   UNVERIFIABLE: {
     label: "UNVERIFIABLE",
@@ -74,7 +84,7 @@ const VERDICT_CONFIG: Record<
     bg: "bg-gray-50",
     border: "border-gray-300",
     icon: <HelpCircle className="w-8 h-8 text-gray-500" />,
-    description: "Insufficient information across both axes to reach a conclusion.",
+    description: "Insufficient information across the 5 axes to reach a conclusion.",
   },
 };
 
@@ -308,6 +318,55 @@ export default function VerifyNews() {
                 </div>
               )}
             </div>
+
+            {/* Axis 3 — Peer-Reviewed Scientific Record */}
+            {report.axis3 && (
+              <div className="rounded-xl border bg-white p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <FlaskConical className="w-4 h-4 text-primary" />
+                  <h3 className="font-bold text-sm uppercase tracking-wider text-header">{report.axis3.label}</h3>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{report.axis3.finding}</p>
+                {report.axis3.sources.length > 0 && (
+                  <div className="space-y-2">
+                    {report.axis3.sources.map((src, i) => (
+                      <a
+                        key={i}
+                        href={src.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-start gap-2 text-xs text-primary hover:underline group"
+                      >
+                        <ExternalLink className="w-3 h-3 shrink-0 mt-0.5 opacity-60 group-hover:opacity-100" />
+                        <span>{src.title} <span className="text-muted-foreground">({src.domain})</span></span>
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Axis 4 — Campaign Finance Record */}
+            {report.axis4 && (
+              <div className="rounded-xl border bg-white p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <Landmark className="w-4 h-4 text-primary" />
+                  <h3 className="font-bold text-sm uppercase tracking-wider text-header">{report.axis4.label}</h3>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">{report.axis4.finding}</p>
+              </div>
+            )}
+
+            {/* Axis 5 — Congressional Legislative Record */}
+            {report.axis5 && (
+              <div className="rounded-xl border bg-white p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <BookOpen className="w-4 h-4 text-primary" />
+                  <h3 className="font-bold text-sm uppercase tracking-wider text-header">{report.axis5.label}</h3>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">{report.axis5.finding}</p>
+              </div>
+            )}
 
             {/* What the Record Shows */}
             <div className="rounded-xl border-l-4 bg-white p-5" style={{ borderLeftColor: "#1A3A8F" }}>

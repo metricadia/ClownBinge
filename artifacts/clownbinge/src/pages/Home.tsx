@@ -83,8 +83,11 @@ export default function Home() {
                   Deep Dives + Verified Research.
                   <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 opacity-60 hover:opacity-100 transition-opacity text-primary" strokeWidth={1.5} />
                 </button>
-                <p className="text-base sm:text-lg text-muted-foreground">
-                  Verified Across 65,000 Global Sources.
+                <p className="text-sm sm:text-base text-muted-foreground font-medium">
+                  Government records. Court filings. Peer-reviewed science.
+                </p>
+                <p className="text-xs sm:text-sm text-muted-foreground/70">
+                  Verified across 65,000+ global primary sources.
                 </p>
               </div>
 
