@@ -1,6 +1,6 @@
 import { Router, type IRouter } from "express";
 import { db, postsTable, reactionsTable } from "@workspace/db";
-import { eq, desc, and, or, ne, gte, sql, count } from "drizzle-orm";
+import { eq, desc, and, sql, count } from "drizzle-orm";
 import {
   ListPostsQueryParams,
   GetPostParams,
@@ -66,10 +66,13 @@ router.get("/posts", async (req, res) => {
       return;
     }
 
-    const { category, tag, limit = 20, offset = 0 } = query.data;
+    const { category, tag, staffPick, limit = 20, offset = 0 } = query.data;
 
     const conditions = [eq(postsTable.status, "published")];
-    if (tag) {
+    if (staffPick === true) {
+      // Staff picks: all categories allowed (incl. religion), filter by flag
+      conditions.push(eq(postsTable.staffPick, true));
+    } else if (tag) {
       // Tag archive: show all matching posts, no category suppression
       conditions.push(sql`${postsTable.tags} @> ARRAY[${tag}]::text[]`);
     } else if (category) {
@@ -144,6 +147,7 @@ router.get("/posts", async (req, res) => {
       userSubmitted: p.userSubmitted,
       pinned: p.pinned,
       locked: p.locked,
+      staffPick: p.staffPick,
     }));
 
     res.json({
@@ -212,6 +216,7 @@ router.get("/posts/:slug", async (req, res) => {
       userSubmitted: p.userSubmitted,
       pinned: p.pinned,
       locked: p.locked,
+      staffPick: p.staffPick,
     });
   } catch (err) {
     req.log.error({ err }, "Error fetching post");

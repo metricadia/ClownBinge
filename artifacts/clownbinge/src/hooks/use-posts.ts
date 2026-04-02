@@ -23,11 +23,12 @@ export function usePostsFilter() {
   };
 }
 
-export function usePostsFeed(category?: ListPostsCategory, limit = 20) {
+export function usePostsFeed(category?: ListPostsCategory, limit = 20, staffPick?: boolean) {
   return useListPosts({ 
     limit, 
     offset: 0,
-    ...(category ? { category } : {})
+    ...(category ? { category } : {}),
+    ...(staffPick ? { staffPick } : {}),
   });
 }
 

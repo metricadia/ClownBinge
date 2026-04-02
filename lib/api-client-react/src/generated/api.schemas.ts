@@ -137,6 +137,8 @@ export interface SubscribeRequest {
 
 export type ListPostsParams = {
   category?: ListPostsCategory;
+  tag?: string;
+  staffPick?: boolean;
   limit?: number;
   offset?: number;
 };

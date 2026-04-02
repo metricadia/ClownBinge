@@ -28,27 +28,24 @@ const CATEGORY_LABELS: Record<string, string> = {
   nerd_out:            "NerdOut / Academic",
   disarming_hate:      "Disarming Hate",
 };
-import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
-
-
 export default function Home() {
   useHomeSeoHead();
   const [showNerdoutModal, setShowNerdoutModal] = useState(false);
   const { category, setCategory } = usePostsFilter();
   const isStaffPicks = category === ('staff_picks' as never);
 
-  const { data: staffPicksData, isLoading: staffPicksLoading, error: staffPicksError } = usePostsFeed(isStaffPicks ? undefined : undefined, isStaffPicks ? 60 : 0);
+  const { data: staffPicksData, isLoading: staffPicksLoading, error: staffPicksError } = usePostsFeed(undefined, 50, isStaffPicks ? true : undefined);
   const { posts: paginatedPosts, isLoading, isLoadingMore, error, hasMore, loadMore } = usePostsFeedPaginated(isStaffPicks ? undefined : category, 20);
   const { data: selfOwnData } = usePostsFeed('self_owned');
   const topSelfOwn = selfOwnData?.posts?.[0] ?? null;
   const { data: highlightedPost } = usePostDetail(HIGHLY_POPULAR_SLUG);
   const { data: foundingDoc } = usePostDetail('respectability-is-unremarkable');
 
-  // Staff picks: filter curated slugs from a full fetch; regular feed uses paginated posts
+  // Staff picks: driven by staffPick flag from the database — no hardcoded slug list
   // Religion articles are excluded from the "all" feed — they only appear when the religion category is explicitly selected
   const isAllFeed = !category || category === 'all';
   const displayPosts = isStaffPicks
-    ? STAFF_PICKS_SLUGS.map(slug => (staffPicksData?.posts ?? []).find(p => p.slug === slug)).filter(Boolean) as typeof paginatedPosts
+    ? (staffPicksData?.posts ?? []).filter((p: any) => p.staffPick === true)
     : isAllFeed
       ? paginatedPosts.filter(p => p.category !== 'religion')
       : paginatedPosts;

@@ -42,6 +42,8 @@ export const ListPostsQueryParams = zod.object({
       "disarming_hate",
     ])
     .optional(),
+  tag: zod.string().optional(),
+  staffPick: zod.coerce.boolean().optional(),
   limit: zod.coerce.number().default(listPostsQueryLimitDefault),
   offset: zod.coerce.number().default(listPostsQueryOffsetDefault),
 });
@@ -88,6 +90,9 @@ export const ListPostsResponse = zod.object({
       createdAt: zod.string(),
       viewCount: zod.number(),
       shareCount: zod.number(),
+      staffPick: zod.boolean().optional(),
+      pinned: zod.boolean().optional(),
+      locked: zod.boolean().optional(),
     }),
   ),
   total: zod.number(),
@@ -142,6 +147,9 @@ export const GetPostResponse = zod.object({
   createdAt: zod.string(),
   viewCount: zod.number(),
   shareCount: zod.number(),
+  staffPick: zod.boolean().optional(),
+  pinned: zod.boolean().optional(),
+  locked: zod.boolean().optional(),
 });
 
 /**
