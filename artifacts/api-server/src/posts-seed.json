@@ -350,7 +350,7 @@
     "locked": true,
     "ai_score": 3,
     "ai_score_tested_at": "2026-03-26T02:10:40.12",
-    "staff_pick": false
+    "staff_pick": true
   },
   {
     "case_number": "CB-000016",
@@ -524,7 +524,7 @@
     "locked": true,
     "ai_score": 16,
     "ai_score_tested_at": "2026-03-25T23:00:57.525",
-    "staff_pick": false
+    "staff_pick": true
   },
   {
     "case_number": "CB-000020",
@@ -1096,7 +1096,7 @@
     "locked": false,
     "ai_score": 31,
     "ai_score_tested_at": "2026-03-25T23:03:55.438",
-    "staff_pick": true
+    "staff_pick": false
   },
   {
     "case_number": "CB-000033",
@@ -1450,7 +1450,8 @@
     "pinned": false,
     "locked": true,
     "ai_score": 14,
-    "ai_score_tested_at": "2026-03-25T22:54:27.668"
+    "ai_score_tested_at": "2026-03-25T22:54:27.668",
+    "staff_pick": true
   },
   {
     "case_number": "CB-000037",
@@ -3842,7 +3843,7 @@
     "status": "published",
     "published_at": "2026-04-02T12:00:00.000Z",
     "pinned": true,
-    "staff_pick": true,
+    "staff_pick": false,
     "locked": false,
     "nerd_accessible": true,
     "has_video": false,
@@ -3908,7 +3909,7 @@
     "status": "published",
     "published_at": "2026-04-02T14:00:00.000Z",
     "pinned": false,
-    "staff_pick": true,
+    "staff_pick": false,
     "locked": false,
     "nerd_accessible": true,
     "has_video": false,
@@ -4183,7 +4184,7 @@
     "subject_title": null,
     "subject_party": null,
     "pinned": false,
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false
   },
   {
@@ -4212,7 +4213,7 @@
     "subject_title": null,
     "subject_party": null,
     "pinned": false,
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false
   },
   {
@@ -4270,7 +4271,7 @@
     "subject_title": null,
     "subject_party": null,
     "pinned": false,
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false
   },
   {
@@ -4387,7 +4388,7 @@
     "subject_title": null,
     "subject_party": null,
     "pinned": false,
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false
   },
   {
@@ -4416,7 +4417,7 @@
     "subject_title": null,
     "subject_party": null,
     "pinned": false,
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false
   },
   {
@@ -4445,7 +4446,7 @@
     "subject_title": null,
     "subject_party": null,
     "pinned": false,
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false
   },
   {
@@ -4474,7 +4475,7 @@
     "subject_title": null,
     "subject_party": null,
     "pinned": false,
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false
   },
   {
@@ -4561,7 +4562,7 @@
     "subject_title": null,
     "subject_party": null,
     "pinned": false,
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false
   },
   {
@@ -4590,7 +4591,7 @@
     "subject_title": null,
     "subject_party": null,
     "pinned": false,
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false
   },
   {
@@ -4619,7 +4620,7 @@
     "subject_title": null,
     "subject_party": null,
     "pinned": false,
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false
   },
   {
@@ -4669,7 +4670,7 @@
     ],
     "category": "us_history",
     "status": "published",
-    "staff_pick": false,
+    "staff_pick": true,
     "locked": false,
     "pinned": false,
     "self_own_score": null,
