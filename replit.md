@@ -334,6 +334,7 @@ cd scripts && pnpm sitemap                                    # Regenerate sitem
 
 - NEVER use em dashes anywhere in this project
 - Source abbreviations: add to `src/lib/source-abbrev.ts` only (single source of truth)
+- **CB Sanitizer Rule — Paragraph Length:** No short paragraphs. Paragraphs must be substantive blocks. A paragraph of 1-2 sentences is only permitted when it is artistically intentional (e.g., a closing rhetorical statement or a deliberate punch line). Even then, use sparingly. Default behavior: merge related short paragraphs into one cohesive block. This rule applies to all article bodies at the time of writing and must be checked before any article is inserted into the database.
 
 ---
 

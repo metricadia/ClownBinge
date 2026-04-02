@@ -384,6 +384,7 @@ Text-based logo: `METRICADIA [gold bar] RESEARCH LLC`
 - No em dashes (—) and no double hyphens (--)
 - Sentences under 55 words
 - No ellipsis in source tile display
+- **CB Sanitizer Rule — Paragraph Length:** No short paragraphs. Every paragraph must be a substantive block of text. A 1-2 sentence paragraph is only permitted when it is artistically intentional (a closing rhetorical beat, a deliberate punch line). Even then, use sparingly. Default behavior: merge adjacent short paragraphs into one cohesive block before inserting into the database. This rule is enforced at write time, not retroactively.
 
 ### Citation Standard
 ```
