@@ -190,7 +190,7 @@ us_constitution | us_history | war_and_inhumanity | women_and_girls
 **Staff Picks:** 4
 **Pinned (editorial top):** 10
 **Locked (access-controlled):** 81
-**Progress to goal:** 166 / 400
+**Progress to goal:** 178 / 400
 
 ### Articles Per Category
 
@@ -205,7 +205,7 @@ us_constitution | us_history | war_and_inhumanity | women_and_girls
 | nerd_out | 6 |
 | disarming_hate | 4 |
 | us_constitution | 4 |
-| global_south | 3 |
+| global_south | 15 ✓ CLOSED |
 | censorship | 3 |
 | women_and_girls | 3 |
 | investigations | 3 |
@@ -425,6 +425,25 @@ To substantiate the brand's novel journalism methodology:
 7. The Civics Gap — primary source illiteracy as a systemic vulnerability
 8. The AI Authentication Crisis — how LLMs threaten evidentiary journalism
 9. The Verification Framework — ClownBinge's proposed primary source standard
+
+---
+
+## Floor Cleanup Sprint — Six Category Jobs (April 2026)
+
+**Objective:** Eliminate orphan cluster signals. Bring all thin categories to minimum 10–15 articles. No article in this sprint gets staff_pick=true or pinned=true. These populate category feeds only. Front page layout optimization happens AFTER all six jobs are complete.
+
+| Job | Category | From | To | Articles Needed | Status |
+|-----|----------|------|----|-----------------|--------|
+| Job 1 | global_south | 3 | 15 | 12 | COMPLETE ✓ (CB-000169 to CB-000180) |
+| Job 2 | censorship | 3 | 15 | 12 | PENDING |
+| Job 3 | women_and_girls | 3 | 15 | 12 | PENDING |
+| Job 4 | war_and_inhumanity | 2 | 15 | 13 | PENDING |
+| Job 5 | anti_racist_heroes | 1 | 10 | 9 | PENDING |
+| Job 6 | technology | 1 | 10 | 9 | PENDING |
+
+**Total articles this sprint:** 67
+**Case numbers:** CB-000169 through CB-000235 (estimated)
+**Next sprint after completion:** Front page SEO layout analysis, then Law & Justice depth sprint (7 → 50).
 
 ---
 
