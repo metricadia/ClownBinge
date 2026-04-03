@@ -30,6 +30,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export default function Home() {
   useHomeSeoHead();
   const [showNerdoutModal, setShowNerdoutModal] = useState(false);
+  const [modalLarge, setModalLarge] = useState(false);
   const { category, setCategory } = usePostsFilter();
   const isStaffPicks = category === ('staff_picks' as never);
 
@@ -99,73 +100,101 @@ export default function Home() {
 
             {/* NerdOut Modal */}
             {showNerdoutModal && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-                <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-primary/20">
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+                <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto border border-primary/20">
+
                   {/* Header */}
-                  <div className="sticky top-0 bg-gradient-to-r from-primary to-primary/80 text-white px-6 py-5 flex items-center justify-between border-b border-white/10">
+                  <div className="sticky top-0 bg-gradient-to-r from-primary to-primary/80 text-white px-6 py-5 flex items-center justify-between border-b border-white/10 z-10">
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-widest text-white/60 mb-1">NerdOut / Academic</p>
-                      <h2 className="text-2xl font-bold">Deep Dives + Verified Research</h2>
+                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50 mb-1">Our Editorial Standard</p>
+                      <h2 className="text-xl sm:text-2xl font-extrabold leading-tight">Deep Dives + Verified Research</h2>
                     </div>
-                    <button
-                      onClick={() => setShowNerdoutModal(false)}
-                      className="text-white hover:bg-white/10 rounded-full p-2 transition-colors"
-                    >
-                      <X className="w-6 h-6" />
-                    </button>
+                    <div className="flex items-center gap-2 shrink-0">
+                      {/* Font resizer */}
+                      <div className="flex items-center gap-1 bg-white/10 rounded-full px-2 py-1">
+                        <button
+                          onClick={() => setModalLarge(false)}
+                          className={`text-xs font-bold px-1.5 py-0.5 rounded-full transition-colors ${!modalLarge ? 'bg-white text-primary' : 'text-white/70 hover:text-white'}`}
+                          aria-label="Smaller text"
+                        >a</button>
+                        <button
+                          onClick={() => setModalLarge(true)}
+                          className={`text-base font-bold px-1.5 py-0.5 rounded-full transition-colors ${modalLarge ? 'bg-white text-primary' : 'text-white/70 hover:text-white'}`}
+                          aria-label="Larger text"
+                        >A</button>
+                      </div>
+                      <button
+                        onClick={() => setShowNerdoutModal(false)}
+                        className="text-white hover:bg-white/10 rounded-full p-2 transition-colors"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
                   </div>
 
                   {/* Content */}
-                  <div className="px-6 py-8 space-y-6 text-sm text-muted-foreground leading-relaxed">
+                  <div className={`px-6 py-8 space-y-7 leading-relaxed text-black transition-all ${modalLarge ? 'text-base' : 'text-sm'}`}>
 
                     <div>
-                      <h3 className="text-lg font-bold text-header mb-2">Primary Sources Only. Every Time.</h3>
+                      <h3 className="text-lg font-extrabold text-black mb-3 flex items-center gap-2">
+                        <span className="text-primary">01</span> Primary Sources. Only. Every Time.
+                      </h3>
                       <p>
-                        Every article on ClownBinge is built exclusively from peer-reviewed research, government records, court filings, congressional transcripts, and verified institutional data. Not summaries of summaries. Not "a source familiar with the matter." The actual document. The actual data. The actual filing.
+                        Every article on ClownBinge is built <strong>exclusively from peer-reviewed research, government records, court filings, congressional transcripts, and verified institutional data.</strong> Not summaries. Not "a source familiar with the matter." Not vibes.
                       </p>
                       <p className="mt-3">
-                        If a claim cannot be traced directly to its origin — the study, the statute, the deposition, the FOIA release — it does not get published here. That is not a standard we aim for. It is the only standard we recognize.
+                        The actual document. The actual study. The actual roll-call vote. If a claim cannot be traced <strong>directly to its origin</strong> — the statute, the deposition, the FOIA release, the data table — it does not exist on this platform. That is not a standard we aim for. It is the only standard we recognize.
                       </p>
                     </div>
 
+                    <div className="h-px bg-black/8 rounded-full" />
+
                     <div>
-                      <h3 className="text-lg font-bold text-header mb-2">1,500 Words Minimum. Here's Why.</h3>
+                      <h3 className="text-lg font-extrabold text-black mb-3 flex items-center gap-2">
+                        <span className="text-primary">02</span> 1,500 Words Minimum — and That's Not an Accident.
+                      </h3>
                       <p>
-                        Our deep dives start at 1,500 words because the truth usually requires that much room. The misleading headline is almost never the whole story. The law that sounds simple has a carve-out. The statistic that sounds damning has context. The politician who sounds principled has a voting record.
+                        The truth rarely fits in a tweet. Our deep dives start at 1,500 words because <strong>the misleading headline is almost never the whole story.</strong> The law that sounds simple has a carve-out. The statistic that sounds damning has context someone buried. The politician who sounds principled has a voting record that says otherwise.
                       </p>
                       <p className="mt-3">
-                        Short-form journalism trades precision for speed. We trade speed for precision. You will leave each ClownBinge article knowing more than when you arrived — not just angrier.
+                        Short-form journalism trades precision for speed. <strong>We trade speed for precision.</strong> You will leave each ClownBinge article knowing more than you did when you arrived — not just angrier.
                       </p>
                     </div>
 
+                    <div className="h-px bg-black/8 rounded-full" />
+
                     <div>
-                      <h3 className="text-lg font-bold text-header mb-2">Why This Model Exists</h3>
+                      <h3 className="text-lg font-extrabold text-black mb-3 flex items-center gap-2">
+                        <span className="text-primary">03</span> Why This Even Has to Exist
+                      </h3>
                       <p>
-                        Most Americans have been failed by the media ecosystem — not because journalists are lazy, but because the economic incentives of the attention economy reward outrage over accuracy and velocity over depth. Cable news discovered decades ago that keeping you afraid and confused is more profitable than keeping you informed.
+                        Most people have been failed by the media ecosystem — not because journalists are lazy, but because <strong>the economic incentives of the attention economy reward outrage over accuracy</strong> and velocity over depth. Cable news figured out decades ago that keeping you afraid and confused is more profitable than keeping you informed.
                       </p>
                       <p className="mt-3">
-                        ClownBinge was built as a direct counter to that model. No cable. No pundits. No "both sides." Just the record — organized, verified, and searchable. We do not tell you what to think. We hand you the receipts and trust you to think for yourself.
+                        ClownBinge was built as a direct counter to that model. No cable. No pundits. No "both sides" theater performed for symmetry's sake. <strong>Just the record — organized, verified, and searchable.</strong> We do not tell you what to think. We hand you the receipts and trust you to think for yourself.
                       </p>
                     </div>
 
-                    <div className="rounded-xl bg-primary/5 border border-primary/20 p-4">
-                      <p className="text-xs uppercase tracking-widest font-bold text-primary mb-2">The Unbreakable Rule</p>
-                      <p className="text-sm text-header font-medium">
-                        No peer-reviewed source or verifiable primary document — no publication. The record is our only authority. It always will be.
+                    <div className="rounded-xl border-2 border-primary/30 bg-primary/5 p-5">
+                      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2">The Rule That Never Bends</p>
+                      <p className={`font-semibold text-black ${modalLarge ? 'text-base' : 'text-sm'}`}>
+                        No peer-reviewed source. No verifiable primary document. <strong>No publication.</strong> The record is our only authority — and it always will be.
                       </p>
                     </div>
 
                   </div>
 
                   {/* Footer */}
-                  <div className="bg-muted/40 px-6 py-4 border-t border-border flex justify-end gap-3">
+                  <div className="bg-gray-50 px-6 py-4 border-t border-black/8 flex items-center justify-between gap-3">
+                    <p className="text-xs text-black/40 font-medium">Metricadia Research LLC · 65,000+ verified sources</p>
                     <button
                       onClick={() => setShowNerdoutModal(false)}
-                      className="px-6 py-2 rounded-full font-semibold text-header border border-border hover:bg-muted transition-colors"
+                      className="px-6 py-2 rounded-full font-bold text-sm text-white bg-primary hover:bg-primary/90 transition-colors"
                     >
-                      Close
+                      Got It
                     </button>
                   </div>
+
                 </div>
               </div>
             )}
