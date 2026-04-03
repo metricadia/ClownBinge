@@ -1103,6 +1103,8 @@ const BOOKS: FactBook[] = [
     tag: "Money & Power",
     bg: "#082010", fg: "#FFFFFF", accent: "#00D084", accentFg: "#082010",
     coverDesign: "circle",
+    coverImage: "/covers/debtclock.png",
+    coverAnchor: "xMidYMid slice",
     subtitle: "Who Borrowed It. Who Foots the Bill",
     summary: "The United States currently pays $2.8 billion every single day in interest on the national debt  - more than the entire discretionary budget of most federal agencies, and more than it spends on education per day. This FactBook uses Treasury Department data, CBO projections, and Federal Reserve reports to trace exactly how this happened, who benefits, and what it forecloses.",
     bullets: [
