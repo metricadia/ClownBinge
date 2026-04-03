@@ -7,7 +7,7 @@ import { usePostsFilter, usePostsFeed, usePostsFeedPaginated, usePostDetail } fr
 import { useHomeSeoHead } from "@/hooks/use-seo-head";
 import { Loader2, AlertCircle, ArrowRight, X, HelpCircle } from "lucide-react";
 
-const HIGHLY_POPULAR_SLUG = "strength-differences-men-women-research";
+const HIGHLY_POPULAR_SLUG = "ted-cruz-christ-is-king-antisemitic-aipac";
 
 const CATEGORY_LABELS: Record<string, string> = {
   self_owned:          "Self-Owned",
@@ -179,18 +179,14 @@ export default function Home() {
                 style={{ background: "#E8EDF5" }}
               >
                 <div className="px-6 pt-5 pb-1 flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-0 bg-white/80 border border-blue-200 rounded-full overflow-hidden">
-                    <div className="flex items-center px-3 py-1">
-                      <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M1 9.5h12M1 9.5L0.5 4l3 2.5L7 1l3.5 5.5 3-2.5L13 9.5" stroke="#1d4ed8" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                    <span className="text-blue-300 text-xs font-bold select-none">|</span>
-                    <span className="px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-blue-500">
-                      {CATEGORY_LABELS[highlightedPost.category] ?? highlightedPost.category}
+                  <div className="flex items-center gap-0 bg-white/90 border border-blue-300 rounded-full overflow-hidden">
+                    <span className="px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-blue-600">
+                      ★ Feature
                     </span>
                   </div>
-                  <span className="text-xs font-mono font-bold text-slate-400 tracking-wide">{highlightedPost.caseNumber}</span>
+                  <span className="text-xs font-mono font-bold text-slate-400 tracking-wide">
+                    {CATEGORY_LABELS[highlightedPost.category] ?? highlightedPost.category}&nbsp;&nbsp;·&nbsp;&nbsp;{highlightedPost.caseNumber}
+                  </span>
                 </div>
                 <div className="px-6 py-4">
                   <Link href={`/case/${highlightedPost.slug}`}>
