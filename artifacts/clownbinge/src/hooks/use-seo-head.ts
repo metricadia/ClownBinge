@@ -187,11 +187,10 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       ? `${post.title} | NerdOut Academic Analysis | ClownBinge`
       : `${post.title} | ClownBinge`;
 
-    // SEO meta title: short, keyword-first, click-worthy for search results.
-    // Falls back to full title if not yet generated.
-    const seoTitle = (post as any).seoMetaTitle
-      ? `${(post as any).seoMetaTitle} | ClownBinge`
-      : pageTitle;
+    // SEO meta title: keyword-first, 55-60 chars, ends with | CB-XXXXXX as trust anchor.
+    // Case ID replaces brand suffix — ClownBinge is in the body, not the tab.
+    // Falls back to full narrative title if not yet generated.
+    const seoTitle = (post as any).seoMetaTitle ?? pageTitle;
 
     document.title = seoTitle;
 
