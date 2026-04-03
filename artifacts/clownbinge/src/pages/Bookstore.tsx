@@ -129,7 +129,7 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 9, vol: "Vol. 02",
+    id: 9, vol: "Vol. 08",
     shortTitle: "Egypt's Undeniable Black Roots",
     fullTitle: "Egypt's Undeniable Black Roots: What Herodotus Saw",
     tag: "Global South / Archaeology",
@@ -191,7 +191,7 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 2, vol: "Vol. 03",
+    id: 2, vol: "Vol. 02",
     shortTitle: "Merchants of Chaos",
     fullTitle: "Merchants of Chaos: Facebook, X, YouTube & TikTok as the World's Largest Disinformation Infrastructure",
     subtitle: "Social Media as the World's Largest Disinformation Infrastructure",
@@ -211,7 +211,7 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 3, vol: "Vol. 04",
+    id: 3, vol: "Vol. 07",
     shortTitle: "A Well-Regulated Exclusion",
     fullTitle: "A Well-Regulated Exclusion: The Second Amendment's Race Problem on the Constitutional Record",
     subtitle: "The Second Amendment's Race Problem on the Constitutional Record",
@@ -228,7 +228,7 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 4, vol: "Vol. 05",
+    id: 4, vol: "Vol. 06",
     shortTitle: "Who Is the Chief Grifter?",
     fullTitle: "Who Is the Chief Grifter? Obama vs. Trump Appointees: The Credential Record That Ends the Merit Argument",
     subtitle: "The Credential Record That Ends the Merit Argument",
@@ -247,7 +247,7 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 5, vol: "Vol. 06",
+    id: 5, vol: "Vol. 04",
     shortTitle: "All Propaganda, All the Time",
     fullTitle: "All Propaganda, All the Time: CNN, MSNBC, and Fox News  - What the Documents Confirm",
     subtitle: "CNN, MSNBC, and Fox News  - What the Documents Confirm",
@@ -264,7 +264,7 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 6, vol: "Vol. 07",
+    id: 6, vol: "Vol. 05",
     shortTitle: "Stolen Maps",
     fullTitle: "Stolen Maps: The Documented Legality of Gerrymandering and Who It Was Designed to Silence",
     subtitle: "The Documented Legality of Gerrymandering and Who It Was Designed to Silence",
@@ -281,7 +281,7 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 7, vol: "Vol. 08",
+    id: 7, vol: "Vol. 09",
     shortTitle: "The Uncredited Builders",
     fullTitle: "The Uncredited Builders: Indigenous Nations, Enslaved Africans, and Immigrants Who Made America",
     subtitle: "Indigenous Nations, Enslaved Africans, and Immigrants Who Made America",
@@ -300,7 +300,7 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 8, vol: "Vol. 09",
+    id: 8, vol: "Vol. 10",
     shortTitle: "Ancient Faith, Modern Politics",
     fullTitle: "Ancient Faith, Modern Politics: The Documented Separation of Judaism and Zionism",
     tag: "Global South / History",
@@ -1096,7 +1096,7 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 10, vol: "Vol. 10",
+    id: 10, vol: "Vol. 03",
     shortTitle: "The Debt Clock",
     fullTitle: "The Debt Clock: Who Borrowed It. Who Foots the Bill",
     tag: "Money & Power",
@@ -1840,7 +1840,7 @@ export default function Bookstore() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-5 gap-y-12">
           {[...BOOKS].sort((a, b) => {
-            const ORDER = [1, 8, 2, 4, 7, 3, 5, 6, 9, 10];
+            const ORDER = [1, 2, 10, 5, 6, 4, 3, 9, 7, 8];
             return ORDER.indexOf(a.id) - ORDER.indexOf(b.id);
           }).map((book) => (
             <div key={book.id} className="group flex flex-col">
