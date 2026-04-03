@@ -32,6 +32,7 @@ interface FactBook {
   idealReaders?: { intro: string; readers: { title: string; body: string }[] };
   coverImage?: string;
   coverAnchor?: string;
+  coverBrightness?: number;
   coverVideo?: string;
   pages?: number;
   price?: string;
@@ -1105,6 +1106,7 @@ const BOOKS: FactBook[] = [
     coverDesign: "circle",
     coverImage: "/covers/debtclock.png",
     coverAnchor: "xMidYMid slice",
+    coverBrightness: 1.6,
     subtitle: "Who Borrowed It. Who Foots the Bill",
     summary: "The United States currently pays $2.8 billion every single day in interest on the national debt  - more than the entire discretionary budget of most federal agencies, and more than it spends on education per day. This FactBook uses Treasury Department data, CBO projections, and Federal Reserve reports to trace exactly how this happened, who benefits, and what it forecloses.",
     bullets: [
@@ -1209,7 +1211,7 @@ function CoverSVG({ book }: { book: FactBook }) {
         {/* Book bg color shows through transparent areas of PNG covers */}
         <rect width="240" height="360" fill={bg} />
         {/* Full-bleed photo */}
-        <image href={book.coverImage} x="0" y="0" width="240" height="360" preserveAspectRatio={book.coverAnchor ?? "xMidYMid slice"} />
+        <image href={book.coverImage} x="0" y="0" width="240" height="360" preserveAspectRatio={book.coverAnchor ?? "xMidYMid slice"} style={book.coverBrightness ? { filter: `brightness(${book.coverBrightness})` } : undefined} />
         {/* Fade photo into black */}
         <rect width="240" height="360" fill={`url(#fade-${book.id})`} />
         {/* Accent color glow from bottom  - ties cover to brand color */}
