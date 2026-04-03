@@ -315,4 +315,242 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
     "first-nations-survival-census-record-us-history",
     "second-amendment-racial-disparity-philando-castile",
   ],
+
+  // --- Law & Justice: Cash Bail / Pretrial Reform cluster ---
+  "cash-bail-reform-states-recidivism-data-documented-record": [
+    "mandatory-minimum-sentencing-reform-congressional-record-what-stopped-it",
+    "prison-litigation-reform-act-plra-civil-rights-suits-barriers-documented",
+    "qualified-immunity-reform-bills-congressional-votes-who-blocked-it",
+  ],
+  "mandatory-minimum-sentencing-reform-congressional-record-what-stopped-it": [
+    "cash-bail-reform-states-recidivism-data-documented-record",
+    "national-registry-exonerations-wrongful-conviction-race-data-documented",
+    "prison-litigation-reform-act-plra-civil-rights-suits-barriers-documented",
+  ],
+  "national-registry-exonerations-wrongful-conviction-race-data-documented": [
+    "jailhouse-informants-wrongful-convictions-documented-pattern-national-registry",
+    "prison-litigation-reform-act-plra-civil-rights-suits-barriers-documented",
+    "mandatory-minimum-sentencing-reform-congressional-record-what-stopped-it",
+  ],
+  "jailhouse-informants-wrongful-convictions-documented-pattern-national-registry": [
+    "national-registry-exonerations-wrongful-conviction-race-data-documented",
+    "prison-litigation-reform-act-plra-civil-rights-suits-barriers-documented",
+  ],
+  "prison-litigation-reform-act-plra-civil-rights-suits-barriers-documented": [
+    "solitary-confinement-un-standards-nelson-mandela-rules-us-prison-practice-documented",
+    "national-registry-exonerations-wrongful-conviction-race-data-documented",
+    "cash-bail-reform-states-recidivism-data-documented-record",
+  ],
+  "solitary-confinement-un-standards-nelson-mandela-rules-us-prison-practice-documented": [
+    "prison-litigation-reform-act-plra-civil-rights-suits-barriers-documented",
+    "national-registry-exonerations-wrongful-conviction-race-data-documented",
+  ],
+
+  // --- Law & Justice: Voting Rights / Civil Rights cluster ---
+  "shelby-county-v-holder-voting-restrictions-states-documented-record-2013-2024": [
+    "hud-fair-housing-complaints-decade-data-race-disability-documented",
+    "eeoc-employment-discrimination-charge-data-outcomes-documented-record",
+    "qualified-immunity-reform-bills-congressional-votes-who-blocked-it",
+  ],
+  "hud-fair-housing-complaints-decade-data-race-disability-documented": [
+    "eeoc-employment-discrimination-charge-data-outcomes-documented-record",
+    "shelby-county-v-holder-voting-restrictions-states-documented-record-2013-2024",
+  ],
+  "eeoc-employment-discrimination-charge-data-outcomes-documented-record": [
+    "hud-fair-housing-complaints-decade-data-race-disability-documented",
+    "algorithmic-hiring-discrimination-eeoc-ai-tools-documented-cases-2023-2024",
+  ],
+  "qualified-immunity-reform-bills-congressional-votes-who-blocked-it": [
+    "civil-asset-forfeiture-states-no-conviction-required-documented-record",
+    "shelby-county-v-holder-voting-restrictions-states-documented-record-2013-2024",
+    "no-fly-list-how-added-due-process-challenges-documented-record",
+  ],
+  "civil-asset-forfeiture-states-no-conviction-required-documented-record": [
+    "qualified-immunity-reform-bills-congressional-votes-who-blocked-it",
+    "prison-litigation-reform-act-plra-civil-rights-suits-barriers-documented",
+  ],
+
+  // --- Law & Justice: SCOTUS / Executive Power cluster ---
+  "trump-v-united-states-presidential-immunity-ruling-text-documented": [
+    "303-creative-v-elenis-supreme-court-ruling-what-it-actually-says",
+    "students-fair-admissions-v-harvard-unc-ruling-what-it-permits-documented",
+    "moody-v-netchoice-supreme-court-social-media-first-amendment-ruling-2024",
+  ],
+  "303-creative-v-elenis-supreme-court-ruling-what-it-actually-says": [
+    "trump-v-united-states-presidential-immunity-ruling-text-documented",
+    "students-fair-admissions-v-harvard-unc-ruling-what-it-permits-documented",
+  ],
+  "students-fair-admissions-v-harvard-unc-ruling-what-it-permits-documented": [
+    "trump-v-united-states-presidential-immunity-ruling-text-documented",
+    "shelby-county-v-holder-voting-restrictions-states-documented-record-2013-2024",
+  ],
+  "moody-v-netchoice-supreme-court-social-media-first-amendment-ruling-2024": [
+    "section-230-communications-decency-act-what-it-says-what-it-does-not",
+    "social-media-political-suppression-documented-cases-court-records-2020-2024",
+  ],
+
+  // --- Law & Justice: Surveillance / Due Process cluster ---
+  "fisa-section-702-mass-surveillance-authority-documented-scope-reauthorization": [
+    "stingray-cell-site-simulators-law-enforcement-warrantless-use-documented",
+    "no-fly-list-how-added-due-process-challenges-documented-record",
+    "clearview-ai-facial-recognition-federal-contracts-database-documented",
+  ],
+  "no-fly-list-how-added-due-process-challenges-documented-record": [
+    "fisa-section-702-mass-surveillance-authority-documented-scope-reauthorization",
+    "civil-asset-forfeiture-states-no-conviction-required-documented-record",
+  ],
+  "title-ix-2024-regulations-legal-challenges-what-changed-documented": [
+    "students-fair-admissions-v-harvard-unc-ruling-what-it-permits-documented",
+    "title-ix-athletic-programs-enrollment-opportunity-gap-documented-data-2024",
+  ],
+
+  // --- Technology: Surveillance / AI cluster ---
+  "algorithmic-hiring-discrimination-eeoc-ai-tools-documented-cases-2023-2024": [
+    "compas-algorithm-criminal-sentencing-propublica-analysis-bias-documented",
+    "amazon-worker-surveillance-patents-monitoring-systems-documented-impact",
+    "eeoc-employment-discrimination-charge-data-outcomes-documented-record",
+  ],
+  "stingray-cell-site-simulators-law-enforcement-warrantless-use-documented": [
+    "clearview-ai-facial-recognition-federal-contracts-database-documented",
+    "license-plate-readers-data-retention-sharing-courts-documented-record",
+    "fisa-section-702-mass-surveillance-authority-documented-scope-reauthorization",
+  ],
+  "license-plate-readers-data-retention-sharing-courts-documented-record": [
+    "stingray-cell-site-simulators-law-enforcement-warrantless-use-documented",
+    "clearview-ai-facial-recognition-federal-contracts-database-documented",
+  ],
+  "clearview-ai-facial-recognition-federal-contracts-database-documented": [
+    "stingray-cell-site-simulators-law-enforcement-warrantless-use-documented",
+    "license-plate-readers-data-retention-sharing-courts-documented-record",
+    "fisa-section-702-mass-surveillance-authority-documented-scope-reauthorization",
+  ],
+  "compas-algorithm-criminal-sentencing-propublica-analysis-bias-documented": [
+    "algorithmic-hiring-discrimination-eeoc-ai-tools-documented-cases-2023-2024",
+    "national-registry-exonerations-wrongful-conviction-race-data-documented",
+  ],
+  "amazon-worker-surveillance-patents-monitoring-systems-documented-impact": [
+    "algorithmic-hiring-discrimination-eeoc-ai-tools-documented-cases-2023-2024",
+    "digital-redlining-fcc-broadband-access-income-race-data-documented",
+  ],
+  "digital-redlining-fcc-broadband-access-income-race-data-documented": [
+    "amazon-worker-surveillance-patents-monitoring-systems-documented-impact",
+    "section-230-communications-decency-act-what-it-says-what-it-does-not",
+  ],
+
+  // --- Technology: Platform Power / AI Rights cluster ---
+  "ai-training-data-copyright-lawsuits-new-york-times-openai-legal-theory": [
+    "section-230-communications-decency-act-what-it-says-what-it-does-not",
+    "social-media-content-moderation-disparities-documented-cases-race-politics",
+  ],
+  "section-230-communications-decency-act-what-it-says-what-it-does-not": [
+    "moody-v-netchoice-supreme-court-social-media-first-amendment-ruling-2024",
+    "ai-training-data-copyright-lawsuits-new-york-times-openai-legal-theory",
+    "social-media-political-suppression-documented-cases-court-records-2020-2024",
+  ],
+  "social-media-content-moderation-disparities-documented-cases-race-politics": [
+    "section-230-communications-decency-act-what-it-says-what-it-does-not",
+    "ai-training-data-copyright-lawsuits-new-york-times-openai-legal-theory",
+    "social-media-political-suppression-documented-cases-court-records-2020-2024",
+  ],
+
+  // --- Women & Girls cluster ---
+  "maternal-mortality-dobbs-state-by-state-data-abortion-restrictions-documented": [
+    "violence-against-women-act-vawa-coverage-funding-gaps-documented",
+    "missing-murdered-indigenous-women-mmiw-doj-data-documentation-gap-documented",
+  ],
+  "title-ix-athletic-programs-enrollment-opportunity-gap-documented-data-2024": [
+    "gender-pay-gap-female-dominated-professions-bls-data-by-industry-documented",
+    "title-ix-2024-regulations-legal-challenges-what-changed-documented",
+    "women-us-senate-full-history-1922-2025-primary-source-record",
+  ],
+  "gender-pay-gap-female-dominated-professions-bls-data-by-industry-documented": [
+    "title-ix-athletic-programs-enrollment-opportunity-gap-documented-data-2024",
+    "eeoc-employment-discrimination-charge-data-outcomes-documented-record",
+  ],
+  "violence-against-women-act-vawa-coverage-funding-gaps-documented": [
+    "maternal-mortality-dobbs-state-by-state-data-abortion-restrictions-documented",
+    "missing-murdered-indigenous-women-mmiw-doj-data-documentation-gap-documented",
+  ],
+  "women-us-senate-full-history-1922-2025-primary-source-record": [
+    "title-ix-athletic-programs-enrollment-opportunity-gap-documented-data-2024",
+    "gender-pay-gap-female-dominated-professions-bls-data-by-industry-documented",
+  ],
+  "missing-murdered-indigenous-women-mmiw-doj-data-documentation-gap-documented": [
+    "violence-against-women-act-vawa-coverage-funding-gaps-documented",
+    "maternal-mortality-dobbs-state-by-state-data-abortion-restrictions-documented",
+  ],
+
+  // --- War & Inhumanity cluster ---
+  "yemen-un-panel-experts-siege-hudaydah-documented-civilian-impact": [
+    "us-cluster-munitions-ukraine-decision-ccm-treaty-civilian-harm-documented",
+    "drc-congo-mineral-extraction-un-group-experts-funding-conflict-documented",
+  ],
+  "drc-congo-mineral-extraction-un-group-experts-funding-conflict-documented": [
+    "sudan-rsf-rapid-support-forces-atrocities-documented-record-2023-2025",
+    "myanmar-military-coup-2021-un-independent-investigative-mechanism-documented",
+  ],
+  "sudan-rsf-rapid-support-forces-atrocities-documented-record-2023-2025": [
+    "drc-congo-mineral-extraction-un-group-experts-funding-conflict-documented",
+    "myanmar-military-coup-2021-un-independent-investigative-mechanism-documented",
+  ],
+  "us-cluster-munitions-ukraine-decision-ccm-treaty-civilian-harm-documented": [
+    "yemen-un-panel-experts-siege-hudaydah-documented-civilian-impact",
+    "myanmar-military-coup-2021-un-independent-investigative-mechanism-documented",
+  ],
+  "myanmar-military-coup-2021-un-independent-investigative-mechanism-documented": [
+    "sudan-rsf-rapid-support-forces-atrocities-documented-record-2023-2025",
+    "drc-congo-mineral-extraction-un-group-experts-funding-conflict-documented",
+  ],
+
+  // --- Anti-Racist Heroes cluster ---
+  "bryan-stevenson-equal-justice-initiative-exonerations-policy-changes-documented": [
+    "ida-b-wells-anti-lynching-journalism-primary-sources-federal-law-impact",
+    "fannie-lou-hamer-democratic-convention-testimony-voting-rights-documented-impact",
+    "national-registry-exonerations-wrongful-conviction-race-data-documented",
+  ],
+  "ida-b-wells-anti-lynching-journalism-primary-sources-federal-law-impact": [
+    "bryan-stevenson-equal-justice-initiative-exonerations-policy-changes-documented",
+    "fannie-lou-hamer-democratic-convention-testimony-voting-rights-documented-impact",
+  ],
+  "claudette-colvin-bus-arrest-before-rosa-parks-montgomery-documented-record": [
+    "fannie-lou-hamer-democratic-convention-testimony-voting-rights-documented-impact",
+    "fred-korematsu-overturning-supreme-court-case-coram-nobis-documented-record",
+  ],
+  "fred-korematsu-overturning-supreme-court-case-coram-nobis-documented-record": [
+    "claudette-colvin-bus-arrest-before-rosa-parks-montgomery-documented-record",
+    "trump-v-united-states-presidential-immunity-ruling-text-documented",
+  ],
+  "fannie-lou-hamer-democratic-convention-testimony-voting-rights-documented-impact": [
+    "shelby-county-v-holder-voting-restrictions-states-documented-record-2013-2024",
+    "ida-b-wells-anti-lynching-journalism-primary-sources-federal-law-impact",
+    "claudette-colvin-bus-arrest-before-rosa-parks-montgomery-documented-record",
+  ],
+
+  // --- Censorship cluster ---
+  "book-banning-florida-school-districts-documented-count-2022-2024": [
+    "pen-america-index-book-challenges-organizations-states-patterns-2022-2024",
+    "american-library-association-book-challenge-index-who-files-outcomes-documented",
+    "lgbtq-content-bans-schools-state-by-state-record-2021-2025-documented",
+  ],
+  "pen-america-index-book-challenges-organizations-states-patterns-2022-2024": [
+    "book-banning-florida-school-districts-documented-count-2022-2024",
+    "american-library-association-book-challenge-index-who-files-outcomes-documented",
+  ],
+  "fire-campus-free-speech-academic-freedom-cases-2020-2024-documented": [
+    "social-media-political-suppression-documented-cases-court-records-2020-2024",
+    "pen-america-index-book-challenges-organizations-states-patterns-2022-2024",
+  ],
+  "social-media-political-suppression-documented-cases-court-records-2020-2024": [
+    "section-230-communications-decency-act-what-it-says-what-it-does-not",
+    "moody-v-netchoice-supreme-court-social-media-first-amendment-ruling-2024",
+    "fire-campus-free-speech-academic-freedom-cases-2020-2024-documented",
+  ],
+  "lgbtq-content-bans-schools-state-by-state-record-2021-2025-documented": [
+    "book-banning-florida-school-districts-documented-count-2022-2024",
+    "pen-america-index-book-challenges-organizations-states-patterns-2022-2024",
+  ],
+  "american-library-association-book-challenge-index-who-files-outcomes-documented": [
+    "pen-america-index-book-challenges-organizations-states-patterns-2022-2024",
+    "book-banning-florida-school-districts-documented-count-2022-2024",
+  ],
 };
