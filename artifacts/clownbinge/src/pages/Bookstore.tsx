@@ -194,6 +194,7 @@ const BOOKS: FactBook[] = [
     id: 2, vol: "Vol. 02",
     shortTitle: "The Disinformation Cashcow",
     fullTitle: "The Disinformation Cashcow: How Social Media Erodes Public Trust",
+    titleLines: ["Disinformation", "Cashcow"],
     subtitle: "How Social Media Erodes Public Trust",
     tag: "Investigations",
     bg: "#1A3A8F", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#1A1A2E",
