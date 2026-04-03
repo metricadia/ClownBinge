@@ -159,7 +159,7 @@ export function PostCard({ post }: { post: Post }) {
             <div className={`flex items-center gap-2 text-xs font-medium truncate min-w-0 ${mutedTextClasses}`}>
               <span className="truncate">{abbreviateSource(post.verifiedSource, true)}</span>
               {wordCountLabel && (
-                <span className="shrink-0 text-[10px] font-medium text-muted-foreground/60 tabular-nums">
+                <span className="shrink-0 text-xs font-medium text-muted-foreground/80 tabular-nums">
                   · {wordCountLabel}
                 </span>
               )}
