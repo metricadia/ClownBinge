@@ -117,44 +117,44 @@ export default function Home() {
 
                   {/* Content */}
                   <div className="px-6 py-8 space-y-6 text-sm text-muted-foreground leading-relaxed">
+
                     <div>
-                      <h3 className="text-lg font-bold text-header mb-2">What It Means</h3>
+                      <h3 className="text-lg font-bold text-header mb-2">Primary Sources Only. Every Time.</h3>
                       <p>
-                        "Deep Dives + Verified Research" is accountability journalism redesigned for the AI era. Instead of waiting for traditional news cycles to catch institutional contradictions, we systematically aggregate and verify claims against primary sources in real time, then present findings in formats that are immediately verifiable and academically defensible.
+                        Every article on ClownBinge is built exclusively from peer-reviewed research, government records, court filings, congressional transcripts, and verified institutional data. Not summaries of summaries. Not "a source familiar with the matter." The actual document. The actual data. The actual filing.
+                      </p>
+                      <p className="mt-3">
+                        If a claim cannot be traced directly to its origin — the study, the statute, the deposition, the FOIA release — it does not get published here. That is not a standard we aim for. It is the only standard we recognize.
                       </p>
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-bold text-header mb-2">The Architecture</h3>
-                      <ul className="space-y-3">
-                        <li>
-                          <strong className="text-header">Multi-Source Verification:</strong> Every claim is cross-referenced against government records, court filings, legislative transcripts, and peer-reviewed research before publication. No single source. No speculation.
-                        </li>
-                        <li>
-                          <strong className="text-header">Canonical Source Links:</strong> We emit schema-resolved citations as resolvable government URLs (congress.gov, supremecourt.gov, law.cornell.edu) so Google's AI can crawl and verify authority at the source level.
-                        </li>
-                        <li>
-                          <strong className="text-header">APA 7 Formatting:</strong> Every article is structured to be immediately citable in scholarly work, academic papers, and legal proceedings. The bibliography is built in.
-                        </li>
-                        <li>
-                          <strong className="text-header">Topical Authority Signaling:</strong> We use structured data (ScholarlyArticle, ClaimReview, Wikidata sameAs links) to signal topical expertise to semantic search engines and AI models evaluating source authority.
-                        </li>
-                      </ul>
+                      <h3 className="text-lg font-bold text-header mb-2">1,500 Words Minimum. Here's Why.</h3>
+                      <p>
+                        Our deep dives start at 1,500 words because the truth usually requires that much room. The misleading headline is almost never the whole story. The law that sounds simple has a carve-out. The statistic that sounds damning has context. The politician who sounds principled has a voting record.
+                      </p>
+                      <p className="mt-3">
+                        Short-form journalism trades precision for speed. We trade speed for precision. You will leave each ClownBinge article knowing more than when you arrived — not just angrier.
+                      </p>
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-bold text-header mb-2">Why It Matters</h3>
+                      <h3 className="text-lg font-bold text-header mb-2">Why This Model Exists</h3>
                       <p>
-                        In an era where misinformation scales faster than traditional fact-checking can respond, the only effective defense is direct access to the primary source record. We don't interpret the record. We organize it, verify it, and make it searchable. The next generation of research happens at the source layer, not the commentary layer.
+                        Most Americans have been failed by the media ecosystem — not because journalists are lazy, but because the economic incentives of the attention economy reward outrage over accuracy and velocity over depth. Cable news discovered decades ago that keeping you afraid and confused is more profitable than keeping you informed.
+                      </p>
+                      <p className="mt-3">
+                        ClownBinge was built as a direct counter to that model. No cable. No pundits. No "both sides." Just the record — organized, verified, and searchable. We do not tell you what to think. We hand you the receipts and trust you to think for yourself.
                       </p>
                     </div>
 
                     <div className="rounded-xl bg-primary/5 border border-primary/20 p-4">
-                      <p className="text-xs uppercase tracking-widest font-bold text-primary mb-2">The Standard</p>
-                      <p className="text-sm text-header">
-                        If a claim cannot be traced to a government document, court filing, legislative record, or peer-reviewed research—it is not published on ClownBinge. The record is our only authority.
+                      <p className="text-xs uppercase tracking-widest font-bold text-primary mb-2">The Unbreakable Rule</p>
+                      <p className="text-sm text-header font-medium">
+                        No peer-reviewed source or verifiable primary document — no publication. The record is our only authority. It always will be.
                       </p>
                     </div>
+
                   </div>
 
                   {/* Footer */}
