@@ -185,12 +185,16 @@ us_constitution | us_history | war_and_inhumanity | women_and_girls
 
 ## 3. Content Audit (Published, CB-prefixed articles only)
 
-**Total Articles:** 95
-**Total Citations:** 562
+> **COUNTING RULE — NEVER DEVIATE:** The authoritative article count is always obtained by running:
+> `SELECT COUNT(*) FROM posts WHERE status='published' AND case_number LIKE 'CB-%'`
+> The website counter uses this exact query on every page load. CBR-prefixed documents are excluded.
+> Never report a count in chat or update this manifest without running this query first.
+
+**Total Articles (CB- only):** 177
+**Total Citations:** 2,023
 **Staff Picks:** 4
 **Pinned (editorial top):** 10
-**Locked (access-controlled):** 81
-**Progress to goal:** 178 / 400
+**Progress to goal:** 177 / 400
 
 ### Articles Per Category
 
