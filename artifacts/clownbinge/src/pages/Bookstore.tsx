@@ -1040,6 +1040,7 @@ const BOOKS: FactBook[] = [
     tag: "Global South / Archaeology",
     bg: "#2D1800", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#2D1800",
     coverDesign: "overlap",
+    subtitle: "What Herodotus Saw",
     summary: "Herodotus — the Greek historian — wrote that the Egyptians were 'dark-skinned and woolly-haired.' He wrote this in the 5th century BCE, 2,500 years before it became politically convenient to deny. This FactBook assembles the archaeological, genetic, and written record that existed long before the politics — and has never actually been refuted.",
     bullets: [
       "Herodotus's original Greek texts describing Egyptian appearance have been in the record since 450 BCE",
