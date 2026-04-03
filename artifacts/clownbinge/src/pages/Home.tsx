@@ -71,16 +71,16 @@ export default function Home() {
                 </div>
               )}
               <div className="mb-6 text-center">
-                <h1 className="font-sans font-normal text-lg sm:text-xl text-header mb-1 leading-tight">
-                  A Public Accountability News Platform by Metricadia Research LLC.
-                </h1>
                 <button
                   onClick={() => setShowNerdoutModal(true)}
-                  className="inline-flex items-center gap-2 font-bold text-xl sm:text-2xl text-primary hover:underline cursor-pointer transition-opacity hover:opacity-75 mb-3"
+                  className="inline-flex items-center justify-center gap-2 font-bold text-xl sm:text-2xl text-primary hover:underline cursor-pointer transition-opacity hover:opacity-75 mb-1"
                 >
                   Deep Dives + Verified Research.
                   <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 opacity-60 hover:opacity-100 transition-opacity text-primary" strokeWidth={1.5} />
                 </button>
+                <h1 className="font-sans font-normal text-sm sm:text-base text-muted-foreground mb-3 leading-tight">
+                  by Metricadia Research LLC
+                </h1>
                 <p className="text-sm sm:text-base text-muted-foreground font-medium">
                   Government records. Court filings. Peer-reviewed science.
                 </p>
