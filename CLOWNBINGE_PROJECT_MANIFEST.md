@@ -190,30 +190,30 @@ us_constitution | us_history | war_and_inhumanity | women_and_girls
 **Staff Picks:** 4
 **Pinned (editorial top):** 10
 **Locked (access-controlled):** 81
-**Progress to goal:** 95 / 400
+**Progress to goal:** 166 / 400
 
 ### Articles Per Category
 
 | Category | Count |
 |----------|-------|
-| religion | 24 |
-| us_history | 12 |
-| health_and_healing | 11 |
-| self_owned | 8 |
+| us_history | 26 |
+| religion | 25 ✓ CLOSED |
+| health_and_healing | 25 ✓ CLOSED |
+| self_owned | 25 ✓ CLOSED |
+| money_and_power | 25 ✓ CLOSED |
+| law_and_justice | 7 |
 | nerd_out | 6 |
 | disarming_hate | 4 |
-| money_and_power | 4 |
 | us_constitution | 4 |
-| law_and_justice | 4 |
 | global_south | 3 |
 | censorship | 3 |
 | women_and_girls | 3 |
 | investigations | 3 |
-| how_it_works | 2 |
+| how_it_works | 3 |
 | war_and_inhumanity | 2 |
-| technology | 1 |
 | anti_racist_heroes | 1 |
-| **TOTAL** | **95** |
+| technology | 1 |
+| **TOTAL** | **166** |
 
 ### Known Case Number Gaps (Do Not Auto-Fill)
 
@@ -221,7 +221,7 @@ CB-000027, CB-000067, CB-000069
 
 ### Next Case Number
 
-CB-000099
+CB-000169
 
 ---
 
