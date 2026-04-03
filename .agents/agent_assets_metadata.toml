@@ -78,3 +78,9 @@ id = "DbyRBaR8nlmBLEPzV-ov5"
 uri = "file://CLOWNBINGE_PROJECT_MANIFEST.md"
 type = "text"
 title = "ClownBinge Project Manifest — Gemini Handoff"
+
+[[outputs]]
+id = "XbMpQgEz51nIcgOO8T7fm"
+uri = "file://clownbinge-export.csv"
+type = "table"
+title = "ClownBinge Full Archive Export"
