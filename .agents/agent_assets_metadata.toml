@@ -84,3 +84,9 @@ id = "XbMpQgEz51nIcgOO8T7fm"
 uri = "file://clownbinge-export.csv"
 type = "table"
 title = "ClownBinge Full Archive Export"
+
+[[outputs]]
+id = "_vABPeHnlPc8o2-oC9Aa-"
+uri = "file://clownbinge-master-export.csv"
+type = "table"
+title = "ClownBinge Master Export — 250 Articles"
