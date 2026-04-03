@@ -7,7 +7,7 @@ import { usePostsFilter, usePostsFeed, usePostsFeedPaginated, usePostDetail } fr
 import { useHomeSeoHead } from "@/hooks/use-seo-head";
 import { Loader2, AlertCircle, ArrowRight, X, HelpCircle } from "lucide-react";
 
-const HIGHLY_POPULAR_SLUG = "ted-cruz-christ-is-king-antisemitic-aipac";
+const HIGHLY_POPULAR_SLUG = "patricia-holden-diversity-book-ban-daughter-dei-university";
 
 const CATEGORY_LABELS: Record<string, string> = {
   self_owned:          "Self-Owned",
