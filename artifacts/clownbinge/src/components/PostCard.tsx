@@ -49,8 +49,17 @@ const CATEGORY_BORDER: Record<string, string> = {
   disarming_hate:     "border-pink-600 shadow-lg shadow-pink-600/20",
 };
 
+function formatWordCount(body: string | null | undefined): string | null {
+  if (!body) return null;
+  const wc = body.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+  if (wc < 100) return null;
+  if (wc >= 1000) return `~${(wc / 1000).toFixed(1).replace(/\.0$/, "")}K words`;
+  return `~${wc} words`;
+}
+
 export function PostCard({ post }: { post: Post }) {
   const isVideo = post.hasVideo;
+  const wordCountLabel = formatWordCount((post as any).body);
 
   const cardClasses = `bg-white text-foreground ${CATEGORY_BORDER[post.category] ?? "border-border shadow-sm hover:shadow-md"}`;
 
@@ -149,6 +158,11 @@ export function PostCard({ post }: { post: Post }) {
           <div className="flex items-center justify-between mt-auto pt-4 border-t border-current/10 gap-4">
             <div className={`flex items-center gap-2 text-xs font-medium truncate min-w-0 ${mutedTextClasses}`}>
               <span className="truncate">{abbreviateSource(post.verifiedSource, true)}</span>
+              {wordCountLabel && (
+                <span className="shrink-0 text-[10px] font-medium text-muted-foreground/60 tabular-nums">
+                  · {wordCountLabel}
+                </span>
+              )}
               {post.category === "nerd_out" && (
                 <span className="shrink-0 inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest bg-slate-100 text-slate-500 border border-slate-300">
                   Scholarly Read
