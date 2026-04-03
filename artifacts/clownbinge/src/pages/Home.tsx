@@ -3,11 +3,10 @@ import { Link } from "wouter";
 import { Layout } from "@/components/Layout";
 import { PostCard } from "@/components/PostCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { FeaturedSlider } from "@/components/FeaturedSlider";
 import { usePostsFilter, usePostsFeed, usePostsFeedPaginated, usePostDetail } from "@/hooks/use-posts";
 import { useHomeSeoHead } from "@/hooks/use-seo-head";
 import { Loader2, AlertCircle, ArrowRight, X, HelpCircle } from "lucide-react";
-
-const HIGHLY_POPULAR_SLUG = "patricia-holden-diversity-book-ban-daughter-dei-university";
 
 const CATEGORY_LABELS: Record<string, string> = {
   self_owned:          "Self-Owned",
@@ -38,7 +37,6 @@ export default function Home() {
   const { posts: paginatedPosts, isLoading, isLoadingMore, error, hasMore, loadMore } = usePostsFeedPaginated(isStaffPicks ? undefined : category, 20);
   const { data: selfOwnData } = usePostsFeed('self_owned');
   const topSelfOwn = selfOwnData?.posts?.[0] ?? null;
-  const { data: highlightedPost } = usePostDetail(HIGHLY_POPULAR_SLUG);
   const { data: foundingDoc } = usePostDetail('respectability-is-unremarkable');
 
   // Staff picks: driven by staffPick flag from the database — no hardcoded slug list
@@ -172,43 +170,8 @@ export default function Home() {
               </div>
             )}
 
-            {/* Highly Popular featured block */}
-            {highlightedPost && !category && (
-              <div
-                className="mb-8 rounded-2xl overflow-hidden border border-blue-200"
-                style={{ background: "#E8EDF5" }}
-              >
-                <div className="px-6 pt-5 pb-1 flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-0 bg-white/90 border border-blue-300 rounded-full overflow-hidden">
-                    <span className="px-3 py-1 text-xs font-extrabold uppercase tracking-widest text-blue-600">
-                      ★ Feature
-                    </span>
-                  </div>
-                  <span className="text-xs font-mono font-bold text-slate-400 tracking-wide">
-                    {CATEGORY_LABELS[highlightedPost.category] ?? highlightedPost.category}&nbsp;&nbsp;·&nbsp;&nbsp;{highlightedPost.caseNumber}
-                  </span>
-                </div>
-                <div className="px-6 py-4">
-                  <Link href={`/case/${highlightedPost.slug}`}>
-                    <h2 className="font-sans font-extrabold text-xl sm:text-2xl text-header leading-snug mb-3 hover:text-primary transition-colors cursor-pointer">
-                      {highlightedPost.title}
-                    </h2>
-                  </Link>
-                  {highlightedPost.teaser && (
-                    <p className="text-sm text-slate-600 leading-relaxed mb-4 line-clamp-2">
-                      {highlightedPost.teaser}
-                    </p>
-                  )}
-                  <Link
-                    href={`/case/${highlightedPost.slug}`}
-                    className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline"
-                  >
-                    Read the Record
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            )}
+            {/* Featured Slider — 5 binge-read articles, auto-advances every 7s */}
+            {!category && <FeaturedSlider />}
 
             {feedIsLoading ? (
               <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
