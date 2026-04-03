@@ -390,6 +390,34 @@ Text-based logo: `METRICADIA [gold bar] RESEARCH LLC`
 - No ellipsis in source tile display
 - **CB Sanitizer Rule — Paragraph Length:** No short paragraphs. Every paragraph must be a substantive block of text. A 1-2 sentence paragraph is only permitted when it is artistically intentional (a closing rhetorical beat, a deliberate punch line). Even then, use sparingly. Default behavior: merge adjacent short paragraphs into one cohesive block before inserting into the database. This rule is enforced at write time, not retroactively.
 
+### Article HTML Format (Definitive — CB-000254+ Standard)
+
+**Inline popup citations** (`<a class="cb-factoid">`) — the primary source click-to-open cards:
+```html
+<a class="cb-factoid" data-title="[Full source name, institution, date]" data-summary="[3-5 sentence description of the document: what it is, what it establishes, why it is authoritative]">[cited phrase in prose]</a>
+```
+- No `href`, `target`, or `rel` attributes — popup handler intercepts the click
+- Minimum **5 per article**
+- Woven naturally into prose at the point of first citation
+
+**CB Factoid div callouts** — the teaching-tool visual breaks:
+```html
+<div class="cb-factoid"><strong>CB Factoid:</strong> [specific, striking, verifiable documented fact].</div>
+```
+- Soft ceiling: **2 per 500 words** (not a hard rule — architect judgment applies)
+- For a 1,500-word article: 3-4 is the working target
+- Placed between paragraphs, never mid-paragraph
+- Each must add a specific granular documented detail (a number, a date, a legal outcome, a dollar amount) — not a restatement of the surrounding prose
+- The test: would a reader stop and think "I cannot believe something that specific is documented"?
+
+**Primary Sources section** (required at bottom of every article):
+```html
+<h3>[Specific heading naming the source types — e.g. "The Standard Applied: Patents, Court Records, and Archival Documents"]</h3>
+<p>[Paragraph naming every primary source used: institution, document name, date/number. Ends with a sentence making clear this is the documented record, not interpretation.]</p>
+```
+
+**h2 section headers** — used to break long articles into navigable sections. Not required for every article but standard for 1,500+ word pieces.
+
 ### Citation Standard
 ```
 Label :: Description (Year) :: Publisher.
