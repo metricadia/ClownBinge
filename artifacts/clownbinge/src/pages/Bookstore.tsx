@@ -3,7 +3,7 @@ import { useSearch } from "wouter";
 import { Layout } from "@/components/Layout";
 import { PsaLogo } from "@/components/PsaLogo";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
-import { BookOpen, ArrowRight, CheckCircle, Download, Package, Layers, X, Video, Users } from "lucide-react";
+import { BookOpen, ArrowRight, CheckCircle, Download, Package, Layers, X, Users } from "lucide-react";
 
 interface FactBookChapter {
   title: string;
@@ -1384,7 +1384,6 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                   ...(hasOutline ? [{ key: "outline" as const, label: "Outline" }] : []),
                   ...(book.idealReaders && !isVol08 ? [{ key: "ideal" as const, label: "Ideal Reader" }] : []),
                   ...(isVol08 ? [
-                    { key: "video" as const, label: "Video" },
                     { key: "ideal" as const, label: "Ideal Reader" },
                   ] : []),
                 ]).map(({ key, label }) => (
@@ -1466,34 +1465,6 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                   </button>
                 </div>
               </>
-            )}
-
-            {/* ── VIDEO TAB ── */}
-            {tab === "video" && (
-              <div className="flex flex-col items-center justify-center py-14 px-6 text-center min-h-[260px]">
-                <div
-                  className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6"
-                  style={{ background: book.accent + "18", border: `2px solid ${book.accent}35` }}
-                >
-                  <Video className="w-9 h-9" style={{ color: book.accent }} />
-                </div>
-                <p className="font-mono text-[10px] font-bold tracking-[0.3em] uppercase mb-3" style={{ color: book.accent }}>
-                  Coming Soon
-                </p>
-                <h3 className="font-sans font-extrabold text-lg text-gray-900 leading-tight mb-3 max-w-xs">
-                  The Author on Ancient Faith, Modern Politics
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed max-w-sm">
-                  A video introduction to the primary source record. The evidence that separates a 3,500-year religion from a 127-year political movement, presented by the author.
-                </p>
-                <div
-                  className="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold"
-                  style={{ background: book.accent + "14", color: book.accent }}
-                >
-                  <Video className="w-3.5 h-3.5" />
-                  Notify Me When Available
-                </div>
-              </div>
             )}
 
             {/* ── IDEAL READER TAB ── */}
