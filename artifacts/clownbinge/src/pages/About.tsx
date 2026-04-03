@@ -25,14 +25,13 @@ export default function About() {
           </p>
 
           <p>
-            A clown, in the accountability journalism tradition going back through editorial
-            cartooning and political satire, is a public figure caught in documented contradiction
-            with their own public record. Not a political enemy. Not someone we disagree with.
-            Someone whose own words, votes, financial disclosures, court records, or genealogy
-            directly contradict the position they have staked out in public life. The contradiction
-            is the story. The documents are the story. The clown is just what you call it when
-            a U.S. Senator votes against the very bill he co-sponsored, or a pastor preaching
-            against immigration turns out to have four immigrant grandparents on record at the
+            A clown, in the accountability journalism tradition, is a public figure caught in
+            documented contradiction with their own record. Not a political enemy. Not someone
+            we disagree with. Someone whose own words, votes, financial disclosures, court
+            records, or genealogy contradict the position they have staked out in public life.
+            The contradiction is the story. The documents are the story. The clown is what you
+            call it when a senator votes against the bill he co-sponsored. Or when a pastor
+            preaching against immigration has four immigrant grandparents on record at the
             National Archives.
           </p>
 
