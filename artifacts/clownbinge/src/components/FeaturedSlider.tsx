@@ -3,32 +3,38 @@ import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { usePostDetail } from "@/hooks/use-posts";
 
+// Five categories, five unmistakable "I had no idea" moments.
+// Rotates every 7 seconds. No two adjacent slides share a category.
 const FEATURED_SLUGS = [
-  "COINTELPRO-fred-hampton-FBI-assassination-Black-Panther-1969",
-  "American-eugenics-Nazi-Germany-forced-sterilization-Buck-v-Bell",
-  "bracero-program-stolen-wages-mexico-farmworkers-labor-history",
-  "ted-cruz-christ-is-king-antisemitic-aipac",
-  "national-debt-military-spending-interest-payments-generational-cost",
+  "tsmc-taiwan-advanced-chips-92-percent-geopolitical-risk-pentagon",       // Technology
+  "loneliness-lethal-smoking-15-cigarettes-social-connection-science",       // Health & Healing
+  "national-registry-exonerations-wrongful-conviction-race-data-documented", // Law & Justice
+  "great-dismal-swamp-maroon-nation-freedom-slavery-archaeology",            // U.S. History
+  "irs-free-file-intuit-turbotax-lobbying-direct-file-2024",                 // Money & Power
 ];
 
-const SLIDE_BG     = ["#E8EDF5", "#FEFAE8", "#E8EDF5", "#FEFAE8", "#E8EDF5"];
-const SLIDE_BORDER = ["#B8C8DC", "#D4C070", "#B8C8DC", "#D4C070", "#B8C8DC"];
-const SLIDE_ACCENT = ["#1A3A8F", "#96720A", "#1A3A8F", "#96720A", "#1A3A8F"];
+const SLIDE_BG     = ["#E8EDF5", "#FEFAE8", "#E8F0EC", "#FEFAE8", "#E8EDF5"];
+const SLIDE_BORDER = ["#B8C8DC", "#D4C070", "#A8C8B8", "#D4C070", "#B8C8DC"];
+const SLIDE_ACCENT = ["#1A3A8F", "#96720A", "#1A6B4A", "#96720A", "#1A3A8F"];
 
 const CATEGORY_LABELS: Record<string, string> = {
-  self_owned:        "Self-Owned",
-  us_history:        "U.S. History",
-  money_and_power:   "Money & Power",
-  law_and_justice:   "Law & Justice",
-  health_and_healing:"Health & Healing",
-  religion:          "Religion",
-  technology:        "Technology",
-  war_and_inhumanity:"War & Inhumanity",
-  anti_racist_heroes:"Anti-Racist Heroes",
-  censorship:        "Censorship",
-  global_south:      "Global South",
-  nerd_out:          "NerdOut / Academic",
-  investigations:    "Investigations",
+  self_owned:         "Self-Owned",
+  us_history:         "U.S. History",
+  money_and_power:    "Money & Power",
+  law_and_justice:    "Law & Justice",
+  health_and_healing: "Health & Healing",
+  religion:           "Religion",
+  technology:         "Technology",
+  war_and_inhumanity: "War & Inhumanity",
+  anti_racist_heroes: "Anti-Racist Heroes",
+  censorship:         "Censorship",
+  global_south:       "Global South",
+  women_and_girls:    "Women & Girls",
+  nerd_out:           "NerdOut / Academic",
+  investigations:     "Investigations",
+  us_constitution:    "U.S. Constitution",
+  disarming_hate:     "Disarming Hate",
+  how_it_works:       "How It Works",
 };
 
 export function FeaturedSlider() {
@@ -95,7 +101,6 @@ export function FeaturedSlider() {
           style={{ background: bg, transition: "background 0.7s ease" }}
         >
           <div className="flex items-center gap-2.5">
-            {/* Filled badge */}
             <div
               className="flex items-center gap-1 px-2.5 py-1 rounded-full"
               style={{ background: accent, transition: "background 0.7s ease" }}
@@ -104,7 +109,6 @@ export function FeaturedSlider() {
                 ★ Feature
               </span>
             </div>
-            {/* Counter — sits outside the badge */}
             <span
               className="text-[11px] font-bold tabular-nums"
               style={{ color: `${accent}70`, transition: "color 0.7s ease" }}
@@ -221,7 +225,6 @@ export function FeaturedSlider() {
 
         {/* ── Footer: dots + progress bar ── */}
         <div style={{ background: bg, transition: "background 0.7s ease" }}>
-          {/* Dot nav */}
           <div className="px-5 pt-2 pb-2.5 flex items-center gap-1.5">
             {[0, 1, 2, 3, 4].map(i => (
               <button
@@ -243,7 +246,6 @@ export function FeaturedSlider() {
             ))}
           </div>
 
-          {/* Animated progress bar — resets each slide via key */}
           <div
             style={{
               height: "2px",
