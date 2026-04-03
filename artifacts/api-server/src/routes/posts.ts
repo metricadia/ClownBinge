@@ -86,6 +86,9 @@ router.get("/posts", async (req, res) => {
     } else {
       // Main feed: religion excluded entirely (religion tab only)
       conditions.push(sql`${postsTable.category} != 'religion'`);
+      // Main feed: floor-cleanup sprint categories are tab-only until front-page redesign is complete
+      // (global_south, censorship, women_and_girls, war_and_inhumanity, anti_racist_heroes, technology)
+      conditions.push(sql`${postsTable.category} NOT IN ('global_south','censorship','women_and_girls','war_and_inhumanity','anti_racist_heroes','technology')`);
       // Main feed: nerd_out articles only appear if nerd_accessible = true
       conditions.push(sql`(${postsTable.category} != 'nerd_out' OR ${postsTable.nerdAccessible} = true)`);
       // Main feed: self_owned articles only appear if staff_pick = true (WOW + INSIGHTFUL + share-worthy)
