@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { usePostDetail } from "@/hooks/use-posts";
@@ -41,6 +41,7 @@ export function FeaturedSlider() {
   const [current, setCurrent] = useState(0);
   const [prev, setPrev]       = useState<number | null>(null);
   const [hovering, setHovering] = useState(false);
+  const touchStartX = useRef<number | null>(null);
 
   const r0 = usePostDetail(FEATURED_SLUGS[0]);
   const r1 = usePostDetail(FEATURED_SLUGS[1]);
@@ -52,6 +53,14 @@ export function FeaturedSlider() {
   const advance = useCallback(() => {
     setCurrent(c => {
       const next = (c + 1) % 5;
+      setPrev(c);
+      return next;
+    });
+  }, []);
+
+  const goBack = useCallback(() => {
+    setCurrent(c => {
+      const next = (c - 1 + 5) % 5;
       setPrev(c);
       return next;
     });
@@ -69,6 +78,19 @@ export function FeaturedSlider() {
       setPrev(c);
       return i;
     });
+  }
+
+  function onTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches[0].clientX;
+  }
+
+  function onTouchEnd(e: React.TouchEvent) {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 40) return; // ignore tiny taps
+    if (dx < 0) advance();  // swipe left  → next
+    else        goBack();   // swipe right → previous
   }
 
   const bg     = SLIDE_BG[current];
@@ -143,7 +165,9 @@ export function FeaturedSlider() {
         {/* ── Slides ── */}
         <div
           className="relative overflow-hidden"
-          style={{ background: bg, transition: "background 0.7s ease", minHeight: "168px" }}
+          style={{ background: bg, transition: "background 0.7s ease", minHeight: "168px", touchAction: "pan-y" }}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
         >
           {FEATURED_SLUGS.map((slug, i) => {
             const post      = posts[i];
