@@ -13,7 +13,7 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
   ],
   "dale-hartwick-immigration-bill-political-theater-cspan": [
     "vernon-mills-anti-immigration-pastor-immigrant-grandparents",
-    "cb-000041-united-states-built-by-immigrants-record-confirms-it",
+    "cb-000161-united-states-built-by-immigrants-record-confirms-it",
     "give-me-your-tired-us-foreign-policy-immigration-global-south",
   ],
   "rick-donahue-texas-ag-suing-companies-own-law-firm-did": [
@@ -73,7 +73,7 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
   "robert-morris-gateway-church-guilty-plea-child-sex-abuse-2025": [
     "robert-morris-gateway-church-indicted-child-sex-abuse-oklahoma-2025",
     "brady-boyd-new-life-church-robert-morris-misconduct-resignation-2025",
-    "john-mckinzie-hope-fellowship-frisco-second-pastor-resignation-sexual-sin-2025",
+    "mark-driscoll-mars-hill-trinity-church-abuse-pattern",
   ],
   "brady-boyd-new-life-church-robert-morris-misconduct-resignation-2025": [
     "robert-morris-gateway-church-indicted-child-sex-abuse-oklahoma-2025",
@@ -81,47 +81,21 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
   ],
 
   // --- Pastoral sexual misconduct ---
-  "john-mckinzie-hope-fellowship-frisco-second-pastor-resignation-sexual-sin-2025": [
-    "robert-morris-gateway-church-guilty-plea-child-sex-abuse-2025",
-    "greg-locke-divorce-remarriage-secretary-global-vision-bible-church-2022",
-    "carl-lentz-hillsong-new-york-fired-infidelity-sexual-coercion-2020",
-  ],
-  "greg-locke-divorce-remarriage-secretary-global-vision-bible-church-2022": [
-    "john-mckinzie-hope-fellowship-frisco-second-pastor-resignation-sexual-sin-2025",
-    "carl-lentz-hillsong-new-york-fired-infidelity-sexual-coercion-2020",
-    "perry-noble-newspring-church-fired-alcohol-abuse-2016",
-  ],
-  "carl-lentz-hillsong-new-york-fired-infidelity-sexual-coercion-2020": [
-    "brian-houston-hillsong-founder-resigns-misconduct-investigation-2022",
-    "john-mckinzie-hope-fellowship-frisco-second-pastor-resignation-sexual-sin-2025",
-    "greg-locke-divorce-remarriage-secretary-global-vision-bible-church-2022",
-  ],
+  // NOTE: john-mckinzie, greg-locke, carl-lentz, perry-noble not yet written — entries reserved for future articles
   "brian-houston-hillsong-founder-resigns-misconduct-investigation-2022": [
-    "carl-lentz-hillsong-new-york-fired-infidelity-sexual-coercion-2020",
     "mark-driscoll-mars-hill-trinity-church-abuse-pattern",
-  ],
-  "perry-noble-newspring-church-fired-alcohol-abuse-2016": [
-    "greg-locke-divorce-remarriage-secretary-global-vision-bible-church-2022",
-    "james-macdonald-harvest-bible-chapel-fired-fraud-hunting-ranch-2019",
+    "robert-morris-gateway-church-guilty-plea-child-sex-abuse-2025",
   ],
 
   // --- Anti-gay preachers / same-sex conduct ---
+  // NOTE: jonathan-shelley, ted-haggard not yet written — entries reserved for future articles
   "dillon-awes-stedfast-baptist-execution-sermon-church-split": [
-    "jonathan-shelley-stedfast-baptist-death-penalty-homosexuality-prostitution-scandal",
     "eddie-long-new-birth-missionary-baptist-same-sex-marriage-lawsuits-2010",
-  ],
-  "jonathan-shelley-stedfast-baptist-death-penalty-homosexuality-prostitution-scandal": [
-    "dillon-awes-stedfast-baptist-execution-sermon-church-split",
-    "eddie-long-new-birth-missionary-baptist-same-sex-marriage-lawsuits-2010",
-    "ted-haggard-male-escort-meth-nae-resignation-2006",
+    "mark-driscoll-mars-hill-trinity-church-abuse-pattern",
   ],
   "eddie-long-new-birth-missionary-baptist-same-sex-marriage-lawsuits-2010": [
-    "ted-haggard-male-escort-meth-nae-resignation-2006",
     "dillon-awes-stedfast-baptist-execution-sermon-church-split",
-  ],
-  "ted-haggard-male-escort-meth-nae-resignation-2006": [
-    "eddie-long-new-birth-missionary-baptist-same-sex-marriage-lawsuits-2010",
-    "jonathan-shelley-stedfast-baptist-death-penalty-homosexuality-prostitution-scandal",
+    "brian-houston-hillsong-founder-resigns-misconduct-investigation-2022",
   ],
 
   // --- Prosperity gospel / private jets / wealth ---
@@ -163,14 +137,14 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
   ],
   "james-macdonald-harvest-bible-chapel-fired-fraud-hunting-ranch-2019": [
     "mark-driscoll-mars-hill-trinity-church-abuse-pattern",
-    "perry-noble-newspring-church-fired-alcohol-abuse-2016",
     "mitchell-summerfield-word-of-god-fellowship-ppp-fraud-guilty-plea-2025",
+    "rony-denis-house-of-prayer-operation-false-profit-indictment-2025",
   ],
 
   // --- Religion / immigration hypocrisy ---
   "vernon-mills-anti-immigration-pastor-immigrant-grandparents": [
     "dale-hartwick-immigration-bill-political-theater-cspan",
-    "cb-000041-united-states-built-by-immigrants-record-confirms-it",
+    "cb-000161-united-states-built-by-immigrants-record-confirms-it",
     "give-me-your-tired-us-foreign-policy-immigration-global-south",
   ],
 
@@ -238,13 +212,13 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
   ],
 
   // --- Immigration / US history ---
-  "cb-000041-united-states-built-by-immigrants-record-confirms-it": [
+  "cb-000161-united-states-built-by-immigrants-record-confirms-it": [
     "give-me-your-tired-us-foreign-policy-immigration-global-south",
     "dale-hartwick-immigration-bill-political-theater-cspan",
     "diversity-denial-primary-source-record-what-was-lost",
   ],
   "give-me-your-tired-us-foreign-policy-immigration-global-south": [
-    "cb-000041-united-states-built-by-immigrants-record-confirms-it",
+    "cb-000161-united-states-built-by-immigrants-record-confirms-it",
     "dale-hartwick-immigration-bill-political-theater-cspan",
     "vernon-mills-anti-immigration-pastor-immigrant-grandparents",
   ],
@@ -252,7 +226,7 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
   // --- Diversity / DEI / demographics cluster ---
   "diversity-denial-primary-source-record-what-was-lost": [
     "arithmetic-of-presence-census-2020-2025-white-america",
-    "cb-000041-united-states-built-by-immigrants-record-confirms-it",
+    "cb-000161-united-states-built-by-immigrants-record-confirms-it",
     "dei-label-clinical-cost-documented-inventory",
   ],
   "arithmetic-of-presence-census-2020-2025-white-america": [
@@ -302,7 +276,7 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
   ],
   "columbus-george-washington-illegal-american-chronology-displacement": [
     "the-strongest-thing-research-love-healing-long-life",
-    "cb-000041-united-states-built-by-immigrants-record-confirms-it",
+    "cb-000161-united-states-built-by-immigrants-record-confirms-it",
     "first-nations-survival-census-record-us-history",
   ],
 
@@ -315,7 +289,7 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
   "first-nations-knowledge-inventory-medicine-ecology-engineering": [
     "first-nations-survival-census-record-us-history",
     "diversity-denial-primary-source-record-what-was-lost",
-    "cb-000041-united-states-built-by-immigrants-record-confirms-it",
+    "cb-000161-united-states-built-by-immigrants-record-confirms-it",
   ],
 
   // --- Disarming Hate ---
