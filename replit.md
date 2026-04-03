@@ -514,7 +514,7 @@ This is a Prime Directive. It is not a guideline, a suggestion, or a target to a
 5. Verify count again before DB write
 6. Only then insert or update
 
-Verified clean: all 149 published articles at 1,500+ words (April 2026). Lowest passing score: CB-000005 at 1,505 words.
+Verified clean: all 149 published articles at 1,500+ words (April 2026). CB-000006 exempt (formal receipt profile brief). Lowest passing score: CB-000058 at 1,500 words. Full expansion sprint completed: 82 articles expanded across health_and_healing (25), religion (25), us_history (26), and mixed stragglers (17). Seed file updated.
 
 ### No External Hyperlinks Cardinal Rule
 
