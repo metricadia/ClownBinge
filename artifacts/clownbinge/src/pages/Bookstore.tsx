@@ -192,9 +192,9 @@ const BOOKS: FactBook[] = [
   },
   {
     id: 2, vol: "Vol. 02",
-    shortTitle: "Merchants of Chaos",
-    fullTitle: "Merchants of Chaos: Facebook, X, YouTube & TikTok as the World's Largest Disinformation Infrastructure",
-    subtitle: "Social Media as the World's Largest Disinformation Infrastructure",
+    shortTitle: "The Disinformation Cashcow",
+    fullTitle: "The Disinformation Cashcow: How Social Media Erodes Public Trust",
+    subtitle: "How Social Media Erodes Public Trust",
     tag: "Investigations",
     bg: "#1A3A8F", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#1A1A2E",
     coverDesign: "grid",
