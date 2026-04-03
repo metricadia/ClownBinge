@@ -58,6 +58,7 @@ export const postsTable = pgTable("posts", {
   aiScore: integer("ai_score"),
   aiScoreTestedAt: timestamp("ai_score_tested_at"),
   nerdAccessible: boolean("nerd_accessible").notNull().default(true),
+  seoMetaTitle: text("seo_meta_title"),
 });
 
 export const insertPostSchema = createInsertSchema(postsTable).omit({ id: true, createdAt: true, updatedAt: true });

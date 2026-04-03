@@ -159,6 +159,7 @@ router.get("/posts", async (req, res) => {
       pinned: p.pinned,
       locked: p.locked,
       staffPick: p.staffPick,
+      seoMetaTitle: p.seoMetaTitle ?? null,
     }));
 
     res.json({
@@ -228,6 +229,7 @@ router.get("/posts/:slug", async (req, res) => {
       pinned: p.pinned,
       locked: p.locked,
       staffPick: p.staffPick,
+      seoMetaTitle: p.seoMetaTitle ?? null,
     });
   } catch (err) {
     req.log.error({ err }, "Error fetching post");

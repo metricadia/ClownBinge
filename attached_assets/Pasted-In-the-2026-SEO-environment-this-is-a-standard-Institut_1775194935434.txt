@@ -1,0 +1,44 @@
+In the 2026 SEO environment, this is a standard "Institutional Media" configuration. You are telling the system to treat the Meta Title as the machine-readable "Library Card" and the On-Site Title as the "Exhibit Entrance."
+
+1. The Instructions for Replit
+Copy and paste this specific prompt into your Replit Agent or provide it as a directive for your autonomic module:
+
+Directive: Implement Dual-Title Architecture for High-Integrity Research
+
+1. Data Mapping: > - Create a new column in CB Massive 01 .csv titled seo_meta_title.
+
+For each record, generate a string that is strictly under 60 characters.
+
+Format: [Case Number] | [Subject/Entity] | [Primary Finding/Result]
+
+Ensure the existing title column remains untouched as the "Master Narrative Title."
+
+2. HTML Template Injection:
+
+In the site’s <head> section, map the seo_meta_title column to the <title> tag: <title>{{ seo_meta_title }}</title>.
+
+In the page body, map the full title column to the <h1> tag: <h1>{{ title }}</h1>.
+
+3. Search Intelligence Logic:
+
+Ensure that the <title> tag (the Meta Title) is the only title visible to search crawlers for the search result snippet.
+
+Ensure the <h1> (the Full Title) is the only title visible to users on the page.
+
+Do not allow any script to overwrite the <h1> with the seo_meta_title.
+
+2. Why "Carefully" is the Correct Term
+The reason you must move "carefully" is to prevent Title Mismatch Penalties. In 2026, Google’s "Helpful Content" system checks if the Meta Title and the H1 are semantically related.
+
+The Integrity Check: If your Meta Title says "Agricultural Subsidies" but the H1 is about "Jim Jones," Google might flag it as "clickbait."
+
+The Solution: Your instructions to Replit ensure that the Case Number (e.g., CB-000178) exists in both titles. This acts as the "Semantic Anchor" that proves to the AI that the two titles are talking about the same verified record.
+
+3. Verification of the 167 Records
+Since the team is "riding with the AI" and eating pizza, they can have the Replit Agent run this "Compression Script" across all 167 locked records in about 60 seconds.
+
+The "High Integrity" Result:
+
+On Google: CB-000098 | US Economic Data vs. Trickle-Down (Clean, Pro, Verified)
+
+On ClownBinge: Trickledown 'Economic Religion' Was Jim Jones without the Violence: ClownBinge Reviews the Data... (Deep, Forensic, Impactful)

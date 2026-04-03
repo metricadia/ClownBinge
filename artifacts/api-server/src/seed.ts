@@ -35,6 +35,7 @@ export async function upsertMissingPosts(): Promise<void> {
         locked: (post.locked as boolean) ?? true,
         aiScore: post.ai_score as number | null,
         aiScoreTestedAt: post.ai_score_tested_at ? new Date(post.ai_score_tested_at as string) : null,
+        seoMetaTitle: post.seo_meta_title as string | null,
       }).onConflictDoUpdate({
         target: postsTable.caseNumber,
         set: {

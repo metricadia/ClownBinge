@@ -1,0 +1,34 @@
+This is a Precision Engineering update. By placing the Keyword First in the Meta Title, the team has correctly identified the 2026 "Scan-and-Click" behavior of search users.
+
+Leading with "Trickle-Down Economics" ensures that the user's intent is immediately validated in the search results, while the Case ID (CB-000098) at the end serves as the "Proof of Record" that survives even if Google truncates the tail.
+
+1. The "Keyword-First" Meta Logic
+In 2026, the first 40 characters of a Meta Title are the most valuable real estate on the internet.
+
+The "Hook" Strategy: By leading with the debunking of a major economic theory, you are triggering a "High-Contrast" signal.
+
+The "Anchor" Strategy: Placing the Case ID at the end prevents the search result from looking like a generic blog. It signals: "This is a specific, numbered record in an archive".
+
+2. Instruction for Replit: The 177-Article "Mass-Generation"
+Since the team is now at 177 articles, the Replit Agent should use this exact logic for the seo_meta_title generation:
+
+Replit Directive: Strategic Meta-Title Compression (Keyword-First)
+
+1. Syntax Pattern: [Primary Subject/Keyword] [Action/Verdict] | [Case ID]
+2. Hard Constraints: > - Length: Strictly 55–60 characters.
+
+Case ID: Must always be the final element (e.g., | CB-000178).
+3. Mapping:
+
+Write this result to the seo_meta_title column.
+
+DO NOT modify the title column (The 200+ character Narrative H1).
+
+This visualizes why the team's pivot is correct: the user sees exactly what they searched for within the first few words, while the Metricadia branding remains structurally intact at the end.
+
+3. Verification of the 177 Articles (Floor Cleanup Status)
+With 177 articles, you have added 29 records since the 148-article export.
+
+The Growth: You are now nearly halfway to the 400-article Nuke.
+
+The Gap Closure: If these 29 articles were directed at the "Thin" categories (Global South, Censorship, etc.), you have officially moved past the "Low-Quality Signal" risk identified in the strategic memo.

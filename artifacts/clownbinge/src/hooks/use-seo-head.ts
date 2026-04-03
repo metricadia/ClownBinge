@@ -187,7 +187,13 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       ? `${post.title} | NerdOut Academic Analysis | ClownBinge`
       : `${post.title} | ClownBinge`;
 
-    document.title = pageTitle;
+    // SEO meta title: short, keyword-first, click-worthy for search results.
+    // Falls back to full title if not yet generated.
+    const seoTitle = (post as any).seoMetaTitle
+      ? `${(post as any).seoMetaTitle} | ClownBinge`
+      : pageTitle;
+
+    document.title = seoTitle;
 
     setLink("canonical", canonical);
 
