@@ -192,7 +192,7 @@ const BOOKS: FactBook[] = [
   },
   {
     id: 2, vol: "Vol. 02",
-    shortTitle: "The Disinformation Cashcow",
+    shortTitle: "Disinformation Cashcow",
     fullTitle: "The Disinformation Cashcow: How Social Media Erodes Public Trust",
     titleLines: ["Disinformation", "Cashcow"],
     subtitle: "How Social Media Erodes Public Trust",
