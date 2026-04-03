@@ -1035,8 +1035,8 @@ const BOOKS: FactBook[] = [
   },
   {
     id: 9, vol: "Vol. 09",
-    shortTitle: "What Herodotus Saw",
-    fullTitle: "What Herodotus Saw: The Primary Source Record of Kemet as Black African Civilization",
+    shortTitle: "Egypt's Undeniable Black Roots",
+    fullTitle: "Egypt's Undeniable Black Roots: What Herodotus Saw",
     tag: "Global South / Archaeology",
     bg: "#2D1800", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#2D1800",
     coverDesign: "overlap",
