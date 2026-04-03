@@ -51,7 +51,7 @@ const BOOKS: FactBook[] = [
     titleLines: ["Three-Fifths", "for 400 Years"],
     subtitleColor: "#7BB3F0",
     idealReaders: {
-      intro: "This book is not an argument. It is a record. A 400-year documented account of what was done, by whom, in what order, and why. The 'Black criminality' narrative did not emerge from the data. It preceded the data. This volume proves that — from primary sources, in chronological order, with full citation.",
+      intro: "This book is not an argument. It is a record. A 400-year documented account of what was done, by whom, in what order, and why. The 'Black criminality' narrative did not emerge from the data. It preceded the data. This volume proves that  - from primary sources, in chronological order, with full citation.",
       readers: [
         {
           title: "The Person Who Has Said 'But What About Black-on-Black Crime'",
@@ -71,11 +71,11 @@ const BOOKS: FactBook[] = [
         },
         {
           title: "The Criminologist or Social Scientist",
-          body: "Every peer-reviewed finding in this volume is fully cited. Chapter 7 consolidates the academic record on the poverty confounder — the finding that race disappears as a variable when structure is controlled. You already know the data. This book gives you the political architecture that explains why the public doesn't.",
+          body: "Every peer-reviewed finding in this volume is fully cited. Chapter 7 consolidates the academic record on the poverty confounder  - the finding that race disappears as a variable when structure is controlled. You already know the data. This book gives you the political architecture that explains why the public doesn't.",
         },
         {
           title: "The Person Who Believes the System Is Fair",
-          body: "You believe in equality under the law. So did the authors of the 13th Amendment. This book uses the constitutional record — not opinion — to show what equality under the law has meant, systematically and by statute, since 1619. The question is not whether you believe in the system. The question is whether you have read it.",
+          body: "You believe in equality under the law. So did the authors of the 13th Amendment. This book uses the constitutional record  - not opinion  - to show what equality under the law has meant, systematically and by statute, since 1619. The question is not whether you believe in the system. The question is whether you have read it.",
         },
       ],
     },
@@ -87,11 +87,11 @@ const BOOKS: FactBook[] = [
     coverVideo: "/manufacturer-threat-bg.mp4",
     summary: "The claim that Black Americans are inherently more violent is one of the most durable lies in American public life. Not a recent invention. A constructed narrative built on 400 years of deliberate dehumanization, beginning with the first enslaved Africans brought to these shores in 1619. The Three-Fifths Compromise didn't create that lie. It gave it a constitutional address.\n\nPoliticians repeat it. Media amplifies it. Data destroys it.\n\nThis FactBook goes straight to the source: FBI crime statistics, peer-reviewed criminology, and federal data that dismantles the myth completely and traces its deliberate political origins back to the people who built it.",
     bullets: [
-      "FBI UCR and BJS data show violent crime tracks poverty and disinvestment — not race",
+      "FBI UCR and BJS data show violent crime tracks poverty and disinvestment  - not race",
       "Peer-reviewed criminology finds race disappears as a variable when income is controlled",
       "The CDC links 'race and crime' framing to deliberate policy narratives dating to the 1960s",
       "97% of Black homicide victimization is driven by economic circumstance, per DOJ data",
-      "The myth serves documented political purposes — this FactBook names them, with receipts",
+      "The myth serves documented political purposes  - this FactBook names them, with receipts",
     ],
     chapters: [
       {
@@ -104,7 +104,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "Federal Disinvestment and the Architecture of Deprivation, 1865–1968",
-        description: "The Homestead Act distributed 270 million acres — to white settlers. The GI Bill funded college and homeownership — with documented racial exclusions. Federal highway construction destroyed Black neighborhoods by design. Congressional appropriations records, FHA redlining maps, and urban renewal filings show a systematic policy of extraction, not neglect.",
+        description: "The Homestead Act distributed 270 million acres  - to white settlers. The GI Bill funded college and homeownership  - with documented racial exclusions. Federal highway construction destroyed Black neighborhoods by design. Congressional appropriations records, FHA redlining maps, and urban renewal filings show a systematic policy of extraction, not neglect.",
       },
       {
         title: "Nixon's War on Crime: What the Architects Said on the Record",
@@ -112,7 +112,7 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "The War on Drugs as Controlled Experiment: Equal Use, Unequal Enforcement",
-        description: "Federal survey data shows drug use rates are nearly identical across racial groups. Arrest rates are not. This chapter uses DEA records, BJS data, and congressional testimony to document how enforcement intensity — not behavior — produced the disparate statistics politicians cited as evidence of inherent criminality.",
+        description: "Federal survey data shows drug use rates are nearly identical across racial groups. Arrest rates are not. This chapter uses DEA records, BJS data, and congressional testimony to document how enforcement intensity  - not behavior  - produced the disparate statistics politicians cited as evidence of inherent criminality.",
       },
       {
         title: "The 1994 Crime Bill: Named Votes, Named Architects, Documented Outcomes",
@@ -120,16 +120,78 @@ const BOOKS: FactBook[] = [
       },
       {
         title: "The Poverty Confounder: What the Research Record Shows When Structure Is Controlled",
-        description: "Peer-reviewed criminology consistently finds that race disappears as a predictor of violent crime when researchers control for concentrated poverty, disinvestment, and resource deprivation — conditions produced by the policies documented in the preceding chapters. This chapter assembles the academic record with full citation.",
+        description: "Peer-reviewed criminology consistently finds that race disappears as a predictor of violent crime when researchers control for concentrated poverty, disinvestment, and resource deprivation  - conditions produced by the policies documented in the preceding chapters. This chapter assembles the academic record with full citation.",
       },
       {
         title: "2020–2026: What the Current Record Shows",
-        description: "FBI arrest data. Bureau of Justice Statistics victimization surveys. The National Registry of Exonerations. Federal sentencing commission data. This chapter presents the current empirical record — the one that exists after 400 years of the documented policy architecture in Chapters 1 through 7. The data is what it is.",
+        description: "FBI arrest data. Bureau of Justice Statistics victimization surveys. The National Registry of Exonerations. Federal sentencing commission data. This chapter presents the current empirical record  - the one that exists after 400 years of the documented policy architecture in Chapters 1 through 7. The data is what it is.",
       },
     ],
   },
   {
-    id: 2, vol: "Vol. 02",
+    id: 9, vol: "Vol. 02",
+    shortTitle: "Egypt's Undeniable Black Roots",
+    fullTitle: "Egypt's Undeniable Black Roots: What Herodotus Saw",
+    tag: "Global South / Archaeology",
+    bg: "#2D1800", fg: "#FFFFFF", accent: "#6BAED6", accentFg: "#0A1E35",
+    coverDesign: "overlap",
+    coverImage: "/covers/blackegypt.png",
+    coverAnchor: "xMidYMin slice",
+    subtitle: "What Herodotus Saw",
+    summary: "Herodotus  - the Greek historian  - wrote that the Egyptians were 'dark-skinned and woolly-haired.' He wrote this in the 5th century BCE, 2,500 years before it became politically convenient to deny. This FactBook assembles the archaeological, genetic, and written record that existed long before the politics  - and has never actually been refuted.",
+    bullets: [
+      "Herodotus's original Greek texts describing Egyptian appearance have been in the record since 450 BCE",
+      "DNA studies of pre-dynastic remains (Nature, 2017) show genetic proximity to sub-Saharan populations",
+      "Ancient Egyptian art  - much of it in color  - depicts skin tones across the full range of African peoples",
+      "Hieroglyphic records include pharaohs' explicit self-identification with African neighbors and kin",
+      "The 'Egypt was not Black' argument emerged in 19th-century European colonial historiography, documented",
+    ],
+    chapters: [
+      {
+        title: "The Silence That Required a Conspiracy",
+        description: "This preface establishes the scope of the documented erasure. The primary source record on Egyptian identity is not thin  - it spans Greek historians, Roman geographers, Egyptian temple inscriptions, and 21st-century genomic science. The erasure did not happen because the evidence was absent. It happened because the evidence was politically inconvenient. This chapter names the institutions and scholars who suppressed it and the ones who didn't.",
+        isPreface: true,
+        sources: ["Herodotus, Histories, Book II (c. 450 BCE)", "Strabo, Geographica, XVII (c. 20 BCE)", "UNESCO General History of Africa, Vol. II (1981)"],
+      },
+      {
+        title: "What Herodotus Actually Wrote",
+        description: "In the second book of the Histories, Herodotus describes the Egyptians as melanchroes  - dark-skinned  - and oulotriches  - woolly-haired. He uses these physical characteristics not as editorializing but as identifying markers, the same way he describes any other people he documents. This chapter reproduces the original Greek text alongside three independent scholarly translations, traces the history of how that passage has been minimized, retranslated, and selectively quoted, and establishes the interpretive record that surrounds it.",
+        sources: ["Herodotus, Histories II.104 (original Greek, Loeb Classical Library ed.)", "Godley translation (1920), Harvard University Press", "de Sélincourt translation (1954), Penguin Classics"],
+      },
+      {
+        title: "The DNA Record: Pre-Dynastic and Early Dynastic Genetics",
+        description: "A 2017 study published in Nature Communications analyzed ancient DNA from 90 mummies spanning 1,300 years of Egyptian history  - the first genomic study of ancient Egyptians at this scale. The findings showed the ancient Egyptians were most closely related to ancient Near Eastern and North African populations, with significant sub-Saharan African ancestry increasing over time. This chapter presents the full dataset, the study methodology, and the peer-reviewed responses  - including those that challenged the sample location's representativeness of broader Egyptian demographics.",
+        sources: ["Schuenemann et al., Nature Communications (2017)", "Keita, S.O.Y., American Journal of Human Biology (2020)", "Zakrzewski, Annals of Human Biology (2007)"],
+      },
+      {
+        title: "Egyptian Art in Color: Three Thousand Years of Self-Representation",
+        description: "Ancient Egyptian tomb paintings, temple reliefs, and statuary are among the most extensively documented visual records in human history. This chapter reproduces verified images from the Egyptian Museum in Cairo, the Metropolitan Museum of Art, and the British Museum's open-access collections showing skin tone representations across the full African chromatic range. It also documents the specific 19th-century curatorial choices  - many at European institutions  - that recolored, relabeled, or re-photographed artifacts to support a lighter-skinned interpretation.",
+        sources: ["The Egyptian Museum, Cairo  - verified catalog records", "Met Open Access Collection (metmuseum.org)", "Kamrin, J., Ancient Egyptian Hieroglyphs, Harvard University Press (2004)"],
+      },
+      {
+        title: "The Pharaohs' Own Words: Hieroglyphic Self-Identification",
+        description: "Multiple pharaohs explicitly identified themselves with Nubian and sub-Saharan African peoples in hieroglyphic inscriptions. This chapter presents and translates primary-source inscriptions from Thutmose III, Amenhotep III, and Ramesses II that document kinship ties, military alliances, and cultural exchange with peoples the inscriptions clearly identify as south of Egypt's geographic border. It cross-references with the Stele of Kamose, which describes the Nubian south as 'our people' in the context of expelling Hyksos rulers.",
+        sources: ["Stele of Kamose (c. 1555 BCE), Luxor Museum", "Thutmose III Annals, Karnak Temple (Breasted translation, 1906)", "Lichtheim, M., Ancient Egyptian Literature, Vol. II, University of California Press (1976)"],
+      },
+      {
+        title: "The 25th Dynasty: When Nubian Kings Ruled Egypt",
+        description: "Between 745 and 656 BCE, Egypt was ruled by a dynasty of Nubian kings originating from the Kingdom of Kush  - modern Sudan. This is not contested. It is documented in Egyptian royal inscriptions, Assyrian military records, Greek historical accounts, and modern archaeological excavation of the Nubian pyramids at Meroe. This chapter presents the primary source documentation of the 25th Dynasty's rule, the architectural legacy they left, and the reason this 90-year period is systematically underrepresented in Western popular history curricula.",
+        sources: ["Kuhrt, A., The Ancient Near East, c. 3000–330 BC, Routledge (1995)", "Welsby, D.A., The Kingdom of Kush, British Museum Press (1996)", "Török, L., The Kingdom of Kush: Handbook of the Napatan-Meroitic Civilization, Brill (1997)"],
+      },
+      {
+        title: "How 'Egypt Was White' Was Invented",
+        description: "The modern argument that ancient Egyptians were not Black African did not emerge from new evidence. It emerged from the political necessities of 19th-century European colonialism and American slavery. This chapter documents the specific scholars  - Johann Friedrich Blumenbach, Samuel Morton, and Josiah Nott  - who constructed the racialized taxonomy of ancient Egypt. It traces their methods, their funding sources, their documented errors, and the extent to which their conclusions were adopted by institutions that had financial stakes in the ideology they produced.",
+        sources: ["Blumenbach, J.F., De Generis Humani Varietate Nativa (1775)", "Morton, S.G., Crania Aegyptiaca (1844)", "Nott, J.C. & Gliddon, G.R., Types of Mankind (1854)", "Gould, S.J., The Mismeasure of Man, W.W. Norton (1981)"],
+      },
+      {
+        title: "The Scientific Consensus That Never Got the Press Release",
+        description: "The 1974 UNESCO Cairo Symposium brought together the world's leading Egyptologists and African historians  - including Cheikh Anta Diop and Théophile Obenga  - to evaluate the available evidence on ancient Egyptian identity. The symposium produced a consensus that ancient Egyptians were biologically and culturally connected to sub-Saharan Africa. This chapter presents the symposium's findings, the subsequent peer-reviewed literature that built on them, and the documented institutional resistance that kept those findings from entering mainstream curricula.",
+        sources: ["UNESCO, The Peopling of Ancient Egypt and the Deciphering of Meroitic Script (1974)", "Diop, C.A., The African Origin of Civilization: Myth or Reality, Lawrence Hill Books (1974)", "Obenga, T., Ancient Egypt and Black Africa, Karnak House (1992)"],
+      },
+    ],
+  },
+  {
+    id: 2, vol: "Vol. 03",
     shortTitle: "Merchants of Chaos",
     fullTitle: "Merchants of Chaos: Facebook, X, YouTube & TikTok as the World's Largest Disinformation Infrastructure",
     subtitle: "Social Media as the World's Largest Disinformation Infrastructure",
@@ -139,34 +201,34 @@ const BOOKS: FactBook[] = [
     coverImage: "/covers/vol02-cover.jpg",
     coverAnchor: "xMaxYMid slice",
     coverVideo: "/vol02-bg.mp4",
-    summary: "Congress has the documents. Senate intelligence committees have done the investigations. Internal communications have been leaked. Facebook, YouTube, X, and TikTok have been caught — not accused — of algorithmically amplifying disinformation for engagement revenue. This FactBook assembles the receipts from congressional testimony, whistleblower documents, and regulatory filings.",
+    summary: "Congress has the documents. Senate intelligence committees have done the investigations. Internal communications have been leaked. Facebook, YouTube, X, and TikTok have been caught  - not accused  - of algorithmically amplifying disinformation for engagement revenue. This FactBook assembles the receipts from congressional testimony, whistleblower documents, and regulatory filings.",
     bullets: [
       "Facebook's own internal research showed the algorithm amplified outrage content by 5x",
       "Senate Intelligence Committee reports document coordinated inauthentic behavior tolerated for profit",
-      "YouTube's recommendation engine drove radicalization at scale — per their own engineers",
+      "YouTube's recommendation engine drove radicalization at scale  - per their own engineers",
       "TikTok congressional testimony revealed state-level data access they denied existed",
       "Every claim traces to congressional records, SEC filings, or published whistleblower testimony",
     ],
   },
   {
-    id: 3, vol: "Vol. 03",
+    id: 3, vol: "Vol. 04",
     shortTitle: "A Well-Regulated Exclusion",
     fullTitle: "A Well-Regulated Exclusion: The Second Amendment's Race Problem on the Constitutional Record",
     subtitle: "The Second Amendment's Race Problem on the Constitutional Record",
     tag: "U.S. Constitution",
     bg: "#F8F9FC", fg: "#1A1A2E", accent: "#1A3A8F", accentFg: "#FFFFFF", footerDotColor: "#C9A227",
     coverDesign: "split",
-    summary: "The Second Amendment was debated, drafted, and ratified when 'the people' had a specific racial definition — and state militia laws at the time made that explicit. This FactBook doesn't argue gun policy. It reads the constitutional record, the Founders' own words, and the Supreme Court's historical analysis to surface what was actually being protected and who was being excluded.",
+    summary: "The Second Amendment was debated, drafted, and ratified when 'the people' had a specific racial definition  - and state militia laws at the time made that explicit. This FactBook doesn't argue gun policy. It reads the constitutional record, the Founders' own words, and the Supreme Court's historical analysis to surface what was actually being protected and who was being excluded.",
     bullets: [
       "Founders' militia writings explicitly tied gun rights to slave patrol and anti-insurrection control",
       "State constitutional records from 1789 reveal racial exclusions baked into 'the people'",
-      "Dred Scott explicitly denied Black Americans 2nd Amendment rights — in the Court's own words",
+      "Dred Scott explicitly denied Black Americans 2nd Amendment rights  - in the Court's own words",
       "Reconstruction-era gun seizures targeting Black communities are documented in congressional testimony",
       "Heller and Bruen's 'historical tradition' argument collapses when applied to non-white Americans",
     ],
   },
   {
-    id: 4, vol: "Vol. 04",
+    id: 4, vol: "Vol. 05",
     shortTitle: "Who Is the Chief Grifter?",
     fullTitle: "Who Is the Chief Grifter? Obama vs. Trump Appointees: The Credential Record That Ends the Merit Argument",
     subtitle: "The Credential Record That Ends the Merit Argument",
@@ -185,41 +247,41 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 5, vol: "Vol. 05",
+    id: 5, vol: "Vol. 06",
     shortTitle: "All Propaganda, All the Time",
-    fullTitle: "All Propaganda, All the Time: CNN, MSNBC, and Fox News — What the Documents Confirm",
-    subtitle: "CNN, MSNBC, and Fox News — What the Documents Confirm",
+    fullTitle: "All Propaganda, All the Time: CNN, MSNBC, and Fox News  - What the Documents Confirm",
+    subtitle: "CNN, MSNBC, and Fox News  - What the Documents Confirm",
     tag: "Media / Investigations",
     bg: "#1A1A2E", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#1A1A2E",
     coverDesign: "slash",
-    summary: "It is no longer a matter of opinion that American cable news operates as political infrastructure. Their own internal documents, regulatory filings, and court-disclosed communications make the case. This FactBook doesn't pick a side — it applies the same evidentiary standard to CNN, MSNBC, and Fox News and lets the documents speak for themselves.",
+    summary: "It is no longer a matter of opinion that American cable news operates as political infrastructure. Their own internal documents, regulatory filings, and court-disclosed communications make the case. This FactBook doesn't pick a side  - it applies the same evidentiary standard to CNN, MSNBC, and Fox News and lets the documents speak for themselves.",
     bullets: [
       "Fox News internal texts show hosts knew the 2020 election claims were false while broadcasting them",
       "CNN's leaked 2021 editorial strategy documents show narrative shaping over news gathering",
       "MSNBC parent NBCUniversal's FEC filings reveal systematic partisan donation patterns",
       "Dominion v. Fox depositions are the most damning primary-source document in cable news history",
-      "All three networks have settled or faced regulatory findings — this book catalogs every one",
+      "All three networks have settled or faced regulatory findings  - this book catalogs every one",
     ],
   },
   {
-    id: 6, vol: "Vol. 06",
+    id: 6, vol: "Vol. 07",
     shortTitle: "Stolen Maps",
     fullTitle: "Stolen Maps: The Documented Legality of Gerrymandering and Who It Was Designed to Silence",
     subtitle: "The Documented Legality of Gerrymandering and Who It Was Designed to Silence",
     tag: "Law & Justice",
     bg: "#2A0A4A", fg: "#FFFFFF", accent: "#C084FC", accentFg: "#1A0A2E",
     coverDesign: "arch",
-    summary: "Gerrymandering has been declared constitutional by the Supreme Court — meaning politicians can now legally choose their voters. This FactBook documents how that legal framework was constructed, who built it, and what the district maps actually look like when overlaid with Census Bureau demographic data. The system is working exactly as designed.",
+    summary: "Gerrymandering has been declared constitutional by the Supreme Court  - meaning politicians can now legally choose their voters. This FactBook documents how that legal framework was constructed, who built it, and what the district maps actually look like when overlaid with Census Bureau demographic data. The system is working exactly as designed.",
     bullets: [
       "Rucho v. Common Cause (2019) explicitly legalized partisan gerrymandering at the federal level",
       "Census Bureau overlays show Black and Latino communities are most consistently packed or cracked",
       "State redistricting documents reveal explicit partisan intent behind ostensibly neutral criteria",
-      "The same 3 redistricting law firms shaped maps across 12 states — documented by name",
+      "The same 3 redistricting law firms shaped maps across 12 states  - documented by name",
       "Voting Rights Act Section 2 cases catalog the legal challenge record, ruling by ruling",
     ],
   },
   {
-    id: 7, vol: "Vol. 07",
+    id: 7, vol: "Vol. 08",
     shortTitle: "The Uncredited Builders",
     fullTitle: "The Uncredited Builders: Indigenous Nations, Enslaved Africans, and Immigrants Who Made America",
     subtitle: "Indigenous Nations, Enslaved Africans, and Immigrants Who Made America",
@@ -238,7 +300,7 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 8, vol: "Vol. 08",
+    id: 8, vol: "Vol. 09",
     shortTitle: "Ancient Faith, Modern Politics",
     fullTitle: "Ancient Faith, Modern Politics: The Documented Separation of Judaism and Zionism",
     tag: "Global South / History",
@@ -1034,23 +1096,6 @@ const BOOKS: FactBook[] = [
     ],
   },
   {
-    id: 9, vol: "Vol. 09",
-    shortTitle: "Egypt's Undeniable Black Roots",
-    fullTitle: "Egypt's Undeniable Black Roots: What Herodotus Saw",
-    tag: "Global South / Archaeology",
-    bg: "#2D1800", fg: "#FFFFFF", accent: "#F5C518", accentFg: "#2D1800",
-    coverDesign: "overlap",
-    subtitle: "What Herodotus Saw",
-    summary: "Herodotus — the Greek historian — wrote that the Egyptians were 'dark-skinned and woolly-haired.' He wrote this in the 5th century BCE, 2,500 years before it became politically convenient to deny. This FactBook assembles the archaeological, genetic, and written record that existed long before the politics — and has never actually been refuted.",
-    bullets: [
-      "Herodotus's original Greek texts describing Egyptian appearance have been in the record since 450 BCE",
-      "DNA studies of pre-dynastic remains (Nature, 2017) show genetic proximity to sub-Saharan populations",
-      "Ancient Egyptian art — much of it in color — depicts skin tones across the full range of African peoples",
-      "Hieroglyphic records include pharaohs' explicit self-identification with African neighbors and kin",
-      "The 'Egypt was not Black' argument emerged in 19th-century European colonial historiography, documented",
-    ],
-  },
-  {
     id: 10, vol: "Vol. 10",
     shortTitle: "The Debt Clock",
     fullTitle: "The Debt Clock: Who Borrowed It. Who Foots the Bill",
@@ -1058,13 +1103,13 @@ const BOOKS: FactBook[] = [
     bg: "#082010", fg: "#FFFFFF", accent: "#00D084", accentFg: "#082010",
     coverDesign: "circle",
     subtitle: "Who Borrowed It. Who Foots the Bill",
-    summary: "The United States currently pays $2.8 billion every single day in interest on the national debt — more than the entire discretionary budget of most federal agencies, and more than it spends on education per day. This FactBook uses Treasury Department data, CBO projections, and Federal Reserve reports to trace exactly how this happened, who benefits, and what it forecloses.",
+    summary: "The United States currently pays $2.8 billion every single day in interest on the national debt  - more than the entire discretionary budget of most federal agencies, and more than it spends on education per day. This FactBook uses Treasury Department data, CBO projections, and Federal Reserve reports to trace exactly how this happened, who benefits, and what it forecloses.",
     bullets: [
       "Treasury data confirms daily interest payments now exceed the daily cost of Medicaid",
       "Top holders of U.S. debt include American pension funds, foreign governments, and the Fed itself",
       "CBO projections show interest payments becoming the single largest federal expense by 2030",
       "Reagan-era tax cuts and Bush-era wars are the two largest documented contributors to current debt",
-      "The $2.8 billion figure is not partisan — it comes directly from the U.S. Department of the Treasury",
+      "The $2.8 billion figure is not partisan  - it comes directly from the U.S. Department of the Treasury",
     ],
   },
 ];
@@ -1106,7 +1151,7 @@ function CoverSVG({ book }: { book: FactBook }) {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Fade to black — lower half */}
+        {/* Fade to black  - lower half */}
         <div className="absolute inset-0" style={{
           background: "linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.12) 38%, rgba(0,0,0,0.75) 68%, rgba(0,0,0,1) 100%)"
         }} />
@@ -1114,7 +1159,7 @@ function CoverSVG({ book }: { book: FactBook }) {
         <div className="absolute inset-0" style={{
           background: `linear-gradient(to bottom, transparent 55%, ${accent}30 84%, ${accent}99 100%)`
         }} />
-        {/* Title + subtitle — cqw matches SVG fontSize=21 in viewBox 240: 21/240*100=8.75cqw */}
+        {/* Title + subtitle  - cqw matches SVG fontSize=21 in viewBox 240: 21/240*100=8.75cqw */}
         <div className="absolute left-0 right-0 text-center px-[6%]" style={{ top: "57%" }}>
           <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "8.75cqw", letterSpacing: "-0.2px" }}>{line1}</div>
           {line2 && <div className="font-bold leading-tight text-white" style={{ fontFamily: "'Libre Franklin',sans-serif", fontSize: "8.75cqw", letterSpacing: "-0.2px", marginTop: "1.2cqw" }}>{line2}</div>}
@@ -1124,7 +1169,7 @@ function CoverSVG({ book }: { book: FactBook }) {
             </div>
           )}
         </div>
-        {/* Footer bar — SVG overlay: identical viewBox 0 0 240 360, same rect + text as image/design branches */}
+        {/* Footer bar  - SVG overlay: identical viewBox 0 0 240 360, same rect + text as image/design branches */}
         <svg
           viewBox="0 0 240 360"
           xmlns="http://www.w3.org/2000/svg"
@@ -1150,7 +1195,7 @@ function CoverSVG({ book }: { book: FactBook }) {
             <stop offset="68%" stopColor="#000000" stopOpacity="0.72" />
             <stop offset="100%" stopColor="#000000" stopOpacity="1" />
           </linearGradient>
-          {/* Accent-color glow bleeding up from footer — gives each cover a signature hue */}
+          {/* Accent-color glow bleeding up from footer  - gives each cover a signature hue */}
           <linearGradient id={`glow-${book.id}`} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor={accent} stopOpacity="0" />
             <stop offset="55%" stopColor={accent} stopOpacity="0" />
@@ -1158,15 +1203,15 @@ function CoverSVG({ book }: { book: FactBook }) {
             <stop offset="100%" stopColor={accent} stopOpacity="0.55" />
           </linearGradient>
         </defs>
-        {/* Black bg fallback */}
-        <rect width="240" height="360" fill="#000000" />
+        {/* Book bg color shows through transparent areas of PNG covers */}
+        <rect width="240" height="360" fill={bg} />
         {/* Full-bleed photo */}
         <image href={book.coverImage} x="0" y="0" width="240" height="360" preserveAspectRatio={book.coverAnchor ?? "xMidYMid slice"} />
         {/* Fade photo into black */}
         <rect width="240" height="360" fill={`url(#fade-${book.id})`} />
-        {/* Accent color glow from bottom — ties cover to brand color */}
+        {/* Accent color glow from bottom  - ties cover to brand color */}
         <rect width="240" height="360" fill={`url(#glow-${book.id})`} />
-        {/* Title — white, seated just above footer */}
+        {/* Title  - white, seated just above footer */}
         <text x="120" y="238" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line1}</text>
         <text x="120" y="261" fontSize="21" fill="#FFFFFF" fontFamily="'Libre Franklin',sans-serif" fontWeight="700" letterSpacing="-0.2" textAnchor="middle">{line2}</text>
         {subtitleLines.map((l, i) => (
@@ -1305,7 +1350,7 @@ function CoverSVG({ book }: { book: FactBook }) {
 }
 
 function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
-  const isVol08 = book.vol === "Vol. 08";
+  const isVol08 = book.id === 8;
   const [tab, setTab] = useState<"description" | "outline" | "video" | "ideal">("description");
   const [expandedChapter, setExpandedChapter] = useState<number | null>(null);
   const hasOutline = book.chapters && book.chapters.length > 0;
@@ -1321,7 +1366,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
         style={{ background: "#ffffff", maxHeight: "90vh" }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Cover — banner on mobile, full-height left panel on sm+; editorial-dominant on md/lg */}
+        {/* Cover  - banner on mobile, full-height left panel on sm+; editorial-dominant on md/lg */}
         <div
           className="w-full h-28 shrink-0 sm:w-[42%] md:w-[50%] lg:w-[54%] sm:h-auto sm:self-stretch"
           style={{ background: book.bg }}
@@ -1331,7 +1376,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
           </div>
         </div>
 
-        {/* RIGHT — text panel */}
+        {/* RIGHT  - text panel */}
         <div className="flex-1 flex flex-col overflow-hidden" style={{ background: "#FAFAFA" }}>
           {/* Close */}
           <button
@@ -1343,7 +1388,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
             <X className="w-3.5 h-3.5 text-gray-700" />
           </button>
 
-          {/* Header — always visible, not scrolled */}
+          {/* Header  - always visible, not scrolled */}
           <div className="px-6 pt-5 pb-0 shrink-0">
             <p className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase mb-1" style={{ color: book.accent }}>
               {book.vol} · {book.tag}
@@ -1406,7 +1451,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
             )}
           </div>
 
-          {/* Scrollable content — always-visible thin scrollbar */}
+          {/* Scrollable content  - always-visible thin scrollbar */}
           <div
             className="overflow-y-scroll flex-1 px-6 py-4"
             style={{ scrollbarWidth: "thin", scrollbarColor: `${book.accent}55 transparent` }}
@@ -1462,7 +1507,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                     className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85 shrink-0"
                     style={{ background: book.accent, color: book.accentFg }}
                   >
-                    {book.price ?? "$24.95"} — Pre-Order
+                    {book.price ?? "$24.95"}  - Pre-Order
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -1530,7 +1575,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                     className="ml-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85 shrink-0"
                     style={{ background: book.accent, color: book.accentFg }}
                   >
-                    {book.price ?? "$24.95"} — Pre-Order
+                    {book.price ?? "$24.95"}  - Pre-Order
                     <ArrowRight className="w-3 h-3" />
                   </button>
                 </div>
@@ -1580,7 +1625,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
                             )}
                             <p className="text-xs text-gray-500 leading-relaxed mb-3">Full chapter analysis, evidence, and citations are in the FactBook.</p>
                             <button className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-extrabold text-xs transition-opacity hover:opacity-85" style={{ background: book.accent, color: book.accentFg }}>
-                              Vol. 08 — {book.price ?? "$24.95"} — Pre-Order
+                              {book.vol} - {book.price ?? "$24.95"} - Pre-Order
                               <ArrowRight className="w-3 h-3" />
                             </button>
                           </div>
@@ -1600,7 +1645,7 @@ function BookModal({ book, onClose }: { book: FactBook; onClose: () => void }) {
 
 export default function Bookstore() {
   usePageSeoHead({
-    title: "Our Books — Knowledge Is Power | ClownBinge FactBook™",
+    title: "Our Books  - Knowledge Is Power | ClownBinge FactBook™",
     description: "The ClownBinge FactBook™ series. Metricadia Research on the topics that define our era. Evergreen. Documented. Sourced.",
     path: "/bookstore",
     schemaType: "ItemPage",
@@ -1634,7 +1679,7 @@ export default function Bookstore() {
             </h2>
           </div>
 
-          {/* LEFT — brand statement */}
+          {/* LEFT  - brand statement */}
           <div>
             <div
               className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8 text-xs font-bold tracking-widest uppercase"
@@ -1656,14 +1701,14 @@ export default function Bookstore() {
             </p>
 
             <p className="text-white/75 text-lg leading-relaxed mb-8">
-              These are not books written about history. They are the history — sourced, cited,
+              These are not books written about history. They are the history  - sourced, cited,
               and organized so the argument ends where the evidence begins.
             </p>
 
             <div className="grid grid-cols-3 gap-6 border-t pt-8" style={{ borderColor: "rgba(255,255,255,0.15)" }}>
               <div>
                 <div className="font-extrabold text-lg text-white mb-1">Primary Source.</div>
-                <p className="text-white/50 text-xs leading-relaxed">Every claim traces to the original document — court filings, census records, peer-reviewed research.</p>
+                <p className="text-white/50 text-xs leading-relaxed">Every claim traces to the original document  - court filings, census records, peer-reviewed research.</p>
               </div>
               <div>
                 <div className="font-extrabold text-lg mb-1" style={{ color: "#F5C518" }}>Evergreen.</div>
@@ -1676,10 +1721,10 @@ export default function Bookstore() {
             </div>
           </div>
 
-          {/* RIGHT — action cards */}
+          {/* RIGHT  - action cards */}
           <div className="flex flex-col gap-4">
 
-            {/* CARD 1 — Individual volume */}
+            {/* CARD 1  - Individual volume */}
             <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid #F5C518" }}>
               <div className="p-6" style={{ background: "linear-gradient(135deg, #0a1a4a 0%, #1A3A8F 100%)" }}>
                 <div className="flex items-center justify-between mb-3">
@@ -1697,7 +1742,7 @@ export default function Bookstore() {
                   </div>
                 </div>
                 <p className="text-white/65 text-sm leading-relaxed mb-4">
-                  Pick the topic that matters most to you. Each volume stands completely alone —
+                  Pick the topic that matters most to you. Each volume stands completely alone  - 
                   fully cited, primary sourced, and delivered instantly as a digital PDF.
                 </p>
                 <div className="flex flex-wrap gap-x-4 gap-y-1 mb-2">
@@ -1723,7 +1768,7 @@ export default function Bookstore() {
               </div>
             </div>
 
-            {/* CARD 2 — Complete bundle */}
+            {/* CARD 2  - Complete bundle */}
             <div className="rounded-2xl overflow-hidden bg-white border border-gray-200 p-6 flex flex-col sm:flex-row gap-5 items-start">
               <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#0e3020" }}>
                 <Package className="w-5 h-5 text-white" />
@@ -1747,7 +1792,7 @@ export default function Bookstore() {
               </div>
             </div>
 
-            {/* CARD 3 — About the series */}
+            {/* CARD 3  - About the series */}
             <div className="rounded-2xl overflow-hidden bg-white border border-gray-200 p-6 flex flex-col sm:flex-row gap-5 items-start">
               <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#0e3020" }}>
                 <Layers className="w-5 h-5 text-white" />
@@ -1756,7 +1801,7 @@ export default function Bookstore() {
                 <div className="text-xs font-bold tracking-widest uppercase text-muted-foreground mb-2">About the Series</div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   The FactBook™ series is produced by the same PhD researchers behind ClownBinge's
-                  documented journalism — expanded into full research volumes with extended sourcing,
+                  documented journalism  - expanded into full research volumes with extended sourcing,
                   data tables, and complete citation indexes.
                 </p>
               </div>
@@ -1802,7 +1847,7 @@ export default function Bookstore() {
               <div className="relative mb-5">
                 <button
                   className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-sm"
-                  style={{ "--tw-ring-color": book.accent } as React.CSSProperties}
+                  style={{ "-tw-ring-color": book.accent } as React.CSSProperties}
                   onClick={() => setSelectedBook(book)}
                   aria-label={`Learn more about ${book.shortTitle}`}
                 >
