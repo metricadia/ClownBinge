@@ -41,7 +41,13 @@ router.get("/posts/stats", async (_req, res) => {
         )
       ),
       db.execute(
-        sql`SELECT COALESCE(SUM(array_length(string_to_array(verified_source, ';'), 1)), 0)::int AS total_citations FROM posts WHERE status = 'published' AND case_number LIKE 'CB-%' AND verified_source IS NOT NULL AND verified_source != ''`
+        sql`SELECT (
+          COALESCE(SUM(array_length(string_to_array(verified_source, ';'), 1)), 0)
+          +
+          COALESCE(SUM((length(body) - length(replace(body, 'cb-factoid', ''))) / 10), 0)
+        )::int AS total_citations
+        FROM posts
+        WHERE status = 'published' AND case_number LIKE 'CB-%'`
       ),
     ]);
 
