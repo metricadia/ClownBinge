@@ -71,8 +71,14 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
     const saved = localStorage.getItem("cb-font-level");
     return saved !== null ? parseInt(saved) : 1;
   });
+  const mainRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    document.documentElement.style.fontSize = `${FONT_SIZES[fontLevel]}px`;
+    // Reset any root font-size from older sessions — header must never scale
+    document.documentElement.style.fontSize = "";
+    // Apply only to the main content area
+    if (mainRef.current) {
+      mainRef.current.style.fontSize = `${FONT_SIZES[fontLevel]}px`;
+    }
     localStorage.setItem("cb-font-level", String(fontLevel));
   }, [fontLevel]);
 
@@ -249,7 +255,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 w-full relative">
+      <main ref={mainRef} className="flex-1 w-full relative">
         {location !== '/' && (
           <div className="cb-container pt-4 pb-0">
             <p className="text-sm text-foreground/70 font-medium tracking-wide text-center">
