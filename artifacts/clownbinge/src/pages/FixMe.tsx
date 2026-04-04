@@ -57,6 +57,14 @@ export default function FixMe() {
   const [filter, setFilter] = useState<"all" | "untested" | "high">("all");
   const [lastResult, setLastResult] = useState<{ slug: string; message: string; ok: boolean } | null>(null);
 
+  type DetectAllStatus =
+    | { phase: "idle" }
+    | { phase: "running"; total: number; done: number; failed: number; current: string }
+    | { phase: "done"; total: number; done: number; failed: number; durationSec: number };
+
+  const [detectAllStatus, setDetectAllStatus] = useState<DetectAllStatus>({ phase: "idle" });
+  const detectAllPollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   const timerRefs = useRef<Record<string, ReturnType<typeof setInterval>>>({});
 
   const fetchArticles = useCallback(async () => {
@@ -81,8 +89,50 @@ export default function FixMe() {
   useEffect(() => {
     return () => {
       Object.values(timerRefs.current).forEach(clearInterval);
+      if (detectAllPollRef.current) clearInterval(detectAllPollRef.current);
     };
   }, []);
+
+  // On mount, check if a detect-all job is already running server-side
+  useEffect(() => {
+    if (!authed) return;
+    fetch(`${BASE}/api/fixme/detect-all/status`)
+      .then(r => r.json())
+      .then((s: DetectAllStatus) => {
+        setDetectAllStatus(s);
+        if (s.phase === "running") startDetectAllPolling();
+      })
+      .catch(() => {});
+  }, [authed]);
+
+  function startDetectAllPolling() {
+    if (detectAllPollRef.current) return;
+    detectAllPollRef.current = setInterval(async () => {
+      try {
+        const res = await fetch(`${BASE}/api/fixme/detect-all/status`);
+        const s: DetectAllStatus = await res.json();
+        setDetectAllStatus(s);
+        if (s.phase !== "running") {
+          clearInterval(detectAllPollRef.current!);
+          detectAllPollRef.current = null;
+          if (s.phase === "done") fetchArticles();
+        }
+      } catch {
+        clearInterval(detectAllPollRef.current!);
+        detectAllPollRef.current = null;
+      }
+    }, 3000);
+  }
+
+  async function handleDetectAll() {
+    try {
+      await fetch(`${BASE}/api/fixme/detect-all`, { method: "POST" });
+      setDetectAllStatus({ phase: "running", total: stats.untested, done: 0, failed: 0, current: "" });
+      startDetectAllPolling();
+    } catch (e) {
+      console.error("Detect all failed to start", e);
+    }
+  }
 
   function handleLogin() {
     if (pwInput === PASS) {
@@ -273,7 +323,14 @@ export default function FixMe() {
           <h1 className="text-lg font-bold text-white">CBfix</h1>
           <p className="text-gray-400 text-xs">AI Score Reduction Dashboard | Target: ≤20% | JS-gated rewrites | 20x concurrency</p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleDetectAll}
+            disabled={detectAllStatus.phase === "running"}
+            className="text-xs bg-emerald-900 hover:bg-emerald-800 border border-emerald-700 text-emerald-200 px-3 py-1.5 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+          >
+            {detectAllStatus.phase === "running" ? "Detecting…" : "Detect All"}
+          </button>
           <button
             onClick={fetchArticles}
             disabled={loadingList}
@@ -305,6 +362,35 @@ export default function FixMe() {
             </div>
           ))}
         </div>
+
+        {detectAllStatus.phase === "running" && (
+          <div className="mb-4 bg-emerald-950 border border-emerald-800 rounded px-4 py-3">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-emerald-300 text-xs font-semibold">
+                Detecting… {detectAllStatus.done}/{detectAllStatus.total}
+                {detectAllStatus.current ? ` — ${detectAllStatus.current}` : ""}
+              </span>
+              {detectAllStatus.failed > 0 && (
+                <span className="text-red-400 text-xs">{detectAllStatus.failed} failed</span>
+              )}
+            </div>
+            <div className="w-full bg-emerald-900 rounded-full h-1.5">
+              <div
+                className="bg-emerald-400 h-1.5 rounded-full transition-all duration-500"
+                style={{ width: `${detectAllStatus.total > 0 ? (detectAllStatus.done / detectAllStatus.total) * 100 : 0}%` }}
+              />
+            </div>
+          </div>
+        )}
+
+        {detectAllStatus.phase === "done" && (
+          <div className="mb-4 bg-gray-800 border border-gray-700 rounded px-4 py-2.5 text-xs text-gray-300">
+            Detect All complete — {detectAllStatus.done} articles scored
+            {detectAllStatus.failed > 0 ? `, ${detectAllStatus.failed} failed` : ""}
+            {" "}in {Math.floor(detectAllStatus.durationSec / 60)}m {detectAllStatus.durationSec % 60}s.
+            <button onClick={() => setDetectAllStatus({ phase: "idle" })} className="ml-3 text-gray-500 hover:text-gray-300">✕</button>
+          </div>
+        )}
 
         {lastResult && (
           <div className={`mb-4 border rounded px-4 py-2.5 text-sm ${lastResult.ok ? "bg-gray-800 border-gray-700 text-gray-200" : "bg-red-950 border-red-800 text-red-300"}`}>

@@ -235,6 +235,71 @@ const CATEGORY_CONTEXT: Record<string, string> = {
   native_and_first_nations:  "Native & First Nations — documented Indigenous history, sovereignty, law, science, and culture from primary sources",
 };
 
+// ── Detect All ───────────────────────────────────────────────────────────────
+
+type DetectAllStatus =
+  | { phase: "idle" }
+  | { phase: "running"; total: number; done: number; failed: number; current: string }
+  | { phase: "done"; total: number; done: number; failed: number; durationSec: number };
+
+let detectAllStatus: DetectAllStatus = { phase: "idle" };
+
+router.get("/fixme/detect-all/status", (_req, res) => {
+  res.json(detectAllStatus);
+});
+
+router.post("/fixme/detect-all", async (_req, res) => {
+  if (detectAllStatus.phase === "running") {
+    res.json({ status: "already_running", message: "Detection already in progress." });
+    return;
+  }
+
+  res.json({ status: "started", message: "Bulk detection started." });
+
+  (async () => {
+    const startedAt = Date.now();
+    try {
+      const articles = await db
+        .select({ id: postsTable.id, slug: postsTable.slug, body: postsTable.body, caseNumber: postsTable.caseNumber })
+        .from(postsTable)
+        .where(sql`ai_score IS NULL`)
+        .orderBy(asc(postsTable.caseNumber));
+
+      const total = articles.length;
+      let done = 0;
+      let failed = 0;
+
+      detectAllStatus = { phase: "running", total, done, failed, current: "" };
+      console.log(`[DetectAll] Starting bulk detection for ${total} untested articles`);
+
+      for (const article of articles) {
+        detectAllStatus = { phase: "running", total, done, failed, current: article.caseNumber };
+        try {
+          const { score } = await detectAI(article.body);
+          await db
+            .update(postsTable)
+            .set({ aiScore: score, aiScoreTestedAt: new Date() })
+            .where(eq(postsTable.id, article.id));
+          done++;
+          console.log(`[DetectAll] ${article.caseNumber}: ${score}% (${done}/${total})`);
+        } catch (err) {
+          failed++;
+          console.error(`[DetectAll] ${article.caseNumber} failed:`, err);
+        }
+        // Small delay between requests to be kind to ZeroGPT
+        await new Promise(r => setTimeout(r, 1200));
+      }
+
+      const durationSec = Math.round((Date.now() - startedAt) / 1000);
+      detectAllStatus = { phase: "done", total, done, failed, durationSec };
+      console.log(`[DetectAll] Complete. ${done} scored, ${failed} failed. ${durationSec}s`);
+    } catch (err) {
+      console.error("[DetectAll] Fatal error:", err);
+      detectAllStatus = { phase: "idle" };
+    }
+  })();
+});
+
 let tagGenRunning = false;
 
 router.post("/fixme/tags/generate-all", async (_req, res) => {
