@@ -252,6 +252,8 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
     "a-roadmap-home-requiem-american-statesman",
     "ketanji-brown-jackson-federal-record-confirmation-hearing",
     "the-strongest-thing-research-love-healing-long-life",
+    "first-nations-survival-census-record-us-history",
+    "second-amendment-racial-disparity-philando-castile",
   ],
 
   // --- American statesman / bipartisan governance ---
@@ -309,11 +311,6 @@ export const RELATED_ARTICLES: Record<string, string[]> = {
     "national-debt-military-spending-interest-payments-generational-cost",
     "give-me-your-tired-us-foreign-policy-immigration-global-south",
     "meta-anti-palestine-investigation-documents-bsr-hrw-drop-site",
-  ],
-
-  "they-did-not-have-to-primary-source-record-human-selflessness": [
-    "first-nations-survival-census-record-us-history",
-    "second-amendment-racial-disparity-philando-castile",
   ],
 
   // --- Law & Justice: Cash Bail / Pretrial Reform cluster ---
