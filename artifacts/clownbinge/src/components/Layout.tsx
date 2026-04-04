@@ -65,7 +65,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
   const { data: postCount } = usePostsCount();
 
   // Font sizer: 3 levels stored in localStorage
-  const FONT_SIZES = [15, 17, 20];
+  const FONT_SIZES = [16, 19, 23];
   const FONT_LABELS = ["a", "A", "A+"];
   const [fontLevel, setFontLevel] = useState<number>(() => {
     const saved = localStorage.getItem("cb-font-level");

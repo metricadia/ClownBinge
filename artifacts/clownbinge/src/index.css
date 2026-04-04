@@ -122,6 +122,13 @@
     color: #1A3A8F;
   }
 
+  /* Article body: inherit font-size from <main> so the font sizer works.
+     This overrides Tailwind Typography's rem-based prose-lg/prose-xl sizes,
+     letting the JS-controlled main font-size cascade down via em inheritance. */
+  .cb-article-body {
+    font-size: inherit !important;
+  }
+
   /* Article body justification */
   .cb-article-body p {
     text-align: justify;
