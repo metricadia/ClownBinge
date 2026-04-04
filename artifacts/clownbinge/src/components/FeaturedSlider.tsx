@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { usePostDetail } from "@/hooks/use-posts";
 
 const FEATURED_SLUGS = [
+  "mary-bowser-confederate-white-house-spy-union-intelligence-documented",
   "tsmc-taiwan-advanced-chips-92-percent-geopolitical-risk-pentagon",
   "loneliness-lethal-smoking-15-cigarettes-social-connection-science",
   "national-registry-exonerations-wrongful-conviction-race-data-documented",
@@ -11,9 +12,9 @@ const FEATURED_SLUGS = [
   "irs-free-file-intuit-turbotax-lobbying-direct-file-2024",
 ];
 
-const SLIDE_BG     = ["#E8EDF5", "#FEFAE8", "#E8F0EC", "#FEFAE8", "#E8EDF5"];
-const SLIDE_BORDER = ["#B8C8DC", "#D4C070", "#A8C8B8", "#D4C070", "#B8C8DC"];
-const SLIDE_ACCENT = ["#1A3A8F", "#96720A", "#1A6B4A", "#96720A", "#1A3A8F"];
+const SLIDE_BG     = ["#F5EBE8", "#E8EDF5", "#FEFAE8", "#E8F0EC", "#FEFAE8", "#E8EDF5"];
+const SLIDE_BORDER = ["#D4A090", "#B8C8DC", "#D4C070", "#A8C8B8", "#D4C070", "#B8C8DC"];
+const SLIDE_ACCENT = ["#8B2010", "#1A3A8F", "#96720A", "#1A6B4A", "#96720A", "#1A3A8F"];
 
 const CATEGORY_LABELS: Record<string, string> = {
   self_owned:               "Self-Owned",
@@ -46,10 +47,11 @@ export function FeaturedSlider() {
   const r2 = usePostDetail(FEATURED_SLUGS[2]);
   const r3 = usePostDetail(FEATURED_SLUGS[3]);
   const r4 = usePostDetail(FEATURED_SLUGS[4]);
-  const posts = [r0.data, r1.data, r2.data, r3.data, r4.data];
+  const r5 = usePostDetail(FEATURED_SLUGS[5]);
+  const posts = [r0.data, r1.data, r2.data, r3.data, r4.data, r5.data];
 
-  const advance  = useCallback(() => setCurrent(c => (c + 1) % 5), []);
-  const goBack   = useCallback(() => setCurrent(c => (c - 1 + 5) % 5), []);
+  const advance  = useCallback(() => setCurrent(c => (c + 1) % 6), []);
+  const goBack   = useCallback(() => setCurrent(c => (c - 1 + 6) % 6), []);
   const goTo     = (i: number) => setCurrent(i);
 
   useEffect(() => {
@@ -108,7 +110,7 @@ export function FeaturedSlider() {
               </span>
             </div>
             <span className="text-[11px] font-bold tabular-nums" style={{ color: `${accent}99` }}>
-              {current + 1} / 5
+              {current + 1} / 6
             </span>
           </div>
 
@@ -197,7 +199,7 @@ export function FeaturedSlider() {
         {/* ── Footer: dots + progress bar ── */}
         <div style={{ background: bg }}>
           <div className="px-5 pt-2 pb-2.5 flex items-center gap-1.5">
-            {[0, 1, 2, 3, 4].map(i => (
+            {[0, 1, 2, 3, 4, 5].map(i => (
               <button
                 key={i}
                 onClick={() => goTo(i)}
