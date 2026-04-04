@@ -272,22 +272,44 @@ router.post("/fixme/detect-all", async (_req, res) => {
       detectAllStatus = { phase: "running", total, done, failed, current: "" };
       console.log(`[DetectAll] Starting bulk detection for ${total} untested articles`);
 
-      for (const article of articles) {
+      for (let i = 0; i < articles.length; i++) {
+        const article = articles[i];
         detectAllStatus = { phase: "running", total, done, failed, current: article.caseNumber };
-        try {
-          const { score } = await detectAI(article.body);
-          await db
-            .update(postsTable)
-            .set({ aiScore: score, aiScoreTestedAt: new Date() })
-            .where(eq(postsTable.id, article.id));
-          done++;
-          console.log(`[DetectAll] ${article.caseNumber}: ${score}% (${done}/${total})`);
-        } catch (err) {
-          failed++;
-          console.error(`[DetectAll] ${article.caseNumber} failed:`, err);
+
+        // Attempt with exponential backoff (up to 3 retries)
+        let scored = false;
+        for (let attempt = 1; attempt <= 3; attempt++) {
+          try {
+            const { score } = await detectAI(article.body);
+            await db
+              .update(postsTable)
+              .set({ aiScore: score, aiScoreTestedAt: new Date() })
+              .where(eq(postsTable.id, article.id));
+            done++;
+            scored = true;
+            console.log(`[DetectAll] ${article.caseNumber}: ${score}% (${done}/${total})`);
+            break;
+          } catch (err) {
+            const backoff = attempt * 15_000; // 15s, 30s, 45s
+            console.warn(`[DetectAll] ${article.caseNumber} attempt ${attempt} failed — waiting ${backoff / 1000}s before retry:`, err);
+            if (attempt < 3) await new Promise(r => setTimeout(r, backoff));
+          }
         }
-        // Small delay between requests to be kind to ZeroGPT
-        await new Promise(r => setTimeout(r, 1200));
+
+        if (!scored) {
+          failed++;
+          console.error(`[DetectAll] ${article.caseNumber} failed after 3 attempts — skipping`);
+        }
+
+        // 5-second base delay between every article
+        await new Promise(r => setTimeout(r, 5000));
+
+        // Every 20 articles, take a 45-second cooldown
+        if ((i + 1) % 20 === 0 && i + 1 < articles.length) {
+          console.log(`[DetectAll] Cooldown after ${i + 1} articles — pausing 45s`);
+          detectAllStatus = { phase: "running", total, done, failed, current: "cooldown…" };
+          await new Promise(r => setTimeout(r, 45_000));
+        }
       }
 
       const durationSec = Math.round((Date.now() - startedAt) / 1000);

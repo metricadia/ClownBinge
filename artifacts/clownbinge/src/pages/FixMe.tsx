@@ -365,14 +365,21 @@ export default function FixMe() {
 
         {detectAllStatus.phase === "running" && (
           <div className="mb-4 bg-emerald-950 border border-emerald-800 rounded px-4 py-3">
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-1.5">
               <span className="text-emerald-300 text-xs font-semibold">
-                Detecting… {detectAllStatus.done}/{detectAllStatus.total}
-                {detectAllStatus.current ? ` — ${detectAllStatus.current}` : ""}
+                {detectAllStatus.current === "cooldown…"
+                  ? `Cooldown pause (every 20 articles) — resuming shortly…`
+                  : `Detecting… ${detectAllStatus.done}/${detectAllStatus.total}${detectAllStatus.current ? ` — ${detectAllStatus.current}` : ""}`
+                }
               </span>
-              {detectAllStatus.failed > 0 && (
-                <span className="text-red-400 text-xs">{detectAllStatus.failed} failed</span>
-              )}
+              <div className="flex items-center gap-3">
+                {detectAllStatus.failed > 0 && (
+                  <span className="text-red-400 text-xs">{detectAllStatus.failed} failed</span>
+                )}
+                <span className="text-emerald-600 text-xs">
+                  ~{Math.round(((detectAllStatus.total - detectAllStatus.done) * 5 + Math.floor((detectAllStatus.total - detectAllStatus.done) / 20) * 45) / 60)}m remaining
+                </span>
+              </div>
             </div>
             <div className="w-full bg-emerald-900 rounded-full h-1.5">
               <div
