@@ -21,7 +21,7 @@ router.get("/fixme/articles", async (_req, res) => {
         locked: postsTable.locked,
         aiScore: postsTable.aiScore,
         aiScoreTestedAt: postsTable.aiScoreTestedAt,
-        wordCount: sql<number>`array_length(regexp_split_to_array(trim(regexp_replace(body, '<[^>]+>', ' ', 'g')), '\s+'), 1)`.as("word_count"),
+        wordCount: sql<number>`array_length(regexp_split_to_array(trim(regexp_replace(body, '<[^>]+>', ' ', 'g')), '[[:space:]]+'), 1)`.as("word_count"),
       })
       .from(postsTable)
       .orderBy(
