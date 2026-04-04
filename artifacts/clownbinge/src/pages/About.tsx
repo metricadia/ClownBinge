@@ -69,12 +69,13 @@ export default function About() {
             <div className="rounded-xl bg-white/10 px-5 py-4">
               <p className="text-blue-100 text-sm leading-relaxed">
                 The <span className="text-[#F5C518] font-bold">clown</span> is
-                the system. The disingenuous machinery of corporate, monied
-                interest journalism — outlets bought, captured, or constructed
-                to manufacture consent rather than document reality. The press
-                that calls itself independent while taking editorial direction
-                from its ad base. The newsroom that buries the story because the
-                story leads to the boardroom.
+                the system. The disingenuous machinery of corporate, monied,
+                nation-state, and political interest journalism — outlets bought,
+                captured, or constructed to manufacture consent rather than
+                document reality. The press that calls itself independent while
+                taking direction from its ad base, its government, or its
+                party. The newsroom that buries the story because the story
+                leads to the boardroom, the embassy, or the donor list.
               </p>
             </div>
             <div className="rounded-xl bg-white/10 px-5 py-4">
