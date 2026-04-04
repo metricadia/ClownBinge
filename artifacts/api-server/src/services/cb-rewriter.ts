@@ -29,6 +29,22 @@ function extractProtectedTerms(text: string): string[] {
   return [...terms];
 }
 
+function extractQuotedPassages(text: string): string[] {
+  const passages: string[] = [];
+  // Match straight double quotes "..." and curly double quotes \u201c...\u201d
+  const patterns = [
+    /"([^"]{10,})"/g,
+    /\u201c([^\u201d]{10,})\u201d/g,
+  ];
+  for (const re of patterns) {
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(text)) !== null) {
+      passages.push(m[1].trim());
+    }
+  }
+  return passages;
+}
+
 function jsGate(original: string, rewritten: string): { pass: boolean; reason?: string } {
   if (!rewritten || rewritten.length < 5) return { pass: false, reason: "empty output" };
 
@@ -58,6 +74,14 @@ function jsGate(original: string, rewritten: string): { pass: boolean; reason?: 
     }
   }
 
+  // Quoted passages must be reproduced verbatim
+  const quotedPassages = extractQuotedPassages(original);
+  for (const passage of quotedPassages) {
+    if (!rewritten.includes(passage)) {
+      return { pass: false, reason: `quoted passage altered or removed: "${passage.slice(0, 60)}..."` };
+    }
+  }
+
   const guard = checkContentGuard(rewritten);
   if (!guard.clean) {
     const phrases = guard.violations.map((v) => `"${v.phrase}"`).join(", ");
@@ -80,6 +104,11 @@ function buildParaphrasePrompt(sentence: string, docType: DocType): string {
   const protectedTerms = extractProtectedTerms(sentence);
   const protectedBlock = protectedTerms.length > 0
     ? `\nPROTECTED TERMS — copy these character-for-character into your output, no substitutions:\n${protectedTerms.map(t => `• "${t}"`).join("\n")}\n`
+    : "";
+
+  const quotedPassages = extractQuotedPassages(sentence);
+  const quotedBlock = quotedPassages.length > 0
+    ? `\nDIRECT QUOTES — these are verbatim quotations and MUST appear in your output exactly as shown, including surrounding quotation marks. Do NOT paraphrase, rephrase, or alter them in any way:\n${quotedPassages.map(p => `• "${p}"`).join("\n")}\n`
     : "";
 
   return `You are an expert at paraphrasing ${docContext}
@@ -116,7 +145,7 @@ WHAT ACTUALLY CAUSES AI FLAGS — fix these:
   "As stated earlier", "As mentioned above", "As noted above", "As stated above",
   "As we discussed", "As mentioned previously", "Recall that", "As you may recall",
   "As I mentioned", "As we have seen", "Returning to"
-${protectedBlock}
+${protectedBlock}${quotedBlock}
 HARD RULES — these will be checked and will cause rejection:
 1. Every number must appear identically: "15,000" stays "15,000", "66%" stays "66%"
 2. Every proper noun, person name, org name, journal name, study name, historical document name stays character-for-character identical — do not paraphrase, abbreviate, or substitute
@@ -126,6 +155,7 @@ HARD RULES — these will be checked and will cause rejection:
 6. Every qualifier word stays identical: "approximately" ≠ "about", "mainly" ≠ "mostly", "over" ≠ "more than"
 7. No em dashes. Use commas, colons, semicolons, or periods instead.
 8. No hedging added: no "Sure," "Notably," "Of course," "Worth mentioning"
+9. Text inside quotation marks is a direct quote — reproduce it verbatim, character-for-character, with its surrounding quotation marks. Do NOT paraphrase any part of it.
 
 OUTPUT RULES:
 - ${Math.max(wordCount - 3, 1)}–${wordCount + 5} words
