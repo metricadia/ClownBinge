@@ -24,6 +24,7 @@ app.listen(port, (err) => {
 
   logger.info({ port }, "Server listening");
 
-  seedIfEmpty().catch((e) => logger.error({ err: e }, "Seed failed"));
-  upsertMissingPosts().catch((e) => logger.error({ err: e }, "Upsert missing posts failed"));
+  seedIfEmpty()
+    .then(() => upsertMissingPosts())
+    .catch((e) => logger.error({ err: e }, "Seed/upsert failed"));
 });
