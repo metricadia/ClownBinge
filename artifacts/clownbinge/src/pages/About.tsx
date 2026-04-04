@@ -57,9 +57,6 @@ export default function About() {
 
         {/* The Name */}
         <div className="rounded-2xl bg-[#1a3a8f] overflow-hidden mb-6 relative">
-          <div className="absolute top-0 right-0 text-[12rem] leading-none font-black text-white/[0.04] select-none pointer-events-none pr-4">
-            🤡
-          </div>
           <div className="px-6 pt-6 pb-2">
             <div className="text-[#F5C518] text-xs font-black uppercase tracking-widest mb-4">
               The Name
@@ -71,20 +68,22 @@ export default function About() {
           <div className="px-6 pb-6 space-y-3">
             <div className="rounded-xl bg-white/10 px-5 py-4">
               <p className="text-blue-100 text-sm leading-relaxed">
-                A <span className="text-[#F5C518] font-bold">clown</span> is a
-                public figure caught in documented contradiction. Not a political
-                enemy. Not someone we disagree with. Someone{" "}
-                <em>the record catches</em>. Their own words. Their own votes.
-                Their own financial disclosures. All contradicting what they say
-                in public.
+                The <span className="text-[#F5C518] font-bold">clown</span> is
+                the system. The disingenuous machinery of corporate, monied
+                interest journalism — outlets bought, captured, or constructed
+                to manufacture consent rather than document reality. The press
+                that calls itself independent while taking editorial direction
+                from its ad base. The newsroom that buries the story because the
+                story leads to the boardroom.
               </p>
             </div>
             <div className="rounded-xl bg-white/10 px-5 py-4">
               <p className="text-blue-100 text-sm leading-relaxed">
-                The contradiction is the story. The documents are the story. The
-                clown is what you call it when a senator votes against the bill
-                he co-sponsored. Or when a pastor preaching against immigration
-                has four immigrant grandparents at the National Archives.
+                That system is the act. We are not. The primary source record —
+                court filings, congressional transcripts, FEC disclosures, the
+                National Archives — does not have an ad buy. It does not have a
+                donor. It does not have a preferred outcome. The documents just
+                say what they say. We publish them.
               </p>
             </div>
             <div className="rounded-xl bg-[#F5C518]/15 border border-[#F5C518]/30 px-5 py-4">
