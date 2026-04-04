@@ -3,14 +3,12 @@ import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { usePostDetail } from "@/hooks/use-posts";
 
-// Five categories, five unmistakable "I had no idea" moments.
-// Rotates every 7 seconds. No two adjacent slides share a category.
 const FEATURED_SLUGS = [
-  "tsmc-taiwan-advanced-chips-92-percent-geopolitical-risk-pentagon",       // Technology
-  "loneliness-lethal-smoking-15-cigarettes-social-connection-science",       // Health & Healing
-  "national-registry-exonerations-wrongful-conviction-race-data-documented", // Law & Justice
-  "great-dismal-swamp-maroon-nation-freedom-slavery-archaeology",            // U.S. History
-  "irs-free-file-intuit-turbotax-lobbying-direct-file-2024",                 // Money & Power
+  "tsmc-taiwan-advanced-chips-92-percent-geopolitical-risk-pentagon",
+  "loneliness-lethal-smoking-15-cigarettes-social-connection-science",
+  "national-registry-exonerations-wrongful-conviction-race-data-documented",
+  "great-dismal-swamp-maroon-nation-freedom-slavery-archaeology",
+  "irs-free-file-intuit-turbotax-lobbying-direct-file-2024",
 ];
 
 const SLIDE_BG     = ["#E8EDF5", "#FEFAE8", "#E8F0EC", "#FEFAE8", "#E8EDF5"];
@@ -18,21 +16,21 @@ const SLIDE_BORDER = ["#B8C8DC", "#D4C070", "#A8C8B8", "#D4C070", "#B8C8DC"];
 const SLIDE_ACCENT = ["#1A3A8F", "#96720A", "#1A6B4A", "#96720A", "#1A3A8F"];
 
 const CATEGORY_LABELS: Record<string, string> = {
-  self_owned:         "Self-Owned",
-  us_history:         "U.S. History",
-  money_and_power:    "Money & Power",
-  law_and_justice:    "Law & Justice",
-  health_and_healing: "Health & Healing",
-  religion:           "Religion",
-  technology:         "Technology",
-  war_and_inhumanity: "War & Inhumanity",
-  anti_racist_heroes: "Anti-Racist Heroes",
-  censorship:         "Censorship",
-  global_south:       "Global South",
-  women_and_girls:    "Women & Girls",
-  nerd_out:           "NerdOut / Academic",
-  investigations:     "Investigations",
-  us_constitution:    "U.S. Constitution",
+  self_owned:               "Self-Owned",
+  us_history:               "U.S. History",
+  money_and_power:          "Money & Power",
+  law_and_justice:          "Law & Justice",
+  health_and_healing:       "Health & Healing",
+  religion:                 "Religion",
+  technology:               "Technology",
+  war_and_inhumanity:       "War & Inhumanity",
+  anti_racist_heroes:       "Anti-Racist Heroes",
+  censorship:               "Censorship",
+  global_south:             "Global South",
+  women_and_girls:          "Women & Girls",
+  nerd_out:                 "NerdOut / Academic",
+  investigations:           "Investigations",
+  us_constitution:          "U.S. Constitution",
   disarming_hate:           "Disarming Hate",
   how_it_works:             "How It Works",
   native_and_first_nations: "Native & First Nations",
@@ -40,7 +38,6 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 export function FeaturedSlider() {
   const [current, setCurrent] = useState(0);
-  const [prev, setPrev]       = useState<number | null>(null);
   const [hovering, setHovering] = useState(false);
   const touchStartX = useRef<number | null>(null);
 
@@ -52,19 +49,11 @@ export function FeaturedSlider() {
   const posts = [r0.data, r1.data, r2.data, r3.data, r4.data];
 
   const advance = useCallback(() => {
-    setCurrent(c => {
-      const next = (c + 1) % 5;
-      setPrev(c);
-      return next;
-    });
+    setCurrent(c => (c + 1) % 5);
   }, []);
 
   const goBack = useCallback(() => {
-    setCurrent(c => {
-      const next = (c - 1 + 5) % 5;
-      setPrev(c);
-      return next;
-    });
+    setCurrent(c => (c - 1 + 5) % 5);
   }, []);
 
   useEffect(() => {
@@ -74,11 +63,7 @@ export function FeaturedSlider() {
   }, [hovering, advance]);
 
   function goTo(i: number) {
-    setCurrent(c => {
-      if (i === c) return c;
-      setPrev(c);
-      return i;
-    });
+    setCurrent(i);
   }
 
   function onTouchStart(e: React.TouchEvent) {
@@ -89,9 +74,9 @@ export function FeaturedSlider() {
     if (touchStartX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     touchStartX.current = null;
-    if (Math.abs(dx) < 40) return; // ignore tiny taps
-    if (dx < 0) advance();  // swipe left  → next
-    else        goBack();   // swipe right → previous
+    if (Math.abs(dx) < 40) return;
+    if (dx < 0) advance();
+    else        goBack();
   }
 
   const bg     = SLIDE_BG[current];
@@ -118,7 +103,7 @@ export function FeaturedSlider() {
         onMouseLeave={() => setHovering(false)}
       >
 
-        {/* ── Header ── */}
+        {/* ── Header: shows current slide's metadata ── */}
         <div
           className="px-5 pt-4 pb-3 flex items-center justify-between gap-3"
           style={{ background: bg, transition: "background 0.7s ease" }}
@@ -140,7 +125,6 @@ export function FeaturedSlider() {
             </span>
           </div>
 
-          {/* Category chip + case number */}
           {posts[current] && (
             <div className="flex items-center gap-2 min-w-0">
               <span
@@ -163,91 +147,93 @@ export function FeaturedSlider() {
           )}
         </div>
 
-        {/* ── Slides ── */}
+        {/* ── Slide rail: all slides side-by-side, rail shifts left ── */}
         <div
-          className="relative overflow-hidden"
-          style={{ background: bg, transition: "background 0.7s ease", minHeight: "168px", touchAction: "pan-y" }}
+          style={{ overflow: "hidden", touchAction: "pan-y" }}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
-          {FEATURED_SLUGS.map((slug, i) => {
-            const post      = posts[i];
-            const isCurrent = i === current;
-            const isPrev    = i === prev;
+          {/* The rail — translates to show current slide */}
+          <div
+            style={{
+              display: "flex",
+              transform: `translateX(-${current * 100}%)`,
+              WebkitTransform: `translateX(-${current * 100}%)`,
+              transition: "transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)",
+              WebkitTransition: "-webkit-transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)",
+              willChange: "transform",
+            }}
+          >
+            {FEATURED_SLUGS.map((slug, i) => {
+              const post = posts[i];
+              const slideBg     = SLIDE_BG[i];
+              const slideAccent = SLIDE_ACCENT[i];
 
-            const tx      = isCurrent ? "translateX(0%)" : isPrev ? "translateX(-110%)" : "translateX(110%)";
-            const opacity = isCurrent ? 1 : 0;
-
-            return (
-              <div
-                key={slug}
-                aria-hidden={!isCurrent}
-                style={{
-                  position: "absolute",
-                  top: 0, left: 0, right: 0, bottom: 0,
-                  display: "flex",
-                  alignItems: "stretch",
-                  transform: tx,
-                  opacity,
-                  transition: "transform 0.65s cubic-bezier(0.4,0,0.2,1), opacity 0.55s ease",
-                  pointerEvents: isCurrent ? "auto" : "none",
-                  zIndex: isCurrent ? 2 : 1,
-                  WebkitTransform: tx,
-                  WebkitBackfaceVisibility: "hidden",
-                  backfaceVisibility: "hidden",
-                }}
-              >
-                {/* Left accent stripe */}
+              return (
                 <div
+                  key={slug}
+                  aria-hidden={i !== current}
                   style={{
-                    width: "3px",
+                    width: "100%",
                     flexShrink: 0,
-                    background: accent,
-                    transition: "background 0.7s ease",
-                    margin: "14px 0 14px 20px",
-                    borderRadius: "9999px",
-                    opacity: 0.85,
+                    display: "flex",
+                    alignItems: "stretch",
+                    background: slideBg,
                   }}
-                />
+                >
+                  {/* Left accent stripe */}
+                  <div
+                    style={{
+                      width: "3px",
+                      flexShrink: 0,
+                      background: slideAccent,
+                      margin: "14px 0 14px 20px",
+                      borderRadius: "9999px",
+                      opacity: 0.85,
+                    }}
+                  />
 
-                {/* Slide content */}
-                <div style={{ padding: "14px 20px 14px 14px", flex: 1, minWidth: 0 }}>
-                  {post ? (
-                    <>
-                      <Link href={`/case/${post.slug}`}>
-                        <h2 className="font-sans font-extrabold text-xl sm:text-2xl text-header leading-snug mb-2.5 hover:opacity-75 transition-opacity cursor-pointer line-clamp-3">
-                          {post.title}
-                        </h2>
-                      </Link>
-                      {post.teaser && (
-                        <p className="text-sm text-slate-500 leading-relaxed mb-4 line-clamp-2">
-                          {post.teaser}
-                        </p>
-                      )}
-                      <Link
-                        href={`/case/${post.slug}`}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-opacity hover:opacity-75"
-                        style={{
-                          background: `${accent}15`,
-                          color: accent,
-                          transition: "background 0.7s ease, color 0.7s ease",
-                        }}
-                      >
-                        Read the Record
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    </>
-                  ) : (
-                    <div className="space-y-2.5 animate-pulse pt-1">
-                      <div className="h-6 rounded-lg bg-white/50 w-4/5" />
-                      <div className="h-4 rounded-lg bg-white/40 w-full" />
-                      <div className="h-4 rounded-lg bg-white/40 w-2/3" />
-                    </div>
-                  )}
+                  {/* Slide content */}
+                  <div style={{ padding: "14px 20px 14px 14px", flex: 1, minWidth: 0 }}>
+                    {post ? (
+                      <>
+                        <Link href={`/case/${post.slug}`}>
+                          <h2
+                            className="font-sans font-extrabold text-xl sm:text-2xl leading-snug mb-2.5 hover:opacity-75 transition-opacity cursor-pointer line-clamp-3"
+                            style={{ color: "#1A2A4A" }}
+                          >
+                            {post.title}
+                          </h2>
+                        </Link>
+                        {post.teaser && (
+                          <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: "#64748b" }}>
+                            {post.teaser}
+                          </p>
+                        )}
+                        <Link
+                          href={`/case/${post.slug}`}
+                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold hover:opacity-75"
+                          style={{
+                            background: `${slideAccent}15`,
+                            color: slideAccent,
+                          }}
+                        >
+                          Read the Record
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
+                      </>
+                    ) : (
+                      <div className="space-y-2.5 animate-pulse pt-1">
+                        <div className="h-6 rounded-lg w-4/5" style={{ background: `${slideAccent}18` }} />
+                        <div className="h-4 rounded-lg w-full" style={{ background: `${slideAccent}12` }} />
+                        <div className="h-4 rounded-lg w-2/3" style={{ background: `${slideAccent}12` }} />
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         {/* ── Footer: dots + progress bar ── */}
