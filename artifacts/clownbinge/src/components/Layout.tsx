@@ -71,14 +71,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
     const saved = localStorage.getItem("cb-font-level");
     return saved !== null ? parseInt(saved) : 1;
   });
-  const mainRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    // Reset any root font-size from older sessions — header must never scale
-    document.documentElement.style.fontSize = "";
-    // Apply only to the main content area
-    if (mainRef.current) {
-      mainRef.current.style.fontSize = `${FONT_SIZES[fontLevel]}px`;
-    }
+    document.documentElement.style.fontSize = `${FONT_SIZES[fontLevel]}px`;
     localStorage.setItem("cb-font-level", String(fontLevel));
   }, [fontLevel]);
 
@@ -132,14 +126,14 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             className="flex flex-col leading-none hover:opacity-90 transition-opacity group"
           >
             <div className="flex items-baseline gap-0">
-              <span className="logo-text text-[1.6rem] sm:text-4xl text-white tracking-tight">Clown</span>
-              <span className="logo-text text-[1.6rem] sm:text-4xl text-secondary tracking-tight">Binge</span>
-              <span className="text-white/40 text-lg sm:text-3xl font-sans font-light mx-1 sm:mx-2">|</span>
-              <span className="text-white/80 text-[0.8rem] sm:text-2xl font-sans font-semibold tracking-wider sm:tracking-widest uppercase">
+              <span className="logo-text text-[26px] sm:text-[36px] text-white tracking-tight">Clown</span>
+              <span className="logo-text text-[26px] sm:text-[36px] text-secondary tracking-tight">Binge</span>
+              <span className="text-white/40 text-[18px] sm:text-[30px] font-sans font-light mx-1 sm:mx-2">|</span>
+              <span className="text-white/80 text-[13px] sm:text-[24px] font-sans font-semibold tracking-wider sm:tracking-widest uppercase">
                 Newsroom
               </span>
             </div>
-            <span className="text-white text-[11px] sm:text-xs font-mono tracking-tight sm:tracking-[0.2em] uppercase mt-0.5 transition-colors">
+            <span className="text-white text-[11px] sm:text-[12px] font-mono tracking-tight sm:tracking-[0.2em] uppercase mt-0.5 transition-colors">
               Independent<span className="text-[#F5C518]">.</span> Verified<span className="text-[#F5C518]">.</span> The Primary Source<span className="text-[#F5C518]">.</span>
             </span>
           </Link>
@@ -147,19 +141,19 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6 ml-10">
-            <Link href="/about" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/about' ? 'text-white' : 'text-white/70'}`}>
+            <Link href="/about" className={`text-[14px] font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/about' ? 'text-white' : 'text-white/70'}`}>
               About
             </Link>
-            <Link href="/contact" className={`text-sm font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/contact' || location === '/advertise' ? 'text-white' : 'text-white/70'}`}>
+            <Link href="/contact" className={`text-[14px] font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/contact' || location === '/advertise' ? 'text-white' : 'text-white/70'}`}>
               Support
             </Link>
-            <Link href="/bookstore" className={`text-sm font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/bookstore' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
+            <Link href="/bookstore" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/bookstore' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
               Our Books
             </Link>
-            <Link href="/reports" className={`text-sm font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/reports' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
+            <Link href="/reports" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/reports' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
               Buy Reports
             </Link>
-            <Link href="/invest-in-us" className={`text-sm font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/invest-in-us' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
+            <Link href="/invest-in-us" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/invest-in-us' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
               Donate Now
             </Link>
 
@@ -180,11 +174,11 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
       {mobileMenuOpen && (
         <div className="fixed inset-0 top-[80px] sm:top-[96px] z-40 bg-header/95 backdrop-blur-xl flex flex-col md:hidden">
           <nav className="flex flex-col items-center justify-center flex-1 gap-8 p-6">
-            <Link href="/about" className="text-2xl font-bold text-white uppercase tracking-widest">About</Link>
-            <Link href="/contact" className="text-2xl font-bold text-white uppercase tracking-widest">Support</Link>
-            <Link href="/bookstore" className="text-2xl font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Our Books</Link>
-            <Link href="/reports" className="text-2xl font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Buy Reports</Link>
-            <Link href="/invest-in-us" className="text-2xl font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Donate Now</Link>
+            <Link href="/about" className="text-[24px] font-bold text-white uppercase tracking-widest">About</Link>
+            <Link href="/contact" className="text-[24px] font-bold text-white uppercase tracking-widest">Support</Link>
+            <Link href="/bookstore" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Our Books</Link>
+            <Link href="/reports" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Buy Reports</Link>
+            <Link href="/invest-in-us" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Donate Now</Link>
 
           </nav>
         </div>
@@ -199,7 +193,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             {CATEGORIES.map(cat => {
               const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
               const pill = PILL[cat.id] ?? PILL.all;
-              const cls = `px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
+              const cls = `px-4 py-1.5 rounded-full text-[14px] font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
               return onCategoryChange && location === '/' ? (
                 <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={cls}>{cat.label}</button>
               ) : (
@@ -219,8 +213,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                   className="flex items-center justify-between w-full py-3 gap-3"
                 >
                   <div className="flex items-center gap-2.5">
-                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Category</span>
-                    <span className={`px-3 py-1 rounded-full text-sm font-bold ${location === '/' ? pill.on : PILL.all.off}`}>
+                    <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">Category</span>
+                    <span className={`px-3 py-1 rounded-full text-[14px] font-bold ${location === '/' ? pill.on : PILL.all.off}`}>
                       {activeCat.label}
                     </span>
                   </div>
@@ -235,7 +229,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                   {CATEGORIES.map(cat => {
                     const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
                     const pill = PILL[cat.id] ?? PILL.all;
-                    const cls = `px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
+                    const cls = `px-4 py-2 rounded-full text-[14px] font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
                     const handleSelect = () => {
                       setCatDropdownOpen(false);
                       if (location === '/') handleCategoryChange(cat.id);
@@ -255,7 +249,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
       </div>
 
       {/* Main Content */}
-      <main ref={mainRef} className="flex-1 w-full relative">
+      <main className="flex-1 w-full relative">
         {location !== '/' && (
           <div className="cb-container pt-4 pb-0">
             <p className="text-sm text-foreground/70 font-medium tracking-wide text-center">
