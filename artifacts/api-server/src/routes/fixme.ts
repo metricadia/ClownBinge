@@ -102,7 +102,7 @@ router.get("/fixme/reduce/status/:slug", (req, res) => {
 router.post("/fixme/reduce/:slug", async (req, res) => {
   const { slug } = req.params as { slug: string };
   const targetScore: number =
-    typeof req.body?.targetScore === "number" ? req.body.targetScore : 15;
+    typeof req.body?.targetScore === "number" ? req.body.targetScore : 20;
 
   const existing = jobs.get(slug);
   if (existing?.phase === "processing") {

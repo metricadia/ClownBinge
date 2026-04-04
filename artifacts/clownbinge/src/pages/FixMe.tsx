@@ -24,8 +24,8 @@ type RowState = {
 
 function scoreColor(score: number | null): string {
   if (score === null) return "bg-gray-100 text-gray-500";
-  if (score <= 30) return "bg-green-100 text-green-800";
-  if (score <= 50) return "bg-yellow-100 text-yellow-800";
+  if (score <= 20) return "bg-green-100 text-green-800";
+  if (score <= 40) return "bg-yellow-100 text-yellow-800";
   return "bg-red-100 text-red-800";
 }
 
@@ -178,7 +178,7 @@ export default function FixMe() {
       const res = await fetch(`${BASE}/api/fixme/reduce/${slug}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ targetScore: 30 }),
+        body: JSON.stringify({ targetScore: 20 }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
@@ -202,7 +202,7 @@ export default function FixMe() {
               const saveNote = saved
                 ? `Saved — article updated.`
                 : `Score logged, no body changes.`;
-              const ok = finalScore <= 30 || delta > 0;
+              const ok = finalScore <= 20 || delta > 0;
               setLastResult({
                 slug,
                 ok,
@@ -224,15 +224,15 @@ export default function FixMe() {
 
   const filtered = articles.filter((a) => {
     if (filter === "untested") return a.aiScore === null;
-    if (filter === "high") return a.aiScore !== null && a.aiScore > 30;
+    if (filter === "high") return a.aiScore !== null && a.aiScore > 20;
     return true;
   });
 
   const stats = {
     total: articles.length,
     tested: articles.filter((a) => a.aiScore !== null).length,
-    passing: articles.filter((a) => a.aiScore !== null && a.aiScore <= 30).length,
-    failing: articles.filter((a) => a.aiScore !== null && a.aiScore > 30).length,
+    passing: articles.filter((a) => a.aiScore !== null && a.aiScore <= 20).length,
+    failing: articles.filter((a) => a.aiScore !== null && a.aiScore > 20).length,
     untested: articles.filter((a) => a.aiScore === null).length,
   };
 
@@ -268,7 +268,7 @@ export default function FixMe() {
       <div className="border-b border-gray-800 px-6 py-4 flex items-center justify-between">
         <div>
           <h1 className="text-lg font-bold text-white">CBfix</h1>
-          <p className="text-gray-400 text-xs">AI Score Reduction Dashboard | Target: 30% | JS-gated rewrites | 20x concurrency</p>
+          <p className="text-gray-400 text-xs">AI Score Reduction Dashboard | Target: ≤20% | JS-gated rewrites | 20x concurrency</p>
         </div>
         <div className="flex items-center gap-4">
           <button
@@ -292,8 +292,8 @@ export default function FixMe() {
           {[
             { label: "Total Articles", value: stats.total, color: "text-white" },
             { label: "Tested", value: stats.tested, color: "text-blue-400" },
-            { label: "Passing (≤30%)", value: stats.passing, color: "text-green-400" },
-            { label: "Failing (>30%)", value: stats.failing, color: "text-red-400" },
+            { label: "Passing (≤20%)", value: stats.passing, color: "text-green-400" },
+            { label: "Needs Review (>20%)", value: stats.failing, color: "text-red-400" },
             { label: "Not Tested", value: stats.untested, color: "text-yellow-400" },
           ].map((s) => (
             <div key={s.label} className="bg-gray-900 border border-gray-800 rounded-lg px-4 py-3">
@@ -322,7 +322,7 @@ export default function FixMe() {
                   : "bg-gray-800 border-gray-700 text-gray-400 hover:text-white"
               }`}
             >
-              {f === "all" ? `All (${stats.total})` : f === "untested" ? `Untested (${stats.untested})` : `Failing (${stats.failing})`}
+              {f === "all" ? `All (${stats.total})` : f === "untested" ? `Untested (${stats.untested})` : `Needs Review (${stats.failing})`}
             </button>
           ))}
         </div>
@@ -415,7 +415,7 @@ export default function FixMe() {
                           <button
                             onClick={() => handleReduce(article.slug)}
                             disabled={rs.loading || article.locked}
-                            title={article.locked ? "Unlock article first" : "Run AI reduction loop targeting 30%"}
+                            title={article.locked ? "Unlock article first" : "Run AI reduction loop targeting ≤20%"}
                             className="text-xs px-3 py-1.5 rounded bg-blue-900 hover:bg-blue-800 border border-blue-700 text-blue-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
                           >
                             {rs.loading && rs.action === "reduce" ? (
@@ -451,7 +451,7 @@ export default function FixMe() {
             </div>
             <div>
               <p className="text-gray-400 font-medium mb-1">Reduce AI</p>
-              <p>ZeroGPT flags sentences. Claude Sonnet rewrites each one at temperature 0.85 — 20 at a time in parallel. JavaScript validates numbers, qualifiers, fragments, and negatives instantly. Re-scans after each pass. Repeats until 30% or score plateaus. Target: 2-5 minutes per article.</p>
+              <p>ZeroGPT flags sentences. Claude Sonnet rewrites each one at temperature 0.9 — 20 at a time in parallel. JavaScript validates numbers, qualifiers, quoted passages, fragments, and negatives instantly. Re-scans after each pass. Repeats until ≤20% or score plateaus. Target: 2-5 minutes per article.</p>
             </div>
           </div>
         </div>
