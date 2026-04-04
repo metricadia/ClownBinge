@@ -78,6 +78,10 @@ overrides:
 importers:
 
   .:
+    dependencies:
+      '@anthropic-ai/sdk':
+        specifier: ^0.78.0
+        version: 0.78.0(zod@4.3.6)
     devDependencies:
       prettier:
         specifier: ^3.8.1

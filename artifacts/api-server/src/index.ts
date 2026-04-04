@@ -1,6 +1,6 @@
 import app from "./app";
 import { logger } from "./lib/logger";
-import { seedIfEmpty, insertNewArticles } from "./seed";
+import { seedIfEmpty, insertNewArticles, updateNativeArticles } from "./seed";
 
 const rawPort = process.env["PORT"];
 
@@ -26,5 +26,6 @@ app.listen(port, (err) => {
 
   seedIfEmpty()
     .then(() => insertNewArticles())
+    .then(() => updateNativeArticles())
     .catch((e) => logger.error({ err: e }, "Seed failed"));
 });

@@ -1,5 +1,5 @@
 import { db, postsTable } from "@workspace/db";
-import { sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import seedData from "./posts-seed.json";
 
 const SEED_EXPECTED_COUNT = (seedData as Record<string, unknown>[]).length;
@@ -122,6 +122,48 @@ export async function seedIfEmpty(): Promise<void> {
     await verifyIntegrity();
   } catch (err) {
     console.error("[Seed] CRITICAL ERROR during seedIfEmpty:", err);
+  }
+}
+
+// ─── Update native articles that are under 1500 words in the DB ──────────────
+// SAFE: only updates body for native_and_first_nations articles where the
+// production body is shorter than the seed body. Never touches other categories.
+
+export async function updateNativeArticles(): Promise<void> {
+  try {
+    const nativeSeedPosts = (seedData as Record<string, unknown>[]).filter(
+      (p) => p.category === "native_and_first_nations"
+    );
+    const seedBodyMap = new Map(
+      nativeSeedPosts.map((p) => [p.case_number as string, p.body as string])
+    );
+
+    const existing = await db.execute(
+      sql`SELECT case_number, LENGTH(body) as body_len FROM posts WHERE category = 'native_and_first_nations'`
+    );
+
+    let updated = 0;
+    for (const row of existing.rows as { case_number: string; body_len: number }[]) {
+      const seedBody = seedBodyMap.get(row.case_number);
+      if (!seedBody) continue;
+      const seedBodyLen = seedBody.length;
+      if (seedBodyLen > row.body_len + 500) {
+        await db
+          .update(postsTable)
+          .set({ body: seedBody })
+          .where(eq(postsTable.caseNumber, row.case_number));
+        updated++;
+        console.log(`[Seed] Updated body for ${row.case_number} (${row.body_len} -> ${seedBodyLen} chars)`);
+      }
+    }
+
+    if (updated === 0) {
+      console.log(`[Seed] All native articles already have full-length bodies.`);
+    } else {
+      console.log(`[Seed] Updated ${updated} native article bodies.`);
+    }
+  } catch (err) {
+    console.error("[Seed] Error during updateNativeArticles:", err);
   }
 }
 
