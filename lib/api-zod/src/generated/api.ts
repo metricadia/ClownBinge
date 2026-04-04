@@ -40,6 +40,7 @@ export const ListPostsQueryParams = zod.object({
       "how_it_works",
       "nerd_out",
       "disarming_hate",
+      "native_and_first_nations",
     ])
     .optional(),
   tag: zod.string().optional(),
@@ -74,6 +75,8 @@ export const ListPostsResponse = zod.object({
         "global_south",
         "how_it_works",
         "nerd_out",
+        "disarming_hate",
+        "native_and_first_nations",
       ]),
       subjectName: zod.string().nullish(),
       subjectTitle: zod.string().nullish(),
