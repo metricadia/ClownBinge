@@ -20,6 +20,7 @@ export const categoryEnum = pgEnum("category", [
   "how_it_works",
   "nerd_out",
   "disarming_hate",
+  "native_and_first_nations",
 ]);
 
 export const statusEnum = pgEnum("status", ["draft", "review", "published"]);

@@ -33,8 +33,9 @@ const CATEGORY_LABELS: Record<string, string> = {
   nerd_out:           "NerdOut / Academic",
   investigations:     "Investigations",
   us_constitution:    "U.S. Constitution",
-  disarming_hate:     "Disarming Hate",
-  how_it_works:       "How It Works",
+  disarming_hate:           "Disarming Hate",
+  how_it_works:             "How It Works",
+  native_and_first_nations: "Native & First Nations",
 };
 
 export function FeaturedSlider() {

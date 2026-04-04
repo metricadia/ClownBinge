@@ -26,7 +26,8 @@ const CATEGORY_LABELS: Record<string, string> = {
   global_south:       "Global South",
   how_it_works:       "How It Works",
   nerd_out:           "NerdOut",
-  disarming_hate:     "Disarming Hate",
+  disarming_hate:           "Disarming Hate",
+  native_and_first_nations: "Native & First Nations",
 };
 
 const CATEGORY_BORDER: Record<string, string> = {
@@ -46,7 +47,8 @@ const CATEGORY_BORDER: Record<string, string> = {
   global_south:       "border-cyan-700 shadow-lg shadow-cyan-700/20",
   how_it_works:       "border-slate-600 shadow-lg shadow-slate-600/20",
   nerd_out:           "border-fuchsia-900 shadow-lg shadow-fuchsia-900/20",
-  disarming_hate:     "border-pink-600 shadow-lg shadow-pink-600/20",
+  disarming_hate:           "border-pink-600 shadow-lg shadow-pink-600/20",
+  native_and_first_nations: "border-amber-700 shadow-lg shadow-amber-700/20",
 };
 
 function formatWordCount(body: string | null | undefined): string | null {

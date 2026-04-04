@@ -23,7 +23,8 @@ const CATEGORIES = [
   { id: "global_south",      label: "Global South" },
   { id: "how_it_works",      label: "How It Works" },
   { id: "nerd_out",          label: "NerdOut / Academic" },
-  { id: "disarming_hate",   label: "Disarming Hate" },
+  { id: "disarming_hate",           label: "Disarming Hate" },
+  { id: "native_and_first_nations", label: "Native & First Nations" },
 ];
 
 const PILL: Record<string, { on: string; off: string }> = {
@@ -45,7 +46,8 @@ const PILL: Record<string, { on: string; off: string }> = {
   global_south:      { on: 'bg-cyan-700 text-white shadow-md ring-2 ring-cyan-700/40',       off: 'bg-cyan-700 text-white hover:bg-cyan-800' },
   how_it_works:      { on: 'bg-slate-600 text-white shadow-md ring-2 ring-slate-600/40',     off: 'bg-slate-600 text-white hover:bg-slate-700' },
   nerd_out:          { on: 'bg-fuchsia-900 text-white shadow-md ring-2 ring-fuchsia-900/40', off: 'bg-fuchsia-900 text-white hover:bg-fuchsia-950' },
-  disarming_hate:    { on: 'bg-rose-900 text-white shadow-md ring-2 ring-rose-900/40',      off: 'bg-rose-900 text-white hover:bg-rose-950' },
+  disarming_hate:           { on: 'bg-rose-900 text-white shadow-md ring-2 ring-rose-900/40',      off: 'bg-rose-900 text-white hover:bg-rose-950' },
+  native_and_first_nations: { on: 'bg-amber-700 text-white shadow-md ring-2 ring-amber-700/40',    off: 'bg-amber-700 text-white hover:bg-amber-800' },
 };
 
 export function Layout({ children, onCategoryChange, activeCategory }: { 

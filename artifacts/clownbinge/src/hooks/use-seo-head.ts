@@ -63,7 +63,8 @@ const CATEGORY_LABELS: Record<string, string> = {
   global_south:       "Global South",
   how_it_works:       "How It Works",
   nerd_out:           "NerdOut",
-  disarming_hate:     "Disarming Hate",
+  disarming_hate:           "Disarming Hate",
+  native_and_first_nations: "Native & First Nations",
 };
 
 const PUBLISHER_BLOCK = {
