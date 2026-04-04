@@ -48,13 +48,9 @@ export function FeaturedSlider() {
   const r4 = usePostDetail(FEATURED_SLUGS[4]);
   const posts = [r0.data, r1.data, r2.data, r3.data, r4.data];
 
-  const advance = useCallback(() => {
-    setCurrent(c => (c + 1) % 5);
-  }, []);
-
-  const goBack = useCallback(() => {
-    setCurrent(c => (c - 1 + 5) % 5);
-  }, []);
+  const advance  = useCallback(() => setCurrent(c => (c + 1) % 5), []);
+  const goBack   = useCallback(() => setCurrent(c => (c - 1 + 5) % 5), []);
+  const goTo     = (i: number) => setCurrent(i);
 
   useEffect(() => {
     if (hovering) return;
@@ -62,26 +58,21 @@ export function FeaturedSlider() {
     return () => clearInterval(id);
   }, [hovering, advance]);
 
-  function goTo(i: number) {
-    setCurrent(i);
-  }
-
   function onTouchStart(e: React.TouchEvent) {
     touchStartX.current = e.touches[0].clientX;
   }
-
   function onTouchEnd(e: React.TouchEvent) {
     if (touchStartX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     touchStartX.current = null;
     if (Math.abs(dx) < 40) return;
-    if (dx < 0) advance();
-    else        goBack();
+    if (dx < 0) advance(); else goBack();
   }
 
   const bg     = SLIDE_BG[current];
   const border = SLIDE_BORDER[current];
   const accent = SLIDE_ACCENT[current];
+  const post   = posts[current];
 
   return (
     <>
@@ -90,154 +81,121 @@ export function FeaturedSlider() {
           from { transform: scaleX(0); }
           to   { transform: scaleX(1); }
         }
+        @keyframes cb-slide-fadein {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
       `}</style>
 
       <div
         className="mb-8 rounded-2xl overflow-hidden"
-        style={{
-          border: `1px solid ${border}`,
-          boxShadow: `0 4px 32px ${accent}14, 0 1px 6px ${accent}0C`,
-          transition: "border-color 0.7s ease, box-shadow 0.7s ease",
-        }}
+        style={{ border: `1px solid ${border}`, boxShadow: `0 4px 24px ${accent}18` }}
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
-
-        {/* ── Header: shows current slide's metadata ── */}
+        {/* ── Header ── */}
         <div
           className="px-5 pt-4 pb-3 flex items-center justify-between gap-3"
-          style={{ background: bg, transition: "background 0.7s ease" }}
+          style={{ background: bg }}
         >
           <div className="flex items-center gap-2.5">
             <div
               className="flex items-center gap-1 px-2.5 py-1 rounded-full"
-              style={{ background: accent, transition: "background 0.7s ease" }}
+              style={{ background: accent }}
             >
               <span className="text-[10px] font-black uppercase tracking-widest text-white leading-none">
                 ★ Feature
               </span>
             </div>
-            <span
-              className="text-[11px] font-bold tabular-nums"
-              style={{ color: `${accent}70`, transition: "color 0.7s ease" }}
-            >
+            <span className="text-[11px] font-bold tabular-nums" style={{ color: `${accent}99` }}>
               {current + 1} / 5
             </span>
           </div>
 
-          {posts[current] && (
+          {post && (
             <div className="flex items-center gap-2 min-w-0">
               <span
                 className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide whitespace-nowrap"
-                style={{
-                  background: `${accent}16`,
-                  color: accent,
-                  transition: "background 0.7s ease, color 0.7s ease",
-                }}
+                style={{ background: `${accent}20`, color: accent }}
               >
-                {CATEGORY_LABELS[posts[current].category] ?? posts[current].category}
+                {CATEGORY_LABELS[post.category] ?? post.category}
               </span>
               <span
                 className="text-[10px] font-mono font-bold tracking-widest shrink-0"
-                style={{ color: `${accent}55`, transition: "color 0.7s ease" }}
+                style={{ color: `${accent}77` }}
               >
-                {posts[current].caseNumber}
+                {post.caseNumber}
               </span>
             </div>
           )}
         </div>
 
-        {/* ── Slide rail: all slides side-by-side, rail shifts left ── */}
+        {/* ── Slide body: only the current slide is in the DOM ── */}
         <div
-          style={{ overflow: "hidden", touchAction: "pan-y" }}
+          style={{ background: bg, minHeight: "160px" }}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
-          {/* The rail — translates to show current slide */}
+          {/* Re-keyed on current so CSS fade-in fires on every transition */}
           <div
+            key={`slide-${current}`}
             style={{
               display: "flex",
-              transform: `translateX(-${current * 100}%)`,
-              WebkitTransform: `translateX(-${current * 100}%)`,
-              transition: "transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)",
-              WebkitTransition: "-webkit-transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)",
-              willChange: "transform",
+              alignItems: "stretch",
+              animation: "cb-slide-fadein 0.35s ease",
             }}
           >
-            {FEATURED_SLUGS.map((slug, i) => {
-              const post = posts[i];
-              const slideBg     = SLIDE_BG[i];
-              const slideAccent = SLIDE_ACCENT[i];
+            {/* Left accent stripe */}
+            <div style={{
+              width: "3px",
+              flexShrink: 0,
+              background: accent,
+              margin: "14px 0 14px 20px",
+              borderRadius: "9999px",
+              opacity: 0.85,
+            }} />
 
-              return (
-                <div
-                  key={slug}
-                  aria-hidden={i !== current}
-                  style={{
-                    width: "100%",
-                    flexShrink: 0,
-                    display: "flex",
-                    alignItems: "stretch",
-                    background: slideBg,
-                  }}
-                >
-                  {/* Left accent stripe */}
-                  <div
-                    style={{
-                      width: "3px",
-                      flexShrink: 0,
-                      background: slideAccent,
-                      margin: "14px 0 14px 20px",
-                      borderRadius: "9999px",
-                      opacity: 0.85,
-                    }}
-                  />
-
-                  {/* Slide content */}
-                  <div style={{ padding: "14px 20px 14px 14px", flex: 1, minWidth: 0 }}>
-                    {post ? (
-                      <>
-                        <Link href={`/case/${post.slug}`}>
-                          <h2
-                            className="font-sans font-extrabold text-xl sm:text-2xl leading-snug mb-2.5 hover:opacity-75 transition-opacity cursor-pointer line-clamp-3"
-                            style={{ color: "#1A2A4A" }}
-                          >
-                            {post.title}
-                          </h2>
-                        </Link>
-                        {post.teaser && (
-                          <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: "#64748b" }}>
-                            {post.teaser}
-                          </p>
-                        )}
-                        <Link
-                          href={`/case/${post.slug}`}
-                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold hover:opacity-75"
-                          style={{
-                            background: `${slideAccent}15`,
-                            color: slideAccent,
-                          }}
-                        >
-                          Read the Record
-                          <ArrowRight className="w-3 h-3" />
-                        </Link>
-                      </>
-                    ) : (
-                      <div className="space-y-2.5 animate-pulse pt-1">
-                        <div className="h-6 rounded-lg w-4/5" style={{ background: `${slideAccent}18` }} />
-                        <div className="h-4 rounded-lg w-full" style={{ background: `${slideAccent}12` }} />
-                        <div className="h-4 rounded-lg w-2/3" style={{ background: `${slideAccent}12` }} />
-                      </div>
-                    )}
-                  </div>
+            {/* Content */}
+            <div style={{ padding: "14px 20px 14px 14px", flex: 1 }}>
+              {post ? (
+                <>
+                  <Link href={`/case/${post.slug}`}>
+                    <h2
+                      className="font-sans font-extrabold text-xl sm:text-2xl leading-snug mb-2.5 hover:opacity-75 transition-opacity cursor-pointer line-clamp-3"
+                      style={{ color: "#1A2A4A" }}
+                    >
+                      {post.title}
+                    </h2>
+                  </Link>
+                  {post.teaser && (
+                    <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: "#64748b" }}>
+                      {post.teaser}
+                    </p>
+                  )}
+                  <Link
+                    href={`/case/${post.slug}`}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold hover:opacity-75"
+                    style={{ background: `${accent}18`, color: accent }}
+                  >
+                    Read the Record
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
+                </>
+              ) : (
+                /* Loading skeleton */
+                <div className="space-y-2.5 animate-pulse pt-1">
+                  <div className="h-6 rounded-lg w-4/5" style={{ background: `${accent}18` }} />
+                  <div className="h-4 rounded-lg w-full"  style={{ background: `${accent}12` }} />
+                  <div className="h-4 rounded-lg w-2/3"   style={{ background: `${accent}12` }} />
+                  <div className="h-8 rounded-full w-36"  style={{ background: `${accent}12` }} />
                 </div>
-              );
-            })}
+              )}
+            </div>
           </div>
         </div>
 
         {/* ── Footer: dots + progress bar ── */}
-        <div style={{ background: bg, transition: "background 0.7s ease" }}>
+        <div style={{ background: bg }}>
           <div className="px-5 pt-2 pb-2.5 flex items-center gap-1.5">
             {[0, 1, 2, 3, 4].map(i => (
               <button
@@ -248,8 +206,8 @@ export function FeaturedSlider() {
                   height: "5px",
                   width: i === current ? "18px" : "5px",
                   borderRadius: "9999px",
-                  background: i === current ? accent : `${accent}28`,
-                  transition: "width 0.4s ease, background 0.7s ease",
+                  background: i === current ? accent : `${accent}30`,
+                  transition: "width 0.35s ease",
                   border: "none",
                   cursor: "pointer",
                   padding: 0,
@@ -259,16 +217,13 @@ export function FeaturedSlider() {
             ))}
           </div>
 
-          <div
-            style={{
-              height: "2px",
-              margin: "0 20px 16px",
-              background: `${accent}18`,
-              borderRadius: "9999px",
-              overflow: "hidden",
-              transition: "background 0.7s ease",
-            }}
-          >
+          <div style={{
+            height: "2px",
+            margin: "0 20px 16px",
+            background: `${accent}18`,
+            borderRadius: "9999px",
+            overflow: "hidden",
+          }}>
             <div
               key={`progress-${current}`}
               style={{
@@ -279,12 +234,10 @@ export function FeaturedSlider() {
                 borderRadius: "9999px",
                 animation: "cb-slide-progress 7s linear forwards",
                 animationPlayState: hovering ? "paused" : "running",
-                transition: "background 0.7s ease",
               }}
             />
           </div>
         </div>
-
       </div>
     </>
   );
