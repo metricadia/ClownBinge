@@ -245,6 +245,9 @@ export default function FixMe() {
           <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
             <input
               type="password"
+              name="password"
+              id="cbfix-password"
+              autoComplete="current-password"
               value={pwInput}
               onChange={(e) => setPwInput(e.target.value)}
               placeholder="Admin password"
