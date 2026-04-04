@@ -174,7 +174,6 @@ export function FeaturedSlider() {
             const post      = posts[i];
             const isCurrent = i === current;
             const isPrev    = i === prev;
-            const isVisible = isCurrent || isPrev;
 
             const tx      = isCurrent ? "translateX(0%)" : isPrev ? "translateX(-110%)" : "translateX(110%)";
             const opacity = isCurrent ? 1 : 0;
@@ -185,14 +184,17 @@ export function FeaturedSlider() {
                 aria-hidden={!isCurrent}
                 style={{
                   position: "absolute",
-                  top: 0, left: 0, right: 0,
+                  top: 0, left: 0, right: 0, bottom: 0,
                   display: "flex",
                   alignItems: "stretch",
                   transform: tx,
                   opacity,
                   transition: "transform 0.65s cubic-bezier(0.4,0,0.2,1), opacity 0.55s ease",
-                  visibility: isVisible ? "visible" : "hidden",
                   pointerEvents: isCurrent ? "auto" : "none",
+                  zIndex: isCurrent ? 2 : 1,
+                  WebkitTransform: tx,
+                  WebkitBackfaceVisibility: "hidden",
+                  backfaceVisibility: "hidden",
                 }}
               >
                 {/* Left accent stripe */}

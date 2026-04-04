@@ -1,7 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { PsaLogo } from "@/components/PsaLogo";
 import { Menu, X, ChevronDown, Heart, Home } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
 
 const CATEGORIES = [
@@ -50,6 +50,10 @@ const PILL: Record<string, { on: string; off: string }> = {
   native_and_first_nations: { on: 'bg-amber-700 text-white shadow-md ring-2 ring-amber-700/40',    off: 'bg-amber-700 text-white hover:bg-amber-800' },
 };
 
+// Font sizer levels — declared outside component so they're stable references
+const FONT_SIZES  = [16, 19, 23];
+const FONT_LABELS = ["a", "A", "A+"];
+
 export function Layout({ children, onCategoryChange, activeCategory }: { 
   children: React.ReactNode,
   onCategoryChange?: (id: string | null) => void,
@@ -64,14 +68,12 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
   const catDropdownRef = useRef<HTMLDivElement>(null);
   const { data: postCount } = usePostsCount();
 
-  // Font sizer: 3 levels stored in localStorage
-  const FONT_SIZES = [16, 19, 23];
-  const FONT_LABELS = ["a", "A", "A+"];
   const [fontLevel, setFontLevel] = useState<number>(() => {
     const saved = localStorage.getItem("cb-font-level");
     return saved !== null ? parseInt(saved) : 1;
   });
-  useEffect(() => {
+  // useLayoutEffect fires synchronously before paint — required for Safari
+  useLayoutEffect(() => {
     document.documentElement.style.fontSize = `${FONT_SIZES[fontLevel]}px`;
     localStorage.setItem("cb-font-level", String(fontLevel));
   }, [fontLevel]);
