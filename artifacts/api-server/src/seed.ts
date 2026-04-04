@@ -121,7 +121,7 @@ export async function seedIfEmpty(): Promise<void> {
         `Expected: "${SEED_ANCHOR_SLUG}", found: "${actualSlug ?? "missing"}". ` +
         `Truncating ${count} old articles and reseeding...`
       );
-      await db.execute(sql`TRUNCATE TABLE posts`);
+      await db.execute(sql`TRUNCATE TABLE posts CASCADE`);
     }
 
     const posts = seedData as Record<string, unknown>[];
