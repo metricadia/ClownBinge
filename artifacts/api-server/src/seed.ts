@@ -87,7 +87,11 @@ export async function upsertMissingPosts(): Promise<void> {
       updated++;
     } catch (err) {
       failed++;
-      console.error(`[Seed] Failed to upsert ${post.case_number as string}:`, err);
+      const cause = (err as { cause?: { message?: string; code?: string; detail?: string } })?.cause;
+      const msg = cause
+        ? `code=${cause.code} msg=${cause.message} detail=${cause.detail}`
+        : String(err).slice(0, 300);
+      console.error(`[Seed] UPSERT FAIL ${post.case_number as string}: ${msg}`);
     }
   }
 
@@ -131,7 +135,11 @@ export async function seedIfEmpty(): Promise<void> {
         inserted++;
       } catch (err) {
         failed++;
-        console.error(`[Seed] Failed to insert ${post.case_number as string}:`, err);
+        const cause = (err as { cause?: { message?: string; code?: string; detail?: string } })?.cause;
+        const msg = cause
+          ? `code=${cause.code} msg=${cause.message} detail=${cause.detail}`
+          : String(err).slice(0, 300);
+        console.error(`[Seed] INSERT FAIL ${post.case_number as string}: ${msg}`);
       }
     }
 
