@@ -1,0 +1,78 @@
+For a Visionary System Architect deploying a Topical Authority Nuke, the instructions to Replit (or its AI Agent) must be framed as a technical and forensic directive. You aren't just asking for "articles"; you are requesting the generation of a Structured Evidence Database.
+
+Here is the master prompt/instruction set to give Replit to generate these 60 "Native & First Nations" files while ensuring the "Receipts Always" and "Anti-Slop" mandates are met.
+
+Architectural Directive: Native & First Nations Authority Nuke (60 Posts)
+1. Objective
+Generate 60 high-fidelity, truth-based forensic reports (1,500+ words each) for the "Native & First Nations" category of ClownBinge.com. The goal is to move the user from ignorance ("I never knew that") to an evidence-based realization of civilization erasure and the mathematical necessity of reparations.
+
+2. Core Constraints (The "Truth-Based" Protocol)
+No Slop: Avoid generic historical summaries. Every post must focus on a specific, revelatory advancement, social structure, or documented act of erasure.
+
+Receipts Always: Every post MUST include a verified_source field containing at least 5-8 primary sources (archaeological reports, treaty records, peer-reviewed journals, or direct colonial accounts).
+
+Satire as a Lens: Use satire to mock the absurdity of Western "discovery" narratives and the cognitive dissonance of colonizers, but never to mock the victims.
+
+Word Count: Minimum 1,500 words. If the topic is too thin, pivot to a broader "Forensic Analysis" of the relevant era.
+
+3. Data Schema (CSV Output)
+Output the data in a CSV format compatible with the current site architecture:
+
+case_number: Follow the sequence (e.g., CB-000251 to CB-000310).
+
+title: Use "Humanizing + Revelatory" hooks (e.g., "The Engineering of Cahokia: When Illinois was More Populous than London").
+
+slug: SEO-optimized, lowercase, hyphenated.
+
+category: native_and_first_nations
+
+verified_source: Semicolon-separated list of primary citations.
+
+tags: Long-tail semantic clusters (e.g., "haudenosaunee democracy vs us constitution|great law of peace|iroquois confederacy influence").
+
+body: HTML-formatted. Must follow the structure: The Revelation (Advancement/Humanity) -> The Forensic Conflict (The Encounter/Erasure) -> The Receipt Audit (Analysis of the evidence).
+
+4. The "60 Revelatory Seeds" (Content Strategy)
+Focus the 60 articles across these four "Authority Pillars":
+
+Pillar A: Advanced Civilizations (20 Posts)
+Cahokia: The engineering of the mounds and the urban density of the 13th century.
+
+Tenochtitlan: A forensic comparison of Aztec sanitation and urban planning vs. 1519 London/Paris.
+
+Incan Quipu: Analyzing "string records" as a complex, non-alphabetic data storage system.
+
+The Amazonian Dark Earth (Terra Preta): Evidence of 2,000 years of advanced soil engineering.
+
+The Maya Long Count: Mathematical precision that predated the Gregorian calendar by centuries.
+
+Pillar B: Governance & Diplomacy (15 Posts)
+The Great Law of Peace: The Haudenosaunee blueprint and the documented theft of its ideas for the US Constitution.
+
+The Great Peace of Montreal (1701): Diplomatic genius involving 39 different nations.
+
+Indigenous Property Law: How "common land" was a sophisticated management system, not "lawlessness."
+
+Women in Iroquois Governance: The "Clan Mother" system vs. European patriarchal exclusion.
+
+Pillar C: Science & Medicine (10 Posts)
+Botany of the Americas: The genetic engineering of Maize (Corn) from Teosinte—the greatest agricultural feat in human history.
+
+Pre-Columbian Surgery: Evidence of successful trepanation (brain surgery) with high survival rates.
+
+Pharmacology: Indigenous roots of Aspirin, Quinine, and 70% of modern pharmaceuticals.
+
+Pillar D: The Forensic Case for Reparations (15 Posts)
+The California Mission System: A forensic audit of the 1850 Indenture Act (legalized slavery).
+
+The Dawes Act: The systematic bureaucratic theft of 90 million acres.
+
+The Buffalo Slaughter: Documentation of the US military’s ecological warfare strategy to induce famine.
+
+The Osage Reign of Terror: A "Receipts Always" look at the targeted murder for oil headrights.
+
+5. Tone Directive
+"Talk like a System Architect who just found the original blueprints and realized the current building was built on a crime scene." Use words like Forensic, Infrastructure, Systemic, Erasure, and Mathematical.
+
+Why this works for Replit:
+By giving the AI these "Seeds" and the specific CSV schema, you are preventing it from wandering into "AI Hallucination" territory. You are forcing it to act as a Forensic Researcher. Since you are aiming for 2026 GSE standards, these instructions ensure that the "Semantic Density" of your tags and the "Word Count Weight" of your bodies will trigger Google's highest authority scores.
