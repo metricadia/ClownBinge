@@ -58,6 +58,7 @@ export const postsTable = pgTable("posts", {
   locked: boolean("locked").notNull().default(false),
   aiScore: integer("ai_score"),
   aiScoreTestedAt: timestamp("ai_score_tested_at"),
+  idsScore: integer("ids_score"),
   nerdAccessible: boolean("nerd_accessible").notNull().default(true),
   seoMetaTitle: text("seo_meta_title"),
 });

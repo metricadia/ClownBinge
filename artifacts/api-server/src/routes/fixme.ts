@@ -3,6 +3,7 @@ import { db, postsTable } from "@workspace/db";
 import { eq, desc, asc, sql } from "drizzle-orm";
 import { detectAI } from "../services/zerogpt";
 import { reduceAI } from "../services/cb-reducer";
+import { scoreIntellectualDensity } from "../services/ids-scorer";
 import { anthropic } from "@workspace/integrations-anthropic-ai";
 import { checkContentGuard, formatViolations } from "../services/content-guard";
 
@@ -22,6 +23,7 @@ router.get("/fixme/articles", async (_req, res) => {
         locked: postsTable.locked,
         aiScore: postsTable.aiScore,
         aiScoreTestedAt: postsTable.aiScoreTestedAt,
+        idsScore: postsTable.idsScore,
         wordCount: sql<number>`array_length(regexp_split_to_array(trim(regexp_replace(body, '<[^>]+>', ' ', 'g')), '[[:space:]]+'), 1)`.as("word_count"),
       })
       .from(postsTable)
@@ -53,14 +55,17 @@ router.post("/fixme/detect/:slug", async (req, res) => {
       return;
     }
 
-    const { score, flaggedSentences } = await detectAI(post.body);
+    const [{ score, flaggedSentences }, ids] = await Promise.all([
+      detectAI(post.body),
+      Promise.resolve(scoreIntellectualDensity(post.body)),
+    ]);
 
     await db
       .update(postsTable)
-      .set({ aiScore: score, aiScoreTestedAt: new Date() })
+      .set({ aiScore: score, aiScoreTestedAt: new Date(), idsScore: ids.score })
       .where(eq(postsTable.id, post.id));
 
-    res.json({ slug, score, flaggedCount: flaggedSentences.length });
+    res.json({ slug, score, flaggedCount: flaggedSentences.length, idsScore: ids.score, idsBreakdown: ids.breakdown });
   } catch (err: unknown) {
     console.error("[FixMe] detect error:", err);
     const message = err instanceof Error ? err.message : "Detection failed";

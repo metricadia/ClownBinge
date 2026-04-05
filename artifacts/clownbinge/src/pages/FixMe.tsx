@@ -12,6 +12,7 @@ type ArticleRow = {
   locked: boolean;
   aiScore: number | null;
   aiScoreTestedAt: string | null;
+  idsScore: number | null;
   wordCount: number | null;
 };
 
@@ -181,7 +182,7 @@ export default function FixMe() {
       setArticles((prev) =>
         prev.map((a) =>
           a.slug === slug
-            ? { ...a, aiScore: data.score, aiScoreTestedAt: new Date().toISOString() }
+            ? { ...a, aiScore: data.score, aiScoreTestedAt: new Date().toISOString(), idsScore: data.idsScore ?? a.idsScore }
             : a
         )
       );
@@ -441,6 +442,7 @@ export default function FixMe() {
                   <th className="text-left px-4 py-3 text-gray-400 font-medium text-xs w-32">Category</th>
                   <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-20">Words</th>
                   <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-28">AI Score</th>
+                  <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-20" title="Intellectual Density Score — measures citation density, proper nouns, quantitative specificity, domain jargon, and epistemic precision">IDS</th>
                   <th className="text-center px-4 py-3 text-gray-400 font-medium text-xs w-52">Actions</th>
                 </tr>
               </thead>
@@ -479,6 +481,22 @@ export default function FixMe() {
                           <div className="text-gray-600 text-xs mt-0.5">
                             {new Date(article.aiScoreTestedAt).toLocaleDateString()}
                           </div>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        {article.idsScore !== null && article.idsScore !== undefined ? (
+                          <span
+                            title="Intellectual Density Score"
+                            className={`inline-block px-2 py-0.5 rounded text-xs font-mono font-semibold ${
+                              article.idsScore >= 60 ? "bg-violet-900 text-violet-200" :
+                              article.idsScore >= 35 ? "bg-blue-900 text-blue-300" :
+                              "bg-gray-800 text-gray-400"
+                            }`}
+                          >
+                            {article.idsScore}
+                          </span>
+                        ) : (
+                          <span className="text-gray-700 text-xs">—</span>
                         )}
                       </td>
                       <td className="px-4 py-3 text-center">
