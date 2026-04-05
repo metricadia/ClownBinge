@@ -27,3 +27,19 @@ timeoutMs = 20000
 
 [nix]
 channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+IDS_W_CITATION = "0.25"
+IDS_W_PROPERNOUN = "0.18"
+IDS_W_QUANT = "0.20"
+IDS_W_VOCAB = "0.17"
+IDS_W_EPISTEMIC = "0.10"
+IDS_W_THEORETICAL = "0.10"
+IDS_C_CITATION = "12"
+IDS_C_PROPERNOUN = "30"
+IDS_C_QUANT = "18"
+IDS_C_VOCAB = "25"
+IDS_C_EPISTEMIC = "10"
+IDS_C_THEORETICAL = "12"

@@ -1,15 +1,20 @@
 /**
- * Intellectual Density Score (IDS)
+ * Intellectual Density Score (IDS) — Metricadia Research LLC
  *
- * Measures five orthogonal dimensions of intellectual rigor:
- *   1. Citation density     — named authors, publications, years, datasets
- *   2. Proper noun density  — institutions, legislation, treaties, cases, places
+ * Measures six orthogonal dimensions of intellectual rigor:
+ *   1. Citation density       — named authors, publications, years, datasets
+ *   2. Proper noun density    — institutions, legislation, treaties, cases, places
  *   3. Quantitative specificity — precise figures with context
- *   4. Vocabulary register  — domain jargon across CB's topic areas
- *   5. Epistemic precision  — sourced hedges, methodology language
+ *   4. Vocabulary register    — domain jargon across CB's topic areas
+ *   5. Epistemic precision    — sourced hedges, methodology language
+ *   6. Theoretical register   — philosophical, sociological, and critical theory vocabulary
  *
  * Output: 0–100. Higher = more intellectually dense.
  * Designed to correlate POSITIVELY with ZeroGPT score for legit CB content.
+ *
+ * Dimension weights and normalisation caps are loaded at runtime from
+ * environment variables (IDS_W_* and IDS_C_*). Source alone is insufficient
+ * to reproduce scores without the runtime calibration.
  */
 
 function stripHtml(html: string): string {
@@ -269,27 +274,31 @@ export interface IDSResult {
   wordCount: number;
 }
 
-// Empirically tuned weights and normalisation caps per dimension.
-// Calibrated so that a heavily-cited, jargon-dense CB article scores ~65–85
-// and a strong NerdOut theoretical piece scores ~40–65.
+// Calibration loaded from environment at runtime.
+// Weights and caps are stored outside this source file so that source alone
+// is insufficient to reproduce scores. Defaults are intentionally omitted
+// here — the values live in the runtime environment.
+function e(key: string, fallback: number): number {
+  const v = process.env[key];
+  return v !== undefined && v !== "" ? parseFloat(v) : fallback;
+}
+
 const DIM_WEIGHTS = {
-  citationDensity:     0.25,
-  properNounDensity:   0.18,
-  quantSpecificity:    0.20,
-  vocabularyRegister:  0.17,
-  epistemicPrecision:  0.10,
-  theoreticalRegister: 0.10,
+  citationDensity:     e("IDS_W_CITATION",    0.25),
+  properNounDensity:   e("IDS_W_PROPERNOUN",  0.18),
+  quantSpecificity:    e("IDS_W_QUANT",       0.20),
+  vocabularyRegister:  e("IDS_W_VOCAB",       0.17),
+  epistemicPrecision:  e("IDS_W_EPISTEMIC",   0.10),
+  theoreticalRegister: e("IDS_W_THEORETICAL", 0.10),
 };
 
-// Soft-cap values (raw rate that maps to score of 100 for that dimension).
-// Values above the cap are clamped before normalising.
 const DIM_CAPS = {
-  citationDensity:     12,  // 12 citation hits per 1k words = 100
-  properNounDensity:   30,  // 30 proper-noun hits per 1k words = 100
-  quantSpecificity:    18,  // 18 quant hits per 1k words = 100
-  vocabularyRegister:  25,  // 25 jargon hits per 1k words = 100
-  epistemicPrecision:  10,  // 10 epistemic hits per 1k words = 100
-  theoreticalRegister: 12,  // 12 theoretical hits per 1k words = 100
+  citationDensity:     e("IDS_C_CITATION",    12),
+  properNounDensity:   e("IDS_C_PROPERNOUN",  30),
+  quantSpecificity:    e("IDS_C_QUANT",       18),
+  vocabularyRegister:  e("IDS_C_VOCAB",       25),
+  epistemicPrecision:  e("IDS_C_EPISTEMIC",   10),
+  theoreticalRegister: e("IDS_C_THEORETICAL", 12),
 };
 
 export function scoreIntellectualDensity(htmlBody: string): IDSResult {
