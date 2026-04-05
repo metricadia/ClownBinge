@@ -366,7 +366,14 @@ ClownBinge is not CNN. ClownBinge is not Fox News. Zero opinion. Zero interpreta
 | Terminal interpretation | paragraph ends with reflects / indicates / suggests / portrays / reveals |
 | Editorial characterization | "dead wrong" — CB states facts, not whether prior accounts were wrong |
 | Reader direction | "matters because" — CB does not tell the reader what matters |
-| Symbolic interpretation | "symbolically" — CB does not assign symbolic meaning to events |
+| Symbolic interpretation | "symbolic/symbolism/symbolically" — CB does not assign symbolic meaning to events |
+| Conclusion openers | "Ultimately," / "In the end," / "Taken together," — generator prohibition, now in scan |
+| Understanding-enrichment | "enriches/deepens/broadens understanding/knowledge" — AI malformation |
+| Gap-filling claim | "fills an important/significant gap" — AI malformation |
+| Significance-assignment verbs | "underscores" — interpretive verb, not permitted |
+| Evaluative adjectives | "emblematic", "pivotal", "damning" — editorial judgment words |
+| AI conclusion voice | "by any measure", "at its core" — rhetorical intensifiers, not facts |
+| Prescriptive obligation | "cannot be ignored" — CB does not prescribe what the reader must notice |
 
 **BLOCK 2 — STRUCTURAL MINIMUMS (non-negotiable floors)**
 

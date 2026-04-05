@@ -78,7 +78,27 @@ async function main() {
       (body ~* '(reflects|indicates|suggests|portrays|reveals)\\.</p>')       AS b1_terminal_interp,
       (body ~* '\\bdead wrong\\b')                                             AS b1_dead_wrong,
       (body ~* '\\bmatters because\\b')                                        AS b1_matters_because,
-      (body ~* '\\bsymbolically\\b')                                           AS b1_symbolically,
+      (body ~* '\\bsymbolic')                                                  AS b1_symbolic,
+
+      -- FAMILY B: Conclusion openers (generator forbids; scan was missing)
+      (body ~* '(^|>|\\. )(Ultimately,|In the end,|Taken together,)')          AS b1_conclusion_opener,
+
+      -- FAMILY C: Understanding-enrichment (generator forbids; scan was missing)
+      (body ~* '(enriches|deepens|broadens).{1,30}(understanding|knowledge)') AS b1_enriches,
+      (body ~* 'fills.{1,20}(important|significant|key|critical|notable).{1,20}gap') AS b1_fills_gap,
+
+      -- FAMILY D: Significance-assignment verbs (Architect gap)
+      (body ~* '\\bunderscores\\b')                                            AS b1_underscores,
+
+      -- FAMILY E: Evaluative adjectives (Architect gap)
+      (body ~* '\\bemblematic\\b')                                             AS b1_emblematic,
+      (body ~* '\\bpivotal\\b')                                                AS b1_pivotal,
+      (body ~* '\\bdamning\\b')                                                AS b1_damning,
+
+      -- FAMILY F: AI conclusion voice (Architect gap)
+      (body ~* 'by any measure')                                               AS b1_by_any_measure,
+      (body ~* 'at its core')                                                  AS b1_at_its_core,
+      (body ~* 'cannot be ignored')                                            AS b1_cannot_ignored,
 
       -- BLOCK 2: Structural Minimums
       array_length(string_to_array(
@@ -132,7 +152,17 @@ async function main() {
     b1_terminal_interp: boolean;
     b1_dead_wrong: boolean;
     b1_matters_because: boolean;
-    b1_symbolically: boolean;
+    b1_symbolic: boolean;
+    b1_conclusion_opener: boolean;
+    b1_enriches: boolean;
+    b1_fills_gap: boolean;
+    b1_underscores: boolean;
+    b1_emblematic: boolean;
+    b1_pivotal: boolean;
+    b1_damning: boolean;
+    b1_by_any_measure: boolean;
+    b1_at_its_core: boolean;
+    b1_cannot_ignored: boolean;
     b2_word_count: number;
     b2_h2_count: number;
     b2_factoid_count: number;
@@ -180,9 +210,19 @@ async function main() {
     if (row.b1_body_h1)        b1.push("H1 IN BODY — duplicate H1 — Google SEO penalty");
     if (row.b1_em_dash)        b1.push("Em dash (—) in visible body text");
     if (row.b1_terminal_interp) b1.push("Terminal interpretation verb (reflects/indicates/suggests/portrays/reveals)");
-    if (row.b1_dead_wrong)      b1.push("'dead wrong' — editorial characterization");
-    if (row.b1_matters_because) b1.push("'matters because' — CB does not tell the reader what matters");
-    if (row.b1_symbolically)    b1.push("'symbolically' — symbolic interpretation of events");
+    if (row.b1_dead_wrong)        b1.push("'dead wrong' — editorial characterization");
+    if (row.b1_matters_because)   b1.push("'matters because' — CB does not tell the reader what matters");
+    if (row.b1_symbolic)          b1.push("'symbolic/symbolism' — symbolic interpretation of events");
+    if (row.b1_conclusion_opener) b1.push("Conclusion opener: 'Ultimately,' / 'In the end,' / 'Taken together,' — generator prohibition, scan was missing");
+    if (row.b1_enriches)          b1.push("'enriches/deepens/broadens understanding' — AI malformation, generator prohibition");
+    if (row.b1_fills_gap)         b1.push("'fills an important/significant gap' — AI malformation, generator prohibition");
+    if (row.b1_underscores)       b1.push("'underscores' — significance-assignment verb");
+    if (row.b1_emblematic)        b1.push("'emblematic' — editorial interpretation");
+    if (row.b1_pivotal)           b1.push("'pivotal' — evaluative adjective");
+    if (row.b1_damning)           b1.push("'damning' — evaluative adjective");
+    if (row.b1_by_any_measure)    b1.push("'by any measure' — editorial voice");
+    if (row.b1_at_its_core)       b1.push("'at its core' — editorial framing");
+    if (row.b1_cannot_ignored)    b1.push("'cannot be ignored' — prescriptive obligation");
 
     // BLOCK 2 — Structural Minimums
     if (row.b2_word_count < WORD_FLOOR)
