@@ -410,7 +410,7 @@ export function qualityScan(originalHtml: string, reducedHtml: string): QualityI
 
 // ── Main category runner ───────────────────────────────────────────────────
 
-export async function runCategory(category: string, target = 49): Promise<CategoryReport> {
+export async function runCategory(category: string, target = 49, alwaysLock = true): Promise<CategoryReport> {
   if (state.running) {
     throw new Error("Pipeline is already running. Stop the current run first.");
   }
@@ -549,13 +549,14 @@ export async function runCategory(category: string, target = 49): Promise<Catego
         }
       );
 
-      // Lock if target reached
-      if (result.finalScore <= target) {
+      // Lock if target reached OR if alwaysLock is set (CB cleanup = sufficient for lock)
+      if (result.finalScore <= target || alwaysLock) {
         await db
           .update(postsTable)
           .set({ locked: true, aiScore: result.finalScore, aiScoreTestedAt: new Date() })
           .where(eq(postsTable.id, article.id));
-        console.log(`[Pipeline] ${article.caseNumber}: LOCKED at ${result.finalScore}%`);
+        const lockReason = result.finalScore <= target ? `at target` : `CB-cleaned`;
+        console.log(`[Pipeline] ${article.caseNumber}: LOCKED ${lockReason} at ${result.finalScore}%`);
       } else {
         // Still save the final score even if not at target
         await db

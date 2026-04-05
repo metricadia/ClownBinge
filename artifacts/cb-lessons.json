@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-05T04:14:44.537Z",
-  "totalArticlesProcessed": 87,
+  "lastUpdated": "2026-04-05T04:46:30.982Z",
+  "totalArticlesProcessed": 88,
   "totalRepairsApplied": 271,
   "patterns": {
     "em_dash::—→,": {
@@ -2543,6 +2543,7 @@
     "CB Dry Rationalism: Never write \"tragically [adjective]\" before a statistic. Write the statistic. \"Tragically elevated\" is editorial; \"elevated at X per 100,000\" is documented fact.",
     "CB Dry Rationalism: Never write \"far beyond mere numbers\" or similar characterization of data. The numbers are the argument. If the paragraph needs more, add another documented figure.",
     "CB Dry Rationalism: Never frame census counts as \"survival and flourishing of distinct cultures.\" That is the writer assigning meaning. Write the number: \"9.7 million in 2020\" is the statement.",
-    "CB Dry Rationalism: Never write a Conclusion header (Conclusion: From Nadir to Resurgence, Conclusion: Legacy and Impact, etc.). CB articles end on the last documented fact with no section label."
+    "CB Dry Rationalism: Never write a Conclusion header (Conclusion: From Nadir to Resurgence, Conclusion: Legacy and Impact, etc.). CB articles end on the last documented fact with no section label.",
+    "CB Dry Rationalism: Citation sentences must anchor to the documented fact, not an interpretation verb. Write: \"Russell Thornton (1987) documented a 4,000 percent demographic recovery.\" Never write: \"...reflects,\" \"...indicates,\" \"...suggests,\" or \"...portrays\" as the terminal verb. The sentence ends on the receipt, not the interpretation."
   ]
 }
