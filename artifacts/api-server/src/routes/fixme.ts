@@ -7,6 +7,14 @@ import { scoreIntellectualDensity } from "../services/ids-scorer";
 import { anthropic } from "@workspace/integrations-anthropic-ai";
 import { checkContentGuard, formatViolations } from "../services/content-guard";
 import { generateArticle } from "../services/cb-generator";
+import {
+  runCategory,
+  stopPipeline,
+  getPipelineState,
+  getCategoryMap,
+  CATEGORY_ORDER,
+} from "../services/cb-pipeline";
+import { getLessonsSummary, loadLessons } from "../services/cb-lessons";
 
 const router: IRouter = Router();
 
@@ -534,6 +542,91 @@ Return format:
       tagGenRunning = false;
     }
   })();
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CB PIPELINE — Category-by-category AI reduction with ML feedback loop
+// ═══════════════════════════════════════════════════════════════════════════
+
+// GET /api/fixme/pipeline/map — live article counts per category
+router.get("/fixme/pipeline/map", async (_req, res) => {
+  res.setHeader("Cache-Control", "no-store");
+  try {
+    const target = 49;
+    const map = await getCategoryMap(target);
+    const total = map.reduce((s, c) => s + c.articlesNeedingReduction, 0);
+    res.json({
+      target,
+      totalArticlesNeedingReduction: total,
+      categoryOrder: map,
+    });
+  } catch (err) {
+    res.status(500).json({ error: String(err) });
+  }
+});
+
+// GET /api/fixme/pipeline/status — current run state + last category report
+router.get("/fixme/pipeline/status", (_req, res) => {
+  res.setHeader("Cache-Control", "no-store");
+  const state = getPipelineState();
+  const lessons = getLessonsSummary();
+  res.json({ pipeline: state, lessons });
+});
+
+// GET /api/fixme/pipeline/lessons — full lessons store
+router.get("/fixme/pipeline/lessons", (_req, res) => {
+  res.setHeader("Cache-Control", "no-store");
+  res.json(loadLessons());
+});
+
+// GET /api/fixme/pipeline/categories — list valid category slugs
+router.get("/fixme/pipeline/categories", (_req, res) => {
+  res.json({ categories: CATEGORY_ORDER });
+});
+
+// POST /api/fixme/pipeline/stop — stop after current article
+router.post("/fixme/pipeline/stop", (_req, res) => {
+  stopPipeline();
+  res.json({ message: "Stop requested. Pipeline will halt after the current article." });
+});
+
+// POST /api/fixme/pipeline/run/:category — run ONE category then stop
+router.post("/fixme/pipeline/run/:category", async (req, res) => {
+  const { category } = req.params as { category: string };
+  const target: number = typeof req.body?.target === "number" ? req.body.target : 49;
+
+  const validCategories: readonly string[] = CATEGORY_ORDER;
+  if (!validCategories.includes(category)) {
+    res.status(400).json({
+      error: `Unknown category "${category}"`,
+      validCategories,
+    });
+    return;
+  }
+
+  const state = getPipelineState();
+  if (state.running) {
+    res.status(409).json({
+      error: "Pipeline already running",
+      currentCategory: state.currentCategory,
+      processedInCategory: state.processedInCategory,
+      totalInCategory: state.totalInCategory,
+    });
+    return;
+  }
+
+  // Respond immediately — pipeline runs in background
+  res.json({
+    message: `Pipeline started for category: ${category} | target: ≤${target}%`,
+    category,
+    target,
+    note: "Poll GET /api/fixme/pipeline/status for progress. Pipeline stops after this category.",
+  });
+
+  // Fire and forget — do not await
+  runCategory(category, target).catch(err => {
+    console.error(`[Pipeline] Unhandled error in category ${category}:`, err);
+  });
 });
 
 export default router;

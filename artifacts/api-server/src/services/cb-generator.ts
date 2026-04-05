@@ -1,4 +1,5 @@
 import { anthropic } from "@workspace/integrations-anthropic-ai";
+import { buildLearnedRulesBlock } from "./cb-lessons";
 
 export interface GenerateArticleInput {
   topic: string;
@@ -105,6 +106,11 @@ function buildUserPrompt(input: GenerateArticleInput): string {
 }
 
 export async function generateArticle(input: GenerateArticleInput): Promise<GeneratedArticle> {
+  // Inject machine-learned rules from the pipeline feedback loop.
+  // As the reducer catches errors across articles, they get promoted here automatically.
+  const learnedBlock = buildLearnedRulesBlock();
+  const activePrompt = learnedBlock ? `${SYSTEM_PROMPT}${learnedBlock}` : SYSTEM_PROMPT;
+
   const response = await anthropic.messages.create({
     model: "claude-opus-4-5",
     max_tokens: 8192,
@@ -114,7 +120,7 @@ export async function generateArticle(input: GenerateArticleInput): Promise<Gene
         content: buildUserPrompt(input),
       },
     ],
-    system: SYSTEM_PROMPT,
+    system: activePrompt,
   });
 
   const raw = response.content[0];
