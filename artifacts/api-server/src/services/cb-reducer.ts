@@ -8,6 +8,10 @@ export function stripHtmlForDetection(html: string): string {
   return html
     // Remove heading elements entirely — headings are structural, not prose to be rewritten
     .replace(/<h[1-6][^>]*>.*?<\/h[1-6]>/gis, ". ")
+    // Remove citation <p> blocks — any paragraph containing :: (APA separator) or a bare URL
+    // Citations must never be rewritten; they are primary source records
+    .replace(/<p[^>]*>[^<]*::[^<]*<\/p>/gi, ". ")
+    .replace(/<p[^>]*>[^<]*https?:\/\/[^<]*<\/p>/gi, ". ")
     // Block-level closing tags → period + space so paragraphs become sentence boundaries
     .replace(/<\/(p|li|blockquote|div|section|tr|dt|dd)>/gi, ". ")
     // Block-level opening tags and <br> → space
