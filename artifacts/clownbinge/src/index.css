@@ -276,18 +276,18 @@
 
   .cb-factoid-popup-brand {
     font-size: 11px;
-    font-family: var(--font-display);
-    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #1A3A8F;
-    font-weight: 900;
+    font-weight: 700;
   }
 
   .cb-factoid-popup-sublabel {
-    font-size: 9px;
+    font-size: 11px;
     font-family: var(--font-sans);
-    color: rgba(26, 58, 143, 0.45);
-    font-weight: 500;
+    color: rgba(26, 58, 143, 0.5);
+    font-weight: 400;
     letter-spacing: 0.02em;
     text-transform: none;
   }
