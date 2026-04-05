@@ -17,6 +17,7 @@ import {
   runClosingScan,
   runAllRemaining,
   getFullRunState,
+  setPauseAfterCategory,
 } from "../services/cb-pipeline";
 import { getLessonsSummary, loadLessons, recordErrors } from "../services/cb-lessons";
 
@@ -645,6 +646,23 @@ router.post("/fixme/pipeline/run-all", async (req, res) => {
 
   runAllRemaining(startFrom, target).catch(err => {
     console.error("[RunAll] Fatal error:", err);
+  });
+});
+
+// POST /api/fixme/pipeline/pause-after — set a pause point between categories
+// Body: { category: "native_and_first_nations" } or { category: null } to clear
+router.post("/fixme/pipeline/pause-after", (req, res) => {
+  const category: string | null = req.body?.category ?? null;
+  if (category && !CATEGORY_ORDER.includes(category as any)) {
+    res.status(400).json({ error: `Unknown category: ${category}`, valid: CATEGORY_ORDER });
+    return;
+  }
+  setPauseAfterCategory(category);
+  res.json({
+    message: category
+      ? `Pipeline will pause after "${category}" completes before advancing to the next category.`
+      : `Pause-after cleared. Pipeline will run through all remaining categories.`,
+    pauseAfter: category,
   });
 });
 

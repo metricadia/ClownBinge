@@ -783,6 +783,18 @@ const fullRunState: FullRunState = {
   categories: [],
 };
 
+// Pause the auto-chain after a specific category completes (checked between categories)
+let _pauseAfterCategory: string | null = null;
+
+export function setPauseAfterCategory(category: string | null): void {
+  _pauseAfterCategory = category;
+  if (category) {
+    console.log(`[RunAll] Pause-after set: will stop after "${category}" completes.`);
+  } else {
+    console.log(`[RunAll] Pause-after cleared — chain will continue through all categories.`);
+  }
+}
+
 export function getFullRunState(): FullRunState {
   return { ...fullRunState, categories: fullRunState.categories.map(c => ({ ...c })) };
 }
@@ -856,6 +868,16 @@ export async function runAllRemaining(
     entry.status = "done";
 
     console.log(`[RunAll] ${category} DONE — reached=${report.reached}/${report.totalArticles} | repairs=${report.totalRepairs} | newMLRules=${entry.newMLRules}`);
+
+    // Check pause-after directive before advancing
+    if (_pauseAfterCategory && category === _pauseAfterCategory) {
+      console.log(`\n${"▓".repeat(60)}`);
+      console.log(`[RunAll] PAUSED after "${category}" as directed. Full run suspended.`);
+      console.log(`[RunAll] Resume with POST /api/fixme/pipeline/run-all { startFrom: "anti_racist_heroes" }`);
+      console.log(`${"▓".repeat(60)}\n`);
+      _pauseAfterCategory = null;
+      break;
+    }
 
     // Small grace period between categories
     if (!_stopRequested) {
