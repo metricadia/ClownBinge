@@ -88,6 +88,20 @@ function jsGate(original: string, rewritten: string): { pass: boolean; reason?: 
     return { pass: false, reason: `banned phrase in rewrite: ${phrases}` };
   }
 
+  // Rule 10: no contractions, no colloquial register
+  const contractionPattern = /\b(?:aren't|can't|couldn't|didn't|doesn't|don't|hadn't|hasn't|haven't|he'd|he'll|he's|here's|i'd|i'll|i'm|i've|isn't|it'd|it'll|it's|let's|mustn't|needn't|shan't|she'd|she'll|she's|shouldn't|that's|there's|they'd|they'll|they're|they've|wasn't|we'd|we'll|we're|we've|weren't|what'll|what's|who'd|who'll|who's|who've|won't|wouldn't|you'd|you'll|you're|you've)\b/i;
+  const contractionMatch = rewritten.match(contractionPattern);
+  if (contractionMatch) {
+    return { pass: false, reason: `contraction in rewrite: "${contractionMatch[0]}"` };
+  }
+
+  // Rule 10b: colloquial register markers
+  const colloquialPattern = /\b(?:supposed to|getting rich|sort of|kind of|a lot of|lots of|pretty much|ended up|figure out|turns out|wrapped up|made up of|came up with|set up to|going to have|got to|got the|had to go|taken care of)\b/i;
+  const colloquialMatch = rewritten.match(colloquialPattern);
+  if (colloquialMatch) {
+    return { pass: false, reason: `colloquial phrase in rewrite: "${colloquialMatch[0]}"` };
+  }
+
   return { pass: true };
 }
 
@@ -156,6 +170,8 @@ HARD RULES — these will be checked and will cause rejection:
 7. No em dashes. Use commas, colons, semicolons, or periods instead.
 8. No hedging added: no "Sure," "Notably," "Of course," "Worth mentioning"
 9. Text inside quotation marks is a direct quote — reproduce it verbatim, character-for-character, with its surrounding quotation marks. Do NOT paraphrase any part of it.
+10. No contractions of any kind: "weren't" → "were not", "didn't" → "did not", "couldn't" → "could not", "it's" → "it is", "who'd" → "who had/would", etc. This is formal accountability journalism — contractions are categorically prohibited.
+11. No colloquial or informal register: avoid "supposed to", "getting rich", "sort of", "kind of", "a lot of", "pretty much", "ended up", "figure out", "turns out", "got to", "had to go". Use formal equivalents at all times.
 
 OUTPUT RULES:
 - ${Math.max(wordCount - 3, 1)}–${wordCount + 5} words
