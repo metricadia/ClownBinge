@@ -707,7 +707,7 @@ A drop-in WYSIWYG admin CMS panel installed at `/admin/editor`.
 - Post list: `GET /api/metricadia/posts` (auth required, returns all 381 articles)
 - Post save: `PUT /api/posts/:id` (auth required, maps `content` → `body`, `excerpt` → `teaser`)
 - Image upload: `POST /api/upload-image` → saved to `artifacts/api-server/public/uploads/`, served at `/uploads/`
-- PettyID™: inline person-profile marks — clickable popup overlays in articles
+- Metricadia ID™: inline person-profile marks — clickable popup overlays in articles
 
 **Environment variables** (optional, for production hardening):
 - `SESSION_SECRET` — session signing key (default: `change-me-in-production`)

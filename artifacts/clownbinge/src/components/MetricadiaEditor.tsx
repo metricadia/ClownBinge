@@ -18,7 +18,7 @@ import Image from "@tiptap/extension-image";
 import Underline from "@tiptap/extension-underline";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
-import { PettyIDMark, sanitizePettyIDAttributes } from "@/extensions/PettyIDMark";
+import { MetricadiaIDMark, sanitizeMetricadiaIDAttributes } from "@/extensions/MetricadiaIDMark";
 import { Button } from "@/components/ui/button";
 import {
   Bold,
@@ -54,7 +54,7 @@ import {
   DialogOverlay,
   DialogClose,
 } from "@/components/ui/dialog";
-import { PettyIDDialog } from "./PettyIDDialog";
+import { MetricadiaIDDialog } from "./MetricadiaIDDialog";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -84,9 +84,9 @@ export function MetricadiaEditor({
   const [seoScore, setSeoScore] = useState(0);
   const [isExcerptAutoFixed, setIsExcerptAutoFixed] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
-  const [showPettyIDDialog, setShowPettyIDDialog] = useState(false);
-  const [pettyIDSelectedText, setPettyIDSelectedText] = useState("");
-  const [pettyIDSelectionRange, setPettyIDSelectionRange] = useState<{
+  const [showMetricadiaIDDialog, setShowMetricadiaIDDialog] = useState(false);
+  const [metricadiaIDSelectedText, setMetricadiaIDSelectedText] = useState("");
+  const [metricadiaIDSelectionRange, setMetricadiaIDSelectionRange] = useState<{
     from: number;
     to: number;
   } | null>(null);
@@ -138,7 +138,7 @@ export function MetricadiaEditor({
       Underline,
       TextStyle,
       Color,
-      PettyIDMark.configure({ HTMLAttributes: { class: "pettyid-marker" } }),
+      MetricadiaIDMark.configure({ HTMLAttributes: { class: "metricadiaid-marker" } }),
     ],
     content: initialContent,
     editorProps: {
@@ -345,27 +345,27 @@ export function MetricadiaEditor({
     }
   };
 
-  // ── PettyID handlers ───────────────────────────────────────────────────────
-  const handleOpenPettyID = () => {
+  // ── Metricadia ID handlers ───────────────────────────────────────────────────────
+  const handleOpenMetricadiaID = () => {
     if (!editor) return;
     const { from, to } = editor.state.selection;
     const text = editor.state.doc.textBetween(from, to, " ");
     if (!text.trim()) { toast({ title: "No text selected", description: "Select a person's name first.", variant: "destructive" }); return; }
-    setPettyIDSelectedText(text);
-    setPettyIDSelectionRange({ from, to });
-    setShowPettyIDDialog(true);
+    setMetricadiaIDSelectedText(text);
+    setMetricadiaIDSelectionRange({ from, to });
+    setShowMetricadiaIDDialog(true);
   };
 
-  const handleConfirmPettyID = (data: { name: string; imageUrl: string; description?: string }) => {
-    if (!editor || !pettyIDSelectionRange) return;
-    const sanitized = sanitizePettyIDAttributes(data);
-    editor.chain().focus().setTextSelection(pettyIDSelectionRange).setPettyID({
+  const handleConfirmMetricadiaID = (data: { name: string; imageUrl: string; description?: string }) => {
+    if (!editor || !metricadiaIDSelectionRange) return;
+    const sanitized = sanitizeMetricadiaIDAttributes(data);
+    editor.chain().focus().setTextSelection(metricadiaIDSelectionRange).setMetricadiaID({
       name: sanitized.name || "",
       imageUrl: sanitized.imageUrl || "/uploads/fallback-avatar.png",
       description: sanitized.description || undefined,
     }).run();
     toast({ title: "Profile linked", description: `${data.name} is now clickable.` });
-    setPettyIDSelectionRange(null);
+    setMetricadiaIDSelectionRange(null);
   };
 
   if (!editor) return null;
@@ -615,9 +615,9 @@ export function MetricadiaEditor({
 
             <div className="hidden md:block w-px h-8 bg-slate-700 mx-1" />
 
-            {/* PettyID™ */}
-            <Button onClick={handleOpenPettyID} variant="outline" size="sm" className="min-h-[44px] px-3 bg-indigo-900/30 text-indigo-300 border-indigo-600/40 hover:border-indigo-400 font-bold" data-testid="button-pettyid" title="Select a name, then add a PettyID profile">
-              <Zap className="w-4 h-4 mr-1" /><span className="hidden md:inline">PettyID™</span>
+            {/* Metricadia ID™ */}
+            <Button onClick={handleOpenMetricadiaID} variant="outline" size="sm" className="min-h-[44px] px-3 bg-indigo-900/30 text-indigo-300 border-indigo-600/40 hover:border-indigo-400 font-bold" data-testid="button-metricadiaid" title="Select a name, then add a Metricadia ID profile">
+              <Zap className="w-4 h-4 mr-1" /><span className="hidden md:inline">Metricadia ID™</span>
             </Button>
 
             <div className="hidden md:block w-px h-8 bg-slate-700 mx-1" />
@@ -688,12 +688,12 @@ export function MetricadiaEditor({
         </div>
       </div>
 
-      {/* PettyID™ dialog */}
-      <PettyIDDialog
-        open={showPettyIDDialog}
-        onClose={() => setShowPettyIDDialog(false)}
-        selectedText={pettyIDSelectedText}
-        onConfirm={handleConfirmPettyID}
+      {/* Metricadia ID™ dialog */}
+      <MetricadiaIDDialog
+        open={showMetricadiaIDDialog}
+        onClose={() => setShowMetricadiaIDDialog(false)}
+        selectedText={metricadiaIDSelectedText}
+        onConfirm={handleConfirmMetricadiaID}
       />
     </div>
   );

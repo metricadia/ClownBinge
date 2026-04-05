@@ -156,21 +156,21 @@ export function registerMetricadiaRoutes(app: Express) {
     }
   });
 
-  app.get("/api/pettyid/:slug", async (req: Request, res: Response) => {
+  app.get("/api/metricadiaid/:slug", async (req: Request, res: Response) => {
     const { slug } = req.params;
     try {
       return res.status(404).json({ message: "Profile not found" });
     } catch (err) {
-      console.error("[Metricadia] PettyID lookup error:", err);
+      console.error("[Metricadia] Metricadia ID lookup error:", err);
       return res.status(500).json({ message: "Server error" });
     }
   });
 
-  app.get("/api/pettyids", async (_req: Request, res: Response) => {
+  app.get("/api/metricadiaids", async (_req: Request, res: Response) => {
     try {
       return res.json([]);
     } catch (err) {
-      console.error("[Metricadia] PettyIDs list error:", err);
+      console.error("[Metricadia] Metricadia IDs list error:", err);
       return res.status(500).json({ message: "Server error" });
     }
   });

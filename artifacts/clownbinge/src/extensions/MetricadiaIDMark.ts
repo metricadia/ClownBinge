@@ -1,11 +1,11 @@
 import { Mark, mergeAttributes } from '@tiptap/core';
 
-export interface PettyIDOptions {
+export interface MetricadiaIDOptions {
   HTMLAttributes: Record<string, any>;
 }
 
-// Shared sanitization helper for PettyID attributes (used in parseHTML and handleConfirmPettyID)
-export function sanitizePettyIDAttributes(attrs: { name?: string; imageUrl?: string; description?: string }) {
+// Shared sanitization helper for Metricadia ID attributes (used in parseHTML and handleConfirmMetricadiaID)
+export function sanitizeMetricadiaIDAttributes(attrs: { name?: string; imageUrl?: string; description?: string }) {
   // HTML escape function for text content - escapes dangerous characters but NOT forward slashes
   const escapeHtml = (text: string): string => {
     if (!text) return '';
@@ -62,15 +62,15 @@ export function sanitizePettyIDAttributes(attrs: { name?: string; imageUrl?: str
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
-    pettyID: {
-      setPettyID: (attributes: { name: string; imageUrl: string; description?: string }) => ReturnType;
-      unsetPettyID: () => ReturnType;
+    metricadiaID: {
+      setMetricadiaID: (attributes: { name: string; imageUrl: string; description?: string }) => ReturnType;
+      unsetMetricadiaID: () => ReturnType;
     };
   }
 }
 
-export const PettyIDMark = Mark.create<PettyIDOptions>({
-  name: 'pettyID',
+export const MetricadiaIDMark = Mark.create<MetricadiaIDOptions>({
+  name: 'metricadiaID',
 
   addOptions() {
     return {
@@ -84,42 +84,42 @@ export const PettyIDMark = Mark.create<PettyIDOptions>({
         default: null,
         parseHTML: element => {
           // Parse and sanitize legacy content on load
-          const rawName = element.getAttribute('data-pettyid-name') || element.getAttribute('data-pettyq-name');
+          const rawName = element.getAttribute('data-metricadiaid-name') || element.getAttribute('data-metricadiaid-name');
           if (!rawName) return null;
-          const sanitized = sanitizePettyIDAttributes({ name: rawName });
+          const sanitized = sanitizeMetricadiaIDAttributes({ name: rawName });
           return sanitized.name;
         },
         renderHTML: attributes => {
           if (!attributes.name) return {};
-          return { 'data-pettyid-name': attributes.name };
+          return { 'data-metricadiaid-name': attributes.name };
         },
       },
       imageUrl: {
         default: null,
         parseHTML: element => {
           // Parse and sanitize legacy URLs on load
-          const rawUrl = element.getAttribute('data-pettyid-image') || element.getAttribute('data-pettyq-image');
+          const rawUrl = element.getAttribute('data-metricadiaid-image') || element.getAttribute('data-metricadiaid-image');
           if (!rawUrl) return null;
-          const sanitized = sanitizePettyIDAttributes({ imageUrl: rawUrl });
+          const sanitized = sanitizeMetricadiaIDAttributes({ imageUrl: rawUrl });
           return sanitized.imageUrl;
         },
         renderHTML: attributes => {
           if (!attributes.imageUrl) return {};
-          return { 'data-pettyid-image': attributes.imageUrl };
+          return { 'data-metricadiaid-image': attributes.imageUrl };
         },
       },
       description: {
         default: null,
         parseHTML: element => {
           // Parse and sanitize legacy descriptions on load
-          const rawDesc = element.getAttribute('data-pettyid-desc') || element.getAttribute('data-pettyq-desc');
+          const rawDesc = element.getAttribute('data-metricadiaid-desc') || element.getAttribute('data-metricadiaid-desc');
           if (!rawDesc) return null;
-          const sanitized = sanitizePettyIDAttributes({ description: rawDesc });
+          const sanitized = sanitizeMetricadiaIDAttributes({ description: rawDesc });
           return sanitized.description;
         },
         renderHTML: attributes => {
           if (!attributes.description) return {};
-          return { 'data-pettyid-desc': attributes.description };
+          return { 'data-metricadiaid-desc': attributes.description };
         },
       },
     };
@@ -128,16 +128,16 @@ export const PettyIDMark = Mark.create<PettyIDOptions>({
   parseHTML() {
     return [
       {
-        tag: 'span[data-pettyid-name]',
+        tag: 'span[data-metricadiaid-name]',
       },
       {
-        tag: 'span[data-pettyq-name]',
+        tag: 'span[data-metricadiaid-name]',
       },
     ];
   },
 
   renderHTML({ HTMLAttributes }) {
-    // Attributes are already escaped when stored in PM state (see handleConfirmPettyID)
+    // Attributes are already escaped when stored in PM state (see handleConfirmMetricadiaID)
     // Just pass them through without double-escaping
     // URL validation as defense-in-depth
     const isSafeUrl = (url: string): boolean => {
@@ -154,18 +154,18 @@ export const PettyIDMark = Mark.create<PettyIDOptions>({
       }
     };
 
-    const rawImageUrl = HTMLAttributes['data-pettyid-image'] || '';
+    const rawImageUrl = HTMLAttributes['data-metricadiaid-image'] || '';
     const validatedImageUrl = isSafeUrl(rawImageUrl) 
       ? rawImageUrl 
       : '/public-objects/public/fallback-avatar.png';
 
     // Use already-escaped values from PM state
-    const safeName = HTMLAttributes['data-pettyid-name'] || '';
+    const safeName = HTMLAttributes['data-metricadiaid-name'] || '';
     const safeImageUrl = validatedImageUrl;
-    const safeDescription = HTMLAttributes['data-pettyid-desc'] || undefined;
+    const safeDescription = HTMLAttributes['data-metricadiaid-desc'] || undefined;
 
     // Generate test ID from name (sanitized to alphanumeric only)
-    const safeTestId = (HTMLAttributes['data-pettyid-name'] || '')
+    const safeTestId = (HTMLAttributes['data-metricadiaid-name'] || '')
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
@@ -173,13 +173,13 @@ export const PettyIDMark = Mark.create<PettyIDOptions>({
     return [
       'span',
       mergeAttributes(this.options.HTMLAttributes, {
-        'data-pettyid-name': safeName,
-        'data-pettyid-image': safeImageUrl,
-        ...(safeDescription ? { 'data-pettyid-desc': safeDescription } : {}),
-        class: 'pettyid-marker',
+        'data-metricadiaid-name': safeName,
+        'data-metricadiaid-image': safeImageUrl,
+        ...(safeDescription ? { 'data-metricadiaid-desc': safeDescription } : {}),
+        class: 'metricadiaid-marker',
         role: 'button',
         tabindex: '0',
-        'data-testid': `pettyid-${safeTestId}`,
+        'data-testid': `metricadiaid-${safeTestId}`,
       }),
       0,
     ];
@@ -187,12 +187,12 @@ export const PettyIDMark = Mark.create<PettyIDOptions>({
 
   addCommands() {
     return {
-      setPettyID:
+      setMetricadiaID:
         attributes =>
         ({ commands }) => {
           return commands.setMark(this.name, attributes);
         },
-      unsetPettyID:
+      unsetMetricadiaID:
         () =>
         ({ commands }) => {
           return commands.unsetMark(this.name);

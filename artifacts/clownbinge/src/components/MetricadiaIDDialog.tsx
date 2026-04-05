@@ -6,14 +6,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Upload, Sparkles, X } from "lucide-react";
 
-interface PettyIDDialogProps {
+interface MetricadiaIDDialogProps {
   open: boolean;
   onClose: () => void;
   selectedText: string;
   onConfirm: (data: { name: string; imageUrl: string; description?: string }) => void;
 }
 
-export function PettyIDDialog({ open, onClose, selectedText, onConfirm }: PettyIDDialogProps) {
+export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: MetricadiaIDDialogProps) {
   const [name, setName] = useState(selectedText);
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
@@ -87,7 +87,7 @@ export function PettyIDDialog({ open, onClose, selectedText, onConfirm }: PettyI
           <DialogTitle className="flex items-center gap-2 text-2xl">
             <Sparkles className="w-6 h-6 text-indigo-400" />
             <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent font-bold">
-              PettyID™
+              Metricadia ID™
             </span>
             <span className="text-white">Identified</span>
           </DialogTitle>
@@ -105,13 +105,13 @@ export function PettyIDDialog({ open, onClose, selectedText, onConfirm }: PettyI
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Jane Smith"
               className="bg-slate-950 border-slate-700 text-white"
-              data-testid="input-pettyid-name"
+              data-testid="input-metricadiaid-name"
             />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="image-upload" className="text-indigo-400 font-semibold">Upload Photo</Label>
-            <input ref={fileInputRef} type="file" id="image-upload" accept="image/*" onChange={handleFileSelect} className="hidden" data-testid="input-pettyid-image-file" />
+            <input ref={fileInputRef} type="file" id="image-upload" accept="image/*" onChange={handleFileSelect} className="hidden" data-testid="input-metricadiaid-image-file" />
             {!imageUrl ? (
               <Button type="button" onClick={() => fileInputRef.current?.click()} disabled={isUploading} className="w-full bg-indigo-900/40 hover:bg-indigo-800/60 border border-indigo-600/40 text-indigo-300 font-bold" data-testid="button-upload-image">
                 {isUploading ? <><div className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin mr-2" />Uploading...</> : <><Upload className="w-4 h-4 mr-2" />Click to Upload Photo</>}
@@ -135,13 +135,13 @@ export function PettyIDDialog({ open, onClose, selectedText, onConfirm }: PettyI
 
           <div className="space-y-2">
             <Label htmlFor="description" className="text-indigo-400 font-semibold">Description (optional)</Label>
-            <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Brief bio or context..." className="bg-slate-950 border-slate-700 text-white resize-none" rows={3} data-testid="input-pettyid-description" />
+            <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Brief bio or context..." className="bg-slate-950 border-slate-700 text-white resize-none" rows={3} data-testid="input-metricadiaid-description" />
           </div>
 
           <div className="flex gap-3 pt-2">
             <Button onClick={onClose} variant="outline" className="flex-1 bg-slate-950 border-slate-700" data-testid="button-cancel">Cancel</Button>
-            <Button onClick={handleConfirm} disabled={!name.trim() || !imageUrl.trim()} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold" data-testid="button-confirm-pettyid">
-              <Sparkles className="w-4 h-4 mr-2" />Add PettyID™
+            <Button onClick={handleConfirm} disabled={!name.trim() || !imageUrl.trim()} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold" data-testid="button-confirm-metricadiaid">
+              <Sparkles className="w-4 h-4 mr-2" />Add Metricadia ID™
             </Button>
           </div>
         </div>

@@ -3,7 +3,7 @@ import { X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
-interface PettyIDPopupProps {
+interface MetricadiaIDPopupProps {
   open: boolean;
   onClose: () => void;
   name: string;
@@ -11,15 +11,15 @@ interface PettyIDPopupProps {
   description?: string;
 }
 
-export function PettyIDPopup({ open, onClose, name, imageUrl, description }: PettyIDPopupProps) {
+export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description }: MetricadiaIDPopupProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent 
         className="p-0 overflow-hidden max-w-sm border-0 bg-transparent shadow-2xl"
-        data-testid="dialog-pettyid-popup"
+        data-testid="dialog-metricadiaid-popup"
       >
         <VisuallyHidden>
-          <DialogTitle>PettyID: {name}</DialogTitle>
+          <DialogTitle>Metricadia ID: {name}</DialogTitle>
           <DialogDescription>
             {description || `Profile information for ${name}`}
           </DialogDescription>
@@ -36,16 +36,16 @@ export function PettyIDPopup({ open, onClose, name, imageUrl, description }: Pet
           <button
             onClick={onClose}
             className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-stone-900/80 hover:bg-stone-800 flex items-center justify-center transition-colors border border-amber-900/30"
-            data-testid="button-close-pettyid"
+            data-testid="button-close-metricadiaid"
           >
             <X className="w-4 h-4 text-amber-500" />
           </button>
 
-          {/* PettyID™ Badge */}
+          {/* Metricadia ID™ Badge */}
           <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-yellow-400 to-amber-600 shadow-lg">
             <Sparkles className="w-3 h-3 text-stone-950" />
             <span className="text-xs font-bold text-stone-950 tracking-wide">
-              PettyID™
+              Metricadia ID™
             </span>
           </div>
 
