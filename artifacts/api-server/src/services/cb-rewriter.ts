@@ -9,6 +9,24 @@ const QUALIFIER_WORDS = [
   "largely", "primarily", "virtually", "essentially",
 ];
 
+// Attribution verbs: the journalist's evidentiary link between a source and their words.
+// If the original uses one of these, the rewrite must preserve it — paraphrasing
+// "testified" as "said" or "stated" as "noted" changes the legal/factual register.
+const ATTRIBUTION_VERBS = [
+  "said", "stated", "wrote", "testified", "declared", "confirmed",
+  "acknowledged", "explained", "described", "reported", "noted",
+  "announced", "alleged", "claimed", "argued", "contended", "insisted",
+  "maintained", "emphasized", "stressed", "asserted",
+];
+
+function containsDirectQuote(text: string): boolean {
+  return /"[^"]{5,}"/.test(text) || /\u201c[^\u201d]{5,}\u201d/.test(text);
+}
+
+function containsCitationMarker(text: string): boolean {
+  return /::/.test(text) || /https?:\/\//.test(text);
+}
+
 function extractProtectedTerms(text: string): string[] {
   const terms = new Set<string>();
 
@@ -79,6 +97,16 @@ function jsGate(original: string, rewritten: string): { pass: boolean; reason?: 
   for (const passage of quotedPassages) {
     if (!rewritten.includes(passage)) {
       return { pass: false, reason: `quoted passage altered or removed: "${passage.slice(0, 60)}..."` };
+    }
+  }
+
+  // Attribution verbs are evidentiary — "testified" ≠ "said", "alleged" ≠ "claimed".
+  // If the original uses one, the rewrite must use the same one.
+  for (const verb of ATTRIBUTION_VERBS) {
+    const origHas = new RegExp(`\\b${verb}\\b`, "i").test(original);
+    const rewHas = new RegExp(`\\b${verb}\\b`, "i").test(rewritten);
+    if (origHas && !rewHas) {
+      return { pass: false, reason: `attribution verb removed or substituted: "${verb}"` };
     }
   }
 
@@ -190,6 +218,14 @@ export async function paraphraseAcademicSentence(
 ): Promise<string> {
   const trimmed = sentence.trim();
   if (!trimmed || trimmed.length < 20) return trimmed;
+
+  // HARDLOCK — these sentence types must never be paraphrased regardless of AI flags:
+  // 1. Sentences containing direct quotes — primary-source testimony is untouchable.
+  // 2. Citation lines — source records cannot be altered.
+  if (containsDirectQuote(trimmed) || containsCitationMarker(trimmed)) {
+    console.log(`[CBRewrite][Hardlock] Sentence contains quote or citation — returning original.`);
+    return trimmed;
+  }
 
   const basePrompt = buildParaphrasePrompt(trimmed, docType);
   let lastReason: string | undefined;

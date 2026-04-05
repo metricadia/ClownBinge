@@ -40,6 +40,12 @@ FAIL a rewrite if it violates ANY of these rules:
 
 7. PRIMARY SOURCE ATTRIBUTION — If the original names a specific source document, record, or primary source, the rewrite must preserve that attribution verbatim.
 
+8. DIRECT QUOTES — Any text inside quotation marks in the original is a verbatim primary source quotation. It must appear character-for-character in the rewrite, with its surrounding quotation marks. The words inside the quotes may NOT be paraphrased, shortened, rearranged, or altered in any way. If the rewrite omits or changes any quoted text, FAIL immediately.
+
+9. ATTRIBUTION VERBS — The specific verb used to introduce a quotation or claim carries legal and evidentiary weight. If the original uses "testified," "alleged," "declared," "confirmed," "acknowledged," "stated," "wrote," or any other attribution verb, the rewrite must use that same verb. Substituting "said" for "testified" or "noted" for "stated" is a factual error. FAIL if any attribution verb is substituted or dropped.
+
+10. CITATION LINES — Any sentence containing "::" separators or a URL (https://...) is a primary source citation record. It must not be altered in any way. FAIL if any citation line is rewritten.
+
 SENTENCE DIFFS TO REVIEW:
 ${diffBlock}
 

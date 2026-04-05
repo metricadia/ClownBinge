@@ -31,7 +31,12 @@ export function stripHtmlForDetection(html: string): string {
 }
 
 function shouldSkipSentence(sentence: string): boolean {
-  return sentence.trim().length < 20;
+  if (sentence.trim().length < 20) return true;
+  // Hardlock: sentences containing direct quotes are primary-source testimony — never paraphrase
+  if (/"[^"]{5,}"/.test(sentence) || /\u201c[^\u201d]{5,}\u201d/.test(sentence)) return true;
+  // Hardlock: citation markers — already stripped from detection input but skip as a belt-and-suspenders guard
+  if (/::/.test(sentence) || /https?:\/\//.test(sentence)) return true;
+  return false;
 }
 
 export interface ReduceAttempt {
