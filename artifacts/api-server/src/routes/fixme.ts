@@ -65,7 +65,7 @@ router.post("/fixme/detect/:slug", async (req, res) => {
       .set({ aiScore: score, aiScoreTestedAt: new Date(), idsScore: ids.score })
       .where(eq(postsTable.id, post.id));
 
-    res.json({ slug, score, flaggedCount: flaggedSentences.length, idsScore: ids.score, idsBreakdown: ids.breakdown });
+    res.json({ slug, score, flaggedCount: flaggedSentences.length, idsScore: ids.score, idsContentType: ids.contentType, idsBaseline: ids.baseline, idsBreakdown: ids.breakdown });
   } catch (err: unknown) {
     console.error("[FixMe] detect error:", err);
     const message = err instanceof Error ? err.message : "Detection failed";

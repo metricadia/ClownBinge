@@ -236,12 +236,14 @@ export async function reduceAI(
     let rejected = 0;
 
     if (quality.failingIndices.length > 0) {
+      // Reason is batch-level from the quality gate — log it once, not per-rejection
+      console.log(`[CBReduce] Quality gate reason: ${quality.reason}`);
       for (const idx of quality.failingIndices) {
         const diff = diffs[idx - 1];
         if (diff) {
           goodRewrites.delete(diff.before);
           rejected++;
-          console.log(`[CBReduce] Rejected rewrite [${idx}]: "${diff.before.slice(0, 60)}..." — ${quality.reason}`);
+          console.log(`[CBReduce] Rejected rewrite [${idx}]: "${diff.before.slice(0, 60)}..."`);
         }
       }
       console.log(`[CBReduce] Quality gate: ${rejected} rejected, ${goodRewrites.size} accepted`);

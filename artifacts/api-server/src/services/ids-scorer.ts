@@ -262,7 +262,9 @@ function theoreticalRegister(text: string, words: number): number {
 // ── Composite Scorer ───────────────────────────────────────────────────────────
 
 export interface IDSResult {
-  score: number; // 0–100
+  score: number;       // 0–100 composite
+  contentType: ContentType;  // classifier-determined: policy | biographical | theoretical
+  baseline: number;    // expected IDS floor for this content type
   breakdown: {
     citationDensity: number;
     properNounDensity: number;
@@ -300,6 +302,33 @@ const DIM_CAPS = {
   theoreticalRegister: e("IDS_C_THEORETICAL", 12),
 };
 
+// ── Content-Type Classifier ────────────────────────────────────────────────────
+// Classifies by dominant dimension signature, not by editorial label.
+// Biographical articles have sparse institutional/citation signatures.
+// Theoretical articles have meaningful philosophical vocabulary density.
+// Everything else scores against the policy/accountability baseline.
+
+export type ContentType = "policy" | "biographical" | "theoretical";
+
+function classifyContentType(raw: Record<string, number>): ContentType {
+  if (raw.theoreticalRegister >= e("IDS_C_THEORETICAL", 12) * 0.25) {
+    return "theoretical";
+  }
+  if (
+    raw.properNounDensity < e("IDS_C_PROPERNOUN", 30) * 0.17 &&
+    raw.citationDensity   < e("IDS_C_CITATION",   12) * 0.33
+  ) {
+    return "biographical";
+  }
+  return "policy";
+}
+
+const CONTENT_BASELINES: Record<ContentType, number> = {
+  policy:       e("IDS_BLINE_POLICY",       40),
+  biographical: e("IDS_BLINE_BIOGRAPHICAL", 15),
+  theoretical:  e("IDS_BLINE_THEORETICAL",  30),
+};
+
 
 export function scoreIntellectualDensity(htmlBody: string): IDSResult {
   const plain = stripHtml(htmlBody);
@@ -308,6 +337,8 @@ export function scoreIntellectualDensity(htmlBody: string): IDSResult {
   if (words < 50) {
     return {
       score: 0,
+      contentType: "policy" as ContentType,
+      baseline: CONTENT_BASELINES.policy,
       breakdown: { citationDensity: 0, properNounDensity: 0, quantSpecificity: 0, vocabularyRegister: 0, epistemicPrecision: 0, theoreticalRegister: 0 },
       wordCount: words,
     };
@@ -322,6 +353,9 @@ export function scoreIntellectualDensity(htmlBody: string): IDSResult {
     theoreticalRegister: theoreticalRegister(plain, words),
   };
 
+  const contentType = classifyContentType(raw);
+  const baseline = CONTENT_BASELINES[contentType];
+
   // Normalise each dimension 0–100 using its cap, then weight and sum
   let composite = 0;
   for (const dim of Object.keys(DIM_WEIGHTS) as (keyof typeof DIM_WEIGHTS)[]) {
@@ -331,6 +365,8 @@ export function scoreIntellectualDensity(htmlBody: string): IDSResult {
 
   return {
     score: Math.round(composite),
+    contentType,
+    baseline,
     breakdown: raw,
     wordCount: words,
   };
