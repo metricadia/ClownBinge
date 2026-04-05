@@ -122,6 +122,29 @@
     color: #1A3A8F;
   }
 
+  /* Metricadia ID™ — people markers in article body */
+  .metricadiaid-marker,
+  .cb-article-body .metricadiaid-marker,
+  .prose .metricadiaid-marker {
+    color: inherit !important;
+    font-weight: 700 !important;
+    text-decoration: underline !important;
+    text-decoration-style: solid !important;
+    text-decoration-color: #f59e0b !important;
+    text-underline-offset: 3px !important;
+    text-decoration-thickness: 2px !important;
+    cursor: pointer !important;
+    transition: text-decoration-color 0.15s, background-color 0.15s;
+    border-radius: 2px;
+  }
+
+  .metricadiaid-marker:hover,
+  .cb-article-body .metricadiaid-marker:hover,
+  .prose .metricadiaid-marker:hover {
+    text-decoration-color: #d97706 !important;
+    background-color: rgba(251, 191, 36, 0.12);
+  }
+
   /* Article body justification */
   .cb-article-body p {
     text-align: justify;

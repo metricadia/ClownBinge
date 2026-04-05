@@ -14,11 +14,12 @@ import { ClownCheckCTA } from "@/components/ClownCheckCTA";
 import { SponsorBar } from "@/components/SponsorBar";
 import { useCategorySponsor } from "@/hooks/use-sponsor";
 import { RelatedArticles } from "@/components/RelatedArticles";
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo, useState, useCallback } from "react";
 import { format } from "date-fns";
 import { Loader2, AlertTriangle, Lock } from "lucide-react";
 import { useFactoidPopup } from "@/hooks/use-factoid-popup";
 import { FactoidPopup } from "@/components/FactoidPopup";
+import { MetricadiaIDPopup } from "@/components/MetricadiaIDPopup";
 import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
 import { ForensicPivot } from "@/components/ForensicPivot";
@@ -90,6 +91,31 @@ export default function PostDetail() {
   const { containerRef, popupRef, factoid, copied, isMobile, closeFactoid, handleCopy } = useFactoidPopup(
     post ? { articleTitle: post.title } : undefined,
   );
+
+  // ── MetricadiaID™ — people click handler ───────────────────────────────────
+  interface MetricadiaIDPerson { name: string; imageUrl: string; description?: string; }
+  const [activePerson, setActivePerson] = useState<MetricadiaIDPerson | null>(null);
+  const closePersonPopup = useCallback(() => setActivePerson(null), []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handlePersonClick = (e: MouseEvent) => {
+      const span = (e.target as Element).closest("[data-metricadiaid-name]") as HTMLElement | null;
+      if (!span) return;
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      const name = span.dataset.metricadiaidName || "";
+      const imageUrl = span.dataset.metricadiaidImage || "";
+      const description = span.dataset.metricadiaidDesc || undefined;
+      if (name && imageUrl) setActivePerson({ name, imageUrl, description });
+    };
+
+    container.addEventListener("click", handlePersonClick, { capture: true });
+    return () => container.removeEventListener("click", handlePersonClick, { capture: true });
+  }, [containerRef]);
 
   const processedBody = useMemo(() => {
     if (!post?.body) return post?.body ?? "";
@@ -463,6 +489,17 @@ export default function PostDetail() {
 
       </article>
 
+
+      {/* MetricadiaID™ — people popup */}
+      {activePerson && (
+        <MetricadiaIDPopup
+          open={!!activePerson}
+          onClose={closePersonPopup}
+          name={activePerson.name}
+          imageUrl={activePerson.imageUrl}
+          description={activePerson.description}
+        />
+      )}
 
       {/* Factoid Popup / Bottom Sheet */}
       {factoid && (
