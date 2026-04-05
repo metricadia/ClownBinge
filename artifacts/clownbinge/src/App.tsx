@@ -1,6 +1,7 @@
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "@/lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
@@ -24,16 +25,8 @@ import Bookstore from "@/pages/Bookstore";
 import CategoryHub from "@/pages/CategoryHub";
 import Methodology from "@/pages/Methodology";
 import Corrections from "@/pages/Corrections";
+import AdminEditorPage from "@/pages/AdminEditorPage";
 import NotFound from "@/pages/not-found";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -67,6 +60,8 @@ function Router() {
       <Route path="/category/:slug" component={CategoryHub} />
       <Route path="/methodology" component={Methodology} />
       <Route path="/corrections" component={Corrections} />
+      <Route path="/admin/editor/:postId?" component={AdminEditorPage} />
+      <Route path="/admin/editor" component={AdminEditorPage} />
       <Route component={NotFound} />
     </Switch>
     </>

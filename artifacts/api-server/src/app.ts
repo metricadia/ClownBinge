@@ -1,7 +1,10 @@
 import express, { type Express } from "express";
 import cors from "cors";
+import session from "express-session";
 import pinoHttp from "pino-http";
+import path from "path";
 import router from "./routes";
+import { registerMetricadiaRoutes } from "./editor-routes";
 import { logger } from "./lib/logger";
 
 const app: Express = express();
@@ -29,15 +32,28 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Cache-Control for locked records (immutable, long-term cache)
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "change-me-in-production",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 },
+  }),
+);
+
+// Serve uploaded images
+app.use("/uploads", express.static(path.join(process.cwd(), "public", "uploads")));
+
+// Cache-Control for locked records (GET only — never cache mutating requests)
 app.use((req, res, next) => {
-  // Locked records (case files) can be cached indefinitely since they don't change
-  if (req.path.includes("/api/posts/") || req.path.includes("/api/list")) {
+  if (req.method === "GET" && (req.path.includes("/api/posts/") || req.path.includes("/api/list"))) {
     res.setHeader("Cache-Control", "public, max-age=86400, immutable");
   }
   next();
 });
 
 app.use("/api", router);
+
+registerMetricadiaRoutes(app);
 
 export default app;

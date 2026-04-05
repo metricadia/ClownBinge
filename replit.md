@@ -692,3 +692,28 @@ CB Dry Rationalism was named and formalized after Claude.ai identified it as a d
 - Never create tag/category pages with no substantive content
 - Never allow broken external links to primary sources beyond 30 days
 - Never change a slug after indexing
+
+---
+
+## Metricadia Editor
+
+A drop-in WYSIWYG admin CMS panel installed at `/admin/editor`.
+
+**Access**: Navigate to `/admin/editor` in the frontend. Default password is `KoGAlpha#7`.
+
+**Architecture**:
+- Login gate at `GET /admin/editor` → `AdminEditorPage.tsx`
+- Auth endpoints: `POST /api/metricadia/login`, `POST /api/metricadia/logout`, `GET /api/metricadia/auth-status`
+- Post list: `GET /api/metricadia/posts` (auth required, returns all 381 articles)
+- Post save: `PUT /api/posts/:id` (auth required, maps `content` → `body`, `excerpt` → `teaser`)
+- Image upload: `POST /api/upload-image` → saved to `artifacts/api-server/public/uploads/`, served at `/uploads/`
+- PettyID™: inline person-profile marks — clickable popup overlays in articles
+
+**Environment variables** (optional, for production hardening):
+- `SESSION_SECRET` — session signing key (default: `change-me-in-production`)
+- `METRICADIA_ADMIN_HASH` — SHA-256 hash of password+token_secret override
+- `METRICADIA_TOKEN_SECRET` — token salt (default: `metricadia-token-secret-change-me`)
+
+**Client packages added**: `@tiptap/core`, `@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-link`, `@tiptap/extension-image`, `@tiptap/extension-underline`, `@tiptap/extension-color`, `@tiptap/extension-text-style`, `@radix-ui/react-visually-hidden`
+
+**Server packages added**: `express-session`, `multer`, `@types/express-session`, `@types/multer`
