@@ -334,30 +334,68 @@ cd scripts && pnpm sitemap                                    # Regenerate sitem
 
 ---
 
-#### MANDATORY FINAL STEP — CB VIOLATION SCAN (NON-NEGOTIABLE)
+#### PRIME DIRECTIVE — END OF PRODUCTION CHECKLIST (ABSOLUTE LAW)
 
-**BEFORE declaring any article or category done, run the scan. No exceptions. Ever.**
+**An article is not done until this scan exits with zero failures. No article. No category. Ever.**
 
 ```bash
-pnpm --filter @workspace/scripts run scan <category>
-# or for all articles:
+# Single article
+pnpm --filter @workspace/scripts run scan CB-000370
+
+# Full category
+pnpm --filter @workspace/scripts run scan native_and_first_nations
+
+# All published articles
 pnpm --filter @workspace/scripts run scan ALL
 ```
 
-The scan must return **zero violations**. If it returns anything other than zero, fix and re-scan before finishing. This is not optional. This is not a best practice. This is the law.
+The scan enforces five blocks. All five must pass simultaneously. A clean B1 while B2 is failing is NOT a pass. Fix everything, re-run, and only accept exit code 0.
 
-**Why this exists:** ClownBinge is not CNN. ClownBinge is not Fox News. ClownBinge publishes zero opinion, zero interpretation, zero editorial voice. Every word that sneaks through — "remarkable," "significant," an em dash, a forbidden H2 — is an opinion signal. Google E-E-A-T rewards factual density. Opinion words contaminate it. This scan is what separates CB from every other political site on the internet.
+---
 
-**CB Dry Rationalism — FORBIDDEN in all article bodies:**
+**BLOCK 1 — CB DRY RATIONALISM (editorial voice = opinion = forbidden)**
 
-| Category | Forbidden |
+ClownBinge is not CNN. ClownBinge is not Fox News. Zero opinion. Zero interpretation. Zero editorial voice. Every forbidden word is an opinion signal that contaminates Google E-E-A-T.
+
+| Type | Forbidden |
 |---|---|
 | Superlative adjectives | remarkable, significant, extraordinary, profound, monumental, groundbreaking, transformative |
-| Editorial phrases | "stands as", "cannot be overstated", "far beyond mere", "legacy of" |
+| Editorial phrases | "stands as", "cannot be overstated", "far beyond mere" |
 | Forbidden H2 headers | Legacy, Significance, Conclusion, Remarkable, Impact |
-| Structural violations | `<h1>` in body (duplicate H1), em dash (—) in visible text |
-| Terminal interpretation | ends with reflects/indicates/suggests/portrays |
-| Word floor | below 1,380 words |
+| Structural | `<h1>` in body (duplicate H1 = Google penalty), em dash (—) in visible text |
+| Terminal interpretation | paragraph ends with reflects / indicates / suggests / portrays |
+
+**BLOCK 2 — STRUCTURAL MINIMUMS (non-negotiable floors)**
+
+| Check | Minimum |
+|---|---|
+| Word count | 1,380 words |
+| H2 headers | 5 per article |
+| cb-factoid anchors | 3 per article |
+
+This block is what caused the native_and_first_nations retrofit in April 2026. Seven articles had 1–2 factoids. One had 2 H2 headers. These were only caught on a second audit pass. The scan now enforces this automatically on every run.
+
+**BLOCK 3 — SEO REQUIREMENTS**
+
+| Check | Rule |
+|---|---|
+| seo_meta_title | Must exist, must be 52–70 characters |
+| Keyword-first | Must lead with the primary noun (case subject, law name, place name) |
+
+**BLOCK 4 — PUBLICATION STATE**
+
+| Check | Required |
+|---|---|
+| status | `published` |
+| locked | `true` |
+
+**BLOCK 5 — SOURCE QUALITY**
+
+| Check | Rule |
+|---|---|
+| CB citation format | verified_source must contain `::` |
+| Zero-URL Policy | No URLs in verified_source — ever |
+| Primary sources only | No legacy media (NYT, WaPo, CNN, BBC, etc.) — cite the document, not the reporter |
 
 ---
 
