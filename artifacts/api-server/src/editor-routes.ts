@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs";
 import { db, postsTable } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
+import { anthropic } from "@workspace/integrations-anthropic-ai";
 
 const ADMIN_PASSWORD_HASH = hashPassword("KoGAlpha#7");
 const TOKEN_SECRET = process.env.METRICADIA_TOKEN_SECRET || "metricadia-token-secret-change-me";
@@ -153,6 +154,76 @@ export function registerMetricadiaRoutes(app: Express) {
     } catch (err) {
       console.error("[Metricadia] Error updating post:", err);
       return res.status(500).json({ message: "Failed to update post" });
+    }
+  });
+
+  // ── Auto-detect people in article content ────────────────────────────────
+  app.post("/api/metricadia/detect-people", requireMetricadiaAuth, async (req: Request, res: Response) => {
+    const { content } = req.body as { content?: string };
+    if (!content) return res.status(400).json({ message: "content is required" });
+
+    const text = content.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    if (text.length < 50) return res.json({ people: [] });
+
+    try {
+      const message = await anthropic.messages.create({
+        model: "claude-haiku-4-5",
+        max_tokens: 1024,
+        messages: [{
+          role: "user",
+          content: `List all real people (not fictional characters) mentioned by name in this article. Return ONLY a valid JSON array of full name strings, nothing else. Example: ["John Smith","Jane Doe"]. If none, return [].\n\nArticle:\n${text.slice(0, 5000)}`
+        }]
+      });
+
+      const block = message.content[0];
+      if (block.type !== "text") return res.json({ people: [] });
+
+      const jsonMatch = block.text.match(/\[[\s\S]*?\]/);
+      if (!jsonMatch) return res.json({ people: [] });
+
+      let names: string[] = [];
+      try { names = JSON.parse(jsonMatch[0]); } catch { return res.json({ people: [] }); }
+      if (!Array.isArray(names) || names.length === 0) return res.json({ people: [] });
+
+      const uniqueNames = [...new Set(names.map(n => String(n).trim()).filter(Boolean))].slice(0, 15);
+
+      const results = await Promise.allSettled(
+        uniqueNames.map(async (name) => {
+          try {
+            const encoded = encodeURIComponent(name.replace(/ /g, "_"));
+            const wikiRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encoded}`, {
+              headers: { "User-Agent": "ClownBinge/1.0 (metricadiaresearch.com)" }
+            });
+            if (!wikiRes.ok) return { name, imageUrl: null, description: null, found: false };
+
+            const data = await wikiRes.json() as any;
+            if (data.type === "disambiguation" || !data.extract) {
+              return { name, imageUrl: null, description: null, found: false };
+            }
+
+            return {
+              name: data.title || name,
+              imageUrl: data.thumbnail?.source || null,
+              description: data.extract ? (data.extract.length > 220 ? data.extract.slice(0, 220) + "…" : data.extract) : null,
+              wikiUrl: data.content_urls?.desktop?.page || null,
+              found: !!(data.thumbnail?.source),
+            };
+          } catch {
+            return { name, imageUrl: null, description: null, found: false };
+          }
+        })
+      );
+
+      const people = results
+        .filter((r): r is PromiseFulfilledResult<any> => r.status === "fulfilled" && r.value !== null)
+        .map(r => r.value);
+
+      console.log(`[Metricadia] Detected ${people.length} people (${people.filter((p: any) => p.found).length} with images)`);
+      return res.json({ people });
+
+    } catch (err) {
+      console.error("[Metricadia] detect-people error:", err);
+      return res.status(500).json({ message: "Detection failed" });
     }
   });
 

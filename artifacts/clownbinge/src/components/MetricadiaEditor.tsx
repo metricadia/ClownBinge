@@ -38,6 +38,9 @@ import {
   Sparkles,
   Upload,
   Zap,
+  Users,
+  CheckCircle2,
+  AlertCircle,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -57,6 +60,14 @@ import {
 import { MetricadiaIDDialog } from "./MetricadiaIDDialog";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
+
+interface DetectedPerson {
+  name: string;
+  imageUrl: string | null;
+  description: string | null;
+  wikiUrl: string | null;
+  found: boolean;
+}
 
 interface MetricadiaEditorProps {
   postId: string;
@@ -102,6 +113,12 @@ export function MetricadiaEditor({
   const [showMetadata, setShowMetadata] = useState(false);
   const [showEditorBody, setShowEditorBody] = useState(true);
   const [showSEO, setShowSEO] = useState(false);
+
+  // Auto-detect state
+  const [showAutoDetect, setShowAutoDetect] = useState(false);
+  const [autoDetectLoading, setAutoDetectLoading] = useState(false);
+  const [detectedPeople, setDetectedPeople] = useState<DetectedPerson[]>([]);
+  const [approvedPeople, setApprovedPeople] = useState<Set<number>>(new Set());
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
@@ -368,6 +385,78 @@ export function MetricadiaEditor({
     setMetricadiaIDSelectionRange(null);
   };
 
+  // ── Auto-detect: scan article and pull Wikipedia data ──────────────────────
+  const handleAutoDetect = async () => {
+    if (!editor) return;
+    setAutoDetectLoading(true);
+    setShowAutoDetect(true);
+    setDetectedPeople([]);
+    try {
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      const token = sessionStorage.getItem("metricadia_token");
+      if (token) headers["X-Metricadia-Token"] = token;
+
+      const res = await fetch("/api/metricadia/detect-people", {
+        method: "POST",
+        headers,
+        credentials: "include",
+        body: JSON.stringify({ content: editor.getHTML() }),
+      });
+
+      if (!res.ok) throw new Error("Detection failed");
+      const data = await res.json();
+      setDetectedPeople(data.people || []);
+      setApprovedPeople(new Set(
+        (data.people || [])
+          .map((_: DetectedPerson, i: number) => i)
+          .filter((i: number) => (data.people as DetectedPerson[])[i]?.found)
+      ));
+    } catch {
+      toast({ title: "Detection failed", description: "Could not scan the article. Try again.", variant: "destructive" });
+      setShowAutoDetect(false);
+    } finally {
+      setAutoDetectLoading(false);
+    }
+  };
+
+  // ── Apply approved MetricadiaID marks to the HTML ──────────────────────────
+  const applyMetricadiaIDMarks = () => {
+    if (!editor) return;
+    let html = editor.getHTML();
+    let appliedCount = 0;
+
+    for (const idx of approvedPeople) {
+      const person = detectedPeople[idx];
+      if (!person || !person.imageUrl) continue;
+
+      const escapedName = person.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const regex = new RegExp(`\\b${escapedName}\\b`);
+
+      const parts = html.split(/(<[^>]+>)/);
+      let found = false;
+      html = parts.map(part => {
+        if (found || part.startsWith("<")) return part;
+        if (regex.test(part)) {
+          found = true;
+          appliedCount++;
+          const safeDesc = person.description
+            ? person.description.replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+            : "";
+          const safeImg = person.imageUrl!.replace(/"/g, "&quot;");
+          const safeName = person.name.replace(/"/g, "&quot;").replace(/</g, "&lt;");
+          return part.replace(regex, (match) =>
+            `<span data-metricadiaid-name="${safeName}" data-metricadiaid-image="${safeImg}"${safeDesc ? ` data-metricadiaid-desc="${safeDesc}"` : ""} class="metricadiaid-marker" role="button" tabindex="0">${match}</span>`
+          );
+        }
+        return part;
+      }).join("");
+    }
+
+    editor.commands.setContent(html, false);
+    setShowAutoDetect(false);
+    toast({ title: `${appliedCount} Metricadia ID${appliedCount !== 1 ? "s" : ""} applied`, description: "Names are now clickable in the article." });
+  };
+
   if (!editor) return null;
 
   // ── SEO score color ────────────────────────────────────────────────────────
@@ -615,9 +704,13 @@ export function MetricadiaEditor({
 
             <div className="hidden md:block w-px h-8 bg-slate-700 mx-1" />
 
-            {/* Metricadia ID™ */}
+            {/* Metricadia ID™ — manual */}
             <Button onClick={handleOpenMetricadiaID} variant="outline" size="sm" className="min-h-[44px] px-3 bg-indigo-900/30 text-indigo-300 border-indigo-600/40 hover:border-indigo-400 font-bold" data-testid="button-metricadiaid" title="Select a name, then add a Metricadia ID profile">
-              <Zap className="w-4 h-4 mr-1" /><span className="hidden md:inline">Metricadia ID™</span>
+              <Zap className="w-4 h-4 mr-1" /><span className="hidden md:inline">ID™</span>
+            </Button>
+            {/* Metricadia ID™ — auto-detect */}
+            <Button onClick={handleAutoDetect} variant="outline" size="sm" className="min-h-[44px] px-3 bg-amber-900/30 text-amber-300 border-amber-600/40 hover:border-amber-400 font-bold" data-testid="button-auto-detect-people" title="Auto-detect all people in this article">
+              <Users className="w-4 h-4 mr-1" /><span className="hidden md:inline">Auto-ID</span>
             </Button>
 
             <div className="hidden md:block w-px h-8 bg-slate-700 mx-1" />
@@ -695,6 +788,116 @@ export function MetricadiaEditor({
         selectedText={metricadiaIDSelectedText}
         onConfirm={handleConfirmMetricadiaID}
       />
+
+      {/* Auto-detect review modal */}
+      {showAutoDetect && (
+        <div className="fixed inset-0 z-[10002] bg-black/80 flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-amber-600/30 rounded-2xl shadow-2xl flex flex-col max-h-[85vh]">
+
+            {/* Header */}
+            <div className="flex items-center justify-between p-5 border-b border-slate-800 flex-shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-black text-white">Auto-detected People</h2>
+                  <p className="text-xs text-slate-500">Wikipedia images &amp; bios — approve to mark names as clickable</p>
+                </div>
+              </div>
+              <button onClick={() => setShowAutoDetect(false)} className="text-slate-500 hover:text-white p-2 rounded-lg hover:bg-slate-800">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+              {autoDetectLoading && (
+                <div className="flex flex-col items-center justify-center py-16 gap-4">
+                  <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                  <p className="text-slate-400 font-medium">Scanning article &amp; fetching Wikipedia data…</p>
+                </div>
+              )}
+
+              {!autoDetectLoading && detectedPeople.length === 0 && (
+                <div className="text-center py-16 text-slate-500">
+                  <AlertCircle className="w-10 h-10 mx-auto mb-3 text-slate-600" />
+                  <p className="text-lg font-semibold">No people found</p>
+                  <p className="text-sm mt-1">No recognisable real-person names were detected in this article.</p>
+                </div>
+              )}
+
+              {!autoDetectLoading && detectedPeople.map((person, i) => (
+                <label
+                  key={i}
+                  className={`flex items-start gap-4 p-4 rounded-xl border cursor-pointer transition-all ${
+                    approvedPeople.has(i)
+                      ? "bg-amber-950/30 border-amber-600/50"
+                      : "bg-slate-900 border-slate-700 opacity-60"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    className="mt-1 w-5 h-5 rounded accent-amber-500 flex-shrink-0"
+                    checked={approvedPeople.has(i)}
+                    disabled={!person.imageUrl}
+                    onChange={(e) => {
+                      const next = new Set(approvedPeople);
+                      if (e.target.checked) next.add(i); else next.delete(i);
+                      setApprovedPeople(next);
+                    }}
+                  />
+
+                  {/* Thumbnail */}
+                  <div className="flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden bg-slate-800 border border-slate-700">
+                    {person.imageUrl
+                      ? <img src={person.imageUrl} alt={person.name} className="w-full h-full object-cover object-top" />
+                      : <div className="w-full h-full flex items-center justify-center text-slate-600 text-xs text-center p-1">No image</div>
+                    }
+                  </div>
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-bold text-white text-sm">{person.name}</span>
+                      {person.found
+                        ? <span className="flex items-center gap-1 text-xs text-green-400"><CheckCircle2 className="w-3 h-3" />Wikipedia</span>
+                        : <span className="flex items-center gap-1 text-xs text-slate-500"><AlertCircle className="w-3 h-3" />No image — skipped</span>
+                      }
+                    </div>
+                    {person.description && (
+                      <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">{person.description}</p>
+                    )}
+                  </div>
+                </label>
+              ))}
+            </div>
+
+            {/* Footer */}
+            {!autoDetectLoading && detectedPeople.length > 0 && (
+              <div className="flex items-center justify-between gap-3 p-4 border-t border-slate-800 flex-shrink-0">
+                <span className="text-sm text-slate-400">
+                  {approvedPeople.size} of {detectedPeople.filter(p => p.found).length} with images selected
+                </span>
+                <div className="flex gap-3">
+                  <Button variant="outline" size="sm" className="border-slate-700 text-slate-300" onClick={() => setShowAutoDetect(false)}>
+                    Cancel
+                  </Button>
+                  <Button
+                    size="sm"
+                    className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-black font-bold"
+                    disabled={approvedPeople.size === 0}
+                    onClick={applyMetricadiaIDMarks}
+                    data-testid="button-apply-metricadiaid"
+                  >
+                    <CheckCircle2 className="w-4 h-4 mr-2" />Apply {approvedPeople.size} ID{approvedPeople.size !== 1 ? "s" : ""}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
