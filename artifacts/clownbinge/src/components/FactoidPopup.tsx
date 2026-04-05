@@ -31,12 +31,16 @@ function SummaryBody({ factoid }: { factoid: FactoidState }) {
     );
   }
 
-  const paras = typeof factoid.summary === "string"
-    ? factoid.summary.split("||").map(s => s.trim()).filter(Boolean)
+  // Split on || (AI-generated) or \n\n (baked content) — whichever is present
+  const rawParas = typeof factoid.summary === "string"
+    ? factoid.summary.includes("||")
+      ? factoid.summary.split("||").map(s => s.trim()).filter(Boolean)
+      : factoid.summary.split(/\n\n+/).map(s => s.trim()).filter(Boolean)
     : null;
 
-  const body = (paras && paras.length > 1)
-    ? <>{paras.map((p, i) => <p key={i} style={{ marginBottom: i < paras.length - 1 ? "0.7em" : 0 }}>{p}</p>)}</>
+  // Always render as paragraphs (even single para gets <p> for consistent spacing)
+  const body = (rawParas && rawParas.length > 0)
+    ? <>{rawParas.map((p, i) => <p key={i} style={{ marginBottom: i < rawParas.length - 1 ? "0.75em" : 0 }}>{p}</p>)}</>
     : <>{factoid.summary}</>;
 
   // Loading with existing content — show content + subtle expanding indicator
@@ -85,14 +89,13 @@ function FontSizer({ sizeIdx, onChange }: { sizeIdx: SizeIdx; onChange: (i: Size
 
 export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onCopy, extraFooter }: FactoidPopupProps) {
   const domain = factoid.href ? sourceDomain(factoid.href) : "";
-  const [sizeIdx, setSizeIdx] = useState<SizeIdx>(isMobile ? 2 : 1);
+  const [sizeIdx, setSizeIdx] = useState<SizeIdx>(2);
   const fontSize = `${FONT_SIZES[sizeIdx]}px`;
 
   useEffect(() => {
-    if (!isMobile) return;
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = ""; };
-  }, [isMobile]);
+  }, []);
 
   if (isMobile) {
     return createPortal(
@@ -148,10 +151,12 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
   }
 
   return createPortal(
-    <div
+    <>
+      <div className="cb-factoid-sheet-overlay" onClick={onClose} aria-hidden="true" />
+      <div
       ref={popupRef}
       className="cb-factoid-popup"
-      style={{ left: factoid.x, top: factoid.y, "--factoid-font-size": fontSize } as React.CSSProperties}
+      style={{ "--factoid-font-size": fontSize } as React.CSSProperties}
       role="dialog"
       aria-label="ClownBinge Factoid"
     >
@@ -190,7 +195,8 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
         </button>
         {extraFooter}
       </div>
-    </div>,
+    </div>
+    </>,
     document.body
   );
 }

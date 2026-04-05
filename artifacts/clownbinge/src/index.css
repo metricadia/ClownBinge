@@ -189,31 +189,25 @@
     margin-bottom: 0.75rem !important;
   }
 
-  /* Factoid Popup */
+  /* Factoid Popup — fixed bottom-center on all non-mobile viewports */
   .cb-factoid-popup {
-    position: absolute;
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 9999;
-    width: 300px;
-    max-height: 65vh;
-  }
-
-  @media (min-width: 768px) {
-    .cb-factoid-popup {
-      width: 480px;
-      max-height: 70vh;
-    }
-  }
-
-  .cb-factoid-popup {
+    width: calc(100vw - 2rem);
+    max-width: 560px;
+    max-height: 70vh;
     background: linear-gradient(135deg, #fffaee 0%, #e3f2ff 100%);
     color: #111111;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 0;
     box-shadow: 0 12px 40px rgba(0,0,0,0.22), 0 0 0 1px rgba(0,0,0,0.08);
-    transform: translateX(-50%) translateY(calc(-100% - 14px));
     pointer-events: auto;
     display: flex;
     flex-direction: column;
+    animation: cb-sheet-slide-up 0.25s cubic-bezier(0.32, 0.72, 0, 1) both;
   }
 
   .cb-factoid-popup-header {
@@ -269,19 +263,6 @@
 
   .cb-factoid-popup-close:hover {
     background: rgba(0,0,0,0.15);
-  }
-
-  .cb-factoid-popup::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 12px;
-    height: 12px;
-    background: #e3f2ff;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
   }
 
   .cb-factoid-popup-label {

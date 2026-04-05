@@ -31,17 +31,16 @@ Clicked term: "${linkText || domain}"
 What the article says near this term: "${(surroundingText || "").slice(0, 600)}"
 Source domain: "${domain}"
 
-Write a comprehensive 3-5 sentence educational explanation that:
-1. Defines or explains what this concept, law, court case, statistic, organization, or event actually IS — its origin, scope, or mechanics
-2. Provides historical context or key facts that go meaningfully beyond what the article says
-3. Explains why it matters, what its real-world consequences are, or what most people get wrong about it
-4. If relevant, includes a specific, striking, or lesser-known detail that deepens understanding
+Write a 2-paragraph educational explanation. Separate the two paragraphs with the exact token: ||
 
-Be direct and substantive. Write like a knowledgeable journalist briefing a skeptical reader. Do NOT start with "This refers to", "This is", or "This source".`;
+Paragraph 1 (2-3 sentences): Define or explain what this concept, law, statistic, organization, or event actually IS — its origin, scope, or mechanics. Include key historical context.
+Paragraph 2 (2-3 sentences): Why it matters. Real-world consequences, what most people get wrong, or a specific lesser-known detail that deepens understanding.
+
+Be direct and substantive. Write like a knowledgeable journalist briefing a skeptical reader. Do NOT start with "This refers to", "This is", or "This source". Do NOT include any label or heading before the paragraphs — output only the two paragraphs separated by ||.`;
 
     const message = await anthropic.messages.create({
       model: "claude-haiku-4-5",
-      max_tokens: 350,
+      max_tokens: 450,
       messages: [{ role: "user", content: prompt }],
     });
 
