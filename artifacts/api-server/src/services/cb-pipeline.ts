@@ -13,7 +13,7 @@
 import { db, postsTable } from "@workspace/db";
 import { eq, and, gt, isNull, or, asc } from "drizzle-orm";
 import { reduceAI } from "./cb-reducer";
-import { recordErrors, incrementArticlesProcessed, correctOrdinalSuffix, type CaughtError } from "./cb-lessons";
+import { recordErrors, incrementArticlesProcessed, correctOrdinalSuffix, loadLessons, type CaughtError } from "./cb-lessons";
 import * as path from "path";
 import * as fs from "fs";
 
@@ -702,6 +702,179 @@ export async function runCategory(category: string, target = 49): Promise<Catego
   state.stoppedAt = new Date().toISOString();
 
   return report;
+}
+
+// ── Extracted closing scan service (used by route + runAllRemaining) ─────────
+
+export interface ClosingScanReport {
+  category: string;
+  fixed: number;
+  clean: number;
+  total: number;
+}
+
+export async function runClosingScan(category: string): Promise<ClosingScanReport> {
+
+  const articles = await db
+    .select({ id: postsTable.id, caseNumber: postsTable.caseNumber, body: postsTable.body, aiScore: postsTable.aiScore })
+    .from(postsTable)
+    .where(eq(postsTable.category, category as any));
+
+  console.log(`[ClosingScan] Scanning ${articles.length} articles in ${category}...`);
+
+  let fixed = 0;
+  let clean = 0;
+  const errors: CaughtError[] = [];
+
+  for (const article of articles) {
+    const result = checkAndFixClosingMalformation(article.body);
+    if (result.removed) {
+      await db
+        .update(postsTable)
+        .set({ body: result.html })
+        .where(eq(postsTable.id, article.id));
+
+      errors.push({
+        lessonType: "closing_malformation" as any,
+        before: result.removedText?.slice(0, 100) ?? "(unknown)",
+        after: "(removed)",
+        description: `Closing malformation removed from ${article.caseNumber}`,
+        caseNumber: article.caseNumber,
+      });
+
+      fixed++;
+      console.log(`[ClosingScan] ${article.caseNumber} (${article.aiScore ?? "?"}%): REMOVED — "${result.removedText?.slice(0, 80)}"`);
+    } else {
+      clean++;
+    }
+  }
+
+  if (errors.length > 0) {
+    recordErrors(errors);
+  }
+
+  console.log(`[ClosingScan] ${category}: Fixed=${fixed} | Clean=${clean} | Total=${articles.length}`);
+  return { category, fixed, clean, total: articles.length };
+}
+
+// ── Full auto-chain: closing scan + pipeline for all remaining categories ─────
+
+export interface FullRunState {
+  active: boolean;
+  target: number;
+  startedAt: string | null;
+  completedAt: string | null;
+  categories: Array<{
+    category: string;
+    status: "pending" | "scanning" | "running" | "done" | "skipped";
+    closingFixed: number;
+    articlesTotal: number;
+    articlesReached: number;
+    totalRepairs: number;
+    newMLRules: number;
+  }>;
+}
+
+const fullRunState: FullRunState = {
+  active: false,
+  target: 49,
+  startedAt: null,
+  completedAt: null,
+  categories: [],
+};
+
+export function getFullRunState(): FullRunState {
+  return { ...fullRunState, categories: fullRunState.categories.map(c => ({ ...c })) };
+}
+
+export async function runAllRemaining(
+  startFromCategory: string | null = null,
+  target = 49
+): Promise<void> {
+  if (fullRunState.active) {
+    throw new Error("Full run already active.");
+  }
+
+  const startIdx = startFromCategory
+    ? Math.max(0, CATEGORY_ORDER.indexOf(startFromCategory as any))
+    : 0;
+  const categories = CATEGORY_ORDER.slice(startIdx);
+
+  fullRunState.active = true;
+  fullRunState.target = target;
+  fullRunState.startedAt = new Date().toISOString();
+  fullRunState.completedAt = null;
+  fullRunState.categories = categories.map(cat => ({
+    category: cat,
+    status: "pending" as const,
+    closingFixed: 0,
+    articlesTotal: 0,
+    articlesReached: 0,
+    totalRepairs: 0,
+    newMLRules: 0,
+  }));
+
+  console.log(`\n${"█".repeat(60)}`);
+  console.log(`[RunAll] Starting full auto-chain. Categories: ${categories.length} | Target: ≤${target}%`);
+  console.log(`${"█".repeat(60)}`);
+
+  for (const entry of fullRunState.categories) {
+    if (_stopRequested) {
+      console.log("[RunAll] Stop requested — halting full run.");
+      break;
+    }
+
+    const { category } = entry;
+
+    // ── Step 1: Retroactive closing scan ──────────────────────────────────
+    entry.status = "scanning";
+    console.log(`\n[RunAll] → Closing scan: ${category}`);
+    const scanReport = await runClosingScan(category);
+    entry.closingFixed = scanReport.fixed;
+
+    // ── Step 2: Check how many articles actually need reduction ────────────
+    const map = await getCategoryMap(target);
+    const catInfo = map.find(c => c.category === category);
+    if (!catInfo || catInfo.articlesNeedingReduction === 0) {
+      console.log(`[RunAll] ${category}: No articles need reduction. Skipping pipeline run.`);
+      entry.status = "skipped";
+      entry.articlesTotal = 0;
+      continue;
+    }
+
+    // ── Step 3: Run the category pipeline ─────────────────────────────────
+    entry.status = "running";
+    const rulesBefore = loadLessons().machineLearnedRules.length;
+
+    const report = await runCategory(category, target);
+
+    const rulesAfter = loadLessons().machineLearnedRules.length;
+    entry.articlesTotal = report.totalArticles;
+    entry.articlesReached = report.reached;
+    entry.totalRepairs = report.totalRepairs;
+    entry.newMLRules = rulesAfter - rulesBefore;
+    entry.status = "done";
+
+    console.log(`[RunAll] ${category} DONE — reached=${report.reached}/${report.totalArticles} | repairs=${report.totalRepairs} | newMLRules=${entry.newMLRules}`);
+
+    // Small grace period between categories
+    if (!_stopRequested) {
+      console.log(`[RunAll] Pausing 10s before next category...`);
+      await sleep(10_000);
+    }
+  }
+
+  fullRunState.active = false;
+  fullRunState.completedAt = new Date().toISOString();
+
+  // Final ML summary
+  const finalLessons = loadLessons();
+  console.log(`\n${"█".repeat(60)}`);
+  console.log(`[RunAll] ALL CATEGORIES COMPLETE`);
+  console.log(`  Machine-learned rules: ${finalLessons.machineLearnedRules.length}`);
+  console.log(`  Total articles processed: ${finalLessons.totalArticlesProcessed}`);
+  console.log(`  Total repairs applied: ${finalLessons.totalRepairsApplied}`);
+  console.log(`${"█".repeat(60)}\n`);
 }
 
 // ── Category map (live article counts from DB) ─────────────────────────────

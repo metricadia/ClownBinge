@@ -14,6 +14,9 @@ import {
   getCategoryMap,
   CATEGORY_ORDER,
   checkAndFixClosingMalformation,
+  runClosingScan,
+  runAllRemaining,
+  getFullRunState,
 } from "../services/cb-pipeline";
 import { getLessonsSummary, loadLessons, recordErrors } from "../services/cb-lessons";
 
@@ -592,64 +595,57 @@ router.post("/fixme/pipeline/stop", (_req, res) => {
 });
 
 // POST /api/fixme/pipeline/scan-closing/:category
-// Retroactive closing malformation scan — runs on ALL articles in category
-// (including already-locked ones). Finds and removes forbidden closing paragraphs.
-// Safe to run while pipeline is stopped.
+// Retroactive closing malformation scan — runs on ALL articles in a category
+// (including already-locked ones). Uses the shared service function.
 router.post("/fixme/pipeline/scan-closing/:category", async (req, res) => {
   const { category } = req.params as { category: string };
-
   res.json({
     message: `Retroactive closing scan started for category: ${category}`,
     note: "Check server logs for per-article results.",
   });
+  runClosingScan(category).catch(err => console.error(`[ClosingScan] Error:`, err));
+});
 
-  (async () => {
-    try {
-      const articles = await db
-        .select({ id: postsTable.id, caseNumber: postsTable.caseNumber, body: postsTable.body, aiScore: postsTable.aiScore })
-        .from(postsTable)
-        .where(eq(postsTable.category, category as any));
+// GET /api/fixme/pipeline/fullrun-status — status of the all-categories run
+router.get("/fixme/pipeline/fullrun-status", (_req, res) => {
+  res.setHeader("Cache-Control", "no-store");
+  res.json(getFullRunState());
+});
 
-      console.log(`[ClosingScan] Scanning ${articles.length} articles in ${category}...`);
+// POST /api/fixme/pipeline/run-all — run ALL remaining categories (closing scan + pipeline each)
+// Optional body: { startFrom: "category_slug", target: 49 }
+router.post("/fixme/pipeline/run-all", async (req, res) => {
+  const startFrom: string | null = req.body?.startFrom ?? null;
+  const target: number = typeof req.body?.target === "number" ? req.body.target : 49;
 
-      let fixed = 0;
-      let clean = 0;
-      const errors: Parameters<typeof recordErrors>[0] = [];
+  const fullState = getFullRunState();
+  if (fullState.active) {
+    res.status(409).json({
+      error: "Full run already active",
+      categories: fullState.categories.map(c => `${c.category}: ${c.status}`),
+    });
+    return;
+  }
 
-      for (const article of articles) {
-        const result = checkAndFixClosingMalformation(article.body);
-        if (result.removed) {
-          await db
-            .update(postsTable)
-            .set({ body: result.html })
-            .where(eq(postsTable.id, article.id));
+  const pipeState = getPipelineState();
+  if (pipeState.running) {
+    res.status(409).json({
+      error: "Single-category pipeline is running. Stop it first or wait for it to finish.",
+      currentCategory: pipeState.currentCategory,
+    });
+    return;
+  }
 
-          errors.push({
-            lessonType: "closing_malformation" as any,
-            before: result.removedText?.slice(0, 100) ?? "(unknown)",
-            after: "(removed)",
-            description: `Closing malformation removed from ${article.caseNumber}`,
-            caseNumber: article.caseNumber,
-          });
+  res.json({
+    message: `Full auto-chain started. Each category: closing scan → pipeline → ML update.`,
+    startFrom: startFrom ?? "native_and_first_nations (first in order)",
+    target,
+    note: "Poll GET /api/fixme/pipeline/fullrun-status for progress.",
+  });
 
-          fixed++;
-          console.log(`[ClosingScan] ${article.caseNumber} (${article.aiScore ?? "?"}%): closing malformation REMOVED`);
-          console.log(`  Pattern: ${result.pattern}`);
-          console.log(`  Text: "${result.removedText?.slice(0, 100)}"`);
-        } else {
-          clean++;
-        }
-      }
-
-      if (errors.length > 0) {
-        recordErrors(errors);
-      }
-
-      console.log(`[ClosingScan] Complete. Fixed: ${fixed} | Clean: ${clean} | Total: ${articles.length}`);
-    } catch (err) {
-      console.error(`[ClosingScan] Error:`, err);
-    }
-  })();
+  runAllRemaining(startFrom, target).catch(err => {
+    console.error("[RunAll] Fatal error:", err);
+  });
 });
 
 // POST /api/fixme/pipeline/run/:category — run ONE category then stop

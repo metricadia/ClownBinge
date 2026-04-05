@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-05T02:15:55.227Z",
-  "totalArticlesProcessed": 18,
-  "totalRepairsApplied": 141,
+  "lastUpdated": "2026-04-05T02:22:31.366Z",
+  "totalArticlesProcessed": 23,
+  "totalRepairsApplied": 170,
   "patterns": {
     "em_dash::—→,": {
       "lessonType": "em_dash",
       "description": "\"—\" corrected to \",\"",
       "before": "—",
       "after": ",",
-      "count": 48,
+      "count": 55,
       "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
-        "CB-000382",
         "CB-000367",
         "CB-000342",
         "CB-000335",
-        "CB-000380"
+        "CB-000380",
+        "CB-000350"
       ],
       "promotedToRule": "No em dashes (—) in article body. Use a comma or restructure the sentence."
     },
@@ -105,13 +105,14 @@
       "description": "\"\"Landscape Astronomy Across North America Beyond\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Landscape Astronomy Across North America Beyond\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000360"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"\"Landscape Astronomy Across North America Beyond\" not found in reduced body\"."
     },
     "quality_proper_noun_missing::\"The Bighorn Medicine Wheel\" not found in reduced body→(flagged for review)": {
       "lessonType": "quality_proper_noun_missing",
@@ -131,26 +132,28 @@
       "description": "\"\"The Chaco Canyon\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"The Chaco Canyon\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000360"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"\"The Chaco Canyon\" not found in reduced body\"."
     },
     "quality_proper_noun_missing::\"Period Astronomical Knowledge The\" not found in reduced body→(flagged for review)": {
       "lessonType": "quality_proper_noun_missing",
       "description": "\"\"Period Astronomical Knowledge The\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Period Astronomical Knowledge The\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000360"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"\"Period Astronomical Knowledge The\" not found in reduced body\"."
     },
     "quality_proper_noun_missing::\"The Americas\" not found in reduced body→(flagged for review)": {
       "lessonType": "quality_proper_noun_missing",
@@ -482,104 +485,112 @@
       "description": "\"\"The Pacific Northwest\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"The Pacific Northwest\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000364"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"\"The Pacific Northwest\" not found in reduced body\"."
     },
     "quality_proper_noun_missing::\"How Indigenous Ecology Worked The\" not found in reduced body→(flagged for review)": {
       "lessonType": "quality_proper_noun_missing",
       "description": "\"\"How Indigenous Ecology Worked The\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"How Indigenous Ecology Worked The\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000364"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"\"How Indigenous Ecology Worked The\" not found in reduced body\"."
     },
     "quality_quote_missing::Quote removed: \" (edited by Thomas C. Blackburn and Kat Anderson in 1993), revealed that Califor\"→(flagged for review)": {
       "lessonType": "quality_quote_missing",
       "description": "\"Quote removed: \" (edited by Thomas C. Blackburn and Kat Anderson in 1993), revealed that Califor\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" (edited by Thomas C. Blackburn and Kat Anderson in 1993), revealed that Califor\"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000364"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" (edited by Thomas C. Blackburn and Kat Anderson in 1993), revealed that Califor\"\"."
     },
     "quality_quote_missing::Quote removed: \" (1982) documented how Indigenous peoples throughout North America employed cont\"→(flagged for review)": {
       "lessonType": "quality_quote_missing",
       "description": "\"Quote removed: \" (1982) documented how Indigenous peoples throughout North America employed cont\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" (1982) documented how Indigenous peoples throughout North America employed cont\"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000364"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" (1982) documented how Indigenous peoples throughout North America employed cont\"\"."
     },
     "quality_quote_missing::Quote removed: \" how fire management represented a form of reciprocal relationship with the land\"→(flagged for review)": {
       "lessonType": "quality_quote_missing",
       "description": "\"Quote removed: \" how fire management represented a form of reciprocal relationship with the land\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" how fire management represented a form of reciprocal relationship with the land\"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000364"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" how fire management represented a form of reciprocal relationship with the land\"\"."
     },
     "quality_quote_missing::Quote removed: \" (2005) documents an extensive network of managed forests, wetlands, and coastal\"→(flagged for review)": {
       "lessonType": "quality_quote_missing",
       "description": "\"Quote removed: \" (2005) documents an extensive network of managed forests, wetlands, and coastal\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" (2005) documents an extensive network of managed forests, wetlands, and coastal\"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000364"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" (2005) documents an extensive network of managed forests, wetlands, and coastal\"\"."
     },
     "quality_quote_missing::Quote removed: \" that these food forests embodied permacultural principles decades before the te\"→(flagged for review)": {
       "lessonType": "quality_quote_missing",
       "description": "\"Quote removed: \" that these food forests embodied permacultural principles decades before the te\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" that these food forests embodied permacultural principles decades before the te\"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000364"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" that these food forests embodied permacultural principles decades before the te\"\"."
     },
     "quality_quote_missing::Quote removed: \" presents extensive documentation from explorer journals, ethnographic records, \"→(flagged for review)": {
       "lessonType": "quality_quote_missing",
       "description": "\"Quote removed: \" presents extensive documentation from explorer journals, ethnographic records, \"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" presents extensive documentation from explorer journals, ethnographic records, \"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000364"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" presents extensive documentation from explorer journals, ethnographic records, \"\"."
     },
     "quality_proper_noun_missing::\"Beaded Memory The Haudenosaunee\" not found in reduced body→(flagged for review)": {
       "lessonType": "quality_proper_noun_missing",
@@ -1080,13 +1091,14 @@
       "description": "\"\"Administrative Infrastructure The\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Administrative Infrastructure The\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
       "exampleArticles": [
         "CB-000337"
-      ]
+      ],
+      "promotedToRule": "Writing rule: use \"(flagged for review)\" not \"\"Administrative Infrastructure The\" not found in reduced body\"."
     },
     "closing_malformation::The Hohokam canal system stands as one of North America's greatest pre-Columbian engineering achieve→(removed)": {
       "lessonType": "closing_malformation",
@@ -1230,9 +1242,151 @@
       "exampleArticles": [
         "CB-000383"
       ]
+    },
+    "quality_proper_noun_missing::\"The Underlying Epidemic The National Institute\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Underlying Epidemic The National Institute\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Underlying Epidemic The National Institute\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:21:49.108Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
+      "exampleArticles": [
+        "CB-000377"
+      ]
+    },
+    "quality_proper_noun_missing::\"Not Invisible Act The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Not Invisible Act The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Not Invisible Act The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:21:49.108Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
+      "exampleArticles": [
+        "CB-000377"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Not Invisible Act Commission\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Not Invisible Act Commission\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Not Invisible Act Commission\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:21:49.108Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
+      "exampleArticles": [
+        "CB-000377"
+      ]
+    },
+    "quality_proper_noun_missing::\"What Adequate Federal Response Would Require An\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"What Adequate Federal Response Would Require An\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"What Adequate Federal Response Would Require An\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:21:49.108Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
+      "exampleArticles": [
+        "CB-000377"
+      ]
+    },
+    "quality_proper_noun_missing::\"Historical Legacy The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Historical Legacy The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Historical Legacy The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:21:49.108Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
+      "exampleArticles": [
+        "CB-000350"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" land — the acreage that remained after allotments were distributed to tribal me\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" land — the acreage that remained after allotments were distributed to tribal me\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" land — the acreage that remained after allotments were distributed to tribal me\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:21:49.108Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
+      "exampleArticles": [
+        "CB-000350"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" this mathematical reality meant that surplus land designations covered the majo\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" this mathematical reality meant that surplus land designations covered the majo\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" this mathematical reality meant that surplus land designations covered the majo\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:21:49.108Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
+      "exampleArticles": [
+        "CB-000350"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" provided detailed quantification of this process. McDonnell documented that in \"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" provided detailed quantification of this process. McDonnell documented that in \"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" provided detailed quantification of this process. McDonnell documented that in \"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:21:49.108Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
+      "exampleArticles": [
+        "CB-000350"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" documented the systematic dispossession of the Five Civilized Tribes and other \"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" documented the systematic dispossession of the Five Civilized Tribes and other \"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" documented the systematic dispossession of the Five Civilized Tribes and other \"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:21:49.108Z",
+      "lastSeen": "2026-04-05T02:21:49.108Z",
+      "exampleArticles": [
+        "CB-000350"
+      ]
+    },
+    "closing_malformation::The domestication of maize from teosinte stands as a foundational achievement in human agricultural →(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000365",
+      "before": "The domestication of maize from teosinte stands as a foundational achievement in human agricultural ",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:22:31.366Z",
+      "lastSeen": "2026-04-05T02:22:31.366Z",
+      "exampleArticles": [
+        "CB-000365"
+      ]
     }
   },
   "machineLearnedRules": [
-    "No em dashes (—) in article body. Use a comma or restructure the sentence."
+    "No em dashes (—) in article body. Use a comma or restructure the sentence.",
+    "Writing rule: use \"(flagged for review)\" not \"\"Landscape Astronomy Across North America Beyond\" not found in reduced body\".",
+    "Writing rule: use \"(flagged for review)\" not \"\"The Chaco Canyon\" not found in reduced body\".",
+    "Writing rule: use \"(flagged for review)\" not \"\"Period Astronomical Knowledge The\" not found in reduced body\".",
+    "Writing rule: use \"(flagged for review)\" not \"\"The Pacific Northwest\" not found in reduced body\".",
+    "Writing rule: use \"(flagged for review)\" not \"\"How Indigenous Ecology Worked The\" not found in reduced body\".",
+    "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" (edited by Thomas C. Blackburn and Kat Anderson in 1993), revealed that Califor\"\".",
+    "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" (1982) documented how Indigenous peoples throughout North America employed cont\"\".",
+    "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" how fire management represented a form of reciprocal relationship with the land\"\".",
+    "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" (2005) documents an extensive network of managed forests, wetlands, and coastal\"\".",
+    "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" that these food forests embodied permacultural principles decades before the te\"\".",
+    "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" presents extensive documentation from explorer journals, ethnographic records, \"\".",
+    "Writing rule: use \"(flagged for review)\" not \"\"Administrative Infrastructure The\" not found in reduced body\"."
   ]
 }
