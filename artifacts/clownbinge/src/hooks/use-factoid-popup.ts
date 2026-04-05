@@ -150,11 +150,37 @@ export function useFactoidPopup(meta?: FactoidMeta) {
 
       setCopied(false);
 
+      const surroundingText =
+        target.closest("p, li, blockquote")?.textContent?.trim() || "";
+
       if (existingSummary) {
-        // Pre-written contextual summary — show immediately
-        setFactoid({ title: existingTitle, summary: existingSummary, href, x, y });
+        // Show baked content immediately for instant feedback, then fetch
+        // a comprehensive educational expansion in the background.
+        setFactoid({ title: existingTitle, summary: existingSummary, href, x, y, isLoading: true });
+
+        fetchContextualSummary(
+          href,
+          linkText,
+          surroundingText,
+          meta?.articleTitle || document.title || "",
+        )
+          .then(({ title, summary }) => {
+            setFactoid((prev) =>
+              prev && prev.x === x && prev.y === y
+                ? { ...prev, title, summary, isLoading: false }
+                : prev,
+            );
+          })
+          .catch(() => {
+            // Fall back to the baked summary silently
+            setFactoid((prev) =>
+              prev && prev.x === x && prev.y === y
+                ? { ...prev, isLoading: false }
+                : prev,
+            );
+          });
       } else {
-        // No summary — show loading state, then fetch contextual explanation
+        // No summary — show loading state, then fetch comprehensive explanation
         setFactoid({
           title: existingTitle,
           summary: "",
@@ -163,9 +189,6 @@ export function useFactoidPopup(meta?: FactoidMeta) {
           y,
           isLoading: true,
         });
-
-        const surroundingText =
-          target.closest("p, li, blockquote")?.textContent?.trim() || "";
 
         fetchContextualSummary(
           href,

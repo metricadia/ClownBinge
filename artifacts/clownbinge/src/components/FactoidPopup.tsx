@@ -21,21 +21,38 @@ function sourceDomain(href: string): string {
 }
 
 function SummaryBody({ factoid }: { factoid: FactoidState }) {
-  if (factoid.isLoading) {
+  // Loading with no content yet — show spinner only
+  if (factoid.isLoading && !factoid.summary) {
     return (
       <div className="flex items-center gap-2 text-[13px] text-gray-400 italic py-1">
         <Loader2 size={13} className="animate-spin shrink-0" strokeWidth={2} />
-        <span>Analyzing source in context…</span>
+        <span>Loading context…</span>
       </div>
     );
   }
+
   const paras = typeof factoid.summary === "string"
     ? factoid.summary.split("||").map(s => s.trim()).filter(Boolean)
     : null;
-  if (paras && paras.length > 1) {
-    return <>{paras.map((p, i) => <p key={i} style={{ marginBottom: i < paras.length - 1 ? "0.7em" : 0 }}>{p}</p>)}</>;
+
+  const body = (paras && paras.length > 1)
+    ? <>{paras.map((p, i) => <p key={i} style={{ marginBottom: i < paras.length - 1 ? "0.7em" : 0 }}>{p}</p>)}</>
+    : <>{factoid.summary}</>;
+
+  // Loading with existing content — show content + subtle expanding indicator
+  if (factoid.isLoading) {
+    return (
+      <>
+        {body}
+        <div className="flex items-center gap-1.5 mt-2 text-[10px] text-gray-400 italic">
+          <Loader2 size={10} className="animate-spin shrink-0" strokeWidth={2} />
+          <span>Expanding…</span>
+        </div>
+      </>
+    );
   }
-  return <>{factoid.summary}</>;
+
+  return body;
 }
 
 function FontSizer({ sizeIdx, onChange }: { sizeIdx: SizeIdx; onChange: (i: SizeIdx) => void }) {

@@ -22,25 +22,26 @@ router.post("/factoid-context", async (req, res) => {
       domain = href ? new URL(href).hostname.replace(/^www\./, "") : "";
     } catch {}
 
-    const prompt = `You are a primary source citation assistant for ClownBinge, a public accountability journalism platform.
+    const prompt = `You are an educational companion for ClownBinge, a public accountability journalism platform.
 
-A reader clicked a link in an article. Explain what this source is and why it's relevant to what the article is talking about.
+A reader clicked a factoid link in an article. Your job is to EDUCATE them — give them context and knowledge they do NOT already have from the article. Do not repeat what the article already says.
 
 Article title: "${articleTitle || "Accountability journalism"}"
-Link text: "${linkText || domain}"
+Clicked term: "${linkText || domain}"
+What the article says near this term: "${(surroundingText || "").slice(0, 600)}"
 Source domain: "${domain}"
-Surrounding article text: "${(surroundingText || "").slice(0, 600)}"
 
-Write a 2-3 sentence explanation that:
-1. Identifies what this source/organization is
-2. Explains its relevance to the specific claim or topic in the surrounding text
-3. States why it counts as a primary source or authoritative reference
+Write a comprehensive 3-5 sentence educational explanation that:
+1. Defines or explains what this concept, law, court case, statistic, organization, or event actually IS — its origin, scope, or mechanics
+2. Provides historical context or key facts that go meaningfully beyond what the article says
+3. Explains why it matters, what its real-world consequences are, or what most people get wrong about it
+4. If relevant, includes a specific, striking, or lesser-known detail that deepens understanding
 
-Keep it factual, direct, and under 80 words. Do not start with "This source" or "This link". Write as if briefing a skeptical reader who wants to know exactly what they would find there.`;
+Be direct and substantive. Write like a knowledgeable journalist briefing a skeptical reader. Do NOT start with "This refers to", "This is", or "This source".`;
 
     const message = await anthropic.messages.create({
       model: "claude-haiku-4-5",
-      max_tokens: 200,
+      max_tokens: 350,
       messages: [{ role: "user", content: prompt }],
     });
 
