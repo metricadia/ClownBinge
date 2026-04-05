@@ -5,12 +5,13 @@
  * It must pass completely — every block, every check — before any article
  * or category is declared finished. No partial passes. No exceptions.
  *
- * Five blocks are checked:
+ * Six blocks are checked:
  *   BLOCK 1 — CB Dry Rationalism (forbidden words, phrases, structures)
  *   BLOCK 2 — Structural Minimums (words, H2s, factoids)
  *   BLOCK 3 — SEO Requirements (seo_meta_title)
  *   BLOCK 4 — Publication State (status, locked)
  *   BLOCK 5 — Source Quality (CB citation format, no URLs, no legacy media)
+ *   BLOCK 6 — Title Quality (no em dashes in public title)
  *
  * Usage:
  *   pnpm --filter @workspace/scripts run scan <category>
@@ -74,7 +75,7 @@ async function main() {
       (body ~* '<h2>[^<]*(legacy|significance|conclusion|remarkable|impact)[^<]*</h2>') AS b1_bad_h2,
       (body ~* '<h1')                                                          AS b1_body_h1,
       (regexp_replace(body, 'data-[a-z]+="[^"]*"', '', 'g') LIKE '%—%')      AS b1_em_dash,
-      (body ~* '(reflects|indicates|suggests|portrays)\\.</p>')                AS b1_terminal_interp,
+      (body ~* '(reflects|indicates|suggests|portrays|reveals)\\.</p>')       AS b1_terminal_interp,
 
       -- BLOCK 2: Structural Minimums
       array_length(string_to_array(
@@ -93,7 +94,11 @@ async function main() {
       -- BLOCK 5: Source Quality
       (verified_source NOT LIKE '%::%' OR verified_source IS NULL)            AS b5_no_citations,
       (verified_source ILIKE '%http%')                                         AS b5_has_url,
-      verified_source                                                          AS b5_source_text
+      verified_source                                                          AS b5_source_text,
+
+      -- BLOCK 6: Title Quality
+      title,
+      (title LIKE '%—%')                                                       AS b6_title_em_dash
 
     FROM posts
     ${whereClause}
@@ -132,6 +137,8 @@ async function main() {
     b5_no_citations: boolean;
     b5_has_url: boolean;
     b5_source_text: string | null;
+    title: string;
+    b6_title_em_dash: boolean;
   };
 
   type Violation = {
@@ -149,6 +156,7 @@ async function main() {
     const b3: string[] = [];
     const b4: string[] = [];
     const b5: string[] = [];
+    const b6: string[] = [];
 
     // BLOCK 1 — CB Dry Rationalism
     if (row.b1_remarkable)     b1.push("'remarkable'");
@@ -201,12 +209,17 @@ async function main() {
       }
     }
 
+    // BLOCK 6 — Title Quality
+    if (row.b6_title_em_dash)
+      b6.push(`Em dash (—) in public title: "${row.title.substring(0, 80)}..."`);
+
     const allIssues = [
       ...b1.map(i => `  [B1-EDITORIAL]    ${i}`),
       ...b2.map(i => `  [B2-STRUCTURE]    ${i}`),
       ...b3.map(i => `  [B3-SEO]          ${i}`),
       ...b4.map(i => `  [B4-STATE]        ${i}`),
       ...b5.map(i => `  [B5-SOURCES]      ${i}`),
+      ...b6.map(i => `  [B6-TITLE]        ${i}`),
     ];
 
     if (allIssues.length > 0) {
@@ -219,6 +232,7 @@ async function main() {
           b3.length ? "B3" : "",
           b4.length ? "B4" : "",
           b5.length ? "B5" : "",
+          b6.length ? "B6" : "",
         ].filter(Boolean).join("+"),
         issues: allIssues,
       });
@@ -241,6 +255,7 @@ async function main() {
   ✓  BLOCK 3 — SEO Requirements       PASS
   ✓  BLOCK 4 — Publication State      PASS
   ✓  BLOCK 5 — Source Quality         PASS
+  ✓  BLOCK 6 — Title Quality          PASS
 
   ALL CLEAR — ${total} article(s) ready for production.
 `);

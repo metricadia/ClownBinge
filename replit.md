@@ -349,7 +349,7 @@ pnpm --filter @workspace/scripts run scan native_and_first_nations
 pnpm --filter @workspace/scripts run scan ALL
 ```
 
-The scan enforces five blocks. All five must pass simultaneously. A clean B1 while B2 is failing is NOT a pass. Fix everything, re-run, and only accept exit code 0.
+The scan enforces six blocks. All six must pass simultaneously. A clean B1 while B2 is failing is NOT a pass. Fix everything, re-run, and only accept exit code 0.
 
 ---
 
@@ -396,6 +396,14 @@ This block is what caused the native_and_first_nations retrofit in April 2026. S
 | CB citation format | verified_source must contain `::` |
 | Zero-URL Policy | No URLs in verified_source — ever |
 | Primary sources only | No legacy media (NYT, WaPo, CNN, BBC, etc.) — cite the document, not the reporter |
+
+**BLOCK 6 — TITLE QUALITY**
+
+| Check | Rule |
+|---|---|
+| Em dash in title | NEVER. The `title` field renders in the page `<h1>` and JSON-LD. Replace ` — ` with `,` or remove. |
+
+The N&FN retrofit (April 2026) added this block after architect review found 7 public titles with em dashes that the 5-block gate had never checked. The scan now enforces this automatically.
 
 ---
 
