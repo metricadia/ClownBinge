@@ -183,8 +183,20 @@ function deriveRule(entry: LessonEntry): string | null {
       return `Do not write "X% percent" — write "X%" or "X percent", not both.`;
     case "plural_million":
       return `Write "$X million" (singular), not "$X millions".`;
-    default:
+    case "quality_number_missing":
+    case "quality_noun_missing":
+    case "quality_quote_missing":
+      // Pipeline quality-gate artifacts — these record internal error strings,
+      // not writing patterns. Never promote to generator rules.
+      return null;
+    default: {
+      // Guard: reject anything where after/before look like internal pipeline messages
+      const PIPELINE_MARKERS = ["(flagged for review)", "not found in reduced body", "Quote removed:", "flagged for"];
+      if (PIPELINE_MARKERS.some(m => entry.after.includes(m) || entry.before.includes(m))) {
+        return null;
+      }
       return `Writing rule: use "${entry.after}" not "${entry.before}".`;
+    }
   }
 }
 
