@@ -192,7 +192,15 @@ export function autoRepair(html: string): { html: string; repairs: Repair[] } {
     return ", ";
   });
 
-  // 4. Contractions (survive reduction when the original sentence wasn't rewritten)
+  // 4. Strip <h1> tags from article body — PostDetail.tsx renders H1 from post.title (line 242).
+  //    A body H1 creates a duplicate H1, which Google penalizes. This is a hard structural rule.
+  fixed = fixed.replace(/<h1[^>]*>[\s\S]*?<\/h1>\s*/gi, (match) => {
+    repairs.push({ type: "duplicate_h1_stripped", before: match.slice(0, 80).replace(/\s+/g, " "), after: "(removed — frontend renders H1 from post.title)" });
+    return "";
+  });
+  fixed = fixed.trim();
+
+  // 5. Contractions (survive reduction when the original sentence wasn't rewritten)
   const contractions: Array<[RegExp, string, string]> = [
     [/\bweren't\b/g, "weren't", "were not"],
     [/\bwasn't\b/g, "wasn't", "was not"],
