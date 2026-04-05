@@ -111,7 +111,7 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
           <div className="cb-factoid-sheet-handle" aria-hidden="true" />
 
           <div className="cb-factoid-popup-header cb-factoid-sheet-header" style={{ position: "relative" }}>
-            <div className="cb-factoid-popup-label">Primary Source Reference</div>
+            <div className="cb-factoid-popup-label">Deep Dive Factoid by Metricadia Research LLC</div>
             <FontSizer sizeIdx={sizeIdx} onChange={setSizeIdx} />
             <button className="cb-factoid-popup-close" onClick={onClose} aria-label="Close" style={{ top: 6, right: 6 }}>
               <X size={11} strokeWidth={2.5} />
@@ -166,7 +166,7 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
       </button>
 
       <div className="cb-factoid-popup-header">
-        <div className="cb-factoid-popup-label">Primary Source Reference</div>
+        <div className="cb-factoid-popup-label">Deep Dive Factoid by Metricadia Research LLC</div>
       </div>
 
       <div className="cb-factoid-popup-scrollable">
