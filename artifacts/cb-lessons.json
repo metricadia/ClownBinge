@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-05T03:38:34.654Z",
-  "totalArticlesProcessed": 65,
+  "lastUpdated": "2026-04-05T03:50:10.220Z",
+  "totalArticlesProcessed": 85,
   "totalRepairsApplied": 266,
   "patterns": {
     "em_dash::—→,": {
