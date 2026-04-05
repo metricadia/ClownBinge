@@ -127,12 +127,13 @@ export default function PostDetail() {
       /<div class="cb-factoid">\s*<strong>CB Factoid:<\/strong>\s*([\s\S]*?)<\/div>/g,
       (_, rawText: string) => {
         const text = rawText.trim();
-        // First sentence (≤120 chars) as the popup title, full text as summary
-        const dotIdx = text.indexOf(". ");
-        const titleRaw = dotIdx > 0 && dotIdx < 120 ? text.slice(0, dotIdx) : text.slice(0, 100);
-        const title = titleRaw.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+        // First sentence as anchor text (visible in article), full text in popup
+        const dotIdx = text.search(/\.\s/);
+        const linkRaw = dotIdx > 10 && dotIdx < 140 ? text.slice(0, dotIdx + 1) : text.slice(0, 100);
+        const linkText = linkRaw.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+        const title = linkRaw.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
         const summary = text.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-        return `<a class="cb-factoid" href="#" data-title="${title}" data-summary="${summary}">${text}</a>`;
+        return `<a class="cb-factoid" href="#" data-title="${title}" data-summary="${summary}">${linkText}</a>`;
       }
     );
 

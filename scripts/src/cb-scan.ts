@@ -101,8 +101,15 @@ async function main() {
       (body ~* 'cannot be ignored')                                            AS b1_cannot_ignored,
 
       -- BLOCK 2: Structural Minimums
+      -- Word count: base body word count plus words stored in data-summary
+      -- popup attributes (factoid text is real article content, just shown
+      -- in a popup instead of inline).
       array_length(string_to_array(
-        regexp_replace(body, '<[^>]+>', ' ', 'g'), ' '), 1)                   AS b2_word_count,
+        regexp_replace(body, '<[^>]+>', ' ', 'g'), ' '), 1)
+      + COALESCE((
+          SELECT SUM(array_length(string_to_array(m[1], ' '), 1))
+          FROM regexp_matches(body, 'data-summary="([^"]*)"', 'g') AS m
+        ), 0)                                                                  AS b2_word_count,
       (array_length(regexp_split_to_array(body, '<h2'), 1) - 1)              AS b2_h2_count,
       (array_length(regexp_split_to_array(body, 'cb-factoid'), 1) - 1)       AS b2_factoid_count,
 
