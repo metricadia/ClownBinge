@@ -132,7 +132,7 @@ export default function PostDetail() {
         const titleRaw = dotIdx > 0 && dotIdx < 120 ? text.slice(0, dotIdx) : text.slice(0, 100);
         const title = titleRaw.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
         const summary = text.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-        return `<a class="cb-factoid" href="#" data-title="${title}" data-summary="${summary}">CB Factoid</a>`;
+        return `<a class="cb-factoid" href="#" data-title="${title}" data-summary="${summary}">${text}</a>`;
       }
     );
 
