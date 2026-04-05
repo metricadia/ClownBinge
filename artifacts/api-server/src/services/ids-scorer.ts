@@ -183,6 +183,77 @@ function epistemicPrecision(text: string, words: number): number {
   return hits / (words / 1000);
 }
 
+// ── Dimension 6: Theoretical Register ────────────────────────────────────────
+// Philosophical, sociological, and critical theory vocabulary — the signature
+// of NerdOut and intellectually discursive CB articles that empirical metrics
+// would otherwise undercount. These terms signal deep conceptual engagement
+// independent of whether numbers or citations are present.
+
+const THEORETICAL_JARGON = new Set([
+  // Philosophy of knowledge
+  "epistemology", "ontology", "ontological", "phenomenological", "phenomenology",
+  "hermeneutics", "hermeneutical", "teleological", "teleology", "deontological",
+  "consequentialist", "consequentialism", "positivism", "postpositivism",
+  "poststructuralism", "poststructuralist", "structuralism", "structuralist",
+  "deconstruction", "deconstructionist", "relativism", "absolutism",
+
+  // Sociological theory
+  "anomie", "alienation", "reification", "habitus", "social capital",
+  "social contract", "social reproduction", "false consciousness",
+  "collective conscience", "social solidarity", "mechanical solidarity",
+  "organic solidarity", "division of labor", "social cohesion",
+  "functionalism", "symbolic interactionism", "dramaturgical",
+  "verstehen", "ideal type", "rationalization", "bureaucratization",
+  "disenchantment", "iron cage",
+
+  // Critical theory / Frankfurt School
+  "dialectic", "dialectics", "contradiction", "base and superstructure",
+  "cultural hegemony", "counter-hegemony", "ideological apparatus",
+  "commodity fetishism", "exchange value", "use value", "surplus value",
+  "means of production", "relations of production", "mode of production",
+  "class consciousness", "false consciousness", "alienated labor",
+
+  // Foucauldian / postmodern
+  "power-knowledge", "genealogy", "archaeology", "discursive formation",
+  "episteme", "panopticon", "disciplinary power", "biopower",
+  "governmentality", "subjectification", "subject formation",
+  "normalization", "surveillance", "technologies of the self",
+
+  // Political philosophy
+  "legitimacy", "legitimation", "sovereignty", "constituent power",
+  "civil society", "public sphere", "lifeworld", "colonization",
+  "communicative action", "strategic action", "procedural justice",
+  "distributive justice", "restorative justice", "social justice",
+  "liberal democracy", "deliberative democracy", "republicanism",
+
+  // Research methodology
+  "ethnography", "ethnographic", "grounded theory", "case study",
+  "triangulation", "reflexivity", "thick description", "positionality",
+  "intersubjectivity", "validity", "reliability", "generalizability",
+  "inductive", "deductive", "abductive", "hermeneutic circle",
+  "critical discourse analysis", "content analysis", "discourse analysis",
+
+  // General theoretical density markers
+  "theoretical framework", "conceptual framework", "analytical lens",
+  "unit of analysis", "level of analysis", "causal mechanism",
+  "intervening variable", "dependent variable", "independent variable",
+  "theoretical contribution", "theoretical implications",
+  "critique", "problematize", "interrogate", "destabilize",
+]);
+
+function theoreticalRegister(text: string, words: number): number {
+  const textLower = text.toLowerCase();
+  let hits = 0;
+  for (const term of THEORETICAL_JARGON) {
+    if (textLower.includes(term)) {
+      const weight = term.includes(" ") ? 2 : 1;
+      const count = (textLower.match(new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) ?? []).length;
+      hits += count * weight;
+    }
+  }
+  return hits / (words / 1000);
+}
+
 // ── Composite Scorer ───────────────────────────────────────────────────────────
 
 export interface IDSResult {
@@ -193,29 +264,32 @@ export interface IDSResult {
     quantSpecificity: number;
     vocabularyRegister: number;
     epistemicPrecision: number;
+    theoreticalRegister: number;
   };
   wordCount: number;
 }
 
 // Empirically tuned weights and normalisation caps per dimension.
-// These were calibrated so that a heavily-cited, jargon-dense CB article
-// scores ~75–90 and a thin opinion piece scores ~10–25.
+// Calibrated so that a heavily-cited, jargon-dense CB article scores ~65–85
+// and a strong NerdOut theoretical piece scores ~40–65.
 const DIM_WEIGHTS = {
-  citationDensity:    0.28,
-  properNounDensity:  0.20,
-  quantSpecificity:   0.22,
-  vocabularyRegister: 0.18,
-  epistemicPrecision: 0.12,
+  citationDensity:     0.25,
+  properNounDensity:   0.18,
+  quantSpecificity:    0.20,
+  vocabularyRegister:  0.17,
+  epistemicPrecision:  0.10,
+  theoreticalRegister: 0.10,
 };
 
 // Soft-cap values (raw rate that maps to score of 100 for that dimension).
-// Values above the cap are clamped to the cap before normalising.
+// Values above the cap are clamped before normalising.
 const DIM_CAPS = {
-  citationDensity:    12,   // 12 citation hits per 1k words = 100
-  properNounDensity:  30,   // 30 proper-noun hits per 1k words = 100
-  quantSpecificity:   18,   // 18 quant hits per 1k words = 100
-  vocabularyRegister: 25,   // 25 jargon hits per 1k words = 100
-  epistemicPrecision: 10,   // 10 epistemic hits per 1k words = 100
+  citationDensity:     12,  // 12 citation hits per 1k words = 100
+  properNounDensity:   30,  // 30 proper-noun hits per 1k words = 100
+  quantSpecificity:    18,  // 18 quant hits per 1k words = 100
+  vocabularyRegister:  25,  // 25 jargon hits per 1k words = 100
+  epistemicPrecision:  10,  // 10 epistemic hits per 1k words = 100
+  theoreticalRegister: 12,  // 12 theoretical hits per 1k words = 100
 };
 
 export function scoreIntellectualDensity(htmlBody: string): IDSResult {
@@ -223,15 +297,20 @@ export function scoreIntellectualDensity(htmlBody: string): IDSResult {
   const words = wordCount(plain);
 
   if (words < 50) {
-    return { score: 0, breakdown: { citationDensity: 0, properNounDensity: 0, quantSpecificity: 0, vocabularyRegister: 0, epistemicPrecision: 0 }, wordCount: words };
+    return {
+      score: 0,
+      breakdown: { citationDensity: 0, properNounDensity: 0, quantSpecificity: 0, vocabularyRegister: 0, epistemicPrecision: 0, theoreticalRegister: 0 },
+      wordCount: words,
+    };
   }
 
   const raw = {
-    citationDensity:    citationDensity(plain, words),
-    properNounDensity:  properNounDensity(plain, words),
-    quantSpecificity:   quantSpecificity(plain, words),
-    vocabularyRegister: vocabularyRegister(plain, words),
-    epistemicPrecision: epistemicPrecision(plain, words),
+    citationDensity:     citationDensity(plain, words),
+    properNounDensity:   properNounDensity(plain, words),
+    quantSpecificity:    quantSpecificity(plain, words),
+    vocabularyRegister:  vocabularyRegister(plain, words),
+    epistemicPrecision:  epistemicPrecision(plain, words),
+    theoreticalRegister: theoreticalRegister(plain, words),
   };
 
   // Normalise each dimension 0–100 using its cap, then weight and sum
