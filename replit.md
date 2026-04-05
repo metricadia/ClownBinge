@@ -516,6 +516,8 @@ This is a Prime Directive. It is not a guideline, a suggestion, or a target to a
 
 Verified clean: all 149 published articles at 1,500+ words (April 2026). CB-000006 exempt (formal receipt profile brief). Lowest passing score: CB-000058 at 1,500 words. Full expansion sprint completed: 82 articles expanded across health_and_healing (25), religion (25), us_history (26), and mixed stragglers (17). Seed file updated.
 
+**Post-reduction operational floor: 1,380 words.** The 1,500-word floor applies to generation — all new articles must be written to 1,500+ words. After the CBvS AI-reduction pipeline runs, borderline articles (those generated near the 1,500-word floor) may compress to as low as 1,380 words. This is the accepted post-reduction minimum. Articles landing at 1,380–1,499 words after pipeline reduction pass editorial review. Articles landing below 1,380 words after reduction must be flagged for manual review and possible regeneration. The generator requirement does not change.
+
 ### No External Hyperlinks Cardinal Rule
 
 **No `<a href="http...">` tags in article bodies pointing to external URLs.** Citations are permanent archival references rendered as static text in the Primary Sources section. The `sourceUrl` field is stored for provenance but never rendered as a clickable link. The `cb-factoid` anchors are internal popup triggers only (navigation blocked via `e.preventDefault()`). ClownBinge does not link out. The record is self-contained.
