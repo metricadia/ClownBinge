@@ -239,8 +239,27 @@
 
   .cb-factoid-popup-footer {
     flex-shrink: 0;
-    padding: 8px 16px 12px;
-    border-top: 1px solid rgba(0,0,0,0.08);
+    padding: 10px 16px 14px;
+    background: #1A3A8F;
+    border-radius: 0 0 16px 16px;
+    border-top: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .cb-factoid-footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .cb-factoid-footer-logo {
+    flex-shrink: 0;
+    font-size: 0.7rem !important;
+    opacity: 0.85;
   }
 
   .cb-factoid-popup-close {
@@ -436,7 +455,12 @@
   }
 
   .cb-factoid-sheet-footer {
-    padding: 10px 22px 36px !important;
-    border-top: 1px solid rgba(0,0,0,0.08);
+    padding: 12px 22px 40px !important;
+    background: #1A3A8F;
+    border-top: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
   }
 }

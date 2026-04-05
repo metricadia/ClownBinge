@@ -2,6 +2,7 @@ import { createPortal } from "react-dom";
 import { Copy, Check, X, ExternalLink, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { FactoidState } from "@/hooks/use-factoid-popup";
+import { PsaLogo } from "@/components/PsaLogo";
 
 interface FactoidPopupProps {
   factoid: FactoidState;
@@ -135,17 +136,20 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
           </div>
 
           <div className="cb-factoid-popup-footer cb-factoid-sheet-footer">
-            <button
-              onClick={onCopy}
-              disabled={factoid.isLoading}
-              className="cb-factoid-popup-copy-btn self-start disabled:opacity-40"
-            >
-              {copied
-                ? <><Check size={14} strokeWidth={3} /> Copied!</>
-                : <><Copy size={14} strokeWidth={2} /> Copy Citation</>
-              }
-            </button>
-            {extraFooter}
+            <div className="cb-factoid-footer-left">
+              <button
+                onClick={onCopy}
+                disabled={factoid.isLoading}
+                className="cb-factoid-popup-copy-btn self-start disabled:opacity-40"
+              >
+                {copied
+                  ? <><Check size={14} strokeWidth={3} /> Copied!</>
+                  : <><Copy size={14} strokeWidth={2} /> Copy Citation</>
+                }
+              </button>
+              {extraFooter}
+            </div>
+            <PsaLogo variant="white" className="cb-factoid-footer-logo" />
           </div>
         </div>
       </>,
@@ -189,17 +193,20 @@ export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onC
       </div>
 
       <div className="cb-factoid-popup-footer">
-        <button
-          onClick={onCopy}
-          disabled={factoid.isLoading}
-          className="cb-factoid-popup-copy-btn self-start disabled:opacity-40"
-        >
-          {copied
-            ? <><Check size={12} strokeWidth={3} /> Copied!</>
-            : <><Copy size={12} strokeWidth={2} /> Copy Citation</>
-          }
-        </button>
-        {extraFooter}
+        <div className="cb-factoid-footer-left">
+          <button
+            onClick={onCopy}
+            disabled={factoid.isLoading}
+            className="cb-factoid-popup-copy-btn self-start disabled:opacity-40"
+          >
+            {copied
+              ? <><Check size={12} strokeWidth={3} /> Copied!</>
+              : <><Copy size={12} strokeWidth={2} /> Copy Citation</>
+            }
+          </button>
+          {extraFooter}
+        </div>
+        <PsaLogo variant="white" className="cb-factoid-footer-logo" />
       </div>
     </div>
     </>,
