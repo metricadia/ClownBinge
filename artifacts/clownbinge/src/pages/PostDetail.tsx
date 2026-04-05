@@ -110,7 +110,7 @@ export default function PostDetail() {
       const name = span.dataset.metricadiaidName || "";
       const imageUrl = span.dataset.metricadiaidImage || "";
       const description = span.dataset.metricadiaidDesc || undefined;
-      if (name && imageUrl) setActivePerson({ name, imageUrl, description });
+      if (name) setActivePerson({ name, imageUrl, description });
     };
 
     container.addEventListener("click", handlePersonClick, { capture: true });

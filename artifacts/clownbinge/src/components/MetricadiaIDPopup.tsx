@@ -49,16 +49,25 @@ export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description }
             </span>
           </div>
 
-          {/* Person Image */}
-          <div className="relative w-full h-64 bg-stone-950 overflow-hidden rounded-t-2xl">
-            <img
-              src={imageUrl}
-              alt={name}
-              className="w-full h-full object-cover object-top"
-              onError={(e) => {
-                e.currentTarget.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect fill='%23292524' width='300' height='300'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23f59e0b' font-size='18'%3ENo Image%3C/text%3E%3C/svg%3E";
-              }}
-            />
+          {/* Person Image or Initial Avatar */}
+          <div className="relative w-full h-64 bg-stone-950 overflow-hidden rounded-t-2xl flex items-center justify-center">
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={name}
+                className="w-full h-full object-cover object-top"
+                onError={(e) => { e.currentTarget.style.display = "none"; }}
+              />
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-3">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-amber-600 to-amber-900 flex items-center justify-center shadow-lg border-2 border-amber-500/40">
+                  <span className="text-4xl font-bold text-amber-100 select-none">
+                    {name.split(" ").map((w: string) => w[0]).slice(0, 2).join("")}
+                  </span>
+                </div>
+                <span className="text-xs text-stone-500 tracking-widest uppercase">Historical Figure</span>
+              </div>
+            )}
             {/* Gradient overlay at bottom */}
             <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-stone-950 to-transparent" />
           </div>
