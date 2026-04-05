@@ -120,6 +120,22 @@ export default function PostDetail() {
   const processedBody = useMemo(() => {
     if (!post?.body) return post?.body ?? "";
     let html = post.body;
+
+    // Convert legacy div-based factoid blocks to the popup anchor format.
+    // Pattern: <div class="cb-factoid"><strong>CB Factoid:</strong> text</div>
+    html = html.replace(
+      /<div class="cb-factoid">\s*<strong>CB Factoid:<\/strong>\s*([\s\S]*?)<\/div>/g,
+      (_, rawText: string) => {
+        const text = rawText.trim();
+        // First sentence (≤120 chars) as the popup title, full text as summary
+        const dotIdx = text.indexOf(". ");
+        const titleRaw = dotIdx > 0 && dotIdx < 120 ? text.slice(0, dotIdx) : text.slice(0, 100);
+        const title = titleRaw.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+        const summary = text.replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+        return `<a class="cb-factoid" href="#" data-title="${title}" data-summary="${summary}">CB Factoid</a>`;
+      }
+    );
+
     if (post.subjectName) {
       const label = formatSubjectLabel(post.subjectName, post.subjectTitle ?? null, post.subjectParty ?? null);
       html = boldFirstMention(html, post.subjectName, label);
