@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSearch, useLocation } from "wouter";
 import { 
   useListPosts, 
   useIncrementView,
@@ -7,15 +8,32 @@ import {
 } from "@workspace/api-client-react";
 
 export function usePostsFilter() {
-  const [category, setCategory] = useState<ListPostsCategory | undefined>(undefined);
-  
+  const search = useSearch();
+  const [, navigate] = useLocation();
+
+  const getInitialCategory = (): ListPostsCategory | undefined => {
+    const params = new URLSearchParams(search);
+    const cat = params.get("category");
+    if (!cat || cat === "all") return undefined;
+    return cat as ListPostsCategory;
+  };
+
+  const [category, setCategory] = useState<ListPostsCategory | undefined>(getInitialCategory);
+
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    const cat = params.get("category");
+    const next = (!cat || cat === "all") ? undefined : cat as ListPostsCategory;
+    setCategory(next);
+  }, [search]);
+
   const handleSetCategory = useCallback((cat: string | null) => {
     if (!cat || cat === "all") {
-      setCategory(undefined);
+      navigate("/");
     } else {
-      setCategory(cat as ListPostsCategory);
+      navigate(`/?category=${encodeURIComponent(cat)}`);
     }
-  }, []);
+  }, [navigate]);
 
   return {
     category,
