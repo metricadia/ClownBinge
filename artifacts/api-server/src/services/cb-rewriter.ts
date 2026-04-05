@@ -182,6 +182,8 @@ SENTENCE TO REWRITE:
 ${sentence}`;
 }
 
+const MAX_ATTEMPTS = 3;
+
 export async function paraphraseAcademicSentence(
   sentence: string,
   docType: DocType = "journalism"
@@ -189,9 +191,17 @@ export async function paraphraseAcademicSentence(
   const trimmed = sentence.trim();
   if (!trimmed || trimmed.length < 20) return trimmed;
 
-  const prompt = buildParaphrasePrompt(trimmed, docType);
+  const basePrompt = buildParaphrasePrompt(trimmed, docType);
+  let lastReason: string | undefined;
 
-  for (let attempt = 1; attempt <= 2; attempt++) {
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    // On retries, prepend a correction addendum so the model knows what it did wrong
+    let prompt = basePrompt;
+    if (attempt > 1 && lastReason) {
+      const correction = `\n\n⛔ YOUR PREVIOUS ATTEMPT WAS REJECTED — reason: ${lastReason}\nDo NOT repeat the same mistake. Try a completely different syntactic structure.\n`;
+      prompt = basePrompt + correction;
+    }
+
     try {
       const response = await anthropic.messages.create({
         model: "claude-sonnet-4-5",
@@ -209,13 +219,15 @@ export async function paraphraseAcademicSentence(
       const gate = jsGate(trimmed, rewritten);
       if (gate.pass) return rewritten;
 
-      if (attempt === 1) {
-        console.log(`[CBRewrite] JS gate fail attempt 1: ${gate.reason} — retrying`);
-      }
-    } catch {
-      console.log(`[CBRewrite] Error on attempt ${attempt}`);
+      lastReason = gate.reason;
+      console.log(`[CBRewrite][GateFail] attempt=${attempt}/${MAX_ATTEMPTS} reason="${gate.reason}" sentence="${trimmed.slice(0, 80)}..."`);
+    } catch (err) {
+      console.log(`[CBRewrite][Error] attempt=${attempt}/${MAX_ATTEMPTS} err="${err instanceof Error ? err.message : String(err)}"`);
     }
   }
+
+  console.log(`[CBRewrite][Fallback] all ${MAX_ATTEMPTS} attempts failed — returning original. Last reason: "${lastReason}". Sentence: "${trimmed.slice(0, 80)}..."`);
+
 
   return trimmed;
 }

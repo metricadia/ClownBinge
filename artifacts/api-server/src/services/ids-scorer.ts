@@ -275,9 +275,8 @@ export interface IDSResult {
 }
 
 // Calibration loaded from environment at runtime.
-// Weights and caps are stored outside this source file so that source alone
-// is insufficient to reproduce scores. Defaults are intentionally omitted
-// here — the values live in the runtime environment.
+// Weights, caps, and content-type baselines are stored outside this source
+// file so that source alone is insufficient to reproduce scores.
 function e(key: string, fallback: number): number {
   const v = process.env[key];
   return v !== undefined && v !== "" ? parseFloat(v) : fallback;
@@ -300,6 +299,7 @@ const DIM_CAPS = {
   epistemicPrecision:  e("IDS_C_EPISTEMIC",   10),
   theoreticalRegister: e("IDS_C_THEORETICAL", 12),
 };
+
 
 export function scoreIntellectualDensity(htmlBody: string): IDSResult {
   const plain = stripHtml(htmlBody);
