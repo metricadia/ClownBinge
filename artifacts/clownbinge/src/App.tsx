@@ -60,8 +60,8 @@ function Router() {
       <Route path="/category/:slug" component={CategoryHub} />
       <Route path="/methodology" component={Methodology} />
       <Route path="/corrections" component={Corrections} />
-      <Route path="/admin/editor/:postId?" component={AdminEditorPage} />
-      <Route path="/admin/editor" component={AdminEditorPage} />
+      <Route path="/Kemet8/:postId?" component={AdminEditorPage} />
+      <Route path="/Kemet8" component={AdminEditorPage} />
       <Route component={NotFound} />
     </Switch>
     </>

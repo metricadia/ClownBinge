@@ -697,12 +697,12 @@ CB Dry Rationalism was named and formalized after Claude.ai identified it as a d
 
 ## Metricadia Editor
 
-A drop-in WYSIWYG admin CMS panel installed at `/admin/editor`.
+A drop-in WYSIWYG admin CMS panel installed at `/Kemet8`.
 
-**Access**: Navigate to `/admin/editor` in the frontend. Default password is `KoGAlpha#7`.
+**Access**: Navigate to `/Kemet8` in the frontend. Default password is `KoGAlpha#7`.
 
 **Architecture**:
-- Login gate at `GET /admin/editor` → `AdminEditorPage.tsx`
+- Login gate at `GET /Kemet8` → `AdminEditorPage.tsx`
 - Auth endpoints: `POST /api/metricadia/login`, `POST /api/metricadia/logout`, `GET /api/metricadia/auth-status`
 - Post list: `GET /api/metricadia/posts` (auth required, returns all 381 articles)
 - Post save: `PUT /api/posts/:id` (auth required, maps `content` → `body`, `excerpt` → `teaser`)
