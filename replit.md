@@ -363,7 +363,10 @@ ClownBinge is not CNN. ClownBinge is not Fox News. Zero opinion. Zero interpreta
 | Editorial phrases | "stands as", "cannot be overstated", "far beyond mere" |
 | Forbidden H2 headers | Legacy, Significance, Conclusion, Remarkable, Impact |
 | Structural | `<h1>` in body (duplicate H1 = Google penalty), em dash (—) in visible text |
-| Terminal interpretation | paragraph ends with reflects / indicates / suggests / portrays |
+| Terminal interpretation | paragraph ends with reflects / indicates / suggests / portrays / reveals |
+| Editorial characterization | "dead wrong" — CB states facts, not whether prior accounts were wrong |
+| Reader direction | "matters because" — CB does not tell the reader what matters |
+| Symbolic interpretation | "symbolically" — CB does not assign symbolic meaning to events |
 
 **BLOCK 2 — STRUCTURAL MINIMUMS (non-negotiable floors)**
 

@@ -76,6 +76,9 @@ async function main() {
       (body ~* '<h1')                                                          AS b1_body_h1,
       (regexp_replace(body, 'data-[a-z]+="[^"]*"', '', 'g') LIKE '%—%')      AS b1_em_dash,
       (body ~* '(reflects|indicates|suggests|portrays|reveals)\\.</p>')       AS b1_terminal_interp,
+      (body ~* '\\bdead wrong\\b')                                             AS b1_dead_wrong,
+      (body ~* '\\bmatters because\\b')                                        AS b1_matters_because,
+      (body ~* '\\bsymbolically\\b')                                           AS b1_symbolically,
 
       -- BLOCK 2: Structural Minimums
       array_length(string_to_array(
@@ -127,6 +130,9 @@ async function main() {
     b1_body_h1: boolean;
     b1_em_dash: boolean;
     b1_terminal_interp: boolean;
+    b1_dead_wrong: boolean;
+    b1_matters_because: boolean;
+    b1_symbolically: boolean;
     b2_word_count: number;
     b2_h2_count: number;
     b2_factoid_count: number;
@@ -173,7 +179,10 @@ async function main() {
     if (row.b1_bad_h2)         b1.push("Forbidden H2 header (Legacy/Significance/Conclusion/Remarkable/Impact)");
     if (row.b1_body_h1)        b1.push("H1 IN BODY — duplicate H1 — Google SEO penalty");
     if (row.b1_em_dash)        b1.push("Em dash (—) in visible body text");
-    if (row.b1_terminal_interp) b1.push("Terminal interpretation verb (reflects/indicates/suggests/portrays)");
+    if (row.b1_terminal_interp) b1.push("Terminal interpretation verb (reflects/indicates/suggests/portrays/reveals)");
+    if (row.b1_dead_wrong)      b1.push("'dead wrong' — editorial characterization");
+    if (row.b1_matters_because) b1.push("'matters because' — CB does not tell the reader what matters");
+    if (row.b1_symbolically)    b1.push("'symbolically' — symbolic interpretation of events");
 
     // BLOCK 2 — Structural Minimums
     if (row.b2_word_count < WORD_FLOOR)
