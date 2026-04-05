@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-05T05:32:07.637Z",
-  "totalArticlesProcessed": 94,
-  "totalRepairsApplied": 314,
+  "lastUpdated": "2026-04-05T09:15:00.776Z",
+  "totalArticlesProcessed": 124,
+  "totalRepairsApplied": 346,
   "patterns": {
     "em_dash::—→,": {
       "lessonType": "em_dash",
       "description": "\"—\" corrected to \",\"",
       "before": "—",
       "after": ",",
-      "count": 66,
+      "count": 69,
       "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T05:32:07.636Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
       "exampleArticles": [
-        "CB-000352",
-        "CB-000383",
         "CB-000269",
         "CB-000271",
-        "CB-000354"
+        "CB-000354",
+        "CB-000310",
+        "CB-000315"
       ],
       "promotedToRule": "No em dashes (—) in article body. Use a comma or restructure the sentence."
     },
@@ -2599,6 +2599,371 @@
       "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000354"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Devices Already Inside Us The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Devices Already Inside Us The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Devices Already Inside Us The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000314"
+      ]
+    },
+    "quality_proper_noun_missing::\"Its Limits The Argus\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Its Limits The Argus\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Its Limits The Argus\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000314"
+      ]
+    },
+    "quality_proper_noun_missing::\"Discontinuation Hyperloop Transportation Technologies\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Discontinuation Hyperloop Transportation Technologies\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Discontinuation Hyperloop Transportation Technologies\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000310"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Department\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Department\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Department\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 2,
+      "promoted": true,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000310",
+        "CB-000202"
+      ]
+    },
+    "quality_proper_noun_missing::\"Record Shows Hyperloop\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Record Shows Hyperloop\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Record Shows Hyperloop\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000310"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Rite Aid\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Rite Aid\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Rite Aid\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000313"
+      ]
+    },
+    "quality_proper_noun_missing::\"Facial Data Beyond\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Facial Data Beyond\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Facial Data Beyond\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000313"
+      ]
+    },
+    "quality_proper_noun_missing::\"Electricity The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Electricity The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Electricity The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000280"
+      ]
+    },
+    "quality_proper_noun_missing::\"Federal Data Microsoft\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Federal Data Microsoft\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Federal Data Microsoft\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000280"
+      ]
+    },
+    "quality_proper_noun_missing::\"Doctor Prescribes The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Doctor Prescribes The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Doctor Prescribes The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000315"
+      ]
+    },
+    "quality_proper_noun_missing::\"Mining Supply Chain The Democratic Republic\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Mining Supply Chain The Democratic Republic\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Mining Supply Chain The Democratic Republic\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000284"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Mountain Pass\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Mountain Pass\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Mountain Pass\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000284"
+      ]
+    },
+    "quality_proper_noun_missing::\"Same Technology When\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Same Technology When\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Same Technology When\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000289"
+      ]
+    },
+    "quality_proper_noun_missing::\"Act Actually Prohibits The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Act Actually Prohibits The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Act Actually Prohibits The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000289"
+      ]
+    },
+    "quality_proper_noun_missing::\"Its Practical Consequences The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Its Practical Consequences The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Its Practical Consequences The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T07:26:12.524Z",
+      "lastSeen": "2026-04-05T07:26:12.524Z",
+      "exampleArticles": [
+        "CB-000289"
+      ]
+    },
+    "quality_proper_noun_missing::\"Consumer Stake The Supremacy Clause\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Consumer Stake The Supremacy Clause\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Consumer Stake The Supremacy Clause\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000144"
+      ]
+    },
+    "quality_proper_noun_missing::\"White House Framework By\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"White House Framework By\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"White House Framework By\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000144"
+      ]
+    },
+    "quality_proper_noun_missing::\"What Courts Have Done With It Federal\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"What Courts Have Done With It Federal\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"What Courts Have Done With It Federal\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000144"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" as a keyword in the specific issues field returns hundreds of disclosure report\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" as a keyword in the specific issues field returns hundreds of disclosure report\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" as a keyword in the specific issues field returns hundreds of disclosure report\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000144"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Information That Is Already Public The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Information That Is Already Public The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Information That Is Already Public The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000079"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Joint Committee\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Joint Committee\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Joint Committee\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000105"
+      ]
+    },
+    "quality_proper_noun_missing::\"Worker Investment Dimension The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Worker Investment Dimension The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Worker Investment Dimension The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000105"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Tax Treatment Because\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Tax Treatment Because\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Tax Treatment Because\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000155"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Complication The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Complication The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Complication The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000155"
+      ]
+    },
+    "quality_proper_noun_missing::\"Mortgage Interest Deduction Works The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Mortgage Interest Deduction Works The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Mortgage Interest Deduction Works The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000090"
+      ]
+    },
+    "quality_proper_noun_missing::\"Primary Source Documentation Lives The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Primary Source Documentation Lives The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Primary Source Documentation Lives The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000090"
+      ]
+    },
+    "quality_proper_noun_missing::\"Federal Estate Tax The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Federal Estate Tax The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Federal Estate Tax The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000022"
+      ]
+    },
+    "quality_proper_noun_missing::\"Numbers Have Changed So Dramatically The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Numbers Have Changed So Dramatically The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Numbers Have Changed So Dramatically The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T09:15:00.775Z",
+      "lastSeen": "2026-04-05T09:15:00.775Z",
+      "exampleArticles": [
+        "CB-000022"
       ]
     }
   },
