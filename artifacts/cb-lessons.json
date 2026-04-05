@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-05T04:47:34.241Z",
-  "totalArticlesProcessed": 89,
-  "totalRepairsApplied": 279,
+  "lastUpdated": "2026-04-05T05:32:07.637Z",
+  "totalArticlesProcessed": 94,
+  "totalRepairsApplied": 314,
   "patterns": {
     "em_dash::—→,": {
       "lessonType": "em_dash",
       "description": "\"—\" corrected to \",\"",
       "before": "—",
       "after": ",",
-      "count": 65,
+      "count": 66,
       "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T04:47:34.241Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
-        "CB-000350",
         "CB-000352",
         "CB-000383",
         "CB-000269",
-        "CB-000271"
+        "CB-000271",
+        "CB-000354"
       ],
       "promotedToRule": "No em dashes (—) in article body. Use a comma or restructure the sentence."
     },
@@ -482,10 +482,10 @@
       "description": "\"\"The Pacific Northwest\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"The Pacific Northwest\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 3,
+      "count": 4,
       "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000364"
       ]
@@ -495,10 +495,10 @@
       "description": "\"\"How Indigenous Ecology Worked The\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"How Indigenous Ecology Worked The\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 3,
+      "count": 4,
       "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000364"
       ]
@@ -508,10 +508,10 @@
       "description": "\"Quote removed: \" (edited by Thomas C. Blackburn and Kat Anderson in 1993), revealed that Califor\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" (edited by Thomas C. Blackburn and Kat Anderson in 1993), revealed that Califor\"",
       "after": "(flagged for review)",
-      "count": 3,
+      "count": 4,
       "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000364"
       ]
@@ -521,10 +521,10 @@
       "description": "\"Quote removed: \" (1982) documented how Indigenous peoples throughout North America employed cont\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" (1982) documented how Indigenous peoples throughout North America employed cont\"",
       "after": "(flagged for review)",
-      "count": 3,
+      "count": 4,
       "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000364"
       ]
@@ -534,10 +534,10 @@
       "description": "\"Quote removed: \" how fire management represented a form of reciprocal relationship with the land\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" how fire management represented a form of reciprocal relationship with the land\"",
       "after": "(flagged for review)",
-      "count": 3,
+      "count": 4,
       "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000364"
       ]
@@ -547,10 +547,10 @@
       "description": "\"Quote removed: \" (2005) documents an extensive network of managed forests, wetlands, and coastal\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" (2005) documents an extensive network of managed forests, wetlands, and coastal\"",
       "after": "(flagged for review)",
-      "count": 3,
+      "count": 4,
       "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000364"
       ]
@@ -560,10 +560,10 @@
       "description": "\"Quote removed: \" that these food forests embodied permacultural principles decades before the te\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" that these food forests embodied permacultural principles decades before the te\"",
       "after": "(flagged for review)",
-      "count": 3,
+      "count": 4,
       "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000364"
       ]
@@ -573,10 +573,10 @@
       "description": "\"Quote removed: \" presents extensive documentation from explorer journals, ethnographic records, \"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" presents extensive documentation from explorer journals, ethnographic records, \"",
       "after": "(flagged for review)",
-      "count": 3,
+      "count": 4,
       "promoted": true,
       "firstSeen": "2026-04-05T02:15:07.599Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000364"
       ]
@@ -1483,10 +1483,10 @@
       "description": "\"\"Opposition The Indian Removal Act\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Opposition The Indian Removal Act\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000349"
       ]
@@ -1496,10 +1496,10 @@
       "description": "\"\"The Cherokee Nation\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"The Cherokee Nation\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000349"
       ]
@@ -1509,10 +1509,10 @@
       "description": "\"\"Forced Removal The\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Forced Removal The\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000349"
       ]
@@ -1522,10 +1522,10 @@
       "description": "\"Quote removed: \" language specifically to deflect constitutional challenges while pursuing what \"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" language specifically to deflect constitutional challenges while pursuing what \"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000349"
       ]
@@ -1535,10 +1535,10 @@
       "description": "\"Quote removed: \" but the methods employed to achieve removal were decidedly coercive. The Five C\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" but the methods employed to achieve removal were decidedly coercive. The Five C\"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000349"
       ]
@@ -1548,10 +1548,10 @@
       "description": "\"Quote removed: \" in the terminology of the era because many of their members had adopted aspects\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" in the terminology of the era because many of their members had adopted aspects\"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000349"
       ]
@@ -1561,10 +1561,10 @@
       "description": "\"Quote removed: \" Jackson had long advocated for the removal of eastern Indian nations, viewing i\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" Jackson had long advocated for the removal of eastern Indian nations, viewing i\"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000349"
       ]
@@ -1574,10 +1574,10 @@
       "description": "\"Quote removed: \" provides a detailed account of how the removal of the Cherokee specifically was\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" provides a detailed account of how the removal of the Cherokee specifically was\"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000349"
       ]
@@ -1964,10 +1964,10 @@
       "description": "\"\"Global Medicine Long\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Global Medicine Long\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000362"
       ]
@@ -1977,10 +1977,10 @@
       "description": "\"\"Scientific Validation The\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Scientific Validation The\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000362"
       ]
@@ -1990,10 +1990,10 @@
       "description": "\"\"Industrial Development The\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Industrial Development The\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000362"
       ]
@@ -2003,10 +2003,10 @@
       "description": "\"\"Indigenous Knowledge Today\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Indigenous Knowledge Today\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000362"
       ]
@@ -2016,10 +2016,10 @@
       "description": "\"\"The World Health Organization\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"The World Health Organization\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000362"
       ]
@@ -2029,10 +2029,10 @@
       "description": "\"Quote removed: \" as a brand name, and by 1950, aspirin had become the world's most widely used p\"\" corrected to \"(flagged for review)\"",
       "before": "Quote removed: \" as a brand name, and by 1950, aspirin had become the world's most widely used p\"",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000362"
       ]
@@ -2198,10 +2198,10 @@
       "description": "\"\"Broken Promises The\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Broken Promises The\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000354"
       ]
@@ -2211,10 +2211,10 @@
       "description": "\"\"Strategic Withdrawal In\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Strategic Withdrawal In\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000354"
       ]
@@ -2224,10 +2224,10 @@
       "description": "\"\"The American\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"The American\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000354"
       ]
@@ -2315,10 +2315,10 @@
       "description": "\"\"Most Produced Grain Corn\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Most Produced Grain Corn\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000365"
       ]
@@ -2328,10 +2328,10 @@
       "description": "\"\"Maize The\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Maize The\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000365"
       ]
@@ -2341,10 +2341,10 @@
       "description": "\"\"The Balsas River\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"The Balsas River\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000365"
       ]
@@ -2354,10 +2354,10 @@
       "description": "\"\"Maize Domestication Understanding\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Maize Domestication Understanding\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000365"
       ]
@@ -2367,10 +2367,10 @@
       "description": "\"\"Global Impact The\" not found in reduced body\" corrected to \"(flagged for review)\"",
       "before": "\"Global Impact The\" not found in reduced body",
       "after": "(flagged for review)",
-      "count": 1,
-      "promoted": false,
+      "count": 2,
+      "promoted": true,
       "firstSeen": "2026-04-05T03:28:25.230Z",
-      "lastSeen": "2026-04-05T03:28:25.230Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
       "exampleArticles": [
         "CB-000365"
       ]
@@ -2547,6 +2547,58 @@
       "lastSeen": "2026-04-05T04:47:34.241Z",
       "exampleArticles": [
         "CB-000269"
+      ]
+    },
+    "quality_proper_noun_missing::\"Removal Policy The Indian Removal Act\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Removal Policy The Indian Removal Act\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Removal Policy The Indian Removal Act\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T05:32:07.636Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
+      "exampleArticles": [
+        "CB-000349"
+      ]
+    },
+    "quality_proper_noun_missing::\"Sustained Guerrilla Warfare What\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Sustained Guerrilla Warfare What\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Sustained Guerrilla Warfare What\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T05:32:07.636Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
+      "exampleArticles": [
+        "CB-000354"
+      ]
+    },
+    "quality_proper_noun_missing::\"Historical Significance\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Historical Significance\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Historical Significance\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T05:32:07.636Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
+      "exampleArticles": [
+        "CB-000354"
+      ]
+    },
+    "quality_proper_noun_missing::\"Enduring Legacy Red Cloud\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Enduring Legacy Red Cloud\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Enduring Legacy Red Cloud\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T05:32:07.636Z",
+      "lastSeen": "2026-04-05T05:32:07.636Z",
+      "exampleArticles": [
+        "CB-000354"
       ]
     }
   },
