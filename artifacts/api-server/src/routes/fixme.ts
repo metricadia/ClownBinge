@@ -13,8 +13,9 @@ import {
   getPipelineState,
   getCategoryMap,
   CATEGORY_ORDER,
+  checkAndFixClosingMalformation,
 } from "../services/cb-pipeline";
-import { getLessonsSummary, loadLessons } from "../services/cb-lessons";
+import { getLessonsSummary, loadLessons, recordErrors } from "../services/cb-lessons";
 
 const router: IRouter = Router();
 
@@ -588,6 +589,67 @@ router.get("/fixme/pipeline/categories", (_req, res) => {
 router.post("/fixme/pipeline/stop", (_req, res) => {
   stopPipeline();
   res.json({ message: "Stop requested. Pipeline will halt after the current article." });
+});
+
+// POST /api/fixme/pipeline/scan-closing/:category
+// Retroactive closing malformation scan — runs on ALL articles in category
+// (including already-locked ones). Finds and removes forbidden closing paragraphs.
+// Safe to run while pipeline is stopped.
+router.post("/fixme/pipeline/scan-closing/:category", async (req, res) => {
+  const { category } = req.params as { category: string };
+
+  res.json({
+    message: `Retroactive closing scan started for category: ${category}`,
+    note: "Check server logs for per-article results.",
+  });
+
+  (async () => {
+    try {
+      const articles = await db
+        .select({ id: postsTable.id, caseNumber: postsTable.caseNumber, body: postsTable.body, aiScore: postsTable.aiScore })
+        .from(postsTable)
+        .where(eq(postsTable.category, category as any));
+
+      console.log(`[ClosingScan] Scanning ${articles.length} articles in ${category}...`);
+
+      let fixed = 0;
+      let clean = 0;
+      const errors: Parameters<typeof recordErrors>[0] = [];
+
+      for (const article of articles) {
+        const result = checkAndFixClosingMalformation(article.body);
+        if (result.removed) {
+          await db
+            .update(postsTable)
+            .set({ body: result.html })
+            .where(eq(postsTable.id, article.id));
+
+          errors.push({
+            lessonType: "closing_malformation" as any,
+            before: result.removedText?.slice(0, 100) ?? "(unknown)",
+            after: "(removed)",
+            description: `Closing malformation removed from ${article.caseNumber}`,
+            caseNumber: article.caseNumber,
+          });
+
+          fixed++;
+          console.log(`[ClosingScan] ${article.caseNumber} (${article.aiScore ?? "?"}%): closing malformation REMOVED`);
+          console.log(`  Pattern: ${result.pattern}`);
+          console.log(`  Text: "${result.removedText?.slice(0, 100)}"`);
+        } else {
+          clean++;
+        }
+      }
+
+      if (errors.length > 0) {
+        recordErrors(errors);
+      }
+
+      console.log(`[ClosingScan] Complete. Fixed: ${fixed} | Clean: ${clean} | Total: ${articles.length}`);
+    } catch (err) {
+      console.error(`[ClosingScan] Error:`, err);
+    }
+  })();
 });
 
 // POST /api/fixme/pipeline/run/:category — run ONE category then stop

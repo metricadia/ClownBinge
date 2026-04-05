@@ -1,8 +1,1238 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-05T02:04:11.325Z",
-  "totalArticlesProcessed": 10,
-  "totalRepairsApplied": 0,
-  "patterns": {},
-  "machineLearnedRules": []
+  "lastUpdated": "2026-04-05T02:15:55.227Z",
+  "totalArticlesProcessed": 18,
+  "totalRepairsApplied": 141,
+  "patterns": {
+    "em_dash::—→,": {
+      "lessonType": "em_dash",
+      "description": "\"—\" corrected to \",\"",
+      "before": "—",
+      "after": ",",
+      "count": 48,
+      "promoted": true,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000382",
+        "CB-000367",
+        "CB-000342",
+        "CB-000335",
+        "CB-000380"
+      ],
+      "promotedToRule": "No em dashes (—) in article body. Use a comma or restructure the sentence."
+    },
+    "quality_proper_noun_missing::\"Mesoamerican Connections While\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Mesoamerican Connections While\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Mesoamerican Connections While\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000332"
+      ]
+    },
+    "quality_proper_noun_missing::\"Social Functions The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Social Functions The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Social Functions The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000332"
+      ]
+    },
+    "quality_proper_noun_missing::\"Years The Arctic\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Years The Arctic\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Years The Arctic\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000338"
+      ]
+    },
+    "quality_proper_noun_missing::\"Umiak The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Umiak The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Umiak The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000338"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" shareholders — Alaska Natives who did not live in villages and thus did not rec\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" shareholders — Alaska Natives who did not live in villages and thus did not rec\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" shareholders — Alaska Natives who did not live in villages and thus did not rec\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000382"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" examines how the corporate imposition disrupted Indigenous governance, decision\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" examines how the corporate imposition disrupted Indigenous governance, decision\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" examines how the corporate imposition disrupted Indigenous governance, decision\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000382"
+      ]
+    },
+    "quality_proper_noun_missing::\"Landscape Astronomy Across North America Beyond\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Landscape Astronomy Across North America Beyond\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Landscape Astronomy Across North America Beyond\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000360"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Bighorn Medicine Wheel\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Bighorn Medicine Wheel\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Bighorn Medicine Wheel\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000360"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Chaco Canyon\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Chaco Canyon\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Chaco Canyon\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000360"
+      ]
+    },
+    "quality_proper_noun_missing::\"Period Astronomical Knowledge The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Period Astronomical Knowledge The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Period Astronomical Knowledge The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000360"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Americas\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Americas\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Americas\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000339"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Mississippi River\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Mississippi River\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Mississippi River\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000339"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Taino\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Taino\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Taino\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000339"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" societies justified European settlement as bringing civilization to empty lands\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" societies justified European settlement as bringing civilization to empty lands\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" societies justified European settlement as bringing civilization to empty lands\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000339"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" published by the University of Tennessee Press. Dobyns deployed a fundamentally\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" published by the University of Tennessee Press. Dobyns deployed a fundamentally\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" published by the University of Tennessee Press. Dobyns deployed a fundamentally\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000339"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" published by the University of Wisconsin Press, a landmark collection that synt\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" published by the University of Wisconsin Press, a landmark collection that synt\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" published by the University of Wisconsin Press, a landmark collection that synt\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000339"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" published by the University of Oklahoma Press, contributed critical demographic\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" published by the University of Oklahoma Press, contributed critical demographic\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" published by the University of Oklahoma Press, contributed critical demographic\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000339"
+      ]
+    },
+    "quality_proper_noun_missing::\"Information Systems The Haudenosaunee\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Information Systems The Haudenosaunee\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Information Systems The Haudenosaunee\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000363"
+      ]
+    },
+    "quality_proper_noun_missing::\"Collective Response The Haudenosaunee\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Collective Response The Haudenosaunee\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Collective Response The Haudenosaunee\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000363"
+      ]
+    },
+    "quality_proper_noun_missing::\"Cultural Transmission The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Cultural Transmission The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Cultural Transmission The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000366"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Polynesian\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Polynesian\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Polynesian\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000366"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" in relation to his canoe. When the reference island appeared to move from one s\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" in relation to his canoe. When the reference island appeared to move from one s\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" in relation to his canoe. When the reference island appeared to move from one s\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000366"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" documented how navigators read these wave patterns with remarkable precision, d\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" documented how navigators read these wave patterns with remarkable precision, d\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" documented how navigators read these wave patterns with remarkable precision, d\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000366"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" documents how bird observation contributed to the detection of previously unkno\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" documents how bird observation contributed to the detection of previously unkno\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" documents how bird observation contributed to the detection of previously unkno\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000366"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" without consideration of whether children were actually harmed or whether these\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" without consideration of whether children were actually harmed or whether these\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" without consideration of whether children were actually harmed or whether these\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000357"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" ICWA's Core Requirements and Protections ICWA established procedural minimums a\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" ICWA's Core Requirements and Protections ICWA established procedural minimums a\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" ICWA's Core Requirements and Protections ICWA established procedural minimums a\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000357"
+      ]
+    },
+    "quality_proper_noun_missing::\"Fire Weapons Against Encircled People Once\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Fire Weapons Against Encircled People Once\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Fire Weapons Against Encircled People Once\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000371"
+      ]
+    },
+    "quality_proper_noun_missing::\"Official Narratives In\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Official Narratives In\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Official Narratives In\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000371"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" Twenty soldiers of the 7th Cavalry received the Medal of Honor - the nation's h\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" Twenty soldiers of the 7th Cavalry received the Medal of Honor - the nation's h\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" Twenty soldiers of the 7th Cavalry received the Medal of Honor - the nation's h\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000371"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" were unarmed or lightly armed. Jensen et al. (1991) note the tension between ho\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" were unarmed or lightly armed. Jensen et al. (1991) note the tension between ho\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" were unarmed or lightly armed. Jensen et al. (1991) note the tension between ho\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000371"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" inappropriate. Brown's Bury My Heart at Wounded Knee (1970), though more popula\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" inappropriate. Brown's Bury My Heart at Wounded Knee (1970), though more popula\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" inappropriate. Brown's Bury My Heart at Wounded Knee (1970), though more popula\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000371"
+      ]
+    },
+    "quality_proper_noun_missing::\"Extreme Environments Beyond\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Extreme Environments Beyond\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Extreme Environments Beyond\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000367"
+      ]
+    },
+    "quality_proper_noun_missing::\"Arctic Year The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Arctic Year The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Arctic Year The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000367"
+      ]
+    },
+    "quality_proper_noun_missing::\"Traditional Food Systems The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Traditional Food Systems The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Traditional Food Systems The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000367"
+      ]
+    },
+    "quality_proper_noun_missing::\"Recovering Indigenous Nutritional Knowledge The Arctic\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Recovering Indigenous Nutritional Knowledge The Arctic\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Recovering Indigenous Nutritional Knowledge The Arctic\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000367"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Pacific Northwest\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Pacific Northwest\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Pacific Northwest\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000364"
+      ]
+    },
+    "quality_proper_noun_missing::\"How Indigenous Ecology Worked The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"How Indigenous Ecology Worked The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"How Indigenous Ecology Worked The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000364"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" (edited by Thomas C. Blackburn and Kat Anderson in 1993), revealed that Califor\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" (edited by Thomas C. Blackburn and Kat Anderson in 1993), revealed that Califor\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" (edited by Thomas C. Blackburn and Kat Anderson in 1993), revealed that Califor\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000364"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" (1982) documented how Indigenous peoples throughout North America employed cont\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" (1982) documented how Indigenous peoples throughout North America employed cont\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" (1982) documented how Indigenous peoples throughout North America employed cont\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000364"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" how fire management represented a form of reciprocal relationship with the land\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" how fire management represented a form of reciprocal relationship with the land\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" how fire management represented a form of reciprocal relationship with the land\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000364"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" (2005) documents an extensive network of managed forests, wetlands, and coastal\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" (2005) documents an extensive network of managed forests, wetlands, and coastal\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" (2005) documents an extensive network of managed forests, wetlands, and coastal\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000364"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" that these food forests embodied permacultural principles decades before the te\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" that these food forests embodied permacultural principles decades before the te\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" that these food forests embodied permacultural principles decades before the te\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000364"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" presents extensive documentation from explorer journals, ethnographic records, \"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" presents extensive documentation from explorer journals, ethnographic records, \"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" presents extensive documentation from explorer journals, ethnographic records, \"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000364"
+      ]
+    },
+    "quality_proper_noun_missing::\"Beaded Memory The Haudenosaunee\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Beaded Memory The Haudenosaunee\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Beaded Memory The Haudenosaunee\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000342"
+      ]
+    },
+    "quality_proper_noun_missing::\"Wampum Wampum\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Wampum Wampum\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Wampum Wampum\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000342"
+      ]
+    },
+    "quality_proper_noun_missing::\"Legal Memory The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Legal Memory The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Legal Memory The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000342"
+      ]
+    },
+    "quality_proper_noun_missing::\"Constitutional Law Beyond\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Constitutional Law Beyond\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Constitutional Law Beyond\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000342"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" that separated the physical world from the spiritual realm in Haudenosaunee cos\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" that separated the physical world from the spiritual realm in Haudenosaunee cos\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" that separated the physical world from the spiritual realm in Haudenosaunee cos\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000342"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" that the wampum keeper's role was equivalent to that of a supreme court justice\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" that the wampum keeper's role was equivalent to that of a supreme court justice\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" that the wampum keeper's role was equivalent to that of a supreme court justice\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000342"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" in 2021, the Two-Row Wampum records the terms of the first treaty between the H\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" in 2021, the Two-Row Wampum records the terms of the first treaty between the H\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" in 2021, the Two-Row Wampum records the terms of the first treaty between the H\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000342"
+      ]
+    },
+    "quality_proper_noun_missing::\"Clear Legal Guarantee The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Clear Legal Guarantee The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Clear Legal Guarantee The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000346"
+      ]
+    },
+    "quality_proper_noun_missing::\"Final Seizure Despite\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Final Seizure Despite\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Final Seizure Despite\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000346"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" to describe the character of that use. These are not conditional terms. They ar\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" to describe the character of that use. These are not conditional terms. They ar\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" to describe the character of that use. These are not conditional terms. They ar\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000346"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" enter this territory. The use of the word \"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" enter this territory. The use of the word \"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" enter this territory. The use of the word \"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000346"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" the treaty represented the government's solemn commitment to protect Lakota ter\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" the treaty represented the government's solemn commitment to protect Lakota ter\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" the treaty represented the government's solemn commitment to protect Lakota ter\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000346"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" This language created a built-in safeguard against the historical pattern of th\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" This language created a built-in safeguard against the historical pattern of th\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" This language created a built-in safeguard against the historical pattern of th\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000346"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" this supermajority provision was one of the most stringent protections ever inc\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" this supermajority provision was one of the most stringent protections ever inc\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" this supermajority provision was one of the most stringent protections ever inc\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000346"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" the expedition was specifically designed to assess the mineral wealth of the Bl\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" the expedition was specifically designed to assess the mineral wealth of the Bl\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" the expedition was specifically designed to assess the mineral wealth of the Bl\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000346"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" thousands of miners were entering the Black Hills in direct violation of Articl\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" thousands of miners were entering the Black Hills in direct violation of Articl\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" thousands of miners were entering the Black Hills in direct violation of Articl\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000346"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" the Black Hills - known as Paha Sapa in the Lakota language - held profound spi\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" the Black Hills - known as Paha Sapa in the Lakota language - held profound spi\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" the Black Hills - known as Paha Sapa in the Lakota language - held profound spi\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000346"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" and subject to military action. This deadline was deliberately unrealistic - is\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" and subject to military action. This deadline was deliberately unrealistic - is\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" and subject to military action. This deadline was deliberately unrealistic - is\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000346"
+      ]
+    },
+    "quality_proper_noun_missing::\"Planned Ceremonial Center Moundville\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Planned Ceremonial Center Moundville\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Planned Ceremonial Center Moundville\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000335"
+      ]
+    },
+    "quality_proper_noun_missing::\"Political Hierarchy The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Political Hierarchy The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Political Hierarchy The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000335"
+      ]
+    },
+    "quality_proper_noun_missing::\"The Moundville Chiefdom\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"The Moundville Chiefdom\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"The Moundville Chiefdom\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000335"
+      ]
+    },
+    "quality_proper_noun_missing::\"Mississippian Complexity By\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Mississippian Complexity By\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Mississippian Complexity By\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000335"
+      ]
+    },
+    "quality_proper_noun_missing::\"Institutional Response The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Institutional Response The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Institutional Response The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000380"
+      ]
+    },
+    "quality_proper_noun_missing::\"Proper Renaming The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Proper Renaming The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Proper Renaming The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000380"
+      ]
+    },
+    "quality_proper_noun_missing::\"Names That Remain Unchanged Despite\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Names That Remain Unchanged Despite\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Names That Remain Unchanged Despite\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000380"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" a term that Indigenous women's organizations have consistently and forcefully i\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" a term that Indigenous women's organizations have consistently and forcefully i\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" a term that Indigenous women's organizations have consistently and forcefully i\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000380"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" on federal maps in 1944. This action was not motivated by concern for Japanese \"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" on federal maps in 1944. This action was not motivated by concern for Japanese \"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" on federal maps in 1944. This action was not motivated by concern for Japanese \"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000380"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" when coordinated removal efforts began in earnest. California initiated its own\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" when coordinated removal efforts began in earnest. California initiated its own\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" when coordinated removal efforts began in earnest. California initiated its own\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000380"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" as a derogatory term and establish an official task force dedicated to its repl\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" as a derogatory term and establish an official task force dedicated to its repl\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" as a derogatory term and establish an official task force dedicated to its repl\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000380"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" itself warrants particular attention because its presence in the geographic rec\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" itself warrants particular attention because its presence in the geographic rec\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" itself warrants particular attention because its presence in the geographic rec\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000380"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" other categories of derogatory naming persist. These include place names employ\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" other categories of derogatory naming persist. These include place names employ\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" other categories of derogatory naming persist. These include place names employ\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000380"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" This approach acknowledges Indigenous naming traditions and restores a layer of\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" This approach acknowledges Indigenous naming traditions and restores a layer of\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" This approach acknowledges Indigenous naming traditions and restores a layer of\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000380"
+      ]
+    },
+    "quality_quote_missing::Quote removed: \" explores the broader context of Indigenous resilience and visibility in contemp\"→(flagged for review)": {
+      "lessonType": "quality_quote_missing",
+      "description": "\"Quote removed: \" explores the broader context of Indigenous resilience and visibility in contemp\"\" corrected to \"(flagged for review)\"",
+      "before": "Quote removed: \" explores the broader context of Indigenous resilience and visibility in contemp\"",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000380"
+      ]
+    },
+    "quality_proper_noun_missing::\"American Medical History Between\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"American Medical History Between\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"American Medical History Between\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000373"
+      ]
+    },
+    "quality_proper_noun_missing::\"Deception Perhaps\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Deception Perhaps\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Deception Perhaps\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000373"
+      ]
+    },
+    "quality_proper_noun_missing::\"Native American Communities The Indian Health Service\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Native American Communities The Indian Health Service\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Native American Communities The Indian Health Service\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000373"
+      ]
+    },
+    "quality_proper_noun_missing::\"Innovation Without\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Innovation Without\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Innovation Without\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000337"
+      ]
+    },
+    "quality_proper_noun_missing::\"Strategic Functions The Qhapaq Nan\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Strategic Functions The Qhapaq Nan\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Strategic Functions The Qhapaq Nan\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000337"
+      ]
+    },
+    "quality_proper_noun_missing::\"Administrative Infrastructure The\" not found in reduced body→(flagged for review)": {
+      "lessonType": "quality_proper_noun_missing",
+      "description": "\"\"Administrative Infrastructure The\" not found in reduced body\" corrected to \"(flagged for review)\"",
+      "before": "\"Administrative Infrastructure The\" not found in reduced body",
+      "after": "(flagged for review)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:07.599Z",
+      "lastSeen": "2026-04-05T02:15:07.599Z",
+      "exampleArticles": [
+        "CB-000337"
+      ]
+    },
+    "closing_malformation::The Hohokam canal system stands as one of North America's greatest pre-Columbian engineering achieve→(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000330",
+      "before": "The Hohokam canal system stands as one of North America's greatest pre-Columbian engineering achieve",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:55.227Z",
+      "lastSeen": "2026-04-05T02:15:55.227Z",
+      "exampleArticles": [
+        "CB-000330"
+      ]
+    },
+    "closing_malformation::Wounded Knee 1890 stands as a watershed moment for American military history and for American-indige→(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000371",
+      "before": "Wounded Knee 1890 stands as a watershed moment for American military history and for American-indige",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:55.227Z",
+      "lastSeen": "2026-04-05T02:15:55.227Z",
+      "exampleArticles": [
+        "CB-000371"
+      ]
+    },
+    "closing_malformation::The potlatch stands as one of history's most thoroughly documented alternative economic systems, ver→(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000334",
+      "before": "The potlatch stands as one of history's most thoroughly documented alternative economic systems, ver",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:55.227Z",
+      "lastSeen": "2026-04-05T02:15:55.227Z",
+      "exampleArticles": [
+        "CB-000334"
+      ]
+    },
+    "closing_malformation::The story of wampum belts is a story about how knowledge is recorded and preserved, about how law is→(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000342",
+      "before": "The story of wampum belts is a story about how knowledge is recorded and preserved, about how law is",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:55.227Z",
+      "lastSeen": "2026-04-05T02:15:55.227Z",
+      "exampleArticles": [
+        "CB-000342"
+      ]
+    },
+    "closing_malformation::The Great Peace of Montreal of 1701 represents a crucial but largely unrecognized achievement in the→(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000345",
+      "before": "The Great Peace of Montreal of 1701 represents a crucial but largely unrecognized achievement in the",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:55.227Z",
+      "lastSeen": "2026-04-05T02:15:55.227Z",
+      "exampleArticles": [
+        "CB-000345"
+      ]
+    },
+    "closing_malformation::In 1934, Congress finally halted allotment through the passage of the Indian Reorganization Act, rec→(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000350",
+      "before": "In 1934, Congress finally halted allotment through the passage of the Indian Reorganization Act, rec",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:55.227Z",
+      "lastSeen": "2026-04-05T02:15:55.227Z",
+      "exampleArticles": [
+        "CB-000350"
+      ]
+    },
+    "closing_malformation::The termination era stands as one of the most destructive periods in modern federal Indian policy. T→(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000355",
+      "before": "The termination era stands as one of the most destructive periods in modern federal Indian policy. T",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:55.227Z",
+      "lastSeen": "2026-04-05T02:15:55.227Z",
+      "exampleArticles": [
+        "CB-000355"
+      ]
+    },
+    "closing_malformation::The history of AIM represents both the possibilities and limitations of indigenous activism within t→(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000356",
+      "before": "The history of AIM represents both the possibilities and limitations of indigenous activism within t",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:55.227Z",
+      "lastSeen": "2026-04-05T02:15:55.227Z",
+      "exampleArticles": [
+        "CB-000356"
+      ]
+    },
+    "closing_malformation::The story of willow bark to aspirin ultimately represents a profound irony in medical history - one →(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000362",
+      "before": "The story of willow bark to aspirin ultimately represents a profound irony in medical history - one ",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:55.227Z",
+      "lastSeen": "2026-04-05T02:15:55.227Z",
+      "exampleArticles": [
+        "CB-000362"
+      ]
+    },
+    "closing_malformation::This global dominance traces directly back to the work of Indigenous plant breeders in Mesoamerica w→(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000365",
+      "before": "This global dominance traces directly back to the work of Indigenous plant breeders in Mesoamerica w",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:55.227Z",
+      "lastSeen": "2026-04-05T02:15:55.227Z",
+      "exampleArticles": [
+        "CB-000365"
+      ]
+    },
+    "closing_malformation::The story of Native American demographic recovery from the 1900 nadir to the 2020 Census represents →(removed)": {
+      "lessonType": "closing_malformation",
+      "description": "Closing malformation removed from CB-000383",
+      "before": "The story of Native American demographic recovery from the 1900 nadir to the 2020 Census represents ",
+      "after": "(removed)",
+      "count": 1,
+      "promoted": false,
+      "firstSeen": "2026-04-05T02:15:55.227Z",
+      "lastSeen": "2026-04-05T02:15:55.227Z",
+      "exampleArticles": [
+        "CB-000383"
+      ]
+    }
+  },
+  "machineLearnedRules": [
+    "No em dashes (—) in article body. Use a comma or restructure the sentence."
+  ]
 }

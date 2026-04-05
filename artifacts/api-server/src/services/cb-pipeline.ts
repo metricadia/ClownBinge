@@ -277,7 +277,91 @@ export function autoRepair(html: string): { html: string; repairs: Repair[] } {
     return after;
   });
 
+  // 9. Closing malformation — the 19 forbidden closing patterns.
+  //    These are editorial characterization / prescription sentences that inflate
+  //    the ZeroGPT AI score. The generator is hardened against them, but legacy
+  //    articles still carry them. Auto-repair: remove the offending closing paragraph.
+  const closingResult = checkAndFixClosingMalformation(fixed);
+  if (closingResult.removed) {
+    repairs.push({
+      type: "closing_malformation",
+      before: closingResult.removedText!.slice(0, 120),
+      after: "(closing paragraph removed — forbidden editorial pattern)",
+    });
+    fixed = closingResult.html;
+  }
+
   return { html: fixed, repairs };
+}
+
+// ── Closing malformation detector (also exported for retroactive scan) ──────
+
+export const CLOSING_FORBIDDEN: RegExp[] = [
+  /represents a (?:remarkable|significant|landmark|pivotal|profound|crucial|unique|extraordinary|major)/i,
+  /stands as (?:a|an|the|one of)/i,
+  /enriches our understanding/i,
+  /deepens our understanding/i,
+  /broadens our (?:knowledge|understanding|awareness)/i,
+  /corrects a significant omission/i,
+  /fills (?:an|a) important gap/i,
+  /reflects (?:growing|the ongoing) (?:scholarly consensus|debate|recognition)/i,
+  /acknowledging this.*enriches/i,
+  /recognizing this.*(?:matters|is important|remains essential)/i,
+  /\blegacy\b.{0,60}\b(?:continues|endures|lives on|remains|serves as a)/i,
+  /\bcontribution\b.{0,80}\b(?:to|of)\b.{0,40}\b(?:understanding|history|knowledge|scholarship)/i,
+  /^Ultimately[,\s]/i,
+  /^In the end[,\s]/i,
+  /^Taken together[,\s]/i,
+  /^Together[,\s].*\bunderstand(?:ing)?\b/i,
+  /The story of .{1,60} is\b/i,
+  /\bserves as (?:a|an) (?:reminder|testament|model|example|demonstration)/i,
+  /\bremains (?:a|an) (?:testament|reminder|model|example|powerful|important)/i,
+];
+
+export interface ClosingCheckResult {
+  html: string;
+  removed: boolean;
+  removedText: string | null;
+  pattern: string | null;
+}
+
+export function checkAndFixClosingMalformation(html: string): ClosingCheckResult {
+  // Find ALL <p> tags to locate the last one reliably
+  // Must ignore citation paragraphs (containing ::) — those are legitimate closings
+  const paraRegex = /<p(?:[^>]*)>([\s\S]*?)<\/p>/gi;
+  const allParas: Array<{ full: string; text: string; index: number }> = [];
+  let m: RegExpExecArray | null;
+
+  while ((m = paraRegex.exec(html)) !== null) {
+    const text = m[1].replace(/<[^>]+>/g, "").trim();
+    // Skip citation paragraphs and very short ones
+    if (!text.includes("::") && !text.startsWith("http") && text.length > 20) {
+      allParas.push({ full: m[0], text, index: m.index });
+    }
+  }
+
+  if (allParas.length === 0) {
+    return { html, removed: false, removedText: null, pattern: null };
+  }
+
+  const lastPara = allParas[allParas.length - 1]!;
+
+  for (const pattern of CLOSING_FORBIDDEN) {
+    if (pattern.test(lastPara.text)) {
+      // Remove only the last paragraph
+      const beforePara = html.slice(0, lastPara.index);
+      const afterPara = html.slice(lastPara.index + lastPara.full.length);
+      const fixed = (beforePara + afterPara).replace(/\s{2,}$/m, "").trimEnd();
+      return {
+        html: fixed,
+        removed: true,
+        removedText: lastPara.text,
+        pattern: pattern.toString(),
+      };
+    }
+  }
+
+  return { html, removed: false, removedText: null, pattern: null };
 }
 
 // ── Quality scan — compare reduced vs seed original ────────────────────────
