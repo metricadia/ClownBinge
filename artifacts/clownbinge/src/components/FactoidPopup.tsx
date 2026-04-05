@@ -68,7 +68,7 @@ function FontSizer({ sizeIdx, onChange }: { sizeIdx: SizeIdx; onChange: (i: Size
 
 export function FactoidPopup({ factoid, popupRef, copied, isMobile, onClose, onCopy, extraFooter }: FactoidPopupProps) {
   const domain = factoid.href ? sourceDomain(factoid.href) : "";
-  const [sizeIdx, setSizeIdx] = useState<SizeIdx>(1);
+  const [sizeIdx, setSizeIdx] = useState<SizeIdx>(isMobile ? 2 : 1);
   const fontSize = `${FONT_SIZES[sizeIdx]}px`;
 
   useEffect(() => {
