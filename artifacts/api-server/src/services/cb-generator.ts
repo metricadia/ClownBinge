@@ -44,6 +44,13 @@ CONTENT STANDARDS:
 16. No hyperlinks in the article body. URLs appear only in citations.
 17. No promotional language about the platform or the article itself.
 
+KNOWN ENTITY CORRECTIONS — HARD FACTUAL RULES:
+These are documented generation errors. Violating any of these is a factual error, not a style issue.
+- The Founding Father who co-authored The Federalist Papers and served as first Secretary of the Treasury is ALEXANDER Hamilton. Never "James Hamilton." James is James Madison. Hamilton is Alexander Hamilton. They are different people.
+- The sitting US Vice President who presided over the Senate is always addressed by title + last name only (e.g., "Vice President Harris"), never combined with a first name from another officeholder.
+- The Supreme Court has 9 justices. Never write "8 justices" or "7 justices" without citing a specific vacancy period with dates.
+- Congress passes concurrent resolutions (S.Con.Res.) and joint resolutions (S.J.Res.) — do not confuse with legislation (bills that become law). A concurrent resolution is not a law.
+
 CLOSING RULE — NON-NEGOTIABLE:
 18. The article must end on a documented fact: a vote count, a court ruling, a legislative record number, a date, a census figure, a named document. Never end on editorial characterization, prescription, or reflection.
 19. FORBIDDEN closing sentence patterns — these are generation malformations that signal AI authorship and will cause hard rejection:
