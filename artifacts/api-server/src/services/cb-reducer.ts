@@ -6,6 +6,11 @@ export type { DocType };
 
 export function stripHtmlForDetection(html: string): string {
   return html
+    // Block-level closing tags → period + space so headings and paragraphs become sentence boundaries
+    .replace(/<\/(h[1-6]|p|li|blockquote|div|section|tr|dt|dd)>/gi, ". ")
+    // Block-level opening tags and <br> → space
+    .replace(/<(h[1-6]|p|br|li|blockquote|div|section|tr|dt|dd)[^>]*>/gi, " ")
+    // Strip remaining tags
     .replace(/<[^>]+>/g, " ")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -13,6 +18,8 @@ export function stripHtmlForDetection(html: string): string {
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
     .replace(/&nbsp;/g, " ")
+    // Collapse multiple periods/spaces that may appear at block boundaries
+    .replace(/\.(\s*\.)+/g, ".")
     .replace(/\s+/g, " ")
     .trim();
 }

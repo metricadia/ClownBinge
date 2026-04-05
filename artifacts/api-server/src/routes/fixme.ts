@@ -6,6 +6,7 @@ import { reduceAI } from "../services/cb-reducer";
 import { scoreIntellectualDensity } from "../services/ids-scorer";
 import { anthropic } from "@workspace/integrations-anthropic-ai";
 import { checkContentGuard, formatViolations } from "../services/content-guard";
+import { generateArticle } from "../services/cb-generator";
 
 const router: IRouter = Router();
 
@@ -37,6 +38,78 @@ router.get("/fixme/articles", async (_req, res) => {
   } catch (err) {
     console.error("[FixMe] list error:", err);
     res.status(500).json({ error: "Failed to fetch articles" });
+  }
+});
+
+// ── Article Generation ─────────────────────────────────────────────────────────
+
+router.post("/fixme/generate", async (req, res) => {
+  const { topic, category, caseNumber, additionalContext } = req.body as {
+    topic: string;
+    category: string;
+    caseNumber: string;
+    additionalContext?: string;
+  };
+
+  if (!topic || !category || !caseNumber) {
+    res.status(400).json({ error: "topic, category, and caseNumber are required" });
+    return;
+  }
+
+  if (!/^CB-\d{6}$/.test(caseNumber)) {
+    res.status(400).json({ error: "caseNumber must match CB-XXXXXX format" });
+    return;
+  }
+
+  try {
+    console.log(`[CBGen] Generating article for ${caseNumber}: ${topic}`);
+    const article = await generateArticle({ topic, category, caseNumber, additionalContext });
+
+    // Score IDS immediately after generation
+    const ids = scoreIntellectualDensity(article.body);
+
+    const [existing] = await db
+      .select({ id: postsTable.id })
+      .from(postsTable)
+      .where(eq(postsTable.caseNumber, caseNumber))
+      .limit(1);
+
+    if (existing) {
+      res.status(409).json({ error: `Case number ${caseNumber} already exists in the database` });
+      return;
+    }
+
+    const [inserted] = await db
+      .insert(postsTable)
+      .values({
+        caseNumber,
+        title: article.title,
+        slug: article.slug,
+        teaser: article.teaser,
+        body: article.body,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        category: category as any,
+        status: "draft",
+        idsScore: ids.score,
+      })
+      .returning({ id: postsTable.id, slug: postsTable.slug });
+
+    console.log(`[CBGen] Saved ${caseNumber} (IDS=${ids.score}, contentType=${ids.contentType})`);
+
+    res.json({
+      caseNumber,
+      slug: inserted.slug,
+      title: article.title,
+      idsScore: ids.score,
+      idsContentType: ids.contentType,
+      idsBaseline: ids.baseline,
+      idsBreakdown: ids.breakdown,
+      wordCountApprox: ids.wordCount,
+    });
+  } catch (err: unknown) {
+    console.error("[CBGen] generation error:", err);
+    const message = err instanceof Error ? err.message : "Generation failed";
+    res.status(500).json({ error: message });
   }
 });
 
