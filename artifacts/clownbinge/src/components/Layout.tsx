@@ -321,6 +321,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <ul className={`space-y-4 mt-3 md:mt-0 overflow-hidden transition-all duration-200 ${footerOpen.legal ? "max-h-96" : "max-h-0 md:max-h-96"}`}>
                 <li><Link href="/privacy" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Privacy Policy</Link></li>
                 <li><Link href="/terms" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Terms of Service</Link></li>
+                <li><Link href="/methodology" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Editorial Methodology</Link></li>
+                <li><Link href="/corrections" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Corrections Policy</Link></li>
                 <li><a href="/ethics#self-own-methodology" className="block py-1 text-white/70 hover:text-secondary transition-colors font-medium">Scoring Methodology</a></li>
               </ul>
             </div>

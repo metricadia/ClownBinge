@@ -175,7 +175,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     const ogImage = (post as any).videoThumbnail ?? `${DOMAIN}/opengraph.jpg`;
     const description = post.teaser ?? "";
     const categoryLabel = CATEGORY_LABELS[post.category] ?? post.category;
-    const categoryUrl = `${DOMAIN}/?category=${post.category}`;
+    const categoryUrl = `${DOMAIN}/category/${post.category}`;
     const isSelfOwned = post.category === "self_owned";
     const isHero = post.category === "anti_racist_heroes";
     const isNerdOut = post.category === "nerd_out";

@@ -22,6 +22,7 @@ import { FactoidPopup } from "@/components/FactoidPopup";
 import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
 import { ForensicPivot } from "@/components/ForensicPivot";
+import { getCategoryConfig } from "@/lib/category-config";
 
 function linkifySource(text: string): React.ReactNode {
   return <span>{text}</span>;
@@ -428,6 +429,30 @@ export default function PostDetail() {
             </div>
           </div>
         </section>
+
+        {/* Category Hub Link — bidirectional internal linking for SEO topical authority */}
+        {(() => {
+          const catConfig = getCategoryConfig(post.category);
+          if (!catConfig) return null;
+          return (
+            <div className="mt-8 mb-2">
+              <Link
+                href={`/category/${post.category}`}
+                className="flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm hover:shadow-md transition-shadow group"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className={`text-xs font-black px-2.5 py-1 rounded-full uppercase tracking-widest shrink-0 ${catConfig.pillBg} ${catConfig.pillText}`}>
+                    {catConfig.label}
+                  </span>
+                  <p className="text-sm font-semibold text-slate-700 truncate">
+                    Browse all <span className="text-primary">{catConfig.label}</span> verified records
+                  </p>
+                </div>
+                <span className="text-primary font-bold text-sm shrink-0 group-hover:translate-x-1 transition-transform">→</span>
+              </Link>
+            </div>
+          );
+        })()}
 
         <RelatedArticles currentSlug={post.slug} category={post.category} />
 

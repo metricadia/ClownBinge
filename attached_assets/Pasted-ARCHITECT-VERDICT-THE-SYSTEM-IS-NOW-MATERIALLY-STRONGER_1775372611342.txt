@@ -1,0 +1,38 @@
+ARCHITECT VERDICT — THE SYSTEM IS NOW MATERIALLY STRONGER
+
+The old gate had a fundamental alignment problem: the generator was trained to forbid things the scan had never heard of. Patterns like "Ultimately,", "In the end,", "enriches our understanding", "underscores", "emblematic", "pivotal" — all explicitly prohibited in the generator's constitution — had no corresponding scan check. An article could carry any of those and pass all 5 blocks.
+
+That gap is now closed. The gate runs 27 distinct B1 checks across six rule families:
+
+Family	Patterns
+Superlatives / editorial adjectives	remarkable, significant, extraordinary, profound, monumental, groundbreaking, transformative, pivotal, damning, emblematic
+Editorial phrases	stands as, cannot be overstated, far beyond mere, by any measure, at its core, cannot be ignored
+Forbidden H2 headers	Legacy, Significance, Conclusion, Remarkable, Impact
+Structural	body H1, em dash in visible text
+Terminal + significance verbs	reflects/indicates/suggests/portrays/reveals at paragraph end; underscores
+Editorial characterization	dead wrong, matters because, symbolic/symbolism/symbolically
+Conclusion openers	Ultimately, / In the end, / Taken together,
+AI malformations	enriches/deepens/broadens understanding, fills an important gap
+N&FN ran through all 27 checks — 60/60 clean. Two real violations were found and fixed in the process ("by any measure" in CB-000327 and CB-000370). No false positives.
+
+ALL SCAN — WHAT THE PROJECT ACTUALLY LOOKS LIKE RIGHT NOW
+
+Running the full gate across all 381 published articles shows 302 failing. That number looks alarming but is expected — it is a category-by-category unprocessed backlog:
+
+Category	Failing articles
+technology	45
+anti_racist_heroes	34
+money_and_power	30
+law_and_justice	30
+self_owned	25
+religion	25
+health_and_healing	24
+us_history	19
+censorship	15
+women_and_girls	14
+war_and_inhumanity	12
+global_south	12
+others	17
+Every one of those failures is a category that hasn't been run through the pipeline yet. The issues are structural (no H2 headers, no factoids, not locked) — not B1 editorial violations from the new scan patterns. The gate is the enforcement mechanism. The pipeline is the fix.
+
+The system is ready to process the remaining categories. Technology is next — 45 articles flagged. Ready when you are.

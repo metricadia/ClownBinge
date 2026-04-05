@@ -21,6 +21,9 @@ import SubmitTip from "@/pages/SubmitTip";
 import Advertise from "@/pages/Advertise";
 import FixMe from "@/pages/FixMe";
 import Bookstore from "@/pages/Bookstore";
+import CategoryHub from "@/pages/CategoryHub";
+import Methodology from "@/pages/Methodology";
+import Corrections from "@/pages/Corrections";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient({
@@ -61,6 +64,9 @@ function Router() {
       <Route path="/invest-in-us" component={Support} />
       <Route path="/FixMe" component={FixMe} />
       <Route path="/bookstore" component={Bookstore} />
+      <Route path="/category/:slug" component={CategoryHub} />
+      <Route path="/methodology" component={Methodology} />
+      <Route path="/corrections" component={Corrections} />
       <Route component={NotFound} />
     </Switch>
     </>

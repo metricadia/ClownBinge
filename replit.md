@@ -324,11 +324,30 @@ cd scripts && pnpm sitemap                                    # Regenerate sitem
 
 ### SEO Implementation (completed)
 
-- `use-seo-head.ts` hook: title, canonical, OG, Twitter Card, JSON-LD NewsArticle + Person schema
-- `public/robots.txt`: static, points to `/sitemap.xml`
-- `public/sitemap.xml`: statically generated; run `pnpm sitemap` to regenerate
+**Core SEO hooks:**
+- `use-seo-head.ts` (760 lines): title, canonical, OG, Twitter Card, JSON-LD NewsArticle + Person schema, PUBLISHER_BLOCK (NewsMediaOrganization + ResearchOrganization), citation extraction, government URL resolution
+- Category JSON-LD `isPartOf` points to `/category/:slug` hub URLs (updated from `/?category=X`)
+
+**Category Hub Architecture (18 hub pages):**
+- `src/lib/category-config.ts` — descriptions, mission statements, key entities, pillar topics, primary sources for all 18 categories
+- `src/pages/CategoryHub.tsx` — full hub page at `/category/:slug` with breadcrumbs, description, coverage areas, primary sources, key entities, full article list
+- Route: `/category/:slug` in App.tsx
+- Every article page has a CategoryHubLink block pointing back to its hub (bidirectional linking)
+
+**E-E-A-T Policy Pages:**
+- `/methodology` — CB Dry Rationalism standard, 3-tier source hierarchy, six-block gate, AI scoring, AI-assisted research policy
+- `/corrections` — corrections policy, retraction policy, how to submit errors
+- Both linked from footer Legal section
+
+**Sitemap (410 URLs):**
+- `public/sitemap.xml`: 11 static + 18 category hubs + 381 articles — run `pnpm --filter @workspace/scripts run sitemap` to regenerate
+- `public/robots.txt`: allows all, Sitemap directive set
+
+**Other:**
 - `/tags/:tag` route: tag index pages with clickable tag pills on article pages
 - selfOwnScore badge: shows on ALL article categories (not just self_owned)
+
+**CSR Risk (known):** App is SPA/Wouter. JSON-LD and meta tags are client-rendered. Verify via URL Inspection in Search Console that Googlebot sees the rendered content. SSR/prerender may become prerequisite for category hub pages to be indexed reliably.
 
 ### Editorial Rules
 

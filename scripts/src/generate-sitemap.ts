@@ -19,15 +19,39 @@ const OUT_PATH = resolve(
 const TODAY = new Date().toISOString().split("T")[0];
 
 const STATIC_PAGES = [
-  { loc: "/",          priority: "1.0", changefreq: "daily",   lastmod: TODAY },
-  { loc: "/about",     priority: "0.7", changefreq: "monthly", lastmod: TODAY },
-  { loc: "/ethics",    priority: "0.8", changefreq: "monthly", lastmod: TODAY },
-  { loc: "/store",     priority: "0.7", changefreq: "weekly",  lastmod: TODAY },
-  { loc: "/clowncheck",priority: "0.8", changefreq: "weekly",  lastmod: TODAY },
-  { loc: "/reports",   priority: "0.7", changefreq: "weekly",  lastmod: TODAY },
-  { loc: "/contact",   priority: "0.5", changefreq: "monthly", lastmod: TODAY },
-  { loc: "/privacy",   priority: "0.3", changefreq: "yearly",  lastmod: TODAY },
-  { loc: "/terms",     priority: "0.3", changefreq: "yearly",  lastmod: TODAY },
+  { loc: "/",             priority: "1.0", changefreq: "daily",   lastmod: TODAY },
+  { loc: "/about",        priority: "0.7", changefreq: "monthly", lastmod: TODAY },
+  { loc: "/ethics",       priority: "0.8", changefreq: "monthly", lastmod: TODAY },
+  { loc: "/methodology",  priority: "0.8", changefreq: "monthly", lastmod: TODAY },
+  { loc: "/corrections",  priority: "0.7", changefreq: "monthly", lastmod: TODAY },
+  { loc: "/store",        priority: "0.7", changefreq: "weekly",  lastmod: TODAY },
+  { loc: "/clowncheck",   priority: "0.8", changefreq: "weekly",  lastmod: TODAY },
+  { loc: "/reports",      priority: "0.7", changefreq: "weekly",  lastmod: TODAY },
+  { loc: "/contact",      priority: "0.5", changefreq: "monthly", lastmod: TODAY },
+  { loc: "/privacy",      priority: "0.3", changefreq: "yearly",  lastmod: TODAY },
+  { loc: "/terms",        priority: "0.3", changefreq: "yearly",  lastmod: TODAY },
+];
+
+// All 18 content categories with dedicated hub pages
+const CATEGORY_SLUGS = [
+  "native_and_first_nations",
+  "technology",
+  "anti_racist_heroes",
+  "money_and_power",
+  "law_and_justice",
+  "us_history",
+  "health_and_healing",
+  "self_owned",
+  "religion",
+  "censorship",
+  "global_south",
+  "women_and_girls",
+  "war_and_inhumanity",
+  "us_constitution",
+  "nerd_out",
+  "disarming_hate",
+  "investigations",
+  "how_it_works",
 ];
 
 function esc(s: string) {
@@ -59,17 +83,26 @@ async function main() {
     <priority>${p.priority}</priority>
   </url>`);
 
+  const categoryUrls = CATEGORY_SLUGS.map((slug) => `  <url>
+    <loc>${esc(DOMAIN)}/category/${esc(slug)}</loc>
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>`);
+
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${staticUrls.join("\n")}
+${categoryUrls.join("\n")}
 ${articleUrls.join("\n")}
 </urlset>`;
 
   writeFileSync(OUT_PATH, xml, "utf8");
   console.log(`Sitemap written: ${OUT_PATH}`);
   console.log(`  Static pages: ${staticUrls.length}`);
+  console.log(`  Category hubs: ${categoryUrls.length}`);
   console.log(`  Article URLs: ${articleUrls.length}`);
-  console.log(`  Total: ${staticUrls.length + articleUrls.length} URLs`);
+  console.log(`  Total: ${staticUrls.length + categoryUrls.length + articleUrls.length} URLs`);
 
   await pool.end();
 }
