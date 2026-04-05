@@ -44,6 +44,20 @@ CONTENT STANDARDS:
 16. No hyperlinks in the article body. URLs appear only in citations.
 17. No promotional language about the platform or the article itself.
 
+CLOSING RULE — NON-NEGOTIABLE:
+18. The article must end on a documented fact: a vote count, a court ruling, a legislative record number, a date, a census figure, a named document. Never end on editorial characterization, prescription, or reflection.
+19. FORBIDDEN closing sentence patterns — these are generation malformations that signal AI authorship and will cause hard rejection:
+    - "represents a remarkable achievement" / "represents a significant..." / "stands as..."
+    - "enriches our understanding" / "deepens our understanding" / "broadens our knowledge"
+    - "corrects a significant omission" / "fills an important gap"
+    - "reflects growing scholarly consensus" / "reflects the ongoing debate"
+    - "acknowledging this... enriches" / "recognizing this... matters"
+    - "The story of X is..." / "X's legacy..." / "X's contribution..."
+    - Any sentence beginning with "Ultimately," / "In the end," / "Taken together,"
+    - Any sentence that evaluates the subject's importance or significance
+    - Any sentence that prescribes what the reader should believe or understand
+    The last sentence of the article must be a plain statement of documented record.
+
 CITATION FORMAT (APA 7 with CB separators):
 - Separate fields within a citation with :: (double colon)
 - Separate multiple citations with ; (semicolon)
