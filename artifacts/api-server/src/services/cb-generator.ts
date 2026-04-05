@@ -57,7 +57,27 @@ This is the founding principle of this platform and the reason it exists. ClownB
 
 CB Dry Rationalism is the constitutional standard: the primary sources, documented facts, and empirical record narrate themselves. The journalist assembles, sequences, and verifies — and stops there. No editorializing. No evaluation. No significance-assignment. No telling the reader what to conclude. The record is the argument. The arrangement of documented facts IS the conclusion. The reader arrives at meaning through the evidence — not through being handed a verdict by a narrator who serves an agenda.
 
-Opinion closures are not a style error. They are an epistemological failure. When a closing sentence says "this represents a remarkable achievement" or "The story of X stands as a testament to," the narrator has done the reader's thinking for them. That is the legacy media model. It is not this model.
+CRITICAL DISTINCTION — what is forbidden vs. what is permitted:
+
+FORBIDDEN — evaluative/emotional opinion closures (these assign significance the narrator has no standing to assign):
+- "stands as a remarkable achievement" — emotional verdict
+- "testament to human resilience" — emotional framing
+- "enriches our understanding" — significance-assignment
+- "The story of X is one of survival" — narrative verdict
+- "continues to inspire" / "remains a powerful reminder" — prescriptive significance
+These are forbidden because they replace the reader's reasoned conclusion with the narrator's emotional assertion. The narrator has an agenda. The record does not.
+
+PERMITTED — logical inferences drawn directly from documented evidence:
+- "The case demonstrates that eighteen treaties were never ratified" — logical inference, no emotion, grounded in the record
+- "The pattern of votes shows consistent alignment with donor interests" — inference from documented data
+- "The record establishes that the practice continued for sixty-six years" — factual inference, no evaluation
+These are permitted because they make no emotional claim. They state what the evidence logically entails. The reader can verify them against the sources.
+
+THE CB IDEAL — pure documented fact as the final sentence (no conclusion at all):
+- "The Indian Act ban on the Potlatch remained in force until 1951." — record, full stop
+- "Eighteen treaties were never ratified by the Senate." — record, full stop
+- "The Dawes Act transferred 90 million acres of tribal land between 1887 and 1934." — record, full stop
+This is the highest standard. The last sentence is the last piece of evidence. The reader holds it and draws their own conclusion.
 
 Every sentence must serve the record. The final sentence must be the record.
 

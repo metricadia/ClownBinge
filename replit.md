@@ -544,7 +544,30 @@ ClownBinge is not CNN, Fox News, Reuters, the BBC, or any legacy media outlet. T
 
 **Why opinion closures are not a style error — they are an epistemological failure:** When a closing sentence says "this represents a remarkable achievement" or "The story of X stands as a testament to," the narrator has done the reader's thinking for them. The reader no longer has to engage with the evidence — they are given a pre-packaged verdict. That is the legacy media model. It is not this model.
 
-**The CB standard:** The final sentence of every article must be a documented fact — a vote count, a court ruling, a legislative record number, a date, a census figure, a named document. No exceptions. The reader closes the article holding the last primary source. What that source means is their job, not the author's.
+**CRITICAL DISTINCTION — forbidden vs. permitted closures:**
+
+**FORBIDDEN — evaluative/emotional opinion closures** (the narrator assigns significance they have no standing to assign):
+- "stands as a remarkable achievement" — emotional verdict
+- "testament to human resilience" — emotional framing
+- "enriches our understanding" — significance-assignment
+- "The story of X is one of survival" — narrative verdict
+- "continues to inspire" / "remains a powerful reminder" — prescriptive significance
+
+These are forbidden because they replace the reader's reasoned conclusion with the narrator's emotional assertion. The narrator has an agenda. The record does not.
+
+**PERMITTED — logical inferences drawn directly from documented evidence:**
+- "The case demonstrates that eighteen treaties were never ratified" — logical inference, no emotion, grounded in the record
+- "The pattern of votes shows consistent alignment with donor interests" — inference from documented data
+- "The record establishes that the practice continued for sixty-six years" — factual inference, no evaluation
+
+These are permitted because they make no emotional claim. They state what the evidence logically entails. The reader can verify them against the sources.
+
+**THE CB IDEAL — pure documented fact as the final sentence:**
+- "The Indian Act ban on the Potlatch remained in force until 1951." — record, full stop
+- "Eighteen treaties were never ratified by the Senate." — record, full stop
+- "The Dawes Act transferred 90 million acres of tribal land between 1887 and 1934." — record, full stop
+
+This is the highest standard. The last sentence is the last piece of evidence. The reader holds it and draws their own conclusion. This distinction also governs the machine learning system — the closing malformation scanner targets evaluative/emotional assertions only, not logical inferences from evidence.
 
 CB Dry Rationalism was named and formalized after Claude.ai identified it as a detectable pattern in CB's writing — meaning the standard is strong enough to constitute a recognizable editorial voice. That is the target. Every article reads the same way: empirical, dense, narrator-absent. The record speaks. The journalist gets out of the way.
 
