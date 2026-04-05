@@ -332,6 +332,35 @@ cd scripts && pnpm sitemap                                    # Regenerate sitem
 
 ### Editorial Rules
 
+---
+
+#### MANDATORY FINAL STEP — CB VIOLATION SCAN (NON-NEGOTIABLE)
+
+**BEFORE declaring any article or category done, run the scan. No exceptions. Ever.**
+
+```bash
+pnpm --filter @workspace/scripts run scan <category>
+# or for all articles:
+pnpm --filter @workspace/scripts run scan ALL
+```
+
+The scan must return **zero violations**. If it returns anything other than zero, fix and re-scan before finishing. This is not optional. This is not a best practice. This is the law.
+
+**Why this exists:** ClownBinge is not CNN. ClownBinge is not Fox News. ClownBinge publishes zero opinion, zero interpretation, zero editorial voice. Every word that sneaks through — "remarkable," "significant," an em dash, a forbidden H2 — is an opinion signal. Google E-E-A-T rewards factual density. Opinion words contaminate it. This scan is what separates CB from every other political site on the internet.
+
+**CB Dry Rationalism — FORBIDDEN in all article bodies:**
+
+| Category | Forbidden |
+|---|---|
+| Superlative adjectives | remarkable, significant, extraordinary, profound, monumental, groundbreaking, transformative |
+| Editorial phrases | "stands as", "cannot be overstated", "far beyond mere", "legacy of" |
+| Forbidden H2 headers | Legacy, Significance, Conclusion, Remarkable, Impact |
+| Structural violations | `<h1>` in body (duplicate H1), em dash (—) in visible text |
+| Terminal interpretation | ends with reflects/indicates/suggests/portrays |
+| Word floor | below 1,380 words |
+
+---
+
 - **NEVER add `<h1>` to an article body. EVER.** The frontend (`PostDetail.tsx` line 242) renders `<h1>{post.title}</h1>` above the body. Any H1 in the body is a duplicate H1 — Google penalizes this as an SEO structural violation. The `autoRepair()` function in `cb-pipeline.ts` strips body H1s automatically, but the correct solution is never adding them. This applies to all article bodies in all categories.
 - NEVER use em dashes anywhere in this project
 - Source abbreviations: add to `src/lib/source-abbrev.ts` only (single source of truth)

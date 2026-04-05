@@ -10,6 +10,7 @@
     "generate": "tsx ./src/generate-articles.ts",
     "sitemap": "tsx ./src/generate-sitemap.ts",
     "expand": "tsx ./src/expand-short-articles.ts",
+    "scan": "tsx ./src/cb-scan.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
