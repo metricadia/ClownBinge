@@ -559,8 +559,12 @@ These are forbidden because they replace the reader's reasoned conclusion with t
 - "The case demonstrates that eighteen treaties were never ratified" — logical inference, no emotion, grounded in the record
 - "The pattern of votes shows consistent alignment with donor interests" — inference from documented data
 - "The record establishes that the practice continued for sixty-six years" — factual inference, no evaluation
+- "The historical record shows scrutiny was applied inconsistently" — descriptive, no obligation assigned
 
 These are permitted because they make no emotional claim. They state what the evidence logically entails. The reader can verify them against the sources.
+
+**Secondary rule — verbs attributed to the record must be observational, never obligatory:**
+The record *contains, shows, establishes, documents, indicates, reveals, demonstrates*. The record does NOT *demand, require, compel, call for, necessitate, or oblige*. "The historical record demands scrutiny" sounds like a logical inference but is editorial — "demands" assigns moral obligation to an inert archive. The record is inert. It holds what it holds. The moment a verb assigns agency or prescription to the record itself, the sentence has crossed from inference into advocacy. This rule applies to the generator, to the closing malformation scanner, and to any future ML-trained detection layer.
 
 **THE CB IDEAL — pure documented fact as the final sentence:**
 - "The Indian Act ban on the Potlatch remained in force until 1951." — record, full stop
