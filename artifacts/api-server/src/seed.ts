@@ -139,7 +139,12 @@ export async function updateNativeArticles(): Promise<void> {
     );
 
     const existing = await db.execute(
-      sql`SELECT case_number, LENGTH(body) as body_len FROM posts WHERE category = 'native_and_first_nations'`
+      // Exclude articles that have been detected (ai_score IS NOT NULL) or locked —
+      // those bodies are owned by the reducer and must never be overwritten by the seed.
+      sql`SELECT case_number, LENGTH(body) as body_len FROM posts
+          WHERE category = 'native_and_first_nations'
+            AND ai_score IS NULL
+            AND locked = false`
     );
 
     let updated = 0;
