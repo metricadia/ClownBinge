@@ -534,17 +534,19 @@ Priority chain for both the badge and the section is identical:
 
 This logic lives in `citationCount` (PostDetail.tsx) and the Primary Sources render block. If either is ever changed, the other must change to match. Verified clean across all 62 articles (March 2026): 58 APA7, 4 plain VS, 0 mismatches.
 
-### CB Dry Rationalism — The Editorial Doctrine
+### CB Dry Rationalism — Prime Directive of Metricadia Research LLC
 
-ClownBinge operates on a principle called **CB Dry Rationalism**. This is the named house standard that governs every article, every closing sentence, and every generator prompt.
+**This is the founding principle of ClownBinge and the reason Metricadia Research exists.**
 
-**The principle:** Primary sources, documented facts, and empirical records narrate themselves. The journalist assembles, sequences, and verifies — but does not editorialize, evaluate, or tell the reader what to conclude. The record is the argument. The arrangement of documented facts IS the conclusion. The reader arrives at significance through the evidence, not through being told that significance exists.
+ClownBinge is not CNN, Fox News, Reuters, the BBC, or any legacy media outlet. Those organizations operate as institutional vassals — their coverage is shaped by government relationships, advertiser dependencies, and ownership interests. Their conclusions are pre-determined. Their record-keeping serves power. Metricadia Research exists to do the opposite.
 
-**Why opinion closures destroy the article:** When a closing sentence says "this represents a remarkable achievement" or "The story of X stands as a testament to," the narrator has replaced the reader's reasoned conclusion with an assertion. The reader no longer has to do intellectual work — they are handed a verdict. This collapses the epistemological value of the record. It also signals AI authorship immediately, because AI defaults to significance-assignment as a way to simulate conclusion.
+**CB Dry Rationalism** is the constitutional standard of this platform: primary sources, documented facts, and empirical records narrate themselves. The journalist assembles, sequences, and verifies — and stops there. No editorializing. No evaluation. No significance-assignment. No telling the reader what to conclude. The record is the argument. The arrangement of documented facts IS the conclusion. The reader arrives at meaning through the evidence — not through being handed a verdict by a narrator who serves an agenda.
 
-**The CB standard:** The final sentence of every article must be a documented fact — a vote count, a court ruling, a legislative record number, a date, a census figure, a named document. No exceptions. The reader closes the article holding the last primary source. What it means is their job, not the author's.
+**Why opinion closures are not a style error — they are an epistemological failure:** When a closing sentence says "this represents a remarkable achievement" or "The story of X stands as a testament to," the narrator has done the reader's thinking for them. The reader no longer has to engage with the evidence — they are given a pre-packaged verdict. That is the legacy media model. It is not this model.
 
-This doctrine was named and formalized after Claude.ai identified "CB Dry Rationalism" as a detectable pattern in CB's writing — meaning the standard is strong enough to be recognized as a coherent editorial voice. That is the target. Every article should read the same way: empirical, dense, narrator-absent.
+**The CB standard:** The final sentence of every article must be a documented fact — a vote count, a court ruling, a legislative record number, a date, a census figure, a named document. No exceptions. The reader closes the article holding the last primary source. What that source means is their job, not the author's.
+
+CB Dry Rationalism was named and formalized after Claude.ai identified it as a detectable pattern in CB's writing — meaning the standard is strong enough to constitute a recognizable editorial voice. That is the target. Every article reads the same way: empirical, dense, narrator-absent. The record speaks. The journalist gets out of the way.
 
 ### What to Never Do
 
