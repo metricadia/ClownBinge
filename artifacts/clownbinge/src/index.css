@@ -212,7 +212,10 @@
 
   .cb-factoid-popup-header {
     flex-shrink: 0;
-    padding: 14px 70px 0 16px;
+    padding: 12px 70px 12px 16px;
+    background: #fffaee;
+    border-radius: 16px 16px 0 0;
+    border-bottom: 1px solid rgba(245, 197, 24, 0.25);
   }
 
   .cb-factoid-popup-scrollable {
@@ -258,8 +261,8 @@
 
   .cb-factoid-footer-logo {
     flex-shrink: 0;
-    font-size: 0.7rem !important;
-    opacity: 0.85;
+    font-size: 0.85rem !important;
+    opacity: 0.9;
   }
 
   .cb-factoid-popup-close {
@@ -294,19 +297,19 @@
   }
 
   .cb-factoid-popup-brand {
-    font-size: 11px;
+    font-size: 12px;
     font-family: var(--font-mono);
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #1A3A8F;
-    font-weight: 700;
+    font-weight: 800;
   }
 
   .cb-factoid-popup-sublabel {
     font-size: 11px;
     font-family: var(--font-sans);
-    color: rgba(26, 58, 143, 0.5);
-    font-weight: 400;
+    color: rgba(26, 58, 143, 0.65);
+    font-weight: 500;
     letter-spacing: 0.02em;
     text-transform: none;
   }
