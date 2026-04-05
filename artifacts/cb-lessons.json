@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "lastUpdated": "2026-04-05T03:50:10.220Z",
-  "totalArticlesProcessed": 85,
-  "totalRepairsApplied": 266,
+  "lastUpdated": "2026-04-05T04:07:37.909Z",
+  "totalArticlesProcessed": 86,
+  "totalRepairsApplied": 271,
   "patterns": {
     "em_dash::—→,": {
       "lessonType": "em_dash",
@@ -2477,6 +2477,76 @@
       "exampleArticles": [
         "CB-000185"
       ]
+    },
+    "custom::remarkable [noun]→[documented figure]": {
+      "lessonType": "custom",
+      "description": "Evaluative adjective applied to a documented fact. \"Remarkable\" assigns a verdict the evidence does not need.",
+      "before": "remarkable resilience / remarkable achievement / remarkable recovery",
+      "after": "[the documented figure — population count, percentage, date]",
+      "count": 10,
+      "promoted": true,
+      "promotedToRule": "CB Dry Rationalism: Never write \"remarkable [noun]\" (remarkable resilience, remarkable achievement, remarkable growth). State the documented figure. The record does not need an adjective.",
+      "firstSeen": "2026-04-05T04:06:52.835Z",
+      "lastSeen": "2026-04-05T04:06:52.835Z",
+      "exampleArticles": [
+        "CB-000383"
+      ]
+    },
+    "custom::tragically [adjective]→[adjective alone]": {
+      "lessonType": "custom",
+      "description": "Emotional intensifier applied to a measurable statistic. \"Tragically\" is editorial; the number is not.",
+      "before": "tragically elevated / tragically high / tragically low",
+      "after": "elevated / high / low",
+      "count": 10,
+      "promoted": true,
+      "promotedToRule": "CB Dry Rationalism: Never write \"tragically [adjective]\" before a statistic. Write the statistic. \"Tragically elevated\" is editorial; \"elevated at X per 100,000\" is documented fact.",
+      "firstSeen": "2026-04-05T04:06:52.835Z",
+      "lastSeen": "2026-04-05T04:06:52.835Z",
+      "exampleArticles": [
+        "CB-000383"
+      ]
+    },
+    "custom::far beyond mere numbers→[remove phrase]": {
+      "lessonType": "custom",
+      "description": "Characterization of documented data as having deeper meaning. The numbers are the statement.",
+      "before": "far beyond mere numbers / beyond the numbers / more than statistics",
+      "after": "[remove phrase entirely — state the documented figure]",
+      "count": 10,
+      "promoted": true,
+      "promotedToRule": "CB Dry Rationalism: Never write \"far beyond mere numbers\" or similar characterization of data. The numbers are the argument. If the paragraph needs more, add another documented figure.",
+      "firstSeen": "2026-04-05T04:06:52.835Z",
+      "lastSeen": "2026-04-05T04:06:52.835Z",
+      "exampleArticles": [
+        "CB-000383"
+      ]
+    },
+    "custom::survival and flourishing→[census data]": {
+      "lessonType": "custom",
+      "description": "Significance framing layered over census counts. The census data shows population growth; let it show that.",
+      "before": "survival and flourishing of distinct cultures / survival and continuity of cultures / cultural survival and renaissance",
+      "after": "[state the census figure, the tribal enrollment number, the language speaker count]",
+      "count": 10,
+      "promoted": true,
+      "promotedToRule": "CB Dry Rationalism: Never frame census counts as \"survival and flourishing of distinct cultures.\" That is the writer assigning meaning. Write the number: \"9.7 million in 2020\" is the statement.",
+      "firstSeen": "2026-04-05T04:06:52.835Z",
+      "lastSeen": "2026-04-05T04:06:52.835Z",
+      "exampleArticles": [
+        "CB-000383"
+      ]
+    },
+    "custom::<h2>Conclusion:→[remove header]": {
+      "lessonType": "custom",
+      "description": "CB articles do not have conclusion sections. Conclusion headers signal editorial structure and significance-assignment.",
+      "before": "<h2>Conclusion: [title]</h2> / ## Conclusion",
+      "after": "[remove the header — the final paragraph stands without a label]",
+      "count": 10,
+      "promoted": true,
+      "promotedToRule": "CB Dry Rationalism: Never write a Conclusion header (Conclusion: From Nadir to Resurgence, Conclusion: Legacy and Impact, etc.). CB articles end on the last documented fact with no section label.",
+      "firstSeen": "2026-04-05T04:06:52.835Z",
+      "lastSeen": "2026-04-05T04:06:52.835Z",
+      "exampleArticles": [
+        "CB-000383"
+      ]
     }
   },
   "machineLearnedRules": [
@@ -2492,6 +2562,11 @@
     "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" (2005) documents an extensive network of managed forests, wetlands, and coastal\"\".",
     "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" that these food forests embodied permacultural principles decades before the te\"\".",
     "Writing rule: use \"(flagged for review)\" not \"Quote removed: \" presents extensive documentation from explorer journals, ethnographic records, \"\".",
-    "Writing rule: use \"(flagged for review)\" not \"\"Administrative Infrastructure The\" not found in reduced body\"."
+    "Writing rule: use \"(flagged for review)\" not \"\"Administrative Infrastructure The\" not found in reduced body\".",
+    "CB Dry Rationalism: Never write \"remarkable [noun]\" (remarkable resilience, remarkable achievement, remarkable growth). State the documented figure. The record does not need an adjective.",
+    "CB Dry Rationalism: Never write \"tragically [adjective]\" before a statistic. Write the statistic. \"Tragically elevated\" is editorial; \"elevated at X per 100,000\" is documented fact.",
+    "CB Dry Rationalism: Never write \"far beyond mere numbers\" or similar characterization of data. The numbers are the argument. If the paragraph needs more, add another documented figure.",
+    "CB Dry Rationalism: Never frame census counts as \"survival and flourishing of distinct cultures.\" That is the writer assigning meaning. Write the number: \"9.7 million in 2020\" is the statement.",
+    "CB Dry Rationalism: Never write a Conclusion header (Conclusion: From Nadir to Resurgence, Conclusion: Legacy and Impact, etc.). CB articles end on the last documented fact with no section label."
   ]
 }
