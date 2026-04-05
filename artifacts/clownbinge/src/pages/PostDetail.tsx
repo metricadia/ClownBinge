@@ -529,7 +529,7 @@ export default function PostDetail() {
           onCopy={handleCopy}
           extraFooter={post ? (
             <div className="flex items-center gap-2 mt-2">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-white/50 flex-shrink-0">Share</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 flex-shrink-0">Share</span>
               <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title ?? "")}&url=${encodeURIComponent(typeof window !== "undefined" ? window.location.href : "")}`} target="_blank" rel="noopener noreferrer" title="Share on X" className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-md text-white hover:opacity-80 transition-opacity" style={{ background: "#000" }}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.26 5.632L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
               </a>
