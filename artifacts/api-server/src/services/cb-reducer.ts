@@ -6,10 +6,12 @@ export type { DocType };
 
 export function stripHtmlForDetection(html: string): string {
   return html
-    // Block-level closing tags → period + space so headings and paragraphs become sentence boundaries
-    .replace(/<\/(h[1-6]|p|li|blockquote|div|section|tr|dt|dd)>/gi, ". ")
+    // Remove heading elements entirely — headings are structural, not prose to be rewritten
+    .replace(/<h[1-6][^>]*>.*?<\/h[1-6]>/gis, ". ")
+    // Block-level closing tags → period + space so paragraphs become sentence boundaries
+    .replace(/<\/(p|li|blockquote|div|section|tr|dt|dd)>/gi, ". ")
     // Block-level opening tags and <br> → space
-    .replace(/<(h[1-6]|p|br|li|blockquote|div|section|tr|dt|dd)[^>]*>/gi, " ")
+    .replace(/<(p|br|li|blockquote|div|section|tr|dt|dd)[^>]*>/gi, " ")
     // Strip remaining tags
     .replace(/<[^>]+>/g, " ")
     .replace(/&amp;/g, "&")
