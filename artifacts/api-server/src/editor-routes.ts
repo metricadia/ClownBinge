@@ -201,10 +201,14 @@ export function registerMetricadiaRoutes(app: Express) {
               return { name, imageUrl: null, description: null, found: false };
             }
 
+            const rawExtract: string = data.extract || "";
+            const sentences = rawExtract.match(/[^.!?]+[.!?]+(?:\s|$)/g) || [];
+            const bio = sentences.slice(0, 3).join("").trim() || rawExtract.slice(0, 260).trim();
+
             return {
               name: data.title || name,
               imageUrl: data.thumbnail?.source || null,
-              description: data.extract ? (data.extract.length > 220 ? data.extract.slice(0, 220) + "…" : data.extract) : null,
+              description: bio || null,
               wikiUrl: data.content_urls?.desktop?.page || null,
               found: !!(data.thumbnail?.source),
             };

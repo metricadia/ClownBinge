@@ -4,7 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Upload, Sparkles, X } from "lucide-react";
+import { Upload, Sparkles, X, Search, Loader2 } from "lucide-react";
+
+function extractSentences(text: string, count: number): string {
+  const sentences = text.match(/[^.!?]+[.!?]+(?:\s|$)/g) || [];
+  return sentences.slice(0, count).join("").trim() || text.slice(0, 260).trim();
+}
 
 interface MetricadiaIDDialogProps {
   open: boolean;
@@ -18,13 +23,43 @@ export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: M
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [isLookingUp, setIsLookingUp] = useState(false);
+  const [lookupStatus, setLookupStatus] = useState<"idle" | "found" | "notfound">("idle");
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleWikipediaLookup = async () => {
+    if (!name.trim()) return;
+    setIsLookingUp(true);
+    setLookupStatus("idle");
+    try {
+      const encoded = encodeURIComponent(name.trim().replace(/ /g, "_"));
+      const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encoded}`, {
+        headers: { "User-Agent": "ClownBinge/1.0" },
+      });
+      if (!res.ok) throw new Error("not found");
+      const data = await res.json() as any;
+      if (data.type === "disambiguation" || !data.extract) throw new Error("ambiguous");
+
+      const bio = extractSentences(data.extract, 3);
+      setDescription(bio);
+
+      if (!imageUrl && data.thumbnail?.source) {
+        setImageUrl(data.thumbnail.source);
+      }
+      setLookupStatus("found");
+    } catch {
+      setLookupStatus("notfound");
+    } finally {
+      setIsLookingUp(false);
+    }
+  };
 
   useEffect(() => {
     if (open && selectedText) {
       setName(selectedText);
       setImageUrl("");
       setDescription("");
+      setLookupStatus("idle");
     }
   }, [open, selectedText]);
 
@@ -99,14 +134,34 @@ export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: M
         <div className="space-y-4 mt-4">
           <div className="space-y-2">
             <Label htmlFor="person-name" className="text-indigo-400 font-semibold">Person's Name</Label>
-            <Input
-              id="person-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="e.g., Jane Smith"
-              className="bg-slate-950 border-slate-700 text-white"
-              data-testid="input-metricadiaid-name"
-            />
+            <div className="flex gap-2">
+              <Input
+                id="person-name"
+                value={name}
+                onChange={(e) => { setName(e.target.value); setLookupStatus("idle"); }}
+                placeholder="e.g., Jane Smith"
+                className="bg-slate-950 border-slate-700 text-white flex-1"
+                data-testid="input-metricadiaid-name"
+                onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handleWikipediaLookup(); } }}
+              />
+              <Button
+                type="button"
+                onClick={handleWikipediaLookup}
+                disabled={!name.trim() || isLookingUp}
+                variant="outline"
+                className="shrink-0 border-indigo-600/40 bg-indigo-900/20 text-indigo-300 hover:bg-indigo-800/40"
+                title="Look up on Wikipedia"
+                data-testid="button-wikipedia-lookup"
+              >
+                {isLookingUp ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+              </Button>
+            </div>
+            {lookupStatus === "found" && (
+              <p className="text-xs text-green-400">Wikipedia bio filled in. Edit below if needed.</p>
+            )}
+            {lookupStatus === "notfound" && (
+              <p className="text-xs text-amber-400">No Wikipedia article found — write a bio manually.</p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -134,8 +189,8 @@ export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: M
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-indigo-400 font-semibold">Description (optional)</Label>
-            <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Brief bio or context..." className="bg-slate-950 border-slate-700 text-white resize-none" rows={3} data-testid="input-metricadiaid-description" />
+            <Label htmlFor="description" className="text-indigo-400 font-semibold">Who is this person? <span className="text-slate-500 font-normal">(2–3 sentences)</span></Label>
+            <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Write 2–3 sentences about who this person is — or use the Wikipedia lookup above to auto-fill." className="bg-slate-950 border-slate-700 text-white resize-none" rows={4} data-testid="input-metricadiaid-description" />
           </div>
 
           <div className="flex gap-3 pt-2">
