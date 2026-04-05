@@ -534,6 +534,18 @@ Priority chain for both the badge and the section is identical:
 
 This logic lives in `citationCount` (PostDetail.tsx) and the Primary Sources render block. If either is ever changed, the other must change to match. Verified clean across all 62 articles (March 2026): 58 APA7, 4 plain VS, 0 mismatches.
 
+### CB Dry Rationalism — The Editorial Doctrine
+
+ClownBinge operates on a principle called **CB Dry Rationalism**. This is the named house standard that governs every article, every closing sentence, and every generator prompt.
+
+**The principle:** Primary sources, documented facts, and empirical records narrate themselves. The journalist assembles, sequences, and verifies — but does not editorialize, evaluate, or tell the reader what to conclude. The record is the argument. The arrangement of documented facts IS the conclusion. The reader arrives at significance through the evidence, not through being told that significance exists.
+
+**Why opinion closures destroy the article:** When a closing sentence says "this represents a remarkable achievement" or "The story of X stands as a testament to," the narrator has replaced the reader's reasoned conclusion with an assertion. The reader no longer has to do intellectual work — they are handed a verdict. This collapses the epistemological value of the record. It also signals AI authorship immediately, because AI defaults to significance-assignment as a way to simulate conclusion.
+
+**The CB standard:** The final sentence of every article must be a documented fact — a vote count, a court ruling, a legislative record number, a date, a census figure, a named document. No exceptions. The reader closes the article holding the last primary source. What it means is their job, not the author's.
+
+This doctrine was named and formalized after Claude.ai identified "CB Dry Rationalism" as a detectable pattern in CB's writing — meaning the standard is strong enough to be recognized as a coherent editorial voice. That is the target. Every article should read the same way: empirical, dense, narrator-absent.
+
 ### What to Never Do
 
 - Never publish > 2 articles in a calendar day
