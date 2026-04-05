@@ -118,7 +118,7 @@ router.post("/fixme/detect/:slug", async (req, res) => {
 
   try {
     const [post] = await db
-      .select({ id: postsTable.id, body: postsTable.body })
+      .select({ id: postsTable.id, body: postsTable.body, locked: postsTable.locked, aiScore: postsTable.aiScore })
       .from(postsTable)
       .where(eq(postsTable.slug, slug))
       .limit(1);
@@ -133,12 +133,27 @@ router.post("/fixme/detect/:slug", async (req, res) => {
       Promise.resolve(scoreIntellectualDensity(post.body)),
     ]);
 
-    await db
-      .update(postsTable)
-      .set({ aiScore: score, aiScoreTestedAt: new Date(), idsScore: ids.score })
-      .where(eq(postsTable.id, post.id));
+    // Never inflate a locked article's saved score — ZeroGPT is non-deterministic.
+    // If the article is locked and the new scan is higher than what was already saved,
+    // preserve the saved (lower) score. Only write if the new score is lower or article is unlocked.
+    const existingScore = post.aiScore ?? Infinity;
+    const scoreToSave = (post.locked && score > existingScore) ? existingScore : score;
+    const scoreChanged = scoreToSave !== existingScore || !post.aiScore;
 
-    res.json({ slug, score, flaggedCount: flaggedSentences.length, idsScore: ids.score, idsContentType: ids.contentType, idsBaseline: ids.baseline, idsBreakdown: ids.breakdown });
+    if (scoreChanged) {
+      await db
+        .update(postsTable)
+        .set({ aiScore: scoreToSave, aiScoreTestedAt: new Date(), idsScore: ids.score })
+        .where(eq(postsTable.id, post.id));
+    } else {
+      // Still update IDS even if score is protected
+      await db
+        .update(postsTable)
+        .set({ aiScoreTestedAt: new Date(), idsScore: ids.score })
+        .where(eq(postsTable.id, post.id));
+    }
+
+    res.json({ slug, score: scoreToSave, rawScore: score, flaggedCount: flaggedSentences.length, idsScore: ids.score, idsContentType: ids.contentType, idsBaseline: ids.baseline, idsBreakdown: ids.breakdown });
   } catch (err: unknown) {
     console.error("[FixMe] detect error:", err);
     const message = err instanceof Error ? err.message : "Detection failed";
