@@ -71,7 +71,7 @@ export default function FixMe() {
     setLoadingList(true);
     setListError(null);
     try {
-      const res = await fetch(`${BASE}/api/fixme/articles`);
+      const res = await fetch(`${BASE}/api/fixme/articles`, { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data: ArticleRow[] = await res.json();
       setArticles(data);
@@ -208,7 +208,7 @@ export default function FixMe() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
-      const listRes = await fetch(`${BASE}/api/fixme/articles`);
+      const listRes = await fetch(`${BASE}/api/fixme/articles`, { cache: "no-store" });
       if (listRes.ok) {
         const updated: ArticleRow[] = await listRes.json();
         setArticles(updated);
@@ -241,7 +241,7 @@ export default function FixMe() {
             clearInterval(poll);
             stopElapsedTimer(slug);
             setRowState(slug, { loading: false, action: null });
-            const listRes = await fetch(`${BASE}/api/fixme/articles`);
+            const listRes = await fetch(`${BASE}/api/fixme/articles`, { cache: "no-store" });
             if (listRes.ok) {
               const updated: ArticleRow[] = await listRes.json();
               setArticles(updated);

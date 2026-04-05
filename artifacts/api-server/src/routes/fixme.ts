@@ -9,6 +9,7 @@ import { checkContentGuard, formatViolations } from "../services/content-guard";
 const router: IRouter = Router();
 
 router.get("/fixme/articles", async (_req, res) => {
+  res.setHeader("Cache-Control", "no-store");
   try {
     const rows = await db
       .select({
