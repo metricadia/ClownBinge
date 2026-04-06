@@ -224,33 +224,125 @@ export function registerMetricadiaRoutes(app: Express) {
 
       const uniqueNames = [...new Set(names.map(n => String(n).trim()).filter(Boolean))].slice(0, 15);
 
+      // ── Image search helpers ────────────────────────────────────────────────
+      const UA = "ClownBinge/1.0 (metricadiaresearch.com; contact@clownbinge.com)";
+      const BAD_FILE = /logo|map|chart|diagram|flag|coat.of.arms|emblem|seal|icon|symbol|signature|autograph/i;
+
+      async function commonsImage(name: string): Promise<{ imageUrl: string; attribution: string } | null> {
+        try {
+          const q = encodeURIComponent(`${name} portrait photograph`);
+          const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrsearch=${q}&gsrlimit=8&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=500&format=json&origin=*`;
+          const res = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(5000) });
+          if (!res.ok) return null;
+          const d = await res.json() as any;
+          const pages: any[] = Object.values(d?.query?.pages || {});
+          for (const page of pages) {
+            const info = page.imageinfo?.[0];
+            if (!info?.url) continue;
+            const fname = (page.title || "").toLowerCase();
+            if (BAD_FILE.test(fname)) continue;
+            if (!/\.(jpe?g|png|webp)/i.test(info.url)) continue;
+            const meta = info.extmetadata || {};
+            const license = meta.LicenseShortName?.value || meta.License?.value || "Wikimedia Commons";
+            const rawAuthor = meta.Artist?.value || meta.Credit?.value || "";
+            const author = rawAuthor.replace(/<[^>]+>/g, "").trim().slice(0, 60);
+            const attribution = `Wikimedia Commons${author ? ` · ${author}` : ""} · ${license}`;
+            return { imageUrl: info.url, attribution };
+          }
+          return null;
+        } catch { return null; }
+      }
+
+      async function locImage(name: string): Promise<{ imageUrl: string; attribution: string } | null> {
+        try {
+          const q = encodeURIComponent(name);
+          const url = `https://www.loc.gov/search/?q=${q}&fo=json&c=5&at=results&fa=online-format:image|access-restricted:false`;
+          const res = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(5000) });
+          if (!res.ok) return null;
+          const d = await res.json() as any;
+          const results: any[] = d?.results || [];
+          for (const item of results) {
+            const imgs: string[] = item.image_url || [];
+            const img = imgs.find((u: string) => /\.(jpe?g|png)/i.test(u)) || imgs[0];
+            if (img) {
+              const safe = img.startsWith("//") ? `https:${img}` : img;
+              return { imageUrl: safe, attribution: "Library of Congress · Public Domain" };
+            }
+          }
+          return null;
+        } catch { return null; }
+      }
+
+      // ── Per-name lookup ─────────────────────────────────────────────────────
       const results = await Promise.allSettled(
         uniqueNames.map(async (name) => {
           try {
+            // 1. Wikipedia summary
             const encoded = encodeURIComponent(name.replace(/ /g, "_"));
             const wikiRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encoded}`, {
-              headers: { "User-Agent": "ClownBinge/1.0 (metricadiaresearch.com)" }
+              headers: { "User-Agent": UA }, signal: AbortSignal.timeout(5000)
             });
-            if (!wikiRes.ok) return { name, imageUrl: null, description: null, found: false };
+            if (!wikiRes.ok) return { name, imageUrl: null, imageAttribution: null, description: null, found: false };
 
             const data = await wikiRes.json() as any;
             if (data.type === "disambiguation" || !data.extract) {
-              return { name, imageUrl: null, description: null, found: false };
+              return { name, imageUrl: null, imageAttribution: null, description: null, found: false };
             }
 
             const rawExtract: string = data.extract || "";
             const sentences = rawExtract.match(/[^.!?]+[.!?]+(?:\s|$)/g) || [];
             const bio = sentences.slice(0, 3).join("").trim() || rawExtract.slice(0, 260).trim();
+            const canonicalName = data.title || name;
 
+            // 2. If Wikipedia has a thumbnail, use it
+            if (data.thumbnail?.source) {
+              return {
+                name: canonicalName,
+                imageUrl: data.thumbnail.source,
+                imageAttribution: "Wikipedia / Wikimedia Commons",
+                description: bio || null,
+                wikiUrl: data.content_urls?.desktop?.page || null,
+                found: true,
+              };
+            }
+
+            // 3. No thumbnail — search Wikimedia Commons
+            const commons = await commonsImage(canonicalName);
+            if (commons) {
+              return {
+                name: canonicalName,
+                imageUrl: commons.imageUrl,
+                imageAttribution: commons.attribution,
+                description: bio || null,
+                wikiUrl: data.content_urls?.desktop?.page || null,
+                found: true,
+              };
+            }
+
+            // 4. Try Library of Congress
+            const loc = await locImage(canonicalName);
+            if (loc) {
+              return {
+                name: canonicalName,
+                imageUrl: loc.imageUrl,
+                imageAttribution: loc.attribution,
+                description: bio || null,
+                wikiUrl: data.content_urls?.desktop?.page || null,
+                found: true,
+              };
+            }
+
+            // 5. Found on Wikipedia but no image anywhere
             return {
-              name: data.title || name,
-              imageUrl: data.thumbnail?.source || null,
+              name: canonicalName,
+              imageUrl: null,
+              imageAttribution: null,
               description: bio || null,
               wikiUrl: data.content_urls?.desktop?.page || null,
-              found: !!(data.extract),
+              found: true,
             };
           } catch {
-            return { name, imageUrl: null, description: null, found: false };
+            return { name, imageUrl: null, imageAttribution: null, description: null, found: false };
           }
         })
       );
