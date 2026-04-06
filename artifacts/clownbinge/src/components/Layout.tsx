@@ -198,8 +198,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
 
           {/* Desktop: collapsible two-row wrap (md+) */}
           <div className="hidden md:block">
-            {catBarOpen && (
-              <div className="flex flex-wrap py-2.5 gap-2 pr-10">
+            {catBarOpen ? (
+              <div className="flex flex-wrap items-center py-2.5 gap-2 pr-2">
                 {CATEGORIES.map(cat => {
                   const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
                   const pill = PILL[cat.id] ?? PILL.all;
@@ -210,16 +210,27 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                     <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={cls}>{cat.label}</Link>
                   );
                 })}
+                {/* Hide button — styled as a pill, sits inline with categories */}
+                <button
+                  onClick={() => setCatBarOpen(false)}
+                  className="ml-1 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[13px] font-black uppercase tracking-wider bg-[#1B3E99] text-white hover:bg-[#162f7a] transition-colors whitespace-nowrap shrink-0"
+                >
+                  <ChevronDown className="w-3.5 h-3.5 rotate-180" />
+                  Hide
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between py-2">
+                <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">Topics</span>
+                <button
+                  onClick={() => setCatBarOpen(true)}
+                  className="flex items-center gap-2 px-5 py-2 rounded-full text-[13px] font-black uppercase tracking-wider bg-[#F5C518] text-[#1A1A2E] hover:bg-[#e0b400] transition-colors shadow-sm"
+                >
+                  <ChevronDown className="w-4 h-4" />
+                  Browse Topics
+                </button>
               </div>
             )}
-            {!catBarOpen && <div className="py-2" />}
-            <button
-              onClick={() => setCatBarOpen(o => !o)}
-              title={catBarOpen ? "Hide categories" : "Show categories"}
-              className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1 text-[11px] font-bold text-muted-foreground uppercase tracking-widest hover:text-foreground transition-colors"
-            >
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${catBarOpen ? 'rotate-180' : ''}`} />
-            </button>
           </div>
 
           {/* Mobile: tap-to-open dropdown (below md) */}
