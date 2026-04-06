@@ -10,12 +10,17 @@ interface LoginWallProps {
 export function LoginWall({ login, isLoading }: LoginWallProps) {
   const [accessDenied, setAccessDenied] = useState(false);
 
-  /* Subtle pulsing gold glow keyframes — injected once */
+  /* Pulsing gold glow keyframes — injected once */
   const glowCSS = `
     @keyframes cb-gold-pulse {
       0%   { opacity: 0.18; transform: scale(1);    }
       50%  { opacity: 0.38; transform: scale(1.06); }
       100% { opacity: 0.18; transform: scale(1);    }
+    }
+    @keyframes cb-card-glow {
+      0%   { box-shadow: 0 32px 80px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.25), 0 0 18px 4px rgba(245,197,24,0.12); }
+      50%  { box-shadow: 0 32px 80px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.25), 0 0 42px 14px rgba(245,197,24,0.32); }
+      100% { box-shadow: 0 32px 80px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.25), 0 0 18px 4px rgba(245,197,24,0.12); }
     }
   `;
 
@@ -87,12 +92,11 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
           className="w-full"
           style={{
             borderRadius: "20px",
-            boxShadow:
-              "0 32px 80px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.25)",
             overflow: "hidden",
             position: "relative",
             zIndex: 1,
             background: "linear-gradient(160deg, #1f3a9e 0%, #192e7a 100%)",
+            animation: "cb-card-glow 3.6s ease-in-out infinite",
           }}
         >
           {/* Card top: blue band with logo — diagonal bottom cut */}
