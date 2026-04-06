@@ -9,9 +9,11 @@ import sponsorsRouter from "./sponsors";
 import verifyRouter from "./verify";
 import fixmeRouter from "./fixme";
 import factoidRouter from "./factoid";
+import authRouter from "./auth";
 
 const router: IRouter = Router();
 
+router.use(authRouter);
 router.use(healthRouter);
 router.use(postsRouter);
 router.use(reactionsRouter);

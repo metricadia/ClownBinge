@@ -168,6 +168,14 @@ router.get("/callback", async (req: Request, res: Response) => {
     claims as unknown as Record<string, unknown>,
   );
 
+  // Email whitelist — if CB_ALLOWED_EMAIL is set, only that address may access
+  const allowedEmail = process.env.CB_ALLOWED_EMAIL;
+  if (allowedEmail && dbUser.email !== allowedEmail) {
+    console.warn(`[Auth] Access denied for ${dbUser.email} — not in whitelist`);
+    res.redirect("/?access=denied");
+    return;
+  }
+
   const now = Math.floor(Date.now() / 1000);
   const sessionData: SessionData = {
     user: {
