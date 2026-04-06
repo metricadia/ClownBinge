@@ -3,6 +3,22 @@ import type { AuthUser } from "@workspace/api-client-react";
 
 export type { AuthUser };
 
+const DEV_SID_KEY = "cb_dev_sid";
+
+function getDevSid(): string | null {
+  try {
+    return localStorage.getItem(DEV_SID_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function buildAuthHeaders(): Record<string, string> {
+  const sid = getDevSid();
+  if (sid) return { Authorization: `Bearer ${sid}` };
+  return {};
+}
+
 interface AuthState {
   user: AuthUser | null;
   isLoading: boolean;
@@ -18,7 +34,10 @@ export function useAuth(): AuthState {
   useEffect(() => {
     let cancelled = false;
 
-    fetch("/api/auth/user", { credentials: "include" })
+    fetch("/api/auth/user", {
+      credentials: "include",
+      headers: buildAuthHeaders(),
+    })
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json() as Promise<{ user: AuthUser | null }>;
@@ -47,6 +66,9 @@ export function useAuth(): AuthState {
   }, []);
 
   const logout = useCallback(() => {
+    try {
+      localStorage.removeItem(DEV_SID_KEY);
+    } catch {}
     window.location.href = "/api/logout";
   }, []);
 
@@ -58,3 +80,5 @@ export function useAuth(): AuthState {
     logout,
   };
 }
+
+export { DEV_SID_KEY };

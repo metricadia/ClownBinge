@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Shield } from "lucide-react";
 import { PsaLogo } from "@/components/PsaLogo";
+import { DEV_SID_KEY } from "@workspace/replit-auth-web";
 
 interface LoginWallProps {
   login: () => void;
@@ -231,7 +232,18 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
             {import.meta.env.DEV && (
               <div className="flex justify-center mb-3">
                 <button
-                  onClick={() => { window.location.href = "/api/dev-login"; }}
+                  onClick={async () => {
+                    try {
+                      const res = await fetch("/api/dev-login", { credentials: "include" });
+                      const data = await res.json() as { ok: boolean; sid: string };
+                      if (data.ok && data.sid) {
+                        localStorage.setItem(DEV_SID_KEY, data.sid);
+                        window.location.reload();
+                      }
+                    } catch (e) {
+                      console.error("dev-login failed", e);
+                    }
+                  }}
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
                     fontSize: "0.65rem",

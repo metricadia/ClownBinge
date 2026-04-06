@@ -222,8 +222,7 @@ router.get("/dev-login", async (req: Request, res: Response) => {
   };
 
   const sid = await createSession(sessionData);
-  setSessionCookie(res, sid);
-  res.redirect("/");
+  res.json({ ok: true, sid });
 });
 
 router.get("/logout", async (req: Request, res: Response) => {
