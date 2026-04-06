@@ -211,17 +211,15 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               <div>
                 <button
                   onClick={() => setReducedBarOpen(o => !o)}
-                  className="w-full flex items-center justify-between py-3 px-1 group"
+                  className="flex items-center gap-3 py-3 px-1 group"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="text-[11px] font-black uppercase tracking-[0.18em] text-muted-foreground">A–Z Categories</span>
-                    <span className="h-3.5 w-px bg-border" />
-                    <span className="text-[13px] font-bold text-foreground/80 group-hover:text-foreground transition-colors">
-                      Browse{postCount ? ` ${fmtCount(postCount)} Verified Articles` : ''} across{' '}
-                      <span className="text-[#1B3E99] font-black">{REAL_CATS.length} Topics</span>
-                    </span>
-                  </div>
-                  <span className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[12px] font-black uppercase tracking-wider transition-all duration-200 ${reducedBarOpen ? 'bg-[#1B3E99] text-white' : 'bg-[#F5C518] text-[#1A1A2E]'}`}>
+                  <span className="text-[11px] font-black uppercase tracking-[0.18em] text-[#B8860B] shrink-0">A–Z Categories</span>
+                  <span className="text-[#B8860B]/50 font-light text-[18px] leading-none select-none">|</span>
+                  <span className="text-[13px] font-bold text-foreground/80 group-hover:text-foreground transition-colors">
+                    Browse{postCount ? ` ${fmtCount(postCount)} Verified Articles` : ''} across{' '}
+                    <span className="text-[#1B3E99] font-black">{REAL_CATS.length} Topics</span>
+                  </span>
+                  <span className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[12px] font-black uppercase tracking-wider transition-all duration-200 shrink-0 ${reducedBarOpen ? 'bg-[#1B3E99] text-white' : 'bg-[#F5C518] text-[#1A1A2E]'}`}>
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${reducedBarOpen ? 'rotate-180' : ''}`} />
                     {reducedBarOpen ? 'Hide' : 'Browse Topics'}
                   </span>
