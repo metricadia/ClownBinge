@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { format } from "date-fns";
-import { Video } from "lucide-react";
+import { Video, PenLine } from "lucide-react";
 import type { Post } from "@workspace/api-client-react";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { UserSubmittedBadge } from "./UserSubmittedBadge";
@@ -8,6 +8,7 @@ import { SelfOwnScoreBadge } from "./SelfOwnScoreBadge";
 import { abbreviateSource } from "@/lib/source-abbrev";
 import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useAdmin } from "@/context/AdminContext";
 
 const CATEGORY_LABELS: Record<string, string> = {
   self_owned:         "Self-Owned",
@@ -62,6 +63,7 @@ function formatWordCount(body: string | null | undefined): string | null {
 export function PostCard({ post }: { post: Post }) {
   const isVideo = post.hasVideo;
   const wordCountLabel = formatWordCount((post as any).body);
+  const { isAdmin } = useAdmin();
 
   const cardClasses = `bg-white text-foreground ${CATEGORY_BORDER[post.category] ?? "border-border shadow-sm hover:shadow-md"}`;
 
@@ -76,6 +78,19 @@ export function PostCard({ post }: { post: Post }) {
       `}>
         {/* Accent line at bottom */}
         <div className="absolute bottom-0 left-0 w-full h-1 bg-secondary" />
+
+        {/* Admin edit button */}
+        {isAdmin && (
+          <a
+            href={`/Kemet8/${encodeURIComponent(post.slug)}`}
+            onClick={(e) => e.stopPropagation()}
+            className="absolute top-2 right-2 z-10 flex items-center gap-1 px-2 py-1 rounded-md bg-indigo-700/90 hover:bg-indigo-600 text-white text-[10px] font-black uppercase tracking-wider shadow-lg transition-colors"
+            title={`Edit ${post.caseNumber}`}
+          >
+            <PenLine size={10} />
+            Edit
+          </a>
+        )}
 
         <div className="p-5 sm:p-6">
           {/* Header — Authority Line */}

@@ -3,6 +3,7 @@ import { PsaLogo } from "@/components/PsaLogo";
 import { Menu, X, ChevronDown, Heart, Home } from "lucide-react";
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
+import { FloatingAdminBar } from "@/components/FloatingAdminBar";
 
 const CATEGORIES = [
   { id: "all",               label: "All" },
@@ -424,6 +425,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           </span>
         </div>
       </div>
+      <FloatingAdminBar />
     </div>
   );
 }
