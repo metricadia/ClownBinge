@@ -427,7 +427,7 @@ export function MetricadiaEditor({
 
     for (const idx of approvedPeople) {
       const person = detectedPeople[idx];
-      if (!person || !person.imageUrl) continue;
+      if (!person) continue;
 
       const escapedName = person.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const regex = new RegExp(`\\b${escapedName}\\b`);
@@ -442,7 +442,7 @@ export function MetricadiaEditor({
           const safeDesc = person.description
             ? person.description.replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
             : "";
-          const safeImg = person.imageUrl!.replace(/"/g, "&quot;");
+          const safeImg = (person.imageUrl || "").replace(/"/g, "&quot;");
           const safeName = person.name.replace(/"/g, "&quot;").replace(/</g, "&lt;");
           return part.replace(regex, (match) =>
             `<span data-metricadiaid-name="${safeName}" data-metricadiaid-image="${safeImg}"${safeDesc ? ` data-metricadiaid-desc="${safeDesc}"` : ""} class="metricadiaid-marker" role="button" tabindex="0">${match}</span>`
@@ -840,7 +840,7 @@ export function MetricadiaEditor({
                     type="checkbox"
                     className="mt-1 w-5 h-5 rounded accent-amber-500 flex-shrink-0"
                     checked={approvedPeople.has(i)}
-                    disabled={!person.imageUrl}
+                    disabled={!person.found}
                     onChange={(e) => {
                       const next = new Set(approvedPeople);
                       if (e.target.checked) next.add(i); else next.delete(i);
@@ -852,7 +852,11 @@ export function MetricadiaEditor({
                   <div className="flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden bg-slate-800 border border-slate-700">
                     {person.imageUrl
                       ? <img src={person.imageUrl} alt={person.name} className="w-full h-full object-cover object-top" />
-                      : <div className="w-full h-full flex items-center justify-center text-slate-600 text-xs text-center p-1">No image</div>
+                      : <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-800/60 to-amber-950/80">
+                          <span className="text-amber-200 font-black text-sm select-none">
+                            {person.name.split(" ").map((w: string) => w[0]).slice(0, 2).join("")}
+                          </span>
+                        </div>
                     }
                   </div>
 
@@ -861,8 +865,8 @@ export function MetricadiaEditor({
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-bold text-white text-sm">{person.name}</span>
                       {person.found
-                        ? <span className="flex items-center gap-1 text-xs text-green-400"><CheckCircle2 className="w-3 h-3" />Wikipedia</span>
-                        : <span className="flex items-center gap-1 text-xs text-slate-500"><AlertCircle className="w-3 h-3" />No image — skipped</span>
+                        ? <span className="flex items-center gap-1 text-xs text-green-400"><CheckCircle2 className="w-3 h-3" />{person.imageUrl ? "Wikipedia" : "Wikipedia · no photo"}</span>
+                        : <span className="flex items-center gap-1 text-xs text-slate-500"><AlertCircle className="w-3 h-3" />Not in Wikipedia</span>
                       }
                     </div>
                     {person.description && (

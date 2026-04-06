@@ -247,7 +247,7 @@ export function registerMetricadiaRoutes(app: Express) {
               imageUrl: data.thumbnail?.source || null,
               description: bio || null,
               wikiUrl: data.content_urls?.desktop?.page || null,
-              found: !!(data.thumbnail?.source),
+              found: !!(data.extract),
             };
           } catch {
             return { name, imageUrl: null, description: null, found: false };
