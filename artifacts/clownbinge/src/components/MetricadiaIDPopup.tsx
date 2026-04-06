@@ -9,9 +9,10 @@ interface MetricadiaIDPopupProps {
   name: string;
   imageUrl: string;
   description?: string;
+  attribution?: string;
 }
 
-export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description }: MetricadiaIDPopupProps) {
+export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description, attribution }: MetricadiaIDPopupProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent 
@@ -70,6 +71,14 @@ export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description }
             )}
             {/* Gradient overlay at bottom */}
             <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-stone-950 to-transparent" />
+            {/* Attribution */}
+            {imageUrl && attribution && (
+              <div className="absolute bottom-1 left-0 right-0 flex justify-center z-10">
+                <span className="text-[9px] text-stone-500 px-2 leading-tight text-center">
+                  {attribution}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Person Info */}

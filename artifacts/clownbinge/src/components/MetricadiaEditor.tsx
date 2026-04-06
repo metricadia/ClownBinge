@@ -64,6 +64,7 @@ import { MetricadiaIDDialog } from "./MetricadiaIDDialog";
 interface DetectedPerson {
   name: string;
   imageUrl: string | null;
+  imageAttribution: string | null;
   description: string | null;
   wikiUrl: string | null;
   found: boolean;
@@ -444,8 +445,9 @@ export function MetricadiaEditor({
             : "";
           const safeImg = (person.imageUrl || "").replace(/"/g, "&quot;");
           const safeName = person.name.replace(/"/g, "&quot;").replace(/</g, "&lt;");
+          const safeAttr = (person.imageAttribution || "").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
           return part.replace(regex, (match) =>
-            `<span data-metricadiaid-name="${safeName}" data-metricadiaid-image="${safeImg}"${safeDesc ? ` data-metricadiaid-desc="${safeDesc}"` : ""} class="metricadiaid-marker" role="button" tabindex="0">${match}</span>`
+            `<span data-metricadiaid-name="${safeName}" data-metricadiaid-image="${safeImg}"${safeDesc ? ` data-metricadiaid-desc="${safeDesc}"` : ""}${safeAttr ? ` data-metricadiaid-attribution="${safeAttr}"` : ""} class="metricadiaid-marker" role="button" tabindex="0">${match}</span>`
           );
         }
         return part;
@@ -868,6 +870,11 @@ export function MetricadiaEditor({
                         ? <span className="flex items-center gap-1 text-xs text-green-400"><CheckCircle2 className="w-3 h-3" />{person.imageUrl ? "Wikipedia" : "Wikipedia · no photo"}</span>
                         : <span className="flex items-center gap-1 text-xs text-slate-500"><AlertCircle className="w-3 h-3" />Not in Wikipedia</span>
                       }
+                      {person.imageAttribution && (
+                        <span className="text-[10px] text-slate-500 ml-1 truncate max-w-[160px]" title={person.imageAttribution}>
+                          {person.imageAttribution.split(" · ")[0]}
+                        </span>
+                      )}
                     </div>
                     {person.description && (
                       <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">{person.description}</p>

@@ -92,7 +92,7 @@ export default function PostDetail() {
     post ? { articleTitle: post.title } : undefined,
   );
   // ── MetricadiaID™ — people click handler ───────────────────────────────────
-  interface MetricadiaIDPerson { name: string; imageUrl: string; description?: string; }
+  interface MetricadiaIDPerson { name: string; imageUrl: string; description?: string; attribution?: string; }
   const [activePerson, setActivePerson] = useState<MetricadiaIDPerson | null>(null);
   const closePersonPopup = useCallback(() => setActivePerson(null), []);
 
@@ -109,7 +109,8 @@ export default function PostDetail() {
       const name = span.dataset.metricadiaidName || "";
       const imageUrl = span.dataset.metricadiaidImage || "";
       const description = span.dataset.metricadiaidDesc || undefined;
-      if (name) setActivePerson({ name, imageUrl, description });
+      const attribution = span.dataset.metricadiaidAttribution || undefined;
+      if (name) setActivePerson({ name, imageUrl, description, attribution });
     };
 
     container.addEventListener("click", handlePersonClick, { capture: true });
@@ -514,6 +515,7 @@ export default function PostDetail() {
           name={activePerson.name}
           imageUrl={activePerson.imageUrl}
           description={activePerson.description}
+          attribution={activePerson.attribution}
         />
       )}
 
