@@ -7,12 +7,7 @@ import { db, postsTable } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
 import { anthropic } from "@workspace/integrations-anthropic-ai";
 
-const TOKEN_SECRET = process.env.METRICADIA_TOKEN_SECRET || "metricadia-token-secret-change-me";
-const ADMIN_PASSWORD_HASH = hashPassword("KoGAlpha#7");
-
-function hashPassword(plain: string): string {
-  return crypto.createHash("sha256").update(plain + TOKEN_SECRET).digest("hex");
-}
+const ADMIN_PASSWORD = process.env.METRICADIA_ADMIN_PASSWORD || "KoGAlpha#7";
 
 function generateToken(): string {
   return crypto.randomBytes(32).toString("hex");
@@ -67,10 +62,7 @@ export function registerMetricadiaRoutes(app: Express) {
     const { password } = req.body as { password?: string };
     if (!password) return res.status(400).json({ message: "Password required" });
 
-    const hash = hashPassword(password);
-    const expectedHash = process.env.METRICADIA_ADMIN_HASH || ADMIN_PASSWORD_HASH;
-
-    if (hash !== expectedHash) {
+    if (password !== ADMIN_PASSWORD) {
       return setTimeout(() => {
         res.status(401).json({ message: "Incorrect password" });
       }, 400) as unknown as void;
