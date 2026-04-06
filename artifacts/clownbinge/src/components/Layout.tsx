@@ -228,10 +228,10 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 {reducedBarOpen && (
                   /* Click anywhere on this white area (not a pill) to retract */
                   <div
-                    className="pb-3 pt-1 cursor-pointer"
+                    className="pb-3 pt-1 w-full cursor-pointer"
                     onClick={() => setReducedBarOpen(false)}
                   >
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 pointer-events-none">
                       {REAL_CATS.map(cat => {
                         const pill = PILL[cat.id] ?? PILL.all;
                         return (
@@ -239,28 +239,28 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                             key={cat.id}
                             href={`/?category=${cat.id}`}
                             onClick={e => { e.stopPropagation(); setReducedBarOpen(false); }}
-                            className={`px-4 py-1.5 rounded-full text-[13px] font-bold whitespace-nowrap transition-colors ${pill.off}`}
+                            className={`pointer-events-auto px-4 py-1.5 rounded-full text-[13px] font-bold whitespace-nowrap transition-colors ${pill.off}`}
                           >
                             {cat.label}
                           </Link>
                         );
                       })}
                     </div>
-                    <p className="mt-2.5 text-[11px] text-muted-foreground/60 text-center select-none">Click anywhere here to close</p>
+                    <p className="mt-2.5 text-[11px] text-muted-foreground/60 text-center select-none pointer-events-none">Click anywhere here to close</p>
                   </div>
                 )}
               </div>
             ) : catBarOpen ? (
-              /* Click white space anywhere to collapse */
+              /* Click white space anywhere to collapse — pointer-events-none on container passes all gaps to outer div */
               <div
-                className="cursor-pointer"
+                className="w-full cursor-pointer py-2.5"
                 onClick={() => setCatBarOpen(false)}
               >
-                <div className="flex flex-wrap items-center py-2.5 gap-2 pr-2">
+                <div className="flex flex-wrap items-center gap-2 pr-2 pointer-events-none">
                   {CATEGORIES.map(cat => {
                     const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
                     const pill = PILL[cat.id] ?? PILL.all;
-                    const cls = `px-4 py-1.5 rounded-full text-[14px] font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
+                    const cls = `pointer-events-auto px-4 py-1.5 rounded-full text-[14px] font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
                     return onCategoryChange ? (
                       <button key={cat.id} onClick={(e) => { e.stopPropagation(); handleCategoryChange(cat.id); }} className={cls}>{cat.label}</button>
                     ) : (
@@ -270,7 +270,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                   {/* Hide button — styled as a pill, sits inline with categories */}
                   <button
                     onClick={e => { e.stopPropagation(); setCatBarOpen(false); }}
-                    className="ml-1 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[13px] font-black uppercase tracking-wider bg-[#1B3E99] text-white hover:bg-[#162f7a] transition-colors whitespace-nowrap shrink-0"
+                    className="pointer-events-auto ml-1 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[13px] font-black uppercase tracking-wider bg-[#1B3E99] text-white hover:bg-[#162f7a] transition-colors whitespace-nowrap shrink-0"
                   >
                     <ChevronDown className="w-3.5 h-3.5 rotate-180" />
                     Hide
@@ -315,25 +315,25 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 </button>
                 {reducedBarOpen && (
                   <div
-                    className="pb-3 pt-1 cursor-pointer"
+                    className="pb-3 pt-1 w-full cursor-pointer"
                     onClick={() => setReducedBarOpen(false)}
                   >
-                    <div className="flex flex-wrap gap-2" onClick={e => e.stopPropagation()}>
+                    <div className="flex flex-wrap gap-2 pointer-events-none">
                       {REAL_CATS.map(cat => {
                         const pill = PILL[cat.id] ?? PILL.all;
                         return (
                           <Link
                             key={cat.id}
                             href={`/?category=${cat.id}`}
-                            onClick={() => setReducedBarOpen(false)}
-                            className={`px-3 py-1 rounded-full text-[12px] font-bold whitespace-nowrap transition-colors ${pill.off}`}
+                            onClick={e => { e.stopPropagation(); setReducedBarOpen(false); }}
+                            className={`pointer-events-auto px-3 py-1 rounded-full text-[12px] font-bold whitespace-nowrap transition-colors ${pill.off}`}
                           >
                             {cat.label}
                           </Link>
                         );
                       })}
                     </div>
-                    <p className="mt-2 text-[10px] text-muted-foreground/50 text-center select-none">Tap anywhere to close</p>
+                    <p className="mt-2 text-[10px] text-muted-foreground/50 text-center select-none pointer-events-none">Tap anywhere to close</p>
                   </div>
                 )}
               </div>
