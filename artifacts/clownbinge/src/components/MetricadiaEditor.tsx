@@ -374,13 +374,15 @@ export function MetricadiaEditor({
     setShowMetricadiaIDDialog(true);
   };
 
-  const handleConfirmMetricadiaID = (data: { name: string; imageUrl: string; description?: string }) => {
+  const handleConfirmMetricadiaID = (data: { name: string; imageUrl: string; description?: string; imageAttribution?: string }) => {
     if (!editor || !metricadiaIDSelectionRange) return;
     const sanitized = sanitizeMetricadiaIDAttributes(data);
+    const safeAttr = (data.imageAttribution || "").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     editor.chain().focus().setTextSelection(metricadiaIDSelectionRange).setMetricadiaID({
       name: sanitized.name || "",
       imageUrl: sanitized.imageUrl || "/uploads/fallback-avatar.png",
       description: sanitized.description || undefined,
+      ...(safeAttr ? { attribution: safeAttr } : {}),
     }).run();
     toast({ title: "Profile linked", description: `${data.name} is now clickable.` });
     setMetricadiaIDSelectionRange(null);

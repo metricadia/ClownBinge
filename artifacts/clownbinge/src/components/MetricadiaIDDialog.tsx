@@ -15,13 +15,34 @@ interface MetricadiaIDDialogProps {
   open: boolean;
   onClose: () => void;
   selectedText: string;
-  onConfirm: (data: { name: string; imageUrl: string; description?: string }) => void;
+  onConfirm: (data: { name: string; imageUrl: string; description?: string; imageAttribution?: string }) => void;
+}
+
+async function fetchWikimediaAttribution(imgUrl: string): Promise<string> {
+  try {
+    const filename = decodeURIComponent(imgUrl.split("/").pop()?.split("?")[0] || "");
+    if (!filename) return "Photo via Wikimedia Commons";
+    const apiUrl = `https://commons.wikimedia.org/w/api.php?action=query&titles=File:${encodeURIComponent(filename)}&prop=imageinfo&iiprop=extmetadata&format=json&origin=*`;
+    const res = await fetch(apiUrl);
+    if (!res.ok) return "Photo via Wikimedia Commons";
+    const data = await res.json() as any;
+    const pages = Object.values((data.query?.pages || {})) as any[];
+    const meta = pages[0]?.imageinfo?.[0]?.extmetadata;
+    const artist = meta?.Artist?.value?.replace(/<[^>]+>/g, "").trim() || "";
+    const license = meta?.LicenseShortName?.value || "CC";
+    return artist
+      ? `Photo: ${artist} · ${license} · Wikimedia Commons`
+      : `Photo via Wikimedia Commons (${license})`;
+  } catch {
+    return "Photo via Wikimedia Commons";
+  }
 }
 
 export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: MetricadiaIDDialogProps) {
   const [name, setName] = useState(selectedText);
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
+  const [imageAttribution, setImageAttribution] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [isLookingUp, setIsLookingUp] = useState(false);
   const [lookupStatus, setLookupStatus] = useState<"idle" | "found" | "notfound">("idle");
@@ -44,7 +65,12 @@ export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: M
       setDescription(bio);
 
       if (!imageUrl && data.thumbnail?.source) {
-        setImageUrl(data.thumbnail.source);
+        const src = data.thumbnail.source;
+        setImageUrl(src);
+        if (/upload\.wikimedia\.org|wikipedia\.org/i.test(src)) {
+          const credit = await fetchWikimediaAttribution(src);
+          setImageAttribution(credit);
+        }
       }
       setLookupStatus("found");
     } catch {
@@ -59,6 +85,7 @@ export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: M
       setName(selectedText);
       setImageUrl("");
       setDescription("");
+      setImageAttribution("");
       setLookupStatus("idle");
     }
   }, [open, selectedText]);
@@ -110,8 +137,13 @@ export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: M
     const trimmedUrl = imageUrl.trim();
     if (!isSafeUrl(trimmedUrl)) { alert("Invalid image URL."); return; }
 
-    onConfirm({ name: name.trim(), imageUrl: trimmedUrl, description: description.trim() || undefined });
-    setName(""); setImageUrl(""); setDescription("");
+    onConfirm({
+      name: name.trim(),
+      imageUrl: trimmedUrl,
+      description: description.trim() || undefined,
+      imageAttribution: imageAttribution.trim() || undefined,
+    });
+    setName(""); setImageUrl(""); setDescription(""); setImageAttribution("");
     onClose();
   };
 
@@ -185,6 +217,24 @@ export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: M
           {imageUrl && (
             <div className="rounded-lg overflow-hidden border border-slate-700 bg-slate-950">
               <img src={imageUrl} alt={name} className="w-full h-32 object-cover" onError={(e) => { e.currentTarget.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect fill='%231e293b' width='100' height='100'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%236366f1' font-size='14'%3ENo image%3C/text%3E%3C/svg%3E"; }} />
+            </div>
+          )}
+
+          {imageUrl && (
+            <div className="space-y-1">
+              <Label htmlFor="image-credit" className="text-indigo-400 font-semibold text-xs">
+                Photo Credit <span className="text-slate-500 font-normal">(auto-filled for Wikimedia)</span>
+              </Label>
+              <Input
+                id="image-credit"
+                value={imageAttribution}
+                onChange={(e) => setImageAttribution(e.target.value)}
+                placeholder="e.g. Photo: Jane Doe · CC BY-SA · Wikimedia Commons"
+                className="bg-slate-950 border-slate-700 text-white text-xs"
+              />
+              {imageAttribution && (
+                <p className="text-[10px] text-green-400">Credit will display in the popup.</p>
+              )}
             </div>
           )}
 

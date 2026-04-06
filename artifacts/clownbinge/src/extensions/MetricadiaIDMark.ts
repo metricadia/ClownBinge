@@ -63,7 +63,7 @@ export function sanitizeMetricadiaIDAttributes(attrs: { name?: string; imageUrl?
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     metricadiaID: {
-      setMetricadiaID: (attributes: { name: string; imageUrl: string; description?: string }) => ReturnType;
+      setMetricadiaID: (attributes: { name: string; imageUrl: string; description?: string; attribution?: string }) => ReturnType;
       unsetMetricadiaID: () => ReturnType;
     };
   }
@@ -111,8 +111,7 @@ export const MetricadiaIDMark = Mark.create<MetricadiaIDOptions>({
       description: {
         default: null,
         parseHTML: element => {
-          // Parse and sanitize legacy descriptions on load
-          const rawDesc = element.getAttribute('data-metricadiaid-desc') || element.getAttribute('data-metricadiaid-desc');
+          const rawDesc = element.getAttribute('data-metricadiaid-desc');
           if (!rawDesc) return null;
           const sanitized = sanitizeMetricadiaIDAttributes({ description: rawDesc });
           return sanitized.description;
@@ -120,6 +119,14 @@ export const MetricadiaIDMark = Mark.create<MetricadiaIDOptions>({
         renderHTML: attributes => {
           if (!attributes.description) return {};
           return { 'data-metricadiaid-desc': attributes.description };
+        },
+      },
+      attribution: {
+        default: null,
+        parseHTML: element => element.getAttribute('data-metricadiaid-attribution') || null,
+        renderHTML: attributes => {
+          if (!attributes.attribution) return {};
+          return { 'data-metricadiaid-attribution': attributes.attribution };
         },
       },
     };
@@ -163,6 +170,7 @@ export const MetricadiaIDMark = Mark.create<MetricadiaIDOptions>({
     const safeName = HTMLAttributes['data-metricadiaid-name'] || '';
     const safeImageUrl = validatedImageUrl;
     const safeDescription = HTMLAttributes['data-metricadiaid-desc'] || undefined;
+    const safeAttribution = HTMLAttributes['data-metricadiaid-attribution'] || undefined;
 
     // Generate test ID from name (sanitized to alphanumeric only)
     const safeTestId = (HTMLAttributes['data-metricadiaid-name'] || '')
@@ -176,6 +184,7 @@ export const MetricadiaIDMark = Mark.create<MetricadiaIDOptions>({
         'data-metricadiaid-name': safeName,
         'data-metricadiaid-image': safeImageUrl,
         ...(safeDescription ? { 'data-metricadiaid-desc': safeDescription } : {}),
+        ...(safeAttribution ? { 'data-metricadiaid-attribution': safeAttribution } : {}),
         class: 'metricadiaid-marker',
         role: 'button',
         tabindex: '0',

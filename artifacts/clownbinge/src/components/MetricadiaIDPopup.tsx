@@ -12,7 +12,17 @@ interface MetricadiaIDPopupProps {
   attribution?: string;
 }
 
+function deriveAttribution(imageUrl: string, explicit?: string): string | undefined {
+  if (explicit) return explicit;
+  if (!imageUrl) return undefined;
+  if (/upload\.wikimedia\.org|wikipedia\.org\/wiki\/File:/i.test(imageUrl)) {
+    return "Photo via Wikimedia Commons";
+  }
+  return undefined;
+}
+
 export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description, attribution }: MetricadiaIDPopupProps) {
+  const credit = deriveAttribution(imageUrl, attribution);
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent 
@@ -71,11 +81,11 @@ export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description, 
             )}
             {/* Gradient overlay at bottom */}
             <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-stone-950 to-transparent" />
-            {/* Attribution */}
-            {imageUrl && attribution && (
+            {/* Attribution — auto-derived for Wikimedia, explicit for uploads */}
+            {imageUrl && credit && (
               <div className="absolute bottom-1 left-0 right-0 flex justify-center z-10">
                 <span className="text-[9px] text-stone-500 px-2 leading-tight text-center">
-                  {attribution}
+                  {credit}
                 </span>
               </div>
             )}
