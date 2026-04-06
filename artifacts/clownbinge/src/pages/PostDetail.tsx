@@ -319,18 +319,17 @@ export default function PostDetail() {
         )}
 
 
-        {/* Zone 1: Hero Ad — direct sponsor takes priority; programmatic slot falls back */}
-        {sponsor
-          ? <SponsorBar sponsor={sponsor} />
-          : <AdSlot id="cb-ad-top" className="my-6" />
-        }
-
-        {/* Article body split at paragraph 3 with ClownCheck CTA injected mid-article */}
+        {/* Article body — lede flows directly into opening paragraphs; ad follows after p3 */}
         <div
           ref={containerRef as React.RefObject<HTMLDivElement>}
           className="cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-strong:text-header prose-p:leading-relaxed mb-12"
         >
           <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
+          {/* Zone 1: Hero Ad — after the opening, not before it */}
+          {sponsor
+            ? <SponsorBar sponsor={sponsor} />
+            : <AdSlot id="cb-ad-top" className="my-6 not-prose" />
+          }
           <ClownCheckCTA />
           <ForensicPivot slug={slug} />
           <div dangerouslySetInnerHTML={{ __html: bodyBottom }} />
