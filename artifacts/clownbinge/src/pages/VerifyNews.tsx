@@ -435,7 +435,7 @@ export default function VerifyNews() {
             One question. Three axes. The record, checked.
           </p>
           <button
-            onClick={() => { setReport(null); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+            onClick={() => { setReport(null); document.getElementById("root")?.scrollTo({ top: 0, behavior: "smooth" }); }}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-header text-lg transition-opacity hover:opacity-90"
             style={{ background: "#F5C518" }}
           >

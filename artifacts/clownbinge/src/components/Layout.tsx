@@ -79,15 +79,19 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
     localStorage.setItem("cb-font-level", String(fontLevel));
   }, [fontLevel]);
 
+  const getRoot = () => document.getElementById("root");
+
   const handleCategoryChange = (id: string) => {
     onCategoryChange?.(id);
-    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    getRoot()?.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
   };
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const root = getRoot();
+    if (!root) return;
+    const handleScroll = () => setScrolled(root.scrollTop > 20);
+    root.addEventListener("scroll", handleScroll);
+    return () => root.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close menus on route change

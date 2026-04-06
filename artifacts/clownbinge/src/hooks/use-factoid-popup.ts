@@ -136,7 +136,7 @@ export function useFactoidPopup(meta?: FactoidMeta) {
 
       const rect = target.getBoundingClientRect();
       const x = rect.left + rect.width / 2;
-      const y = rect.top + window.scrollY;
+      const y = rect.top + (document.getElementById("root")?.scrollTop ?? window.scrollY);
 
       // Toggle off if same link clicked twice
       if (factoid && Math.abs(factoid.x - x) < 4 && Math.abs(factoid.y - y) < 4) {
