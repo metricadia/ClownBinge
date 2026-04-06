@@ -186,9 +186,10 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
                 lineHeight: 1.7,
               }}
             >
-              The accountability journalism platform that names names, cites
-              sources, and follows the money. Sign in to access the full
-              platform.
+              Journalism captured by money, politics, and nation-state interests
+              has run its course. ClownBinge goes to the primary source: court
+              filings, congressional records, and federal data. It reports only
+              what the documents say. Nothing added. Nothing omitted.
             </p>
 
             {/* Access denied message */}
