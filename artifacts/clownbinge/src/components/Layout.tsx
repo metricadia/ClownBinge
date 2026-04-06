@@ -220,8 +220,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center justify-between py-2">
-                <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">Topics</span>
+              <div className="flex items-center gap-3 py-2">
+                <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">A–Z Categories</span>
                 <button
                   onClick={() => setCatBarOpen(true)}
                   className="flex items-center gap-2 px-5 py-2 rounded-full text-[13px] font-black uppercase tracking-wider bg-[#F5C518] text-[#1A1A2E] hover:bg-[#e0b400] transition-colors shadow-sm"
