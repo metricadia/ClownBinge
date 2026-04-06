@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Libre+Franklin:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&family=Montserrat:wght@300;400;700&display=swap');
 @import "tailwindcss";
 
+html, body, #root {
+  background-color: #192e7a;
+}
+
 @theme inline {
   --font-sans: 'Libre Franklin', sans-serif;
   --font-headline: 'Libre Franklin', sans-serif;

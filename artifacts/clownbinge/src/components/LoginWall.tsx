@@ -157,44 +157,41 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
               <div style={{ height: "1px", width: "20px", background: "rgba(245,197,24,0.5)", flexShrink: 0 }} />
             </div>
 
-            {/* Launching Soon — quiet annotation, not a banner */}
-            <div className="flex items-center gap-2 mt-3">
-              <div style={{ height: "1px", width: "14px", background: "rgba(245,197,24,0.22)", flexShrink: 0 }} />
+            {/* Launch date — specific, no fanfare */}
+            <div className="flex items-center gap-3 mt-3">
+              <div style={{ height: "1px", width: "18px", background: "rgba(245,197,24,0.3)", flexShrink: 0 }} />
               <span
                 style={{
-                  fontFamily: "'Libre Franklin', sans-serif",
-                  fontSize: "0.58rem",
-                  fontWeight: 300,
-                  fontStyle: "italic",
-                  letterSpacing: "0.24em",
-                  color: "rgba(245,197,24,0.48)",
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: "0.7rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.14em",
+                  color: "rgba(245,197,24,0.6)",
                 }}
               >
-                launching soon
+                May 14, 2026
               </span>
-              <div style={{ height: "1px", width: "14px", background: "rgba(245,197,24,0.22)", flexShrink: 0 }} />
+              <div style={{ height: "1px", width: "18px", background: "rgba(245,197,24,0.3)", flexShrink: 0 }} />
             </div>
           </div>
 
           {/* Card body: white */}
           <div style={{ padding: "28px 48px 72px", background: "#ffffff" }}>
-            {/* Access badge */}
+            {/* Studio marker */}
             <div className="flex justify-center mb-5">
               <span
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-bold uppercase tracking-widest"
                 style={{
-                  background: "rgba(245,197,24,0.12)",
-                  border: "1.5px solid rgba(245,197,24,0.4)",
-                  color: "#b38800",
-                  fontSize: "0.65rem",
                   fontFamily: "'Libre Franklin', sans-serif",
+                  fontSize: "0.72rem",
+                  fontWeight: 400,
+                  fontStyle: "italic",
+                  color: "#b38800",
+                  letterSpacing: "0.06em",
+                  borderBottom: "1px solid rgba(245,197,24,0.3)",
+                  paddingBottom: "2px",
                 }}
               >
-                <span
-                  className="w-1.5 h-1.5 rounded-full"
-                  style={{ background: "#F5C518" }}
-                />
-                Preview Access
+                Creative Minds At Work
               </span>
             </div>
 
