@@ -283,23 +283,25 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
         </div>{/* end card+image wrapper */}
 
         {/* Metricadia Research LLC logo — well below */}
-        <div className="mt-48 flex flex-col items-center gap-2">
+        <div className="mt-48 flex flex-col items-center gap-3 w-full" style={{ maxWidth: "460px" }}>
           <PsaLogo
             variant="white"
             dotColor="#F5C518"
             className="text-xl"
             style={{ opacity: 0.85 }}
           />
+          {/* 1px rule */}
+          <div style={{ width: "100%", height: "1px", background: "rgba(255,255,255,0.12)" }} />
+          {/* Copyright */}
           <p
             style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.6rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.28)",
+              fontFamily: "'Libre Franklin', sans-serif",
+              fontSize: "0.7rem",
+              color: "rgba(255,255,255,0.3)",
+              letterSpacing: "0.04em",
             }}
           >
-            Authorized personnel only
+            © {new Date().getFullYear()} Metricadia Research LLC. All rights reserved.
           </p>
         </div>
 
