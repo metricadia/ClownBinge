@@ -125,7 +125,7 @@ export function registerMetricadiaRoutes(app: Express) {
         .from(postsTable)
         .where(sql`${postsTable.caseNumber} ~ '^CB-[0-9]{6}$'`);
 
-      let max = 384;
+      let max = 0;
       for (const row of rows) {
         const num = parseInt(row.caseNumber.replace("CB-", ""), 10);
         if (!isNaN(num) && num > max) max = num;
