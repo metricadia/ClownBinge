@@ -227,6 +227,28 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
               </div>
             )}
 
+            {/* DEV-ONLY: instant bypass — not visible in production */}
+            {import.meta.env.DEV && (
+              <div className="flex justify-center mb-3">
+                <button
+                  onClick={() => { window.location.href = "/api/dev-login"; }}
+                  style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: "0.65rem",
+                    color: "rgba(99,102,241,0.8)",
+                    background: "rgba(99,102,241,0.08)",
+                    border: "1px solid rgba(99,102,241,0.25)",
+                    borderRadius: "6px",
+                    padding: "4px 12px",
+                    cursor: "pointer",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  ⚡ dev login
+                </button>
+              </div>
+            )}
+
             {/* CTA Button */}
             <button
               onClick={login}

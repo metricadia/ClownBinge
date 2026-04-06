@@ -195,6 +195,37 @@ router.get("/callback", async (req: Request, res: Response) => {
   res.redirect(returnTo);
 });
 
+// DEV-ONLY: instant login bypass — never runs in production
+router.get("/dev-login", async (req: Request, res: Response) => {
+  if (process.env.NODE_ENV === "production") {
+    res.status(404).json({ error: "Not found" });
+    return;
+  }
+
+  const email = process.env.CB_ALLOWED_EMAIL || "dev@clownbinge.local";
+  const devUserId = "dev-user-00000000-0000-0000-0000-000000000001";
+
+  await db
+    .insert(usersTable)
+    .values({ id: devUserId, email, firstName: "Dev", lastName: "User" })
+    .onConflictDoUpdate({
+      target: usersTable.id,
+      set: { email, updatedAt: new Date() },
+    });
+
+  const now = Math.floor(Date.now() / 1000);
+  const sessionData: SessionData = {
+    user: { id: devUserId, email, firstName: "Dev", lastName: "User", profileImageUrl: null },
+    access_token: "dev-token",
+    refresh_token: undefined,
+    expires_at: now + SESSION_TTL / 1000,
+  };
+
+  const sid = await createSession(sessionData);
+  setSessionCookie(res, sid);
+  res.redirect("/");
+});
+
 router.get("/logout", async (req: Request, res: Response) => {
   const config = await getOidcConfig();
   const origin = getOrigin(req);
