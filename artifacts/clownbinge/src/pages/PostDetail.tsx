@@ -115,7 +115,7 @@ export default function PostDetail() {
 
     container.addEventListener("click", handlePersonClick, { capture: true });
     return () => container.removeEventListener("click", handlePersonClick, { capture: true });
-  }, [containerRef]);
+  }, [containerRef, post?.id]);
 
   const processedBody = useMemo(() => {
     if (!post?.body) return post?.body ?? "";
