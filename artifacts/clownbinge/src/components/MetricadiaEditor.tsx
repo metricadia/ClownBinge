@@ -855,7 +855,7 @@ export function MetricadiaEditor({
                   {/* Thumbnail */}
                   <div className="flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden bg-slate-800 border border-slate-700">
                     {person.imageUrl
-                      ? <img src={person.imageUrl} alt={person.name} className="w-full h-full object-cover object-top" />
+                      ? <img src={person.imageUrl} alt={person.name} className="w-full h-full object-contain" />
                       : <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-800/60 to-amber-950/80">
                           <span className="text-amber-200 font-black text-sm select-none">
                             {person.name.split(" ").map((w: string) => w[0]).slice(0, 2).join("")}

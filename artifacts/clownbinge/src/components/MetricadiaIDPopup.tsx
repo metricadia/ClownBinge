@@ -66,7 +66,7 @@ export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description, 
               <img
                 src={imageUrl}
                 alt={name}
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-contain"
                 onError={(e) => { e.currentTarget.style.display = "none"; }}
               />
             ) : (
