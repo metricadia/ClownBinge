@@ -156,6 +156,24 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
               </span>
               <div style={{ height: "1px", width: "20px", background: "rgba(245,197,24,0.5)", flexShrink: 0 }} />
             </div>
+
+            {/* Launching Soon — quiet annotation, not a banner */}
+            <div className="flex items-center gap-2 mt-3">
+              <div style={{ height: "1px", width: "14px", background: "rgba(245,197,24,0.22)", flexShrink: 0 }} />
+              <span
+                style={{
+                  fontFamily: "'Libre Franklin', sans-serif",
+                  fontSize: "0.58rem",
+                  fontWeight: 300,
+                  fontStyle: "italic",
+                  letterSpacing: "0.24em",
+                  color: "rgba(245,197,24,0.48)",
+                }}
+              >
+                launching soon
+              </span>
+              <div style={{ height: "1px", width: "14px", background: "rgba(245,197,24,0.22)", flexShrink: 0 }} />
+            </div>
           </div>
 
           {/* Card body: white */}
