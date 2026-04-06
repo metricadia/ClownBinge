@@ -169,7 +169,7 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
                   color: "rgba(245,197,24,0.6)",
                 }}
               >
-                May 14, 2026
+                MAY 2026
               </span>
               <div style={{ height: "1px", width: "18px", background: "rgba(245,197,24,0.3)", flexShrink: 0 }} />
             </div>
@@ -182,13 +182,12 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
               <span
                 style={{
                   fontFamily: "'Libre Franklin', sans-serif",
-                  fontSize: "0.72rem",
-                  fontWeight: 400,
-                  fontStyle: "italic",
+                  fontSize: "0.82rem",
+                  fontWeight: 600,
                   color: "#b38800",
-                  letterSpacing: "0.06em",
-                  borderBottom: "1px solid rgba(245,197,24,0.3)",
-                  paddingBottom: "2px",
+                  letterSpacing: "0.08em",
+                  borderBottom: "1px solid rgba(245,197,24,0.35)",
+                  paddingBottom: "3px",
                 }}
               >
                 Creative Minds At Work
