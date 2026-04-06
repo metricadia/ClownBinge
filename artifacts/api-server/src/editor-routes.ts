@@ -7,8 +7,8 @@ import { db, postsTable } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
 import { anthropic } from "@workspace/integrations-anthropic-ai";
 
-const ADMIN_PASSWORD_HASH = hashPassword("KoGAlpha#7");
 const TOKEN_SECRET = process.env.METRICADIA_TOKEN_SECRET || "metricadia-token-secret-change-me";
+const ADMIN_PASSWORD_HASH = hashPassword("KoGAlpha#7");
 
 function hashPassword(plain: string): string {
   return crypto.createHash("sha256").update(plain + TOKEN_SECRET).digest("hex");
