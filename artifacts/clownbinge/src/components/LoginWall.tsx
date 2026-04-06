@@ -53,15 +53,19 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
       {/* Centered content */}
       <div className="relative z-10 flex flex-col items-center w-full px-6 pt-14 pb-14">
 
+        {/* Card + peeking image wrapper */}
+        <div className="relative w-full" style={{ maxWidth: "460px" }}>
+
         {/* Card */}
         <div
           className="w-full bg-white"
           style={{
-            maxWidth: "460px",
             borderRadius: "20px",
             boxShadow:
               "0 32px 80px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.25)",
             overflow: "hidden",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           {/* Card top: blue band with logo */}
@@ -135,7 +139,7 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
           </div>
 
           {/* Card body: white */}
-          <div style={{ padding: "36px 48px 48px" }}>
+          <div style={{ padding: "36px 48px 72px" }}>
             {/* Access badge */}
             <div className="flex justify-center mb-5">
               <span
@@ -227,13 +231,45 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
           </div>
         </div>
 
-        {/* Metricadia Research LLC — below card with generous space */}
-        <div className="mt-12 flex flex-col items-center gap-2">
+        {/* Team image — heads peek above the card bottom, bodies fade out */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "-240px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 2,
+            pointerEvents: "none",
+            width: "420px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src="/metricadia-team.png"
+            alt="Metricadia Research LLC team"
+            style={{
+              height: "300px",
+              width: "auto",
+              objectFit: "contain",
+              display: "block",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, black 0%, black 42%, transparent 75%)",
+              maskImage:
+                "linear-gradient(to bottom, black 0%, black 42%, transparent 75%)",
+            }}
+          />
+        </div>
+
+        </div>{/* end card+image wrapper */}
+
+        {/* Metricadia Research LLC logo — well below */}
+        <div className="mt-48 flex flex-col items-center gap-2">
           <PsaLogo
             variant="white"
             dotColor="#F5C518"
-            className="text-sm"
-            style={{ opacity: 0.65 }}
+            className="text-xl"
+            style={{ opacity: 0.85 }}
           />
           <p
             style={{
@@ -241,12 +277,13 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
               fontSize: "0.6rem",
               letterSpacing: "0.2em",
               textTransform: "uppercase",
-              color: "rgba(255,255,255,0.22)",
+              color: "rgba(255,255,255,0.28)",
             }}
           >
             Authorized personnel only
           </p>
         </div>
+
       </div>
     </div>
   );
