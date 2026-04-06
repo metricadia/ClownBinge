@@ -4,7 +4,7 @@ import { usePageSeoHead } from "@/hooks/use-seo-head";
 import { AdminPageHeader } from "@/components/AdminPageHeader";
 import { Link } from "wouter";
 import {
-  Send, MapPin, Mail, MessageSquare, FileText, CheckCircle,
+  Send, Mail, MessageSquare, FileText, CheckCircle,
   Shield, TrendingUp, BookOpen, BarChart3, Users, Megaphone, Phone
 } from "lucide-react";
 
@@ -112,19 +112,6 @@ export default function Contact() {
               <div className="bg-muted p-7 rounded-2xl border border-border">
                 <h3 className="font-bold text-lg mb-5 text-foreground border-b border-border pb-3">Corporate Info</h3>
                 <div className="space-y-5">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-white p-2 rounded-lg shadow-sm border border-border shrink-0">
-                      <MapPin className="w-4 h-4 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-sm text-foreground">Mailing Address</p>
-                      <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                        Metricadia Research, LLC<br />
-                        1309 Coffeen Avenue STE 1200<br />
-                        Sheridan, Wyoming 82801
-                      </p>
-                    </div>
-                  </div>
                   <div className="flex items-start gap-3">
                     <div className="bg-white p-2 rounded-lg shadow-sm border border-border shrink-0">
                       <Mail className="w-4 h-4 text-primary" />
