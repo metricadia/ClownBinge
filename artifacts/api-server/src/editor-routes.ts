@@ -126,6 +126,51 @@ export function registerMetricadiaRoutes(app: Express) {
     }
   });
 
+  app.post("/api/metricadia/posts", requireMetricadiaAuth, async (req: Request, res: Response) => {
+    const {
+      caseNumber, title, slug, teaser, body, category,
+      seoMetaTitle, verifiedSource, tags,
+      status, subjectName, subjectTitle, subjectParty,
+    } = req.body as Record<string, any>;
+
+    if (!caseNumber || !title || !slug || !body || !category) {
+      return res.status(400).json({ message: "caseNumber, title, slug, body, category are required" });
+    }
+
+    try {
+      const [inserted] = await db
+        .insert(postsTable)
+        .values({
+          caseNumber,
+          title,
+          slug,
+          teaser: teaser || "",
+          body,
+          category,
+          seoMetaTitle: seoMetaTitle || null,
+          verifiedSource: verifiedSource || null,
+          tags: Array.isArray(tags) ? tags : [],
+          status: status || "published",
+          publishedAt: new Date(),
+          subjectName: subjectName || null,
+          subjectTitle: subjectTitle || null,
+          subjectParty: subjectParty || null,
+          nerdAccessible: true,
+          locked: false,
+        })
+        .returning({ id: postsTable.id, caseNumber: postsTable.caseNumber, slug: postsTable.slug });
+
+      console.log(`[Metricadia] Post created: ${inserted.caseNumber}`);
+      return res.status(201).json({ success: true, ...inserted });
+    } catch (err: any) {
+      console.error("[Metricadia] Error creating post:", err);
+      if (err.code === "23505") {
+        return res.status(409).json({ message: "Duplicate case_number or slug" });
+      }
+      return res.status(500).json({ message: "Failed to create post" });
+    }
+  });
+
   app.put("/api/posts/:id", requireMetricadiaAuth, async (req: Request, res: Response) => {
     const { id } = req.params;
     const { title, content, excerpt } = req.body as {
