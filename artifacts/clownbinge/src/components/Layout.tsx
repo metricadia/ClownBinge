@@ -231,14 +231,14 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                     className="pb-3 pt-1 cursor-pointer"
                     onClick={() => setReducedBarOpen(false)}
                   >
-                    <div className="flex flex-wrap gap-2" onClick={e => e.stopPropagation()}>
+                    <div className="flex flex-wrap gap-2">
                       {REAL_CATS.map(cat => {
                         const pill = PILL[cat.id] ?? PILL.all;
                         return (
                           <Link
                             key={cat.id}
                             href={`/?category=${cat.id}`}
-                            onClick={() => setReducedBarOpen(false)}
+                            onClick={e => { e.stopPropagation(); setReducedBarOpen(false); }}
                             className={`px-4 py-1.5 rounded-full text-[13px] font-bold whitespace-nowrap transition-colors ${pill.off}`}
                           >
                             {cat.label}
@@ -256,20 +256,20 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 className="cursor-pointer"
                 onClick={() => setCatBarOpen(false)}
               >
-                <div className="flex flex-wrap items-center py-2.5 gap-2 pr-2" onClick={e => e.stopPropagation()}>
+                <div className="flex flex-wrap items-center py-2.5 gap-2 pr-2">
                   {CATEGORIES.map(cat => {
                     const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
                     const pill = PILL[cat.id] ?? PILL.all;
                     const cls = `px-4 py-1.5 rounded-full text-[14px] font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
                     return onCategoryChange ? (
-                      <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={cls}>{cat.label}</button>
+                      <button key={cat.id} onClick={(e) => { e.stopPropagation(); handleCategoryChange(cat.id); }} className={cls}>{cat.label}</button>
                     ) : (
-                      <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={cls}>{cat.label}</Link>
+                      <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} onClick={e => e.stopPropagation()} className={cls}>{cat.label}</Link>
                     );
                   })}
                   {/* Hide button — styled as a pill, sits inline with categories */}
                   <button
-                    onClick={() => setCatBarOpen(false)}
+                    onClick={e => { e.stopPropagation(); setCatBarOpen(false); }}
                     className="ml-1 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[13px] font-black uppercase tracking-wider bg-[#1B3E99] text-white hover:bg-[#162f7a] transition-colors whitespace-nowrap shrink-0"
                   >
                     <ChevronDown className="w-3.5 h-3.5 rotate-180" />
