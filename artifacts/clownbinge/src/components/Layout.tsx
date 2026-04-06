@@ -272,16 +272,21 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-3 py-2">
-                <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">A–Z Categories</span>
-                <button
-                  onClick={() => setCatBarOpen(true)}
-                  className="flex items-center gap-2 px-5 py-2 rounded-full text-[13px] font-black uppercase tracking-wider bg-[#F5C518] text-[#1A1A2E] hover:bg-[#e0b400] transition-colors shadow-sm"
-                >
-                  <ChevronDown className="w-4 h-4" />
+              <button
+                onClick={() => setCatBarOpen(true)}
+                className="flex items-center gap-3 py-3 px-1 group"
+              >
+                <span className="text-[11px] font-black uppercase tracking-[0.18em] text-[#B8860B] shrink-0">A–Z Categories</span>
+                <span className="text-[#B8860B]/50 font-light text-[18px] leading-none select-none">|</span>
+                <span className="text-[15px] font-bold text-foreground/80 group-hover:text-foreground transition-colors">
+                  Browse{postCount ? ` ${fmtCount(postCount)} Verified Articles` : ''} across{' '}
+                  <span className="text-[#1B3E99] font-black">{REAL_CATS.length} Topics</span>
+                </span>
+                <span className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[12px] font-black uppercase tracking-wider bg-[#F5C518] text-[#1A1A2E] hover:bg-[#e0b400] transition-colors shrink-0">
+                  <ChevronDown className="w-3.5 h-3.5" />
                   Browse Topics
-                </button>
-              </div>
+                </span>
+              </button>
             )}
           </div>
 
