@@ -241,7 +241,10 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
                   Signing in…
                 </span>
               ) : (
-                "Sign In to Access"
+                <span>
+                  <strong style={{ fontWeight: 700 }}>Authorized Users</strong>
+                  <span style={{ fontWeight: 400, opacity: 0.75 }}> | Continue</span>
+                </span>
               )}
             </button>
           </div>
