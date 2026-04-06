@@ -94,7 +94,7 @@ export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description, 
           </div>
 
           {/* Person Info — scrollable if long */}
-          <div className="p-6 space-y-3 overflow-y-auto max-h-64">
+          <div className="cb-id-scroll p-6 space-y-3 overflow-y-auto max-h-64">
             {/* "Identified" label */}
             <div className="flex items-center gap-2 mb-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-900/50 to-transparent" />
