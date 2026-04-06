@@ -348,20 +348,20 @@ export default function Home() {
 
               {/* Top Self-Own card -- pulls real data */}
               {topSelfOwn && (
-                <div className="rounded-xl p-6 shadow-xl mb-8 border border-white/10" style={{ background: "linear-gradient(145deg, #1B3E99 0%, #192e7a 100%)" }}>
+                <div className="rounded-xl p-6 shadow-md mb-8" style={{ background: "#FEFBEC", border: "1px solid #e8d98a" }}>
                   <div className="flex items-center gap-2 mb-4">
                     <span className="text-2xl">🫵</span>
-                    <h3 className="font-display font-extrabold text-xl" style={{ color: "#ffffff" }}>Top Self-Own</h3>
+                    <h3 className="font-display font-extrabold text-xl" style={{ color: "#1B3E99" }}>Top Self-Own</h3>
                   </div>
-                  <h4 className="font-bold text-base mb-2 leading-snug" style={{ color: "#ffffff" }}>
+                  <h4 className="font-bold text-base mb-2 leading-snug" style={{ color: "#1A1A2E" }}>
                     {topSelfOwn.title}
                   </h4>
                   {topSelfOwn.teaser && (
-                    <p className="text-sm mb-4 line-clamp-3" style={{ color: "rgba(255,255,255,0.72)" }}>
+                    <p className="text-sm mb-4 line-clamp-3" style={{ color: "#555555" }}>
                       {topSelfOwn.teaser}
                     </p>
                   )}
-                  <Link href={`/case/${topSelfOwn.slug}`} className="block w-full font-bold uppercase tracking-wider text-sm py-3 rounded-lg text-center transition-colors hover:opacity-90" style={{ background: "#F5C518", color: "#1A1A2E" }}>
+                  <Link href={`/case/${topSelfOwn.slug}`} className="block w-full font-bold uppercase tracking-wider text-sm py-3 rounded-lg text-center transition-colors hover:opacity-90" style={{ background: "#1B3E99", color: "#ffffff" }}>
                     View The Record
                   </Link>
                 </div>
