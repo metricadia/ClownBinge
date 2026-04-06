@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useParams } from "wouter";
+import { useParams, useLocation } from "wouter";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminLogin } from "@/components/AdminLogin";
 import { MetricadiaEditor } from "@/components/MetricadiaEditor";
@@ -293,6 +293,7 @@ function NewArticleModal({ onClose, onCreated }: NewArticleModalProps) {
 
 export default function AdminEditorPage() {
   const params = useParams<{ postId?: string }>();
+  const [, setLocation] = useLocation();
   const { authenticated, setAuthenticated, logout } = useAdminAuth();
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [search, setSearch] = useState("");
@@ -360,7 +361,7 @@ export default function AdminEditorPage() {
         initialTitle={editingPost.title}
         initialContent={editingPost.content}
         initialExcerpt={editingPost.excerpt}
-        onClose={() => setEditingPost(null)}
+        onClose={() => setLocation(`/case/${editingPost.slug}`)}
       />
     );
   }
