@@ -16,8 +16,7 @@ import { useCategorySponsor } from "@/hooks/use-sponsor";
 import { RelatedArticles } from "@/components/RelatedArticles";
 import { useEffect, useRef, useMemo, useState, useCallback } from "react";
 import { format } from "date-fns";
-import { Loader2, AlertTriangle, Lock, PenLine } from "lucide-react";
-import { useAdmin } from "@/context/AdminContext";
+import { Loader2, AlertTriangle, Lock } from "lucide-react";
 import { useFactoidPopup } from "@/hooks/use-factoid-popup";
 import { FactoidPopup } from "@/components/FactoidPopup";
 import { MetricadiaIDPopup } from "@/components/MetricadiaIDPopup";
@@ -92,8 +91,6 @@ export default function PostDetail() {
   const { containerRef, popupRef, factoid, copied, isMobile, closeFactoid, handleCopy } = useFactoidPopup(
     post ? { articleTitle: post.title } : undefined,
   );
-  const { isAdmin } = useAdmin();
-
   // ── MetricadiaID™ — people click handler ───────────────────────────────────
   interface MetricadiaIDPerson { name: string; imageUrl: string; description?: string; }
   const [activePerson, setActivePerson] = useState<MetricadiaIDPerson | null>(null);
@@ -227,19 +224,8 @@ export default function PostDetail() {
         <header className="mb-10">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-border pb-5 mb-0">
             <div>
-              <div className="flex items-center gap-3">
-                <div className="font-mono text-lg sm:text-xl font-bold tracking-tight text-header mb-1">
-                  CASE {post.caseNumber}
-                </div>
-                {isAdmin && (
-                  <a
-                    href={`/Kemet8/${encodeURIComponent(slug)}`}
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-indigo-700 hover:bg-indigo-600 text-white text-xs font-black uppercase tracking-wider transition-colors shadow"
-                  >
-                    <PenLine size={11} />
-                    Edit Article
-                  </a>
-                )}
+              <div className="font-mono text-lg sm:text-xl font-bold tracking-tight text-header mb-1">
+                CASE {post.caseNumber}
               </div>
               <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-muted-foreground">
                 <span className="uppercase tracking-widest">{post.category.replace(/_/g, " ")}</span>
