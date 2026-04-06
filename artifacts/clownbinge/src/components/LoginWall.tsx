@@ -10,6 +10,15 @@ interface LoginWallProps {
 export function LoginWall({ login, isLoading }: LoginWallProps) {
   const [accessDenied, setAccessDenied] = useState(false);
 
+  /* Subtle pulsing gold glow keyframes — injected once */
+  const glowCSS = `
+    @keyframes cb-gold-pulse {
+      0%   { opacity: 0.18; transform: scale(1);    }
+      50%  { opacity: 0.38; transform: scale(1.06); }
+      100% { opacity: 0.18; transform: scale(1);    }
+    }
+  `;
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("access") === "denied") {
@@ -53,8 +62,25 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
       {/* Centered content */}
       <div className="relative z-10 flex flex-col items-center w-full px-6 pt-14 pb-14">
 
+        {/* Inject glow keyframes */}
+        <style>{glowCSS}</style>
+
         {/* Card + peeking image wrapper */}
         <div className="relative w-full" style={{ maxWidth: "460px" }}>
+
+        {/* Gold glow layer — sits behind the card */}
+        <div
+          style={{
+            position: "absolute",
+            inset: "-28px",
+            borderRadius: "36px",
+            background:
+              "radial-gradient(ellipse at 50% 50%, rgba(245,197,24,0.55) 0%, rgba(245,197,24,0.18) 55%, transparent 80%)",
+            animation: "cb-gold-pulse 3.6s ease-in-out infinite",
+            zIndex: 0,
+            pointerEvents: "none",
+          }}
+        />
 
         {/* Card */}
         <div
