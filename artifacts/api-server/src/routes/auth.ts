@@ -15,6 +15,7 @@ import {
   deleteSession,
   SESSION_COOKIE,
   SESSION_TTL,
+  DEV_SESSION_TTL,
   ISSUER_URL,
   type SessionData,
 } from "../lib/auth";
@@ -218,10 +219,10 @@ router.get("/dev-login", async (req: Request, res: Response) => {
     user: { id: devUserId, email, firstName: "Dev", lastName: "User", profileImageUrl: null },
     access_token: "dev-token",
     refresh_token: undefined,
-    expires_at: now + SESSION_TTL / 1000,
+    expires_at: now + DEV_SESSION_TTL / 1000,
   };
 
-  const sid = await createSession(sessionData);
+  const sid = await createSession(sessionData, DEV_SESSION_TTL);
   res.json({ ok: true, sid });
 });
 

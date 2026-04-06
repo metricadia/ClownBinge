@@ -13,9 +13,9 @@ function getDevSid(): string | null {
   }
 }
 
-function buildAuthHeaders(): Record<string, string> {
-  const sid = getDevSid();
-  if (sid) return { Authorization: `Bearer ${sid}` };
+function buildAuthHeaders(sid?: string | null): Record<string, string> {
+  const token = sid ?? getDevSid();
+  if (token) return { Authorization: `Bearer ${token}` };
   return {};
 }
 
@@ -34,26 +34,64 @@ export function useAuth(): AuthState {
   useEffect(() => {
     let cancelled = false;
 
-    fetch("/api/auth/user", {
-      credentials: "include",
-      headers: buildAuthHeaders(),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json() as Promise<{ user: AuthUser | null }>;
-      })
-      .then((data) => {
-        if (!cancelled) {
-          setUser(data.user ?? null);
-          setIsLoading(false);
+    async function checkAuth() {
+      const res = await fetch("/api/auth/user", {
+        credentials: "include",
+        headers: buildAuthHeaders(),
+      });
+
+      if (!res.ok && (res.status === 401 || res.status === 403)) {
+        if (import.meta.env.DEV) {
+          try {
+            const refreshRes = await fetch("/api/dev-login", { credentials: "include" });
+            if (refreshRes.ok) {
+              const data = await refreshRes.json() as { ok: boolean; sid: string };
+              if (data.ok && data.sid) {
+                localStorage.setItem(DEV_SID_KEY, data.sid);
+                const retryRes = await fetch("/api/auth/user", {
+                  credentials: "include",
+                  headers: buildAuthHeaders(data.sid),
+                });
+                if (retryRes.ok) {
+                  const retryData = await retryRes.json() as { user: AuthUser | null };
+                  if (!cancelled) {
+                    setUser(retryData.user ?? null);
+                    setIsLoading(false);
+                    return;
+                  }
+                }
+              }
+            }
+          } catch {
+          }
         }
-      })
-      .catch(() => {
         if (!cancelled) {
           setUser(null);
           setIsLoading(false);
         }
-      });
+        return;
+      }
+
+      if (res.ok) {
+        const data = await res.json() as { user: AuthUser | null };
+        if (!cancelled) {
+          setUser(data.user ?? null);
+          setIsLoading(false);
+        }
+      } else {
+        if (!cancelled) {
+          setUser(null);
+          setIsLoading(false);
+        }
+      }
+    }
+
+    checkAuth().catch(() => {
+      if (!cancelled) {
+        setUser(null);
+        setIsLoading(false);
+      }
+    });
 
     return () => {
       cancelled = true;

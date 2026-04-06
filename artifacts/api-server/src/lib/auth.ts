@@ -8,6 +8,7 @@ import type { AuthUser } from "@workspace/api-zod";
 export const ISSUER_URL = process.env.ISSUER_URL ?? "https://replit.com/oidc";
 export const SESSION_COOKIE = "sid";
 export const SESSION_TTL = 60 * 60 * 1000; // 1 hour
+export const DEV_SESSION_TTL = 30 * 24 * 60 * 60 * 1000; // 30 days for dev
 
 export interface SessionData {
   user: AuthUser;
@@ -28,12 +29,12 @@ export async function getOidcConfig(): Promise<client.Configuration> {
   return oidcConfig;
 }
 
-export async function createSession(data: SessionData): Promise<string> {
+export async function createSession(data: SessionData, ttl = SESSION_TTL): Promise<string> {
   const sid = crypto.randomBytes(32).toString("hex");
   await db.insert(sessionsTable).values({
     sid,
     sess: data as unknown as Record<string, unknown>,
-    expire: new Date(Date.now() + SESSION_TTL),
+    expire: new Date(Date.now() + ttl),
   });
   return sid;
 }
