@@ -58,7 +58,7 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
 
         {/* Card */}
         <div
-          className="w-full bg-white"
+          className="w-full"
           style={{
             borderRadius: "20px",
             boxShadow:
@@ -66,14 +66,16 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
             overflow: "hidden",
             position: "relative",
             zIndex: 1,
+            background: "linear-gradient(160deg, #1f3a9e 0%, #192e7a 100%)",
           }}
         >
-          {/* Card top: blue band with logo */}
+          {/* Card top: blue band with logo — diagonal bottom cut */}
           <div
             className="flex flex-col items-center text-center"
             style={{
               background: "linear-gradient(160deg, #1f3a9e 0%, #192e7a 100%)",
-              padding: "52px 48px 44px",
+              padding: "52px 48px 62px",
+              clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 28px), 0 100%)",
             }}
           >
             {/* ClownBinge wordmark */}
@@ -126,20 +128,8 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
             </div>
           </div>
 
-          {/* Zigzag divider */}
-          <div style={{ lineHeight: 0, display: "block" }}>
-            <svg
-              viewBox="0 0 460 18"
-              preserveAspectRatio="none"
-              style={{ display: "block", width: "100%", height: "18px" }}
-            >
-              <polygon points="0,0 460,0 460,18 0,0" fill="#192e7a" />
-              <polygon points="0,0 0,18 230,0" fill="#192e7a" />
-            </svg>
-          </div>
-
           {/* Card body: white */}
-          <div style={{ padding: "36px 48px 72px" }}>
+          <div style={{ padding: "28px 48px 72px", background: "#ffffff" }}>
             {/* Access badge */}
             <div className="flex justify-center mb-5">
               <span
@@ -200,14 +190,14 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
               style={{
                 background: "linear-gradient(135deg, #F5C518 0%, #e6b800 100%)",
                 color: "#111827",
-                fontFamily: "'Archivo Black', sans-serif",
-                fontWeight: 900,
-                fontSize: "1.05rem",
+                fontFamily: "'Libre Franklin', sans-serif",
+                fontWeight: 500,
+                fontSize: "1rem",
                 padding: "1rem 1.5rem",
                 boxShadow: "0 4px 20px rgba(245,197,24,0.45), 0 1px 4px rgba(0,0,0,0.15)",
                 border: "none",
                 cursor: isLoading ? "not-allowed" : "pointer",
-                letterSpacing: "0.01em",
+                letterSpacing: "0.04em",
               }}
               onMouseEnter={e => {
                 if (!isLoading) (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 6px 28px rgba(245,197,24,0.6), 0 2px 6px rgba(0,0,0,0.2)";
