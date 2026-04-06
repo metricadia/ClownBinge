@@ -64,11 +64,19 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [catDropdownOpen, setCatDropdownOpen] = useState(false);
   const [catBarOpen, setCatBarOpen] = useState(true);
+  const [reducedBarOpen, setReducedBarOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [footerOpen, setFooterOpen] = useState<Record<string, boolean>>({});
   const [ctaOpen, setCtaOpen] = useState(false);
   const catDropdownRef = useRef<HTMLDivElement>(null);
   const { data: postCount } = usePostsCount();
+
+  const REAL_CATS = CATEGORIES.filter(c => c.id !== 'all');
+  const fmtCount = (n?: number) => {
+    if (!n) return '';
+    if (n >= 1000) return `${(n / 1000).toFixed(1).replace(/\.0$/, '')}K`;
+    return String(n);
+  };
 
   const [fontLevel, setFontLevel] = useState<number>(() => {
     const saved = localStorage.getItem("cb-font-level");
@@ -96,7 +104,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
   }, []);
 
   // Close menus on route change
-  useEffect(() => { setMobileMenuOpen(false); setCatDropdownOpen(false); }, [location]);
+  useEffect(() => { setMobileMenuOpen(false); setCatDropdownOpen(false); setReducedBarOpen(false); }, [location]);
 
   // Close category dropdown on outside click
   useEffect(() => {
@@ -199,16 +207,50 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           {/* Desktop: collapsible two-row wrap (md+) */}
           <div className="hidden md:block">
             {location !== '/' ? (
-              /* Reduced mode on article/other pages — always collapsed, links to home */
-              <div className="flex items-center gap-3 py-2">
-                <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">A–Z Categories</span>
-                <Link
-                  href="/"
-                  className="flex items-center gap-2 px-5 py-2 rounded-full text-[13px] font-black uppercase tracking-wider bg-[#F5C518] text-[#1A1A2E] hover:bg-[#e0b400] transition-colors shadow-sm"
+              /* Reduced mode on article/other pages — full-width clickable banner */
+              <div>
+                <button
+                  onClick={() => setReducedBarOpen(o => !o)}
+                  className="w-full flex items-center justify-between py-3 px-1 group"
                 >
-                  <ChevronDown className="w-4 h-4" />
-                  Browse Topics
-                </Link>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[11px] font-black uppercase tracking-[0.18em] text-muted-foreground">A–Z Categories</span>
+                    <span className="h-3.5 w-px bg-border" />
+                    <span className="text-[13px] font-bold text-foreground/80 group-hover:text-foreground transition-colors">
+                      Browse{postCount ? ` ${fmtCount(postCount)} Verified Articles` : ''} across{' '}
+                      <span className="text-[#1B3E99] font-black">{REAL_CATS.length} Topics</span>
+                    </span>
+                  </div>
+                  <span className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[12px] font-black uppercase tracking-wider transition-all duration-200 ${reducedBarOpen ? 'bg-[#1B3E99] text-white' : 'bg-[#F5C518] text-[#1A1A2E]'}`}>
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${reducedBarOpen ? 'rotate-180' : ''}`} />
+                    {reducedBarOpen ? 'Hide' : 'Browse Topics'}
+                  </span>
+                </button>
+
+                {reducedBarOpen && (
+                  /* Click anywhere on this white area (not a pill) to retract */
+                  <div
+                    className="pb-3 pt-1 cursor-pointer"
+                    onClick={() => setReducedBarOpen(false)}
+                  >
+                    <div className="flex flex-wrap gap-2" onClick={e => e.stopPropagation()}>
+                      {REAL_CATS.map(cat => {
+                        const pill = PILL[cat.id] ?? PILL.all;
+                        return (
+                          <Link
+                            key={cat.id}
+                            href={`/?category=${cat.id}`}
+                            onClick={() => setReducedBarOpen(false)}
+                            className={`px-4 py-1.5 rounded-full text-[13px] font-bold whitespace-nowrap transition-colors ${pill.off}`}
+                          >
+                            {cat.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                    <p className="mt-2.5 text-[11px] text-muted-foreground/60 text-center select-none">Click anywhere here to close</p>
+                  </div>
+                )}
               </div>
             ) : catBarOpen ? (
               <div className="flex flex-wrap items-center py-2.5 gap-2 pr-2">
@@ -249,15 +291,42 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
           <div className="md:hidden">
             {location !== '/' ? (
               /* Reduced mode on article/other pages */
-              <div className="flex items-center gap-3 py-2.5">
-                <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">A–Z Categories</span>
-                <Link
-                  href="/"
-                  className="flex items-center gap-2 px-4 py-1.5 rounded-full text-[12px] font-black uppercase tracking-wider bg-[#F5C518] text-[#1A1A2E] hover:bg-[#e0b400] transition-colors shadow-sm"
+              <div>
+                <button
+                  onClick={() => setReducedBarOpen(o => !o)}
+                  className="w-full flex items-center justify-between py-2.5 group"
                 >
-                  <ChevronDown className="w-3.5 h-3.5" />
-                  Browse Topics
-                </Link>
+                  <span className="text-[12px] font-bold text-foreground/70 group-hover:text-foreground transition-colors">
+                    {postCount ? `${fmtCount(postCount)} Articles · ` : ''}<span className="text-[#1B3E99] font-black">{REAL_CATS.length} Topics</span>
+                  </span>
+                  <span className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider transition-all duration-200 ${reducedBarOpen ? 'bg-[#1B3E99] text-white' : 'bg-[#F5C518] text-[#1A1A2E]'}`}>
+                    <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${reducedBarOpen ? 'rotate-180' : ''}`} />
+                    {reducedBarOpen ? 'Hide' : 'Browse'}
+                  </span>
+                </button>
+                {reducedBarOpen && (
+                  <div
+                    className="pb-3 pt-1 cursor-pointer"
+                    onClick={() => setReducedBarOpen(false)}
+                  >
+                    <div className="flex flex-wrap gap-2" onClick={e => e.stopPropagation()}>
+                      {REAL_CATS.map(cat => {
+                        const pill = PILL[cat.id] ?? PILL.all;
+                        return (
+                          <Link
+                            key={cat.id}
+                            href={`/?category=${cat.id}`}
+                            onClick={() => setReducedBarOpen(false)}
+                            className={`px-3 py-1 rounded-full text-[12px] font-bold whitespace-nowrap transition-colors ${pill.off}`}
+                          >
+                            {cat.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                    <p className="mt-2 text-[10px] text-muted-foreground/50 text-center select-none">Tap anywhere to close</p>
+                  </div>
+                )}
               </div>
             ) : (() => {
               const activeCat = CATEGORIES.find(c => c.id === (activeCategory || 'all')) ?? CATEGORIES[0];
