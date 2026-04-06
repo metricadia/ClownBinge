@@ -187,7 +187,7 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
               }}
             >
               Journalism captured by money, politics, and nation-state interests
-              has run its course. ClownBinge goes to the primary source: court
+              has run its course. <strong style={{ fontWeight: 700, color: "#111827" }}>ClownBinge</strong> goes to the primary source: court
               filings, congressional records, and federal data. It reports only
               what the documents say. Nothing added. Nothing omitted.
             </p>
