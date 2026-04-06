@@ -215,7 +215,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 >
                   <span className="text-[11px] font-black uppercase tracking-[0.18em] text-[#B8860B] shrink-0">A–Z Categories</span>
                   <span className="text-[#B8860B]/50 font-light text-[18px] leading-none select-none">|</span>
-                  <span className="text-[13px] font-bold text-foreground/80 group-hover:text-foreground transition-colors">
+                  <span className="text-[15px] font-bold text-foreground/80 group-hover:text-foreground transition-colors">
                     Browse{postCount ? ` ${fmtCount(postCount)} Verified Articles` : ''} across{' '}
                     <span className="text-[#1B3E99] font-black">{REAL_CATS.length} Topics</span>
                   </span>
@@ -372,14 +372,6 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
 
       {/* Main Content */}
       <main className="flex-1 w-full relative">
-        {location !== '/' && (
-          <div className="cb-container pt-4 pb-0">
-            <p className="text-sm text-foreground/70 font-medium tracking-wide text-center">
-              <span className="font-bold text-header">ClownBinge</span> is A Public Accountability News Platform by Metricadia Research LLC.
-            </p>
-            <div className="h-px w-full bg-[#F5C518]/30 mt-2" />
-          </div>
-        )}
         {children}
       </main>
 
