@@ -272,57 +272,78 @@ export default function Home() {
           {/* Desktop Sidebar */}
           <aside className="hidden lg:block w-[320px] shrink-0 space-y-8">
             <div className="sticky top-[96px]">
-              {/* Founding Document block */}
+              {/* Founding Document — Signature "Why We Exist" tile */}
               {foundingDoc && (
-                <div
-                  className="mb-6 rounded-2xl overflow-hidden border border-blue-200"
-                  style={{ background: "#E8EDF5" }}
-                >
-                  {/* Header — two-tier authority layout */}
-                  <div className="px-5 pt-5 pb-3 border-b border-blue-200">
-                    <div className="flex items-start justify-between gap-2 mb-2">
-                      <div className="min-w-0">
-                        <p className="font-mono text-base font-extrabold tracking-[0.06em] leading-none" style={{ color: "#1A1A2E" }}>
-                          {foundingDoc.caseNumber}
-                        </p>
-                        <p className="mt-1 text-[9px] uppercase tracking-[0.18em] font-semibold" style={{ color: "#5A5A5A" }}>
-                          ClownBinge Record
-                        </p>
+                <Link href={`/case/${foundingDoc.slug}`} className="block mb-6 group">
+                  <div
+                    className="rounded-2xl overflow-hidden"
+                    style={{
+                      background: "linear-gradient(155deg, #0f1f5c 0%, #192e7a 55%, #1a1040 100%)",
+                      boxShadow: "0 8px 32px rgba(25,46,122,0.45), 0 1px 0 rgba(245,197,24,0.3) inset",
+                    }}
+                  >
+                    {/* Top label bar */}
+                    <div
+                      className="px-5 pt-4 pb-3 flex items-center justify-between"
+                      style={{ borderBottom: "1px solid rgba(245,197,24,0.18)" }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="text-[9px] font-black uppercase tracking-[0.22em]"
+                          style={{ color: "#F5C518" }}
+                        >
+                          Why We Exist
+                        </span>
+                        <span style={{ color: "rgba(245,197,24,0.35)", fontSize: "8px" }}>◆</span>
+                        <span className="text-[9px] font-semibold uppercase tracking-[0.14em]" style={{ color: "rgba(255,255,255,0.4)" }}>
+                          Founding Document
+                        </span>
                       </div>
-                      <div className="shrink-0">
-                        <span className="verified-badge">Verified</span>
-                      </div>
+                      <span
+                        className="text-[9px] font-black uppercase tracking-[0.16em] px-2 py-0.5 rounded-full"
+                        style={{ background: "rgba(245,197,24,0.15)", color: "#F5C518", border: "1px solid rgba(245,197,24,0.3)" }}
+                      >
+                        Verified
+                      </span>
                     </div>
-                    <span className="inline-flex items-center rounded border px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em]" style={{ borderColor: "rgba(107,53,32,0.3)", background: "rgba(107,53,32,0.08)", color: "#6B3520" }}>
-                      {CATEGORY_LABELS[foundingDoc.category] ?? foundingDoc.category}
-                    </span>
-                  </div>
 
-                  {/* Body */}
-                  <div className="px-5 py-3">
-                    <Link href={`/case/${foundingDoc.slug}`}>
-                      <h3 className="font-sans font-extrabold text-base leading-snug mb-3 hover:opacity-70 transition-opacity cursor-pointer" style={{ color: "#1A1A2E" }}>
+                    {/* Body */}
+                    <div className="px-5 pt-4 pb-5">
+                      <h3
+                        className="font-sans font-extrabold text-[15px] leading-snug mb-3 group-hover:opacity-85 transition-opacity"
+                        style={{ color: "#ffffff" }}
+                      >
                         {foundingDoc.title}
                       </h3>
-                    </Link>
-                    <p className="text-sm leading-relaxed mb-4 line-clamp-2 text-slate-500">
-                      {foundingDoc.teaser}
-                    </p>
-                    <div className="border-t border-blue-200 pt-3 flex items-center justify-between">
-                      <span className="text-xs text-slate-400 truncate max-w-[55%]">
-                        {foundingDoc.verifiedSource ? `Source: ${foundingDoc.verifiedSource}` : "Founding Document"}
-                      </span>
-                      <Link
-                        href={`/case/${foundingDoc.slug}`}
-                        className="text-xs font-black uppercase tracking-widest hover:opacity-70 transition-opacity flex items-center gap-1"
-                        style={{ color: "#1A3A8F" }}
+                      <p
+                        className="text-[13px] leading-relaxed line-clamp-3"
+                        style={{ color: "rgba(255,255,255,0.58)" }}
                       >
-                        Read More
-                        <ArrowRight className="w-3 h-3" />
-                      </Link>
+                        {foundingDoc.teaser}
+                      </p>
+
+                      {/* CTA */}
+                      <div
+                        className="mt-4 pt-3 flex items-center justify-between"
+                        style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}
+                      >
+                        <span
+                          className="text-[10px] font-semibold truncate max-w-[55%]"
+                          style={{ color: "rgba(255,255,255,0.35)", fontFamily: "'JetBrains Mono', monospace" }}
+                        >
+                          {foundingDoc.caseNumber}
+                        </span>
+                        <span
+                          className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest group-hover:gap-2 transition-all"
+                          style={{ color: "#F5C518" }}
+                        >
+                          Read More
+                          <ArrowRight className="w-3 h-3" />
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               )}
 
               {/* Top Self-Own card -- pulls real data */}
