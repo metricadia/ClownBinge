@@ -163,6 +163,19 @@
     margin-bottom: 1.75rem;
   }
 
+  /* Article body headings — APA-7 section headers in CB dark blue */
+  .cb-article-body h2 {
+    color: #1B3E99 !important;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cb-article-body h3 {
+    color: #1B3E99 !important;
+    margin-top: 1.5rem;
+    margin-bottom: 0.4rem;
+  }
+
   /* ALL links in article body — gold dotted, never navigate away.
      Covers both original a[href] AND patched a[data-href] (href removed by JS) */
   .cb-article-body a[href],
