@@ -269,9 +269,9 @@ export default function Home() {
             )}
           </div>
 
-          {/* Desktop Sidebar */}
-          <aside className="hidden lg:block w-[320px] shrink-0 space-y-8">
-            <div className="sticky top-[96px]">
+          {/* Desktop + Tablet Sidebar */}
+          <aside className="hidden md:block w-[280px] lg:w-[320px] shrink-0">
+            <div className="sticky top-[96px] h-[calc(100vh-96px)] overflow-y-auto pb-8 space-y-8 pr-1" style={{ scrollbarWidth: "thin", scrollbarColor: "rgba(0,0,0,0.15) transparent" }}>
               {/* Founding Document — Signature "Why We Exist" tile */}
               {foundingDoc && (
                 <Link href={`/case/${foundingDoc.slug}`} className="block mb-6 group">
@@ -348,20 +348,20 @@ export default function Home() {
 
               {/* Top Self-Own card -- pulls real data */}
               {topSelfOwn && (
-                <div className="bg-primary text-white rounded-xl p-6 shadow-xl shadow-primary/20 mb-8 border border-primary-foreground/10">
+                <div className="rounded-xl p-6 shadow-xl mb-8 border border-white/10" style={{ background: "linear-gradient(145deg, #1B3E99 0%, #192e7a 100%)" }}>
                   <div className="flex items-center gap-2 mb-4">
                     <span className="text-2xl">🫵</span>
-                    <h3 className="font-display font-extrabold text-xl">Top Self-Own</h3>
+                    <h3 className="font-display font-extrabold text-xl" style={{ color: "#ffffff" }}>Top Self-Own</h3>
                   </div>
-                  <h4 className="font-bold text-lg mb-2 leading-snug">
+                  <h4 className="font-bold text-base mb-2 leading-snug" style={{ color: "#ffffff" }}>
                     {topSelfOwn.title}
                   </h4>
                   {topSelfOwn.teaser && (
-                    <p className="text-white/80 text-sm mb-4 line-clamp-3">
+                    <p className="text-sm mb-4 line-clamp-3" style={{ color: "rgba(255,255,255,0.72)" }}>
                       {topSelfOwn.teaser}
                     </p>
                   )}
-                  <Link href={`/post/${topSelfOwn.slug}`} className="block w-full bg-secondary text-dark-text font-bold uppercase tracking-wider text-sm py-3 rounded-lg hover:bg-white transition-colors text-center">
+                  <Link href={`/case/${topSelfOwn.slug}`} className="block w-full font-bold uppercase tracking-wider text-sm py-3 rounded-lg text-center transition-colors hover:opacity-90" style={{ background: "#F5C518", color: "#1A1A2E" }}>
                     View The Record
                   </Link>
                 </div>
