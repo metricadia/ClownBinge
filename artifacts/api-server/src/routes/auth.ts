@@ -169,8 +169,8 @@ router.get("/callback", async (req: Request, res: Response) => {
   );
 
   // Email whitelist — if CB_ALLOWED_EMAIL is set, only that address may access
-  const allowedEmail = process.env.CB_ALLOWED_EMAIL;
-  if (allowedEmail && dbUser.email !== allowedEmail) {
+  const allowedEmail = process.env.CB_ALLOWED_EMAIL?.toLowerCase().trim();
+  if (allowedEmail && dbUser.email?.toLowerCase().trim() !== allowedEmail) {
     console.warn(`[Auth] Access denied for ${dbUser.email} — not in whitelist`);
     res.redirect("/?access=denied");
     return;
