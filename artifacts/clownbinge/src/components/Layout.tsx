@@ -192,19 +192,31 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         </div>
       )}
 
-      {/* Category sub-bar -- sticky below nav, home feed only */}
-      <div className={`sticky top-[80px] sm:top-[96px] z-40 bg-white border-b shadow-sm relative ${location !== '/' ? 'hidden' : ''}`} ref={catDropdownRef}>
+      {/* Category sub-bar -- sticky below nav */}
+      <div className={`sticky top-[80px] sm:top-[96px] z-40 bg-white border-b shadow-sm relative`} ref={catDropdownRef}>
         <div className="cb-container">
 
           {/* Desktop: collapsible two-row wrap (md+) */}
           <div className="hidden md:block">
-            {catBarOpen ? (
+            {location !== '/' ? (
+              /* Reduced mode on article/other pages — always collapsed, links to home */
+              <div className="flex items-center gap-3 py-2">
+                <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">A–Z Categories</span>
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 px-5 py-2 rounded-full text-[13px] font-black uppercase tracking-wider bg-[#F5C518] text-[#1A1A2E] hover:bg-[#e0b400] transition-colors shadow-sm"
+                >
+                  <ChevronDown className="w-4 h-4" />
+                  Browse Topics
+                </Link>
+              </div>
+            ) : catBarOpen ? (
               <div className="flex flex-wrap items-center py-2.5 gap-2 pr-2">
                 {CATEGORIES.map(cat => {
                   const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
                   const pill = PILL[cat.id] ?? PILL.all;
                   const cls = `px-4 py-1.5 rounded-full text-[14px] font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
-                  return onCategoryChange && location === '/' ? (
+                  return onCategoryChange ? (
                     <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={cls}>{cat.label}</button>
                   ) : (
                     <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={cls}>{cat.label}</Link>
@@ -235,7 +247,19 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
 
           {/* Mobile: tap-to-open dropdown (below md) */}
           <div className="md:hidden">
-            {(() => {
+            {location !== '/' ? (
+              /* Reduced mode on article/other pages */
+              <div className="flex items-center gap-3 py-2.5">
+                <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">A–Z Categories</span>
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 px-4 py-1.5 rounded-full text-[12px] font-black uppercase tracking-wider bg-[#F5C518] text-[#1A1A2E] hover:bg-[#e0b400] transition-colors shadow-sm"
+                >
+                  <ChevronDown className="w-3.5 h-3.5" />
+                  Browse Topics
+                </Link>
+              </div>
+            ) : (() => {
               const activeCat = CATEGORIES.find(c => c.id === (activeCategory || 'all')) ?? CATEGORIES[0];
               const pill = PILL[activeCat.id] ?? PILL.all;
               return (
@@ -245,7 +269,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 >
                   <div className="flex items-center gap-2.5">
                     <span className="text-[12px] font-bold text-muted-foreground uppercase tracking-widest">Category</span>
-                    <span className={`px-3 py-1 rounded-full text-[14px] font-bold ${location === '/' ? pill.on : PILL.all.off}`}>
+                    <span className={`px-3 py-1 rounded-full text-[14px] font-bold ${pill.on}`}>
                       {activeCat.label}
                     </span>
                   </div>
@@ -254,7 +278,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               );
             })()}
 
-            {catDropdownOpen && (
+            {catDropdownOpen && location === '/' && (
               <div className="absolute left-0 right-0 top-full z-50 bg-white border-b border-t border-border shadow-xl">
                 <div className="cb-container py-4 flex flex-wrap gap-2 max-h-[70vh] overflow-y-auto">
                   {CATEGORIES.map(cat => {
