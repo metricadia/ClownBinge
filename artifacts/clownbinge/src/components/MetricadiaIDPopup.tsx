@@ -60,17 +60,29 @@ export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description, 
             </span>
           </div>
 
-          {/* Person Image or Initial Avatar */}
-          <div className="relative w-full h-64 bg-stone-950 overflow-hidden rounded-t-2xl flex items-center justify-center">
+          {/* Person Image or Initial Avatar — flush, natural dimensions, max-capped */}
+          <div className="relative w-full bg-stone-950 overflow-hidden rounded-t-2xl">
             {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt={name}
-                className="w-full h-full object-contain"
-                onError={(e) => { e.currentTarget.style.display = "none"; }}
-              />
+              <>
+                <img
+                  src={imageUrl}
+                  alt={name}
+                  className="w-full h-auto block max-h-80 object-cover object-top"
+                  onError={(e) => { e.currentTarget.style.display = "none"; }}
+                />
+                {/* Gradient fade into info section */}
+                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-stone-950 to-transparent" />
+                {/* Attribution */}
+                {credit && (
+                  <div className="absolute bottom-1 left-0 right-0 flex justify-center z-10">
+                    <span className="text-[9px] text-stone-500 px-2 leading-tight text-center">
+                      {credit}
+                    </span>
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="flex flex-col items-center justify-center gap-3">
+              <div className="h-40 flex flex-col items-center justify-center gap-3">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-amber-600 to-amber-900 flex items-center justify-center shadow-lg border-2 border-amber-500/40">
                   <span className="text-4xl font-bold text-amber-100 select-none">
                     {name.split(" ").map((w: string) => w[0]).slice(0, 2).join("")}
@@ -79,20 +91,10 @@ export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description, 
                 <span className="text-xs text-stone-500 tracking-widest uppercase">Historical Figure</span>
               </div>
             )}
-            {/* Gradient overlay at bottom */}
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-stone-950 to-transparent" />
-            {/* Attribution — auto-derived for Wikimedia, explicit for uploads */}
-            {imageUrl && credit && (
-              <div className="absolute bottom-1 left-0 right-0 flex justify-center z-10">
-                <span className="text-[9px] text-stone-500 px-2 leading-tight text-center">
-                  {credit}
-                </span>
-              </div>
-            )}
           </div>
 
-          {/* Person Info */}
-          <div className="p-6 space-y-3">
+          {/* Person Info — scrollable if long */}
+          <div className="p-6 space-y-3 overflow-y-auto max-h-64">
             {/* "Identified" label */}
             <div className="flex items-center gap-2 mb-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-amber-900/50 to-transparent" />
