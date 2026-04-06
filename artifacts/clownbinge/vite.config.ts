@@ -63,9 +63,7 @@ export default defineConfig({
     host: "0.0.0.0",
     allowedHosts: true,
     hmr: {
-      clientPort: 443,
-      protocol: "wss",
-      timeout: 120000,
+      overlay: false,
     },
     fs: {
       strict: true,
