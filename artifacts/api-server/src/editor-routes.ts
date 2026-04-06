@@ -4,7 +4,7 @@ import crypto from "crypto";
 import path from "path";
 import fs from "fs";
 import { db, postsTable } from "@workspace/db";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, sql } from "drizzle-orm";
 import { anthropic } from "@workspace/integrations-anthropic-ai";
 
 const ADMIN_PASSWORD = process.env.METRICADIA_ADMIN_PASSWORD || "KoGAlpha#7";
@@ -118,6 +118,26 @@ export function registerMetricadiaRoutes(app: Express) {
     }
   });
 
+  app.get("/api/metricadia/next-case-number", requireMetricadiaAuth, async (_req: Request, res: Response) => {
+    try {
+      const rows = await db
+        .select({ caseNumber: postsTable.caseNumber })
+        .from(postsTable)
+        .where(sql`${postsTable.caseNumber} ~ '^CB-[0-9]{6}$'`);
+
+      let max = 384;
+      for (const row of rows) {
+        const num = parseInt(row.caseNumber.replace("CB-", ""), 10);
+        if (!isNaN(num) && num > max) max = num;
+      }
+      const next = `CB-${String(max + 1).padStart(6, "0")}`;
+      return res.json({ caseNumber: next });
+    } catch (err) {
+      console.error("[Metricadia] Error computing next case number:", err);
+      return res.status(500).json({ message: "Failed to compute next case number" });
+    }
+  });
+
   app.post("/api/metricadia/posts", requireMetricadiaAuth, async (req: Request, res: Response) => {
     const {
       caseNumber, title, slug, teaser, body, category,
@@ -125,8 +145,9 @@ export function registerMetricadiaRoutes(app: Express) {
       status, subjectName, subjectTitle, subjectParty,
     } = req.body as Record<string, any>;
 
-    if (!caseNumber || !title || !slug || !body || !category) {
-      return res.status(400).json({ message: "caseNumber, title, slug, body, category are required" });
+    const isDraft = status === "draft";
+    if (!caseNumber || !title || !slug || !category || (!isDraft && !body)) {
+      return res.status(400).json({ message: "caseNumber, title, slug, category are required (body required unless draft)" });
     }
 
     try {
@@ -137,7 +158,7 @@ export function registerMetricadiaRoutes(app: Express) {
           title,
           slug,
           teaser: teaser || "",
-          body,
+          body: body || "",
           category,
           seoMetaTitle: seoMetaTitle || null,
           verifiedSource: verifiedSource || null,
