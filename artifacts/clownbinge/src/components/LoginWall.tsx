@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Lock, Shield } from "lucide-react";
+import { Shield } from "lucide-react";
 import { PsaLogo } from "@/components/PsaLogo";
 
 interface LoginWallProps {
@@ -19,170 +19,234 @@ export function LoginWall({ login, isLoading }: LoginWallProps) {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden"
-      style={{ background: "#1A3A8F" }}
+      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
+      style={{ background: "#192e7a" }}
     >
-      {/* Subtle pattern overlay */}
+      {/* Background: diagonal stripes */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-10"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
+          backgroundImage: `repeating-linear-gradient(
+            -55deg,
+            transparent,
+            transparent 38px,
+            rgba(255,255,255,0.025) 38px,
+            rgba(255,255,255,0.025) 40px
+          )`,
+        }}
+      />
+      {/* Background: radial vignette lift behind card */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 60% at 50% 46%, rgba(67,105,230,0.35) 0%, transparent 70%)",
         }}
       />
 
-      {/* White card */}
+      {/* Yellow top bar — full width */}
       <div
-        className="relative w-full max-w-sm bg-white rounded-2xl overflow-hidden"
-        style={{
-          boxShadow:
-            "0 20px 60px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2)",
-        }}
-      >
-        {/* Yellow top accent bar */}
-        <div className="h-1.5 w-full" style={{ background: "#F5C518" }} />
+        className="absolute top-0 left-0 right-0"
+        style={{ height: "6px", background: "#F5C518", zIndex: 10 }}
+      />
 
-        <div className="px-8 pt-8 pb-8 flex flex-col items-center text-center">
-          {/* ClownBinge logo — matches site header */}
-          <div className="mb-1 flex flex-col items-center">
-            <div className="flex items-baseline gap-0 leading-none">
+      {/* Centered content */}
+      <div className="relative z-10 flex flex-col items-center w-full px-6 pt-14 pb-14">
+
+        {/* Card */}
+        <div
+          className="w-full bg-white"
+          style={{
+            maxWidth: "460px",
+            borderRadius: "20px",
+            boxShadow:
+              "0 32px 80px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.25)",
+            overflow: "hidden",
+          }}
+        >
+          {/* Card top: blue band with logo */}
+          <div
+            className="flex flex-col items-center text-center"
+            style={{
+              background: "linear-gradient(160deg, #1f3a9e 0%, #192e7a 100%)",
+              padding: "52px 48px 44px",
+            }}
+          >
+            {/* ClownBinge wordmark */}
+            <div className="flex items-baseline justify-center mb-3">
               <span
-                className="text-4xl font-black tracking-tight"
                 style={{
                   fontFamily: "'Archivo Black', sans-serif",
-                  color: "#1A3A8F",
+                  fontSize: "3.4rem",
+                  fontWeight: 900,
+                  color: "#ffffff",
+                  lineHeight: 1,
+                  letterSpacing: "-1px",
                 }}
               >
                 Clown
               </span>
               <span
-                className="text-4xl font-black tracking-tight"
                 style={{
                   fontFamily: "'Archivo Black', sans-serif",
+                  fontSize: "3.4rem",
+                  fontWeight: 900,
                   color: "#F5C518",
+                  lineHeight: 1,
+                  letterSpacing: "-1px",
                 }}
               >
                 Binge
               </span>
+            </div>
+            {/* Sub-tagline */}
+            <div className="flex items-center gap-2" style={{ whiteSpace: "nowrap" }}>
+              <div style={{ height: "1px", width: "20px", background: "rgba(245,197,24,0.5)", flexShrink: 0 }} />
               <span
-                className="text-2xl font-light mx-2"
-                style={{ color: "rgba(26,58,143,0.3)" }}
-              >
-                |
-              </span>
-              <span
-                className="text-lg font-semibold tracking-widest uppercase"
                 style={{
-                  fontFamily: "'Libre Franklin', sans-serif",
-                  color: "rgba(26,58,143,0.55)",
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: "0.58rem",
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.5)",
+                  whiteSpace: "nowrap",
                 }}
               >
-                Newsroom
+                Independent
+                <span style={{ color: "#F5C518", margin: "0 3px" }}>·</span>
+                Verified
+                <span style={{ color: "#F5C518", margin: "0 3px" }}>·</span>
+                The Primary Source
+              </span>
+              <div style={{ height: "1px", width: "20px", background: "rgba(245,197,24,0.5)", flexShrink: 0 }} />
+            </div>
+          </div>
+
+          {/* Zigzag divider */}
+          <div style={{ lineHeight: 0, display: "block" }}>
+            <svg
+              viewBox="0 0 460 18"
+              preserveAspectRatio="none"
+              style={{ display: "block", width: "100%", height: "18px" }}
+            >
+              <polygon points="0,0 460,0 460,18 0,0" fill="#192e7a" />
+              <polygon points="0,0 0,18 230,0" fill="#192e7a" />
+            </svg>
+          </div>
+
+          {/* Card body: white */}
+          <div style={{ padding: "36px 48px 48px" }}>
+            {/* Access badge */}
+            <div className="flex justify-center mb-5">
+              <span
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-bold uppercase tracking-widest"
+                style={{
+                  background: "rgba(245,197,24,0.12)",
+                  border: "1.5px solid rgba(245,197,24,0.4)",
+                  color: "#b38800",
+                  fontSize: "0.65rem",
+                  fontFamily: "'Libre Franklin', sans-serif",
+                }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ background: "#F5C518" }}
+                />
+                Preview Access
               </span>
             </div>
-            <span
-              className="text-[10px] tracking-[0.2em] uppercase mt-1"
+
+            {/* Description */}
+            <p
+              className="text-center leading-relaxed mb-8"
               style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                color: "rgba(26,58,143,0.45)",
+                fontFamily: "'Libre Franklin', sans-serif",
+                fontSize: "0.95rem",
+                color: "#374151",
+                lineHeight: 1.7,
               }}
             >
-              Independent
-              <span style={{ color: "#F5C518" }}>.</span> Verified
-              <span style={{ color: "#F5C518" }}>.</span> The Primary Source
-              <span style={{ color: "#F5C518" }}>.</span>
-            </span>
-          </div>
+              The accountability journalism platform that names names, cites
+              sources, and follows the money. Sign in to access the full
+              platform.
+            </p>
 
-          {/* Yellow rule */}
-          <div
-            className="w-full rounded-full my-6"
-            style={{ height: "3px", background: "#F5C518" }}
+            {/* Access denied message */}
+            {accessDenied && (
+              <div
+                className="flex items-start gap-3 px-4 py-3 rounded-xl text-left mb-6"
+                style={{ background: "#FFF1F2", border: "1px solid #FECDD3" }}
+              >
+                <Shield
+                  className="w-4 h-4 flex-shrink-0 mt-0.5"
+                  style={{ color: "#E11D48" }}
+                />
+                <p style={{ fontSize: "0.82rem", color: "#9F1239", lineHeight: 1.5 }}>
+                  This account is not authorized. Please sign in with an
+                  authorized account.
+                </p>
+              </div>
+            )}
+
+            {/* CTA Button */}
+            <button
+              onClick={login}
+              disabled={isLoading}
+              className="w-full rounded-xl transition-all duration-150 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+              style={{
+                background: "linear-gradient(135deg, #F5C518 0%, #e6b800 100%)",
+                color: "#111827",
+                fontFamily: "'Archivo Black', sans-serif",
+                fontWeight: 900,
+                fontSize: "1.05rem",
+                padding: "1rem 1.5rem",
+                boxShadow: "0 4px 20px rgba(245,197,24,0.45), 0 1px 4px rgba(0,0,0,0.15)",
+                border: "none",
+                cursor: isLoading ? "not-allowed" : "pointer",
+                letterSpacing: "0.01em",
+              }}
+              onMouseEnter={e => {
+                if (!isLoading) (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 6px 28px rgba(245,197,24,0.6), 0 2px 6px rgba(0,0,0,0.2)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 20px rgba(245,197,24,0.45), 0 1px 4px rgba(0,0,0,0.15)";
+              }}
+            >
+              {isLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <span
+                    className="w-4 h-4 rounded-full border-2 border-t-transparent animate-spin"
+                    style={{ borderColor: "#111827", borderTopColor: "transparent" }}
+                  />
+                  Signing in…
+                </span>
+              ) : (
+                "Sign In to Access"
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Metricadia Research LLC — below card with generous space */}
+        <div className="mt-12 flex flex-col items-center gap-2">
+          <PsaLogo
+            variant="white"
+            dotColor="#F5C518"
+            className="text-sm"
+            style={{ opacity: 0.65 }}
           />
-
-          {/* Preview access label */}
-          <div className="flex items-center gap-2 mb-4">
-            <Lock className="w-3.5 h-3.5" style={{ color: "#1A3A8F" }} />
-            <span
-              className="text-xs font-bold tracking-widest uppercase"
-              style={{ color: "#1A3A8F" }}
-            >
-              Preview Access
-            </span>
-          </div>
-
-          {/* Description */}
           <p
-            className="text-sm leading-relaxed mb-6"
-            style={{ color: "#6B7280" }}
-          >
-            ClownBinge is the accountability journalism platform that names
-            names, cites sources, and follows the money. Sign in to access the
-            full platform.
-          </p>
-
-          {/* Access denied message */}
-          {accessDenied && (
-            <div
-              className="w-full mb-5 flex items-start gap-3 px-4 py-3 rounded-xl border text-left"
-              style={{
-                background: "#FFF1F2",
-                borderColor: "#FECDD3",
-              }}
-            >
-              <Shield
-                className="w-4 h-4 flex-shrink-0 mt-0.5"
-                style={{ color: "#E11D48" }}
-              />
-              <p className="text-sm" style={{ color: "#9F1239" }}>
-                This account is not authorized to access ClownBinge. Please sign
-                in with an authorized account.
-              </p>
-            </div>
-          )}
-
-          {/* Sign in button */}
-          <button
-            onClick={login}
-            disabled={isLoading}
-            className="w-full py-3.5 px-6 rounded-xl font-black text-base transition-all duration-150 disabled:opacity-60 disabled:cursor-not-allowed hover:brightness-95 active:scale-[0.98]"
             style={{
-              background: "#F5C518",
-              color: "#1A1A2E",
-              fontFamily: "'Libre Franklin', sans-serif",
-              boxShadow: "0 2px 12px rgba(245,197,24,0.35)",
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: "0.6rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.22)",
             }}
           >
-            {isLoading ? (
-              <span className="flex items-center justify-center gap-2">
-                <span
-                  className="w-4 h-4 border-2 border-t-transparent rounded-full animate-spin"
-                  style={{ borderColor: "#1A1A2E", borderTopColor: "transparent" }}
-                />
-                Signing in…
-              </span>
-            ) : (
-              "Sign In to Access"
-            )}
-          </button>
+            Authorized personnel only
+          </p>
         </div>
-      </div>
-
-      {/* Metricadia Research LLC logo — below the card */}
-      <div className="mt-8 flex flex-col items-center gap-2">
-        <PsaLogo
-          variant="white"
-          dotColor="#F5C518"
-          className="text-base"
-          style={{ opacity: 0.85 }}
-        />
-        <p
-          className="text-xs tracking-widest uppercase"
-          style={{ color: "rgba(255,255,255,0.35)", fontFamily: "'JetBrains Mono', monospace" }}
-        >
-          Authorized personnel only
-        </p>
       </div>
     </div>
   );
