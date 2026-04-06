@@ -251,30 +251,36 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
                 )}
               </div>
             ) : catBarOpen ? (
-              <div className="flex flex-wrap items-center py-2.5 gap-2 pr-2">
-                {CATEGORIES.map(cat => {
-                  const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
-                  const pill = PILL[cat.id] ?? PILL.all;
-                  const cls = `px-4 py-1.5 rounded-full text-[14px] font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
-                  return onCategoryChange ? (
-                    <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={cls}>{cat.label}</button>
-                  ) : (
-                    <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={cls}>{cat.label}</Link>
-                  );
-                })}
-                {/* Hide button — styled as a pill, sits inline with categories */}
-                <button
-                  onClick={() => setCatBarOpen(false)}
-                  className="ml-1 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[13px] font-black uppercase tracking-wider bg-[#1B3E99] text-white hover:bg-[#162f7a] transition-colors whitespace-nowrap shrink-0"
-                >
-                  <ChevronDown className="w-3.5 h-3.5 rotate-180" />
-                  Hide
-                </button>
+              /* Click white space anywhere to collapse */
+              <div
+                className="cursor-pointer"
+                onClick={() => setCatBarOpen(false)}
+              >
+                <div className="flex flex-wrap items-center py-2.5 gap-2 pr-2" onClick={e => e.stopPropagation()}>
+                  {CATEGORIES.map(cat => {
+                    const isActive = location === '/' && (activeCategory === cat.id || (!activeCategory && cat.id === 'all'));
+                    const pill = PILL[cat.id] ?? PILL.all;
+                    const cls = `px-4 py-1.5 rounded-full text-[14px] font-bold whitespace-nowrap transition-colors ${isActive ? pill.on : pill.off}`;
+                    return onCategoryChange ? (
+                      <button key={cat.id} onClick={() => handleCategoryChange(cat.id)} className={cls}>{cat.label}</button>
+                    ) : (
+                      <Link key={cat.id} href={cat.id === 'all' ? '/' : `/?category=${cat.id}`} className={cls}>{cat.label}</Link>
+                    );
+                  })}
+                  {/* Hide button — styled as a pill, sits inline with categories */}
+                  <button
+                    onClick={() => setCatBarOpen(false)}
+                    className="ml-1 flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[13px] font-black uppercase tracking-wider bg-[#1B3E99] text-white hover:bg-[#162f7a] transition-colors whitespace-nowrap shrink-0"
+                  >
+                    <ChevronDown className="w-3.5 h-3.5 rotate-180" />
+                    Hide
+                  </button>
+                </div>
               </div>
             ) : (
               <button
                 onClick={() => setCatBarOpen(true)}
-                className="flex items-center gap-3 py-3 px-1 group"
+                className="w-full flex items-center gap-3 py-3 px-1 group"
               >
                 <span className="text-[11px] font-black uppercase tracking-[0.18em] text-[#B8860B] shrink-0">A–Z Categories</span>
                 <span className="text-[#B8860B]/50 font-light text-[18px] leading-none select-none">|</span>
