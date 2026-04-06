@@ -56,7 +56,7 @@ export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description, 
           <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-yellow-400 to-amber-600 shadow-lg">
             <Sparkles className="w-3 h-3 text-stone-950" />
             <span className="text-xs font-bold text-stone-950 tracking-wide">
-              Metricadia ID™
+              ClownBinge ID™
             </span>
           </div>
 
