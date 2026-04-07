@@ -371,75 +371,44 @@ export default function PostDetail() {
               {/* Fade over last paragraph */}
               <div className="h-28 -mt-28 relative pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, white)" }} />
 
-              {/* Gate card — subscribe page blue */}
-              <div className="rounded-2xl overflow-hidden" style={{ background: "#1A3A8F", border: "2px solid #F5C518" }}>
-                <div className="px-6 pt-6 pb-5">
+              {/* Gate — editorial, white, restrained */}
+              <div style={{ background: "#fff", borderTop: "3px solid #C9A84C" }}>
+                <div className="py-8 px-1">
 
-                  {/* Header copy */}
-                  <p className="text-[10px] font-black uppercase tracking-[0.22em] mb-3" style={{ color: "#F5C518" }}>
-                    Premium Investigation · Members Only
-                  </p>
-                  <p className="font-display font-black text-2xl leading-tight mb-1" style={{ color: "#ffffff" }}>
-                    The rest of this article
-                  </p>
-                  <p className="font-display font-black text-2xl leading-tight mb-4" style={{ color: "#F5C518" }}>
-                    is for Supporting Members.
+                  {/* Eyebrow */}
+                  <p className="text-[9px] font-black uppercase tracking-[0.3em] mb-5" style={{ color: "#B8860B" }}>
+                    Supporting Members Only
                   </p>
 
-                  {/* Price + star */}
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <span className="font-display font-black leading-none" style={{ fontSize: "2.5rem", color: "#ffffff" }}>$9</span>
-                      <span className="text-base font-medium ml-1.5" style={{ color: "rgba(255,255,255,0.55)" }}>/ month</span>
-                      <span className="ml-3 text-xs font-bold" style={{ color: "rgba(255,255,255,0.4)" }}>No ads. No sponsors.</span>
-                    </div>
-                    <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#F5C518" }}>
-                      <Star className="w-5 h-5 fill-[#1A3A8F] text-[#1A3A8F]" />
-                    </div>
+                  {/* Headline */}
+                  <p className="font-display font-black leading-tight mb-4" style={{ fontSize: "1.55rem", color: "#1A1A2E" }}>
+                    You're three paragraphs from the full investigation.
+                  </p>
+
+                  {/* Body */}
+                  <p className="text-sm leading-relaxed mb-6" style={{ color: "#4B5563", maxWidth: "42rem" }}>
+                    Supporting Members read the complete investigation — every source cited, every Metricadia ID profile, and every CB Deep Dive Factoid embedded in this article.
+                  </p>
+
+                  {/* CTA row */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <Link
+                      href="/subscribe"
+                      className="inline-flex items-center justify-center px-7 py-3 font-bold text-sm uppercase tracking-wider transition-opacity hover:opacity-80"
+                      style={{ background: "#1A1A2E", color: "#fff", letterSpacing: "0.1em" }}
+                    >
+                      Become a Supporting Member
+                      <span className="ml-2 font-normal text-xs opacity-60">$9/mo</span>
+                    </Link>
+                    <button
+                      onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
+                      className="text-sm text-left transition-colors hover:text-[#1A1A2E]"
+                      style={{ color: "#9CA3AF" }}
+                    >
+                      Already a member? Enter your access token
+                    </button>
                   </div>
 
-                  {/* Pitch */}
-                  <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.6)" }}>
-                    Independent. Source-verified. Every claim traced to a primary document. Supporting members get the full investigation and every research tool we build.
-                  </p>
-
-                  {/* Benefits */}
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 mb-6">
-                    {[
-                      "Full access to all member investigations",
-                      "Metricadia ID: Profiles on every named person in this article",
-                      "CB Deep Dive Factoid: Learn as you read",
-                      "Member discussion on every article",
-                    ].map(b => (
-                      <li key={b} className="flex items-center gap-2 text-xs" style={{ color: "#F5C518" }}>
-                        <svg className="w-3.5 h-3.5 shrink-0" style={{ color: "#F5C518" }} viewBox="0 0 16 16" fill="none">
-                          <circle cx="8" cy="8" r="7.5" stroke="currentColor" strokeWidth="1"/>
-                          <path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA */}
-                  <Link
-                    href="/subscribe"
-                    className="flex items-center justify-center w-full py-3.5 rounded-xl font-black text-sm uppercase tracking-wider transition-opacity hover:opacity-90"
-                    style={{ background: "#F5C518", color: "#1A3A8F" }}
-                  >
-                    Read the Full Investigation &nbsp;★
-                  </Link>
-                </div>
-
-                {/* Footer link */}
-                <div className="px-6 py-3.5 text-center" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-                  <button
-                    onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
-                    className="text-xs underline underline-offset-4 transition-colors hover:opacity-100"
-                    style={{ color: "rgba(255,255,255,0.45)" }}
-                  >
-                    Already a member? Enter your access token
-                  </button>
                 </div>
               </div>
             </div>
