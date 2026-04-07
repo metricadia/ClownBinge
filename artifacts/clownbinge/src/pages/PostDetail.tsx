@@ -22,6 +22,7 @@ import { FactoidPopup } from "@/components/FactoidPopup";
 import { MetricadiaIDPopup } from "@/components/MetricadiaIDPopup";
 import { SubscriptionModal } from "@/components/SubscriptionModal";
 import { useSubscription } from "@/hooks/use-subscription";
+import { useAdmin } from "@/context/AdminContext";
 import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
 import { ForensicPivot } from "@/components/ForensicPivot";
@@ -95,8 +96,13 @@ export default function PostDetail() {
   );
   // ── Subscription gate ───────────────────────────────────────────────────────
   const { data: subscriptionStatus } = useSubscription();
+  const { isAdmin, checking: adminChecking } = useAdmin();
   const [gateOpen, setGateOpen] = useState(false);
   const [gateTrigger, setGateTrigger] = useState<"metricadiaid" | "factoid" | "comment">("metricadiaid");
+
+  // True once we know both admin and subscriber status
+  const authResolved = !adminChecking && subscriptionStatus !== undefined;
+  const isPremiumGated = authResolved && !!(post as any)?.premiumOnly && !isAdmin && !subscriptionStatus?.isSubscriber;
   const [commentText, setCommentText] = useState("");
   const [commentSubmitted, setCommentSubmitted] = useState(false);
 
@@ -352,20 +358,72 @@ export default function PostDetail() {
         )}
 
 
-        {/* Article body — lede flows directly into opening paragraphs; ad follows after p3 */}
+        {/* Article body */}
         <div
           ref={containerRef as React.RefObject<HTMLDivElement>}
           className="cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-strong:text-header prose-p:leading-relaxed mb-12"
         >
           <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
-          {/* Zone 1: Hero Ad — after the opening, not before it */}
-          {sponsor
-            ? <SponsorBar sponsor={sponsor} />
-            : <AdSlot id="cb-ad-top" className="my-6 not-prose" />
-          }
-          <ClownCheckCTA />
-          <ForensicPivot slug={slug} />
-          <div dangerouslySetInnerHTML={{ __html: bodyBottom }} />
+
+          {isPremiumGated ? (
+            /* ── Premium paywall ── */
+            <div className="not-prose">
+              {/* Fade gradient over preview */}
+              <div className="h-24 -mt-24 relative pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, var(--background, #fff))" }} />
+
+              {/* Inline gate card */}
+              <div className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: "#D97706" }}>
+                <div className="px-6 py-5 text-center" style={{ background: "linear-gradient(135deg, #1A1A2E 0%, #1B3E99 100%)" }}>
+                  <p className="text-[10px] font-black uppercase tracking-widest mb-1" style={{ color: "#F5C518" }}>Membership Required</p>
+                  <h2 className="font-bold text-xl text-white mb-1">Support ClownBinge</h2>
+                  <p className="text-sm text-white/70">This is member-supported accountability journalism.</p>
+                </div>
+
+                <div className="bg-white px-6 py-6">
+                  <div className="flex items-start gap-3 rounded-xl p-4 mb-5 border border-amber-200" style={{ background: "#FFFBEB" }}>
+                    <Star className="w-5 h-5 shrink-0 mt-0.5 fill-amber-500 text-amber-600" />
+                    <div>
+                      <p className="font-bold text-sm text-amber-900 mb-1">Supporting Member — $9/month</p>
+                      <ul className="text-xs text-amber-800 space-y-1">
+                        <li>Full access to all member-only articles</li>
+                        <li>Metricadia ID profiles on every person in our reporting</li>
+                        <li>CB Factoid citation popups with full source detail</li>
+                        <li>Member discussion on every article</li>
+                        <li>Direct support for independent accountability journalism</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <Link
+                      href="/subscribe"
+                      className="block w-full py-3 rounded-xl font-bold text-sm text-center transition-opacity hover:opacity-90"
+                      style={{ background: "#1B3E99", color: "#F5C518" }}
+                    >
+                      Become a Supporting Member
+                    </Link>
+                    <button
+                      onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
+                      className="text-xs text-gray-500 hover:text-gray-800 underline underline-offset-2 py-1"
+                    >
+                      Already a member? Enter your access token
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* ── Full article ── */
+            <>
+              {sponsor
+                ? <SponsorBar sponsor={sponsor} />
+                : <AdSlot id="cb-ad-top" className="my-6 not-prose" />
+              }
+              <ClownCheckCTA />
+              <ForensicPivot slug={slug} />
+              <div dangerouslySetInnerHTML={{ __html: bodyBottom }} />
+            </>
+          )}
         </div>
 
         {/* Engagement strip */}
