@@ -403,10 +403,10 @@ export default function PostDetail() {
                 </div>
 
                 {/* Main body */}
-                <div className="px-6 pt-5 pb-6">
+                <div className="px-6 pt-5 pb-6 text-center">
 
                   {/* Price — front and center */}
-                  <div className="flex items-baseline gap-2 mb-3">
+                  <div className="flex items-baseline justify-center gap-2 mb-3">
                     <span className="font-display font-black" style={{ fontSize: "2.8rem", lineHeight: 1, color: "#1A3A8F" }}>$9</span>
                     <span className="font-bold text-base" style={{ color: "#374151" }}>/month</span>
                   </div>
