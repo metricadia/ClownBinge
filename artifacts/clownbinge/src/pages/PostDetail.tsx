@@ -411,11 +411,8 @@ export default function PostDetail() {
                     <span className="font-bold text-base" style={{ color: "#374151" }}>/month</span>
                   </div>
 
-                  <p className="font-bold text-lg mb-1" style={{ color: "#1A1A2E" }}>
-                    This investigation was made possible by Supporting Members.
-                  </p>
-                  <p className="text-sm mb-5" style={{ color: "#374151" }}>
-                    Unlock the full article, Metricadia ID profiles, and CB Deep Dive Factoids.
+                  <p className="font-bold text-xl leading-snug mb-5" style={{ color: "#1A1A2E" }}>
+                    {rawWc > 0 ? `${rawWc.toLocaleString()} Words of Evidence.` : "Words of Evidence."} We Aren't Fox, CNN, or Washington Post.
                   </p>
 
                   <div className="flex flex-col gap-3">
