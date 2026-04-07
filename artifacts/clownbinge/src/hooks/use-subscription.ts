@@ -8,9 +8,13 @@ interface SubscriptionStatus {
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 async function fetchStatus(): Promise<SubscriptionStatus> {
-  const res = await fetch(`${BASE}/api/subscription/status`, { credentials: "include" });
-  if (!res.ok) throw new Error("Failed to fetch subscription status");
-  return res.json();
+  try {
+    const res = await fetch(`${BASE}/api/subscription/status`, { credentials: "include" });
+    if (!res.ok) return { isSubscriber: false };
+    return res.json();
+  } catch {
+    return { isSubscriber: false };
+  }
 }
 
 export function useSubscription() {
@@ -18,7 +22,7 @@ export function useSubscription() {
     queryKey: ["subscription-status"],
     queryFn: fetchStatus,
     staleTime: 5 * 60 * 1000,
-    retry: false,
+    retry: 2,
   });
 }
 
