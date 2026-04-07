@@ -450,9 +450,12 @@ export default function PostDetail() {
         {/* Discussion section */}
         <div className="border-t border-border pt-6 mt-4">
           <div className="flex items-center justify-between mb-5">
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-base text-header">Discussion</span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground bg-muted px-2 py-0.5 rounded-full">Members Only</span>
+            <div className="flex flex-col gap-0.5">
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-base text-header">☕ Coffee &amp; Tea</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground bg-muted px-2 py-0.5 rounded-full">Members Only</span>
+              </div>
+              <span className="text-xs font-medium" style={{ color: "#374151" }}>Join our respectful conversations.</span>
             </div>
             {subscriptionStatus?.isSubscriber && (
               <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full" style={{ background: "#FEF3C7", color: "#92400E" }}>
