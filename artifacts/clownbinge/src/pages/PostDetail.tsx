@@ -366,47 +366,69 @@ export default function PostDetail() {
           <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
 
           {isPremiumGated ? (
-            /* ── Premium paywall — clean editorial ── */
+            /* ── Premium paywall ── */
             <div className="not-prose">
-              {/* Fade gradient over last paragraph */}
+              {/* Fade over last paragraph */}
               <div className="h-28 -mt-28 relative pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, white)" }} />
 
-              {/* Gate — NYT-style: white, restrained, typographic */}
-              <div className="bg-white border-t-2 pt-8 pb-6" style={{ borderColor: "#1A1A2E" }}>
-                {/* Eyebrow */}
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#6B7280] mb-4">
-                  Member Exclusive
-                </p>
+              {/* Gate card — brand language from the subscribe page */}
+              <div className="rounded-2xl overflow-hidden" style={{ background: "#1A1A2E", border: "1px solid rgba(201,168,76,0.4)" }}>
+                <div className="px-6 pt-6 pb-5">
+                  {/* Eyebrow */}
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] mb-3" style={{ color: "#C9A84C" }}>
+                    Supporting Member
+                  </p>
 
-                {/* Headline + pitch */}
-                <h2 className="font-display font-bold text-2xl text-[#1A1A2E] leading-tight mb-2">
-                  Read the full investigation.
-                </h2>
-                <p className="text-sm text-[#4B5563] leading-relaxed mb-6 max-w-md">
-                  ClownBinge is independent, source-verified accountability journalism — no sponsors, no algorithms. Supporting members keep this work going.
-                </p>
+                  {/* Price + star */}
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <span className="font-display font-black text-4xl text-white leading-none">$9</span>
+                      <span className="text-white/60 text-base font-medium ml-1">/ month</span>
+                    </div>
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: "#F5C518" }}>
+                      <Star className="w-5 h-5 fill-[#1A1A2E] text-[#1A1A2E]" />
+                    </div>
+                  </div>
 
-                {/* Benefits — minimal, inline */}
-                <ul className="text-sm text-[#374151] space-y-1.5 mb-7">
-                  <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#C9A84C] shrink-0" />Full access to all member-only investigations</li>
-                  <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#C9A84C] shrink-0" />Metricadia ID profiles on every named subject</li>
-                  <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#C9A84C] shrink-0" />CB Factoid citation popups with primary source detail</li>
-                  <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#C9A84C] shrink-0" />Member discussion on every article</li>
-                </ul>
+                  {/* Pitch */}
+                  <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.65)" }}>
+                    Unlock the full investigation — plus the complete research toolkit on every article.
+                  </p>
 
-                {/* CTA row */}
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  {/* Benefits */}
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 mb-6">
+                    {[
+                      "Full access to all member investigations",
+                      "Metricadia ID profiles on named subjects",
+                      "CB Factoid citation popups",
+                      "Member discussion on every article",
+                    ].map(b => (
+                      <li key={b} className="flex items-center gap-2 text-xs" style={{ color: "rgba(255,255,255,0.75)" }}>
+                        <svg className="w-3.5 h-3.5 shrink-0" style={{ color: "#F5C518" }} viewBox="0 0 16 16" fill="none">
+                          <circle cx="8" cy="8" r="7.5" stroke="currentColor" strokeWidth="1"/>
+                          <path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA */}
                   <Link
                     href="/subscribe"
-                    className="inline-flex items-center justify-between gap-4 px-6 py-3.5 font-bold text-sm transition-opacity hover:opacity-90"
-                    style={{ background: "#1A1A2E", color: "white" }}
+                    className="flex items-center justify-center w-full py-3.5 rounded-xl font-black text-sm uppercase tracking-wider transition-opacity hover:opacity-90"
+                    style={{ background: "#F5C518", color: "#1A1A2E" }}
                   >
-                    <span>Become a Supporting Member</span>
-                    <span className="text-[#C9A84C] font-black">$9 / mo</span>
+                    Subscribe Now&nbsp; ★
                   </Link>
+                </div>
+
+                {/* Footer link */}
+                <div className="px-6 py-3.5 text-center" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
                   <button
                     onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
-                    className="text-sm text-[#6B7280] hover:text-[#1A1A2E] transition-colors underline underline-offset-4 text-left"
+                    className="text-xs underline underline-offset-4 transition-colors hover:opacity-100"
+                    style={{ color: "rgba(255,255,255,0.45)" }}
                   >
                     Already a member? Enter your access token
                   </button>
