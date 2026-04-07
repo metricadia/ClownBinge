@@ -2,19 +2,19 @@ import { usePostReactions } from "@/hooks/use-reactions";
 import { AddReactionRequestType } from "@workspace/api-client-react";
 
 const STANDARD_REACTIONS = [
-  { id: "clowned", emoji: "🎪", label: "Clowned" },
-  { id: "side_eye", emoji: "👀", label: "Side Eye" },
-  { id: "receipts", emoji: "🔥", label: "Receipts" },
-  { id: "dead", emoji: "💀", label: "Dead" },
-  { id: "self_owned", emoji: "🫵", label: "Self-Owned" },
+  { id: "clowned",   emoji: "🎯", label: "Accurate"  },
+  { id: "side_eye",  emoji: "⚡", label: "Shocking"  },
+  { id: "receipts",  emoji: "🧾", label: "Receipts"  },
+  { id: "dead",      emoji: "😟", label: "Troubling" },
+  { id: "self_owned",emoji: "😤", label: "Outraged"  },
 ] as const;
 
 const HERO_REACTIONS = [
-  { id: "thats_right", emoji: "✊", label: "That's Right" },
-  { id: "receipts", emoji: "🔥", label: "Receipts" },
-  { id: "king_queen", emoji: "👑", label: "King/Queen" },
-  { id: "finished_them", emoji: "💀", label: "Finished Them" },
-  { id: "nailed_it", emoji: "🎯", label: "Nailed It" },
+  { id: "thats_right",   emoji: "💪", label: "Inspired"  },
+  { id: "receipts",      emoji: "🧾", label: "Receipts"  },
+  { id: "king_queen",    emoji: "🌟", label: "Admire"    },
+  { id: "finished_them", emoji: "❤️", label: "Grateful"  },
+  { id: "nailed_it",     emoji: "🎯", label: "Accurate"  },
 ] as const;
 
 export function ReactionBar({ postId, isHero = false }: { postId: string, isHero?: boolean }) {
