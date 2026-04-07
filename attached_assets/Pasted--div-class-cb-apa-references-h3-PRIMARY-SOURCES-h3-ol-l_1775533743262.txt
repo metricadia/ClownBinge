@@ -1,0 +1,61 @@
+<div class="cb-apa-references">
+  <h3>PRIMARY SOURCES</h3>
+  <ol>
+    <li>
+      <strong>De Revolutionibus Orbium Coelestium — Library of Congress</strong><br/>
+      <em>Copernicus, N. (1543). De revolutionibus orbium coelestium. Petreius. https://www.loc.gov/item/46031925</em>
+    </li>
+    <li>
+      <strong>Canon of Medicine Manuscript — Library of Congress</strong><br/>
+      <em>Ibn Sina. (c. 1025/1700). Al-Qanun fi al-Tibb [Manuscript]. Library of Congress. https://www.loc.gov/item/2021667335/</em>
+    </li>
+    <li>
+      <strong>Al-Jabr Manuscript — Bodleian Library, Oxford</strong><br/>
+      <em>Al-Khwarizmi. (c. 820/1831). Al-Kitab al-Mukhtasar fi Hisab al-Jabr wal-Muqabala [Arabic manuscript, translated F. Rosen]. Bodleian Library, University of Oxford.</em>
+    </li>
+    <li>
+      <strong>Kitab az-Zij as-Sabi — Printed Latin Edition, 1537</strong><br/>
+      <em>Al-Battani. (c. 900/1537). Kitab az-Zij as-Sabi [De motu stellarum] (Plato of Tivoli, Trans.). Petreius. (Original work composed c. 900 CE)</em>
+    </li>
+    <li>
+      <strong>Bayt al-Hikma — Encyclopaedia Britannica</strong><br/>
+      <em>Britannica, T. Editors of Encyclopaedia. (2024). Bayt al-Hikmah. Encyclopaedia Britannica. https://www.britannica.com/place/Bayt-al-Hikmah</em>
+    </li>
+    <li>
+      <strong>Canon of Medicine — Encyclopaedia Britannica</strong><br/>
+      <em>Britannica, T. Editors of Encyclopaedia. (2024). The Canon of Medicine. Encyclopaedia Britannica. https://www.britannica.com/topic/The-Canon-of-Medicine</em>
+    </li>
+    <li>
+      <strong>Greek Thought, Arabic Culture — Gutas (1998)</strong><br/>
+      <em>Gutas, D. (1998). Greek thought, Arabic culture: The Graeco-Arabic translation movement in Baghdad and early Abbasid society. Routledge.</em>
+    </li>
+    <li>
+      <strong>Al-Battani — Wikipedia Primary Record</strong><br/>
+      <em>Wikipedia contributors. (2025). Al-Battani. Wikipedia. https://en.wikipedia.org/wiki/Al-Battani</em>
+    </li>
+    <li>
+      <strong>Al-Khwarizmi — Wikipedia Primary Record</strong><br/>
+      <em>Wikipedia contributors. (2025). Al-Khwarizmi. Wikipedia. https://en.wikipedia.org/wiki/Al-Khwarizmi</em>
+    </li>
+    <li>
+      <strong>Toledo School of Translators — Wikipedia Primary Record</strong><br/>
+      <em>Wikipedia contributors. (2025). Toledo School of Translators. Wikipedia. https://en.wikipedia.org/wiki/Toledo_School_of_Translators</em>
+    </li>
+    <li>
+      <strong>Ibn Sina (Avicenna) — Wikipedia Primary Record</strong><br/>
+      <em>Wikipedia contributors. (2025). Avicenna. Wikipedia. https://en.wikipedia.org/wiki/Avicenna</em>
+    </li>
+    <li>
+      <strong>De Revolutionibus — Wikipedia Primary Record</strong><br/>
+      <em>Wikipedia contributors. (2025). De revolutionibus orbium coelestium. Wikipedia. https://en.wikipedia.org/wiki/De_revolutionibus_orbium_coelestium</em>
+    </li>
+    <li>
+      <strong>Ibn Sina's Canon — PubMed Central</strong><br/>
+      <em>Masic, I., et al. (2013). Thousand-year anniversary of the Canon of Medicine written by Ibn Sina. PubMed Central. https://pmc.ncbi.nlm.nih.gov/articles/PMC3702097/</em>
+    </li>
+    <li>
+      <strong>House of Wisdom — Middle East Eye</strong><br/>
+      <em>Middle East Eye. (2024). Baghdad: The House of Wisdom — Uniting East and West to pursue knowledge. https://www.middleeasteye.net/discover/iraq-baghdad-house-wisdom-uniting-east-west</em>
+    </li>
+  </ol>
+</div>
