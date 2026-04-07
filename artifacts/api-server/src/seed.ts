@@ -172,6 +172,59 @@ export async function updateNativeArticles(): Promise<void> {
   }
 }
 
+// ─── Sync improved article content from seed to DB ───────────────────────────
+// When an article's body or citations are improved in the editor and re-exported
+// to the seed, this function pushes those improvements to the DB on startup.
+// Only articles explicitly listed here are touched. Never overwrites locked articles.
+
+const IMPROVED_ARTICLES: string[] = [
+  "CB-000384",
+];
+
+export async function syncImprovedArticles(): Promise<void> {
+  try {
+    const seedMap = new Map(
+      (seedData as Record<string, unknown>[])
+        .filter((p) => IMPROVED_ARTICLES.includes(p.case_number as string))
+        .map((p) => [p.case_number as string, p])
+    );
+
+    const existing = await db
+      .select({ caseNumber: postsTable.caseNumber, bodyLen: sql<number>`LENGTH(body)` })
+      .from(postsTable)
+      .where(
+        inArray(postsTable.caseNumber, IMPROVED_ARTICLES)
+      );
+
+    let updated = 0;
+    for (const row of existing as { caseNumber: string; bodyLen: number }[]) {
+      const seed = seedMap.get(row.caseNumber);
+      if (!seed) continue;
+      const seedBodyLen = (seed.body as string).length;
+      if (seedBodyLen > row.bodyLen + 200) {
+        await db
+          .update(postsTable)
+          .set({
+            body: seed.body as string,
+            verifiedSource: (seed.verified_source as string | null) ?? null,
+            teaser: (seed.teaser as string) ?? undefined,
+          })
+          .where(eq(postsTable.caseNumber, row.caseNumber));
+        updated++;
+        console.log(`[Seed] Synced improved article ${row.caseNumber} (${row.bodyLen} -> ${seedBodyLen} chars)`);
+      }
+    }
+
+    if (updated === 0) {
+      console.log(`[Seed] No improved articles needed syncing.`);
+    } else {
+      console.log(`[Seed] Synced ${updated} improved article(s).`);
+    }
+  } catch (err) {
+    console.error("[Seed] Error during syncImprovedArticles:", err);
+  }
+}
+
 // ─── Insert any articles added to the seed since last deploy ─────────────────
 // SAFE BY DESIGN: this function ONLY inserts. It NEVER updates any existing
 // article — not its category, title, slug, body, or any other field.

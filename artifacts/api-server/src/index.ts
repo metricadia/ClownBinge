@@ -1,6 +1,6 @@
 import app from "./app";
 import { logger } from "./lib/logger";
-import { seedIfEmpty, insertNewArticles, updateNativeArticles, applyPremiumFlags, applyStaffPickFlags } from "./seed";
+import { seedIfEmpty, insertNewArticles, updateNativeArticles, syncImprovedArticles, applyPremiumFlags, applyStaffPickFlags } from "./seed";
 
 const rawPort = process.env["PORT"];
 
@@ -27,6 +27,7 @@ app.listen(port, (err) => {
   seedIfEmpty()
     .then(() => insertNewArticles())
     .then(() => updateNativeArticles())
+    .then(() => syncImprovedArticles())
     .then(() => applyPremiumFlags())
     .then(() => applyStaffPickFlags())
     .catch((e) => logger.error({ err: e }, "Seed failed"));
