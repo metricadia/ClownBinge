@@ -96,15 +96,16 @@ export function PostCard({ post }: { post: Post }) {
               <div className="shrink-0">
                 {isPremium ? (
                   <span
-                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-black uppercase"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-black uppercase whitespace-nowrap"
                     style={{
-                      background: "#FEFBEC",
-                      color: "#1A1A2E",
+                      background: "#FDF8E7",
+                      color: "#7A5500",
                       border: "1.5px solid #C9A84C",
-                      letterSpacing: "0.14em",
+                      fontSize: "12px",
+                      letterSpacing: "0.15em",
                     }}
                   >
-                    <Star className="w-3.5 h-3.5 shrink-0" style={{ color: "#B8860B" }} />
+                    <Star className="w-3 h-3 shrink-0" style={{ color: "#B8860B" }} />
                     Premium
                   </span>
                 ) : (
@@ -113,15 +114,15 @@ export function PostCard({ post }: { post: Post }) {
               </div>
             </div>
 
-            {/* Metadata Line — category + optional badges */}
+            {/* Metadata Line — all pills share identical height: px-3 py-1.5 text-[11px] rounded-full */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center rounded border border-[#6B3520]/30 bg-[#6B3520]/8 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.12em] text-[#6B3520]">
+              <span className="inline-flex items-center rounded-full border border-[#6B3520]/40 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-[#6B3520] whitespace-nowrap">
                 {CATEGORY_LABELS[post.category] || post.category}
               </span>
               {post.userSubmitted && <UserSubmittedBadge />}
               {post.selfOwnScore != null && post.category === "self_owned" && <SelfOwnScoreBadge score={post.selfOwnScore} />}
               {STAFF_PICKS_SLUGS.includes(post.slug) && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-green-600 text-white">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-green-600 text-white whitespace-nowrap">
                   ★ Staff Pick
                 </span>
               )}
@@ -133,7 +134,7 @@ export function PostCard({ post }: { post: Post }) {
                 <TooltipProvider delayDuration={200}>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-slate-500 text-white cursor-help">
+                      <span className="inline-flex items-center px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-500 text-white cursor-help whitespace-nowrap">
                         Academic
                       </span>
                     </TooltipTrigger>
