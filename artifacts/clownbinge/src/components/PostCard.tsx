@@ -62,7 +62,7 @@ function formatWordCount(body: string | null | undefined): string | null {
 export function PostCard({ post }: { post: Post }) {
   const isVideo = post.hasVideo;
   const wordCountLabel = formatWordCount((post as any).body);
-  const isPremium = !!(post as any).premiumOnly;
+  const isPremium = !!post.premiumOnly;
 
   // Premium cards: white, 4px gold left stripe — editorial tier marker
   const cardStyle = isPremium

@@ -76,6 +76,9 @@ export interface Post {
   userSubmitted: boolean;
   pinned: boolean;
   locked: boolean;
+  staffPick?: boolean | null;
+  seoMetaTitle?: string | null;
+  premiumOnly?: boolean | null;
 }
 
 export interface PostListResponse {
