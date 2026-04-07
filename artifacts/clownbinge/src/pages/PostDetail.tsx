@@ -366,49 +366,50 @@ export default function PostDetail() {
           <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
 
           {isPremiumGated ? (
-            /* ── Premium paywall ── */
+            /* ── Premium paywall — clean editorial ── */
             <div className="not-prose">
-              {/* Fade gradient over preview */}
-              <div className="h-24 -mt-24 relative pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, var(--background, #fff))" }} />
+              {/* Fade gradient over last paragraph */}
+              <div className="h-28 -mt-28 relative pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, white)" }} />
 
-              {/* Inline gate card */}
-              <div className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: "#D97706" }}>
-                <div className="px-6 py-5 text-center" style={{ background: "linear-gradient(135deg, #1A1A2E 0%, #1B3E99 100%)" }}>
-                  <p className="text-[10px] font-black uppercase tracking-widest mb-1" style={{ color: "#F5C518" }}>Membership Required</p>
-                  <h2 className="font-bold text-xl text-white mb-1">Support ClownBinge</h2>
-                  <p className="text-sm text-white/70">This is member-supported accountability journalism.</p>
-                </div>
+              {/* Gate — NYT-style: white, restrained, typographic */}
+              <div className="bg-white border-t-2 pt-8 pb-6" style={{ borderColor: "#1A1A2E" }}>
+                {/* Eyebrow */}
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#6B7280] mb-4">
+                  Member Exclusive
+                </p>
 
-                <div className="bg-white px-6 py-6">
-                  <div className="flex items-start gap-3 rounded-xl p-4 mb-5 border border-amber-200" style={{ background: "#FFFBEB" }}>
-                    <Star className="w-5 h-5 shrink-0 mt-0.5 fill-amber-500 text-amber-600" />
-                    <div>
-                      <p className="font-bold text-sm text-amber-900 mb-1">Supporting Member — $9/month</p>
-                      <ul className="text-xs text-amber-800 space-y-1">
-                        <li>Full access to all member-only articles</li>
-                        <li>Metricadia ID profiles on every person in our reporting</li>
-                        <li>CB Factoid citation popups with full source detail</li>
-                        <li>Member discussion on every article</li>
-                        <li>Direct support for independent accountability journalism</li>
-                      </ul>
-                    </div>
-                  </div>
+                {/* Headline + pitch */}
+                <h2 className="font-display font-bold text-2xl text-[#1A1A2E] leading-tight mb-2">
+                  Read the full investigation.
+                </h2>
+                <p className="text-sm text-[#4B5563] leading-relaxed mb-6 max-w-md">
+                  ClownBinge is independent, source-verified accountability journalism — no sponsors, no algorithms. Supporting members keep this work going.
+                </p>
 
-                  <div className="flex flex-col gap-2">
-                    <Link
-                      href="/subscribe"
-                      className="block w-full py-3 rounded-xl font-bold text-sm text-center transition-opacity hover:opacity-90"
-                      style={{ background: "#1B3E99", color: "#F5C518" }}
-                    >
-                      Become a Supporting Member
-                    </Link>
-                    <button
-                      onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
-                      className="text-xs text-gray-500 hover:text-gray-800 underline underline-offset-2 py-1"
-                    >
-                      Already a member? Enter your access token
-                    </button>
-                  </div>
+                {/* Benefits — minimal, inline */}
+                <ul className="text-sm text-[#374151] space-y-1.5 mb-7">
+                  <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#C9A84C] shrink-0" />Full access to all member-only investigations</li>
+                  <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#C9A84C] shrink-0" />Metricadia ID profiles on every named subject</li>
+                  <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#C9A84C] shrink-0" />CB Factoid citation popups with primary source detail</li>
+                  <li className="flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-[#C9A84C] shrink-0" />Member discussion on every article</li>
+                </ul>
+
+                {/* CTA row */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <Link
+                    href="/subscribe"
+                    className="inline-flex items-center justify-between gap-4 px-6 py-3.5 font-bold text-sm transition-opacity hover:opacity-90"
+                    style={{ background: "#1A1A2E", color: "white" }}
+                  >
+                    <span>Become a Supporting Member</span>
+                    <span className="text-[#C9A84C] font-black">$9 / mo</span>
+                  </Link>
+                  <button
+                    onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
+                    className="text-sm text-[#6B7280] hover:text-[#1A1A2E] transition-colors underline underline-offset-4 text-left"
+                  >
+                    Already a member? Enter your access token
+                  </button>
                 </div>
               </div>
             </div>
