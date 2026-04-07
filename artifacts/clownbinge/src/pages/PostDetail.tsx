@@ -358,74 +358,13 @@ export default function PostDetail() {
         )}
 
 
-        {/* Article body */}
+        {/* Article body — preview only when gated */}
         <div
           ref={containerRef as React.RefObject<HTMLDivElement>}
-          className="cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-strong:text-header prose-p:leading-relaxed mb-12"
+          className="cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-strong:text-header prose-p:leading-relaxed mb-4"
         >
           <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
-
-          {isPremiumGated ? (
-            /* ── Premium paywall — Case File Sealed ── */
-            (() => {
-              const rawWc = post?.body ? post.body.replace(/<[^>]+>/g, "").split(/\s+/).filter(Boolean).length : 0;
-              const wcLabel = rawWc >= 1000 ? `~${(rawWc / 1000).toFixed(1).replace(/\.0$/, "")}K words` : rawWc > 0 ? `~${rawWc} words` : null;
-              const srcLabel = post?.verifiedSource ? abbreviateSource(post.verifiedSource, true) : null;
-              return (
-                <div className="not-prose">
-                  {/* Fade */}
-                  <div className="h-28 -mt-28 relative pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, white)" }} />
-
-                  {/* Case file gate */}
-                  <div style={{ border: "1px solid #1A1A2E", background: "#fff" }}>
-
-                    {/* Header row — case number + SEALED stamp */}
-                    <div className="flex items-center justify-between px-5 py-3" style={{ borderBottom: "1px solid #1A1A2E", background: "#1A1A2E" }}>
-                      <span className="font-mono text-sm font-bold tracking-widest" style={{ color: "#F5C518" }}>
-                        {post?.caseNumber ?? "CASE FILE"}
-                      </span>
-                      <div className="flex items-center gap-3">
-                        {wcLabel && <span className="font-mono text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{wcLabel}</span>}
-                        {srcLabel && <span className="font-mono text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{srcLabel}</span>}
-                        <span className="font-mono text-[10px] font-black uppercase tracking-[0.2em] px-2 py-0.5" style={{ border: "1px solid #F5C518", color: "#F5C518" }}>
-                          Members Only
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Body */}
-                    <div className="px-5 py-6">
-                      <p className="font-display font-black text-xl leading-snug mb-2" style={{ color: "#1A1A2E" }}>
-                        This investigation continues behind the member line.
-                      </p>
-                      <p className="text-sm leading-relaxed mb-6" style={{ color: "#6B7280" }}>
-                        Supporting Members read the complete case file — the full article, Metricadia ID profiles on every named person, and CB Deep Dive Factoids with primary citations.
-                      </p>
-
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                        <Link
-                          href="/subscribe"
-                          className="inline-flex items-center gap-3 px-6 py-3 font-bold text-sm uppercase tracking-wider transition-opacity hover:opacity-80"
-                          style={{ background: "#1A1A2E", color: "#F5C518", letterSpacing: "0.1em" }}
-                        >
-                          <Lock className="w-3.5 h-3.5" />
-                          Unlock This Case — $9/month
-                        </Link>
-                        <button
-                          onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
-                          className="text-sm transition-colors hover:underline"
-                          style={{ color: "#9CA3AF" }}
-                        >
-                          Already a member? Enter access token
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })()
-          ) : (
-            /* ── Full article ── */
+          {!isPremiumGated && (
             <>
               {sponsor
                 ? <SponsorBar sponsor={sponsor} />
@@ -437,6 +376,71 @@ export default function PostDetail() {
             </>
           )}
         </div>
+
+        {/* ── Premium gate — rendered OUTSIDE prose so styles work ── */}
+        {isPremiumGated && (() => {
+          const rawWc = post?.body ? post.body.replace(/<[^>]+>/g, "").split(/\s+/).filter(Boolean).length : 0;
+          const wcLabel = rawWc >= 1000 ? `~${(rawWc / 1000).toFixed(1).replace(/\.0$/, "")}K words` : rawWc > 0 ? `~${rawWc} words` : null;
+          return (
+            <div className="mb-12">
+              {/* Fade over last lines of preview */}
+              <div className="h-24 -mt-24 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, white)" }} />
+
+              {/* Gate card */}
+              <div style={{ border: "1px solid #C9A84C", borderTop: "4px solid #C9A84C", background: "#fff" }}>
+
+                {/* Top info bar — case + word count */}
+                <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-2.5" style={{ borderBottom: "1px solid #E5E7EB", background: "#FAFAFA" }}>
+                  <span className="font-mono text-xs font-bold tracking-widest" style={{ color: "#1A3A8F" }}>
+                    {post?.caseNumber ?? "CASE FILE"}
+                  </span>
+                  <div className="flex items-center gap-3">
+                    {wcLabel && <span className="font-mono text-xs" style={{ color: "#9CA3AF" }}>{wcLabel}</span>}
+                    <span className="text-[10px] font-black uppercase tracking-[0.22em] px-2.5 py-0.5 rounded-full" style={{ background: "#1A3A8F", color: "#F5C518" }}>
+                      Premium Article
+                    </span>
+                  </div>
+                </div>
+
+                {/* Main body */}
+                <div className="px-6 pt-5 pb-6">
+
+                  {/* Price — front and center */}
+                  <div className="flex items-baseline gap-2 mb-3">
+                    <span className="font-display font-black" style={{ fontSize: "2.8rem", lineHeight: 1, color: "#1A3A8F" }}>$9</span>
+                    <span className="font-bold text-base" style={{ color: "#6B7280" }}>/month</span>
+                    <span className="text-xs font-semibold ml-2" style={{ color: "#C9A84C" }}>No ads. No sponsors.</span>
+                  </div>
+
+                  <p className="font-bold text-lg mb-1" style={{ color: "#1A1A2E" }}>
+                    This investigation is for Supporting Members.
+                  </p>
+                  <p className="text-sm mb-5" style={{ color: "#6B7280" }}>
+                    Unlock the full article, Metricadia ID profiles, and CB Deep Dive Factoids — all primary-source verified.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <a
+                      href="/subscribe"
+                      className="inline-flex items-center justify-center gap-2 px-7 py-3 font-black text-sm uppercase tracking-wider transition-opacity hover:opacity-80"
+                      style={{ background: "#1A3A8F", color: "#ffffff", textDecoration: "none", letterSpacing: "0.1em" }}
+                    >
+                      <Lock className="w-3.5 h-3.5" />
+                      Become a Supporting Member
+                    </a>
+                    <button
+                      onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
+                      className="text-sm hover:underline underline-offset-4"
+                      style={{ color: "#9CA3AF", background: "none", border: "none", cursor: "pointer" }}
+                    >
+                      Already a member? Enter access token
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Engagement strip */}
         <div className="border-t border-border pt-4 mt-2 space-y-2">
