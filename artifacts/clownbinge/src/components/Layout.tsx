@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { PsaLogo } from "@/components/PsaLogo";
-import { Menu, X, ChevronDown, Heart, Home } from "lucide-react";
+import { Menu, X, ChevronDown, Heart, Home, Star } from "lucide-react";
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
 import { FloatingAdminBar } from "@/components/FloatingAdminBar";
@@ -170,7 +170,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               Buy Reports
             </Link>
             <Link href="/invest-in-us" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/invest-in-us' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
-              Donate Now
+              Subscribe Now!
             </Link>
 
           </nav>
@@ -194,7 +194,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/contact" className="text-[24px] font-bold text-white uppercase tracking-widest">Support</Link>
             <Link href="/bookstore" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Our Books</Link>
             <Link href="/reports" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Buy Reports</Link>
-            <Link href="/invest-in-us" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Donate Now</Link>
+            <Link href="/invest-in-us" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Subscribe Now!</Link>
 
           </nav>
         </div>
@@ -492,18 +492,18 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             style={{ background: "#1A3A8F" }}
           >
             <div className="px-4 pt-3 pb-2 flex items-center justify-between">
-              <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Donate</p>
-              <Heart className="w-3.5 h-3.5 text-[#F5C518]" />
+              <p className="text-[9px] font-bold text-white/50 uppercase tracking-widest">Supporting Member</p>
+              <Star className="w-3.5 h-3.5 fill-current text-[#F5C518]" />
             </div>
             <div className="px-4 pb-1">
-              <p className="text-base font-black text-white leading-tight">Any Amount</p>
+              <p className="text-base font-black text-white leading-tight">$9 <span className="text-sm font-bold text-white/60">/ month</span></p>
             </div>
             <div className="px-4 pb-3">
               <p className="text-[11px] text-white/70 leading-relaxed">
-                No product. No deliverable. Just you deciding that verified, independent journalism is worth keeping alive.
+                Unlock Metricadia ID profiles and CB Factoid citation popups on every article. All articles stay free for everyone.
               </p>
               <ul className="mt-2 flex flex-col gap-1">
-                {["Funds original research", "Supports editorial independence", "Keeps the site free"].map((item) => (
+                {["Metricadia ID profiles", "CB Factoid popups", "Supports editorial independence"].map((item) => (
                   <li key={item} className="flex items-center gap-1.5">
                     <span className="text-[#F5C518] text-[10px]">&#10003;</span>
                     <span className="text-[10px] text-white/80">{item}</span>
@@ -513,13 +513,13 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             </div>
             <div className="px-3 pb-3">
               <Link
-                href="/invest-in-us"
+                href="/subscribe"
                 onClick={() => setCtaOpen(false)}
                 className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-black text-sm text-[#1A3A8F] hover:opacity-90 transition-opacity"
                 style={{ background: "#F5C518" }}
               >
-                <span>I Want to Help</span>
-                <Heart className="w-3.5 h-3.5" />
+                <span>Subscribe Now!</span>
+                <Star className="w-3.5 h-3.5 fill-current" />
               </Link>
             </div>
           </div>
@@ -534,8 +534,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               "Close"
             ) : (
               <>
-                <Heart className="w-3 h-3" />
-                <span>Donate Today</span>
+                <Star className="w-3 h-3 fill-current" />
+                <span>Subscribe Now!</span>
               </>
             )}
           </button>
