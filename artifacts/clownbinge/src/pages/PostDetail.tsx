@@ -366,52 +366,64 @@ export default function PostDetail() {
           <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
 
           {isPremiumGated ? (
-            /* ── Premium paywall ── */
-            <div className="not-prose">
-              {/* Fade over last paragraph */}
-              <div className="h-28 -mt-28 relative pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, white)" }} />
+            /* ── Premium paywall — Case File Sealed ── */
+            (() => {
+              const rawWc = post?.body ? post.body.replace(/<[^>]+>/g, "").split(/\s+/).filter(Boolean).length : 0;
+              const wcLabel = rawWc >= 1000 ? `~${(rawWc / 1000).toFixed(1).replace(/\.0$/, "")}K words` : rawWc > 0 ? `~${rawWc} words` : null;
+              const srcLabel = post?.verifiedSource ? abbreviateSource(post.verifiedSource, true) : null;
+              return (
+                <div className="not-prose">
+                  {/* Fade */}
+                  <div className="h-28 -mt-28 relative pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, white)" }} />
 
-              {/* Gate — editorial, white, restrained */}
-              <div style={{ background: "#fff", borderTop: "3px solid #C9A84C" }}>
-                <div className="py-8 px-1">
+                  {/* Case file gate */}
+                  <div style={{ border: "1px solid #1A1A2E", background: "#fff" }}>
 
-                  {/* Eyebrow */}
-                  <p className="text-[9px] font-black uppercase tracking-[0.3em] mb-5" style={{ color: "#B8860B" }}>
-                    Supporting Members Only
-                  </p>
+                    {/* Header row — case number + SEALED stamp */}
+                    <div className="flex items-center justify-between px-5 py-3" style={{ borderBottom: "1px solid #1A1A2E", background: "#1A1A2E" }}>
+                      <span className="font-mono text-sm font-bold tracking-widest" style={{ color: "#F5C518" }}>
+                        {post?.caseNumber ?? "CASE FILE"}
+                      </span>
+                      <div className="flex items-center gap-3">
+                        {wcLabel && <span className="font-mono text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{wcLabel}</span>}
+                        {srcLabel && <span className="font-mono text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{srcLabel}</span>}
+                        <span className="font-mono text-[10px] font-black uppercase tracking-[0.2em] px-2 py-0.5" style={{ border: "1px solid #F5C518", color: "#F5C518" }}>
+                          Members Only
+                        </span>
+                      </div>
+                    </div>
 
-                  {/* Headline */}
-                  <p className="font-display font-black leading-tight mb-4" style={{ fontSize: "1.55rem", color: "#1A1A2E" }}>
-                    You're three paragraphs from the full investigation.
-                  </p>
+                    {/* Body */}
+                    <div className="px-5 py-6">
+                      <p className="font-display font-black text-xl leading-snug mb-2" style={{ color: "#1A1A2E" }}>
+                        This investigation continues behind the member line.
+                      </p>
+                      <p className="text-sm leading-relaxed mb-6" style={{ color: "#6B7280" }}>
+                        Supporting Members read the complete case file — the full article, Metricadia ID profiles on every named person, and CB Deep Dive Factoids with primary citations.
+                      </p>
 
-                  {/* Body */}
-                  <p className="text-sm leading-relaxed mb-6" style={{ color: "#4B5563", maxWidth: "42rem" }}>
-                    Supporting Members read the complete investigation — every source cited, every Metricadia ID profile, and every CB Deep Dive Factoid embedded in this article.
-                  </p>
-
-                  {/* CTA row */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                    <Link
-                      href="/subscribe"
-                      className="inline-flex items-center justify-center px-7 py-3 font-bold text-sm uppercase tracking-wider transition-opacity hover:opacity-80"
-                      style={{ background: "#1A1A2E", color: "#fff", letterSpacing: "0.1em" }}
-                    >
-                      Become a Supporting Member
-                      <span className="ml-2 font-normal text-xs opacity-60">$9/mo</span>
-                    </Link>
-                    <button
-                      onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
-                      className="text-sm text-left transition-colors hover:text-[#1A1A2E]"
-                      style={{ color: "#9CA3AF" }}
-                    >
-                      Already a member? Enter your access token
-                    </button>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                        <Link
+                          href="/subscribe"
+                          className="inline-flex items-center gap-3 px-6 py-3 font-bold text-sm uppercase tracking-wider transition-opacity hover:opacity-80"
+                          style={{ background: "#1A1A2E", color: "#F5C518", letterSpacing: "0.1em" }}
+                        >
+                          <Lock className="w-3.5 h-3.5" />
+                          Unlock This Case — $9/month
+                        </Link>
+                        <button
+                          onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
+                          className="text-sm transition-colors hover:underline"
+                          style={{ color: "#9CA3AF" }}
+                        >
+                          Already a member? Enter access token
+                        </button>
+                      </div>
+                    </div>
                   </div>
-
                 </div>
-              </div>
-            </div>
+              );
+            })()
           ) : (
             /* ── Full article ── */
             <>
