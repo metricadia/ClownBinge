@@ -412,10 +412,10 @@ export default function PostDetail() {
                   </div>
 
                   <p className="font-bold text-lg mb-1" style={{ color: "#1A1A2E" }}>
-                    This investigation is for Supporting Members.
+                    This investigation was made possible by Supporting Members.
                   </p>
                   <p className="text-sm mb-5" style={{ color: "#374151" }}>
-                    Unlock the full article, Metricadia ID profiles, and CB Deep Dive Factoids — all primary-source verified.
+                    Unlock the full article, Metricadia ID profiles, and CB Deep Dive Factoids.
                   </p>
 
                   <div className="flex flex-col gap-3">
