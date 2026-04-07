@@ -234,6 +234,62 @@
     margin-bottom: 0.75rem !important;
   }
 
+  /* ─── APA References block (PRIMARY SOURCES / REFERENCES sections) ─── */
+  .cb-article-body .cb-apa-references {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #e5e7eb;
+  }
+  .cb-article-body .cb-apa-references h3 {
+    color: #1B3E99 !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    margin-bottom: 1.25rem !important;
+    font-family: 'Helvetica Neue', Arial, sans-serif !important;
+  }
+  .cb-article-body .cb-apa-references ol {
+    list-style: none;
+    counter-reset: source-counter;
+    padding: 0;
+    margin: 0;
+  }
+  .cb-article-body .cb-apa-references ol li {
+    counter-increment: source-counter;
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1.4rem;
+    line-height: 1.5;
+  }
+  .cb-article-body .cb-apa-references ol li::before {
+    content: counter(source-counter) ".";
+    color: #F5C518;
+    font-weight: 700;
+    font-size: 0.9rem;
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+  }
+  .cb-article-body .cb-apa-references ol li strong {
+    display: block;
+    color: #1B3E99;
+    font-weight: 700;
+    font-size: 0.93rem;
+    margin-bottom: 0.15rem;
+    text-decoration: none !important;
+  }
+  .cb-article-body .cb-apa-references ol li br {
+    display: none;
+  }
+  .cb-article-body .cb-apa-references ol li em {
+    display: block;
+    color: #4b5563;
+    font-style: italic;
+    font-size: 0.87rem;
+    line-height: 1.55;
+  }
+
   /* ─── Factoid Popup — desktop fixed bottom-center card ─── */
   .cb-factoid-popup {
     position: fixed;
