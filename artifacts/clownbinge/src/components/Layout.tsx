@@ -170,7 +170,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               Buy Reports
             </Link>
             <Link href="/invest-in-us" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/invest-in-us' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
-              Subscribe Now!
+              Subscribe!
             </Link>
 
           </nav>
@@ -194,7 +194,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/contact" className="text-[24px] font-bold text-white uppercase tracking-widest">Support</Link>
             <Link href="/bookstore" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Our Books</Link>
             <Link href="/reports" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Buy Reports</Link>
-            <Link href="/invest-in-us" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Subscribe Now!</Link>
+            <Link href="/invest-in-us" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Subscribe!</Link>
 
           </nav>
         </div>
