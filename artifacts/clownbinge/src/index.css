@@ -33,7 +33,7 @@
   --color-header: hsl(var(--blue-deep));
   --color-header-foreground: hsl(var(--white-base));
   
-  --color-verified: hsl(var(--pink-verified));
+  --color-verified: hsl(var(--blue-deep));
 }
 
 :root {
@@ -81,12 +81,12 @@
 @layer utilities {
   .verified-badge {
     @apply inline-flex items-center bg-verified text-white font-sans font-bold text-[11px] tracking-wider uppercase px-3 py-1.5 rounded-full whitespace-nowrap cursor-pointer transition-all duration-150 ease-out;
-    box-shadow: 0 2px 8px rgba(255, 0, 153, 0.35);
+    box-shadow: 0 2px 8px rgba(26, 58, 143, 0.3);
   }
   
   .verified-badge:hover {
     @apply scale-105;
-    box-shadow: 0 4px 12px rgba(255, 0, 153, 0.5);
+    box-shadow: 0 4px 12px rgba(26, 58, 143, 0.45);
   }
 
   .user-submitted-badge {

@@ -63,27 +63,38 @@ export function PostCard({ post }: { post: Post }) {
   const isVideo = post.hasVideo;
   const wordCountLabel = formatWordCount((post as any).body);
   const isPremium = !!(post as any).premiumOnly;
-  const cardClasses = `bg-white text-foreground ${isPremium ? "shadow-sm" : (CATEGORY_BORDER[post.category] ?? "border-border shadow-sm hover:shadow-md")}`;
 
-  const textClasses = "text-dark-text";
-  const mutedTextClasses = "text-muted-foreground";
+  // Premium cards: white, 4px gold left stripe — editorial tier marker
+  const cardStyle = isPremium
+    ? {
+        background: "white",
+        borderTop: "1px solid rgba(201,168,76,0.35)",
+        borderRight: "1px solid rgba(201,168,76,0.35)",
+        borderBottom: "1px solid rgba(201,168,76,0.35)",
+        borderLeft: "4px solid #C9A84C",
+      }
+    : undefined;
+  const cardClasses = isPremium
+    ? "shadow-md hover:shadow-lg"
+    : `bg-white text-foreground border ${CATEGORY_BORDER[post.category] ?? "border-border shadow-sm hover:shadow-md"}`;
+
+  const dividerColor = isPremium ? "rgba(201,168,76,0.25)" : undefined;
 
   return (
     <Link href={`/case/${post.slug}`} className="block group">
-      <div className={`
-        relative rounded-xl border overflow-hidden transition-all duration-300 hover:-translate-y-1
-        ${cardClasses}
-      `}>
-        {/* Accent line at bottom — gold gradient for premium, yellow for standard */}
+      <div
+        className={`relative rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 ${cardClasses}`}
+        style={cardStyle}
+      >
+        {/* Accent line at bottom */}
         <div
           className={`absolute bottom-0 left-0 w-full h-1 ${isPremium ? "" : "bg-secondary"}`}
           style={isPremium ? { background: "linear-gradient(90deg,#B8860B,#F5C518,#B8860B)" } : undefined}
         />
 
-
         <div className="p-5 sm:p-6">
           {/* Header — Authority Line */}
-          <div className="mb-3 pb-3 border-b border-[#1A1A2E]/10">
+          <div className="mb-3 pb-3" style={{ borderBottom: `1px solid ${dividerColor ?? "rgba(26,26,46,0.1)"}` }}>
             <div className="flex items-start justify-between gap-3 mb-2.5">
               <div className="min-w-0">
                 <p className="font-mono text-lg sm:text-xl font-extrabold tracking-[0.06em] text-[#1A1A2E] leading-none">
@@ -116,7 +127,10 @@ export function PostCard({ post }: { post: Post }) {
 
             {/* Metadata Line — all pills share identical height: px-3 py-1.5 text-[11px] rounded-full */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center rounded-full border border-[#6B3520]/40 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-[#6B3520] whitespace-nowrap">
+              <span
+                className="inline-flex items-center rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider whitespace-nowrap"
+                style={{ border: "1px solid rgba(107,53,32,0.4)", color: "#6B3520" }}
+              >
                 {CATEGORY_LABELS[post.category] || post.category}
               </span>
               {post.userSubmitted && <UserSubmittedBadge />}
@@ -126,7 +140,6 @@ export function PostCard({ post }: { post: Post }) {
                   ★ Staff Pick
                 </span>
               )}
-              {/* On premium cards, verified badge moves into the metadata row */}
               {isPremium && (
                 <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
               )}
@@ -152,10 +165,10 @@ export function PostCard({ post }: { post: Post }) {
 
           {/* Title & Teaser */}
           <div className="mb-6">
-            <h2 className={`font-sans font-bold text-xl sm:text-2xl leading-tight mb-3 group-hover:underline decoration-2 underline-offset-4 ${textClasses}`}>
+            <h2 className="font-sans font-bold text-xl sm:text-2xl leading-tight mb-3 group-hover:underline decoration-2 underline-offset-4 text-dark-text">
               {post.title}
             </h2>
-            <p className={`line-clamp-2 text-sm sm:text-base leading-relaxed ${mutedTextClasses}`}>
+            <p className="line-clamp-2 text-sm sm:text-base leading-relaxed text-muted-foreground">
               {post.teaser}
             </p>
           </div>
@@ -181,11 +194,14 @@ export function PostCard({ post }: { post: Post }) {
           )}
 
           {/* Footer Info */}
-          <div className="flex items-center justify-between mt-auto pt-4 border-t border-current/10 gap-4">
-            <div className={`flex items-center gap-2 text-xs font-medium truncate min-w-0 ${mutedTextClasses}`}>
+          <div
+            className="flex items-center justify-between mt-auto pt-4 gap-4"
+            style={{ borderTop: `1px solid ${dividerColor ?? "rgba(26,26,46,0.1)"}` }}
+          >
+            <div className="flex items-center gap-2 text-xs font-medium truncate min-w-0 text-muted-foreground">
               <span className="truncate">{abbreviateSource(post.verifiedSource, true)}</span>
               {wordCountLabel && (
-                <span className="shrink-0 text-xs font-medium text-muted-foreground/80 tabular-nums">
+                <span className="shrink-0 text-xs font-medium tabular-nums text-muted-foreground/80">
                   · {wordCountLabel}
                 </span>
               )}
@@ -195,7 +211,10 @@ export function PostCard({ post }: { post: Post }) {
                 </span>
               )}
             </div>
-            <div className="text-xs font-bold uppercase tracking-wider text-primary group-hover:translate-x-1 transition-transform">
+            <div
+              className="text-xs font-bold uppercase tracking-wider group-hover:translate-x-1 transition-transform shrink-0"
+              style={{ color: isPremium ? "#B8860B" : "var(--primary)" }}
+            >
               Read More &gt;
             </div>
           </div>
