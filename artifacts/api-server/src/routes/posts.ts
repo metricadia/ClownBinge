@@ -154,12 +154,7 @@ router.get("/posts/count", async (_req, res) => {
     const result = await db
       .select({ count: count() })
       .from(postsTable)
-      .where(
-        and(
-          eq(postsTable.status, "published"),
-          sql`${postsTable.caseNumber} LIKE 'CB-%'`
-        )
-      );
+      .where(eq(postsTable.status, "published"));
     res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
     res.setHeader("Pragma", "no-cache");
     res.json({ count: Number(result[0]?.count ?? 0) });
@@ -172,10 +167,7 @@ router.get("/posts/stats", async (_req, res) => {
   try {
     const [articlesResult, citationsResult] = await Promise.all([
       db.select({ count: count() }).from(postsTable).where(
-        and(
-          eq(postsTable.status, "published"),
-          sql`${postsTable.caseNumber} LIKE 'CB-%'`
-        )
+        eq(postsTable.status, "published")
       ),
       db.execute(
         sql`SELECT (
@@ -184,7 +176,7 @@ router.get("/posts/stats", async (_req, res) => {
           COALESCE(SUM((length(body) - length(replace(body, 'cb-factoid', ''))) / 10), 0)
         )::int AS total_citations
         FROM posts
-        WHERE status = 'published' AND case_number LIKE 'CB-%'`
+        WHERE status = 'published'`
       ),
     ]);
 
