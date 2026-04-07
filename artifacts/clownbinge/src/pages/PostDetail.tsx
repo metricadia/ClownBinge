@@ -409,7 +409,6 @@ export default function PostDetail() {
                   <div className="flex items-baseline gap-2 mb-3">
                     <span className="font-display font-black" style={{ fontSize: "2.8rem", lineHeight: 1, color: "#1A3A8F" }}>$9</span>
                     <span className="font-bold text-base" style={{ color: "#6B7280" }}>/month</span>
-                    <span className="text-xs font-semibold ml-2" style={{ color: "#C9A84C" }}>No ads. No sponsors.</span>
                   </div>
 
                   <p className="font-bold text-lg mb-1" style={{ color: "#1A1A2E" }}>
@@ -419,14 +418,14 @@ export default function PostDetail() {
                     Unlock the full article, Metricadia ID profiles, and CB Deep Dive Factoids — all primary-source verified.
                   </p>
 
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <div className="flex flex-col gap-3">
                     <a
                       href="/subscribe"
-                      className="inline-flex items-center justify-center gap-2 px-7 py-3 font-black text-sm uppercase tracking-wider transition-opacity hover:opacity-80"
-                      style={{ background: "#1A3A8F", color: "#ffffff", textDecoration: "none", letterSpacing: "0.1em" }}
+                      className="flex items-center justify-center gap-2 w-full py-4 font-black text-base uppercase tracking-widest transition-opacity hover:opacity-90"
+                      style={{ background: "#1A3A8F", color: "#F5C518", textDecoration: "none", letterSpacing: "0.15em" }}
                     >
-                      <Lock className="w-3.5 h-3.5" />
-                      Become a Supporting Member
+                      <Lock className="w-4 h-4" />
+                      Become a Supporting Member — $9/mo
                     </a>
                     <button
                       onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
