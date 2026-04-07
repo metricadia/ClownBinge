@@ -143,6 +143,7 @@ function mapPost(p: PostRow) {
     locked: p.locked,
     staffPick: p.staffPick,
     seoMetaTitle: p.seoMetaTitle ?? null,
+    premiumOnly: p.premiumOnly,
   };
 }
 

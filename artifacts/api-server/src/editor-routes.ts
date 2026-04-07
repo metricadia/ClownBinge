@@ -3,7 +3,7 @@ import multer from "multer";
 import crypto from "crypto";
 import path from "path";
 import fs from "fs";
-import { db, postsTable } from "@workspace/db";
+import { db, postsTable, subscriberTokensTable } from "@workspace/db";
 import { eq, desc, sql } from "drizzle-orm";
 import { anthropic } from "@workspace/integrations-anthropic-ai";
 
@@ -107,6 +107,7 @@ export function registerMetricadiaRoutes(app: Express) {
           content: postsTable.body,
           publishedAt: postsTable.publishedAt,
           caseNumber: postsTable.caseNumber,
+          premiumOnly: postsTable.premiumOnly,
         })
         .from(postsTable)
         .orderBy(desc(postsTable.publishedAt))
@@ -397,6 +398,97 @@ export function registerMetricadiaRoutes(app: Express) {
     } catch (err) {
       console.error("[Metricadia] Metricadia IDs list error:", err);
       return res.status(500).json({ message: "Server error" });
+    }
+  });
+
+  // ── Premium article toggle ────────────────────────────────────────────────
+
+  app.patch("/api/metricadia/posts/:id/premium", requireMetricadiaAuth, async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { premiumOnly } = req.body as { premiumOnly?: boolean };
+    if (typeof premiumOnly !== "boolean") {
+      return res.status(400).json({ message: "premiumOnly must be a boolean" });
+    }
+    try {
+      const rows = await db
+        .update(postsTable)
+        .set({ premiumOnly })
+        .where(eq(postsTable.id, id))
+        .returning({ id: postsTable.id, slug: postsTable.slug, premiumOnly: postsTable.premiumOnly });
+      if (!rows.length) return res.status(404).json({ message: "Post not found" });
+      return res.json(rows[0]);
+    } catch (err) {
+      console.error("[Metricadia] premium toggle error:", err);
+      return res.status(500).json({ message: "Failed to update premium status" });
+    }
+  });
+
+  // ── Subscriber token management ───────────────────────────────────────────
+
+  app.get("/api/metricadia/subscriber-tokens", requireMetricadiaAuth, async (_req: Request, res: Response) => {
+    try {
+      const tokens = await db
+        .select()
+        .from(subscriberTokensTable)
+        .orderBy(desc(subscriberTokensTable.createdAt));
+      return res.json(tokens);
+    } catch (err) {
+      console.error("[Metricadia] token list error:", err);
+      return res.status(500).json({ message: "Failed to fetch tokens" });
+    }
+  });
+
+  app.post("/api/metricadia/subscriber-tokens", requireMetricadiaAuth, async (req: Request, res: Response) => {
+    const { label, email, expiresAt } = req.body as { label?: string; email?: string; expiresAt?: string };
+    if (!label || typeof label !== "string" || !label.trim()) {
+      return res.status(400).json({ message: "label is required" });
+    }
+    const token = crypto.randomUUID();
+    try {
+      const [row] = await db
+        .insert(subscriberTokensTable)
+        .values({
+          token,
+          label: label.trim(),
+          email: email?.trim() || null,
+          expiresAt: expiresAt ? new Date(expiresAt) : null,
+        })
+        .returning();
+      return res.status(201).json(row);
+    } catch (err) {
+      console.error("[Metricadia] token create error:", err);
+      return res.status(500).json({ message: "Failed to create token" });
+    }
+  });
+
+  app.patch("/api/metricadia/subscriber-tokens/:token/active", requireMetricadiaAuth, async (req: Request, res: Response) => {
+    const { token } = req.params;
+    const { active } = req.body as { active?: boolean };
+    if (typeof active !== "boolean") {
+      return res.status(400).json({ message: "active must be a boolean" });
+    }
+    try {
+      const rows = await db
+        .update(subscriberTokensTable)
+        .set({ active })
+        .where(eq(subscriberTokensTable.token, token))
+        .returning();
+      if (!rows.length) return res.status(404).json({ message: "Token not found" });
+      return res.json(rows[0]);
+    } catch (err) {
+      console.error("[Metricadia] token toggle error:", err);
+      return res.status(500).json({ message: "Failed to update token" });
+    }
+  });
+
+  app.delete("/api/metricadia/subscriber-tokens/:token", requireMetricadiaAuth, async (req: Request, res: Response) => {
+    const { token } = req.params;
+    try {
+      await db.delete(subscriberTokensTable).where(eq(subscriberTokensTable.token, token));
+      return res.json({ success: true });
+    } catch (err) {
+      console.error("[Metricadia] token delete error:", err);
+      return res.status(500).json({ message: "Failed to delete token" });
     }
   });
 

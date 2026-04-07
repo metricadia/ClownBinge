@@ -20,6 +20,8 @@ import { Loader2, AlertTriangle, Lock } from "lucide-react";
 import { useFactoidPopup } from "@/hooks/use-factoid-popup";
 import { FactoidPopup } from "@/components/FactoidPopup";
 import { MetricadiaIDPopup } from "@/components/MetricadiaIDPopup";
+import { SubscriptionModal } from "@/components/SubscriptionModal";
+import { useSubscription } from "@/hooks/use-subscription";
 import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
 import { ForensicPivot } from "@/components/ForensicPivot";
@@ -91,6 +93,20 @@ export default function PostDetail() {
   const { containerRef, popupRef, factoid, copied, isMobile, closeFactoid, handleCopy } = useFactoidPopup(
     post ? { articleTitle: post.title } : undefined,
   );
+  // ── Subscription gate ───────────────────────────────────────────────────────
+  const { data: subscriptionStatus } = useSubscription();
+  const [gateOpen, setGateOpen] = useState(false);
+  const [gateTrigger, setGateTrigger] = useState<"metricadiaid" | "factoid">("metricadiaid");
+
+  // Gate factoid popup: if premium-only and not subscribed, close factoid and show gate
+  useEffect(() => {
+    if (factoid && post?.premiumOnly && !subscriptionStatus?.isSubscriber) {
+      closeFactoid();
+      setGateTrigger("factoid");
+      setGateOpen(true);
+    }
+  }, [factoid, post?.premiumOnly, subscriptionStatus?.isSubscriber, closeFactoid]);
+
   // ── MetricadiaID™ — people click handler ───────────────────────────────────
   interface MetricadiaIDPerson { name: string; imageUrl: string; description?: string; attribution?: string; }
   const [activePerson, setActivePerson] = useState<MetricadiaIDPerson | null>(null);
@@ -106,6 +122,11 @@ export default function PostDetail() {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
+      if (post?.premiumOnly && !subscriptionStatus?.isSubscriber) {
+        setGateTrigger("metricadiaid");
+        setGateOpen(true);
+        return;
+      }
       const name = span.dataset.metricadiaidName || "";
       const imageUrl = span.dataset.metricadiaidImage || "";
       const description = span.dataset.metricadiaidDesc || undefined;
@@ -115,7 +136,7 @@ export default function PostDetail() {
 
     container.addEventListener("click", handlePersonClick, { capture: true });
     return () => container.removeEventListener("click", handlePersonClick, { capture: true });
-  }, [containerRef, post?.id]);
+  }, [containerRef, post?.id, post?.premiumOnly, subscriptionStatus?.isSubscriber]);
 
   const processedBody = useMemo(() => {
     if (!post?.body) return post?.body ?? "";
@@ -262,6 +283,16 @@ export default function PostDetail() {
               {post.locked && (
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-900 text-white text-[11px] font-bold uppercase tracking-wider">
                   <Lock className="w-3 h-3" /> Record Locked
+                </span>
+              )}
+              {post.premiumOnly && !subscriptionStatus?.isSubscriber && (
+                <span
+                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider cursor-pointer hover:opacity-90 transition-opacity"
+                  style={{ background: "#F5C518", color: "#1A1A2E" }}
+                  onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
+                  title="Interactive tools are for Supporting Members"
+                >
+                  <Lock className="w-3 h-3" /> Members Only Tools
                 </span>
               )}
             </div>
@@ -505,6 +536,11 @@ export default function PostDetail() {
 
       </article>
 
+
+      {/* Subscription gate modal */}
+      {gateOpen && (
+        <SubscriptionModal trigger={gateTrigger} onClose={() => setGateOpen(false)} />
+      )}
 
       {/* MetricadiaID™ — people popup */}
       {activePerson && (

@@ -29,6 +29,7 @@ import CategoryHub from "@/pages/CategoryHub";
 import Methodology from "@/pages/Methodology";
 import Corrections from "@/pages/Corrections";
 import AdminEditorPage from "@/pages/AdminEditorPage";
+import Subscribe from "@/pages/Subscribe";
 import NotFound from "@/pages/not-found";
 
 function ScrollToTop() {
@@ -65,6 +66,7 @@ function Router() {
         <Route path="/corrections" component={Corrections} />
         <Route path="/Kemet8/:postId?" component={AdminEditorPage} />
         <Route path="/Kemet8" component={AdminEditorPage} />
+        <Route path="/subscribe" component={Subscribe} />
         <Route component={NotFound} />
       </Switch>
     </>

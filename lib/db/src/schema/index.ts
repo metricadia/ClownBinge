@@ -3,4 +3,5 @@ export * from "./posts";
 export * from "./reactions";
 export * from "./books";
 export * from "./subscribers";
+export * from "./subscriber-tokens";
 export * from "./tips";

@@ -107,6 +107,34 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 
 - **ClownCheck** — $1.95/verification
 - **Comprehensive Reports** — $24.95/PDF
+- **Supporting Member** — $9/mo subscription (manual external merchant)
+
+### Subscription System (Supporting Member)
+
+**Architecture:** No Stripe. No payment processor in the app. Payment is handled entirely outside the platform via an external localized merchant account. Admin grants access manually by issuing tokens.
+
+**Token flow:**
+1. Admin receives payment confirmation externally
+2. Admin opens `/Kemet8` → "Subscribers" tab → issues a token (label + optional email)
+3. Admin copies the activation link: `/subscribe?token=<uuid>`
+4. Admin sends link to subscriber (email, DM, etc.)
+5. Subscriber visits the link → auto-activates → `cb_sub` HttpOnly cookie set for 1 year
+6. Subscriber now has access to premium features on all `premiumOnly` articles
+
+**Key files:**
+- `lib/db/src/schema/subscriber-tokens.ts` — `subscriber_tokens` table (uuid token, label, email, active, expiresAt)
+- `lib/db/src/schema/posts.ts` — `premiumOnly boolean` column on posts
+- `artifacts/api-server/src/routes/subscription.ts` — `GET /api/subscription/status`, `POST /api/subscription/activate`, `POST /api/subscription/deactivate`
+- `artifacts/api-server/src/editor-routes.ts` — admin token CRUD (`/api/metricadia/subscriber-tokens`) + premium toggle (`PATCH /api/metricadia/posts/:id/premium`)
+- `artifacts/clownbinge/src/hooks/use-subscription.ts` — `useSubscription` + `useActivateSubscription` hooks
+- `artifacts/clownbinge/src/components/SubscriptionModal.tsx` — gate modal shown to non-subscribers
+- `artifacts/clownbinge/src/pages/Subscribe.tsx` — `/subscribe` page (auto-activates from `?token=` URL param)
+- `artifacts/clownbinge/src/pages/PostDetail.tsx` — gates MetricadiaID popups + CB Factoid popups on `premiumOnly` articles
+- `artifacts/clownbinge/src/pages/AdminEditorPage.tsx` — SubscribersPanel + ⭐ premium toggle per article
+
+**Feature gating:** Article text is always visible (SEO). Only the interactive research tools are gated: Metricadia ID person-profile popups and CB Factoid citation popups. Non-subscribers see a `SubscriptionModal` nudge when they attempt to use these tools on a `premiumOnly` article. A "Members Only Tools" amber badge appears in the article header.
+
+**Cookie:** `cb_sub` — HttpOnly, 1-year expiry, set by Express on activation, validated on every status check. No JWT, no session DB lookup — the token table is the source of truth.
 
 ### CITATION AUDIT STATUS (March 2026)
 

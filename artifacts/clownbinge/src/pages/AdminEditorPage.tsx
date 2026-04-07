@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams, useLocation } from "wouter";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { AdminLogin } from "@/components/AdminLogin";
 import { MetricadiaEditor } from "@/components/MetricadiaEditor";
 import { Button } from "@/components/ui/button";
-import { PenLine, LogOut, Plus, X, Loader2 } from "lucide-react";
+import { PenLine, LogOut, Plus, X, Loader2, Star, Trash2, Copy, Check } from "lucide-react";
 
 interface Post {
   id: string;
@@ -14,6 +14,16 @@ interface Post {
   content: string;
   caseNumber?: string;
   publishedAt?: string;
+  premiumOnly?: boolean;
+}
+
+interface SubscriberToken {
+  token: string;
+  label: string;
+  email: string | null;
+  active: boolean;
+  createdAt: string;
+  expiresAt: string | null;
 }
 
 const CATEGORIES: { value: string; label: string }[] = [
@@ -291,6 +301,206 @@ function NewArticleModal({ onClose, onCreated }: NewArticleModalProps) {
   );
 }
 
+function SubscribersPanel({ authHeaders }: { authHeaders: () => Record<string, string> }) {
+  const queryClient = useQueryClient();
+  const [newLabel, setNewLabel] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [creating, setCreating] = useState(false);
+  const [copiedToken, setCopiedToken] = useState<string | null>(null);
+
+  const { data: tokens = [], isLoading } = useQuery<SubscriberToken[]>({
+    queryKey: ["/api/metricadia/subscriber-tokens"],
+    queryFn: async () => {
+      const res = await fetch("/api/metricadia/subscriber-tokens", { credentials: "include", headers: authHeaders() });
+      if (!res.ok) throw new Error("Failed to fetch tokens");
+      return res.json();
+    },
+  });
+
+  const createMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch("/api/metricadia/subscriber-tokens", {
+        method: "POST",
+        headers: { ...authHeaders(), "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ label: newLabel.trim(), email: newEmail.trim() || undefined }),
+      });
+      if (!res.ok) throw new Error("Failed to create token");
+      return res.json();
+    },
+    onSuccess: () => {
+      setNewLabel("");
+      setNewEmail("");
+      setCreating(false);
+      queryClient.invalidateQueries({ queryKey: ["/api/metricadia/subscriber-tokens"] });
+    },
+  });
+
+  const toggleMutation = useMutation({
+    mutationFn: async ({ token, active }: { token: string; active: boolean }) => {
+      const res = await fetch(`/api/metricadia/subscriber-tokens/${token}/active`, {
+        method: "PATCH",
+        headers: { ...authHeaders(), "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ active }),
+      });
+      if (!res.ok) throw new Error("Failed to update");
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["/api/metricadia/subscriber-tokens"] }),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (token: string) => {
+      await fetch(`/api/metricadia/subscriber-tokens/${token}`, {
+        method: "DELETE",
+        headers: authHeaders(),
+        credentials: "include",
+      });
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["/api/metricadia/subscriber-tokens"] }),
+  });
+
+  function copyToken(token: string) {
+    const activationUrl = `${window.location.origin}/subscribe?token=${token}`;
+    navigator.clipboard.writeText(activationUrl).then(() => {
+      setCopiedToken(token);
+      setTimeout(() => setCopiedToken(null), 2000);
+    });
+  }
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-3xl font-black text-white">Subscribers</h1>
+          <p className="text-slate-500 text-sm mt-1">{tokens.filter(t => t.active).length} active tokens</p>
+        </div>
+        <Button
+          size="sm"
+          onClick={() => setCreating(true)}
+          className="bg-amber-500 hover:bg-amber-600 text-black font-bold"
+        >
+          <Plus className="w-4 h-4 mr-2" />Issue Token
+        </Button>
+      </div>
+
+      {creating && (
+        <div className="bg-slate-900 border border-amber-700/40 rounded-xl p-5 mb-6">
+          <h3 className="font-bold text-white mb-4">Issue New Access Token</h3>
+          <div className="space-y-3">
+            <div>
+              <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                Label <span className="text-red-400">*</span>
+              </label>
+              <input
+                type="text"
+                value={newLabel}
+                onChange={(e) => setNewLabel(e.target.value)}
+                placeholder="e.g. Jane Smith — Apr 2026"
+                className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-white text-sm placeholder:text-slate-600 focus:outline-none focus:border-amber-500"
+                autoFocus
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                Email (optional)
+              </label>
+              <input
+                type="email"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                placeholder="subscriber@example.com"
+                className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-white text-sm placeholder:text-slate-600 focus:outline-none focus:border-amber-500"
+              />
+            </div>
+            <div className="flex gap-3 pt-1">
+              <Button
+                size="sm"
+                onClick={() => createMutation.mutate()}
+                disabled={!newLabel.trim() || createMutation.isPending}
+                className="bg-amber-500 hover:bg-amber-600 text-black font-bold"
+              >
+                {createMutation.isPending ? "Creating..." : "Create Token"}
+              </Button>
+              <Button size="sm" variant="ghost" onClick={() => setCreating(false)} className="text-slate-400">
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isLoading && (
+        <div className="flex items-center justify-center py-20">
+          <div className="w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
+
+      {!isLoading && tokens.length === 0 && (
+        <div className="text-center py-20 text-slate-500">
+          <Star className="w-10 h-10 mx-auto mb-3 text-slate-700" />
+          <p>No subscriber tokens yet. Issue one to get started.</p>
+        </div>
+      )}
+
+      <div className="grid gap-3">
+        {tokens.map((t) => (
+          <div
+            key={t.token}
+            className={`bg-slate-900 border rounded-xl p-4 ${t.active ? "border-slate-800" : "border-slate-800/40 opacity-60"}`}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap mb-0.5">
+                  <span className="font-bold text-white text-sm">{t.label}</span>
+                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${t.active ? "bg-green-950 text-green-400" : "bg-slate-800 text-slate-500"}`}>
+                    {t.active ? "ACTIVE" : "REVOKED"}
+                  </span>
+                </div>
+                {t.email && <p className="text-xs text-slate-500">{t.email}</p>}
+                <p className="text-[10px] text-slate-700 font-mono mt-1 truncate max-w-[240px]" title={t.token}>{t.token}</p>
+                <p className="text-[10px] text-slate-600 mt-0.5">
+                  Issued: {new Date(t.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                  {t.expiresAt && ` · Expires: ${new Date(t.expiresAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}`}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <button
+                  onClick={() => copyToken(t.token)}
+                  title="Copy activation link"
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                >
+                  {copiedToken === t.token ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+                </button>
+                <button
+                  onClick={() => toggleMutation.mutate({ token: t.token, active: !t.active })}
+                  title={t.active ? "Revoke access" : "Restore access"}
+                  className={`text-xs font-bold px-2.5 py-1 rounded-lg transition-colors ${
+                    t.active
+                      ? "bg-red-950/50 text-red-400 hover:bg-red-950"
+                      : "bg-green-950/50 text-green-400 hover:bg-green-950"
+                  }`}
+                >
+                  {t.active ? "Revoke" : "Restore"}
+                </button>
+                <button
+                  onClick={() => {
+                    if (confirm(`Delete token for "${t.label}"?`)) deleteMutation.mutate(t.token);
+                  }}
+                  className="p-1.5 rounded-lg text-slate-600 hover:text-red-400 hover:bg-slate-800 transition-colors"
+                  title="Delete token permanently"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function AdminEditorPage() {
   const params = useParams<{ postId?: string }>();
   const [, setLocation] = useLocation();
@@ -298,7 +508,26 @@ export default function AdminEditorPage() {
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [search, setSearch] = useState("");
   const [showNewArticle, setShowNewArticle] = useState(false);
+  const [activeTab, setActiveTab] = useState<"articles" | "subscribers">("articles");
   const queryClient = useQueryClient();
+
+  // ── Premium toggle mutation ─────────────────────────────────────────────────
+  const premiumMutation = useMutation({
+    mutationFn: async ({ id, premiumOnly }: { id: string; premiumOnly: boolean }) => {
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      const token = sessionStorage.getItem("metricadia_token");
+      if (token) headers["X-Metricadia-Token"] = token;
+      const res = await fetch(`/api/metricadia/posts/${id}/premium`, {
+        method: "PATCH",
+        headers,
+        credentials: "include",
+        body: JSON.stringify({ premiumOnly }),
+      });
+      if (!res.ok) throw new Error("Failed to update");
+      return res.json();
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["/api/metricadia/posts"] }),
+  });
 
   const { data: postsData, isLoading } = useQuery<{ posts: Post[] }>({
     queryKey: ["/api/metricadia/posts"],
@@ -390,14 +619,16 @@ export default function AdminEditorPage() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Button
-              size="sm"
-              onClick={() => setShowNewArticle(true)}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold"
-              data-testid="button-new-article"
-            >
-              <Plus className="w-4 h-4 mr-2" />New Article
-            </Button>
+            {activeTab === "articles" && (
+              <Button
+                size="sm"
+                onClick={() => setShowNewArticle(true)}
+                className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold"
+                data-testid="button-new-article"
+              >
+                <Plus className="w-4 h-4 mr-2" />New Article
+              </Button>
+            )}
             <Button
               variant="ghost"
               size="sm"
@@ -409,73 +640,124 @@ export default function AdminEditorPage() {
             </Button>
           </div>
         </div>
+        <div className="max-w-5xl mx-auto px-4 pb-0 flex gap-1">
+          {(["articles", "subscribers"] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 text-sm font-bold capitalize border-b-2 transition-colors ${
+                activeTab === tab
+                  ? "border-indigo-500 text-indigo-300"
+                  : "border-transparent text-slate-500 hover:text-slate-300"
+              }`}
+            >
+              {tab === "subscribers" ? <span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5" />Subscribers</span> : "Articles"}
+            </button>
+          ))}
+        </div>
       </header>
 
       <main className="max-w-5xl mx-auto px-4 py-10">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-black text-white">All Articles</h1>
-          <span className="text-slate-500 text-sm">{allPosts.length} total</span>
-        </div>
 
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by title or case number..."
-          className="w-full mb-6 px-4 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500"
-          data-testid="input-search-posts"
-        />
-
-        {isLoading && (
-          <div className="flex items-center justify-center py-20">
-            <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
-          </div>
-        )}
-
-        {!isLoading && posts.length === 0 && (
-          <div className="text-center py-20 text-slate-500">
-            <p className="text-lg">No articles found.</p>
-          </div>
-        )}
-
-        <div className="grid gap-3">
-          {posts.map((post) => (
-            <div
-              key={post.id}
-              className="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-indigo-600/50 transition-colors cursor-pointer group"
-              onClick={() => setEditingPost(post)}
-              data-testid={`card-post-${post.id}`}
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex-1 min-w-0">
-                  {post.caseNumber && (
-                    <span className="text-xs text-indigo-400 font-mono font-bold">{post.caseNumber} &mdash; </span>
-                  )}
-                  <span className="text-base font-bold text-white group-hover:text-indigo-300 transition-colors">
-                    {post.title || "(Untitled)"}
-                  </span>
-                  {post.publishedAt && (
-                    <p className="text-xs text-slate-600 mt-1">
-                      {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </p>
-                  )}
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="shrink-0 border-slate-700 text-slate-300 group-hover:border-indigo-500 group-hover:text-indigo-300"
-                  data-testid={`button-edit-post-${post.id}`}
-                >
-                  <PenLine className="w-4 h-4 mr-2" />Edit
-                </Button>
-              </div>
+        {/* ── Articles tab ── */}
+        {activeTab === "articles" && (
+          <>
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-3xl font-black text-white">All Articles</h1>
+              <span className="text-slate-500 text-sm">{allPosts.length} total</span>
             </div>
-          ))}
-        </div>
+
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by title or case number..."
+              className="w-full mb-6 px-4 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500"
+              data-testid="input-search-posts"
+            />
+
+            {isLoading && (
+              <div className="flex items-center justify-center py-20">
+                <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+              </div>
+            )}
+
+            {!isLoading && posts.length === 0 && (
+              <div className="text-center py-20 text-slate-500">
+                <p className="text-lg">No articles found.</p>
+              </div>
+            )}
+
+            <div className="grid gap-3">
+              {posts.map((post) => (
+                <div
+                  key={post.id}
+                  className="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-indigo-600/50 transition-colors group"
+                  data-testid={`card-post-${post.id}`}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <div
+                      className="flex-1 min-w-0 cursor-pointer"
+                      onClick={() => setEditingPost(post)}
+                    >
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {post.caseNumber && (
+                          <span className="text-xs text-indigo-400 font-mono font-bold">{post.caseNumber}</span>
+                        )}
+                        {post.premiumOnly && (
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: "#F5C518", color: "#1A1A2E" }}>
+                            MEMBERS
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-base font-bold text-white group-hover:text-indigo-300 transition-colors">
+                        {post.title || "(Untitled)"}
+                      </span>
+                      {post.publishedAt && (
+                        <p className="text-xs text-slate-600 mt-1">
+                          {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          premiumMutation.mutate({ id: post.id, premiumOnly: !post.premiumOnly });
+                        }}
+                        title={post.premiumOnly ? "Remove members-only" : "Mark as members-only"}
+                        className={`p-1.5 rounded-lg transition-colors ${
+                          post.premiumOnly
+                            ? "text-amber-400 bg-amber-950/40 hover:bg-amber-950/60"
+                            : "text-slate-600 hover:text-amber-400 hover:bg-slate-800"
+                        }`}
+                      >
+                        <Star className={`w-4 h-4 ${post.premiumOnly ? "fill-amber-400" : ""}`} />
+                      </button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setEditingPost(post)}
+                        className="shrink-0 border-slate-700 text-slate-300 group-hover:border-indigo-500 group-hover:text-indigo-300"
+                        data-testid={`button-edit-post-${post.id}`}
+                      >
+                        <PenLine className="w-4 h-4 mr-2" />Edit
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* ── Subscribers tab ── */}
+        {activeTab === "subscribers" && <SubscribersPanel authHeaders={authHeaders} />}
+
       </main>
     </div>
   );
