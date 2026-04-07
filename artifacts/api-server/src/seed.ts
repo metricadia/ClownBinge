@@ -1,5 +1,5 @@
 import { db, postsTable } from "@workspace/db";
-import { eq, sql } from "drizzle-orm";
+import { eq, inArray, sql } from "drizzle-orm";
 import seedData from "./posts-seed.json";
 
 const SEED_EXPECTED_COUNT = (seedData as Record<string, unknown>[]).length;
@@ -212,5 +212,57 @@ export async function insertNewArticles(): Promise<void> {
     console.log(`[Seed] New articles: ${inserted} inserted, ${failed} failed.`);
   } catch (err) {
     console.error("[Seed] Error during insertNewArticles:", err);
+  }
+}
+
+// ─── Ensure premium-flagged articles are marked in the DB ────────────────────
+// SAFE BY DESIGN: only sets premiumOnly = true for known slugs. Never clears
+// the flag from any article — admin can still toggle articles individually.
+
+const PREMIUM_SLUGS: string[] = [
+  "social-media-disinformation-platforms-facebook-x-youtube-tiktok-receipts",
+  "meta-anti-palestine-investigation-documents-bsr-hrw-drop-site",
+  "monks-kept-western-civilization-books-faith-custodian-knowledge",
+  "no-black-americans-violent-crime-racist-narrative-2024",
+  "eddie-long-new-birth-missionary-baptist-same-sex-marriage-lawsuits-2010",
+  "bob-corker-tax-cuts-jobs-act-deficit-vote-flip",
+  "judaism-zionism-distinction-documented-record-2026",
+  "brian-carn-false-prophecy-irs-guilty-plea-sexual-misconduct",
+  "the-strongest-thing-research-love-healing-long-life",
+  "cnn-vanishing-act-wbd-debt-eeoc-audit",
+  "second-amendment-racial-disparity-philando-castile",
+  "give-me-your-tired-us-foreign-policy-immigration-global-south",
+  "dei-label-clinical-cost-documented-inventory",
+  "dei-ruse-obama-trump-appointee-qualifications",
+  "white-women-primary-beneficiaries-affirmative-action-federal-record",
+  "america-resource-wars-iraq-iran-libya-petrodollar-race",
+  "white-dei-wdei-discrimination-exclusion-ignorance-republican-merit",
+  "gaza-riviera-trump-kushner-beachfront-real-estate-plan",
+  "COINTELPRO-fred-hampton-FBI-assassination-Black-Panther-1969",
+  "sundown-towns-racial-exclusion-redlining-wealth-gap-American-history",
+  "indian-adoption-project-Native-children-removal-CWLA-BIA-history",
+  "American-eugenics-Nazi-Germany-forced-sterilization-Buck-v-Bell",
+  "disclose-act-blocked-501c4-dark-money-irs-architecture-senate-roll-call",
+  "billionaire-donor-concentration-fec-2024-cycle-300-families-19-percent",
+  "fairshake-crypto-super-pac-221-million-coinbase-ripple-fec-regulatory-exposure",
+  "haiti-indemnity-france-21-billion-reparations-slave-owners-documented",
+  "cia-declassified-latin-america-coups-seven-governments-1953-1989",
+  "wto-trips-pharmaceutical-patents-generic-drugs-hiv-aids-msf-developing-nations",
+  "britain-extracted-45-trillion-india-colonial-trade-records-patnaik-calculation",
+  "civil-asset-forfeiture-states-no-conviction-required-documented-record",
+  "philo-of-alexandria-logos-gospel-john-nicene-creed-definition",
+  "european-renaissance-islamic-scholarship-primary-source-record",
+];
+
+export async function applyPremiumFlags(): Promise<void> {
+  try {
+    const result = await db
+      .update(postsTable)
+      .set({ premiumOnly: true })
+      .where(inArray(postsTable.slug, PREMIUM_SLUGS));
+    const count = (result as unknown as { rowCount?: number })?.rowCount ?? 0;
+    console.log(`[Seed] Premium flags applied: ${count} articles marked premiumOnly.`);
+  } catch (err) {
+    console.error("[Seed] Error during applyPremiumFlags:", err);
   }
 }
