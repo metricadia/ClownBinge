@@ -535,7 +535,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             ) : (
               <>
                 <Star className="w-3 h-3 fill-current" />
-                <span>Subscribe Now!</span>
+                <span>Subscribe!</span>
               </>
             )}
           </button>
