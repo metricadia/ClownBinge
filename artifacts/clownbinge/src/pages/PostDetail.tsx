@@ -389,17 +389,18 @@ export default function PostDetail() {
               {/* Gate card */}
               <div style={{ border: "1px solid #C9A84C", borderTop: "4px solid #C9A84C", background: "#fff" }}>
 
-                {/* Top info bar — case + word count */}
+                {/* Top info bar */}
                 <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-2.5" style={{ borderBottom: "1px solid #E5E7EB", background: "#FAFAFA" }}>
-                  <span className="font-mono text-xs font-bold tracking-widest" style={{ color: "#1A3A8F" }}>
-                    {post?.caseNumber ?? "CASE FILE"}
+                  <span className="text-xs font-semibold" style={{ color: "#374151" }}>
+                    Subscription Required for{" "}
+                    <span className="font-mono font-bold" style={{ color: "#1A3A8F" }}>{post?.caseNumber ?? "CASE FILE"}</span>
+                    {post?.title && (
+                      <span style={{ color: "#374151" }}> &mdash; {post.title.length > 55 ? post.title.slice(0, 55) + "…" : post.title}</span>
+                    )}
                   </span>
-                  <div className="flex items-center gap-3">
-                    {wcLabel && <span className="font-mono text-xs font-semibold" style={{ color: "#374151" }}>{wcLabel}</span>}
-                    <span className="text-[10px] font-black uppercase tracking-[0.22em] px-2.5 py-0.5 rounded-full" style={{ background: "#1A3A8F", color: "#F5C518" }}>
-                      Premium Article
-                    </span>
-                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-[0.22em] px-2.5 py-0.5 rounded-full shrink-0" style={{ background: "#1A3A8F", color: "#F5C518" }}>
+                    Premium Article
+                  </span>
                 </div>
 
                 {/* Main body */}
