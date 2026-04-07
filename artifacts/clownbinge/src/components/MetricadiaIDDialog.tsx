@@ -121,7 +121,7 @@ export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: M
   };
 
   const handleConfirm = () => {
-    if (!name.trim() || !imageUrl.trim()) return;
+    if (!name.trim()) return;
 
     const isSafeUrl = (url: string): boolean => {
       const trimmed = url.trim();
@@ -135,11 +135,11 @@ export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: M
     };
 
     const trimmedUrl = imageUrl.trim();
-    if (!isSafeUrl(trimmedUrl)) { alert("Invalid image URL."); return; }
+    if (trimmedUrl && !isSafeUrl(trimmedUrl)) { alert("Invalid image URL."); return; }
 
     onConfirm({
       name: name.trim(),
-      imageUrl: trimmedUrl,
+      imageUrl: trimmedUrl || "",
       description: description.trim() || undefined,
       imageAttribution: imageAttribution.trim() || undefined,
     });
@@ -197,21 +197,31 @@ export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: M
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="image-upload" className="text-indigo-400 font-semibold">Upload Photo</Label>
+            <Label htmlFor="image-upload" className="text-indigo-400 font-semibold">
+              Photo <span className="text-slate-500 font-normal">(optional — initials shown if omitted)</span>
+            </Label>
             <input ref={fileInputRef} type="file" id="image-upload" accept="image/*" onChange={handleFileSelect} className="hidden" data-testid="input-metricadiaid-image-file" />
             {!imageUrl ? (
-              <Button type="button" onClick={() => fileInputRef.current?.click()} disabled={isUploading} className="w-full bg-indigo-900/40 hover:bg-indigo-800/60 border border-indigo-600/40 text-indigo-300 font-bold" data-testid="button-upload-image">
-                {isUploading ? <><div className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin mr-2" />Uploading...</> : <><Upload className="w-4 h-4 mr-2" />Click to Upload Photo</>}
-              </Button>
+              <div className="flex gap-2 items-center">
+                {/* Initials preview — shows what the popup will look like without a photo */}
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-600 to-amber-900 flex items-center justify-center border border-amber-500/40 shrink-0" title="Popup will show these initials">
+                  <span className="text-sm font-bold text-amber-100 select-none">
+                    {name.trim().split(" ").map((w: string) => w[0]).filter(Boolean).slice(0, 2).join("") || "?"}
+                  </span>
+                </div>
+                <Button type="button" onClick={() => fileInputRef.current?.click()} disabled={isUploading} className="flex-1 bg-indigo-900/40 hover:bg-indigo-800/60 border border-indigo-600/40 text-indigo-300 font-bold" data-testid="button-upload-image">
+                  {isUploading ? <><div className="w-4 h-4 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin mr-2" />Uploading...</> : <><Upload className="w-4 h-4 mr-2" />Upload Photo</>}
+                </Button>
+              </div>
             ) : (
               <div className="flex items-center gap-2 p-2 bg-slate-950 border border-slate-700 rounded">
-                <span className="text-sm text-green-400 flex-1">Photo uploaded</span>
+                <span className="text-sm text-green-400 flex-1">Photo set</span>
                 <Button type="button" size="sm" variant="ghost" onClick={() => { setImageUrl(""); if (fileInputRef.current) fileInputRef.current.value = ""; }} className="h-6 w-6 p-0" data-testid="button-remove-image">
                   <X className="w-4 h-4 text-red-400" />
                 </Button>
               </div>
             )}
-            <p className="text-xs text-slate-500">Max 5MB &bull; JPG, PNG, GIF, WebP</p>
+            <p className="text-xs text-slate-500">Max 5MB &bull; JPG, PNG, GIF, WebP &bull; Wikipedia lookup auto-fills</p>
           </div>
 
           {imageUrl && (
