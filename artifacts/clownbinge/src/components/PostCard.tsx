@@ -62,7 +62,8 @@ function formatWordCount(body: string | null | undefined): string | null {
 export function PostCard({ post }: { post: Post }) {
   const isVideo = post.hasVideo;
   const wordCountLabel = formatWordCount((post as any).body);
-  const cardClasses = `bg-white text-foreground ${CATEGORY_BORDER[post.category] ?? "border-border shadow-sm hover:shadow-md"}`;
+  const isPremium = !!(post as any).premiumOnly;
+  const cardClasses = `bg-white text-foreground ${isPremium ? "shadow-sm" : (CATEGORY_BORDER[post.category] ?? "border-border shadow-sm hover:shadow-md")}`;
 
   const textClasses = "text-dark-text";
   const mutedTextClasses = "text-muted-foreground";
@@ -73,8 +74,11 @@ export function PostCard({ post }: { post: Post }) {
         relative rounded-xl border overflow-hidden transition-all duration-300 hover:-translate-y-1
         ${cardClasses}
       `}>
-        {/* Accent line at bottom */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-secondary" />
+        {/* Accent line at bottom — gold gradient for premium, yellow for standard */}
+        <div
+          className={`absolute bottom-0 left-0 w-full h-1 ${isPremium ? "" : "bg-secondary"}`}
+          style={isPremium ? { background: "linear-gradient(90deg,#B8860B,#F5C518,#B8860B)" } : undefined}
+        />
 
 
         <div className="p-5 sm:p-6">
@@ -90,7 +94,22 @@ export function PostCard({ post }: { post: Post }) {
                 </p>
               </div>
               <div className="shrink-0">
-                <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
+                {isPremium ? (
+                  <span
+                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-black uppercase"
+                    style={{
+                      background: "#FEFBEC",
+                      color: "#1A1A2E",
+                      border: "1.5px solid #C9A84C",
+                      letterSpacing: "0.14em",
+                    }}
+                  >
+                    <Star className="w-3.5 h-3.5 shrink-0" style={{ color: "#B8860B" }} />
+                    Premium
+                  </span>
+                ) : (
+                  <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
+                )}
               </div>
             </div>
 
@@ -100,16 +119,15 @@ export function PostCard({ post }: { post: Post }) {
                 {CATEGORY_LABELS[post.category] || post.category}
               </span>
               {post.userSubmitted && <UserSubmittedBadge />}
-              {post.selfOwnScore != null && <SelfOwnScoreBadge score={post.selfOwnScore} />}
+              {post.selfOwnScore != null && post.category === "self_owned" && <SelfOwnScoreBadge score={post.selfOwnScore} />}
               {STAFF_PICKS_SLUGS.includes(post.slug) && (
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-green-600 text-white">
                   ★ Staff Pick
                 </span>
               )}
-              {(post as any).premiumOnly && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest border" style={{ background: "#FEF3C7", color: "#92400E", borderColor: "#D97706" }}>
-                  <Star className="w-2.5 h-2.5 fill-current" /> Member
-                </span>
+              {/* On premium cards, verified badge moves into the metadata row */}
+              {isPremium && (
+                <VerifiedBadge source={post.verifiedSource} date={post.dateOfIncident ? format(new Date(post.dateOfIncident), 'MMM d, yyyy') : undefined} />
               )}
               {post.category === "nerd_out" && (
                 <TooltipProvider delayDuration={200}>

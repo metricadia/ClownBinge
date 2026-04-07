@@ -282,7 +282,7 @@ export default function PostDetail() {
             </div>
             <div className="shrink-0 flex items-center gap-2 flex-wrap justify-end">
               {post.userSubmitted && <UserSubmittedBadge />}
-              {post.selfOwnScore != null && <SelfOwnScoreBadge score={post.selfOwnScore} />}
+              {post.selfOwnScore != null && post.category === "self_owned" && <SelfOwnScoreBadge score={post.selfOwnScore} />}
               <VerifiedBadge
                 source={post.verifiedSource}
                 date={post.dateOfIncident ? format(new Date(post.dateOfIncident), "MMM d, yyyy") : undefined}
