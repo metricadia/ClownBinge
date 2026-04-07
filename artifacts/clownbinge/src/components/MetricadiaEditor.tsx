@@ -380,7 +380,7 @@ export function MetricadiaEditor({
     const safeAttr = (data.imageAttribution || "").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     editor.chain().focus().setTextSelection(metricadiaIDSelectionRange).setMetricadiaID({
       name: sanitized.name || "",
-      imageUrl: sanitized.imageUrl || "/uploads/fallback-avatar.png",
+      imageUrl: sanitized.imageUrl || "",
       description: sanitized.description || undefined,
       ...(safeAttr ? { attribution: safeAttr } : {}),
     }).run();

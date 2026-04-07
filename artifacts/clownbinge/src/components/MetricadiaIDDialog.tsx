@@ -255,7 +255,7 @@ export function MetricadiaIDDialog({ open, onClose, selectedText, onConfirm }: M
 
           <div className="flex gap-3 pt-2">
             <Button onClick={onClose} variant="outline" className="flex-1 bg-slate-950 border-slate-700" data-testid="button-cancel">Cancel</Button>
-            <Button onClick={handleConfirm} disabled={!name.trim() || !imageUrl.trim()} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold" data-testid="button-confirm-metricadiaid">
+            <Button onClick={handleConfirm} disabled={!name.trim()} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold" data-testid="button-confirm-metricadiaid">
               <Sparkles className="w-4 h-4 mr-2" />Add Metricadia ID™
             </Button>
           </div>

@@ -50,12 +50,12 @@ export function sanitizeMetricadiaIDAttributes(attrs: { name?: string; imageUrl?
   };
 
   // Sanitize and return safe attributes
+  // imageUrl is intentionally nullable — empty string means "no photo, show initials"
   return {
     name: attrs.name ? escapeHtml(attrs.name) : null,
-    // Escape quotes/brackets but NOT slashes - prevents XSS while preserving URL paths
-    imageUrl: attrs.imageUrl && isSafeUrl(attrs.imageUrl) 
-      ? escapeUrlForAttribute(attrs.imageUrl) 
-      : '/public-objects/public/fallback-avatar.png',
+    imageUrl: attrs.imageUrl && isSafeUrl(attrs.imageUrl)
+      ? escapeUrlForAttribute(attrs.imageUrl)
+      : '',
     description: attrs.description ? escapeHtml(attrs.description) : null,
   };
 }

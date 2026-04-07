@@ -88,7 +88,7 @@ export function MetricadiaIDPopup({ open, onClose, name, imageUrl, description, 
                     {name.split(" ").map((w: string) => w[0]).slice(0, 2).join("")}
                   </span>
                 </div>
-                <span className="text-xs text-stone-500 tracking-widest uppercase">Historical Figure</span>
+                <span className="text-xs text-stone-500 tracking-widest uppercase">Metricadia ID</span>
               </div>
             )}
           </div>
