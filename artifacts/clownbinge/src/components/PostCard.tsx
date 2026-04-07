@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { format } from "date-fns";
-import { Video } from "lucide-react";
+import { Video, Star } from "lucide-react";
 import type { Post } from "@workspace/api-client-react";
 import { VerifiedBadge } from "./VerifiedBadge";
 import { UserSubmittedBadge } from "./UserSubmittedBadge";
@@ -104,6 +104,11 @@ export function PostCard({ post }: { post: Post }) {
               {STAFF_PICKS_SLUGS.includes(post.slug) && (
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-green-600 text-white">
                   ★ Staff Pick
+                </span>
+              )}
+              {(post as any).premiumOnly && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest border" style={{ background: "#FEF3C7", color: "#92400E", borderColor: "#D97706" }}>
+                  <Star className="w-2.5 h-2.5 fill-current" /> Member
                 </span>
               )}
               {post.category === "nerd_out" && (
