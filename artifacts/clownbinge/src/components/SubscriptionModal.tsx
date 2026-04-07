@@ -5,7 +5,7 @@ import { Link } from "wouter";
 
 interface SubscriptionModalProps {
   onClose: () => void;
-  trigger?: "metricadiaid" | "factoid";
+  trigger?: "metricadiaid" | "factoid" | "comment";
 }
 
 export function SubscriptionModal({ onClose, trigger }: SubscriptionModalProps) {
@@ -14,12 +14,15 @@ export function SubscriptionModal({ onClose, trigger }: SubscriptionModalProps) 
   const [successLabel, setSuccessLabel] = useState("");
   const activate = useActivateSubscription();
 
+  const isComment = trigger === "comment";
   const featureLabel =
     trigger === "metricadiaid"
       ? "Metricadia ID profiles"
       : trigger === "factoid"
         ? "CB Factoid citations"
-        : "premium features";
+        : trigger === "comment"
+          ? "Member discussion"
+          : "premium features";
 
   async function handleActivate(e: React.FormEvent) {
     e.preventDefault();
@@ -50,16 +53,32 @@ export function SubscriptionModal({ onClose, trigger }: SubscriptionModalProps) 
 
         {view === "gate" && (
           <div className="p-8 pt-9 text-center">
-            <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "#EEF2FF" }}>
-              <Lock className="w-7 h-7" style={{ color: "#1B3E99" }} />
+            <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: isComment ? "#FEF3C7" : "#EEF2FF" }}>
+              {isComment
+                ? <Star className="w-7 h-7 fill-amber-500 text-amber-600" />
+                : <Lock className="w-7 h-7" style={{ color: "#1B3E99" }} />
+              }
             </div>
-            <h2 className="font-sans font-bold text-xl text-gray-900 mb-2">Supporting Members Only</h2>
-            <p className="text-gray-600 text-sm mb-1">
-              <strong>{featureLabel.charAt(0).toUpperCase() + featureLabel.slice(1)}</strong> are available to Supporting Members.
-            </p>
-            <p className="text-gray-500 text-xs mb-6 leading-relaxed">
-              All article text stays free and publicly accessible. Membership unlocks interactive research tools: Metricadia ID profiles and sourced CB Factoid popups.
-            </p>
+
+            {isComment ? (
+              <>
+                <p className="text-xs font-bold uppercase tracking-widest text-amber-700 mb-1">Membership Required</p>
+                <h2 className="font-sans font-bold text-xl text-gray-900 mb-2">Support ClownBinge</h2>
+                <p className="text-gray-500 text-sm mb-6 leading-relaxed">
+                  Join the member discussion. $9/month keeps the platform independent and gives you a seat at the table.
+                </p>
+              </>
+            ) : (
+              <>
+                <h2 className="font-sans font-bold text-xl text-gray-900 mb-2">Supporting Members Only</h2>
+                <p className="text-gray-600 text-sm mb-1">
+                  <strong>{featureLabel.charAt(0).toUpperCase() + featureLabel.slice(1)}</strong> are available to Supporting Members.
+                </p>
+                <p className="text-gray-500 text-xs mb-6 leading-relaxed">
+                  All article text stays free and publicly accessible. Membership unlocks interactive research tools: Metricadia ID profiles and sourced CB Factoid popups.
+                </p>
+              </>
+            )}
 
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-left">
               <div className="flex items-center gap-2 mb-2">
@@ -67,7 +86,8 @@ export function SubscriptionModal({ onClose, trigger }: SubscriptionModalProps) 
                 <span className="font-bold text-sm text-amber-900">Supporting Member — $9/mo</span>
               </div>
               <ul className="text-xs text-amber-800 space-y-1 pl-1">
-                <li>Metricadia ID profiles on every person named in our reporting</li>
+                <li>Join the member-only discussion on every article</li>
+                <li>Metricadia ID profiles on every person in our reporting</li>
                 <li>CB Factoid citation popups with full source detail</li>
                 <li>Direct support for independent accountability journalism</li>
               </ul>
@@ -80,7 +100,7 @@ export function SubscriptionModal({ onClose, trigger }: SubscriptionModalProps) 
                 className="block w-full py-2.5 rounded-lg font-bold text-sm text-center transition-colors"
                 style={{ background: "#1B3E99", color: "#fff" }}
               >
-                Become a Supporting Member
+                {isComment ? "Subscribe to Join the Discussion" : "Become a Supporting Member"}
               </Link>
               <button
                 onClick={() => setView("activate")}

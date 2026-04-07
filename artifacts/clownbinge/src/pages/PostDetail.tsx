@@ -16,7 +16,7 @@ import { useCategorySponsor } from "@/hooks/use-sponsor";
 import { RelatedArticles } from "@/components/RelatedArticles";
 import { useEffect, useRef, useMemo, useState, useCallback } from "react";
 import { format } from "date-fns";
-import { Loader2, AlertTriangle, Lock } from "lucide-react";
+import { Loader2, AlertTriangle, Lock, Star } from "lucide-react";
 import { useFactoidPopup } from "@/hooks/use-factoid-popup";
 import { FactoidPopup } from "@/components/FactoidPopup";
 import { MetricadiaIDPopup } from "@/components/MetricadiaIDPopup";
@@ -96,7 +96,9 @@ export default function PostDetail() {
   // ── Subscription gate ───────────────────────────────────────────────────────
   const { data: subscriptionStatus } = useSubscription();
   const [gateOpen, setGateOpen] = useState(false);
-  const [gateTrigger, setGateTrigger] = useState<"metricadiaid" | "factoid">("metricadiaid");
+  const [gateTrigger, setGateTrigger] = useState<"metricadiaid" | "factoid" | "comment">("metricadiaid");
+  const [commentText, setCommentText] = useState("");
+  const [commentSubmitted, setCommentSubmitted] = useState(false);
 
   // Gate factoid popup: if premium-only and not subscribed, close factoid and show gate
   useEffect(() => {
@@ -378,15 +380,98 @@ export default function PostDetail() {
           </div>
         </div>
 
-        {/* Discussion — compact strip */}
-        <div className="flex items-center justify-between gap-4 border-t border-border pt-3 mt-3">
-          <div className="flex items-baseline gap-2 min-w-0">
-            <span className="font-semibold text-sm text-header shrink-0">Discussion</span>
-            <span className="text-xs text-foreground/50 truncate">Join the conversation — verified readers only</span>
+        {/* Discussion section */}
+        <div className="border-t border-border pt-6 mt-4">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-base text-header">Discussion</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground bg-muted px-2 py-0.5 rounded-full">Members Only</span>
+            </div>
+            {subscriptionStatus?.isSubscriber && (
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full" style={{ background: "#FEF3C7", color: "#92400E" }}>
+                <Star className="w-2.5 h-2.5 fill-current" /> Active
+              </span>
+            )}
           </div>
-          <button className="shrink-0 bg-[#1A3A8F] text-white font-bold text-xs px-4 py-2 rounded-lg hover:bg-[#162f74] transition-colors">
-            Log in to Comment
-          </button>
+
+          {/* Ghost comments — always visible, blurred for non-subscribers */}
+          <div className="space-y-4 mb-5 relative">
+            {[
+              { initials: "MR", color: "#1A3A8F", name: "M. Rodriguez", time: "2h ago", text: "The primary source record on this is staggering. I pulled the original filing myself — every single number checks out. This is why I subscribe." },
+              { initials: "TW", color: "#7C3AED", name: "T. Washington", time: "5h ago", text: "Compare this to the coverage in legacy outlets. Not a single citation to an actual document. ClownBinge is the only place doing this work correctly." },
+              { initials: "AJ", color: "#065F46", name: "A. Johnson", time: "8h ago", text: "Shared this with my research group. The S. Hrg. number alone opens up three additional primary sources we hadn't cross-referenced yet." },
+            ].map((c) => (
+              <div
+                key={c.initials}
+                className={`flex gap-3 transition-all duration-200 ${subscriptionStatus?.isSubscriber ? "" : "select-none pointer-events-none"}`}
+                style={subscriptionStatus?.isSubscriber ? {} : { filter: "blur(5px)", opacity: 0.55 }}
+              >
+                <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-white text-[11px] font-bold" style={{ background: c.color }}>
+                  {c.initials}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-2 mb-1">
+                    <span className="font-bold text-xs text-header">{c.name}</span>
+                    <span className="text-[10px] text-muted-foreground">{c.time}</span>
+                  </div>
+                  <p className="text-sm text-foreground/80 leading-relaxed">{c.text}</p>
+                </div>
+              </div>
+            ))}
+
+            {/* Lock overlay for non-subscribers */}
+            {!subscriptionStatus?.isSubscriber && (
+              <div
+                className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                onClick={() => { setGateTrigger("comment"); setGateOpen(true); }}
+              >
+                <div className="rounded-xl px-5 py-3 text-center shadow-lg border border-amber-200" style={{ background: "rgba(255,251,235,0.97)" }}>
+                  <Lock className="w-4 h-4 mx-auto mb-1.5 text-amber-700" />
+                  <p className="text-xs font-bold text-amber-900">Members read the full discussion</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Comment input */}
+          {subscriptionStatus?.isSubscriber ? (
+            commentSubmitted ? (
+              <div className="rounded-xl px-4 py-3 text-sm text-center border border-green-200" style={{ background: "#F0FDF4", color: "#166534" }}>
+                Comment submitted. Our team reviews all discussion before publishing.
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <textarea
+                  value={commentText}
+                  onChange={e => setCommentText(e.target.value)}
+                  placeholder="Share your analysis, a question, or an additional primary source…"
+                  rows={3}
+                  className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#1A3A8F]/30"
+                />
+                <div className="flex justify-end">
+                  <button
+                    onClick={() => { if (commentText.trim()) setCommentSubmitted(true); }}
+                    disabled={!commentText.trim()}
+                    className="px-4 py-2 rounded-lg font-bold text-xs text-white transition-opacity disabled:opacity-40"
+                    style={{ background: "#1A3A8F" }}
+                  >
+                    Submit Comment
+                  </button>
+                </div>
+              </div>
+            )
+          ) : (
+            <div
+              className="rounded-xl border border-border bg-muted/40 px-4 py-3 flex items-center gap-3 cursor-pointer hover:border-[#1A3A8F]/40 transition-colors"
+              onClick={() => { setGateTrigger("comment"); setGateOpen(true); }}
+            >
+              <div className="w-7 h-7 rounded-full bg-muted shrink-0" />
+              <span className="text-sm text-muted-foreground flex-1">Add to the discussion…</span>
+              <span className="shrink-0 font-bold text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5" style={{ background: "#1A3A8F", color: "#F5C518" }}>
+                <Star className="w-3 h-3 fill-current" /> Subscribe
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Primary Sources */}
