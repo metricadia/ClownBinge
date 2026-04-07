@@ -392,11 +392,7 @@ export default function PostDetail() {
                 {/* Top info bar */}
                 <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-2.5" style={{ borderBottom: "1px solid #E5E7EB", background: "#FAFAFA" }}>
                   <span className="text-xs font-semibold" style={{ color: "#374151" }}>
-                    Subscription Required for{" "}
-                    <span className="font-mono font-bold" style={{ color: "#1A3A8F" }}>{post?.caseNumber ?? "CASE FILE"}</span>
-                    {post?.title && (
-                      <span style={{ color: "#374151" }}> &mdash; {post.title.length > 55 ? post.title.slice(0, 55) + "…" : post.title}</span>
-                    )}
+                    Subscription Required To Read This Article
                   </span>
                   <span className="text-[10px] font-black uppercase tracking-[0.22em] px-2.5 py-0.5 rounded-full shrink-0" style={{ background: "#1A3A8F", color: "#F5C518" }}>
                     Premium Article
