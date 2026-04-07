@@ -266,3 +266,56 @@ export async function applyPremiumFlags(): Promise<void> {
     console.error("[Seed] Error during applyPremiumFlags:", err);
   }
 }
+
+const STAFF_PICK_SLUGS: string[] = [
+  "American-eugenics-Nazi-Germany-forced-sterilization-Buck-v-Bell",
+  "COINTELPRO-fred-hampton-FBI-assassination-Black-Panther-1969",
+  "Freedmens-Bureau-reconstruction-1865-records-national-archives-Black-history",
+  "afroman-sued-harassers-into-museum-exhibit",
+  "ai-data-center-cooling-cost-water-electricity-hyperscale-bill",
+  "black-native-mexican-history-is-us-history",
+  "bonus-army-1932-MacArthur-veterans-hoover-Anacostia",
+  "bracero-program-stolen-wages-mexico-farmworkers-labor-history",
+  "britain-extracted-45-trillion-india-colonial-trade-records-patnaik-calculation",
+  "cash-bail-reform-states-recidivism-data-documented-record",
+  "civil-asset-forfeiture-states-no-conviction-required-documented-record",
+  "dawes-act-1887-90-million-acres-2025-cost",
+  "faith-communities-built-abolition-religion-anti-slavery",
+  "generative-ai-copyright-lawsuits-settlements-authors-guild-openai-2024",
+  "great-dismal-swamp-maroon-nation-freedom-slavery-archaeology",
+  "gut-brain-axis-second-brain-microbiome-serotonin-mental-health",
+  "haiti-indemnity-france-21-billion-reparations-slave-owners-documented",
+  "india-upi-unified-payments-interface-131-billion-transactions-2023",
+  "irs-free-file-intuit-turbotax-lobbying-direct-file-2024",
+  "loneliness-lethal-smoking-15-cigarettes-social-connection-science",
+  "manila-men-Louisiana-Filipino-first-Asian-Americans-St-Malo-1763",
+  "national-registry-exonerations-wrongful-conviction-race-data-documented",
+  "patricia-holden-diversity-book-ban-daughter-dei-university",
+  "prosperity-gospel-bible-wealth-new-testament",
+  "quantum-computing-break-encryption-nist-post-quantum-standards",
+  "rick-donahue-texas-ag-suing-companies-own-law-firm-did",
+  "science-of-grief-mourning-prolonged-grief-resilience-brain",
+  "semiconductor-supply-chain-single-points-failure-sia-bcg-analysis",
+  "sit-with-grandma-grandpa-intergenerational-wisdom-healing-elders",
+  "smart-tv-surveillance-data-collection-ftc-acr-privacy-samsung-lg",
+  "strength-differences-men-women-research",
+  "submarine-cables-internet-infrastructure-1-3-million-miles-four-companies",
+  "sundown-towns-racial-exclusion-redlining-wealth-gap-American-history",
+  "tommy-tuberville-broadband-infrastructure-vote-biden-mockery",
+  "trickledown-economic-religion-jim-jones-republican-democratic-economic-record",
+  "tsmc-taiwan-advanced-chips-92-percent-geopolitical-risk-pentagon",
+  "women-build-too-50-business-women-changed-world",
+];
+
+export async function applyStaffPickFlags(): Promise<void> {
+  try {
+    const result = await db
+      .update(postsTable)
+      .set({ staffPick: true })
+      .where(inArray(postsTable.slug, STAFF_PICK_SLUGS));
+    const count = (result as unknown as { rowCount?: number })?.rowCount ?? 0;
+    console.log(`[Seed] Staff pick flags applied: ${count} articles marked staffPick.`);
+  } catch (err) {
+    console.error("[Seed] Error during applyStaffPickFlags:", err);
+  }
+}
