@@ -376,18 +376,22 @@ export default function PostDetail() {
                 <div className="px-6 pt-6 pb-5">
 
                   {/* Header copy */}
-                  <p className="text-[11px] font-black uppercase tracking-[0.22em] mb-1" style={{ color: "#F5C518" }}>
-                    Premium Article · Members Only
+                  <p className="text-[10px] font-black uppercase tracking-[0.22em] mb-3" style={{ color: "#F5C518" }}>
+                    Premium Investigation · Members Only
                   </p>
-                  <h2 className="font-display font-black text-2xl text-white leading-tight mb-4">
-                    Help Us Keep the Lights On
-                  </h2>
+                  <p className="font-display font-black text-2xl leading-tight mb-1" style={{ color: "#ffffff" }}>
+                    The rest of this article
+                  </p>
+                  <p className="font-display font-black text-2xl leading-tight mb-4" style={{ color: "#F5C518" }}>
+                    is for Supporting Members.
+                  </p>
 
                   {/* Price + star */}
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <span className="font-display font-black text-4xl text-white leading-none">$9</span>
-                      <span className="text-white/60 text-base font-medium ml-1">/ month</span>
+                      <span className="font-display font-black leading-none" style={{ fontSize: "2.5rem", color: "#ffffff" }}>$9</span>
+                      <span className="text-base font-medium ml-1.5" style={{ color: "rgba(255,255,255,0.55)" }}>/ month</span>
+                      <span className="ml-3 text-xs font-bold" style={{ color: "rgba(255,255,255,0.4)" }}>No ads. No sponsors.</span>
                     </div>
                     <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#F5C518" }}>
                       <Star className="w-5 h-5 fill-[#1A3A8F] text-[#1A3A8F]" />
@@ -395,16 +399,16 @@ export default function PostDetail() {
                   </div>
 
                   {/* Pitch */}
-                  <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.65)" }}>
-                    Unlock the full investigation — plus the complete research toolkit on every article.
+                  <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.6)" }}>
+                    Independent. Source-verified. Every claim traced to a primary document. Supporting members get the full investigation and every research tool we build.
                   </p>
 
                   {/* Benefits */}
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 mb-6">
                     {[
                       "Full access to all member investigations",
-                      "Metricadia ID profiles on named subjects",
-                      "CB Factoid citation popups",
+                      "Metricadia ID: Profiles on every named person in this article",
+                      "CB Deep Dive Factoid: Learn as you read",
                       "Member discussion on every article",
                     ].map(b => (
                       <li key={b} className="flex items-center gap-2 text-xs" style={{ color: "#F5C518" }}>
@@ -423,7 +427,7 @@ export default function PostDetail() {
                     className="flex items-center justify-center w-full py-3.5 rounded-xl font-black text-sm uppercase tracking-wider transition-opacity hover:opacity-90"
                     style={{ background: "#F5C518", color: "#1A3A8F" }}
                   >
-                    Subscribe Now&nbsp; ★
+                    Read the Full Investigation &nbsp;★
                   </Link>
                 </div>
 
