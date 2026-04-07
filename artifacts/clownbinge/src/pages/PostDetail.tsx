@@ -395,7 +395,7 @@ export default function PostDetail() {
                     {post?.caseNumber ?? "CASE FILE"}
                   </span>
                   <div className="flex items-center gap-3">
-                    {wcLabel && <span className="font-mono text-xs" style={{ color: "#9CA3AF" }}>{wcLabel}</span>}
+                    {wcLabel && <span className="font-mono text-xs font-semibold" style={{ color: "#374151" }}>{wcLabel}</span>}
                     <span className="text-[10px] font-black uppercase tracking-[0.22em] px-2.5 py-0.5 rounded-full" style={{ background: "#1A3A8F", color: "#F5C518" }}>
                       Premium Article
                     </span>
@@ -408,13 +408,13 @@ export default function PostDetail() {
                   {/* Price — front and center */}
                   <div className="flex items-baseline gap-2 mb-3">
                     <span className="font-display font-black" style={{ fontSize: "2.8rem", lineHeight: 1, color: "#1A3A8F" }}>$9</span>
-                    <span className="font-bold text-base" style={{ color: "#6B7280" }}>/month</span>
+                    <span className="font-bold text-base" style={{ color: "#374151" }}>/month</span>
                   </div>
 
                   <p className="font-bold text-lg mb-1" style={{ color: "#1A1A2E" }}>
                     This investigation is for Supporting Members.
                   </p>
-                  <p className="text-sm mb-5" style={{ color: "#6B7280" }}>
+                  <p className="text-sm mb-5" style={{ color: "#374151" }}>
                     Unlock the full article, Metricadia ID profiles, and CB Deep Dive Factoids — all primary-source verified.
                   </p>
 
@@ -429,8 +429,8 @@ export default function PostDetail() {
                     </a>
                     <button
                       onClick={() => { setGateTrigger("metricadiaid"); setGateOpen(true); }}
-                      className="text-sm hover:underline underline-offset-4"
-                      style={{ color: "#9CA3AF", background: "none", border: "none", cursor: "pointer" }}
+                      className="text-sm font-semibold hover:underline underline-offset-4"
+                      style={{ color: "#1A3A8F", background: "none", border: "none", cursor: "pointer" }}
                     >
                       Already a member? Enter access token
                     </button>
