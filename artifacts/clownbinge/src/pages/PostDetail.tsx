@@ -371,13 +371,17 @@ export default function PostDetail() {
               {/* Fade over last paragraph */}
               <div className="h-28 -mt-28 relative pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, white)" }} />
 
-              {/* Gate card — brand language from the subscribe page */}
-              <div className="rounded-2xl overflow-hidden" style={{ background: "#1A1A2E", border: "1px solid rgba(201,168,76,0.4)" }}>
+              {/* Gate card — subscribe page blue */}
+              <div className="rounded-2xl overflow-hidden" style={{ background: "#1A3A8F", border: "2px solid #F5C518" }}>
                 <div className="px-6 pt-6 pb-5">
-                  {/* Eyebrow */}
-                  <p className="text-[10px] font-black uppercase tracking-[0.22em] mb-3" style={{ color: "#C9A84C" }}>
-                    Supporting Member
+
+                  {/* Header copy */}
+                  <p className="text-[11px] font-black uppercase tracking-[0.22em] mb-1" style={{ color: "#F5C518" }}>
+                    Premium Article · Members Only
                   </p>
+                  <h2 className="font-display font-black text-2xl text-white leading-tight mb-4">
+                    Help Us Keep the Lights On
+                  </h2>
 
                   {/* Price + star */}
                   <div className="flex items-start justify-between mb-3">
@@ -385,8 +389,8 @@ export default function PostDetail() {
                       <span className="font-display font-black text-4xl text-white leading-none">$9</span>
                       <span className="text-white/60 text-base font-medium ml-1">/ month</span>
                     </div>
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: "#F5C518" }}>
-                      <Star className="w-5 h-5 fill-[#1A1A2E] text-[#1A1A2E]" />
+                    <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: "#F5C518" }}>
+                      <Star className="w-5 h-5 fill-[#1A3A8F] text-[#1A3A8F]" />
                     </div>
                   </div>
 
@@ -403,7 +407,7 @@ export default function PostDetail() {
                       "CB Factoid citation popups",
                       "Member discussion on every article",
                     ].map(b => (
-                      <li key={b} className="flex items-center gap-2 text-xs" style={{ color: "rgba(255,255,255,0.75)" }}>
+                      <li key={b} className="flex items-center gap-2 text-xs" style={{ color: "#F5C518" }}>
                         <svg className="w-3.5 h-3.5 shrink-0" style={{ color: "#F5C518" }} viewBox="0 0 16 16" fill="none">
                           <circle cx="8" cy="8" r="7.5" stroke="currentColor" strokeWidth="1"/>
                           <path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -417,7 +421,7 @@ export default function PostDetail() {
                   <Link
                     href="/subscribe"
                     className="flex items-center justify-center w-full py-3.5 rounded-xl font-black text-sm uppercase tracking-wider transition-opacity hover:opacity-90"
-                    style={{ background: "#F5C518", color: "#1A1A2E" }}
+                    style={{ background: "#F5C518", color: "#1A3A8F" }}
                   >
                     Subscribe Now&nbsp; ★
                   </Link>
