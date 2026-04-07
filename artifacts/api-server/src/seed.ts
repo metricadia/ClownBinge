@@ -190,18 +190,25 @@ export async function syncImprovedArticles(): Promise<void> {
     );
 
     const existing = await db
-      .select({ caseNumber: postsTable.caseNumber, bodyLen: sql<number>`LENGTH(body)` })
+      .select({
+        caseNumber: postsTable.caseNumber,
+        bodyLen: sql<number>`LENGTH(body)`,
+        hasCorruptedLinks: sql<boolean>`body LIKE '%&lt;a href%'`,
+      })
       .from(postsTable)
       .where(
         inArray(postsTable.caseNumber, IMPROVED_ARTICLES)
       );
 
     let updated = 0;
-    for (const row of existing as { caseNumber: string; bodyLen: number }[]) {
+    for (const row of existing as { caseNumber: string; bodyLen: number; hasCorruptedLinks: boolean }[]) {
       const seed = seedMap.get(row.caseNumber);
       if (!seed) continue;
       const seedBodyLen = (seed.body as string).length;
-      if (seedBodyLen > row.bodyLen + 200) {
+      const needsLengthSync = seedBodyLen > row.bodyLen + 200;
+      const needsCorruptionFix = row.hasCorruptedLinks;
+      if (needsLengthSync || needsCorruptionFix) {
+        const reason = needsCorruptionFix ? "corrupted links detected" : `${row.bodyLen} -> ${seedBodyLen} chars`;
         await db
           .update(postsTable)
           .set({
@@ -211,7 +218,7 @@ export async function syncImprovedArticles(): Promise<void> {
           })
           .where(eq(postsTable.caseNumber, row.caseNumber));
         updated++;
-        console.log(`[Seed] Synced improved article ${row.caseNumber} (${row.bodyLen} -> ${seedBodyLen} chars)`);
+        console.log(`[Seed] Synced improved article ${row.caseNumber} (${reason})`);
       }
     }
 
