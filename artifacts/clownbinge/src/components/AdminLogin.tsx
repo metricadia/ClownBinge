@@ -59,49 +59,87 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
         }}
       />
 
-      {/* Marble gold veining — organic SVG paths, very low opacity */}
+      {/* Kintsugi-marble gold veining — glow + core layers + particle scatter */}
+      <style>{`
+        @keyframes veinPulse {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0.45; }
+        }
+        .vein-svg { animation: veinPulse 9s ease-in-out infinite; }
+      `}</style>
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none"
+        className="absolute inset-0 w-full h-full pointer-events-none vein-svg"
         viewBox="0 0 1000 600"
         preserveAspectRatio="xMidYMid slice"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g fill="none" stroke="#C8A230">
-          {/* Main diagonal — lower-left to upper-right */}
-          <path
-            d="M 40 598 C 140 490, 240 415, 370 305 C 445 248, 530 172, 695 72 C 740 46, 790 22, 850 4"
-            strokeWidth="1.4" strokeOpacity="0.055"
-          />
-          {/* Branch off main ~midpoint */}
-          <path
-            d="M 370 305 C 415 285, 478 260, 548 210 C 618 160, 700 100, 775 52"
-            strokeWidth="0.6" strokeOpacity="0.038"
-          />
-          {/* Secondary cross-vein — flows lower */}
-          <path
-            d="M 0 165 C 90 195, 175 235, 268 285 C 358 334, 455 398, 558 455 C 638 498, 718 528, 820 562"
-            strokeWidth="0.9" strokeOpacity="0.045"
-          />
-          {/* Thin whisper vein — near vertical */}
-          <path
-            d="M 215 0 C 242 48, 278 102, 316 162 C 375 252, 448 345, 505 428 C 554 498, 592 548, 624 600"
-            strokeWidth="0.55" strokeOpacity="0.038"
-          />
-          {/* Upper-right vein cluster */}
-          <path
-            d="M 588 0 C 638 52, 692 98, 736 148 C 786 208, 828 268, 882 328 C 924 376, 964 426, 998 482"
-            strokeWidth="0.7" strokeOpacity="0.04"
-          />
-          {/* Hairline accent — lower left quadrant */}
-          <path
-            d="M 0 408 C 52 386, 108 362, 158 332 C 208 302, 248 268, 292 234"
-            strokeWidth="0.45" strokeOpacity="0.032"
-          />
-          {/* Micro shard detail — upper left */}
-          <path
-            d="M 0 58 C 38 72, 82 90, 128 118 C 168 142, 198 168, 228 198"
-            strokeWidth="0.4" strokeOpacity="0.028"
-          />
+        <defs>
+          {/* Reusable glow filter */}
+          <filter id="vein-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        {/* ── VEIN A — full width, lower-left → upper-right ── */}
+        <path d="M -10 510 C 60 470, 50 380, 150 330 C 240 285, 340 355, 420 305 C 500 255, 458 145, 558 105 C 625 75, 698 115, 768 68 C 840 22, 920 40, 1010 15"
+          fill="none" stroke="#C8A230" strokeWidth="18" strokeOpacity="0.025" />
+        <path d="M -10 510 C 60 470, 50 380, 150 330 C 240 285, 340 355, 420 305 C 500 255, 458 145, 558 105 C 625 75, 698 115, 768 68 C 840 22, 920 40, 1010 15"
+          fill="none" stroke="#D4A832" strokeWidth="5" strokeOpacity="0.055" />
+        <path d="M -10 510 C 60 470, 50 380, 150 330 C 240 285, 340 355, 420 305 C 500 255, 458 145, 558 105 C 625 75, 698 115, 768 68 C 840 22, 920 40, 1010 15"
+          fill="none" stroke="#F0D070" strokeWidth="1.0" strokeOpacity="0.18" filter="url(#vein-glow)" />
+
+        {/* ── VEIN B — full width, upper meandering ── */}
+        <path d="M -10 145 C 90 125, 125 185, 218 168 C 308 152, 328 72, 438 92 C 538 110, 558 192, 668 178 C 758 164, 798 92, 918 82 C 962 78, 995 92, 1010 88"
+          fill="none" stroke="#C8A230" strokeWidth="14" strokeOpacity="0.022" />
+        <path d="M -10 145 C 90 125, 125 185, 218 168 C 308 152, 328 72, 438 92 C 538 110, 558 192, 668 178 C 758 164, 798 92, 918 82 C 962 78, 995 92, 1010 88"
+          fill="none" stroke="#D4A832" strokeWidth="4" strokeOpacity="0.050" />
+        <path d="M -10 145 C 90 125, 125 185, 218 168 C 308 152, 328 72, 438 92 C 538 110, 558 192, 668 178 C 758 164, 798 92, 918 82 C 962 78, 995 92, 1010 88"
+          fill="none" stroke="#F0D070" strokeWidth="0.8" strokeOpacity="0.15" filter="url(#vein-glow)" />
+
+        {/* ── VEIN C — full width fork, left edge → right edge ── */}
+        <path d="M -10 365 C 60 345, 118 334, 150 320 C 182 292, 232 302, 272 272 C 312 242, 312 182, 372 162 C 422 144, 482 162, 522 142 C 590 115, 660 130, 740 110 C 820 90, 900 105, 1010 90"
+          fill="none" stroke="#D4A832" strokeWidth="3" strokeOpacity="0.04" />
+        <path d="M -10 365 C 60 345, 118 334, 150 320 C 182 292, 232 302, 272 272 C 312 242, 312 182, 372 162 C 422 144, 482 162, 522 142 C 590 115, 660 130, 740 110 C 820 90, 900 105, 1010 90"
+          fill="none" stroke="#F0D070" strokeWidth="0.6" strokeOpacity="0.13" filter="url(#vein-glow)" />
+
+        {/* ── VEIN D — full width, lower wandering ── */}
+        <path d="M 1010 505 C 928 472, 882 532, 802 512 C 722 492, 702 422, 622 402 C 542 382, 502 442, 422 432 C 362 424, 332 372, 272 382 C 200 394, 140 360, 60 375 C 20 382, -10 372, -10 372"
+          fill="none" stroke="#C8A230" strokeWidth="12" strokeOpacity="0.020" />
+        <path d="M 1010 505 C 928 472, 882 532, 802 512 C 722 492, 702 422, 622 402 C 542 382, 502 442, 422 432 C 362 424, 332 372, 272 382 C 200 394, 140 360, 60 375 C 20 382, -10 372, -10 372"
+          fill="none" stroke="#D4A832" strokeWidth="3.5" strokeOpacity="0.045" />
+        <path d="M 1010 505 C 928 472, 882 532, 802 512 C 722 492, 702 422, 622 402 C 542 382, 502 442, 422 432 C 362 424, 332 372, 272 382 C 200 394, 140 360, 60 375 C 20 382, -10 372, -10 372"
+          fill="none" stroke="#F0D070" strokeWidth="0.7" strokeOpacity="0.14" filter="url(#vein-glow)" />
+
+        {/* ── Gold particle scatter — clustered near vein intersections ── */}
+        <g fill="#D4A832">
+          {/* cluster near vein-A reversal ~(420,300) */}
+          <circle cx="390" cy="310" r="1.2" fillOpacity="0.12" />
+          <circle cx="408" cy="295" r="0.7" fillOpacity="0.09" />
+          <circle cx="430" cy="308" r="1.5" fillOpacity="0.07" />
+          <circle cx="415" cy="320" r="0.5" fillOpacity="0.10" />
+          <circle cx="400" cy="285" r="0.9" fillOpacity="0.08" />
+          <circle cx="445" cy="290" r="0.6" fillOpacity="0.07" />
+          {/* cluster near vein-B wave ~(440,90) */}
+          <circle cx="430" cy="85"  r="1.0" fillOpacity="0.10" />
+          <circle cx="448" cy="96"  r="0.6" fillOpacity="0.08" />
+          <circle cx="460" cy="82"  r="1.3" fillOpacity="0.07" />
+          <circle cx="420" cy="100" r="0.5" fillOpacity="0.09" />
+          {/* scattered singles along vein A */}
+          <circle cx="80"  cy="444" r="0.8" fillOpacity="0.07" />
+          <circle cx="155" cy="318" r="0.6" fillOpacity="0.08" />
+          <circle cx="560" cy="102" r="1.0" fillOpacity="0.09" />
+          <circle cx="700" cy="62"  r="0.7" fillOpacity="0.07" />
+          {/* scattered singles along vein B */}
+          <circle cx="220" cy="162" r="0.8" fillOpacity="0.08" />
+          <circle cx="670" cy="173" r="1.1" fillOpacity="0.07" />
+          <circle cx="880" cy="83"  r="0.6" fillOpacity="0.08" />
+          {/* random field dusting */}
+          <circle cx="290" cy="530" r="0.5" fillOpacity="0.06" />
+          <circle cx="740" cy="400" r="0.7" fillOpacity="0.06" />
+          <circle cx="120" cy="240" r="0.5" fillOpacity="0.05" />
+          <circle cx="860" cy="200" r="0.6" fillOpacity="0.06" />
+          <circle cx="600" cy="480" r="0.8" fillOpacity="0.06" />
         </g>
       </svg>
 
