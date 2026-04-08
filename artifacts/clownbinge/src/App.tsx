@@ -73,6 +73,7 @@ function ClerkQueryClientCacheInvalidator() {
           // Member sync
           fetch(`${apiBase}/api/members/sync`, {
             method: "POST",
+            credentials: "include",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               clerkId: userId,
