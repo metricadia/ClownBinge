@@ -5,6 +5,8 @@
   --font-sans: 'Libre Franklin', sans-serif;
   --font-headline: 'Libre Franklin', sans-serif;
   --font-display: 'Archivo Black', sans-serif;
+  --font-founders-title: 'Playfair Display', serif;
+  --font-founders-body: 'Source Serif 4', serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* ClownBinge Design System Colors */
@@ -161,6 +163,30 @@
     text-align: justify;
     hyphens: auto;
     margin-bottom: 1.75rem;
+  }
+
+  .founders-pen-article .founders-pen-title {
+    font-family: var(--font-founders-title);
+    font-size: 2.6rem;
+    line-height: 1.15;
+  }
+
+  .founders-pen-article .founders-pen-body {
+    font-family: var(--font-founders-body);
+    font-size: 18px;
+    line-height: 1.85;
+  }
+
+  .founders-pen-article .founders-pen-lede {
+    font-family: var(--font-founders-body);
+    font-size: 19px;
+    line-height: 1.85;
+    color: #111827;
+  }
+
+  .founders-pen-article .cb-article-body p,
+  .founders-pen-article .cb-article-body li {
+    font-family: var(--font-founders-body);
   }
 
   /* Article body headings — APA-7 section headers in CB dark blue */
