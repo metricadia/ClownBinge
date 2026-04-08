@@ -1,9 +1,8 @@
 import { Router } from "express";
-import { getAuth } from "@clerk/express";
+import { getAuth, clerkClient } from "@clerk/express";
 
 const router = Router();
 
-// Merge ADMIN_CLERK_EMAILS and CB_ALLOWED_EMAIL env vars into one whitelist
 const ADMIN_EMAILS = [
   ...(process.env.ADMIN_CLERK_EMAILS ?? "").split(","),
   ...(process.env.CB_ALLOWED_EMAIL ?? "").split(","),
@@ -11,8 +10,8 @@ const ADMIN_EMAILS = [
   .map((e) => e.trim().toLowerCase())
   .filter(Boolean);
 
-// Auto-grant Kemet8 admin session to whitelisted Clerk users
-// Server verifies Clerk session is active, then checks email whitelist
+// Auto-grant Kemet8 admin session to whitelisted Clerk users.
+// Email is fetched SERVER-SIDE from Clerk — never trusted from the request body.
 router.post("/admin/clerk-login", async (req, res) => {
   try {
     const { userId } = getAuth(req);
@@ -20,13 +19,26 @@ router.post("/admin/clerk-login", async (req, res) => {
       return res.status(401).json({ error: "Not authenticated with Clerk" });
     }
 
-    const { email } = req.body as { email?: string };
-    if (!email || !ADMIN_EMAILS.includes(email.toLowerCase())) {
+    // Resolve verified email directly from Clerk — ignore any client-supplied value
+    const clerkUser = await clerkClient.users.getUser(userId);
+    const primaryEmailId = clerkUser.primaryEmailAddressId;
+    const primaryEmail = clerkUser.emailAddresses.find(
+      (e) => e.id === primaryEmailId,
+    )?.emailAddress;
+
+    if (!primaryEmail || !ADMIN_EMAILS.includes(primaryEmail.toLowerCase())) {
       return res.status(403).json({ error: "Not authorized" });
     }
 
-    (req.session as any).metricadiaAdmin = true;
-    return res.json({ ok: true });
+    // Regenerate session to prevent session fixation
+    req.session.regenerate((err) => {
+      if (err) {
+        console.error("[admin/clerk-login] session regenerate error:", err);
+        return res.status(500).json({ error: "Session error" });
+      }
+      (req.session as any).metricadiaAdmin = true;
+      return res.json({ ok: true });
+    });
   } catch (err) {
     console.error("[admin/clerk-login] error:", err);
     return res.status(500).json({ error: "Internal server error" });

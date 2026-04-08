@@ -44,12 +44,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // express-session retained for Metricadia admin (Kemet8) auth
+if (!process.env.SESSION_SECRET) {
+  console.error(
+    "[App] WARNING: SESSION_SECRET env var is not set. Using insecure fallback — set this secret immediately.",
+  );
+}
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "metricadia-admin-secret",
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 },
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000,
+    },
   }),
 );
 

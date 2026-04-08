@@ -3,17 +3,35 @@ import multer from "multer";
 import crypto from "crypto";
 import path from "path";
 import fs from "fs";
+import rateLimit from "express-rate-limit";
 import { db, postsTable, subscriberTokensTable } from "@workspace/db";
 import { eq, desc, sql } from "drizzle-orm";
 import { anthropic } from "@workspace/integrations-anthropic-ai";
 
+if (!process.env.METRICADIA_ADMIN_PASSWORD) {
+  console.error(
+    "[Metricadia] WARNING: METRICADIA_ADMIN_PASSWORD env var is not set. " +
+    "Using insecure fallback — set this secret immediately in production.",
+  );
+}
 const ADMIN_PASSWORD = process.env.METRICADIA_ADMIN_PASSWORD || "KoGAlpha#7";
 
 function generateToken(): string {
   return crypto.randomBytes(32).toString("hex");
 }
 
-const validTokens = new Set<string>();
+// Map from token → session ID so logout can revoke only the caller's token
+const tokenToSessionId = new Map<string, string>();
+
+// Rate limiter: max 6 login attempts per 15 minutes per IP
+const loginRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 6,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: "Too many login attempts, please try again later." },
+  skipSuccessfulRequests: true,
+});
 
 declare module "express-session" {
   interface SessionData {
@@ -24,9 +42,9 @@ declare module "express-session" {
 function isAdminAuthenticated(req: Request): boolean {
   if ((req.session as any)?.metricadiaAdmin === true) return true;
   const token =
-    req.headers["x-metricadia-token"] as string ||
-    req.headers["x-admin-token"] as string;
-  if (token && validTokens.has(token)) return true;
+    (req.headers["x-metricadia-token"] as string) ||
+    (req.headers["x-admin-token"] as string);
+  if (token && tokenToSessionId.has(token)) return true;
   return false;
 }
 
@@ -58,24 +76,49 @@ const imageUpload = multer({
 
 export function registerMetricadiaRoutes(app: Express) {
 
-  app.post("/api/metricadia/login", (req: Request, res: Response) => {
+  app.post("/api/metricadia/login", loginRateLimiter, (req: Request, res: Response) => {
     const { password } = req.body as { password?: string };
     if (!password) return res.status(400).json({ message: "Password required" });
 
-    if (password !== ADMIN_PASSWORD) {
+    // Constant-time comparison to prevent timing attacks
+    const provided = Buffer.from(password);
+    const expected = Buffer.from(ADMIN_PASSWORD);
+    const match =
+      provided.length === expected.length &&
+      crypto.timingSafeEqual(provided, expected);
+
+    if (!match) {
+      // Uniform delay on failure to frustrate timing analysis
       return setTimeout(() => {
         res.status(401).json({ message: "Incorrect password" });
-      }, 400) as unknown as void;
+      }, 400 + Math.random() * 200) as unknown as void;
     }
 
-    (req.session as any).metricadiaAdmin = true;
-    const token = generateToken();
-    validTokens.add(token);
-    setTimeout(() => validTokens.delete(token), 24 * 60 * 60 * 1000);
-    return res.json({ success: true, token });
+    // Regenerate session on successful login to prevent session fixation
+    req.session.regenerate((err) => {
+      if (err) {
+        console.error("[Metricadia] session regenerate error:", err);
+        return res.status(500).json({ message: "Session error" });
+      }
+      (req.session as any).metricadiaAdmin = true;
+
+      const token = generateToken();
+      const sessionId = req.session.id;
+      tokenToSessionId.set(token, sessionId);
+      // Auto-expire token after 24 h
+      setTimeout(() => tokenToSessionId.delete(token), 24 * 60 * 60 * 1000);
+
+      // Store token in session so logout can revoke it
+      (req.session as any).adminToken = token;
+
+      return res.json({ success: true, token });
+    });
   });
 
   app.post("/api/metricadia/logout", (req: Request, res: Response) => {
+    // Revoke only this session's bearer token
+    const token = (req.session as any).adminToken as string | undefined;
+    if (token) tokenToSessionId.delete(token);
     req.session.destroy(() => {});
     res.json({ success: true });
   });
