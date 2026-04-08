@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams, useLocation } from "wouter";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useUser, useClerk } from "@clerk/react";
@@ -20,6 +20,7 @@ interface Post {
   excerpt: string;
   content: string;
   caseNumber?: string;
+  category?: string;
   publishedAt?: string;
   premiumOnly?: boolean;
 }
@@ -249,9 +250,9 @@ function Sidebar({ activeSection, onSection, onLogout }: SidebarProps) {
         <button
           onClick={async () => { await onLogout(); signOut(); }}
           className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold transition-colors text-left"
-          style={{ color: "rgba(255,100,100,0.7)" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#f87171"; (e.currentTarget as HTMLButtonElement).style.background = "rgba(220,38,38,0.08)"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,100,100,0.7)"; (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+          style={{ color: "rgba(255,255,255,0.4)" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#E8C840"; (e.currentTarget as HTMLButtonElement).style.background = "rgba(201,162,39,0.06)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.4)"; (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
         >
           <LogOut size={13} />
           Sign Out
@@ -468,13 +469,14 @@ function ComingSoonPanel({ section }: { section: Section }) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-8">
-      <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5" style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.25)" }}>
-        <Icon size={28} style={{ color: "rgba(201,162,39,0.4)" }} />
+      <div className="w-14 h-14 flex items-center justify-center mb-6" style={{ borderTop: "3px solid #C9A227", background: "#fff", boxShadow: "0 1px 6px rgba(11,25,48,0.08)" }}>
+        <Icon size={22} style={{ color: "#C9A227" }} />
       </div>
-      <h1 className="text-2xl font-black text-white mb-2">{data.title}</h1>
-      <p className="text-sm max-w-md mb-4" style={{ color: "rgba(255,255,255,0.55)" }}>{data.desc}</p>
-      <div className="rounded-xl px-4 py-3 text-xs max-w-sm" style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.2)", color: "rgba(255,255,255,0.45)" }}>
-        <span className="font-bold" style={{ color: "rgba(201,162,39,0.75)" }}>Planned: </span>{data.when}
+      <h1 className="mb-3" style={{ fontFamily: "'Libre Baskerville', serif", fontWeight: 700, fontSize: "22px", color: "#0B1930" }}>{data.title}</h1>
+      <p className="max-w-md mb-5" style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "rgba(11,25,48,0.55)", lineHeight: 1.6 }}>{data.desc}</p>
+      <div className="px-5 py-3 max-w-sm" style={{ borderLeft: "3px solid #C9A227", background: "#fff", textAlign: "left" }}>
+        <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "10px", letterSpacing: "0.15em", color: "#C9A227" }}>PLANNED — </span>
+        <span style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", color: "rgba(11,25,48,0.6)" }}>{data.when}</span>
       </div>
     </div>
   );
@@ -484,6 +486,7 @@ function ComingSoonPanel({ section }: { section: Section }) {
 
 interface ArticlesPanelProps {
   posts: Post[];
+  allPosts: Post[];
   allCount: number;
   isLoading: boolean;
   search: string;
@@ -493,87 +496,148 @@ interface ArticlesPanelProps {
   premiumMutation: ReturnType<typeof useMutation<any, any, any>>;
 }
 
-function ArticlesPanel({ posts, allCount, isLoading, search, onSearch, onNewArticle, onEdit, premiumMutation }: ArticlesPanelProps) {
+function ArticlesPanel({ posts, allPosts, allCount, isLoading, search, onSearch, onNewArticle, onEdit, premiumMutation }: ArticlesPanelProps) {
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+
+  // Derive unique categories from allPosts
+  const categories = useMemo(() => {
+    const seen = new Set<string>();
+    const list: { value: string; label: string }[] = [];
+    allPosts.forEach((p) => {
+      if (p.category && !seen.has(p.category)) {
+        seen.add(p.category);
+        const found = CATEGORIES.find((c) => c.value === p.category);
+        list.push({ value: p.category, label: found?.label ?? p.category });
+      }
+    });
+    return list.sort((a, b) => a.label.localeCompare(b.label));
+  }, [allPosts]);
+
+  // Filter displayed posts by category (on top of search filter already applied)
+  const displayedPosts = useMemo(() => {
+    if (activeCategory === "all") return posts;
+    return posts.filter((p) => p.category === activeCategory);
+  }, [posts, activeCategory]);
+
   return (
     <div>
-      {/* Section header — Metricadia research-roster style */}
-      <div className="flex items-center justify-between mb-0 pb-3" style={{ borderBottom: "1px solid rgba(201,162,39,0.3)" }}>
-        <div className="flex items-baseline gap-6">
-          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "13px", letterSpacing: "0.22em", color: "rgba(255,255,255,0.9)" }}>ARTICLES</span>
-          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(201,162,39,0.6)" }}>{allCount} ON RECORD</span>
+      {/* Section header */}
+      <div className="flex items-center justify-between pb-3 mb-0" style={{ borderBottom: "1px solid rgba(201,162,39,0.5)" }}>
+        <div className="flex items-baseline gap-8">
+          <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "12px", letterSpacing: "0.18em", color: "#0B1930" }}>ARTICLES</span>
+          <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(11,25,48,0.45)" }}>
+            {activeCategory === "all" ? allCount : displayedPosts.length} ON RECORD
+          </span>
         </div>
         <button
           onClick={onNewArticle}
-          className="flex items-center gap-2 px-4 py-1.5 rounded-sm transition-colors"
-          style={{ background: "#C9A227", color: "#08122E", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "12px", letterSpacing: "0.15em" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#E8C840"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#C9A227"; }}
+          className="flex items-center gap-2 px-4 py-1.5"
+          style={{ background: "#0B1930", color: "#C9A227", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#C9A227"; (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
           data-testid="button-new-article"
         >
-          <Plus size={13} />
-          NEW ARTICLE
+          <Plus size={12} />NEW ARTICLE
         </button>
       </div>
 
+      {/* Search */}
       <input
         type="text"
         value={search}
         onChange={(e) => onSearch(e.target.value)}
         placeholder="Search by title or case number…"
-        className="w-full mb-5 px-4 py-2.5 text-white text-sm focus:outline-none rounded-lg"
-        style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.2)" }}
-        onFocus={(e) => { (e.currentTarget as HTMLInputElement).style.border = "1px solid rgba(201,162,39,0.55)"; }}
-        onBlur={(e) => { (e.currentTarget as HTMLInputElement).style.border = "1px solid rgba(201,162,39,0.2)"; }}
+        className="w-full mt-5 mb-4 px-0 py-2 text-sm focus:outline-none bg-transparent"
+        style={{ color: "#0B1930", borderBottom: "1px solid rgba(11,25,48,0.15)", fontFamily: "'Inter', sans-serif" }}
+        onFocus={(e) => { (e.currentTarget as HTMLInputElement).style.borderBottomColor = "#C9A227"; }}
+        onBlur={(e) => { (e.currentTarget as HTMLInputElement).style.borderBottomColor = "rgba(11,25,48,0.15)"; }}
         data-testid="input-search-posts"
       />
 
+      {/* Category filter — horizontal scroll strip */}
+      <div className="flex items-center gap-0 mb-6 overflow-x-auto" style={{ borderBottom: "1px solid rgba(11,25,48,0.08)", paddingBottom: 0 }}>
+        {[{ value: "all", label: "ALL" }, ...categories.map(c => ({ ...c, label: c.label.toUpperCase() }))].map((cat) => {
+          const isActive = activeCategory === cat.value;
+          return (
+            <button
+              key={cat.value}
+              onClick={() => setActiveCategory(cat.value)}
+              className="shrink-0 px-4 py-2 text-[11px] transition-all"
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontWeight: isActive ? 700 : 500,
+                letterSpacing: "0.1em",
+                color: isActive ? "#0B1930" : "rgba(11,25,48,0.4)",
+                borderBottom: isActive ? "2px solid #C9A227" : "2px solid transparent",
+                marginBottom: "-1px",
+                whiteSpace: "nowrap",
+              }}
+              onMouseEnter={(e) => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
+              onMouseLeave={(e) => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.color = "rgba(11,25,48,0.4)"; }}
+            >
+              {cat.label}
+            </button>
+          );
+        })}
+      </div>
+
       {isLoading && (
         <div className="flex items-center justify-center py-20">
-          <div className="w-8 h-8 border-4 border-t-transparent rounded-full animate-spin" style={{ borderColor: "rgba(201,162,39,0.3)", borderTopColor: "#C9A227" }} />
+          <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: "rgba(11,25,48,0.15)", borderTopColor: "#C9A227" }} />
         </div>
       )}
 
-      {!isLoading && posts.length === 0 && (
-        <div className="text-center py-20" style={{ color: "rgba(255,255,255,0.35)" }}>
-          <FileText className="w-10 h-10 mx-auto mb-3" style={{ color: "rgba(201,162,39,0.25)" }} />
-          <p className="text-sm">No articles found.</p>
+      {!isLoading && displayedPosts.length === 0 && (
+        <div className="text-center py-20">
+          <FileText className="w-10 h-10 mx-auto mb-3" style={{ color: "rgba(11,25,48,0.2)" }} />
+          <p className="text-sm" style={{ color: "rgba(11,25,48,0.4)", fontFamily: "'Inter', sans-serif" }}>
+            {activeCategory !== "all" ? `No articles in this category.` : "No articles found."}
+          </p>
         </div>
       )}
 
       <div>
-        {posts.map((post, idx) => (
+        {displayedPosts.map((post, idx) => (
           <div
             key={post.id}
             className="group transition-all"
-            style={{ borderBottom: "1px solid rgba(201,162,39,0.12)" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = "rgba(201,162,39,0.04)"; }}
+            style={{ borderBottom: "1px solid rgba(11,25,48,0.08)" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = "#F0EDE6"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = "transparent"; }}
             data-testid={`card-post-${post.id}`}
           >
-            <div className="flex items-center gap-0 py-3.5 px-1">
-              {/* Number */}
+            <div className="flex items-center gap-0 py-4 px-1">
+              {/* Gold number */}
               <div className="w-12 shrink-0">
-                <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", color: "#C9A227", letterSpacing: "0.05em" }}>
+                <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "12px", color: "#C9A227", letterSpacing: "0.04em" }}>
                   {String(idx + 1).padStart(2, "0")}
                 </span>
               </div>
               {/* Title block */}
               <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onEdit(post)}>
-                <div className="flex items-center gap-2 flex-wrap mb-0.5">
+                <div className="flex items-center gap-2 flex-wrap mb-1">
                   {post.premiumOnly && (
-                    <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "9px", letterSpacing: "0.18em", padding: "1px 6px", borderRadius: "2px", background: "#C9A227", color: "#08122E" }}>
+                    <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "8px", letterSpacing: "0.18em", padding: "1px 6px", background: "#0B1930", color: "#C9A227" }}>
                       MEMBERS
                     </span>
                   )}
+                  {post.category && (
+                    <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "8px", letterSpacing: "0.16em", padding: "1px 6px", background: "rgba(201,162,39,0.1)", color: "rgba(11,25,48,0.6)", border: "1px solid rgba(201,162,39,0.25)" }}>
+                      {(CATEGORIES.find(c => c.value === post.category)?.label ?? post.category).toUpperCase()}
+                    </span>
+                  )}
                   {post.caseNumber && (
-                    <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: "10px", letterSpacing: "0.1em", color: "rgba(201,162,39,0.55)" }}>{post.caseNumber}</span>
+                    <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "10px", letterSpacing: "0.08em", color: "rgba(11,25,48,0.35)" }}>{post.caseNumber}</span>
                   )}
                 </div>
-                <span className="font-bold text-white transition-colors group-hover:text-[#E8C840]" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "14px", fontWeight: 700 }}>
+                <span className="transition-colors" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "14px", fontWeight: 700, color: "#0B1930" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLSpanElement).style.color = "#C9A227"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLSpanElement).style.color = "#0B1930"; }}
+                >
                   {post.title || "(Untitled)"}
                 </span>
                 {post.publishedAt && (
-                  <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 400, fontSize: "10px", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", marginTop: "2px" }}>{fmtDate(post.publishedAt)}</p>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "10px", letterSpacing: "0.1em", color: "rgba(11,25,48,0.35)", marginTop: "3px" }}>{fmtDate(post.publishedAt)}</p>
                 )}
               </div>
               <div className="flex items-center gap-2 shrink-0">
@@ -698,12 +762,12 @@ function NewArticleModal({ onClose, onCreated }: NewArticleModalProps) {
 
         <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
           {error && (
-            <div className="text-sm rounded-lg px-4 py-3" style={{ color: "#f87171", background: "rgba(220,38,38,0.08)", border: "1px solid rgba(220,38,38,0.25)" }}>{error}</div>
+            <div className="text-sm px-4 py-3" style={{ color: "#0B1930", background: "rgba(201,162,39,0.1)", border: "1px solid rgba(201,162,39,0.4)" }}>{error}</div>
           )}
 
           <div>
             <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: "rgba(201,162,39,0.75)" }}>
-              Title <span style={{ color: "#f87171" }}>*</span>
+              Title <span style={{ color: "#C9A227" }}>*</span>
             </label>
             <input
               type="text"
@@ -721,7 +785,7 @@ function NewArticleModal({ onClose, onCreated }: NewArticleModalProps) {
 
           <div>
             <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: "rgba(201,162,39,0.75)" }}>
-              Category <span style={{ color: "#f87171" }}>*</span>
+              Category <span style={{ color: "#C9A227" }}>*</span>
             </label>
             <select
               value={category}
@@ -742,7 +806,7 @@ function NewArticleModal({ onClose, onCreated }: NewArticleModalProps) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: "rgba(201,162,39,0.75)" }}>
-                Case Number <span style={{ color: "#f87171" }}>*</span>
+                Case Number <span style={{ color: "#C9A227" }}>*</span>
               </label>
               <div className="relative">
                 <input
@@ -763,7 +827,7 @@ function NewArticleModal({ onClose, onCreated }: NewArticleModalProps) {
 
             <div>
               <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: "rgba(201,162,39,0.75)" }}>
-                Slug <span style={{ color: "#f87171" }}>*</span>
+                Slug <span style={{ color: "#C9A227" }}>*</span>
               </label>
               <input
                 type="text"
@@ -884,7 +948,7 @@ function SubscribersPanel({ authHeaders }: { authHeaders: () => Record<string, s
           <h3 className="font-bold text-white mb-4">Issue New Access Token</h3>
           <div className="space-y-3">
             <div>
-              <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Label <span className="text-red-400">*</span></label>
+              <label className="text-xs font-bold uppercase tracking-wider block mb-1" style={{ color: "rgba(201,162,39,0.75)" }}>Label <span style={{ color: "#C9A227" }}>*</span></label>
               <input
                 type="text" value={newLabel} onChange={(e) => setNewLabel(e.target.value)}
                 placeholder="e.g. Jane Smith — Apr 2026"
@@ -942,13 +1006,15 @@ function SubscribersPanel({ authHeaders }: { authHeaders: () => Record<string, s
                 </button>
                 <button
                   onClick={() => toggleMutation.mutate({ token: t.token, active: !t.active })}
-                  className={`text-xs font-bold px-2.5 py-1 rounded-lg transition-colors ${t.active ? "bg-red-950/50 text-red-400 hover:bg-red-950" : "bg-green-950/50 text-green-400 hover:bg-green-950"}`}
+                  className={`text-xs font-bold px-2.5 py-1 transition-colors ${t.active ? "bg-amber-950/50 text-amber-400 hover:bg-amber-900/60" : "bg-green-950/50 text-green-400 hover:bg-green-950"}`}
                 >
                   {t.active ? "Revoke" : "Restore"}
                 </button>
                 <button
                   onClick={() => { if (confirm(`Delete token for "${t.label}"?`)) deleteMutation.mutate(t.token); }}
-                  className="p-1.5 rounded-lg text-slate-600 hover:text-red-400 hover:bg-slate-800 transition-colors"
+                  className="p-1.5 rounded-lg transition-colors" style={{ color: "rgba(201,162,39,0.4)" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(201,162,39,0.4)"; }}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -981,52 +1047,49 @@ function MembersPanel({ authHeaders }: { authHeaders: () => Record<string, strin
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-0 pb-3" style={{ borderBottom: "1px solid rgba(201,162,39,0.3)" }}>
-        <div className="flex items-baseline gap-6">
-          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "13px", letterSpacing: "0.22em", color: "rgba(255,255,255,0.9)" }}>MEMBERS</span>
-          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(201,162,39,0.6)" }}>{members.length} REGISTERED</span>
+      <div className="flex items-center justify-between pb-3 mb-6" style={{ borderBottom: "1px solid rgba(201,162,39,0.5)" }}>
+        <div className="flex items-baseline gap-8">
+          <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "12px", letterSpacing: "0.18em", color: "#0B1930" }}>MEMBERS</span>
+          <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(11,25,48,0.45)" }}>{members.length} REGISTERED</span>
         </div>
       </div>
-      <div className="mt-5" />
 
       {members.length === 0 ? (
-        <div className="text-center py-20 text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
-          <Users className="w-10 h-10 mx-auto mb-3" style={{ color: "rgba(201,162,39,0.25)" }} />
-          <p>No members yet. They appear here after signing in via Clerk.</p>
+        <div className="text-center py-20">
+          <Users className="w-10 h-10 mx-auto mb-3" style={{ color: "rgba(11,25,48,0.2)" }} />
+          <p className="text-sm" style={{ color: "rgba(11,25,48,0.4)", fontFamily: "'Inter', sans-serif" }}>No members yet. They appear after signing in.</p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl" style={{ border: "1px solid rgba(201,162,39,0.2)" }}>
-          <table className="w-full text-sm">
-            <thead>
-              <tr style={{ background: "#0C1F52", borderBottom: "1px solid rgba(201,162,39,0.2)" }}>
-                {["Member", "Email", "Joined", "Last Login"].map(h => (
-                  <th key={h} className="text-left px-4 py-3 text-[11px] font-black uppercase tracking-widest" style={{ color: "#C9A227" }}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {members.map((m, i) => (
-                <tr key={m.clerkId} style={{ background: i % 2 === 0 ? "rgba(8,18,46,0.9)" : "rgba(12,31,82,0.3)", borderBottom: "1px solid rgba(201,162,39,0.08)" }}>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      {m.avatarUrl ? (
-                        <img src={m.avatarUrl} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" style={{ border: "1px solid rgba(201,162,39,0.25)" }} />
-                      ) : (
-                        <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.25)" }}>
-                          <span className="text-[10px] font-bold" style={{ color: "#C9A227" }}>{(m.name || m.email)[0].toUpperCase()}</span>
-                        </div>
-                      )}
-                      <span className="text-white font-medium">{m.name || <span className="italic" style={{ color: "rgba(255,255,255,0.35)" }}>—</span>}</span>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 font-mono text-xs" style={{ color: "rgba(255,255,255,0.7)" }}>{m.email}</td>
-                  <td className="px-4 py-3 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{fmtDate(m.createdAt)}</td>
-                  <td className="px-4 py-3 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{fmtDate(m.lastLoginAt)}</td>
-                </tr>
+        <table className="w-full">
+          <thead>
+            <tr style={{ borderBottom: "1px solid rgba(201,162,39,0.4)" }}>
+              {["Member", "Email", "Joined", "Last Login"].map(h => (
+                <th key={h} className="text-left pb-3" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "10px", letterSpacing: "0.18em", color: "rgba(11,25,48,0.5)" }}>{h.toUpperCase()}</th>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </tr>
+          </thead>
+          <tbody>
+            {members.map((m) => (
+              <tr key={m.clerkId} style={{ borderBottom: "1px solid rgba(11,25,48,0.07)" }}>
+                <td className="py-3 pr-4">
+                  <div className="flex items-center gap-3">
+                    {m.avatarUrl ? (
+                      <img src={m.avatarUrl} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" />
+                    ) : (
+                      <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold" style={{ background: "#0B1930", color: "#C9A227" }}>
+                        {(m.name || m.email)[0].toUpperCase()}
+                      </div>
+                    )}
+                    <span className="font-semibold" style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", color: "#0B1930" }}>{m.name || <span className="italic" style={{ color: "rgba(11,25,48,0.35)" }}>—</span>}</span>
+                  </div>
+                </td>
+                <td className="py-3 pr-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", color: "rgba(11,25,48,0.6)" }}>{m.email}</td>
+                <td className="py-3 pr-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "11px", color: "rgba(11,25,48,0.45)", whiteSpace: "nowrap" }}>{fmtDate(m.createdAt)}</td>
+                <td className="py-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: "11px", color: "rgba(11,25,48,0.45)", whiteSpace: "nowrap" }}>{fmtDate(m.lastLoginAt)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );
@@ -1150,13 +1213,18 @@ export default function AdminEditorPage() {
         {/* ── Metricadia-style sticky header ── */}
         <div className="sticky top-0 z-30" style={{ background: "#0B1930" }}>
           <div className="flex items-center justify-between px-10 py-0" style={{ height: "52px" }}>
-            {/* Wordmark */}
-            <div className="flex items-baseline gap-0">
-              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 900, fontSize: "14px", letterSpacing: "-0.01em", color: "#fff" }}>BRAIN</span>
-              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "14px", letterSpacing: "-0.01em", color: "#fff" }}>&thinsp;&ndash;&thinsp;RESEARCH LLC</span>
+            {/* Wordmark — exact Metricadia-Research LLC style */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-baseline gap-0">
+                <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 900, fontSize: "14px", letterSpacing: "0.01em", color: "#fff" }}>METRICADIA</span>
+                <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "14px", letterSpacing: "0.01em", color: "#fff" }}>&thinsp;&ndash;&thinsp;RESEARCH</span>
+                <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "12px", letterSpacing: "0.06em", color: "rgba(255,255,255,0.75)", marginLeft: "4px" }}>LLC</span>
+              </div>
+              {/* Brain badge */}
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "9px", letterSpacing: "0.22em", color: "#C9A227", background: "rgba(201,162,39,0.12)", padding: "2px 7px", border: "1px solid rgba(201,162,39,0.3)" }}>BRAIN</span>
             </div>
-            {/* Right nav — section trail */}
-            <div className="flex items-center gap-0" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "12px", letterSpacing: "0.09em" }}>
+            {/* Right nav — Brain sections, pipe-separated like screenshot */}
+            <div className="flex items-center" style={{ fontFamily: "'Inter', sans-serif" }}>
               {["DASHBOARD","ARTICLES","MEMBERS","SUBSCRIBERS"].map((label, i, arr) => {
                 const sectionId = label.toLowerCase() as Section;
                 const isActive = activeSection === sectionId;
@@ -1164,9 +1232,11 @@ export default function AdminEditorPage() {
                   <span key={label} className="flex items-center">
                     <button
                       onClick={() => { setActiveSection(sectionId); setSearch(""); }}
-                      style={{ color: isActive ? "#C9A227" : "rgba(255,255,255,0.55)", padding: "0 14px", letterSpacing: "0.09em", fontWeight: isActive ? 700 : 500, fontSize: "12px", fontFamily: "'Inter', sans-serif" }}
+                      style={{ color: isActive ? "#C9A227" : "rgba(255,255,255,0.55)", padding: "0 16px", letterSpacing: "0.1em", fontWeight: isActive ? 800 : 500, fontSize: "12px", fontFamily: "'Inter', sans-serif", transition: "color 0.15s" }}
+                      onMouseEnter={(e) => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.color = "#fff"; }}
+                      onMouseLeave={(e) => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.55)"; }}
                     >{label}</button>
-                    {i < arr.length - 1 && <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "14px" }}>|</span>}
+                    {i < arr.length - 1 && <span style={{ color: "rgba(255,255,255,0.18)", fontSize: "15px", lineHeight: 1 }}>|</span>}
                   </span>
                 );
               })}
@@ -1189,6 +1259,7 @@ export default function AdminEditorPage() {
           {activeSection === "articles" && (
             <ArticlesPanel
               posts={posts}
+              allPosts={allPosts}
               allCount={allPosts.length}
               isLoading={isLoading}
               search={search}
@@ -1211,9 +1282,11 @@ export default function AdminEditorPage() {
         <div className="mt-auto" style={{ background: "#0B1930" }}>
           <div style={{ height: "3px", background: "linear-gradient(90deg,#C9A227 0%,#E8C840 20%,#D4A820 40%,#F0D458 55%,#D4A820 70%,#E8C840 82%,#C9A227 100%)" }} />
           <div className="flex items-center justify-between px-10" style={{ height: "48px" }}>
-            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 900, fontSize: "12px", color: "#fff", letterSpacing: "-0.01em" }}>
-              BRAIN<span style={{ fontWeight: 300 }}>&thinsp;&ndash;&thinsp;RESEARCH LLC</span>
-            </span>
+            <div className="flex items-baseline gap-0">
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 900, fontSize: "12px", color: "#fff", letterSpacing: "0.01em" }}>METRICADIA</span>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "12px", color: "#fff", letterSpacing: "0.01em" }}>&thinsp;&ndash;&thinsp;RESEARCH</span>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "10px", color: "rgba(255,255,255,0.7)", marginLeft: "3px", letterSpacing: "0.05em" }}>LLC</span>
+            </div>
             <div className="flex items-center gap-6" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "11px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.45)" }}>
               <span>METRICADIA.COM</span>
               <span style={{ color: "rgba(255,255,255,0.2)" }}>|</span>
