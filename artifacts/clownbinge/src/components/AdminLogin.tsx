@@ -71,18 +71,58 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
         />
       </div>
 
-      <div className="relative w-full max-w-sm">
-        <div
-          className="rounded-2xl px-8 py-10"
+      {/*
+        Wrapper: paddingTop creates space for the lion above the card.
+        Lion center (~42% down the image) aligns to the card top edge.
+        260px wide → ~357px tall → center at ~150px.
+      */}
+      <div className="relative w-full max-w-sm" style={{ paddingTop: "100px" }}>
+
+        {/* Lion-sword medallion — straddling the card top edge */}
+        <img
+          src="/brain-lion.png"
+          alt="Metricadia Brain"
           style={{
+            position: "absolute",
+            top: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "260px",
+            height: "auto",
+            zIndex: 10,
+            pointerEvents: "none",
+            filter: "drop-shadow(0 8px 32px rgba(201,162,39,0.35)) drop-shadow(0 2px 8px rgba(0,0,0,0.7))",
+          }}
+        />
+
+        <div
+          className="rounded-2xl px-8 pb-10"
+          style={{
+            paddingTop: "80px",
             background: "linear-gradient(160deg, rgba(26,44,85,0.97) 0%, rgba(18,30,62,0.99) 100%)",
             border: `1px solid rgba(201,162,39,0.18)`,
-            boxShadow: `0 0 0 1px rgba(255,255,255,0.03), 0 32px 80px rgba(0,0,0,0.65), 0 0 60px rgba(201,162,39,0.05)`,
+            boxShadow: `0 0 0 1px rgba(255,255,255,0.03), 0 32px 80px rgba(0,0,0,0.65), 0 0 60px rgba(201,162,39,0.08)`,
+            position: "relative",
+            overflow: "hidden",
           }}
         >
+          {/* Subtle gold radial glow behind lion insertion point */}
+          <div
+            style={{
+              position: "absolute",
+              top: "-30px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "240px",
+              height: "160px",
+              background: `radial-gradient(ellipse at top, rgba(201,162,39,0.10) 0%, transparent 70%)`,
+              pointerEvents: "none",
+            }}
+          />
+
           {/* ── Logo section ── */}
-          <div className="flex flex-col items-center mb-9 gap-0">
-            {/* PsaLogo — white variant, larger */}
+          <div className="flex flex-col items-center mb-8 gap-0">
+            {/* PsaLogo — white variant */}
             <div className="mb-2">
               <PsaLogo variant="white" style={{ fontSize: "1.25rem", letterSpacing: "0.01em" }} />
             </div>
