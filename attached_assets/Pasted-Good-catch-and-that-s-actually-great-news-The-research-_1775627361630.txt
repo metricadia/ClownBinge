@@ -1,0 +1,24 @@
+Good catch, and that's actually great news. The research infrastructure is already CB. This is a cosmetic surgery job, not a transplant.
+Here are the fixes:
+
+CB-000054
+Current: "No, Time is Not Money: It is The Most Sacred Thing You've Borrowed, Though"
+Revised: "Kahneman's Research on Time Valuation and Warе's Longitudinal Data on Regret Reach the Same Conclusion. They Are Not About Money."
+
+CB-000071
+Current: "Beyond the Doormat Trap: You Are Too Valuable to Be a Doormat at the Holidays"
+Revised: "Walker, Taylor, and Peer-Reviewed Boundary Research Document What Chronic Compliance Costs the Nervous System."
+One line fix in body: Strip "You Are Too Valuable" framing from whatever sentence carries it in the opening. Replace with the clinical finding that supports the same point.
+
+CB-000082
+Current: "How Many Times Have You Denied Your Truth to Fit In? Your Ancestors Did Not Survive for This."
+Revised: "Asch's Conformity Experiments, Janis's Groupthink Research, and Yehuda's Epigenetic Data Document What Social Suppression of Identity Costs Physiologically."
+Full lede rewrite: The current lede is motivational therapy in second person. Replace with the Asch finding as the opening fact. Let the reader arrive at the personal implication themselves. Something like: "In Solomon Asch's 1951 conformity experiments, 75 percent of participants gave an answer they knew was wrong rather than contradict the group. The physiological cost of sustained identity suppression has since been quantified in three separate research traditions."
+
+CB-000177
+Current: "Sit with Grandma or Grandpa, If They're Still Here: The Wisdom of Your Kin Can Be Healing"
+Revised: "Tornstam's Gerotranscendence Research and Harvard's Longitudinal Data Document What Intergenerational Contact Produces in Measurable Health Outcomes."
+
+CB-000123
+Current: "The Negativity Is Killing You: The Case for Retiring Hatred and Unnecessary Stress"
+Revised: "NEJM, PNAS, and Circulation Meta-Analyses Quantify What Chronic Negative Affect Does to Cardiovascular and Immune Function."
