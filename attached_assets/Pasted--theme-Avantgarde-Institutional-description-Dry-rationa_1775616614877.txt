@@ -1,0 +1,132 @@
+{
+  "theme": "Avantgarde Institutional",
+  "description": "Dry-rationalist, high-trust visual language. No decoration for decoration's sake. Every element earns its place. Dark navy authority meets warm gold precision.",
+
+  "palette": {
+    "background_primary":   "#0C1F52",
+    "background_deep":      "#08122E",
+    "background_accent":    "#091A0F",
+    "background_light":     "#F7F5F0",
+    "background_white":     "#FFFFFF",
+    "text_primary":         "#111111",
+    "text_on_dark":         "#FFFFFF",
+    "text_muted_on_dark":   "rgba(255,255,255,0.55)",
+    "text_ghost_on_dark":   "rgba(255,255,255,0.25)",
+    "accent_gold":          "#C9A227",
+    "accent_gold_light":    "#E8C840",
+    "accent_gold_bright":   "#F0D458",
+    "accent_green":         "#1A5C3A"
+  },
+
+  "gradients": {
+    "hero_background":  "linear-gradient(140deg, #08122E 0%, #0C1F52 58%, #091A0F 100%)",
+    "gold_bar":         "linear-gradient(90deg, #C9A227 0%, #E8C840 20%, #D4A820 40%, #F0D458 55%, #D4A820 70%, #E8C840 82%, #C9A227 100%)"
+  },
+
+  "typography": {
+    "font_body":       "Inter, sans-serif",
+    "font_display":    "Playfair Display, Georgia, serif",
+    "note":            "Playfair Display italic is reserved for pull quotes only. All UI, nav, body, labels use Inter.",
+    "size_min_body":   "16px",
+    "size_min_label":  "13px",
+    "nav_style":       { "size": "13px", "weight": 700, "tracking": "0.18em", "transform": "uppercase" },
+    "label_style":     { "size": "13px", "weight": 600, "tracking": "0.28em", "transform": "uppercase" },
+    "headline_size":   "clamp(1.4rem, 2.4vw, 2.2rem)",
+    "subhead_size":    "clamp(1rem, 1.5vw, 1.1rem)"
+  },
+
+  "rules": {
+    "no_grey_text":        true,
+    "no_em_dashes":        true,
+    "no_exclamation_marks":true,
+    "min_body_text_size":  "16px",
+    "min_label_text_size": "13px",
+    "text_color_on_light": "#111111"
+  },
+
+  "components": {
+
+    "sticky_header": {
+      "position":        "sticky top-0 z-50",
+      "background":      "rgba(12, 31, 82, 0.96)",
+      "backdrop_blur":   "12px",
+      "height":          "68px",
+      "border_bottom":   "1px solid rgba(201,162,39,0.35)",
+      "layout":          "flex items-center justify-between",
+      "padding":         "px-6 md:px-8"
+    },
+
+    "gold_bar": {
+      "height":      "6px",
+      "gradient":    "see gradients.gold_bar",
+      "box_shadow":  "0 1px 12px rgba(201,162,39,0.55), 0 -1px 6px rgba(255,220,80,0.2)",
+      "usage":       "Divider between major sections"
+    },
+
+    "nav_link": {
+      "font_size":   "13px",
+      "font_weight": 700,
+      "tracking":    "0.18em",
+      "transform":   "uppercase",
+      "color_active": "#FFFFFF",
+      "color_default":"#C9A227",
+      "separator":   { "char": "|", "color": "rgba(255,255,255,0.20)" }
+    },
+
+    "dropdown": {
+      "background":   "#0C1F52",
+      "border_top":   "2px solid #C9A227",
+      "padding":      "py-2",
+      "item_style":   "same as nav_link but left-aligned"
+    },
+
+    "hero_section": {
+      "min_height":       "50vh",
+      "background":       "see gradients.hero_background",
+      "grid_overlay":     { "color": "rgba(255,255,255,0.018)", "size": "80px" },
+      "text_column_width":"54% on desktop, 100% on mobile",
+      "headline_border":  "1px dotted rgba(255,255,255,0.28)",
+      "layout":           "flex flex-col justify-between"
+    },
+
+    "section_row": {
+      "border":      "1px solid rgba(255,255,255,0.08) between rows",
+      "padding":     "px-8 py-4",
+      "label_color": "#C9A227",
+      "label_track": "0.14em"
+    },
+
+    "quote_block": {
+      "background":    "#F7F5F0",
+      "border_left":   "2px solid #C9A227",
+      "font":          "Playfair Display italic",
+      "attribution":   "13px, 0.18em tracking, uppercase, color #7A5C0A"
+    },
+
+    "data_row_list": {
+      "grid":          "3rem label | flex-1 title | flex-2 description",
+      "divider":       "1px gold gradient at 50% opacity",
+      "title_color":   "#0C1F52",
+      "body_color":    "#111111"
+    },
+
+    "footer": {
+      "background":  "#0C1F52",
+      "top_bar":     "gold_bar",
+      "layout":      "logo left, nav links right",
+      "text_color":  "#FFFFFF"
+    }
+  },
+
+  "motion": {
+    "fade_up":          { "y": 24, "duration": 0.8, "ease": [0.16, 1, 0.3, 1] },
+    "stagger_children": 0.12,
+    "viewport_trigger": { "once": true, "margin": "-20px" }
+  },
+
+  "spacing": {
+    "section_padding_x": "px-8",
+    "section_padding_y": "py-8 to py-16",
+    "max_width":         "max-w-7xl mx-auto"
+  }
+}

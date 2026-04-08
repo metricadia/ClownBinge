@@ -148,22 +148,23 @@ function Sidebar({ activeSection, onSection, onLogout }: SidebarProps) {
   };
 
   return (
-    <aside className="w-[240px] min-h-screen bg-[#0a0e1a] border-r border-slate-800/80 flex flex-col shrink-0">
+    <aside className="w-[240px] min-h-screen flex flex-col shrink-0" style={{ background: "#08122E", borderRight: "1px solid rgba(201,162,39,0.18)" }}>
+
+      {/* Gold top bar */}
+      <div style={{ height: "4px", background: "linear-gradient(90deg,#C9A227 0%,#E8C840 20%,#D4A820 40%,#F0D458 55%,#D4A820 70%,#E8C840 82%,#C9A227 100%)", boxShadow: "0 1px 8px rgba(201,162,39,0.4)" }} />
 
       {/* Brand */}
-      <div className="px-5 pt-6 pb-5 border-b border-slate-800/60">
-        <div className="flex items-center gap-2.5 mb-1">
-          <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black text-white shrink-0"
-            style={{ background: "linear-gradient(135deg, #1a3a5c 0%, #0d2540 100%)", border: "1px solid #2a5a8c" }}
+      <div className="px-5 pt-5 pb-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.15)" }}>
+        <div className="mb-1">
+          <span
+            className="text-white leading-none"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "22px", letterSpacing: "0.04em" }}
           >
-            K
-          </div>
-          <span className="font-black text-white text-lg tracking-tight leading-none">KEMET8</span>
+            BRAIN
+          </span>
         </div>
-        <p className="text-[10px] text-slate-500 leading-tight mt-2 font-medium tracking-wide">
-          ClownBinge<br />
-          <span className="text-slate-600">Metricadia Research LLC</span>
+        <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: "10px", letterSpacing: "0.18em", color: "rgba(201,162,39,0.7)", marginTop: "2px" }}>
+          METRICADIA RESEARCH LLC
         </p>
       </div>
 
@@ -173,57 +174,62 @@ function Sidebar({ activeSection, onSection, onLogout }: SidebarProps) {
           <button
             key={id}
             onClick={() => onSection(id)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-left
-              ${activeSection === id
-                ? "bg-indigo-600/20 text-indigo-300 border border-indigo-600/30"
-                : "text-slate-400 hover:text-white hover:bg-slate-800/50"
-              }`}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-150 text-left"
+            style={activeSection === id
+              ? { background: "rgba(201,162,39,0.12)", color: "#C9A227", border: "1px solid rgba(201,162,39,0.28)", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", letterSpacing: "0.12em" }
+              : { color: "rgba(255,255,255,0.55)", border: "1px solid transparent", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.12em" }}
+            onMouseEnter={(e) => { if (activeSection !== id) { (e.currentTarget as HTMLButtonElement).style.color = "#fff"; (e.currentTarget as HTMLButtonElement).style.background = "rgba(201,162,39,0.06)"; } }}
+            onMouseLeave={(e) => { if (activeSection !== id) { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.55)"; (e.currentTarget as HTMLButtonElement).style.background = "transparent"; } }}
           >
-            <Icon size={15} className="shrink-0" />
-            {label}
+            <Icon size={14} className="shrink-0" />
+            {label.toUpperCase()}
           </button>
         ))}
 
         <div className="pt-3 pb-1">
-          <div className="h-px bg-slate-800/80" />
-          <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest mt-3 mb-1 px-3">Coming Soon</p>
+          <div style={{ height: "1px", background: "rgba(201,162,39,0.15)" }} />
+          <p className="px-3 mt-3 mb-1" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "9px", letterSpacing: "0.22em", color: "rgba(201,162,39,0.4)" }}>COMING SOON</p>
         </div>
 
         {NAV_SOON.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
             disabled
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-700 cursor-not-allowed text-left"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-not-allowed text-left"
+            style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.22)" }}
           >
-            <Icon size={15} className="shrink-0" />
-            <span className="flex-1">{label}</span>
-            <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-slate-800 text-slate-600 tracking-wider">SOON</span>
+            <Icon size={14} className="shrink-0" />
+            <span className="flex-1">{label.toUpperCase()}</span>
+            <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "8px", letterSpacing: "0.18em", padding: "2px 6px", borderRadius: "3px", background: "#0C1F52", color: "rgba(201,162,39,0.4)", border: "1px solid rgba(201,162,39,0.15)" }}>SOON</span>
           </button>
         ))}
       </nav>
 
       {/* Bottom controls */}
-      <div className="px-3 pb-5 border-t border-slate-800/60 pt-4 space-y-1">
+      <div className="px-3 pb-5 pt-4 space-y-1" style={{ borderTop: "1px solid rgba(201,162,39,0.15)" }}>
         {/* Current user */}
         {user && (
           <div className="flex items-center gap-2.5 px-3 py-2 mb-2">
             {user.imageUrl ? (
-              <img src={user.imageUrl} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" />
+              <img src={user.imageUrl} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" style={{ border: "1px solid rgba(201,162,39,0.3)" }} />
             ) : (
-              <div className="w-7 h-7 rounded-full bg-indigo-900/60 flex items-center justify-center shrink-0 text-[11px] font-bold text-indigo-300">
+              <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[11px] font-bold" style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.3)", color: "#C9A227" }}>
                 {(user.fullName || user.primaryEmailAddress?.emailAddress || "A")[0].toUpperCase()}
               </div>
             )}
             <div className="min-w-0">
               <p className="text-xs font-bold text-white truncate">{user.fullName || "Admin"}</p>
-              <p className="text-[10px] text-slate-500 truncate">{user.primaryEmailAddress?.emailAddress}</p>
+              <p className="text-[10px] truncate" style={{ color: "rgba(255,255,255,0.4)" }}>{user.primaryEmailAddress?.emailAddress}</p>
             </div>
           </div>
         )}
 
         <a
           href="/"
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-500 hover:text-slate-300 hover:bg-slate-800/40 transition-colors"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
+          style={{ color: "rgba(255,255,255,0.45)" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; (e.currentTarget as HTMLAnchorElement).style.background = "rgba(201,162,39,0.06)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.45)"; (e.currentTarget as HTMLAnchorElement).style.background = "transparent"; }}
         >
           <ExternalLink size={13} />
           View Site
@@ -231,7 +237,10 @@ function Sidebar({ activeSection, onSection, onLogout }: SidebarProps) {
 
         <button
           onClick={handleReaderMode}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-amber-600 hover:text-amber-400 hover:bg-amber-900/10 transition-colors text-left"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold transition-colors text-left"
+          style={{ color: "#C9A227" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(201,162,39,0.08)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
         >
           <ShieldOff size={13} />
           Switch to Reader Mode
@@ -239,7 +248,10 @@ function Sidebar({ activeSection, onSection, onLogout }: SidebarProps) {
 
         <button
           onClick={async () => { await onLogout(); signOut(); }}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-red-600 hover:text-red-400 hover:bg-red-900/10 transition-colors text-left"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold transition-colors text-left"
+          style={{ color: "rgba(255,100,100,0.7)" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#f87171"; (e.currentTarget as HTMLButtonElement).style.background = "rgba(220,38,38,0.08)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,100,100,0.7)"; (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
         >
           <LogOut size={13} />
           Sign Out
@@ -309,11 +321,11 @@ function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPan
     },
   ];
 
-  const colorMap: Record<string, string> = {
-    indigo: "bg-indigo-900/30 border-indigo-700/30 text-indigo-400",
-    sky:    "bg-sky-900/30 border-sky-700/30 text-sky-400",
-    amber:  "bg-amber-900/30 border-amber-700/30 text-amber-400",
-    slate:  "bg-slate-800/30 border-slate-700/30 text-slate-500",
+  const colorMap: Record<string, { card: string; icon: string }> = {
+    indigo: { card: "border-[#C9A227]/25 bg-[#0C1F52]/50",  icon: "text-[#C9A227]" },
+    sky:    { card: "border-[#C9A227]/18 bg-[#0C1F52]/35",  icon: "text-[#E8C840]" },
+    amber:  { card: "border-[#C9A227]/20 bg-[#0C1F52]/40",  icon: "text-[#C9A227]" },
+    slate:  { card: "border-[rgba(255,255,255,0.08)] bg-[#08122E]/60", icon: "text-[rgba(255,255,255,0.25)]" },
   };
 
   const today = new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
@@ -323,15 +335,18 @@ function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPan
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-black text-white">Dashboard</h1>
-          <p className="text-slate-500 text-sm mt-0.5">{today}</p>
+          <h1 className="text-white" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "28px", letterSpacing: "0.06em" }}>DASHBOARD</h1>
+          <p className="mt-0.5" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 400, fontSize: "12px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.4)" }}>{today.toUpperCase()}</p>
         </div>
         <button
           onClick={onNewArticle}
-          className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold rounded-xl transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-sm transition-colors"
+          style={{ background: "#C9A227", color: "#08122E", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", letterSpacing: "0.15em" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#E8C840"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#C9A227"; }}
         >
-          <Plus size={15} />
-          New Article
+          <Plus size={14} />
+          NEW ARTICLE
         </button>
       </div>
 
@@ -341,16 +356,16 @@ function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPan
           <div
             key={label}
             onClick={action}
-            className={`relative border rounded-xl p-5 ${colorMap[color]} ${action ? "cursor-pointer hover:scale-[1.02] transition-transform" : ""}`}
+            className={`relative border rounded-xl p-5 ${colorMap[color].card} ${action ? "cursor-pointer hover:scale-[1.02] transition-transform" : ""}`}
           >
             {comingSoon && (
-              <span className="absolute top-3 right-3 text-[9px] font-black px-1.5 py-0.5 rounded bg-slate-800 text-slate-600 tracking-wider">
+              <span className="absolute top-3 right-3 text-[9px] font-black px-1.5 py-0.5 rounded tracking-wider" style={{ background: "#08122E", color: "rgba(201,162,39,0.5)", border: "1px solid rgba(201,162,39,0.2)" }}>
                 SOON
               </span>
             )}
-            <Icon size={20} className="mb-3" />
+            <Icon size={20} className={`mb-3 ${colorMap[color].icon}`} />
             <p className="text-3xl font-black text-white mb-1">{value}</p>
-            <p className="text-xs font-semibold text-slate-400">{label}</p>
+            <p className="text-xs font-semibold tracking-wide uppercase" style={{ color: "rgba(255,255,255,0.5)" }}>{label}</p>
           </div>
         ))}
       </div>
@@ -359,32 +374,32 @@ function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPan
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
 
         {/* Recent Members */}
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800">
-            <h2 className="text-sm font-black text-white">Recent Members</h2>
-            <button onClick={() => onSection("members")} className="flex items-center gap-1 text-xs text-indigo-400 hover:text-indigo-300 font-semibold transition-colors">
-              View all <ChevronRight size={13} />
+        <div className="rounded-xl overflow-hidden" style={{ border: "1px solid rgba(201,162,39,0.18)", background: "rgba(12,31,82,0.45)" }}>
+          <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.15)" }}>
+            <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "12px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.9)" }}>RECENT MEMBERS</h2>
+            <button onClick={() => onSection("members")} className="flex items-center gap-1 transition-colors" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em", color: "#C9A227" }}>
+              VIEW ALL <ChevronRight size={12} />
             </button>
           </div>
           <div className="p-4">
             {members.length === 0 ? (
-              <p className="text-slate-600 text-sm text-center py-6">No members yet.</p>
+              <p className="text-sm text-center py-6" style={{ color: "rgba(255,255,255,0.3)" }}>No members yet.</p>
             ) : (
               <div className="space-y-2">
                 {members.slice(0, 5).map((m) => (
                   <div key={m.clerkId} className="flex items-center gap-3">
                     {m.avatarUrl ? (
-                      <img src={m.avatarUrl} alt="" className="w-8 h-8 rounded-full object-cover shrink-0" />
+                      <img src={m.avatarUrl} alt="" className="w-8 h-8 rounded-full object-cover shrink-0" style={{ border: "1px solid rgba(201,162,39,0.25)" }} />
                     ) : (
-                      <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300 shrink-0">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0" style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.25)", color: "#C9A227" }}>
                         {(m.name || m.email)[0].toUpperCase()}
                       </div>
                     )}
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-semibold text-white truncate">{m.name || <span className="italic text-slate-500">No name</span>}</p>
-                      <p className="text-xs text-slate-500 truncate">{m.email}</p>
+                      <p className="text-sm font-semibold text-white truncate">{m.name || <span className="italic" style={{ color: "rgba(255,255,255,0.35)" }}>No name</span>}</p>
+                      <p className="text-xs truncate" style={{ color: "rgba(255,255,255,0.45)" }}>{m.email}</p>
                     </div>
-                    <p className="text-[10px] text-slate-600 shrink-0">{fmtDate(m.createdAt)}</p>
+                    <p className="text-[10px] shrink-0" style={{ color: "rgba(255,255,255,0.3)" }}>{fmtDate(m.createdAt)}</p>
                   </div>
                 ))}
               </div>
@@ -392,11 +407,11 @@ function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPan
           </div>
         </div>
 
-        {/* Coming Soon Features */}
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl">
-          <div className="px-5 py-4 border-b border-slate-800">
-            <h2 className="text-sm font-black text-white">Planned Features</h2>
-            <p className="text-xs text-slate-500 mt-0.5">Coming after official incorporation</p>
+        {/* Planned Features */}
+        <div className="rounded-xl overflow-hidden" style={{ border: "1px solid rgba(201,162,39,0.18)", background: "rgba(12,31,82,0.45)" }}>
+          <div className="px-5 py-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.15)" }}>
+            <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "12px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.9)" }}>PLANNED FEATURES</h2>
+            <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 400, fontSize: "10px", letterSpacing: "0.1em", color: "rgba(255,255,255,0.35)", marginTop: "2px" }}>COMING AFTER OFFICIAL INCORPORATION</p>
           </div>
           <div className="p-4 space-y-3">
             {[
@@ -406,12 +421,12 @@ function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPan
               { icon: Mail,      label: "Email Campaigns",             desc: "Sent, opened, conversion rates" },
             ].map(({ icon: Icon, label, desc }) => (
               <div key={label} className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0">
-                  <Icon size={14} className="text-slate-500" />
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.2)" }}>
+                  <Icon size={14} style={{ color: "rgba(201,162,39,0.45)" }} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-slate-300">{label}</p>
-                  <p className="text-xs text-slate-600">{desc}</p>
+                  <p className="text-sm font-semibold" style={{ color: "rgba(255,255,255,0.75)" }}>{label}</p>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>{desc}</p>
                 </div>
               </div>
             ))}
@@ -457,13 +472,13 @@ function ComingSoonPanel({ section }: { section: Section }) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-8">
-      <div className="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center mb-5">
-        <Icon size={28} className="text-slate-600" />
+      <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5" style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.25)" }}>
+        <Icon size={28} style={{ color: "rgba(201,162,39,0.4)" }} />
       </div>
       <h1 className="text-2xl font-black text-white mb-2">{data.title}</h1>
-      <p className="text-slate-400 text-sm max-w-md mb-4">{data.desc}</p>
-      <div className="bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-xs text-slate-500 max-w-sm">
-        <span className="font-bold text-slate-400">Planned: </span>{data.when}
+      <p className="text-sm max-w-md mb-4" style={{ color: "rgba(255,255,255,0.55)" }}>{data.desc}</p>
+      <div className="rounded-xl px-4 py-3 text-xs max-w-sm" style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.2)", color: "rgba(255,255,255,0.45)" }}>
+        <span className="font-bold" style={{ color: "rgba(201,162,39,0.75)" }}>Planned: </span>{data.when}
       </div>
     </div>
   );
@@ -485,18 +500,22 @@ interface ArticlesPanelProps {
 function ArticlesPanel({ posts, allCount, isLoading, search, onSearch, onNewArticle, onEdit, premiumMutation }: ArticlesPanelProps) {
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-black text-white">Articles</h1>
-          <p className="text-slate-500 text-sm mt-0.5">{allCount} total</p>
+      {/* Section header — Metricadia research-roster style */}
+      <div className="flex items-center justify-between mb-0 pb-3" style={{ borderBottom: "1px solid rgba(201,162,39,0.3)" }}>
+        <div className="flex items-baseline gap-6">
+          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "13px", letterSpacing: "0.22em", color: "rgba(255,255,255,0.9)" }}>ARTICLES</span>
+          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(201,162,39,0.6)" }}>{allCount} ON RECORD</span>
         </div>
         <button
           onClick={onNewArticle}
-          className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold rounded-xl transition-colors"
+          className="flex items-center gap-2 px-4 py-1.5 rounded-sm transition-colors"
+          style={{ background: "#C9A227", color: "#08122E", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "12px", letterSpacing: "0.15em" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#E8C840"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#C9A227"; }}
           data-testid="button-new-article"
         >
-          <Plus size={15} />
-          New Article
+          <Plus size={13} />
+          NEW ARTICLE
         </button>
       </div>
 
@@ -505,47 +524,60 @@ function ArticlesPanel({ posts, allCount, isLoading, search, onSearch, onNewArti
         value={search}
         onChange={(e) => onSearch(e.target.value)}
         placeholder="Search by title or case number…"
-        className="w-full mb-5 px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500 text-sm"
+        className="w-full mb-5 px-4 py-2.5 text-white text-sm focus:outline-none rounded-lg"
+        style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.2)" }}
+        onFocus={(e) => { (e.currentTarget as HTMLInputElement).style.border = "1px solid rgba(201,162,39,0.55)"; }}
+        onBlur={(e) => { (e.currentTarget as HTMLInputElement).style.border = "1px solid rgba(201,162,39,0.2)"; }}
         data-testid="input-search-posts"
       />
 
       {isLoading && (
         <div className="flex items-center justify-center py-20">
-          <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-t-transparent rounded-full animate-spin" style={{ borderColor: "rgba(201,162,39,0.3)", borderTopColor: "#C9A227" }} />
         </div>
       )}
 
       {!isLoading && posts.length === 0 && (
-        <div className="text-center py-20 text-slate-500">
-          <FileText className="w-10 h-10 mx-auto mb-3 text-slate-700" />
+        <div className="text-center py-20" style={{ color: "rgba(255,255,255,0.35)" }}>
+          <FileText className="w-10 h-10 mx-auto mb-3" style={{ color: "rgba(201,162,39,0.25)" }} />
           <p className="text-sm">No articles found.</p>
         </div>
       )}
 
-      <div className="grid gap-2.5">
-        {posts.map((post) => (
+      <div>
+        {posts.map((post, idx) => (
           <div
             key={post.id}
-            className="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-indigo-600/50 transition-colors group"
+            className="group transition-all"
+            style={{ borderBottom: "1px solid rgba(201,162,39,0.12)" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = "rgba(201,162,39,0.04)"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = "transparent"; }}
             data-testid={`card-post-${post.id}`}
           >
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-0 py-3.5 px-1">
+              {/* Number */}
+              <div className="w-12 shrink-0">
+                <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", color: "#C9A227", letterSpacing: "0.05em" }}>
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+              </div>
+              {/* Title block */}
               <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onEdit(post)}>
                 <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                  {post.caseNumber && (
-                    <span className="text-xs text-indigo-400 font-mono font-bold">{post.caseNumber}</span>
-                  )}
                   {post.premiumOnly && (
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: "#F5C518", color: "#1A1A2E" }}>
+                    <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "9px", letterSpacing: "0.18em", padding: "1px 6px", borderRadius: "2px", background: "#C9A227", color: "#08122E" }}>
                       MEMBERS
                     </span>
                   )}
+                  {post.caseNumber && (
+                    <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: "10px", letterSpacing: "0.1em", color: "rgba(201,162,39,0.55)" }}>{post.caseNumber}</span>
+                  )}
                 </div>
-                <span className="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">
+                <span className="font-bold text-white transition-colors group-hover:text-[#E8C840]" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "14px", fontWeight: 700 }}>
                   {post.title || "(Untitled)"}
                 </span>
                 {post.publishedAt && (
-                  <p className="text-xs text-slate-600 mt-1">{fmtDate(post.publishedAt)}</p>
+                  <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 400, fontSize: "10px", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", marginTop: "2px" }}>{fmtDate(post.publishedAt)}</p>
                 )}
               </div>
               <div className="flex items-center gap-2 shrink-0">
@@ -651,49 +683,57 @@ function NewArticleModal({ onClose, onCreated }: NewArticleModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
-      <div className="w-full max-w-lg bg-slate-950 border border-slate-700 rounded-2xl shadow-2xl">
-        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-slate-800">
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}>
+      <div className="w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden" style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.25)" }}>
+        <div className="flex items-center justify-between px-6 pt-6 pb-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.15)" }}>
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black text-white"
-              style={{ background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)" }}>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-black"
+              style={{ background: "#C9A227", color: "#08122E" }}>
               <Plus className="w-4 h-4" />
             </div>
             <h2 className="text-lg font-black text-white">New Article</h2>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+          <button onClick={onClose} className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors" style={{ color: "rgba(255,255,255,0.5)" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(201,162,39,0.1)"; (e.currentTarget as HTMLButtonElement).style.color = "#fff"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.5)"; }}>
             <X className="w-4 h-4" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
           {error && (
-            <div className="text-sm text-red-400 bg-red-950/40 border border-red-800/50 rounded-lg px-4 py-3">{error}</div>
+            <div className="text-sm rounded-lg px-4 py-3" style={{ color: "#f87171", background: "rgba(220,38,38,0.08)", border: "1px solid rgba(220,38,38,0.25)" }}>{error}</div>
           )}
 
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
-              Title <span className="text-red-400">*</span>
+            <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: "rgba(201,162,39,0.75)" }}>
+              Title <span style={{ color: "#f87171" }}>*</span>
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => handleTitleChange(e.target.value)}
               placeholder="Article headline..."
-              className="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500 text-sm"
+              className="w-full px-3 py-2.5 text-white text-sm focus:outline-none rounded-lg"
+              style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.2)" }}
+              onFocus={(e) => { (e.currentTarget as HTMLInputElement).style.border = "1px solid rgba(201,162,39,0.5)"; }}
+              onBlur={(e) => { (e.currentTarget as HTMLInputElement).style.border = "1px solid rgba(201,162,39,0.2)"; }}
               autoFocus
               data-testid="input-new-article-title"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
-              Category <span className="text-red-400">*</span>
+            <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: "rgba(201,162,39,0.75)" }}>
+              Category <span style={{ color: "#f87171" }}>*</span>
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-indigo-500 text-sm"
+              className="w-full px-3 py-2.5 text-white text-sm focus:outline-none rounded-lg"
+              style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.2)" }}
+              onFocus={(e) => { (e.currentTarget as HTMLSelectElement).style.border = "1px solid rgba(201,162,39,0.5)"; }}
+              onBlur={(e) => { (e.currentTarget as HTMLSelectElement).style.border = "1px solid rgba(201,162,39,0.2)"; }}
               data-testid="select-new-article-category"
             >
               <option value="" disabled>Select a category...</option>
@@ -705,8 +745,8 @@ function NewArticleModal({ onClose, onCreated }: NewArticleModalProps) {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
-                Case Number <span className="text-red-400">*</span>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: "rgba(201,162,39,0.75)" }}>
+                Case Number <span style={{ color: "#f87171" }}>*</span>
               </label>
               <div className="relative">
                 <input
@@ -714,37 +754,44 @@ function NewArticleModal({ onClose, onCreated }: NewArticleModalProps) {
                   value={caseLoading ? "" : caseNumber}
                   onChange={(e) => { setCaseManual(true); setCaseNumber(e.target.value); }}
                   placeholder={caseLoading ? "Loading..." : "CB-000000"}
-                  className="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500 text-sm font-mono"
+                  className="w-full px-3 py-2.5 text-white text-sm font-mono focus:outline-none rounded-lg"
+                  style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.2)" }}
+                  onFocus={(e) => { (e.currentTarget as HTMLInputElement).style.border = "1px solid rgba(201,162,39,0.5)"; }}
+                  onBlur={(e) => { (e.currentTarget as HTMLInputElement).style.border = "1px solid rgba(201,162,39,0.2)"; }}
                   data-testid="input-new-article-case-number"
                 />
-                {caseLoading && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 animate-spin" />}
+                {caseLoading && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 animate-spin" style={{ color: "rgba(201,162,39,0.5)" }} />}
               </div>
-              {!caseManual && !caseLoading && <p className="text-[10px] text-slate-600 mt-1">Auto-generated · editable</p>}
+              {!caseManual && !caseLoading && <p className="text-[10px] mt-1" style={{ color: "rgba(255,255,255,0.3)" }}>Auto-generated · editable</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">
-                Slug <span className="text-red-400">*</span>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: "rgba(201,162,39,0.75)" }}>
+                Slug <span style={{ color: "#f87171" }}>*</span>
               </label>
               <input
                 type="text"
                 value={slug}
                 onChange={(e) => { setSlugManual(true); setSlug(e.target.value); }}
                 placeholder="url-slug"
-                className="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500 text-sm font-mono"
+                className="w-full px-3 py-2.5 text-white text-sm font-mono focus:outline-none rounded-lg"
+                style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.2)" }}
+                onFocus={(e) => { (e.currentTarget as HTMLInputElement).style.border = "1px solid rgba(201,162,39,0.5)"; }}
+                onBlur={(e) => { (e.currentTarget as HTMLInputElement).style.border = "1px solid rgba(201,162,39,0.2)"; }}
                 data-testid="input-new-article-slug"
               />
-              {!slugManual && slug && <p className="text-[10px] text-slate-600 mt-1">Auto-derived from title</p>}
+              {!slugManual && slug && <p className="text-[10px] mt-1" style={{ color: "rgba(255,255,255,0.3)" }}>Auto-derived from title</p>}
             </div>
           </div>
 
           <div className="flex items-center gap-3 pt-2">
-            <Button type="button" variant="ghost" className="flex-1 text-slate-400 hover:text-white" onClick={onClose} disabled={submitting}>
+            <Button type="button" variant="ghost" className="flex-1 font-bold" style={{ color: "rgba(255,255,255,0.55)" }} onClick={onClose} disabled={submitting}>
               Cancel
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold"
+              className="flex-1 font-bold border-0"
+              style={{ background: "#C9A227", color: "#08122E" }}
               disabled={submitting || caseLoading || !title.trim() || !category || !slug.trim()}
               data-testid="button-create-article"
             >
@@ -930,50 +977,55 @@ function MembersPanel({ authHeaders }: { authHeaders: () => Record<string, strin
     },
   });
 
-  if (isLoading) return <div className="flex items-center justify-center py-20"><Loader2 className="w-6 h-6 animate-spin text-indigo-400" /></div>;
+  if (isLoading) return (
+    <div className="flex items-center justify-center py-20">
+      <div className="w-6 h-6 border-4 border-t-transparent rounded-full animate-spin" style={{ borderColor: "rgba(201,162,39,0.3)", borderTopColor: "#C9A227" }} />
+    </div>
+  );
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-2xl font-black text-white">Members</h1>
-          <p className="text-slate-500 text-sm mt-0.5">{members.length} registered via Clerk</p>
+      <div className="flex items-center justify-between mb-0 pb-3" style={{ borderBottom: "1px solid rgba(201,162,39,0.3)" }}>
+        <div className="flex items-baseline gap-6">
+          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "13px", letterSpacing: "0.22em", color: "rgba(255,255,255,0.9)" }}>MEMBERS</span>
+          <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(201,162,39,0.6)" }}>{members.length} REGISTERED</span>
         </div>
       </div>
+      <div className="mt-5" />
 
       {members.length === 0 ? (
-        <div className="text-center py-20 text-slate-500 text-sm">
-          <Users className="w-10 h-10 mx-auto mb-3 text-slate-700" />
+        <div className="text-center py-20 text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
+          <Users className="w-10 h-10 mx-auto mb-3" style={{ color: "rgba(201,162,39,0.25)" }} />
           <p>No members yet. They appear here after signing in via Clerk.</p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-slate-700">
+        <div className="overflow-hidden rounded-xl" style={{ border: "1px solid rgba(201,162,39,0.2)" }}>
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-700 bg-slate-800/60">
+              <tr style={{ background: "#0C1F52", borderBottom: "1px solid rgba(201,162,39,0.2)" }}>
                 {["Member", "Email", "Joined", "Last Login"].map(h => (
-                  <th key={h} className="text-left px-4 py-3 text-[11px] font-black uppercase tracking-wider text-slate-400">{h}</th>
+                  <th key={h} className="text-left px-4 py-3 text-[11px] font-black uppercase tracking-widest" style={{ color: "#C9A227" }}>{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {members.map((m, i) => (
-                <tr key={m.clerkId} className={`border-b border-slate-800 ${i % 2 === 0 ? "bg-slate-900/40" : "bg-slate-900/20"}`}>
+                <tr key={m.clerkId} style={{ background: i % 2 === 0 ? "rgba(8,18,46,0.9)" : "rgba(12,31,82,0.3)", borderBottom: "1px solid rgba(201,162,39,0.08)" }}>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       {m.avatarUrl ? (
-                        <img src={m.avatarUrl} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" />
+                        <img src={m.avatarUrl} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" style={{ border: "1px solid rgba(201,162,39,0.25)" }} />
                       ) : (
-                        <div className="w-7 h-7 rounded-full bg-indigo-900/60 flex items-center justify-center shrink-0">
-                          <span className="text-[10px] font-bold text-indigo-300">{(m.name || m.email)[0].toUpperCase()}</span>
+                        <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.25)" }}>
+                          <span className="text-[10px] font-bold" style={{ color: "#C9A227" }}>{(m.name || m.email)[0].toUpperCase()}</span>
                         </div>
                       )}
-                      <span className="text-white font-medium">{m.name || <span className="text-slate-500 italic">—</span>}</span>
+                      <span className="text-white font-medium">{m.name || <span className="italic" style={{ color: "rgba(255,255,255,0.35)" }}>—</span>}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-slate-300 font-mono text-xs">{m.email}</td>
-                  <td className="px-4 py-3 text-slate-400 text-xs">{fmtDate(m.createdAt)}</td>
-                  <td className="px-4 py-3 text-slate-400 text-xs">{fmtDate(m.lastLoginAt)}</td>
+                  <td className="px-4 py-3 font-mono text-xs" style={{ color: "rgba(255,255,255,0.7)" }}>{m.email}</td>
+                  <td className="px-4 py-3 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{fmtDate(m.createdAt)}</td>
+                  <td className="px-4 py-3 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{fmtDate(m.lastLoginAt)}</td>
                 </tr>
               ))}
             </tbody>
@@ -1048,8 +1100,8 @@ export default function AdminEditorPage() {
   // ── Loading state ──
   if (authenticated === null) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "#08122E" }}>
+        <div className="w-8 h-8 border-4 border-t-transparent rounded-full animate-spin" style={{ borderColor: "rgba(201,162,39,0.25)", borderTopColor: "#C9A227" }} />
       </div>
     );
   }
@@ -1084,7 +1136,7 @@ export default function AdminEditorPage() {
 
   // ── Main dashboard layout ──
   return (
-    <div className="flex min-h-screen bg-[#080c16] text-white">
+    <div className="flex min-h-screen text-white" style={{ background: "#08122E" }}>
       {showNewArticle && (
         <NewArticleModal
           onClose={() => setShowNewArticle(false)}
@@ -1100,11 +1152,11 @@ export default function AdminEditorPage() {
 
       <main className="flex-1 min-w-0 overflow-y-auto">
         {/* Top bar */}
-        <div className="sticky top-0 z-30 bg-[#080c16]/95 backdrop-blur border-b border-slate-800/60 px-8 py-4">
-          <div className="flex items-center gap-2 text-xs text-slate-500">
-            <span className="font-bold text-slate-400">Kemet8</span>
-            <span>/</span>
-            <span className="capitalize text-slate-300 font-semibold">{activeSection}</span>
+        <div className="sticky top-0 z-30 px-8 py-4" style={{ background: "rgba(8,18,46,0.97)", backdropFilter: "blur(8px)", borderBottom: "1px solid rgba(201,162,39,0.12)" }}>
+          <div className="flex items-center gap-2">
+            <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", letterSpacing: "0.2em", color: "#C9A227" }}>BRAIN</span>
+            <span style={{ color: "rgba(201,162,39,0.35)", fontSize: "12px" }}>&ndash;</span>
+            <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.18em", color: "rgba(255,255,255,0.65)" }}>{activeSection.toUpperCase()}</span>
           </div>
         </div>
 
