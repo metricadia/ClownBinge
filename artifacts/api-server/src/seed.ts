@@ -78,6 +78,27 @@ async function verifyIntegrity(): Promise<void> {
   }
 }
 
+// ─── Safe delete: only removes articles that came from the seed file ──────────
+// Admin-created articles (e.g. FP-001, FP-002) are NOT in the seed and will
+// NOT be deleted. Only articles whose case_number appears in the seed are removed.
+
+async function deleteSeedArticles(): Promise<void> {
+  const seedCaseNumbers = (seedData as Record<string, unknown>[]).map(
+    (p) => p.case_number as string
+  );
+  // Delete in chunks to avoid hitting postgres parameter limits
+  const chunkSize = 100;
+  let deleted = 0;
+  for (let i = 0; i < seedCaseNumbers.length; i += chunkSize) {
+    const chunk = seedCaseNumbers.slice(i, i + chunkSize);
+    const result = await db.execute(
+      sql`DELETE FROM posts WHERE case_number = ANY(${chunk}::text[])`
+    );
+    deleted += (result as unknown as { rowCount?: number })?.rowCount ?? 0;
+  }
+  console.log(`[Seed] Deleted ${deleted} old seed articles (admin-created articles preserved).`);
+}
+
 // ─── Main entry point ────────────────────────────────────────────────────────
 
 export async function seedIfEmpty(): Promise<void> {
@@ -104,15 +125,15 @@ export async function seedIfEmpty(): Promise<void> {
       console.log(
         `[Seed] Stale seed detected. ` +
         `Expected anchor slug: "${SEED_ANCHOR_SLUG}", found: "${actualSlug ?? "missing"}". ` +
-        `Truncating ${count} old articles and reseeding from scratch...`
+        `Removing old seed articles and reseeding from scratch (admin-created articles preserved)...`
       );
-      await db.execute(sql`TRUNCATE TABLE posts CASCADE`);
+      await deleteSeedArticles();
     } else if (forceReseed && count > 0) {
       console.log(
         `[Seed] FORCE_POSTS_RESEED=1 detected. ` +
-        `Truncating ${count} existing articles and reseeding from scratch...`
+        `Removing old seed articles and reseeding from scratch (admin-created articles preserved)...`
       );
-      await db.execute(sql`TRUNCATE TABLE posts CASCADE`);
+      await deleteSeedArticles();
     }
 
     const posts = seedData as Record<string, unknown>[];
