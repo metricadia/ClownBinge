@@ -47,7 +47,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden pb-[14vh]"
       style={{ background: `linear-gradient(170deg, #0a1628 0%, ${NAVY} 45%, #0b1a35 100%)` }}
     >
       {/* Subtle grid overlay */}
@@ -121,32 +121,32 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
           />
 
           {/* ── Logo section ── */}
-          <div className="flex flex-col items-center mb-8 gap-0">
-            {/* PsaLogo — white variant */}
-            <div className="mb-2">
-              <PsaLogo variant="white" style={{ fontSize: "1.25rem", letterSpacing: "0.01em" }} />
+          <div className="flex flex-col items-center mb-6 gap-0">
+            {/* PsaLogo — white variant, compact */}
+            <div className="mb-1.5">
+              <PsaLogo variant="white" style={{ fontSize: "0.9rem", letterSpacing: "0.01em" }} />
             </div>
 
             {/* Flags */}
-            <div className="flex items-center gap-1.5 mb-3">
-              <span title="Saint Kitts and Nevis" className="text-base leading-none select-none">🇰🇳</span>
-              <span title="United States"          className="text-base leading-none select-none">🇺🇸</span>
-              <span title="Iceland"                className="text-base leading-none select-none">🇮🇸</span>
+            <div className="flex items-center gap-1 mb-2.5">
+              <span title="Saint Kitts and Nevis" className="text-sm leading-none select-none">🇰🇳</span>
+              <span title="United States"          className="text-sm leading-none select-none">🇺🇸</span>
+              <span title="Iceland"                className="text-sm leading-none select-none">🇮🇸</span>
             </div>
 
             {/* Gold rule */}
-            <div className="w-full h-px mb-4" style={{ background: `linear-gradient(90deg, transparent, ${GOLD}55, transparent)` }} />
+            <div className="w-full h-px mb-3" style={{ background: `linear-gradient(90deg, transparent, ${GOLD}55, transparent)` }} />
 
             {/* BRAIN V1.0 — ClownBinge Instance */}
             <div className="flex flex-col items-center gap-[3px] select-none">
-              <div className="flex items-baseline gap-2">
+              <div className="flex items-baseline gap-1.5">
                 <span
                   style={{
                     fontFamily: "'Montserrat', system-ui, sans-serif",
                     fontWeight: 700,
-                    fontSize: "1.1rem",
+                    fontSize: "0.95rem",
                     color: GOLD,
-                    letterSpacing: "0.30em",
+                    letterSpacing: "0.28em",
                     textTransform: "uppercase",
                   }}
                 >
@@ -156,21 +156,21 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
                   style={{
                     fontFamily: "'Montserrat', system-ui, sans-serif",
                     fontWeight: 300,
-                    fontSize: "0.9rem",
+                    fontSize: "0.75rem",
                     color: GOLD,
-                    letterSpacing: "0.18em",
+                    letterSpacing: "0.15em",
                   }}
                 >
                   v1.0
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="h-px w-8" style={{ background: "rgba(255,255,255,0.35)" }} />
+                <div className="h-px w-6" style={{ background: "rgba(255,255,255,0.35)" }} />
                 <span
                   style={{
                     fontFamily: "'Montserrat', system-ui, sans-serif",
                     fontWeight: 600,
-                    fontSize: "0.6rem",
+                    fontSize: "0.52rem",
                     color: "#ffffff",
                     letterSpacing: "0.22em",
                     textTransform: "uppercase",
@@ -178,7 +178,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
                 >
                   ClownBinge Instance
                 </span>
-                <div className="h-px w-8" style={{ background: "rgba(255,255,255,0.35)" }} />
+                <div className="h-px w-6" style={{ background: "rgba(255,255,255,0.35)" }} />
               </div>
             </div>
           </div>
