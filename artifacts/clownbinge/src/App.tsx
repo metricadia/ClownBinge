@@ -1,12 +1,11 @@
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
-import { useEffect } from "react";
-import { QueryClientProvider } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
+import { QueryClientProvider, useQueryClient } from "@tanstack/react-query";
 import { queryClient } from "@/lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AdminProvider } from "@/context/AdminContext";
-import { useAuth } from "@workspace/replit-auth-web";
-import { LoginWall } from "@/components/LoginWall";
+import { ClerkProvider, SignIn, SignUp, useClerk } from "@clerk/react";
 
 // Pages
 import Home from "@/pages/Home";
@@ -30,7 +29,18 @@ import Methodology from "@/pages/Methodology";
 import Corrections from "@/pages/Corrections";
 import AdminEditorPage from "@/pages/AdminEditorPage";
 import Subscribe from "@/pages/Subscribe";
+import MyAccount from "@/pages/MyAccount";
 import NotFound from "@/pages/not-found";
+
+const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+const clerkProxyUrl = import.meta.env.VITE_CLERK_PROXY_URL || undefined;
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+function stripBase(path: string): string {
+  return basePath && path.startsWith(basePath)
+    ? path.slice(basePath.length) || "/"
+    : path;
+}
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -40,12 +50,87 @@ function ScrollToTop() {
   return null;
 }
 
+const apiBase = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+function ClerkQueryClientCacheInvalidator() {
+  const { addListener } = useClerk();
+  const qc = useQueryClient();
+  const prevUserIdRef = useRef<string | null | undefined>(undefined);
+
+  useEffect(() => {
+    const unsubscribe = addListener(({ user }) => {
+      const userId = user?.id ?? null;
+      if (
+        prevUserIdRef.current !== undefined &&
+        prevUserIdRef.current !== userId
+      ) {
+        qc.clear();
+      }
+      // Sync member record when a new user signs in
+      if (userId && prevUserIdRef.current !== userId && user) {
+        const email = user.primaryEmailAddress?.emailAddress ?? "";
+        if (email) {
+          fetch(`${apiBase}/api/members/sync`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              clerkId: userId,
+              email,
+              name: user.fullName || user.username || null,
+              avatarUrl: user.imageUrl || null,
+            }),
+          }).catch(() => {});
+        }
+      }
+      prevUserIdRef.current = userId;
+    });
+    return unsubscribe;
+  }, [addListener, qc]);
+
+  return null;
+}
+
+function SignInPage() {
+  return (
+    <div
+      className="min-h-screen flex items-center justify-center"
+      style={{ background: "#192e7a" }}
+    >
+      <SignIn
+        routing="path"
+        path={`${basePath}/sign-in`}
+        signUpUrl={`${basePath}/sign-up`}
+        fallbackRedirectUrl={`${basePath}/`}
+      />
+    </div>
+  );
+}
+
+function SignUpPage() {
+  return (
+    <div
+      className="min-h-screen flex items-center justify-center"
+      style={{ background: "#192e7a" }}
+    >
+      <SignUp
+        routing="path"
+        path={`${basePath}/sign-up`}
+        signInUrl={`${basePath}/sign-in`}
+        fallbackRedirectUrl={`${basePath}/`}
+      />
+    </div>
+  );
+}
+
 function Router() {
   return (
     <>
       <ScrollToTop />
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/sign-in/*?" component={SignInPage} />
+        <Route path="/sign-up/*?" component={SignUpPage} />
+        <Route path="/account" component={MyAccount} />
         <Route path="/case/:slug" component={PostDetail} />
         <Route path="/store" component={Store} />
         <Route path="/about" component={About} />
@@ -73,48 +158,34 @@ function Router() {
   );
 }
 
-function AuthGate({ children }: { children: React.ReactNode }) {
-  const { isLoading, isAuthenticated, login } = useAuth();
+function ClerkProviderWithRoutes() {
+  const [, setLocation] = useLocation();
 
-  if (isLoading) {
-    return (
-      <div
-        className="min-h-screen flex items-center justify-center"
-        style={{ background: "#0a0a0f" }}
-      >
-        <div className="flex flex-col items-center gap-4">
-          <div
-            className="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"
-          />
-          <p className="text-stone-600 text-xs tracking-widest uppercase">
-            ClownBinge
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <LoginWall login={login} />;
-  }
-
-  return <>{children}</>;
+  return (
+    <ClerkProvider
+      publishableKey={clerkPubKey || ""}
+      proxyUrl={clerkProxyUrl}
+      routerPush={(to) => setLocation(stripBase(to))}
+      routerReplace={(to) => setLocation(stripBase(to), { replace: true })}
+    >
+      <QueryClientProvider client={queryClient}>
+        <ClerkQueryClientCacheInvalidator />
+        <AdminProvider>
+          <TooltipProvider>
+            <Router />
+            <Toaster />
+          </TooltipProvider>
+        </AdminProvider>
+      </QueryClientProvider>
+    </ClerkProvider>
+  );
 }
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AdminProvider>
-        <TooltipProvider>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-            <AuthGate>
-              <Router />
-            </AuthGate>
-          </WouterRouter>
-          <Toaster />
-        </TooltipProvider>
-      </AdminProvider>
-    </QueryClientProvider>
+    <WouterRouter base={basePath}>
+      <ClerkProviderWithRoutes />
+    </WouterRouter>
   );
 }
 

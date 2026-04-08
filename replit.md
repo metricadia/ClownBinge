@@ -103,6 +103,24 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 **Tagline:** "Verified. Primary Sources. Clowned."
 **Mission:** Verified accountability journalism and political satire. Real, verifiable incidents of politicians and religious leaders betraying constituents.
 
+### Authentication (Clerk)
+
+Site is **public** — no global login wall. Article reading requires Clerk social sign-in.
+
+- **Auth provider:** Clerk (`@clerk/react` frontend, `@clerk/express` server middleware)
+- **Provisioned app:** `app_3C3Lb6pvok9tbn36yfEKuhFRHap` (WhiteLabel, Google + Apple social login)
+- **Env vars:** `CLERK_SECRET_KEY`, `CLERK_PUBLISHABLE_KEY`, `VITE_CLERK_PUBLISHABLE_KEY`, `VITE_CLERK_PROXY_URL` (auto-set in prod)
+- **Clerk proxy:** `clerkProxyMiddleware.ts` — proxies `/api/__clerk` to Clerk's FAPI (must be mounted before body parsers)
+- **Article gate:** `PostDetail.tsx` — detects `!isSignedIn` via `useAuth()`, shows "Sign In to Read" overlay with bodyBottom hidden
+- **Routes:** `/sign-in` (Clerk SignIn component), `/sign-up` (Clerk SignUp component), `/account` (MyAccount.tsx — redirects to /sign-in if not authed)
+- **Nav:** "My Account" link → `/account` (signed in) or `/sign-in` (signed out) via Clerk `useAuth()` in Layout.tsx
+- **Member tracking:** On Clerk sign-in, App.tsx `ClerkQueryClientCacheInvalidator` fires `POST /api/members/sync` with Clerk user data → upserts `members` table
+- **Kemet8 admin:** `/Kemet8` → Members tab shows all registered Clerk members (name, email, avatar, join date, last login)
+- **Admin auth:** Kemet8 uses `express-session` + `metricadiaAdmin` session flag — separate from Clerk, unchanged
+- **Removed:** Replit OIDC (`openid-client`), `routes/auth.ts`, `middlewares/authMiddleware.ts`, `lib/auth.ts`, `LoginWall.tsx`, `@workspace/replit-auth-web` dep
+
+**DB tables:** `members` table — `clerk_id` (PK), `email`, `name`, `avatar_url`, `created_at`, `last_login_at`
+
 ### Products
 
 - **ClownCheck** — $1.95/verification
@@ -132,7 +150,9 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 - `artifacts/clownbinge/src/pages/PostDetail.tsx` — gates MetricadiaID popups + CB Factoid popups on `premiumOnly` articles
 - `artifacts/clownbinge/src/pages/AdminEditorPage.tsx` — SubscribersPanel + ⭐ premium toggle per article
 
-**Feature gating:** Article text is always visible (SEO). Only the interactive research tools are gated: Metricadia ID person-profile popups and CB Factoid citation popups. Non-subscribers see a `SubscriptionModal` nudge when they attempt to use these tools on a `premiumOnly` article. A "Members Only Tools" amber badge appears in the article header.
+**Feature gating (two-tier):**
+1. **Auth gate (Clerk):** All articles require social sign-in to read. Signed-out users see the teaser (bodyTop) then a "Sign In to Read" overlay.
+2. **Premium gate (subscription):** `premiumOnly` articles require a subscriber token on top of auth. Non-subscribers see the SubscriptionModal when using MetricadiaID or CB Factoid popups, and are blocked from bodyBottom. A "Members Only Tools" amber badge appears in the article header.
 
 **Cookie:** `cb_sub` — HttpOnly, 1-year expiry, set by Express on activation, validated on every status check. No JWT, no session DB lookup — the token table is the source of truth.
 

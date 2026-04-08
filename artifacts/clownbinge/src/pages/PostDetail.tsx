@@ -1,3 +1,4 @@
+import { useAuth } from "@clerk/react";
 import { useRoute } from "wouter";
 import { Layout } from "@/components/Layout";
 import { VerifiedBadge } from "@/components/VerifiedBadge";
@@ -100,9 +101,13 @@ export default function PostDetail() {
   const [gateOpen, setGateOpen] = useState(false);
   const [gateTrigger, setGateTrigger] = useState<"metricadiaid" | "factoid" | "comment">("metricadiaid");
 
+  // Clerk auth state
+  const { isLoaded: clerkLoaded, isSignedIn } = useAuth();
+  const isAuthGated = clerkLoaded && !isSignedIn;
+
   // True once we know both admin and subscriber status
   const authResolved = !adminChecking && subscriptionStatus !== undefined;
-  const isPremiumGated = authResolved && !!(post as any)?.premiumOnly && !isAdmin && !subscriptionStatus?.isSubscriber;
+  const isPremiumGated = !isAuthGated && authResolved && !!(post as any)?.premiumOnly && !isAdmin && !subscriptionStatus?.isSubscriber;
   const [commentText, setCommentText] = useState("");
   const [commentSubmitted, setCommentSubmitted] = useState(false);
 
@@ -364,7 +369,7 @@ export default function PostDetail() {
           className="cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-strong:text-header prose-p:leading-relaxed mb-4"
         >
           <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
-          {!isPremiumGated && (
+          {!isAuthGated && !isPremiumGated && (
             <>
               {sponsor
                 ? <SponsorBar sponsor={sponsor} />
@@ -376,6 +381,55 @@ export default function PostDetail() {
             </>
           )}
         </div>
+
+        {/* ── Auth gate — sign in required to read ── */}
+        {isAuthGated && (
+          <div className="mb-12">
+            <div className="h-24 -mt-24 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, white)" }} />
+            <div style={{ border: "1px solid #1A3A8F", borderTop: "4px solid #1A3A8F", background: "#fff" }}>
+              <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-2.5" style={{ borderBottom: "1px solid #E5E7EB", background: "#FAFAFA" }}>
+                <span className="text-xs font-semibold" style={{ color: "#374151" }}>
+                  Members-Only Article
+                </span>
+                <span className="text-[10px] font-black uppercase tracking-[0.22em] px-2.5 py-0.5 rounded-full shrink-0" style={{ background: "#1A3A8F", color: "#F5C518" }}>
+                  Sign In Required
+                </span>
+              </div>
+              <div className="px-6 pt-6 pb-8 text-center">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: "#EEF2FF" }}>
+                  <Lock className="w-6 h-6" style={{ color: "#1A3A8F" }} />
+                </div>
+                <h3 className="text-xl font-black mb-2" style={{ color: "#111827" }}>
+                  Sign In to Read This Article
+                </h3>
+                <p className="text-sm mb-6" style={{ color: "#6B7280" }}>
+                  ClownBinge is free to join. Create an account with Google or Apple to access the full article.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Link
+                    href="/sign-in"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-black uppercase tracking-wider transition-colors"
+                    style={{ background: "#1A3A8F", color: "#fff" }}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-black uppercase tracking-wider transition-colors"
+                    style={{ border: "2px solid #1A3A8F", color: "#1A3A8F" }}
+                  >
+                    Create Free Account
+                  </Link>
+                </div>
+                <p className="text-xs mt-4" style={{ color: "#9CA3AF" }}>
+                  Already a subscriber?{" "}
+                  <Link href="/sign-in" className="underline" style={{ color: "#1A3A8F" }}>Sign in</Link>{" "}
+                  to access your premium content.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ── Premium gate — rendered OUTSIDE prose so styles work ── */}
         {isPremiumGated && (() => {

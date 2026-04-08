@@ -5,3 +5,4 @@ export * from "./books";
 export * from "./subscribers";
 export * from "./subscriber-tokens";
 export * from "./tips";
+export * from "./members";

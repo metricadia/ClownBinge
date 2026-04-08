@@ -9,12 +9,11 @@ import sponsorsRouter from "./sponsors";
 import verifyRouter from "./verify";
 import fixmeRouter from "./fixme";
 import factoidRouter from "./factoid";
-import authRouter from "./auth";
 import subscriptionRouter from "./subscription";
+import membersRouter from "./members";
 
 const router: IRouter = Router();
 
-router.use(authRouter);
 router.use(healthRouter);
 router.use(postsRouter);
 router.use(reactionsRouter);
@@ -26,5 +25,6 @@ router.use(verifyRouter);
 router.use(fixmeRouter);
 router.use(factoidRouter);
 router.use(subscriptionRouter);
+router.use(membersRouter);
 
 export default router;

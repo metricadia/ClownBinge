@@ -4,6 +4,7 @@ import { Menu, X, ChevronDown, Heart, Home, Star } from "lucide-react";
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
 import { FloatingAdminBar } from "@/components/FloatingAdminBar";
+import { useAuth } from "@clerk/react";
 
 const CATEGORIES = [
   { id: "all",               label: "All" },
@@ -61,6 +62,8 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
   activeCategory?: string 
 }) {
   const [location] = useLocation();
+  const { isSignedIn } = useAuth();
+  const accountHref = isSignedIn ? "/account" : "/sign-in";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [catDropdownOpen, setCatDropdownOpen] = useState(false);
   const [catBarOpen, setCatBarOpen] = useState(true);
@@ -172,7 +175,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/invest-in-us" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors text-[#F5C518]`}>
               Subscribe
             </Link>
-            <Link href="/login" className={`text-[14px] font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/login' ? 'text-white' : 'text-white/70'}`}>
+            <Link href={accountHref} className={`text-[14px] font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/account' || location === '/sign-in' ? 'text-white' : 'text-white/70'}`}>
               My Account
             </Link>
           </nav>
@@ -197,7 +200,7 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
             <Link href="/bookstore" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Books</Link>
             <Link href="/reports" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Buy Reports</Link>
             <Link href="/invest-in-us" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Subscribe</Link>
-            <Link href="/login" className="text-[24px] font-bold text-white uppercase tracking-widest">My Account</Link>
+            <Link href={accountHref} className="text-[24px] font-bold text-white uppercase tracking-widest">My Account</Link>
           </nav>
         </div>
       )}

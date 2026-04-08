@@ -97,7 +97,7 @@ export default function Home() {
                 <span className="text-muted-foreground/30">|</span>
                 <a href="/ethics" className="text-xs font-semibold hover:underline whitespace-nowrap" style={{ color: "#B8860B" }}>Ethics Policy</a>
                 <span className="text-muted-foreground/30">|</span>
-                <a href="/login" className="text-xs font-bold hover:underline whitespace-nowrap" style={{ color: "#1B3E99" }}>My Account</a>
+                <a href="/account" className="text-xs font-bold hover:underline whitespace-nowrap" style={{ color: "#1B3E99" }}>My Account</a>
               </div>
             </div>
 

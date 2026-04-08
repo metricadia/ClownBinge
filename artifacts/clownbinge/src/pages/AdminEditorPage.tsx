@@ -501,6 +501,85 @@ function SubscribersPanel({ authHeaders }: { authHeaders: () => Record<string, s
   );
 }
 
+interface Member {
+  clerkId: string;
+  email: string;
+  name: string | null;
+  avatarUrl: string | null;
+  createdAt: string;
+  lastLoginAt: string;
+}
+
+function MembersPanel({ authHeaders }: { authHeaders: () => Record<string, string> }) {
+  const { data: members = [], isLoading } = useQuery<Member[]>({
+    queryKey: ["/api/members"],
+    queryFn: async () => {
+      const res = await fetch("/api/members", { credentials: "include", headers: authHeaders() });
+      if (!res.ok) throw new Error("Failed to fetch members");
+      return res.json();
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 animate-spin text-indigo-400" />
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h2 className="text-xl font-black text-white">Clerk Members</h2>
+          <p className="text-xs text-slate-400 mt-0.5">{members.length} registered member{members.length !== 1 ? "s" : ""}</p>
+        </div>
+      </div>
+
+      {members.length === 0 ? (
+        <div className="text-center py-16 text-slate-500 text-sm">
+          No members yet. Members appear here when they sign in via Clerk.
+        </div>
+      ) : (
+        <div className="overflow-hidden rounded-xl border border-slate-700">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-slate-700 bg-slate-800/60">
+                <th className="text-left px-4 py-3 text-[11px] font-black uppercase tracking-wider text-slate-400">Member</th>
+                <th className="text-left px-4 py-3 text-[11px] font-black uppercase tracking-wider text-slate-400">Email</th>
+                <th className="text-left px-4 py-3 text-[11px] font-black uppercase tracking-wider text-slate-400">Joined</th>
+                <th className="text-left px-4 py-3 text-[11px] font-black uppercase tracking-wider text-slate-400">Last Login</th>
+              </tr>
+            </thead>
+            <tbody>
+              {members.map((member, i) => (
+                <tr key={member.clerkId} className={`border-b border-slate-800 ${i % 2 === 0 ? "bg-slate-900/40" : "bg-slate-900/20"}`}>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-3">
+                      {member.avatarUrl ? (
+                        <img src={member.avatarUrl} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" />
+                      ) : (
+                        <div className="w-7 h-7 rounded-full bg-indigo-900/60 flex items-center justify-center shrink-0">
+                          <span className="text-[10px] font-bold text-indigo-300">{(member.name || member.email)[0].toUpperCase()}</span>
+                        </div>
+                      )}
+                      <span className="text-white font-medium">{member.name || <span className="text-slate-500 italic">—</span>}</span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-slate-300 font-mono text-xs">{member.email}</td>
+                  <td className="px-4 py-3 text-slate-400 text-xs">{new Date(member.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
+                  <td className="px-4 py-3 text-slate-400 text-xs">{new Date(member.lastLoginAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function AdminEditorPage() {
   const params = useParams<{ postId?: string }>();
   const [, setLocation] = useLocation();
@@ -508,7 +587,7 @@ export default function AdminEditorPage() {
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [search, setSearch] = useState("");
   const [showNewArticle, setShowNewArticle] = useState(false);
-  const [activeTab, setActiveTab] = useState<"articles" | "subscribers">("articles");
+  const [activeTab, setActiveTab] = useState<"articles" | "subscribers" | "members">("articles");
   const queryClient = useQueryClient();
 
   // ── Premium toggle mutation ─────────────────────────────────────────────────
@@ -641,7 +720,7 @@ export default function AdminEditorPage() {
           </div>
         </div>
         <div className="max-w-5xl mx-auto px-4 pb-0 flex gap-1">
-          {(["articles", "subscribers"] as const).map((tab) => (
+          {(["articles", "subscribers", "members"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -651,7 +730,7 @@ export default function AdminEditorPage() {
                   : "border-transparent text-slate-500 hover:text-slate-300"
               }`}
             >
-              {tab === "subscribers" ? <span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5" />Subscribers</span> : "Articles"}
+              {tab === "subscribers" ? <span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5" />Subscribers</span> : tab === "members" ? "Members" : "Articles"}
             </button>
           ))}
         </div>
@@ -757,6 +836,9 @@ export default function AdminEditorPage() {
 
         {/* ── Subscribers tab ── */}
         {activeTab === "subscribers" && <SubscribersPanel authHeaders={authHeaders} />}
+
+        {/* ── Members tab ── */}
+        {activeTab === "members" && <MembersPanel authHeaders={authHeaders} />}
 
       </main>
     </div>
