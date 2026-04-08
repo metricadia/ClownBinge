@@ -47,6 +47,7 @@ function removeMeta(name: string, attr = "name") {
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
+  founders_pen:       "Founder's Pen",
   self_owned:         "Self-Owned",
   law_and_justice:    "Law & Justice Files",
   money_and_power:    "Money & Power",

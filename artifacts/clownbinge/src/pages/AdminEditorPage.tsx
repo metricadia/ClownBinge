@@ -48,6 +48,7 @@ type Section = "dashboard" | "articles" | "members" | "subscribers" | "traffic" 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const CATEGORIES: { value: string; label: string }[] = [
+  { value: "founders_pen",          label: "Founder's Pen" },
   { value: "self_owned",            label: "Self-Owned" },
   { value: "law_and_justice",       label: "Law & Justice" },
   { value: "money_and_power",       label: "Money & Power" },

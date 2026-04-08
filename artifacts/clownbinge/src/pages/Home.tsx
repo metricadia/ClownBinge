@@ -9,6 +9,7 @@ import { useHomeSeoHead } from "@/hooks/use-seo-head";
 import { Loader2, AlertCircle, ArrowRight, X, HelpCircle } from "lucide-react";
 
 const CATEGORY_LABELS: Record<string, string> = {
+  founders_pen:        "Founder's Pen",
   self_owned:          "Self-Owned",
   law_and_justice:     "Law & Justice",
   money_and_power:     "Money & Power",

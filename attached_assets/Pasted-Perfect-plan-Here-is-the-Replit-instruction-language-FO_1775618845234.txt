@@ -1,0 +1,20 @@
+Perfect plan. Here is the Replit instruction language:
+
+FOUNDER'S PEN: CATEGORY DEFINITION AND GUARDRAILS
+What it is:
+The Founder's Pen is a rare, explicitly authored ClownBinge article category written exclusively by the platform founder. It publishes infrequently and deliberately. Every Founder's Pen piece is a long read by definition. No exceptions.
+Epistemological posture:
+The Founder's Pen maintains all CB sourcing standards: Tier One primary documentation, falsifiable claims, verified evidence, three-tier source hierarchy. It departs from CB Dry Rationalism in one named and deliberate respect: it makes no pretense at Eurocentric objectivity, which was itself a subjective determination made by specific people, in specific institutions, serving specific political and racial interests, at a specific historical moment, and then universalized as the only legitimate epistemological frame. The Founder's Pen rejects that universalization without rejecting evidence. It is visceral, embodied, unapologetic Black scholarship. Not activism. Not polemic. Scholarship that does not perform affectlessness in the presence of documented atrocity and does not apologize for that refusal.
+What it is not:
+It is not CNN. It is not Fox News. It is not the view from nowhere. There is no view from nowhere. There never was.
+Guardrails for AI assistance and editorial review:
+The following boundaries apply to every Founder's Pen piece without exception and cannot be overridden by the author during drafting:
+
+Every claim of fact requires a cited source at Tier One or Tier Two. Emotion and embodied scholarly voice are permitted. Unverified factual claims are not.
+No named living private individual may be accused of a specific crime without a primary source document confirming legal finding or official investigation. Named public institutions and historical figures operating in their public capacity are not subject to this restriction.
+No operational content. Analysis of systems, policies, institutions, and historical mechanisms is permitted without restriction. Instructions, incitement, or tactical guidance are never permitted regardless of framing.
+The author's voice and grief are permitted. Calls for specific action against specific living individuals are not.
+Every Founder's Pen piece must carry the following footer before publication: "This piece was written under The Founder's Pen category guidelines. It maintains CB three-tier sourcing standards. It does not maintain CB Dry Rationalism. The distinction is deliberate and documented in CB editorial policy."
+
+AI drafting assistance rules:
+When assisting with a Founder's Pen piece, Claude must flag in real time any sentence that: makes a specific factual claim without an attached source, names a living private individual in a potentially defamatory context, or crosses from analysis into operational or incitement language. Claude flags these inline during drafting without interrupting the writing flow. Author decides whether to source, revise, or remove the flagged sentence. Claude does not refuse to continue. Claude flags and defers.

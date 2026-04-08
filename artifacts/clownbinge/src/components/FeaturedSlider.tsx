@@ -17,6 +17,7 @@ const SLIDE_BORDER = ["#D4A090", "#B8C8DC", "#D4C070", "#A8C8B8", "#D4C070", "#B
 const SLIDE_ACCENT = ["#8B2010", "#1A3A8F", "#96720A", "#1A6B4A", "#96720A", "#1A3A8F"];
 
 const CATEGORY_LABELS: Record<string, string> = {
+  founders_pen:             "Founder's Pen",
   self_owned:               "Self-Owned",
   us_history:               "U.S. History",
   money_and_power:          "Money & Power",

@@ -10,6 +10,7 @@ import { STAFF_PICKS_SLUGS } from "@/config/staff-picks";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const CATEGORY_LABELS: Record<string, string> = {
+  founders_pen:       "Founder's Pen",
   self_owned:         "Self-Owned",
   law_and_justice:    "Law & Justice Files",
   money_and_power:    "Money & Power",
@@ -31,6 +32,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 const CATEGORY_BORDER: Record<string, string> = {
+  founders_pen:       "border-[#C9A227] shadow-lg shadow-[#C9A227]/20",
   self_owned:         "border-primary shadow-lg shadow-primary/20",
   law_and_justice:    "border-red-700 shadow-lg shadow-red-700/20",
   money_and_power:    "border-emerald-700 shadow-lg shadow-emerald-700/20",

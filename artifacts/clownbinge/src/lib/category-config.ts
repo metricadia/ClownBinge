@@ -198,6 +198,17 @@ export const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
     pillBg: "bg-rose-900",
     pillText: "text-white",
   },
+  founders_pen: {
+    slug: "founders_pen",
+    label: "Founder's Pen",
+    description: "The Founder's Pen is a rare, explicitly authored ClownBinge article category written exclusively by the platform founder. It publishes infrequently and deliberately. Every Founder's Pen piece is a long read by definition. It maintains all CB sourcing standards — Tier One primary documentation, falsifiable claims, verified evidence, three-tier source hierarchy — while departing from CB Dry Rationalism in one named and deliberate respect: it makes no pretense at Eurocentric objectivity. The Founder's Pen carries a documented editorial posture, not an undisclosed one. Every piece includes the mandatory footer disclosing this distinction.",
+    mission: "To document the intersection of systemic power and lived experience through the founder's voice, under full CB sourcing standards, with the editorial posture named and disclosed rather than hidden.",
+    keyEntities: ["Metricadia-Research LLC", "ClownBinge Editorial Board", "CB Editorial Policy"],
+    pillarTopics: ["Systemic analysis", "Institutional power documentation", "Founder's editorial voice", "Primary-source grounded perspective"],
+    primarySources: ["Tier One primary documentation", "Peer-reviewed scholarship", "Official government records", "Court decisions and legal filings"],
+    pillBg: "bg-[#C9A227]",
+    pillText: "text-[#0B1930]",
+  },
   self_owned: {
     slug: "self_owned",
     label: "Self-Owned",
