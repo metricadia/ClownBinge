@@ -166,34 +166,25 @@
   }
 
   .founders-pen-article .founders-pen-title {
-    font-family: var(--font-founders-title);
-    font-size: 2.6rem;
+    font-size: 2.4rem;
     line-height: 1.15;
   }
 
   .founders-pen-article .founders-pen-body {
-    font-family: var(--font-founders-body);
-    font-size: 18px;
-    line-height: 1.85;
+    font-size: 17px;
+    line-height: 1.8;
   }
 
   .founders-pen-article .founders-pen-lede {
-    font-family: var(--font-founders-body);
-    font-size: 19px;
-    line-height: 1.85;
+    font-size: 18px;
+    line-height: 1.75;
     color: #111827;
-  }
-
-  .founders-pen-article .cb-article-body p,
-  .founders-pen-article .cb-article-body li {
-    font-family: var(--font-founders-body);
   }
 
   /* ── Founder's Pen body component classes (used in article HTML) ── */
   .fp-body {
-    font-family: var(--font-founders-body);
-    font-size: 18px;
-    line-height: 1.85;
+    font-size: 17px;
+    line-height: 1.8;
     color: #111827;
   }
   .fp-body p {
@@ -227,8 +218,7 @@
     margin-bottom: 0.2rem;
   }
   .fp-section-title {
-    font-family: var(--font-founders-body);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: #111827;
     margin-top: 0.2rem;
