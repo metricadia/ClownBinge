@@ -11,6 +11,7 @@ import fixmeRouter from "./fixme";
 import factoidRouter from "./factoid";
 import subscriptionRouter from "./subscription";
 import membersRouter from "./members";
+import adminRouter from "./admin";
 
 const router: IRouter = Router();
 
@@ -26,5 +27,6 @@ router.use(fixmeRouter);
 router.use(factoidRouter);
 router.use(subscriptionRouter);
 router.use(membersRouter);
+router.use(adminRouter);
 
 export default router;

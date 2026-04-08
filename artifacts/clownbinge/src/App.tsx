@@ -66,10 +66,11 @@ function ClerkQueryClientCacheInvalidator() {
       ) {
         qc.clear();
       }
-      // Sync member record when a new user signs in
+      // Sync member record + attempt admin auto-login when user signs in
       if (userId && prevUserIdRef.current !== userId && user) {
         const email = user.primaryEmailAddress?.emailAddress ?? "";
         if (email) {
+          // Member sync
           fetch(`${apiBase}/api/members/sync`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -79,6 +80,14 @@ function ClerkQueryClientCacheInvalidator() {
               name: user.fullName || user.username || null,
               avatarUrl: user.imageUrl || null,
             }),
+          }).catch(() => {});
+
+          // Auto-grant Kemet8 admin session if email is whitelisted
+          fetch(`${apiBase}/api/admin/clerk-login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ email }),
           }).catch(() => {});
         }
       }
