@@ -206,8 +206,8 @@ export const CATEGORY_CONFIG: Record<string, CategoryConfig> = {
     keyEntities: ["Metricadia-Research LLC", "ClownBinge Editorial Board", "CB Editorial Policy"],
     pillarTopics: ["Systemic analysis", "Institutional power documentation", "Founder's editorial voice", "Primary-source grounded perspective"],
     primarySources: ["Tier One primary documentation", "Peer-reviewed scholarship", "Official government records", "Court decisions and legal filings"],
-    pillBg: "bg-white border border-gray-400",
-    pillText: "text-[#0B1930]",
+    pillBg: "bg-[#3D1A00]",
+    pillText: "text-white",
   },
   self_owned: {
     slug: "self_owned",

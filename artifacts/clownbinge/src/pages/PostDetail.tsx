@@ -344,7 +344,7 @@ export default function PostDetail() {
           <div className="border-b-2 border-border mb-4" />
 
           {isFoundersPen && (
-            <div className="mb-4 inline-flex items-center px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em]" style={{ background: "#8B1A1A", color: "#fff" }}>
+            <div className="mb-4 inline-flex items-center px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em]" style={{ background: "#3D1A00", color: "#fff" }}>
               Founder's Pen
             </div>
           )}

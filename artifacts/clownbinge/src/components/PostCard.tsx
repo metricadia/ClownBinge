@@ -132,7 +132,7 @@ export function PostCard({ post }: { post: Post }) {
               <span
                 className="inline-flex items-center rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider whitespace-nowrap"
                 style={post.category === "founders_pen"
-                  ? { background: "#ffffff", border: "1.5px solid #9CA3AF", color: "#0B1930" }
+                  ? { background: "#3D1A00", color: "#fff" }
                   : { border: "1px solid rgba(107,53,32,0.4)", color: "#6B3520" }
                 }
               >

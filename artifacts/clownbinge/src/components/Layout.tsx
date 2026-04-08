@@ -33,7 +33,7 @@ const CATEGORIES = [
 const PILL: Record<string, { on: string; off: string }> = {
   all:               { on: 'bg-primary text-white shadow-md ring-2 ring-primary/40',         off: 'bg-muted text-muted-foreground hover:bg-border hover:text-foreground' },
   staff_picks:       { on: 'bg-[#F5C518] text-[#1A3A8F] shadow-md ring-2 ring-[#F5C518]/50 font-black', off: 'bg-[#F5C518] text-[#1A3A8F] hover:bg-[#e0b400] font-black' },
-  founders_pen:      { on: 'bg-white border border-gray-400 text-[#0B1930] shadow-sm font-black', off: 'bg-white border border-gray-400 text-[#0B1930] hover:bg-gray-50 font-black' },
+  founders_pen:      { on: 'bg-[#3D1A00] text-white shadow-md ring-2 ring-[#3D1A00]/40 font-black', off: 'bg-[#3D1A00] text-white hover:bg-[#2E1400] font-black' },
   self_owned:        { on: 'bg-primary text-white shadow-md ring-2 ring-primary/40',         off: 'bg-primary text-white hover:bg-primary/80' },
   law_and_justice:   { on: 'bg-red-700 text-white shadow-md ring-2 ring-red-700/40',         off: 'bg-red-700 text-white hover:bg-red-800' },
   money_and_power:   { on: 'bg-emerald-700 text-white shadow-md ring-2 ring-emerald-700/40', off: 'bg-emerald-700 text-white hover:bg-emerald-800' },
