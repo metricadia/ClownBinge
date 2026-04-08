@@ -97,20 +97,50 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
             {/* Gold rule */}
             <div className="w-full h-px mb-4" style={{ background: `linear-gradient(90deg, transparent, ${GOLD}55, transparent)` }} />
 
-            {/* brain v1.0 */}
-            <p
-              className="tracking-widest select-none"
-              style={{
-                fontFamily: "'Montserrat', 'Inter', system-ui, sans-serif",
-                fontWeight: 300,
-                fontSize: "0.82rem",
-                color: GOLD,
-                letterSpacing: "0.28em",
-                textTransform: "uppercase",
-              }}
-            >
-              brain v1.0
-            </p>
+            {/* BRAIN V1.0 — ClownBinge Instance */}
+            <div className="flex flex-col items-center gap-[3px] select-none">
+              <div className="flex items-baseline gap-2">
+                <span
+                  style={{
+                    fontFamily: "'Montserrat', system-ui, sans-serif",
+                    fontWeight: 700,
+                    fontSize: "0.78rem",
+                    color: GOLD,
+                    letterSpacing: "0.30em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Brain
+                </span>
+                <span
+                  style={{
+                    fontFamily: "'Montserrat', system-ui, sans-serif",
+                    fontWeight: 300,
+                    fontSize: "0.68rem",
+                    color: `${GOLD}99`,
+                    letterSpacing: "0.18em",
+                  }}
+                >
+                  v1.0
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="h-px w-8" style={{ background: `${GOLD}30` }} />
+                <span
+                  style={{
+                    fontFamily: "'Montserrat', system-ui, sans-serif",
+                    fontWeight: 400,
+                    fontSize: "0.58rem",
+                    color: `${GOLD}70`,
+                    letterSpacing: "0.22em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  ClownBinge Instance
+                </span>
+                <div className="h-px w-8" style={{ background: `${GOLD}30` }} />
+              </div>
+            </div>
           </div>
 
           {/* ── Password form ── */}
@@ -125,14 +155,14 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
                 value={password}
                 onChange={(e) => { setPassword(e.target.value); setError(""); }}
                 placeholder="Admin passphrase"
-                className="w-full pl-10 pr-10 py-[11px] rounded-xl text-sm text-white placeholder:text-slate-600 focus:outline-none transition-all duration-150"
+                className="w-full pl-10 pr-10 py-[11px] rounded-xl text-sm text-white placeholder:text-slate-500 focus:outline-none transition-all duration-150"
                 style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: "rgba(201,162,39,0.06)",
+                  border: `1px solid ${GOLD}55`,
                   caretColor: GOLD,
                 }}
-                onFocus={(e) => (e.currentTarget.style.border = `1px solid ${GOLD}66`)}
-                onBlur={(e)  => (e.currentTarget.style.border = "1px solid rgba(255,255,255,0.08)")}
+                onFocus={(e) => (e.currentTarget.style.border = `1px solid ${GOLD}cc`)}
+                onBlur={(e)  => (e.currentTarget.style.border = `1px solid ${GOLD}55`)}
                 data-testid="input-admin-password"
                 autoFocus
                 autoComplete="current-password"
@@ -157,12 +187,12 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
 
             <button
               type="submit"
-              disabled={isLoading || !password.trim()}
-              className="w-full py-[11px] rounded-xl text-sm font-bold tracking-widest uppercase transition-all duration-150 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
+              disabled={isLoading}
+              className="w-full py-[11px] rounded-xl text-sm font-bold tracking-widest uppercase transition-all duration-150 active:scale-[0.98] disabled:opacity-60"
               style={{
                 background: `linear-gradient(135deg, #b8891a 0%, ${GOLD} 50%, #b8891a 100%)`,
                 color: "#0a1628",
-                boxShadow: `0 4px 20px rgba(201,162,39,0.3), inset 0 1px 0 rgba(255,255,255,0.15)`,
+                boxShadow: `0 4px 24px rgba(201,162,39,0.45), inset 0 1px 0 rgba(255,255,255,0.18)`,
                 letterSpacing: "0.18em",
               }}
               data-testid="button-admin-login"
