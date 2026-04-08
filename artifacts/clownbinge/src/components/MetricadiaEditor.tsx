@@ -111,6 +111,7 @@ interface MetricadiaEditorProps {
   initialContent: string;
   initialTitle: string;
   initialExcerpt: string;
+  initialCategory?: string;
   initialPrimarySourcess?: PrimarySource[];
   onClose: () => void;
   apiEndpoint?: string;
@@ -118,17 +119,41 @@ interface MetricadiaEditorProps {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
+const CATEGORY_OPTIONS: { value: string; label: string }[] = [
+  { value: "native_and_first_nations", label: "Native & First Nations" },
+  { value: "technology", label: "Technology" },
+  { value: "anti_racist_heroes", label: "Anti-Racist Heroes" },
+  { value: "money_and_power", label: "Money & Power" },
+  { value: "law_and_justice", label: "Law & Justice Files" },
+  { value: "us_constitution", label: "U.S. Constitution" },
+  { value: "women_and_girls", label: "Women & Girls" },
+  { value: "us_history", label: "U.S. History" },
+  { value: "religion", label: "Religion" },
+  { value: "investigations", label: "Investigations" },
+  { value: "war_and_inhumanity", label: "War & Inhumanity" },
+  { value: "health_and_healing", label: "Health & Healing" },
+  { value: "censorship", label: "Censorship" },
+  { value: "global_south", label: "Global South" },
+  { value: "how_it_works", label: "How It Works" },
+  { value: "nerd_out", label: "NerdOut / Academic" },
+  { value: "disarming_hate", label: "Disarming Hate" },
+  { value: "founders_pen", label: "Founder's Pen" },
+  { value: "self_owned", label: "Self-Owned" },
+];
+
 export function MetricadiaEditor({
   postId,
   initialContent,
   initialTitle,
   initialExcerpt,
+  initialCategory,
   initialPrimarySourcess,
   onClose,
   apiEndpoint,
 }: MetricadiaEditorProps) {
   const [title, setTitle] = useState(initialTitle);
   const [excerpt, setExcerpt] = useState(initialExcerpt);
+  const [category, setCategory] = useState(initialCategory || "");
   const [primarySources, setPrimarySources] = useState<PrimarySource[]>(initialPrimarySourcess || []);
   const [showSourcesPanel, setShowSourcesPanel] = useState(false);
   const [addingSource, setAddingSource] = useState(false);
@@ -223,7 +248,7 @@ export function MetricadiaEditor({
         method: "PUT",
         headers,
         credentials: "include",
-        body: JSON.stringify({ title, content, excerpt, primarySources }),
+        body: JSON.stringify({ title, content, excerpt, primarySources, category }),
       });
 
       if (!res.ok) {
@@ -696,6 +721,20 @@ export function MetricadiaEditor({
                     {excerpt.length}/160
                   </span>
                 </div>
+              </div>
+              <div>
+                <label className="text-xs font-bold text-indigo-400 mb-2 block tracking-wide uppercase">Category</label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full bg-slate-950 border-2 border-slate-700 hover:border-indigo-700/50 focus:border-indigo-600 rounded-lg px-4 py-3 text-white text-sm focus:outline-none transition-all"
+                  data-testid="select-post-category"
+                >
+                  <option value="">— Select a category —</option>
+                  {CATEGORY_OPTIONS.map((opt) => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
               </div>
             </div>
           )}

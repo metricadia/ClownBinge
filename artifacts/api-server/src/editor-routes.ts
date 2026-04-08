@@ -233,11 +233,12 @@ export function registerMetricadiaRoutes(app: Express) {
 
   app.put("/api/posts/:id", requireMetricadiaAuth, async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { title, content, excerpt, primarySources } = req.body as {
+    const { title, content, excerpt, primarySources, category } = req.body as {
       title: string;
       content: string;
       excerpt: string;
       primarySources?: any[];
+      category?: string;
     };
 
     if (!title || content === undefined) {
@@ -253,6 +254,9 @@ export function registerMetricadiaRoutes(app: Express) {
       };
       if (Array.isArray(primarySources)) {
         updateData.primarySources = primarySources;
+      }
+      if (category && typeof category === "string") {
+        updateData.category = category;
       }
 
       await db

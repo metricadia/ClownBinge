@@ -1284,6 +1284,7 @@ export default function AdminEditorPage() {
         initialTitle={editingPost.title}
         initialContent={editingPost.content}
         initialExcerpt={editingPost.excerpt}
+        initialCategory={editingPost.category || ""}
         initialPrimarySourcess={(editingPost.primarySources as any) || []}
         onClose={() => {
           setEditingPost(null);
