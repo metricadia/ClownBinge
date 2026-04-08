@@ -121,17 +121,10 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
           />
 
           {/* ── Logo section ── */}
-          <div className="flex flex-col items-center mb-6 gap-0">
-            {/* PsaLogo — white variant, compact */}
-            <div className="mb-1.5">
-              <PsaLogo variant="white" style={{ fontSize: "0.9rem", letterSpacing: "0.01em" }} />
-            </div>
-
-            {/* Flags */}
-            <div className="flex items-center gap-1 mb-2.5">
-              <span title="Saint Kitts and Nevis" className="text-sm leading-none select-none">🇰🇳</span>
-              <span title="United States"          className="text-sm leading-none select-none">🇺🇸</span>
-              <span title="Iceland"                className="text-sm leading-none select-none">🇮🇸</span>
+          <div className="flex flex-col items-center mb-4 gap-0">
+            {/* PsaLogo */}
+            <div className="mb-2">
+              <PsaLogo variant="white" style={{ fontSize: "1.1rem", letterSpacing: "0.01em" }} />
             </div>
 
             {/* Gold rule */}
@@ -248,19 +241,15 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
             </button>
           </form>
 
-          {/* ── Footer ── */}
-          <div
-            className="mt-8 pt-5 text-center"
-            style={{ borderTop: "1px solid rgba(201,162,39,0.10)" }}
-          >
-            <p
-              className="text-[9px] uppercase tracking-[0.22em]"
-              style={{ color: GOLD, fontFamily: "'Montserrat', system-ui, sans-serif" }}
-            >
-              Restricted System Access
-            </p>
-          </div>
         </div>
+
+        {/* ── Footer — outside the card ── */}
+        <p
+          className="text-center mt-4 text-[9px] uppercase tracking-[0.22em] select-none"
+          style={{ color: `${GOLD}99`, fontFamily: "'Montserrat', system-ui, sans-serif" }}
+        >
+          Restricted System Access
+        </p>
       </div>
     </div>
   );
