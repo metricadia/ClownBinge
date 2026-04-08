@@ -388,6 +388,37 @@ const STAFF_PICK_SLUGS: string[] = [
   "women-build-too-50-business-women-changed-world",
 ];
 
+// ─── Correct categories that were misassigned during earlier reseeds ──────────
+// These articles were wiped from founders_pen by a prior TRUNCATE and re-added
+// under wrong categories. This corrects them permanently on every startup.
+
+const CATEGORY_OVERRIDES: { caseNumber: string; category: typeof postsTable.$inferInsert["category"] }[] = [
+  { caseNumber: "CB-000384", category: "founders_pen" }, // Philo of Alexandria
+  { caseNumber: "CB-000125", category: "founders_pen" }, // No, Black Americans Do Not Commit More Violent Crime
+];
+
+export async function applyCategoryOverrides(): Promise<void> {
+  try {
+    let fixed = 0;
+    for (const { caseNumber, category } of CATEGORY_OVERRIDES) {
+      const result = await db
+        .update(postsTable)
+        .set({ category })
+        .where(sql`${postsTable.caseNumber} = ${caseNumber} AND ${postsTable.category} != ${category}`);
+      const count = (result as unknown as { rowCount?: number })?.rowCount ?? 0;
+      if (count > 0) {
+        console.log(`[Seed] Category override applied: ${caseNumber} -> ${category}`);
+        fixed++;
+      }
+    }
+    if (fixed === 0) {
+      console.log(`[Seed] Category overrides: all articles already correct.`);
+    }
+  } catch (err) {
+    console.error("[Seed] Error during applyCategoryOverrides:", err);
+  }
+}
+
 export async function applyStaffPickFlags(): Promise<void> {
   try {
     const result = await db
