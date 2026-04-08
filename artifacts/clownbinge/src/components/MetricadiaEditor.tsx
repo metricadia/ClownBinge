@@ -58,6 +58,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { MetricadiaIDDialog } from "./MetricadiaIDDialog";
+import { CBFactoidDialog } from "./CBFactoidDialog";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -169,6 +170,9 @@ export function MetricadiaEditor({
     from: number;
     to: number;
   } | null>(null);
+  const [showCBFactoidDialog, setShowCBFactoidDialog] = useState(false);
+  const [cbFactoidSelectedText, setCBFactoidSelectedText] = useState("");
+  const [cbFactoidSelectionRange, setCBFactoidSelectionRange] = useState<{ from: number; to: number } | null>(null);
 
   // Dragging state
   const [isDragging, setIsDragging] = useState(false);
@@ -453,6 +457,29 @@ export function MetricadiaEditor({
     }).run();
     toast({ title: "Profile linked", description: `${data.name} is now clickable.` });
     setMetricadiaIDSelectionRange(null);
+  };
+
+  // ── CB Factoid: wrap selected text with factoid markup ─────────────────────
+  const handleOpenCBFactoid = () => {
+    if (!editor) return;
+    const { from, to } = editor.state.selection;
+    const text = editor.state.doc.textBetween(from, to, " ").trim();
+    if (!text) return;
+    setCBFactoidSelectedText(text);
+    setCBFactoidSelectionRange({ from, to });
+    setShowCBFactoidDialog(true);
+  };
+
+  const handleInsertCBFactoid = (data: { title: string; summary: string; url: string }) => {
+    if (!editor || !cbFactoidSelectionRange) return;
+    const href = data.url || "#";
+    const safeTitle = data.title.replace(/"/g, "&quot;");
+    const safeSummary = data.summary.replace(/"/g, "&quot;");
+    const html = `<a class="cb-factoid" href="${href}" data-title="${safeTitle}" data-summary="${safeSummary}">${cbFactoidSelectedText}</a>`;
+    editor.chain().focus().setTextSelection(cbFactoidSelectionRange).insertContent(html).run();
+    setCBFactoidSelectionRange(null);
+    setCBFactoidSelectedText("");
+    toast({ title: "CB Factoid inserted", description: `"${data.title}" is now a reader tooltip.` });
   };
 
   // ── Auto-detect: scan article and pull Wikipedia data ──────────────────────
@@ -1008,6 +1035,10 @@ export function MetricadiaEditor({
             <Button onClick={handleAutoDetect} variant="outline" size="sm" className="min-h-[44px] px-3 bg-amber-900/30 text-amber-300 border-amber-600/40 hover:border-amber-400 font-bold" data-testid="button-auto-detect-people" title="Auto-detect all people in this article">
               <Users className="w-4 h-4 mr-1" /><span className="hidden md:inline">Auto-ID</span>
             </Button>
+            {/* CB Factoid™ */}
+            <Button onClick={handleOpenCBFactoid} variant="outline" size="sm" className="min-h-[44px] px-3 bg-yellow-900/30 text-yellow-300 border-yellow-600/40 hover:border-yellow-400 font-bold" data-testid="button-cbfactoid" title="Select text, then generate a CB Factoid tooltip with Claude">
+              <Sparkles className="w-4 h-4 mr-1" /><span className="hidden md:inline">Factoid</span>
+            </Button>
 
             <div className="hidden md:block w-px h-8 bg-slate-700 mx-1" />
 
@@ -1083,6 +1114,15 @@ export function MetricadiaEditor({
         onClose={() => setShowMetricadiaIDDialog(false)}
         selectedText={metricadiaIDSelectedText}
         onConfirm={handleConfirmMetricadiaID}
+      />
+
+      {/* CB Factoid™ dialog */}
+      <CBFactoidDialog
+        open={showCBFactoidDialog}
+        selectedText={cbFactoidSelectedText}
+        articleContext={title}
+        onClose={() => setShowCBFactoidDialog(false)}
+        onInsert={handleInsertCBFactoid}
       />
 
       {/* Auto-detect review modal */}
