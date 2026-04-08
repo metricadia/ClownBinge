@@ -23,6 +23,7 @@ export const listPostsQueryOffsetDefault = 0;
 export const ListPostsQueryParams = zod.object({
   category: zod
     .enum([
+      "founders_pen",
       "self_owned",
       "law_and_justice",
       "money_and_power",
