@@ -395,6 +395,10 @@ const STAFF_PICK_SLUGS: string[] = [
 const CATEGORY_OVERRIDES: { caseNumber: string; category: typeof postsTable.$inferInsert["category"] }[] = [
   { caseNumber: "CB-000384", category: "founders_pen" }, // Philo of Alexandria
   { caseNumber: "CB-000125", category: "founders_pen" }, // No, Black Americans Do Not Commit More Violent Crime
+  { caseNumber: "FP-001",    category: "founders_pen" }, // Engineered Underdevelopment
+  { caseNumber: "FP-002",    category: "founders_pen" }, // Hidden Debts & Philosophia
+  { caseNumber: "FP-003",    category: "founders_pen" }, // Harriet Tubman / Irena Sendler
+  { caseNumber: "FP-004",    category: "founders_pen" }, // African Immigrants $55 Billion
 ];
 
 export async function applyCategoryOverrides(): Promise<void> {
