@@ -104,7 +104,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
                   style={{
                     fontFamily: "'Montserrat', system-ui, sans-serif",
                     fontWeight: 700,
-                    fontSize: "0.78rem",
+                    fontSize: "1.1rem",
                     color: GOLD,
                     letterSpacing: "0.30em",
                     textTransform: "uppercase",
@@ -116,7 +116,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
                   style={{
                     fontFamily: "'Montserrat', system-ui, sans-serif",
                     fontWeight: 300,
-                    fontSize: "0.68rem",
+                    fontSize: "0.9rem",
                     color: GOLD,
                     letterSpacing: "0.18em",
                   }}
@@ -125,20 +125,20 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="h-px w-8" style={{ background: `${GOLD}60` }} />
+                <div className="h-px w-8" style={{ background: "rgba(255,255,255,0.35)" }} />
                 <span
                   style={{
                     fontFamily: "'Montserrat', system-ui, sans-serif",
                     fontWeight: 600,
-                    fontSize: "0.58rem",
-                    color: GOLD,
+                    fontSize: "0.6rem",
+                    color: "#ffffff",
                     letterSpacing: "0.22em",
                     textTransform: "uppercase",
                   }}
                 >
                   ClownBinge Instance
                 </span>
-                <div className="h-px w-8" style={{ background: `${GOLD}60` }} />
+                <div className="h-px w-8" style={{ background: "rgba(255,255,255,0.35)" }} />
               </div>
             </div>
           </div>
