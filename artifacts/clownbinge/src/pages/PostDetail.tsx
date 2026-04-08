@@ -255,20 +255,6 @@ export default function PostDetail() {
   const foundersPenWordCount = post?.body ? post.body.replace(/<[^>]+>/g, "").split(/\s+/).filter(Boolean).length : 0;
   const foundersPenReadTime = Math.max(1, Math.ceil(foundersPenWordCount / 200));
   const foundersPenArticleHtml = post?.body ?? "";
-  const foundersPenSections = isFoundersPen
-    ? [
-        {
-          label: "I. The Architecture",
-          title: "Before the Scramble, the Blueprint",
-          body: `<p>The conventional starting point for discussions of African underdevelopment is 1884, the Berlin Conference, the Scramble for Africa. That starting point is accurate but incomplete. By 1884, the economic logic that would govern the continent for the next 140 years was already fully developed.</p><p>The Berlin Conference did not invent extraction. It bureaucratized it, gave it legal infrastructure, and distributed its geography among competing European powers with the precision of a corporate merger.</p><div class="founders-pen-source-box"><div class="founders-pen-source-label">PRIMARY DOCUMENTATION</div><p class="founders-pen-source-body">The British Colonial Office circular of 1930 instructed colonial administrators that the encouragement of secondary industries in Africa was contrary to imperial economic policy and that governors should actively discourage manufacturing enterprises that might compete with British exports.</p><p class="founders-pen-source-citation"><em>Source: UK National Archives, Colonial Office Records, CO 852/1/1, 1930.</em></p></div>`,
-        },
-        {
-          label: "II. The Instrument",
-          title: "The Franc CFA: Colonialism With a Central Bank",
-          body: `<p>France, a foreign nation, held the reserve keys to three independent African states. This is not history. This is Tuesday.</p><p>That single fact is the thesis of this treatise in miniature. African poverty is not a wound that history inflicted and then walked away from. It is a managed condition, maintained by living institutions, enforced by traceable legal instruments, and profitable to identifiable parties.</p><p>The scholarly tradition from which this treatise draws is not obscure. Walter Rodney named the mechanism in 1972. Kwame Nkrumah named it before that. Frantz Fanon named the psychology of it.</p>`,
-        },
-      ]
-    : [];
 
   return (
     <Layout>
@@ -414,56 +400,7 @@ export default function PostDetail() {
           className={`cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-strong:text-header prose-p:leading-relaxed mb-4 ${isFoundersPen ? "founders-pen-body" : ""}`}
         >
           {isFoundersPen ? (
-            <div className="space-y-10">
-              <div className="rounded-none border-l-[3px] border-l-[#8B1A1A] bg-[#F5F5F3] px-5 py-4">
-                <p className="text-[11px] font-black uppercase tracking-[0.2em] mb-2" style={{ color: "#8B1A1A" }}>
-                  A note on this category.
-                </p>
-                <p className="text-base leading-relaxed" style={{ fontFamily: "'Source Serif 4', Georgia, serif" }}>
-                  The Founder's Pen maintains all ClownBinge sourcing standards while making its editorial posture explicit. This piece is a treatise and should be read as such.
-                </p>
-              </div>
-              <div className="rounded-none border-l-[3px] border-l-[#8B1A1A] bg-[#F5F5F3] px-5 py-4">
-                <p className="text-[11px] font-black uppercase tracking-[0.2em] mb-2" style={{ color: "#8B1A1A" }}>
-                  This is a long read.
-                </p>
-                <p className="text-base leading-relaxed" style={{ fontFamily: "'Source Serif 4', Georgia, serif" }}>
-                  Not an article. Not an opinion piece. A treatise makes a systematic, evidenced, falsifiable claim and defends it with primary documentation.
-                </p>
-              </div>
-              <div className="space-y-12">
-                {foundersPenSections.map((section) => (
-                  <section key={section.label} className="space-y-4">
-                    <div>
-                      <div className="text-[11px] font-black uppercase tracking-[0.2em]" style={{ color: "#8B1A1A" }}>
-                        {section.label}
-                      </div>
-                      <h2 className="text-2xl font-bold text-black mt-1" style={{ fontFamily: "'Source Serif 4', Georgia, serif" }}>
-                        {section.title}
-                      </h2>
-                    </div>
-                    <div
-                      className="prose max-w-none"
-                      style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontSize: "18px", lineHeight: 1.85, color: "#111827" }}
-                      dangerouslySetInnerHTML={{ __html: section.body }}
-                    />
-                  </section>
-                ))}
-              </div>
-              <div className="border-t border-[#CCCCCC] pt-6">
-                <div className="text-[11px] font-black uppercase tracking-[0.2em] mb-3" style={{ color: "#8B1A1A" }}>
-                  Sources
-                </div>
-                <ol className="space-y-3 text-[13px] text-slate-700">
-                  <li>1. UK National Archives, Colonial Office Records, CO 852/1/1, 1930.</li>
-                  <li>2. Walter Rodney, <em>How Europe Underdeveloped Africa</em> (1972).</li>
-                  <li>3. Kwame Nkrumah, <em>Neo-Colonialism: The Last Stage of Imperialism</em> (1965).</li>
-                </ol>
-              </div>
-              <div className="border-t border-[#CCCCCC] pt-4 text-[12px] italic text-slate-600" style={{ fontFamily: "'Source Serif 4', Georgia, serif" }}>
-                This piece was written under The Founder's Pen category guidelines. It maintains ClownBinge three-tier sourcing standards. It does not maintain CB Dry Rationalism. The distinction is deliberate and documented in CB editorial policy.
-              </div>
-            </div>
+            <div className="fp-body" dangerouslySetInnerHTML={{ __html: foundersPenArticleHtml }} />
           ) : (
             <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
           )}
