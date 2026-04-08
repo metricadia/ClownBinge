@@ -388,17 +388,47 @@ const STAFF_PICK_SLUGS: string[] = [
   "women-build-too-50-business-women-changed-world",
 ];
 
+// ─── Rename case numbers that were originally assigned wrong CB- prefixes ─────
+// These articles were created via the editor and got CB- numbers. They belong
+// in the FP- series. This rename runs on every startup and is idempotent.
+
+const CASE_NUMBER_RENAMES: { from: string; to: string }[] = [
+  { from: "CB-000125", to: "FP-005" }, // No, Black Americans Do Not Commit More Violent Crime
+  { from: "CB-000384", to: "FP-006" }, // Philo of Alexandria
+];
+
+export async function applyCaseNumberRenames(): Promise<void> {
+  try {
+    let renamed = 0;
+    for (const { from, to } of CASE_NUMBER_RENAMES) {
+      const result = await db.execute(
+        sql`UPDATE posts SET case_number = ${to} WHERE case_number = ${from}`
+      );
+      const count = (result as unknown as { rowCount?: number })?.rowCount ?? 0;
+      if (count > 0) {
+        console.log(`[Seed] Renamed case number: ${from} -> ${to}`);
+        renamed++;
+      }
+    }
+    if (renamed === 0) {
+      console.log(`[Seed] Case number renames: all already correct.`);
+    }
+  } catch (err) {
+    console.error("[Seed] Error during applyCaseNumberRenames:", err);
+  }
+}
+
 // ─── Correct categories that were misassigned during earlier reseeds ──────────
 // These articles were wiped from founders_pen by a prior TRUNCATE and re-added
 // under wrong categories. This corrects them permanently on every startup.
 
 const CATEGORY_OVERRIDES: { caseNumber: string; category: typeof postsTable.$inferInsert["category"] }[] = [
-  { caseNumber: "CB-000384", category: "founders_pen" }, // Philo of Alexandria
-  { caseNumber: "CB-000125", category: "founders_pen" }, // No, Black Americans Do Not Commit More Violent Crime
-  { caseNumber: "FP-001",    category: "founders_pen" }, // Engineered Underdevelopment
-  { caseNumber: "FP-002",    category: "founders_pen" }, // Hidden Debts & Philosophia
-  { caseNumber: "FP-003",    category: "founders_pen" }, // Harriet Tubman / Irena Sendler
-  { caseNumber: "FP-004",    category: "founders_pen" }, // African Immigrants $55 Billion
+  { caseNumber: "FP-001", category: "founders_pen" }, // Engineered Underdevelopment
+  { caseNumber: "FP-002", category: "founders_pen" }, // Hidden Debts & Philosophia
+  { caseNumber: "FP-003", category: "founders_pen" }, // Harriet Tubman / Irena Sendler
+  { caseNumber: "FP-004", category: "founders_pen" }, // African Immigrants $55 Billion
+  { caseNumber: "FP-005", category: "founders_pen" }, // No, Black Americans Do Not Commit More Violent Crime
+  { caseNumber: "FP-006", category: "founders_pen" }, // Philo of Alexandria
 ];
 
 export async function applyCategoryOverrides(): Promise<void> {
