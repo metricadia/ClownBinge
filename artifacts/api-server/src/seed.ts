@@ -333,6 +333,7 @@ const PREMIUM_SLUGS: string[] = [
   "civil-asset-forfeiture-states-no-conviction-required-documented-record",
   "philo-of-alexandria-logos-gospel-john-nicene-creed-definition",
   "european-renaissance-islamic-scholarship-primary-source-record",
+  "replacement-theory-requires-a-culture-to-replace-the-record-does-not-confirm-one-exists",
 ];
 
 export async function applyPremiumFlags(): Promise<void> {
@@ -429,6 +430,7 @@ const CATEGORY_OVERRIDES: { caseNumber: string; category: typeof postsTable.$inf
   { caseNumber: "FP-004", category: "founders_pen" }, // African Immigrants $55 Billion
   { caseNumber: "FP-005", category: "founders_pen" }, // No, Black Americans Do Not Commit More Violent Crime
   { caseNumber: "FP-006", category: "founders_pen" }, // Philo of Alexandria
+  { caseNumber: "FP-007", category: "founders_pen" }, // Replacement Theory Requires a Culture to Replace
 ];
 
 export async function applyCategoryOverrides(): Promise<void> {
