@@ -75,7 +75,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
         <div
           className="rounded-2xl px-8 py-10"
           style={{
-            background: "linear-gradient(160deg, rgba(16,28,58,0.96) 0%, rgba(10,18,40,0.99) 100%)",
+            background: "linear-gradient(160deg, rgba(26,44,85,0.97) 0%, rgba(18,30,62,0.99) 100%)",
             border: `1px solid rgba(201,162,39,0.18)`,
             boxShadow: `0 0 0 1px rgba(255,255,255,0.03), 0 32px 80px rgba(0,0,0,0.65), 0 0 60px rgba(201,162,39,0.05)`,
           }}
