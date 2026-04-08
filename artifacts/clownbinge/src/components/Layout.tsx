@@ -161,18 +161,20 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
               About
             </Link>
             <Link href="/contact" className={`text-[14px] font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/contact' || location === '/advertise' ? 'text-white' : 'text-white/70'}`}>
-              Support
+              Help
             </Link>
-            <Link href="/bookstore" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/bookstore' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
-              Our Books
+            <Link href="/bookstore" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors text-[#F5C518]`}>
+              Books
             </Link>
-            <Link href="/reports" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/reports' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
+            <Link href="/reports" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors text-[#F5C518]`}>
               Buy Reports
             </Link>
-            <Link href="/invest-in-us" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors ${location === '/invest-in-us' ? 'text-[#F5C518]' : 'text-[#F5C518]'}`}>
-              Subscribe!
+            <Link href="/invest-in-us" className={`text-[14px] font-bold uppercase tracking-wider hover:text-[#e0b400] transition-colors text-[#F5C518]`}>
+              Subscribe
             </Link>
-
+            <Link href="/login" className={`text-[14px] font-bold uppercase tracking-wider hover:text-white transition-colors ${location === '/login' ? 'text-white' : 'text-white/70'}`}>
+              My Account
+            </Link>
           </nav>
 
           {/* Mobile Menu Toggle */}
@@ -191,11 +193,11 @@ export function Layout({ children, onCategoryChange, activeCategory }: {
         <div className="fixed inset-0 top-[80px] sm:top-[96px] z-40 bg-header/95 backdrop-blur-xl flex flex-col md:hidden">
           <nav className="flex flex-col items-center justify-center flex-1 gap-8 p-6">
             <Link href="/about" className="text-[24px] font-bold text-white uppercase tracking-widest">About</Link>
-            <Link href="/contact" className="text-[24px] font-bold text-white uppercase tracking-widest">Support</Link>
-            <Link href="/bookstore" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Our Books</Link>
+            <Link href="/contact" className="text-[24px] font-bold text-white uppercase tracking-widest">Help</Link>
+            <Link href="/bookstore" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Books</Link>
             <Link href="/reports" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Buy Reports</Link>
-            <Link href="/invest-in-us" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Subscribe!</Link>
-
+            <Link href="/invest-in-us" className="text-[24px] font-bold uppercase tracking-widest text-[#F5C518] hover:text-[#e0b400] transition-colors">Subscribe</Link>
+            <Link href="/login" className="text-[24px] font-bold text-white uppercase tracking-widest">My Account</Link>
           </nav>
         </div>
       )}
