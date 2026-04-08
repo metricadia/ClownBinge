@@ -182,7 +182,7 @@ export default function PostDetail() {
     if (!processedBody) return [processedBody, ""];
     let count = 0;
     let idx = 0;
-    while (count < 3) {
+    while (count < 1) {
       const next = processedBody.indexOf("</p>", idx);
       if (next === -1) return [processedBody, ""];
       idx = next + 4;
@@ -400,7 +400,7 @@ export default function PostDetail() {
           className={`cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-strong:text-header prose-p:leading-relaxed mb-4 ${isFoundersPen ? "founders-pen-body" : ""}`}
         >
           {isFoundersPen ? (
-            <div className="fp-body" dangerouslySetInnerHTML={{ __html: foundersPenArticleHtml }} />
+            <div className="fp-body" dangerouslySetInnerHTML={{ __html: (isAuthGated || isPremiumGated) ? bodyTop : foundersPenArticleHtml }} />
           ) : (
             <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
           )}
