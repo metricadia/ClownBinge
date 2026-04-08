@@ -267,7 +267,7 @@ export default function PostDetail() {
                 CASE {post.caseNumber}
               </div>
               <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-muted-foreground">
-                <span className="uppercase tracking-widest">{post.category.replace(/_/g, " ")}</span>
+                {!isFoundersPen && <span className="uppercase tracking-widest">{post.category.replace(/_/g, " ")}</span>}
                 {isFoundersPen && (
                   <>
                     <span>•</span>
