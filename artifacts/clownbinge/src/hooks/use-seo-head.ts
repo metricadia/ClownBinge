@@ -183,7 +183,8 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     const isConstitution = post.category === "us_constitution";
     const isGlobalSouth = post.category === "global_south";
     const isDisarmingHate = post.category === "disarming_hate";
-    const isScholarlyDeepDive = isNerdOut || isConstitution || isGlobalSouth || isDisarmingHate;
+    const isFoundersPen = post.category === "founders_pen";
+    const isScholarlyDeepDive = isNerdOut || isConstitution || isGlobalSouth || isDisarmingHate || isFoundersPen;
     const hasApaCitations = !!(post.verifiedSource && post.verifiedSource.includes("::"));
     const pageTitle = isNerdOut
       ? `${post.title} | NerdOut Academic Analysis | ClownBinge`
@@ -268,7 +269,9 @@ export function useArticleSeoHead(post: Post | null | undefined) {
 
     // Article @type — ScholarlyArticle for deep legal/historical/academic dives
     let articleType: string | string[];
-    if (isScholarlyDeepDive) {
+    if (isFoundersPen) {
+      articleType = ["NewsArticle", "ScholarlyArticle", "TechReport", "AnalysisNewsArticle"];
+    } else if (isScholarlyDeepDive) {
       articleType = ["NewsArticle", "ScholarlyArticle", "AnalysisNewsArticle"];
     } else {
       articleType = "NewsArticle";
@@ -290,6 +293,17 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       { "@type": "Thing", "name": "Archaeological Record" },
       { "@type": "Thing", "name": "Primary Source History" },
       { "@type": "Place", "name": "Global South" }
+    ];
+
+    const FOUNDERS_PEN_ENTITIES = [
+      { "@type": "Organization", "name": "International Monetary Fund", "sameAs": "https://www.wikidata.org/wiki/Q208400" },
+      { "@type": "Organization", "name": "World Bank", "sameAs": "https://www.wikidata.org/wiki/Q26678" },
+      { "@type": "Organization", "name": "French Treasury", "sameAs": "https://www.wikidata.org/wiki/Q1664720" },
+      { "@type": "Organization", "name": "United Nations Conference on Trade and Development", "sameAs": "https://www.wikidata.org/wiki/Q167330" },
+      { "@type": "Place", "name": "Sub-Saharan Africa", "sameAs": "https://www.wikidata.org/wiki/Q132959" },
+      { "@type": "Thing", "name": "CFA Franc Zone", "sameAs": "https://www.wikidata.org/wiki/Q188424" },
+      { "@type": "Thing", "name": "Structural Adjustment Programs" },
+      { "@type": "Person", "name": "Walter Rodney", "sameAs": "https://www.wikidata.org/wiki/Q376278" }
     ];
 
     // NewsArticle schema
@@ -335,7 +349,11 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       "additionalProperty": additionalProps
     };
 
-    if (subjectPerson) {
+    if (isFoundersPen) {
+      articleSchema.about = FOUNDERS_PEN_ENTITIES;
+      articleSchema.genre = "Technical Report";
+      articleSchema.educationalLevel = "advanced";
+    } else if (subjectPerson) {
       articleSchema.about = subjectPerson;
       articleSchema.mentions = subjectPerson;
     } else if (isConstitution) {
