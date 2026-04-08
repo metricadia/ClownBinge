@@ -117,7 +117,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
                     fontFamily: "'Montserrat', system-ui, sans-serif",
                     fontWeight: 300,
                     fontSize: "0.68rem",
-                    color: `${GOLD}99`,
+                    color: GOLD,
                     letterSpacing: "0.18em",
                   }}
                 >
@@ -125,20 +125,20 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="h-px w-8" style={{ background: `${GOLD}30` }} />
+                <div className="h-px w-8" style={{ background: `${GOLD}60` }} />
                 <span
                   style={{
                     fontFamily: "'Montserrat', system-ui, sans-serif",
-                    fontWeight: 400,
+                    fontWeight: 600,
                     fontSize: "0.58rem",
-                    color: `${GOLD}70`,
+                    color: GOLD,
                     letterSpacing: "0.22em",
                     textTransform: "uppercase",
                   }}
                 >
                   ClownBinge Instance
                 </span>
-                <div className="h-px w-8" style={{ background: `${GOLD}30` }} />
+                <div className="h-px w-8" style={{ background: `${GOLD}60` }} />
               </div>
             </div>
           </div>
@@ -215,7 +215,7 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
           >
             <p
               className="text-[9px] uppercase tracking-[0.22em]"
-              style={{ color: `${GOLD}55`, fontFamily: "'Montserrat', system-ui, sans-serif" }}
+              style={{ color: GOLD, fontFamily: "'Montserrat', system-ui, sans-serif" }}
             >
               Restricted System Access
             </p>
