@@ -151,6 +151,9 @@ export function registerMetricadiaRoutes(app: Express) {
           publishedAt: postsTable.publishedAt,
           caseNumber: postsTable.caseNumber,
           premiumOnly: postsTable.premiumOnly,
+          status: postsTable.status,
+          category: postsTable.category,
+          primarySources: postsTable.primarySources,
         })
         .from(postsTable)
         .orderBy(desc(postsTable.publishedAt))
@@ -230,10 +233,11 @@ export function registerMetricadiaRoutes(app: Express) {
 
   app.put("/api/posts/:id", requireMetricadiaAuth, async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { title, content, excerpt } = req.body as {
+    const { title, content, excerpt, primarySources } = req.body as {
       title: string;
       content: string;
       excerpt: string;
+      primarySources?: any[];
     };
 
     if (!title || content === undefined) {
@@ -241,14 +245,19 @@ export function registerMetricadiaRoutes(app: Express) {
     }
 
     try {
+      const updateData: any = {
+        title,
+        body: content,
+        teaser: excerpt || "",
+        updatedAt: new Date(),
+      };
+      if (Array.isArray(primarySources)) {
+        updateData.primarySources = primarySources;
+      }
+
       await db
         .update(postsTable)
-        .set({
-          title,
-          body: content,
-          teaser: excerpt || "",
-          updatedAt: new Date(),
-        })
+        .set(updateData)
         .where(eq(postsTable.id, id));
 
       console.log(`[Metricadia] Post updated: ${id}`);
@@ -256,6 +265,47 @@ export function registerMetricadiaRoutes(app: Express) {
     } catch (err) {
       console.error("[Metricadia] Error updating post:", err);
       return res.status(500).json({ message: "Failed to update post" });
+    }
+  });
+
+  // ── Delete post ──────────────────────────────────────────────────────────
+  app.delete("/api/metricadia/posts/:id", requireMetricadiaAuth, async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+      const rows = await db
+        .delete(postsTable)
+        .where(eq(postsTable.id, id))
+        .returning({ id: postsTable.id, title: postsTable.title });
+      if (!rows.length) return res.status(404).json({ message: "Post not found" });
+      console.log(`[Metricadia] Post deleted: ${id}`);
+      return res.json({ success: true, deleted: rows[0] });
+    } catch (err) {
+      console.error("[Metricadia] post delete error:", err);
+      return res.status(500).json({ message: "Failed to delete post" });
+    }
+  });
+
+  // ── Status toggle (draft ↔ published) ────────────────────────────────────
+  app.patch("/api/metricadia/posts/:id/status", requireMetricadiaAuth, async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { status } = req.body as { status?: string };
+    if (!status || !["draft", "review", "published"].includes(status)) {
+      return res.status(400).json({ message: "status must be 'draft', 'review', or 'published'" });
+    }
+    try {
+      const updateData: any = { status, updatedAt: new Date() };
+      if (status === "published") updateData.publishedAt = new Date();
+      const rows = await db
+        .update(postsTable)
+        .set(updateData)
+        .where(eq(postsTable.id, id))
+        .returning({ id: postsTable.id, slug: postsTable.slug, status: postsTable.status });
+      if (!rows.length) return res.status(404).json({ message: "Post not found" });
+      console.log(`[Metricadia] Post status updated: ${id} → ${status}`);
+      return res.json(rows[0]);
+    } catch (err) {
+      console.error("[Metricadia] status update error:", err);
+      return res.status(500).json({ message: "Failed to update status" });
     }
   });
 

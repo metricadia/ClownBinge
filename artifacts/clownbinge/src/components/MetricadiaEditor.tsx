@@ -70,11 +70,48 @@ interface DetectedPerson {
   found: boolean;
 }
 
+interface PrimarySource {
+  id: string;
+  tier: "tier1" | "tier2" | "tier3";
+  type: "court_record" | "government_doc" | "congressional_record" | "peer_reviewed" | "official_statement" | "financial_filing" | "census_data" | "treaty" | "law_statute" | "other";
+  title: string;
+  url?: string;
+  institution?: string;
+  date?: string;
+  notes?: string;
+}
+
+const SOURCE_TYPES: { value: PrimarySource["type"]; label: string }[] = [
+  { value: "court_record",          label: "Court Record" },
+  { value: "government_doc",        label: "Government Document" },
+  { value: "congressional_record",  label: "Congressional Record" },
+  { value: "peer_reviewed",         label: "Peer-Reviewed Study" },
+  { value: "official_statement",    label: "Official Statement" },
+  { value: "financial_filing",      label: "Financial Filing" },
+  { value: "census_data",           label: "Census / Statistical Data" },
+  { value: "treaty",                label: "Treaty / International Agreement" },
+  { value: "law_statute",           label: "Law / Statute" },
+  { value: "other",                 label: "Other Primary Source" },
+];
+
+const TIER_LABELS: Record<PrimarySource["tier"], string> = {
+  tier1: "TIER 1 — PRIMARY",
+  tier2: "TIER 2 — SECONDARY",
+  tier3: "TIER 3 — SUPPORTING",
+};
+
+const TIER_COLORS: Record<PrimarySource["tier"], string> = {
+  tier1: "#16A34A",
+  tier2: "#C9A227",
+  tier3: "#6B7280",
+};
+
 interface MetricadiaEditorProps {
   postId: string;
   initialContent: string;
   initialTitle: string;
   initialExcerpt: string;
+  initialPrimarySourcess?: PrimarySource[];
   onClose: () => void;
   apiEndpoint?: string;
 }
@@ -86,11 +123,16 @@ export function MetricadiaEditor({
   initialContent,
   initialTitle,
   initialExcerpt,
+  initialPrimarySourcess,
   onClose,
   apiEndpoint,
 }: MetricadiaEditorProps) {
   const [title, setTitle] = useState(initialTitle);
   const [excerpt, setExcerpt] = useState(initialExcerpt);
+  const [primarySources, setPrimarySources] = useState<PrimarySource[]>(initialPrimarySourcess || []);
+  const [showSourcesPanel, setShowSourcesPanel] = useState(false);
+  const [addingSource, setAddingSource] = useState(false);
+  const [newSource, setNewSource] = useState<Partial<PrimarySource>>({ tier: "tier1", type: "government_doc" });
   const [isSaving, setIsSaving] = useState(false);
   const [justSaved, setJustSaved] = useState(false);
   const [seoScore, setSeoScore] = useState(0);
@@ -181,7 +223,7 @@ export function MetricadiaEditor({
         method: "PUT",
         headers,
         credentials: "include",
-        body: JSON.stringify({ title, content, excerpt }),
+        body: JSON.stringify({ title, content, excerpt, primarySources }),
       });
 
       if (!res.ok) {
@@ -657,6 +699,217 @@ export function MetricadiaEditor({
               </div>
             </div>
           )}
+
+          {/* ── Primary Sources Panel ────────────────────────────────── */}
+          <div className="flex-shrink-0 border-b-2 border-indigo-900/40 border-x-2 border-indigo-900/20" style={{ background: "#0B1930" }}>
+            {/* Toggle bar */}
+            <button
+              className="w-full flex items-center justify-between px-4 md:px-6 py-3"
+              onClick={() => setShowSourcesPanel(!showSourcesPanel)}
+            >
+              <div className="flex items-center gap-3">
+                <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.18em", color: "#C9A227" }}>
+                  PRIMARY SOURCES
+                </span>
+                {primarySources.length > 0 && (
+                  <span className="px-2 py-0.5 text-[10px] font-black rounded-full" style={{ background: "rgba(201,162,39,0.15)", color: "#C9A227", border: "1px solid rgba(201,162,39,0.3)" }}>
+                    {primarySources.length}
+                  </span>
+                )}
+              </div>
+              <span style={{ color: "rgba(201,162,39,0.5)", fontSize: "12px" }}>{showSourcesPanel ? "▲" : "▼"}</span>
+            </button>
+
+            {showSourcesPanel && (
+              <div className="px-4 md:px-6 pb-5">
+                {/* Existing sources list */}
+                {primarySources.length > 0 && (
+                  <div className="space-y-2 mb-4">
+                    {primarySources.map((src) => (
+                      <div key={src.id} className="rounded-lg p-3" style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.15)" }}>
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            {/* CB formatted citation */}
+                            <div className="flex items-center gap-2 flex-wrap mb-1">
+                              <span className="text-[9px] font-black px-2 py-0.5 rounded" style={{ background: "rgba(201,162,39,0.12)", color: TIER_COLORS[src.tier], border: `1px solid ${TIER_COLORS[src.tier]}40`, letterSpacing: "0.12em" }}>
+                                {TIER_LABELS[src.tier]}
+                              </span>
+                              <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>
+                                {SOURCE_TYPES.find(t => t.value === src.type)?.label}
+                              </span>
+                            </div>
+                            <p className="text-sm font-semibold leading-snug" style={{ color: "#fff", fontFamily: "'Georgia', serif" }}>{src.title}</p>
+                            {src.institution && (
+                              <p className="text-[11px] mt-0.5" style={{ color: "rgba(255,255,255,0.45)", fontFamily: "'Inter', sans-serif" }}>{src.institution}{src.date ? ` · ${src.date}` : ""}</p>
+                            )}
+                            {src.url && (
+                              <a href={src.url} target="_blank" rel="noopener noreferrer" className="text-[10px] mt-1 block truncate hover:underline" style={{ color: "#C9A227", fontFamily: "'Inter', sans-serif" }}>
+                                {src.url}
+                              </a>
+                            )}
+                            {src.notes && (
+                              <p className="text-[11px] mt-1 italic" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'Georgia', serif" }}>{src.notes}</p>
+                            )}
+                          </div>
+                          <button
+                            onClick={() => setPrimarySources(ps => ps.filter(s => s.id !== src.id))}
+                            className="shrink-0 p-1 rounded opacity-40 hover:opacity-100 transition-opacity"
+                            style={{ color: "#ef4444" }}
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {primarySources.length === 0 && !addingSource && (
+                  <p className="text-[11px] mb-3" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Inter', sans-serif" }}>
+                    No primary sources logged yet. Every published article must cite at least one Tier 1 source.
+                  </p>
+                )}
+
+                {/* Add source form */}
+                {addingSource ? (
+                  <div className="rounded-lg p-4 space-y-3" style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.25)" }}>
+                    <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: "#C9A227", fontFamily: "'Inter', sans-serif" }}>NEW SOURCE</p>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "rgba(201,162,39,0.6)" }}>Tier</label>
+                        <select
+                          value={newSource.tier || "tier1"}
+                          onChange={(e) => setNewSource(s => ({ ...s, tier: e.target.value as PrimarySource["tier"] }))}
+                          className="w-full px-2 py-1.5 text-white text-xs rounded focus:outline-none"
+                          style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.2)" }}
+                        >
+                          <option value="tier1">Tier 1 — Primary</option>
+                          <option value="tier2">Tier 2 — Secondary</option>
+                          <option value="tier3">Tier 3 — Supporting</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "rgba(201,162,39,0.6)" }}>Source Type</label>
+                        <select
+                          value={newSource.type || "government_doc"}
+                          onChange={(e) => setNewSource(s => ({ ...s, type: e.target.value as PrimarySource["type"] }))}
+                          className="w-full px-2 py-1.5 text-white text-xs rounded focus:outline-none"
+                          style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.2)" }}
+                        >
+                          {SOURCE_TYPES.map(t => (
+                            <option key={t.value} value={t.value}>{t.label}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "rgba(201,162,39,0.6)" }}>Document Title <span style={{ color: "#C9A227" }}>*</span></label>
+                      <input
+                        type="text"
+                        value={newSource.title || ""}
+                        onChange={(e) => setNewSource(s => ({ ...s, title: e.target.value }))}
+                        placeholder="Full document name or case citation..."
+                        className="w-full px-3 py-2 text-white text-sm rounded focus:outline-none"
+                        style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.2)" }}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "rgba(201,162,39,0.6)" }}>Institution</label>
+                        <input
+                          type="text"
+                          value={newSource.institution || ""}
+                          onChange={(e) => setNewSource(s => ({ ...s, institution: e.target.value }))}
+                          placeholder="Issuing body..."
+                          className="w-full px-2 py-1.5 text-white text-xs rounded focus:outline-none"
+                          style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.2)" }}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "rgba(201,162,39,0.6)" }}>Date</label>
+                        <input
+                          type="text"
+                          value={newSource.date || ""}
+                          onChange={(e) => setNewSource(s => ({ ...s, date: e.target.value }))}
+                          placeholder="e.g. March 15, 2024"
+                          className="w-full px-2 py-1.5 text-white text-xs rounded focus:outline-none"
+                          style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.2)" }}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "rgba(201,162,39,0.6)" }}>Source URL</label>
+                      <input
+                        type="url"
+                        value={newSource.url || ""}
+                        onChange={(e) => setNewSource(s => ({ ...s, url: e.target.value }))}
+                        placeholder="https://..."
+                        className="w-full px-3 py-2 text-white text-sm rounded focus:outline-none"
+                        style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.2)" }}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: "rgba(201,162,39,0.6)" }}>Notes</label>
+                      <input
+                        type="text"
+                        value={newSource.notes || ""}
+                        onChange={(e) => setNewSource(s => ({ ...s, notes: e.target.value }))}
+                        placeholder="What this source establishes..."
+                        className="w-full px-3 py-2 text-white text-sm rounded focus:outline-none"
+                        style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.2)" }}
+                      />
+                    </div>
+
+                    <div className="flex gap-2 pt-1">
+                      <button
+                        className="px-4 py-1.5 text-xs font-semibold rounded"
+                        style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.5)" }}
+                        onClick={() => { setAddingSource(false); setNewSource({ tier: "tier1", type: "government_doc" }); }}
+                      >Cancel</button>
+                      <button
+                        className="flex-1 py-1.5 text-xs font-bold rounded"
+                        style={{ background: newSource.title?.trim() ? "#C9A227" : "rgba(201,162,39,0.3)", color: "#0B1930" }}
+                        disabled={!newSource.title?.trim()}
+                        onClick={() => {
+                          if (!newSource.title?.trim()) return;
+                          const src: PrimarySource = {
+                            id: crypto.randomUUID(),
+                            tier: (newSource.tier || "tier1") as PrimarySource["tier"],
+                            type: (newSource.type || "government_doc") as PrimarySource["type"],
+                            title: newSource.title.trim(),
+                            url: newSource.url?.trim() || undefined,
+                            institution: newSource.institution?.trim() || undefined,
+                            date: newSource.date?.trim() || undefined,
+                            notes: newSource.notes?.trim() || undefined,
+                          };
+                          setPrimarySources(ps => [...ps, src]);
+                          setNewSource({ tier: "tier1", type: "government_doc" });
+                          setAddingSource(false);
+                        }}
+                      >
+                        + Log Source
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    className="w-full py-2 text-xs font-bold rounded border transition-all"
+                    style={{ background: "transparent", border: "1px dashed rgba(201,162,39,0.3)", color: "rgba(201,162,39,0.7)", fontFamily: "'Inter', sans-serif", letterSpacing: "0.1em" }}
+                    onClick={() => setAddingSource(true)}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = "#C9A227"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(201,162,39,0.3)"; (e.currentTarget as HTMLButtonElement).style.color = "rgba(201,162,39,0.7)"; }}
+                  >
+                    + ADD PRIMARY SOURCE
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
 
           {/* ── Toolbar ────────────────────────────────────────────────── */}
           <div

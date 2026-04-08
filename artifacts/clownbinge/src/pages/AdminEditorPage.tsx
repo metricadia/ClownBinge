@@ -9,6 +9,7 @@ import {
   PenLine, LogOut, Plus, X, Loader2, Star, Trash2, Copy, Check,
   LayoutDashboard, FileText, Users, Key, BarChart2, DollarSign,
   LifeBuoy, Mail, Eye, ChevronRight, ShieldOff, ExternalLink,
+  Globe, EyeOff, AlertTriangle,
 } from "lucide-react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -23,6 +24,8 @@ interface Post {
   category?: string;
   publishedAt?: string;
   premiumOnly?: boolean;
+  status?: "draft" | "review" | "published";
+  primarySources?: any[];
 }
 
 interface SubscriberToken {
@@ -495,9 +498,12 @@ interface ArticlesPanelProps {
   onNewArticle: () => void;
   onEdit: (p: Post) => void;
   premiumMutation: ReturnType<typeof useMutation<any, any, any>>;
+  statusMutation: ReturnType<typeof useMutation<any, any, any>>;
+  deleteMutation: ReturnType<typeof useMutation<any, any, any>>;
 }
 
-function ArticlesPanel({ posts, allPosts, allCount, isLoading, search, onSearch, onNewArticle, onEdit, premiumMutation }: ArticlesPanelProps) {
+function ArticlesPanel({ posts, allPosts, allCount, isLoading, search, onSearch, onNewArticle, onEdit, premiumMutation, statusMutation, deleteMutation }: ArticlesPanelProps) {
+  const [confirmDelete, setConfirmDelete] = useState<Post | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
   // Derive unique categories from allPosts
@@ -597,78 +603,141 @@ function ArticlesPanel({ posts, allPosts, allCount, isLoading, search, onSearch,
         </div>
       )}
 
-      <div>
-        {displayedPosts.map((post, idx) => (
-          <div
-            key={post.id}
-            className="group transition-all"
-            style={{ borderBottom: "1px solid rgba(11,25,48,0.08)" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = "#F0EDE6"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = "transparent"; }}
-            data-testid={`card-post-${post.id}`}
-          >
-            <div className="flex items-center gap-0 py-4 px-1">
-              {/* Gold number */}
-              <div className="w-12 shrink-0">
-                <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "12px", color: "#C9A227", letterSpacing: "0.04em" }}>
-                  {String(idx + 1).padStart(2, "0")}
-                </span>
-              </div>
-              {/* Title block */}
-              <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onEdit(post)}>
-                <div className="flex items-center gap-2 flex-wrap mb-1">
-                  {post.premiumOnly && (
-                    <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "8px", letterSpacing: "0.18em", padding: "1px 6px", background: "#0B1930", color: "#C9A227" }}>
-                      MEMBERS
-                    </span>
-                  )}
-                  {post.category && (
-                    <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "8px", letterSpacing: "0.16em", padding: "1px 6px", background: "rgba(201,162,39,0.1)", color: "rgba(11,25,48,0.6)", border: "1px solid rgba(201,162,39,0.25)" }}>
-                      {(CATEGORIES.find(c => c.value === post.category)?.label ?? post.category).toUpperCase()}
-                    </span>
-                  )}
-                  {post.caseNumber && (
-                    <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "10px", letterSpacing: "0.08em", color: "rgba(11,25,48,0.35)" }}>{post.caseNumber}</span>
-                  )}
-                </div>
-                <span className="transition-colors" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "14px", fontWeight: 700, color: "#0B1930" }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLSpanElement).style.color = "#C9A227"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLSpanElement).style.color = "#0B1930"; }}
-                >
-                  {post.title || "(Untitled)"}
-                </span>
-                {post.publishedAt && (
-                  <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "10px", letterSpacing: "0.1em", color: "rgba(11,25,48,0.35)", marginTop: "3px" }}>{fmtDate(post.publishedAt)}</p>
-                )}
-              </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    premiumMutation.mutate({ id: post.id, premiumOnly: !post.premiumOnly });
-                  }}
-                  title={post.premiumOnly ? "Remove members-only" : "Mark as members-only"}
-                  className={`p-1.5 rounded-lg transition-colors ${
-                    post.premiumOnly
-                      ? "text-amber-400 bg-amber-950/40 hover:bg-amber-950/60"
-                      : "text-slate-600 hover:text-amber-400 hover:bg-slate-800"
-                  }`}
-                >
-                  <Star className={`w-4 h-4 ${post.premiumOnly ? "fill-amber-400" : ""}`} />
-                </button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => onEdit(post)}
-                  className="shrink-0 border-slate-700 text-slate-300 group-hover:border-indigo-500 group-hover:text-indigo-300"
-                  data-testid={`button-edit-post-${post.id}`}
-                >
-                  <PenLine className="w-4 h-4 mr-1.5" />Edit
-                </Button>
-              </div>
+      {/* Delete confirmation dialog */}
+      {confirmDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.7)" }}>
+          <div className="w-full max-w-sm rounded-xl p-6 shadow-2xl" style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.25)" }}>
+            <div className="flex items-center gap-3 mb-4">
+              <AlertTriangle className="w-5 h-5 shrink-0" style={{ color: "#C9A227" }} />
+              <h3 className="font-bold text-white text-sm">Delete Article?</h3>
+            </div>
+            <p className="text-sm mb-1" style={{ color: "rgba(255,255,255,0.6)", fontFamily: "'Inter', sans-serif" }}>
+              This will permanently delete:
+            </p>
+            <p className="text-sm font-semibold mb-5" style={{ color: "#fff", fontFamily: "'Libre Baskerville', serif" }}>
+              "{confirmDelete.title || "(Untitled)"}"
+            </p>
+            <div className="flex gap-3">
+              <button
+                className="flex-1 py-2 text-sm font-semibold rounded-lg"
+                style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.6)" }}
+                onClick={() => setConfirmDelete(null)}
+              >Cancel</button>
+              <button
+                className="flex-1 py-2 text-sm font-semibold rounded-lg"
+                style={{ background: "rgba(201,50,50,0.85)", color: "#fff" }}
+                onClick={() => { deleteMutation.mutate(confirmDelete.id); setConfirmDelete(null); }}
+              >Delete Forever</button>
             </div>
           </div>
-        ))}
+        </div>
+      )}
+
+      <div>
+        {displayedPosts.map((post, idx) => {
+          const isDraft = !post.status || post.status === "draft";
+          return (
+            <div
+              key={post.id}
+              className="group transition-all"
+              style={{ borderBottom: "1px solid rgba(11,25,48,0.08)" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.background = "#F0EDE6"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = "transparent"; }}
+              data-testid={`card-post-${post.id}`}
+            >
+              <div className="flex items-center gap-0 py-4 px-1">
+                {/* Gold number */}
+                <div className="w-12 shrink-0">
+                  <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "12px", color: "#C9A227", letterSpacing: "0.04em" }}>
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                {/* Title block */}
+                <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onEdit(post)}>
+                  <div className="flex items-center gap-2 flex-wrap mb-1">
+                    {/* Draft badge */}
+                    {isDraft && (
+                      <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "8px", letterSpacing: "0.18em", padding: "1px 6px", background: "rgba(234,179,8,0.12)", color: "#C9A227", border: "1px solid rgba(201,162,39,0.35)" }}>
+                        DRAFT
+                      </span>
+                    )}
+                    {post.premiumOnly && (
+                      <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "8px", letterSpacing: "0.18em", padding: "1px 6px", background: "#0B1930", color: "#C9A227" }}>
+                        MEMBERS
+                      </span>
+                    )}
+                    {post.category && (
+                      <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "8px", letterSpacing: "0.16em", padding: "1px 6px", background: "rgba(201,162,39,0.1)", color: "rgba(11,25,48,0.6)", border: "1px solid rgba(201,162,39,0.25)" }}>
+                        {(CATEGORIES.find(c => c.value === post.category)?.label ?? post.category).toUpperCase()}
+                      </span>
+                    )}
+                    {post.caseNumber && (
+                      <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "10px", letterSpacing: "0.08em", color: "rgba(11,25,48,0.35)" }}>{post.caseNumber}</span>
+                    )}
+                  </div>
+                  <span className="transition-colors" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "14px", fontWeight: 700, color: "#0B1930" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLSpanElement).style.color = "#C9A227"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLSpanElement).style.color = "#0B1930"; }}
+                  >
+                    {post.title || "(Untitled)"}
+                  </span>
+                  {post.publishedAt && !isDraft && (
+                    <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "10px", letterSpacing: "0.1em", color: "rgba(11,25,48,0.35)", marginTop: "3px" }}>{fmtDate(post.publishedAt)}</p>
+                  )}
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {/* Premium toggle */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); premiumMutation.mutate({ id: post.id, premiumOnly: !post.premiumOnly }); }}
+                    title={post.premiumOnly ? "Remove members-only" : "Mark as members-only"}
+                    className="p-1.5 rounded transition-all"
+                    style={{ color: post.premiumOnly ? "#C9A227" : "rgba(11,25,48,0.3)" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = post.premiumOnly ? "#C9A227" : "rgba(11,25,48,0.3)"; }}
+                  >
+                    <Star className={`w-3.5 h-3.5 ${post.premiumOnly ? "fill-[#C9A227]" : ""}`} />
+                  </button>
+                  {/* Publish / Unpublish */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      statusMutation.mutate({ id: post.id, status: isDraft ? "published" : "draft" });
+                    }}
+                    title={isDraft ? "Publish to site" : "Revert to draft"}
+                    className="p-1.5 rounded transition-all"
+                    style={{ color: isDraft ? "rgba(11,25,48,0.3)" : "#16A34A" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = isDraft ? "#16A34A" : "#C9A227"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = isDraft ? "rgba(11,25,48,0.3)" : "#16A34A"; }}
+                  >
+                    {isDraft ? <Globe className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                  </button>
+                  {/* Edit */}
+                  <button
+                    onClick={() => onEdit(post)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded transition-all"
+                    style={{ background: "#0B1930", color: "#C9A227", fontFamily: "'Inter', sans-serif", letterSpacing: "0.08em" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#C9A227"; (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
+                    data-testid={`button-edit-post-${post.id}`}
+                  >
+                    <PenLine className="w-3 h-3" />EDIT
+                  </button>
+                  {/* Delete */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setConfirmDelete(post); }}
+                    className="p-1.5 rounded transition-all"
+                    style={{ color: "rgba(11,25,48,0.25)" }}
+                    title="Delete article"
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(220,38,38,0.8)"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "rgba(11,25,48,0.25)"; }}
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -1123,6 +1192,35 @@ export default function AdminEditorPage() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["/api/metricadia/posts"] }),
   });
 
+  const statusMutation = useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      const token = sessionStorage.getItem("metricadia_token");
+      if (token) headers["X-Metricadia-Token"] = token;
+      const res = await fetch(`/api/metricadia/posts/${id}/status`, {
+        method: "PATCH", headers, credentials: "include",
+        body: JSON.stringify({ status }),
+      });
+      if (!res.ok) throw new Error("Failed to update status");
+      return res.json();
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["/api/metricadia/posts"] }),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      const token = sessionStorage.getItem("metricadia_token");
+      if (token) headers["X-Metricadia-Token"] = token;
+      const res = await fetch(`/api/metricadia/posts/${id}`, {
+        method: "DELETE", headers, credentials: "include",
+      });
+      if (!res.ok) throw new Error("Failed to delete");
+      return res.json();
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["/api/metricadia/posts"] }),
+  });
+
   const { data: postsData, isLoading } = useQuery<{ posts: Post[] }>({
     queryKey: ["/api/metricadia/posts"],
     enabled: authenticated === true,
@@ -1186,6 +1284,7 @@ export default function AdminEditorPage() {
         initialTitle={editingPost.title}
         initialContent={editingPost.content}
         initialExcerpt={editingPost.excerpt}
+        initialPrimarySourcess={(editingPost.primarySources as any) || []}
         onClose={() => {
           setEditingPost(null);
           setLocation("/Kemet8");
@@ -1268,6 +1367,8 @@ export default function AdminEditorPage() {
               onNewArticle={() => setShowNewArticle(true)}
               onEdit={setEditingPost}
               premiumMutation={premiumMutation as any}
+              statusMutation={statusMutation as any}
+              deleteMutation={deleteMutation as any}
             />
           )}
 

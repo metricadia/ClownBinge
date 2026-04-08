@@ -3,6 +3,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
 export const categoryEnum = pgEnum("category", [
+  "founders_pen",
   "self_owned",
   "law_and_justice",
   "money_and_power",
@@ -62,7 +63,19 @@ export const postsTable = pgTable("posts", {
   nerdAccessible: boolean("nerd_accessible").notNull().default(true),
   seoMetaTitle: text("seo_meta_title"),
   premiumOnly: boolean("premium_only").notNull().default(false),
+  primarySources: jsonb("primary_sources").$type<PrimarySource[]>().default([]),
 });
+
+export interface PrimarySource {
+  id: string;
+  tier: "tier1" | "tier2" | "tier3";
+  type: "court_record" | "government_doc" | "congressional_record" | "peer_reviewed" | "official_statement" | "financial_filing" | "census_data" | "treaty" | "law_statute" | "other";
+  title: string;
+  url?: string;
+  institution?: string;
+  date?: string;
+  notes?: string;
+}
 
 export const insertPostSchema = createInsertSchema(postsTable).omit({ id: true, createdAt: true, updatedAt: true });
 export type InsertPost = z.infer<typeof insertPostSchema>;
