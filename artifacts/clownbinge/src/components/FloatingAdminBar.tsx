@@ -58,7 +58,7 @@ export function FloatingAdminBar() {
   const [location] = useLocation();
   const { isAdmin, checking, login, logout } = useAdmin();
   const { user } = useUser();
-  const { isSignedIn } = useAuth();
+  const { isSignedIn, getToken } = useAuth();
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
@@ -92,16 +92,18 @@ export function FloatingAdminBar() {
 
   // Re-enable admin via Clerk bridge — no password needed for whitelisted email
   const handleReEnableAdmin = async () => {
-    const email = user?.primaryEmailAddress?.emailAddress;
-    if (!email) return;
+    if (!user) return;
     setReEnabling(true);
     setError("");
     try {
+      const token = await getToken();
       const res = await fetch(`${apiBase}/api/admin/clerk-login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         credentials: "include",
-        body: JSON.stringify({ email }),
       });
       if (res.ok) {
         window.location.reload();
