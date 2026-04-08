@@ -332,101 +332,97 @@ function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPan
 
   return (
     <div>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      {/* Section header — Metricadia style */}
+      <div className="flex items-center justify-between pb-3 mb-8" style={{ borderBottom: "1px solid rgba(201,162,39,0.5)" }}>
         <div>
-          <h1 className="text-white" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "28px", letterSpacing: "0.06em" }}>DASHBOARD</h1>
-          <p className="mt-0.5" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 400, fontSize: "12px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.4)" }}>{today.toUpperCase()}</p>
+          <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "12px", letterSpacing: "0.18em", color: "#0B1930" }}>DASHBOARD</span>
         </div>
-        <button
-          onClick={onNewArticle}
-          className="flex items-center gap-2 px-4 py-2 rounded-sm transition-colors"
-          style={{ background: "#C9A227", color: "#08122E", fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", letterSpacing: "0.15em" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#E8C840"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#C9A227"; }}
-        >
-          <Plus size={14} />
-          NEW ARTICLE
-        </button>
+        <div className="flex items-center gap-6">
+          <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(11,25,48,0.45)" }}>{today.toUpperCase()}</span>
+          <button
+            onClick={onNewArticle}
+            className="flex items-center gap-2 px-4 py-1.5"
+            style={{ background: "#0B1930", color: "#C9A227", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#C9A227"; (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
+          >
+            <Plus size={12} />NEW ARTICLE
+          </button>
+        </div>
       </div>
 
-      {/* Stat Cards */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+      {/* Stat Cards — AmEx style */}
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
         {statCards.map(({ label, value, icon: Icon, color, action, comingSoon }) => (
           <div
             key={label}
             onClick={action}
-            className={`relative border rounded-xl p-5 ${colorMap[color].card} ${action ? "cursor-pointer hover:scale-[1.02] transition-transform" : ""}`}
+            className={`relative bg-white p-5 ${action ? "cursor-pointer" : ""}`}
+            style={{ borderTop: "3px solid #C9A227", boxShadow: "0 1px 4px rgba(11,25,48,0.08)" }}
+            onMouseEnter={(e) => { if (action) (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 16px rgba(11,25,48,0.14)"; }}
+            onMouseLeave={(e) => { if (action) (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 4px rgba(11,25,48,0.08)"; }}
           >
             {comingSoon && (
-              <span className="absolute top-3 right-3 text-[9px] font-black px-1.5 py-0.5 rounded tracking-wider" style={{ background: "#08122E", color: "rgba(201,162,39,0.5)", border: "1px solid rgba(201,162,39,0.2)" }}>
-                SOON
-              </span>
+              <span className="absolute top-3 right-3" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "8px", letterSpacing: "0.2em", color: "rgba(11,25,48,0.35)" }}>SOON</span>
             )}
-            <Icon size={20} className={`mb-3 ${colorMap[color].icon}`} />
-            <p className="text-3xl font-black text-white mb-1">{value}</p>
-            <p className="text-xs font-semibold tracking-wide uppercase" style={{ color: "rgba(255,255,255,0.5)" }}>{label}</p>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 900, fontSize: "32px", color: "#0B1930", lineHeight: 1 }}>{value}</p>
+            <p className="mt-2" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "10px", letterSpacing: "0.18em", color: "rgba(11,25,48,0.5)" }}>{label.toUpperCase()}</p>
           </div>
         ))}
       </div>
 
       {/* Content row */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
 
         {/* Recent Members */}
-        <div className="rounded-xl overflow-hidden" style={{ border: "1px solid rgba(201,162,39,0.18)", background: "rgba(12,31,82,0.45)" }}>
-          <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.15)" }}>
-            <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "12px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.9)" }}>RECENT MEMBERS</h2>
-            <button onClick={() => onSection("members")} className="flex items-center gap-1 transition-colors" style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em", color: "#C9A227" }}>
-              VIEW ALL <ChevronRight size={12} />
+        <div>
+          <div className="flex items-center justify-between pb-3 mb-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.5)" }}>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "0.2em", color: "#0B1930" }}>RECENT MEMBERS</span>
+            <button onClick={() => onSection("members")} className="flex items-center gap-1" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "10px", letterSpacing: "0.15em", color: "#C9A227" }}>
+              VIEW ALL <ChevronRight size={11} />
             </button>
           </div>
-          <div className="p-4">
-            {members.length === 0 ? (
-              <p className="text-sm text-center py-6" style={{ color: "rgba(255,255,255,0.3)" }}>No members yet.</p>
-            ) : (
-              <div className="space-y-2">
-                {members.slice(0, 5).map((m) => (
-                  <div key={m.clerkId} className="flex items-center gap-3">
-                    {m.avatarUrl ? (
-                      <img src={m.avatarUrl} alt="" className="w-8 h-8 rounded-full object-cover shrink-0" style={{ border: "1px solid rgba(201,162,39,0.25)" }} />
-                    ) : (
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0" style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.25)", color: "#C9A227" }}>
-                        {(m.name || m.email)[0].toUpperCase()}
-                      </div>
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-semibold text-white truncate">{m.name || <span className="italic" style={{ color: "rgba(255,255,255,0.35)" }}>No name</span>}</p>
-                      <p className="text-xs truncate" style={{ color: "rgba(255,255,255,0.45)" }}>{m.email}</p>
+          {members.length === 0 ? (
+            <p className="text-sm py-6 text-center" style={{ color: "rgba(11,25,48,0.35)", fontFamily: "'Inter', sans-serif" }}>No members yet.</p>
+          ) : (
+            <div>
+              {members.slice(0, 5).map((m) => (
+                <div key={m.clerkId} className="flex items-center gap-3 py-3" style={{ borderBottom: "1px solid rgba(11,25,48,0.07)" }}>
+                  {m.avatarUrl ? (
+                    <img src={m.avatarUrl} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" />
+                  ) : (
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-xs font-bold" style={{ background: "#0B1930", color: "#C9A227" }}>
+                      {(m.name || m.email)[0].toUpperCase()}
                     </div>
-                    <p className="text-[10px] shrink-0" style={{ color: "rgba(255,255,255,0.3)" }}>{fmtDate(m.createdAt)}</p>
+                  )}
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold truncate" style={{ color: "#0B1930", fontFamily: "'Inter', sans-serif" }}>{m.name || <span className="italic" style={{ color: "rgba(11,25,48,0.4)" }}>No name</span>}</p>
+                    <p className="text-xs truncate" style={{ color: "rgba(11,25,48,0.5)", fontFamily: "'Inter', sans-serif" }}>{m.email}</p>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
+                  <p style={{ fontSize: "10px", color: "rgba(11,25,48,0.35)", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap" }}>{fmtDate(m.createdAt)}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Planned Features */}
-        <div className="rounded-xl overflow-hidden" style={{ border: "1px solid rgba(201,162,39,0.18)", background: "rgba(12,31,82,0.45)" }}>
-          <div className="px-5 py-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.15)" }}>
-            <h2 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "12px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.9)" }}>PLANNED FEATURES</h2>
-            <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 400, fontSize: "10px", letterSpacing: "0.1em", color: "rgba(255,255,255,0.35)", marginTop: "2px" }}>COMING AFTER OFFICIAL INCORPORATION</p>
+        <div>
+          <div className="pb-3 mb-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.5)" }}>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "11px", letterSpacing: "0.2em", color: "#0B1930" }}>PLANNED FEATURES</span>
           </div>
-          <div className="p-4 space-y-3">
+          <div>
             {[
               { icon: BarChart2, label: "Google Analytics Integration", desc: "Traffic, pageviews, sessions" },
               { icon: DollarSign, label: "Revenue & Sales Dashboard",  desc: "Orders, subscriptions, payments" },
               { icon: LifeBuoy,  label: "Support Tickets",             desc: "AI-assisted customer service" },
               { icon: Mail,      label: "Email Campaigns",             desc: "Sent, opened, conversion rates" },
             ].map(({ icon: Icon, label, desc }) => (
-              <div key={label} className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: "#08122E", border: "1px solid rgba(201,162,39,0.2)" }}>
-                  <Icon size={14} style={{ color: "rgba(201,162,39,0.45)" }} />
-                </div>
+              <div key={label} className="flex items-center gap-4 py-3" style={{ borderBottom: "1px solid rgba(11,25,48,0.07)" }}>
+                <Icon size={14} style={{ color: "#C9A227", flexShrink: 0 }} />
                 <div>
-                  <p className="text-sm font-semibold" style={{ color: "rgba(255,255,255,0.75)" }}>{label}</p>
-                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>{desc}</p>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "13px", color: "#0B1930" }}>{label}</p>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "11px", color: "rgba(11,25,48,0.5)" }}>{desc}</p>
                 </div>
               </div>
             ))}
@@ -1136,7 +1132,7 @@ export default function AdminEditorPage() {
 
   // ── Main dashboard layout ──
   return (
-    <div className="flex min-h-screen text-white" style={{ background: "#08122E" }}>
+    <div className="flex min-h-screen" style={{ background: "#0B1930" }}>
       {showNewArticle && (
         <NewArticleModal
           onClose={() => setShowNewArticle(false)}
@@ -1150,18 +1146,38 @@ export default function AdminEditorPage() {
         onLogout={logout}
       />
 
-      <main className="flex-1 min-w-0 overflow-y-auto">
-        {/* Top bar */}
-        <div className="sticky top-0 z-30 px-8 py-4" style={{ background: "rgba(8,18,46,0.97)", backdropFilter: "blur(8px)", borderBottom: "1px solid rgba(201,162,39,0.12)" }}>
-          <div className="flex items-center gap-2">
-            <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: "13px", letterSpacing: "0.2em", color: "#C9A227" }}>BRAIN</span>
-            <span style={{ color: "rgba(201,162,39,0.35)", fontSize: "12px" }}>&ndash;</span>
-            <span style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: "13px", letterSpacing: "0.18em", color: "rgba(255,255,255,0.65)" }}>{activeSection.toUpperCase()}</span>
+      <main className="flex-1 min-w-0 overflow-y-auto flex flex-col" style={{ background: "#FAFAF8" }}>
+        {/* ── Metricadia-style sticky header ── */}
+        <div className="sticky top-0 z-30" style={{ background: "#0B1930" }}>
+          <div className="flex items-center justify-between px-10 py-0" style={{ height: "52px" }}>
+            {/* Wordmark */}
+            <div className="flex items-baseline gap-0">
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 900, fontSize: "14px", letterSpacing: "-0.01em", color: "#fff" }}>BRAIN</span>
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "14px", letterSpacing: "-0.01em", color: "#fff" }}>&thinsp;&ndash;&thinsp;RESEARCH LLC</span>
+            </div>
+            {/* Right nav — section trail */}
+            <div className="flex items-center gap-0" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "12px", letterSpacing: "0.09em" }}>
+              {["DASHBOARD","ARTICLES","MEMBERS","SUBSCRIBERS"].map((label, i, arr) => {
+                const sectionId = label.toLowerCase() as Section;
+                const isActive = activeSection === sectionId;
+                return (
+                  <span key={label} className="flex items-center">
+                    <button
+                      onClick={() => { setActiveSection(sectionId); setSearch(""); }}
+                      style={{ color: isActive ? "#C9A227" : "rgba(255,255,255,0.55)", padding: "0 14px", letterSpacing: "0.09em", fontWeight: isActive ? 700 : 500, fontSize: "12px", fontFamily: "'Inter', sans-serif" }}
+                    >{label}</button>
+                    {i < arr.length - 1 && <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "14px" }}>|</span>}
+                  </span>
+                );
+              })}
+            </div>
           </div>
+          {/* Gold bar under header */}
+          <div style={{ height: "3px", background: "linear-gradient(90deg,#C9A227 0%,#E8C840 20%,#D4A820 40%,#F0D458 55%,#D4A820 70%,#E8C840 82%,#C9A227 100%)" }} />
         </div>
 
         {/* Content */}
-        <div className="px-8 py-8 max-w-5xl">
+        <div className="px-10 py-10 max-w-5xl w-full flex-1">
           {activeSection === "dashboard" && (
             <DashboardPanel
               articlesCount={allPosts.length}
@@ -1189,6 +1205,27 @@ export default function AdminEditorPage() {
           {(activeSection === "traffic" || activeSection === "revenue" || activeSection === "support" || activeSection === "email") && (
             <ComingSoonPanel section={activeSection} />
           )}
+        </div>
+
+        {/* ── Metricadia-style footer ── */}
+        <div className="mt-auto" style={{ background: "#0B1930" }}>
+          <div style={{ height: "3px", background: "linear-gradient(90deg,#C9A227 0%,#E8C840 20%,#D4A820 40%,#F0D458 55%,#D4A820 70%,#E8C840 82%,#C9A227 100%)" }} />
+          <div className="flex items-center justify-between px-10" style={{ height: "48px" }}>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 900, fontSize: "12px", color: "#fff", letterSpacing: "-0.01em" }}>
+              BRAIN<span style={{ fontWeight: 300 }}>&thinsp;&ndash;&thinsp;RESEARCH LLC</span>
+            </span>
+            <div className="flex items-center gap-6" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "11px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.45)" }}>
+              <span>METRICADIA.COM</span>
+              <span style={{ color: "rgba(255,255,255,0.2)" }}>|</span>
+              <span>CLOWNBINGE.COM</span>
+              <span style={{ color: "rgba(255,255,255,0.2)" }}>|</span>
+              <span>CONTACT</span>
+              <span style={{ color: "rgba(255,255,255,0.2)" }}>|</span>
+              <span>PRIVACY</span>
+              <span style={{ color: "rgba(255,255,255,0.2)" }}>|</span>
+              <span>LEGAL</span>
+            </div>
+          </div>
         </div>
       </main>
     </div>
