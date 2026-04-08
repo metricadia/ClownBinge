@@ -131,7 +131,10 @@ export function PostCard({ post }: { post: Post }) {
             <div className="flex flex-wrap items-center gap-2">
               <span
                 className="inline-flex items-center rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider whitespace-nowrap"
-                style={{ border: "1px solid rgba(107,53,32,0.4)", color: "#6B3520" }}
+                style={post.category === "founders_pen"
+                  ? { background: "#ffffff", border: "1px solid rgba(11,25,48,0.25)", color: "#0B1930" }
+                  : { border: "1px solid rgba(107,53,32,0.4)", color: "#6B3520" }
+                }
               >
                 {CATEGORY_LABELS[post.category] || post.category}
               </span>
