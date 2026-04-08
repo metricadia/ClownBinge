@@ -1,7 +1,7 @@
 import { useRoute, Link } from "wouter";
 import { Layout } from "@/components/Layout";
 import { PostCard } from "@/components/PostCard";
-import { Loader2, AlertCircle, BookOpen, ChevronRight, Home } from "lucide-react";
+import { Loader2, AlertCircle, BookOpen, ChevronRight, Home, PenLine, ShieldCheck, Ban, FileText } from "lucide-react";
 import { useListPosts } from "@workspace/api-client-react";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 import { getCategoryConfig } from "@/lib/category-config";
@@ -81,6 +81,81 @@ export default function CategoryHub() {
             <p className="text-sm font-semibold text-foreground italic">{config.mission}</p>
           </div>
         </div>
+
+        {/* ── Founder's Pen Special Editorial Statement ── */}
+        {slug === "founders_pen" && (
+          <div className="mb-10">
+
+            {/* Definition block */}
+            <div className="rounded-none border-l-4 border-[#C9A227] pl-6 py-4 mb-8" style={{ background: "#FAFAF8" }}>
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#C9A227", fontFamily: "'Inter', sans-serif" }}>What It Is</p>
+              <p className="text-sm leading-relaxed" style={{ color: "#0B1930", fontFamily: "'Georgia', serif" }}>
+                The Founder's Pen is a <strong>rare, explicitly authored</strong> ClownBinge article category written exclusively by the platform founder. It publishes infrequently and deliberately. Every Founder's Pen piece is a long read by definition. No exceptions.
+              </p>
+            </div>
+
+            {/* Epistemological posture */}
+            <div className="rounded-none border border-[#C9A227]/30 p-6 mb-6" style={{ background: "#0B1930" }}>
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#C9A227", fontFamily: "'Inter', sans-serif", letterSpacing: "0.2em" }}>Epistemological Posture</p>
+              <p className="text-sm leading-relaxed mb-4" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "'Georgia', serif" }}>
+                The Founder's Pen maintains all CB sourcing standards: Tier One primary documentation, falsifiable claims, verified evidence, three-tier source hierarchy. It departs from CB Dry Rationalism in one named and deliberate respect: <strong style={{ color: "#E8C840" }}>it makes no pretense at Eurocentric objectivity</strong> — which was itself a subjective determination made by specific people, in specific institutions, serving specific political and racial interests, at a specific historical moment, and then universalized as the only legitimate posture for knowledge production.
+              </p>
+              <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "'Georgia', serif" }}>
+                The Founder's Pen carries a documented editorial posture, not an undisclosed one. The departure is named. The reasoning is published. Readers are not asked to mistake a standpoint for the absence of one.
+              </p>
+            </div>
+
+            {/* What It Is Not */}
+            <div className="p-6 mb-6" style={{ background: "#F0EDE6", borderTop: "3px solid #C9A227" }}>
+              <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "#0B1930", fontFamily: "'Inter', sans-serif", letterSpacing: "0.2em" }}>What It Is Not</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {["CNN", "Fox News", "The view from nowhere"].map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <Ban className="w-4 h-4 shrink-0" style={{ color: "#C9A227" }} />
+                    <span className="text-sm font-semibold" style={{ color: "#0B1930", fontFamily: "'Inter', sans-serif" }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm mt-4 italic" style={{ color: "rgba(11,25,48,0.65)", fontFamily: "'Georgia', serif" }}>
+                There is no view from nowhere. There never was.
+              </p>
+            </div>
+
+            {/* Guardrails */}
+            <div className="mb-6">
+              <div className="flex items-center gap-3 mb-4">
+                <ShieldCheck className="w-4 h-4" style={{ color: "#C9A227" }} />
+                <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#0B1930", fontFamily: "'Inter', sans-serif", letterSpacing: "0.2em" }}>Editorial Guardrails — Non-Negotiable</p>
+              </div>
+              <div className="space-y-3">
+                {[
+                  "Every claim of fact requires a cited source at Tier One or Tier Two. Emotion and embodied scholarly voice are permitted. Unverified factual claims are not.",
+                  "No named living private individual may be accused of a specific crime without a primary source document confirming legal finding or official investigation. Named public institutions and historical figures operating in their public capacity are not subject to this restriction.",
+                  "No operational content. Analysis of systems, policies, institutions, and historical mechanisms is permitted without restriction. Instructions, incitement, or tactical guidance are never permitted regardless of framing.",
+                  "The author's voice and grief are permitted. Calls for specific action against specific living individuals are not.",
+                ].map((rule, i) => (
+                  <div key={i} className="flex items-start gap-4 py-3" style={{ borderBottom: "1px solid rgba(11,25,48,0.08)" }}>
+                    <span className="shrink-0 mt-0.5 text-[11px] font-black" style={{ color: "#C9A227", fontFamily: "'Inter', sans-serif", minWidth: "20px" }}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <p className="text-sm leading-relaxed" style={{ color: "#0B1930", fontFamily: "'Georgia', serif" }}>{rule}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mandatory footer disclosure */}
+            <div className="flex items-start gap-4 p-5" style={{ background: "#0B1930", border: "1px solid rgba(201,162,39,0.3)" }}>
+              <FileText className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#C9A227" }} />
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: "#C9A227", fontFamily: "'Inter', sans-serif", letterSpacing: "0.2em" }}>Mandatory Footer — Appears on Every Piece</p>
+                <p className="text-sm italic leading-relaxed" style={{ color: "rgba(255,255,255,0.8)", fontFamily: "'Georgia', serif" }}>
+                  "This piece was written under The Founder's Pen category guidelines. It maintains CB three-tier sourcing standards. It does not maintain CB Dry Rationalism. The distinction is deliberate and documented in CB editorial policy."
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Pillar Topics + Key Entities */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
