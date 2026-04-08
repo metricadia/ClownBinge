@@ -59,6 +59,52 @@ export function AdminLogin({ onSuccess }: AdminLoginProps) {
         }}
       />
 
+      {/* Marble gold veining — organic SVG paths, very low opacity */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        viewBox="0 0 1000 600"
+        preserveAspectRatio="xMidYMid slice"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g fill="none" stroke="#C8A230">
+          {/* Main diagonal — lower-left to upper-right */}
+          <path
+            d="M 40 598 C 140 490, 240 415, 370 305 C 445 248, 530 172, 695 72 C 740 46, 790 22, 850 4"
+            strokeWidth="1.4" strokeOpacity="0.055"
+          />
+          {/* Branch off main ~midpoint */}
+          <path
+            d="M 370 305 C 415 285, 478 260, 548 210 C 618 160, 700 100, 775 52"
+            strokeWidth="0.6" strokeOpacity="0.038"
+          />
+          {/* Secondary cross-vein — flows lower */}
+          <path
+            d="M 0 165 C 90 195, 175 235, 268 285 C 358 334, 455 398, 558 455 C 638 498, 718 528, 820 562"
+            strokeWidth="0.9" strokeOpacity="0.045"
+          />
+          {/* Thin whisper vein — near vertical */}
+          <path
+            d="M 215 0 C 242 48, 278 102, 316 162 C 375 252, 448 345, 505 428 C 554 498, 592 548, 624 600"
+            strokeWidth="0.55" strokeOpacity="0.038"
+          />
+          {/* Upper-right vein cluster */}
+          <path
+            d="M 588 0 C 638 52, 692 98, 736 148 C 786 208, 828 268, 882 328 C 924 376, 964 426, 998 482"
+            strokeWidth="0.7" strokeOpacity="0.04"
+          />
+          {/* Hairline accent — lower left quadrant */}
+          <path
+            d="M 0 408 C 52 386, 108 362, 158 332 C 208 302, 248 268, 292 234"
+            strokeWidth="0.45" strokeOpacity="0.032"
+          />
+          {/* Micro shard detail — upper left */}
+          <path
+            d="M 0 58 C 38 72, 82 90, 128 118 C 168 142, 198 168, 228 198"
+            strokeWidth="0.4" strokeOpacity="0.028"
+          />
+        </g>
+      </svg>
+
       {/* Ambient glow — gold tinted, brand-accurate */}
       <div className="absolute inset-0 pointer-events-none">
         <div
