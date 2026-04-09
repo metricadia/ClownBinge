@@ -112,6 +112,7 @@ Site is **public** — no global login wall. Article reading requires Clerk soci
 - **Env vars:** `CLERK_SECRET_KEY`, `CLERK_PUBLISHABLE_KEY`, `VITE_CLERK_PUBLISHABLE_KEY`, `VITE_CLERK_PROXY_URL` (auto-set in prod)
 - **Clerk proxy:** `clerkProxyMiddleware.ts` — proxies `/api/__clerk` to Clerk's FAPI (must be mounted before body parsers)
 - **Article gate:** `PostDetail.tsx` — detects `!isSignedIn` via `useAuth()`, shows "Sign In to Read" overlay with bodyBottom hidden
+- **Crawler whitelist (NEVER REMOVE):** `PostDetail.tsx` — `isCrawler` flag detects Googlebot, bingbot, DuckDuckBot, Applebot, AhrefsBot, SemrushBot, ia_archiver, MJ12bot by `navigator.userAgent`. When `isCrawler = true`, BOTH `isAuthGated` and `isPremiumGated` are forced to `false` — crawlers always see the full article body. This is legal under Google's Flexible Sampling policy because we declare the paywall in JSON-LD (`isAccessibleForFree: "False"`, `hasPart` with `cssSelector: ".cb-article-body"`). **If this is ever removed, Googlebot will only see 1 paragraph of every article and all SEO value collapses.**
 - **Routes:** `/sign-in` (Clerk SignIn component), `/sign-up` (Clerk SignUp component), `/account` (MyAccount.tsx — redirects to /sign-in if not authed)
 - **Nav:** "My Account" link → `/account` (signed in) or `/sign-in` (signed out) via Clerk `useAuth()` in Layout.tsx
 - **Member tracking:** On Clerk sign-in, App.tsx `ClerkQueryClientCacheInvalidator` fires `POST /api/members/sync` with Clerk user data → upserts `members` table
@@ -395,7 +396,15 @@ cd scripts && pnpm sitemap                                    # Regenerate sitem
 - `/tags/:tag` route: tag index pages with clickable tag pills on article pages
 - selfOwnScore badge: shows on ALL article categories (not just self_owned)
 
-**CSR Risk (known):** App is SPA/Wouter. JSON-LD and meta tags are client-rendered. Verify via URL Inspection in Search Console that Googlebot sees the rendered content. SSR/prerender may become prerequisite for category hub pages to be indexed reliably.
+**CSR Risk (MITIGATED):** App is SPA/Wouter. JSON-LD and meta tags are client-rendered. Googlebot DOES execute JavaScript — and the crawler whitelist in PostDetail.tsx ensures Googlebot always sees the full rendered article body (not the auth gate). Verify via URL Inspection in Search Console. SSR/prerender may become prerequisite for category hub pages to be indexed reliably.
+
+**Table of Contents — Auto-Generated from H2 Tags (NEVER REMOVE):**
+- Hook: `artifacts/clownbinge/src/hooks/use-article-toc.ts` — scans `containerRef` for H2 elements after body renders, adds slugified `id` attributes to each (e.g., `"The Lobbying Ledger"` → `id="the-lobbying-ledger"`), returns list
+- Component: `artifacts/clownbinge/src/components/ArticleToc.tsx` — renders nothing if < 2 H2s found; renders "In This Treatise" for Founder's Pen articles (dark `#1C0E00` bg, gold `#C9A84C` text) and "In This Article" for all others
+- Wired in: `PostDetail.tsx` — `useArticleToc(containerRef, post?.id, isAuthGated || isPremiumGated)` then `<ArticleToc items={toc} isFoundersPen={isFoundersPen} />` placed between the article header and the `cb-article-body` div
+- **Why it matters:** H2 anchor IDs are how Google generates "Jump to:" sitelinks in search results — those make the result taller, more prominent, and significantly increase click-through rate. All FP articles have 6-9 H2 sections (enforced by BLOCK 2 minimum of 5 H2s per article). The ToC is invisible on short articles, automatic on long ones — zero manual work per article.
+- **Protection:** H2 structure in FP article bodies is canonical in `founders-pen-articles.json` and is synced by `insertFoundersPenArticles()` on every server startup. It cannot be lost.
+- **Do not gate the ToC:** It must show for signed-out users and crawlers. The `isCrawler` bypass ensures Googlebot sees it. The ToC renders BEFORE the auth gate overlay.
 
 ### Editorial Rules
 
