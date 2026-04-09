@@ -1,6 +1,7 @@
 import { db, postsTable } from "@workspace/db";
 import { eq, inArray, sql } from "drizzle-orm";
 import seedData from "./posts-seed.json";
+import fpArticlesData from "./founders-pen-articles.json";
 
 const SEED_EXPECTED_COUNT = (seedData as Record<string, unknown>[]).length;
 
@@ -97,6 +98,73 @@ async function deleteSeedArticles(): Promise<void> {
     deleted += (result as unknown as { rowCount?: number })?.rowCount ?? 0;
   }
   console.log(`[Seed] Deleted ${deleted} old seed articles (admin-created articles preserved).`);
+}
+
+// ─── Founder's Pen articles — self-healing insert on every startup ────────────
+// These articles are NOT in posts-seed.json and will never be wiped by deleteSeedArticles().
+// This function inserts any missing FP articles into the DB on every boot.
+
+type FpArticle = {
+  caseNumber: string;
+  title: string;
+  slug: string;
+  teaser: string;
+  body: string;
+  category: string;
+  verifiedSource: string;
+  tags: string[];
+  status: string;
+  publishedAt: string;
+  premiumOnly: boolean;
+  staffPick: boolean;
+  nerdAccessible: boolean;
+};
+
+export async function insertFoundersPenArticles(): Promise<void> {
+  try {
+    const existing = await db.execute(sql`SELECT case_number FROM posts WHERE case_number LIKE 'FP-%'`);
+    const existingSet = new Set((existing.rows as { case_number: string }[]).map(r => r.case_number));
+
+    const fpArticles = fpArticlesData as FpArticle[];
+    let inserted = 0;
+    for (const article of fpArticles) {
+      if (existingSet.has(article.caseNumber)) continue;
+      try {
+        await db.insert(postsTable).values({
+          caseNumber: article.caseNumber,
+          title: article.title,
+          slug: article.slug,
+          teaser: article.teaser,
+          body: article.body,
+          category: article.category as typeof postsTable.$inferInsert["category"],
+          verifiedSource: article.verifiedSource || null,
+          tags: article.tags ?? [],
+          status: article.status as typeof postsTable.$inferInsert["status"],
+          publishedAt: article.publishedAt ? new Date(article.publishedAt) : new Date(),
+          premiumOnly: article.premiumOnly ?? true,
+          staffPick: article.staffPick ?? false,
+          nerdAccessible: article.nerdAccessible ?? true,
+          hasVideo: false,
+          userSubmitted: false,
+          pinned: false,
+          locked: false,
+          viewCount: 0,
+          shareCount: 0,
+        }).onConflictDoNothing();
+        console.log(`[Seed] Inserted missing Founder's Pen article: ${article.caseNumber}`);
+        inserted++;
+      } catch (err) {
+        console.error(`[Seed] Failed to insert ${article.caseNumber}:`, err);
+      }
+    }
+    if (inserted === 0) {
+      console.log(`[Seed] Founder's Pen articles: all ${fpArticles.length} already present.`);
+    } else {
+      console.log(`[Seed] Founder's Pen articles: ${inserted} inserted.`);
+    }
+  } catch (err) {
+    console.error("[Seed] Error during insertFoundersPenArticles:", err);
+  }
 }
 
 // ─── Main entry point ────────────────────────────────────────────────────────
