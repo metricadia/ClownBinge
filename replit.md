@@ -56,6 +56,10 @@ Express 5 API server. Routes live in `src/routes/` and use `@workspace/api-zod` 
 
 - Entry: `src/index.ts` — reads `PORT`, starts Express
 - App setup: `src/app.ts` — mounts CORS, JSON/urlencoded parsing, routes at `/api`
+- **Security headers (NEVER REMOVE):** Helmet middleware in `app.ts` emits `X-Content-Type-Options: nosniff`, `Strict-Transport-Security` (1 year + subdomains), `Referrer-Policy: no-referrer`, `X-XSS-Protection: 0` on every API response. CSP and frameguard are disabled intentionally (Clerk inline scripts + Replit preview iframe). Verified via `curl -sI /api/health`.
+- **Trust proxy (NEVER REMOVE):** `app.set("trust proxy", 1)` in `app.ts` — required for rate limiting (accurate IP from X-Forwarded-For) and secure cookies in production behind Replit's load balancer. Removing this breaks rate limiting and `cookie.secure` in production.
+- **Session secret:** `SESSION_SECRET` env var is required in production — server throws a fatal error if missing. Dev uses a clearly-labeled fallback. The secret is already set as a Replit secret.
+- **Admin rate limit:** `POST /api/admin/clerk-login` is rate-limited to 10 requests per 15 minutes via `express-rate-limit`. Configured in `src/routes/admin.ts`.
 - Routes: `src/routes/index.ts` mounts sub-routers; `src/routes/health.ts` exposes `GET /health` (full path: `/api/health`)
 - Depends on: `@workspace/db`, `@workspace/api-zod`
 - `pnpm --filter @workspace/api-server run dev` — run the dev server
@@ -297,6 +301,25 @@ For any citation that references a non-government source deemed essential (e.g.,
 1. Whistleblower filings not in public government archives
 2. Corporate internal documents obtained via FOIA
 3. State court records not yet digitized in PACER
+
+### Founder's Pen — Self-Healing Startup (NEVER REMOVE OR BYPASS)
+
+The 7 Founder's Pen articles (FP-001 through FP-007) are maintained by a self-healing system that runs on every server startup. This was built because FP article bodies and `verifiedSource` fields were repeatedly lost or truncated in production.
+
+**Canonical source:** `artifacts/api-server/src/founders-pen-articles.json` — this is the single source of truth for all 7 FP articles (title, body, verifiedSource, caseNumber, slug, category, tags). Never modify a FP article in the DB without also updating this file.
+
+**`insertFoundersPenArticles()` in `seed.ts` does the following on every startup:**
+1. Checks all 7 FP articles exist in the DB — inserts any missing ones
+2. If an FP article body in the DB is shorter than the JSON body by >100 chars (truncation indicator), overwrites the DB body from JSON
+3. Always syncs `verified_source` from JSON to DB (`IS DISTINCT FROM` check — only updates if different)
+
+**Startup sequence (order matters):** `seedIfEmpty → applyCaseNumberRenames → insertNewArticles → insertFoundersPenArticles → updateNativeArticles → syncImprovedArticles → applyCategoryOverrides → applyPremiumFlags → applyStaffPickFlags`
+
+**FP article structure requirements (in the JSON and enforced by BLOCK 2 scan):**
+- Each FP article body must contain 5+ `<h2>` sections (provides Table of Contents entries for Google "Jump to:" sitelinks)
+- `verifiedSource` must be in `Title :: APA citation` pipe-separated format (18 entries for FP-007)
+- No `<h1>` tags in body (duplicate H1 penalty)
+- No em dashes in title or body
 
 ### Article Workflow
 
