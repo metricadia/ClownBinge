@@ -375,7 +375,7 @@ export default function PostDetail() {
             <div className="mb-5 p-4 border-l-[3px]" style={{ borderLeftColor: "#8B1A1A", background: "#F5F5F3" }}>
               <p className="text-sm uppercase tracking-[0.2em] font-black mb-2" style={{ color: "#8B1A1A" }}>A note on this category.</p>
               <p className="text-base leading-relaxed" style={{ fontFamily: "'Source Serif 4', Georgia, serif" }}>
-                The Founder's Pen maintains all ClownBinge sourcing standards while making its editorial posture explicit. This piece is a treatise and should be read as such.
+                Mainstream "Opinion" is discourse theatre. This is a Founder's Treatise. We maintain absolute ClownBinge sourcing standards to prove that our perspective isn't a bias—it's the only logical result of reading the documents. Read this as a data-driven indictment of the status quo.
               </p>
             </div>
           )}
