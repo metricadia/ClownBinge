@@ -28,6 +28,8 @@ import { Link } from "wouter";
 import { abbreviateSource } from "@/lib/source-abbrev";
 import { ForensicPivot } from "@/components/ForensicPivot";
 import { getCategoryConfig } from "@/lib/category-config";
+import { useArticleToc } from "@/hooks/use-article-toc";
+import { ArticleToc } from "@/components/ArticleToc";
 
 function linkifySource(text: string): React.ReactNode {
   return <span>{text}</span>;
@@ -115,6 +117,9 @@ export default function PostDetail() {
   // True once we know both admin and subscriber status
   const authResolved = !adminChecking && subscriptionStatus !== undefined;
   const isPremiumGated = !isCrawler && !isAuthGated && authResolved && !!(post as any)?.premiumOnly && !isAdmin && !subscriptionStatus?.isSubscriber;
+
+  const toc = useArticleToc(containerRef, post?.id, isAuthGated || isPremiumGated);
+
   const [commentText, setCommentText] = useState("");
   const [commentSubmitted, setCommentSubmitted] = useState(false);
 
@@ -400,6 +405,9 @@ export default function PostDetail() {
           </div>
         )}
 
+
+        {/* Table of Contents — auto-generated from H2 tags; visible to crawlers and signed-in users */}
+        <ArticleToc items={toc} isFoundersPen={isFoundersPen} />
 
         {/* Article body — preview only when gated */}
         <div
