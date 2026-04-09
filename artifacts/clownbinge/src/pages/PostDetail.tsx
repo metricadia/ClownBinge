@@ -216,6 +216,8 @@ export default function PostDetail() {
     if (post.verifiedSource) {
       return post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).length || 1;
     }
+    const ps = (post as any).primarySources;
+    if (Array.isArray(ps) && ps.length > 0) return ps.length;
     if (post.sourceUrl) return 1;
     return 0;
   }, [post, references]);
@@ -383,6 +385,19 @@ export default function PostDetail() {
           <p data-speakable-lede className={`text-base sm:text-lg text-muted-foreground font-medium leading-relaxed border-l-4 border-secondary pl-5 ${isFoundersPen ? "founders-pen-lede" : ""}`}>
             {post.teaser}
           </p>
+
+          {(post as any).seriesName && (post as any).seriesSequence && (() => {
+            const seq: string = (post as any).seriesSequence;
+            const name: string = (post as any).seriesName;
+            const partNum = seq.match(/ITP-(\d+)/)?.[1];
+            const ordinals: Record<string, string> = { "1": "Part One", "2": "Part Two", "3": "Part Three" };
+            const ordinal = ordinals[partNum ?? ""] ?? seq;
+            return (
+              <div className="mt-4 border-l-4 pl-5 py-1 text-base leading-relaxed" style={{ borderColor: "#C9A227", background: "#FDFAF3" }}>
+                <strong>This is {ordinal}</strong> of the {name}, a three-part ClownBinge archival investigation. Parts Two and Three are forthcoming.
+              </div>
+            );
+          })()}
         </header>
 
         {isVideo && (

@@ -64,6 +64,9 @@ export const postsTable = pgTable("posts", {
   seoMetaTitle: text("seo_meta_title"),
   premiumOnly: boolean("premium_only").notNull().default(false),
   primarySources: jsonb("primary_sources").$type<PrimarySource[]>().default([]),
+  seriesName: text("series_name"),
+  seriesSequence: text("series_sequence"),
+  seriesThesis: text("series_thesis"),
 });
 
 export interface PrimarySource {
