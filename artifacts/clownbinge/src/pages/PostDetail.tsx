@@ -6,7 +6,7 @@ import { CitedBadge } from "@/components/CitedBadge";
 import { ReactionBar } from "@/components/ReactionBar";
 import { ShareButtons } from "@/components/ShareButtons";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
-import { usePostDetail, useViewTracker } from "@/hooks/use-posts";
+import { usePostDetail, useViewTracker, useSeriesPosts } from "@/hooks/use-posts";
 import { UserSubmittedBadge } from "@/components/UserSubmittedBadge";
 import { SelfOwnScoreBadge } from "@/components/SelfOwnScoreBadge";
 import { useArticleSeoHead } from "@/hooks/use-seo-head";
@@ -100,6 +100,7 @@ export default function PostDetail() {
   // ── Subscription gate ───────────────────────────────────────────────────────
   const { data: subscriptionStatus } = useSubscription();
   const { isAdmin, checking: adminChecking } = useAdmin();
+  const { data: seriesPosts } = useSeriesPosts((post as any)?.seriesName);
   const [gateOpen, setGateOpen] = useState(false);
   const [gateTrigger, setGateTrigger] = useState<"metricadiaid" | "factoid" | "comment">("metricadiaid");
 
@@ -392,9 +393,26 @@ export default function PostDetail() {
             const partNum = seq.match(/ITP-(\d+)/)?.[1];
             const ordinals: Record<string, string> = { "1": "Part One", "2": "Part Two", "3": "Part Three" };
             const ordinal = ordinals[partNum ?? ""] ?? seq;
+            const siblings = (seriesPosts ?? []).filter((p: any) => p.slug !== post.slug);
+            const getPartLabel = (sibSeq: string) => {
+              const n = sibSeq.match(/ITP-(\d+)/)?.[1];
+              return ordinals[n ?? ""] ?? sibSeq;
+            };
             return (
-              <div className="mt-4 border-l-4 pl-5 py-1 text-base leading-relaxed" style={{ borderColor: "#C9A227", background: "#FDFAF3" }}>
-                <strong>This is {ordinal}</strong> of the {name}, a three-part ClownBinge archival investigation. Parts Two and Three are forthcoming.
+              <div className="mt-4 border-l-4 pl-5 py-2 text-base leading-relaxed" style={{ borderColor: "#C9A227", background: "#FDFAF3" }}>
+                <strong>This is {ordinal}</strong> of the {name}, a three-part ClownBinge archival investigation.
+                {siblings.length > 0 && (
+                  <span>
+                    {siblings.map((sib: any, i: number) => (
+                      <span key={sib.slug}>
+                        {" "}<strong><Link href={`/case/${sib.slug}`} style={{ textDecoration: "underline", textDecorationColor: "#C9A227" }}>{getPartLabel((sib as any).seriesSequence ?? "")}: {sib.title.replace(/^The Ivory Terror Project:\s*/i, "").replace(/\.$/, "")}</Link></strong>{i < siblings.length - 1 ? "." : "."}
+                      </span>
+                    ))}
+                  </span>
+                )}
+                {[1,2,3].filter(n => ![ ...(seriesPosts ?? []).map((p: any) => p.seriesSequence?.match(/ITP-(\d+)/)?.[1]), partNum ].includes(String(n))).length > 0 && (
+                  <span className="text-muted-foreground"> {[1,2,3].filter(n => ![ ...(seriesPosts ?? []).map((p: any) => p.seriesSequence?.match(/ITP-(\d+)/)?.[1]), partNum ].includes(String(n))).map(n => ordinals[String(n)]).join(" and ")} {[1,2,3].filter(n => ![ ...(seriesPosts ?? []).map((p: any) => p.seriesSequence?.match(/ITP-(\d+)/)?.[1]), partNum ].includes(String(n))).length === 1 ? "is" : "are"} forthcoming.</span>
+                )}
               </div>
             );
           })()}

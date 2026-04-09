@@ -204,11 +204,13 @@ router.get("/posts", async (req, res) => {
       return;
     }
 
-    const { category, tag, staffPick, limit = 20, offset = 0 } = query.data;
+    const { category, tag, series, staffPick, limit = 20, offset = 0 } = query.data;
 
     const conditions = [eq(postsTable.status, "published")];
 
-    if (staffPick === true) {
+    if (series) {
+      conditions.push(eq(postsTable.seriesName, series));
+    } else if (staffPick === true) {
       // Staff picks tab: all categories, filter by flag
       conditions.push(eq(postsTable.staffPick, true));
     } else if (tag) {

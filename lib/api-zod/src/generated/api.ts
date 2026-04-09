@@ -45,6 +45,7 @@ export const ListPostsQueryParams = zod.object({
     ])
     .optional(),
   tag: zod.string().optional(),
+  series: zod.string().optional(),
   staffPick: zod.coerce.boolean().optional(),
   limit: zod.coerce.number().default(listPostsQueryLimitDefault),
   offset: zod.coerce.number().default(listPostsQueryOffsetDefault),

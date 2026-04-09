@@ -101,6 +101,21 @@ export function usePostsFeedPaginated(category?: ListPostsCategory, pageSize = 2
   };
 }
 
+export function useSeriesPosts(seriesName: string | null | undefined) {
+  return useQuery({
+    queryKey: ["series-posts", seriesName],
+    queryFn: async () => {
+      if (!seriesName) return [];
+      const res = await fetch(`/api/posts?series=${encodeURIComponent(seriesName)}&limit=10`, { cache: "no-store" });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return (data.posts ?? []) as Array<{ slug: string; title: string; seriesSequence: string | null }>;
+    },
+    staleTime: 60_000,
+    enabled: Boolean(seriesName),
+  });
+}
+
 export function usePostDetail(slug: string) {
   return useQuery({
     queryKey: ["post", slug],
