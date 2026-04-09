@@ -1185,7 +1185,11 @@ export function MetricadiaEditor({
       <DeepFactoidScanDialog
         open={showDeepScanDialog}
         articleTitle={title}
-        bodyText={editor?.getText() ?? ""}
+        bodyText={
+          (editor?.getText() ?? "")
+            .replace(/This is Part (One|Two|Three) of the .*?archival investigation\.[^.]*\./gi, "")
+            .trim()
+        }
         onClose={() => setShowDeepScanDialog(false)}
         onInstall={handleInstallDeepFactoids}
       />

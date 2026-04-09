@@ -144,6 +144,8 @@ STRICT RULES:
 - Do NOT select person names (individuals are handled separately)
 - Do NOT select the article's main subject
 - Do NOT select obvious common words
+- Do NOT select series/collection titles, investigative series names, or article sequence labels (e.g., "Part One", "Part Two", "Part Three", or any named investigative project title like "The Ivory Terror Project")
+- Do NOT select self-referential editorial meta-text (e.g., "archival investigation", "ClownBinge", publication or series navigation phrases)
 - DO select: agency acronyms, legal case names, policy programs, legislative acts, financial terms, regulatory frameworks
 - Pick the MOST IMPORTANT terms — ones where background context directly changes how the reader understands the article's stakes
 - Each phrase must appear EXACTLY as written in the article text above

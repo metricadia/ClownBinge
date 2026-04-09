@@ -400,7 +400,7 @@ export default function PostDetail() {
             };
             return (
               <div className="mt-4 border-l-4 pl-5 py-2 text-base leading-relaxed" style={{ borderColor: "#C9A227", background: "#FDFAF3" }}>
-                <strong>This is {ordinal}</strong> of the {name}, a three-part ClownBinge archival investigation.
+                <strong>This is {ordinal}</strong> of {/^[Tt]he\s/.test(name) ? name.replace(/^[Tt]he\s+/, 'the ') : `the ${name}`}, a three-part ClownBinge archival investigation.
                 {siblings.length > 0 && (
                   <span>
                     {siblings.map((sib: any, i: number) => (
