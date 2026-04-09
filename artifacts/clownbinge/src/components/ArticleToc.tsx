@@ -5,6 +5,16 @@ interface ArticleTocProps {
   isFoundersPen?: boolean;
 }
 
+function scrollToHeading(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+  e.preventDefault();
+  const el = document.getElementById(id);
+  if (el) {
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: "smooth" });
+    history.replaceState(null, "", `#${id}`);
+  }
+}
+
 export function ArticleToc({ items, isFoundersPen }: ArticleTocProps) {
   if (items.length < 2) return null;
 
@@ -36,6 +46,7 @@ export function ArticleToc({ items, isFoundersPen }: ArticleTocProps) {
               </span>
               <a
                 href={`#${item.id}`}
+                onClick={(e) => scrollToHeading(e, item.id)}
                 className="text-sm leading-snug hover:underline"
                 style={{
                   color: "#2C1600",
@@ -69,6 +80,7 @@ export function ArticleToc({ items, isFoundersPen }: ArticleTocProps) {
             </span>
             <a
               href={`#${item.id}`}
+              onClick={(e) => scrollToHeading(e, item.id)}
               className="text-sm font-medium text-primary hover:underline leading-snug"
             >
               {item.text}
