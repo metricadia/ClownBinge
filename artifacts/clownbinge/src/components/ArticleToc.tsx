@@ -14,14 +14,14 @@ export function ArticleToc({ items, isFoundersPen }: ArticleTocProps) {
         aria-label="Table of Contents"
         className="mb-8 not-prose"
         style={{
-          background: "#1C0E00",
+          background: "#F2E8D4",
           borderLeft: "4px solid #C9A84C",
           padding: "1.25rem 1.5rem",
         }}
       >
         <p
           className="text-[10px] font-black uppercase tracking-[0.25em] mb-3"
-          style={{ color: "#C9A84C" }}
+          style={{ color: "#8C6520" }}
         >
           In This Treatise
         </p>
@@ -38,7 +38,7 @@ export function ArticleToc({ items, isFoundersPen }: ArticleTocProps) {
                 href={`#${item.id}`}
                 className="text-sm leading-snug hover:underline"
                 style={{
-                  color: "#E8DCC8",
+                  color: "#2C1600",
                   fontFamily: "'Source Serif 4', Georgia, serif",
                   textDecoration: "none",
                 }}

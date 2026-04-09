@@ -27,21 +27,26 @@ export function useArticleToc(
       return;
     }
 
-    const el = containerRef.current;
-    if (!el) return;
+    const scan = () => {
+      const el = containerRef.current;
+      if (!el) return;
 
-    const h2s = Array.from(el.querySelectorAll("h2"));
-    const items: TocItem[] = [];
+      const h2s = Array.from(el.querySelectorAll("h2"));
+      const items: TocItem[] = [];
 
-    h2s.forEach((h2, i) => {
-      const text = h2.textContent?.trim() ?? "";
-      if (!text) return;
-      const base = slugify(text) || `section-${i + 1}`;
-      if (!h2.id) h2.id = base;
-      items.push({ id: h2.id, text });
-    });
+      h2s.forEach((h2, i) => {
+        const text = h2.textContent?.trim() ?? "";
+        if (!text) return;
+        const base = slugify(text) || `section-${i + 1}`;
+        if (!h2.id) h2.id = base;
+        items.push({ id: h2.id, text });
+      });
 
-    setHeadings(items);
+      setHeadings(items);
+    };
+
+    const timer = setTimeout(scan, 0);
+    return () => clearTimeout(timer);
   }, [articleId, gated]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return headings;
