@@ -147,7 +147,7 @@ export default function PostDetail() {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
-      if (post?.premiumOnly && !subscriptionStatus?.isSubscriber) {
+      if (post?.premiumOnly && !subscriptionStatus?.isSubscriber && !isAdmin) {
         setGateTrigger("metricadiaid");
         setGateOpen(true);
         return;
@@ -161,7 +161,7 @@ export default function PostDetail() {
 
     container.addEventListener("click", handlePersonClick, { capture: true });
     return () => container.removeEventListener("click", handlePersonClick, { capture: true });
-  }, [containerRef, post?.id, post?.premiumOnly, subscriptionStatus?.isSubscriber]);
+  }, [containerRef, post?.id, post?.premiumOnly, subscriptionStatus?.isSubscriber, isAdmin]);
 
   const processedBody = useMemo(() => {
     if (!post?.body) return post?.body ?? "";
@@ -326,7 +326,7 @@ export default function PostDetail() {
                   <Lock className="w-3 h-3" /> Record Locked
                 </span>
               )}
-              {post.premiumOnly && !subscriptionStatus?.isSubscriber && (
+              {post.premiumOnly && !subscriptionStatus?.isSubscriber && !isAdmin && (
                 <span
                   className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider cursor-pointer hover:opacity-90 transition-opacity"
                   style={{ background: "#F5C518", color: "#1A1A2E" }}
