@@ -315,6 +315,8 @@ The 7 Founder's Pen articles (FP-001 through FP-007) are maintained by a self-he
 
 **Startup sequence (order matters):** `seedIfEmpty → applyCaseNumberRenames → insertNewArticles → insertFoundersPenArticles → updateNativeArticles → syncImprovedArticles → applyCategoryOverrides → applyPremiumFlags → applyStaffPickFlags`
 
+**RETIRED_TO_FP exclusion set (in seed.ts):** CB- numbers that were promoted to FP articles must be added here so `insertNewArticles()` doesn't re-insert the old seed version on every restart. Current list: `CB-000174` → FP-008. Add future promotions here.
+
 **FP article structure requirements (in the JSON and enforced by BLOCK 2 scan):**
 - Each FP article body must contain 5+ `<h2>` sections (provides Table of Contents entries for Google "Jump to:" sitelinks)
 - `verifiedSource` must be in `Title :: APA citation` pipe-separated format (18 entries for FP-007)

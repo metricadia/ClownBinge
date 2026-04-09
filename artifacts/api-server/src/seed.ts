@@ -373,7 +373,11 @@ export async function insertNewArticles(): Promise<void> {
     );
 
     const posts = seedData as Record<string, unknown>[];
-    const newPosts = posts.filter((p) => !existingCases.has(p.case_number as string));
+    const newPosts = posts.filter(
+      (p) =>
+        !existingCases.has(p.case_number as string) &&
+        !RETIRED_TO_FP.has(p.case_number as string)
+    );
 
     if (newPosts.length === 0) {
       console.log(`[Seed] No new articles to insert.`);
@@ -505,6 +509,14 @@ const CASE_NUMBER_RENAMES: { from: string; to: string }[] = [
   { from: "CB-000384", to: "FP-006" }, // Philo of Alexandria
 ];
 
+// CB- numbers that have been promoted to FP- articles and removed from the
+// regular seed. The seed file still lists them under the old number, so
+// insertNewArticles() would try to re-insert them every startup without this
+// exclusion list.
+const RETIRED_TO_FP: Set<string> = new Set([
+  "CB-000174", // → FP-008: $40 Billion Tax on Paying Your Taxes
+]);
+
 export async function applyCaseNumberRenames(): Promise<void> {
   try {
     let renamed = 0;
@@ -538,6 +550,7 @@ const CATEGORY_OVERRIDES: { caseNumber: string; category: typeof postsTable.$inf
   { caseNumber: "FP-005", category: "founders_pen" }, // No, Black Americans Do Not Commit More Violent Crime
   { caseNumber: "FP-006", category: "founders_pen" }, // Philo of Alexandria
   { caseNumber: "FP-007", category: "founders_pen" }, // Replacement Theory Requires a Culture to Replace
+  { caseNumber: "FP-008", category: "founders_pen" }, // $40 Billion Tax on Paying Your Taxes
 ];
 
 export async function applyCategoryOverrides(): Promise<void> {
