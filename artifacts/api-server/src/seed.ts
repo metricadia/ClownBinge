@@ -169,7 +169,9 @@ export async function insertFoundersPenArticles(): Promise<void> {
       } else {
         // Sync body if DB body is shorter than the canonical JSON body (indicates truncation)
         const dbBodyLen = bodyLenMap.get(article.caseNumber) ?? 0;
-        if (article.body.length > dbBodyLen + 100) {
+        const bodyNeedsSync = article.body.length > dbBodyLen + 100;
+
+        if (bodyNeedsSync) {
           try {
             await db.execute(
               sql`UPDATE posts SET body = ${article.body} WHERE case_number = ${article.caseNumber}`
@@ -178,6 +180,16 @@ export async function insertFoundersPenArticles(): Promise<void> {
             synced++;
           } catch (err) {
             console.error(`[Seed] Failed to sync body for ${article.caseNumber}:`, err);
+          }
+        }
+        // Always sync verifiedSource from canonical JSON so APA 7 formatting is enforced
+        if (article.verifiedSource) {
+          try {
+            await db.execute(
+              sql`UPDATE posts SET verified_source = ${article.verifiedSource} WHERE case_number = ${article.caseNumber} AND (verified_source IS DISTINCT FROM ${article.verifiedSource})`
+            );
+          } catch (err) {
+            console.error(`[Seed] Failed to sync verified_source for ${article.caseNumber}:`, err);
           }
         }
       }
