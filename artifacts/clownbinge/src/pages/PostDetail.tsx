@@ -390,29 +390,18 @@ export default function PostDetail() {
           {(post as any).seriesName && (post as any).seriesSequence && (() => {
             const seq: string = (post as any).seriesSequence;
             const name: string = (post as any).seriesName;
-            const partNum = seq.match(/ITP-(\d+)/)?.[1];
-            const ordinals: Record<string, string> = { "1": "Part One", "2": "Part Two", "3": "Part Three" };
-            const ordinal = ordinals[partNum ?? ""] ?? seq;
-            const siblings = (seriesPosts ?? []).filter((p: any) => p.slug !== post.slug);
-            const getPartLabel = (sibSeq: string) => {
-              const n = sibSeq.match(/ITP-(\d+)/)?.[1];
-              return ordinals[n ?? ""] ?? sibSeq;
-            };
+            const partNum = parseInt(seq.match(/ITP-(\d+)/)?.[1] ?? "0", 10);
+            const total = (seriesPosts ?? []).length || 3;
+            const partStr = String(partNum).padStart(2, "0");
+            const totalStr = String(total).padStart(2, "0");
             return (
-              <div className="mt-4 border-l-4 pl-5 py-2 text-base leading-relaxed" style={{ borderColor: "#C9A227", background: "#FDFAF3" }}>
-                <strong>This is {ordinal}</strong> of {/^[Tt]he\s/.test(name) ? name.replace(/^[Tt]he\s+/, 'the ') : `the ${name}`}, a three-part ClownBinge archival investigation.
-                {siblings.length > 0 && (
-                  <span>
-                    {siblings.map((sib: any, i: number) => (
-                      <span key={sib.slug}>
-                        {" "}<strong><Link href={`/case/${sib.slug}`} style={{ textDecoration: "underline", textDecorationColor: "#C9A227" }}>{getPartLabel((sib as any).seriesSequence ?? "")}: {sib.title.replace(/^The Ivory Terror Project:\s*/i, "").replace(/\.$/, "")}</Link></strong>{i < siblings.length - 1 ? "." : "."}
-                      </span>
-                    ))}
-                  </span>
-                )}
-                {[1,2,3].filter(n => ![ ...(seriesPosts ?? []).map((p: any) => p.seriesSequence?.match(/ITP-(\d+)/)?.[1]), partNum ].includes(String(n))).length > 0 && (
-                  <span className="text-muted-foreground"> {[1,2,3].filter(n => ![ ...(seriesPosts ?? []).map((p: any) => p.seriesSequence?.match(/ITP-(\d+)/)?.[1]), partNum ].includes(String(n))).map(n => ordinals[String(n)]).join(" and ")} {[1,2,3].filter(n => ![ ...(seriesPosts ?? []).map((p: any) => p.seriesSequence?.match(/ITP-(\d+)/)?.[1]), partNum ].includes(String(n))).length === 1 ? "is" : "are"} forthcoming.</span>
-                )}
+              <div className="mt-4 border-l-4 pl-5 py-2" style={{ borderColor: "#C9A227", background: "#FDFAF3" }}>
+                <p className="text-sm font-bold tracking-wide" style={{ color: "#08122E", margin: 0 }}>
+                  Article {partStr} of {totalStr} &mdash; {name}
+                </p>
+                <p className="text-sm" style={{ color: "#475569", margin: "2px 0 0" }}>
+                  A three-part empirical investigation and deep-dive into American history.
+                </p>
               </div>
             );
           })()}
