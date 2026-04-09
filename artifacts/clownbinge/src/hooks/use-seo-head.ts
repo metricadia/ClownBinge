@@ -451,6 +451,35 @@ export function useArticleSeoHead(post: Post | null | undefined) {
 
     setJsonLd("article", articleSchema);
 
+    // schema.org/Table — fires for any article whose body contains a <table>.
+    // Helps Google extract comparison tables into People Also Ask / Knowledge Panels.
+    if (post.body && post.body.includes("<table")) {
+      // Extract the table heading nearest to the table (H2 immediately before it)
+      const tableHeadingMatch = post.body.match(/(<h2[^>]*>)(.*?)<\/h2>(?=[^]*?<table)/is);
+      const tableHeading = tableHeadingMatch
+        ? tableHeadingMatch[2].replace(/<[^>]+>/g, "").trim()
+        : post.title;
+      setJsonLd("table", {
+        "@context": "https://schema.org",
+        "@type": "Table",
+        "name": tableHeading,
+        "about": post.teaser ?? post.title,
+        "description": `Structured comparison table from: ${post.title}. Published by ClownBinge. All data sourced from primary records.`,
+        "isPartOf": {
+          "@type": "NewsArticle",
+          "@id": `${canonical}#article`
+        },
+        "url": canonical,
+        "publisher": {
+          "@type": "Organization",
+          "name": "ClownBinge",
+          "url": DOMAIN
+        }
+      });
+    } else {
+      removeJsonLd("table");
+    }
+
     // BreadcrumbList — site hierarchy for Topical Authority
     setJsonLd("breadcrumb", {
       "@context": "https://schema.org",
@@ -547,6 +576,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       removeJsonLd("breadcrumb");
       removeJsonLd("subject");
       removeJsonLd("claimreview");
+      removeJsonLd("table");
       removeMeta("robots");
       removeMeta("language");
       removeMeta("author");
