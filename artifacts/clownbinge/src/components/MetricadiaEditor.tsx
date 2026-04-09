@@ -41,6 +41,7 @@ import {
   Users,
   CheckCircle2,
   AlertCircle,
+  ScanSearch,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -59,6 +60,7 @@ import {
 } from "@/components/ui/dialog";
 import { MetricadiaIDDialog } from "./MetricadiaIDDialog";
 import { CBFactoidDialog } from "./CBFactoidDialog";
+import { DeepFactoidScanDialog } from "./DeepFactoidScanDialog";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -173,6 +175,9 @@ export function MetricadiaEditor({
   const [showCBFactoidDialog, setShowCBFactoidDialog] = useState(false);
   const [cbFactoidSelectedText, setCBFactoidSelectedText] = useState("");
   const [cbFactoidSelectionRange, setCBFactoidSelectionRange] = useState<{ from: number; to: number } | null>(null);
+
+  // Deep Factoid Scanner state
+  const [showDeepScanDialog, setShowDeepScanDialog] = useState(false);
 
   // Dragging state
   const [isDragging, setIsDragging] = useState(false);
@@ -480,6 +485,53 @@ export function MetricadiaEditor({
     setCBFactoidSelectionRange(null);
     setCBFactoidSelectedText("");
     toast({ title: "CB Factoid inserted", description: `"${data.title}" is now a reader tooltip.` });
+  };
+
+  // ── Deep Factoid Scan: auto-scan entire article, install approved factoids ──
+  const handleInstallDeepFactoids = (
+    approved: Array<{ phrase: string; title: string; summary: string }>
+  ) => {
+    if (!editor || approved.length === 0) return;
+    let html = editor.getHTML();
+    let inserted = 0;
+
+    for (const { phrase, title, summary } of approved) {
+      const safeTitle = title.replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const safeSummary = summary.replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const factoidTag = `<a class="cb-factoid" href="#" data-title="${safeTitle}" data-summary="${safeSummary}">${phrase}</a>`;
+      // Split HTML into text segments (between tags) and tag segments.
+      // Only replace the first occurrence in a text segment — avoids matching inside attributes.
+      const parts = html.split(/(<[^>]+>)/);
+      let replaced = false;
+      const newParts = parts.map((part) => {
+        if (replaced || part.startsWith("<")) return part;
+        const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const re = new RegExp(escaped, "i");
+        if (re.test(part)) {
+          replaced = true;
+          return part.replace(re, factoidTag);
+        }
+        return part;
+      });
+      if (replaced) {
+        html = newParts.join("");
+        inserted++;
+      }
+    }
+
+    if (inserted > 0) {
+      editor.commands.setContent(html, false);
+      toast({
+        title: `${inserted} Deep Factoid${inserted !== 1 ? "s" : ""} installed`,
+        description: "First-occurrence markup applied. Review the article body.",
+      });
+    } else {
+      toast({
+        title: "No phrases matched",
+        description: "The phrases weren't found verbatim — try manual Factoid for these terms.",
+        variant: "destructive",
+      });
+    }
   };
 
   // ── Auto-detect: scan article and pull Wikipedia data ──────────────────────
@@ -1039,6 +1091,10 @@ export function MetricadiaEditor({
             <Button onClick={handleOpenCBFactoid} variant="outline" size="sm" className="min-h-[44px] px-3 bg-yellow-900/30 text-yellow-300 border-yellow-600/40 hover:border-yellow-400 font-bold" data-testid="button-cbfactoid" title="Select text, then generate a CB Factoid tooltip with Claude">
               <Sparkles className="w-4 h-4 mr-1" /><span className="hidden md:inline">Factoid</span>
             </Button>
+            {/* Deep Factoid Scanner™ */}
+            <Button onClick={() => setShowDeepScanDialog(true)} variant="outline" size="sm" className="min-h-[44px] px-3 bg-amber-950/50 text-amber-200 border-amber-500/50 hover:border-amber-300 font-bold" data-testid="button-deep-scan" title="Scan entire article with Claude — auto-installs gold dotted factoids on key institutional terms">
+              <ScanSearch className="w-4 h-4 mr-1" /><span className="hidden md:inline">Deep Scan</span>
+            </Button>
 
             <div className="hidden md:block w-px h-8 bg-slate-700 mx-1" />
 
@@ -1123,6 +1179,15 @@ export function MetricadiaEditor({
         articleContext={title}
         onClose={() => setShowCBFactoidDialog(false)}
         onInsert={handleInsertCBFactoid}
+      />
+
+      {/* Deep Factoid Scanner™ dialog */}
+      <DeepFactoidScanDialog
+        open={showDeepScanDialog}
+        articleTitle={title}
+        bodyText={editor?.getText() ?? ""}
+        onClose={() => setShowDeepScanDialog(false)}
+        onInstall={handleInstallDeepFactoids}
       />
 
       {/* Auto-detect review modal */}

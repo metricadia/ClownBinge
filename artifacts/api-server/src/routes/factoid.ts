@@ -111,4 +111,88 @@ Do not include any text outside the JSON object.`;
   }
 });
 
+// ── Deep Factoid Scan: analyze entire article in one call ────────────────────
+// Assigns factoids to theme turns (first occurrence of each concept), not to
+// authors or subjects. Selective by design — 3-7 max per article.
+router.post("/factoid/deep-scan", async (req, res) => {
+  try {
+    const { articleTitle, bodyText } = req.body as {
+      articleTitle?: string;
+      bodyText?: string;
+    };
+
+    if (!bodyText || bodyText.trim().length < 100) {
+      res.status(400).json({ error: "bodyText is required (min 100 chars)" });
+      return;
+    }
+
+    // Trim to ~4000 chars for cost control — enough for full context
+    const truncatedBody = bodyText.slice(0, 4000);
+
+    const prompt = `You are an expert research editor at ClownBinge, a public accountability journalism platform. Your job is to perform a Deep Factoid Scan on the article below.
+
+Article title: "${articleTitle || "Accountability article"}"
+
+Article text:
+"""
+${truncatedBody}
+"""
+
+Your task: Identify exactly 4–6 key terms or phrases in this article that a general reader would genuinely benefit from having explained. These must be INSTITUTIONAL or CONCEPTUAL terms — laws, government agencies, acronyms, historical events, legal concepts, financial instruments, regulatory bodies, or policy mechanisms.
+
+STRICT RULES:
+- Do NOT select person names (individuals are handled separately)
+- Do NOT select the article's main subject
+- Do NOT select obvious common words
+- DO select: agency acronyms, legal case names, policy programs, legislative acts, financial terms, regulatory frameworks
+- Pick the MOST IMPORTANT terms — ones where background context directly changes how the reader understands the article's stakes
+- Each phrase must appear EXACTLY as written in the article text above
+- Prefer shorter, precise phrases (2-5 words) over long ones
+- Maximum 6 factoids — quality over quantity
+
+Return ONLY a JSON array with this exact shape (no other text):
+[
+  {
+    "phrase": "exact phrase from article text",
+    "title": "short factual label (max 70 chars)",
+    "summary": "Two sentences. First: what this IS — its origin, scope, or mechanics. Second: why it matters to the reader of this article."
+  }
+]`;
+
+    const message = await anthropic.messages.create({
+      model: "claude-sonnet-4-5",
+      max_tokens: 1200,
+      messages: [{ role: "user", content: prompt }],
+    });
+
+    const content = message.content[0];
+    if (content.type !== "text") {
+      res.status(500).json({ error: "Unexpected response from Claude" });
+      return;
+    }
+
+    const jsonMatch = content.text.match(/\[[\s\S]*\]/);
+    if (!jsonMatch) {
+      res.status(500).json({ error: "Could not parse Claude response as JSON array" });
+      return;
+    }
+
+    const parsed = JSON.parse(jsonMatch[0]) as {
+      phrase: string;
+      title: string;
+      summary: string;
+    }[];
+
+    // Validate and cap at 6
+    const factoids = parsed
+      .filter((f) => f.phrase && f.title && f.summary)
+      .slice(0, 6);
+
+    res.json({ factoids });
+  } catch (err) {
+    console.error("factoid/deep-scan error:", err);
+    res.status(500).json({ error: "Failed to run Deep Factoid Scan" });
+  }
+});
+
 export default router;
