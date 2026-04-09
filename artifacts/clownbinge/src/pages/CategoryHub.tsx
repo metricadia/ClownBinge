@@ -5,6 +5,7 @@ import { Loader2, AlertCircle, BookOpen, ChevronRight, Home, PenLine, ShieldChec
 import { useListPosts } from "@workspace/api-client-react";
 import { usePageSeoHead } from "@/hooks/use-seo-head";
 import { getCategoryConfig } from "@/lib/category-config";
+import { US_HISTORY_CLUSTERS } from "@/lib/us-history-clusters";
 
 function NotFoundHub() {
   return (
@@ -45,6 +46,21 @@ export default function CategoryHub() {
 
   const posts = data?.posts ?? [];
   const total = data?.total ?? 0;
+  const isUsHistory = slug === "us_history";
+
+  const clusterGroups = isUsHistory
+    ? US_HISTORY_CLUSTERS.map((cluster) => ({
+        cluster,
+        posts: posts.filter((p) => cluster.caseNumbers.includes(p.caseNumber ?? "")),
+      })).filter((g) => g.posts.length > 0)
+    : [];
+
+  const clusteredCaseNumbers = new Set(
+    US_HISTORY_CLUSTERS.flatMap((c) => c.caseNumbers)
+  );
+  const unclustered = isUsHistory
+    ? posts.filter((p) => !clusteredCaseNumbers.has(p.caseNumber ?? ""))
+    : [];
 
   return (
     <Layout>
@@ -206,7 +222,7 @@ export default function CategoryHub() {
           </div>
         </div>
 
-        {/* Article Grid */}
+        {/* Article Grid — clustered for US History, flat for all other categories */}
         <div className="border-t-2 border-border pt-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="font-bold text-header text-lg">
@@ -240,10 +256,81 @@ export default function CategoryHub() {
             </div>
           )}
 
-          {!isLoading && !error && posts.length > 0 && (
+          {!isLoading && !error && posts.length > 0 && !isUsHistory && (
             <div className="space-y-4">
               {posts.map(post => (
                 <PostCard key={post.id} post={post} />
+              ))}
+            </div>
+          )}
+
+          {!isLoading && !error && isUsHistory && (
+            <div className="space-y-16">
+              {clusterGroups.map((group, clusterIdx) => (
+                <section
+                  key={group.cluster.id}
+                  aria-labelledby={`cluster-${group.cluster.id}`}
+                >
+                  <div className="flex items-baseline gap-3 mb-2">
+                    <span
+                      className="text-xs font-black uppercase tracking-widest shrink-0"
+                      style={{ color: "#C9A227" }}
+                    >
+                      {String(clusterIdx + 1).padStart(2, "0")} /
+                    </span>
+                    <h2
+                      id={`cluster-${group.cluster.id}`}
+                      className="text-lg sm:text-xl font-black text-header leading-snug tracking-tight"
+                    >
+                      {group.cluster.label}
+                    </h2>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6 max-w-3xl border-l-2 pl-4" style={{ borderColor: "#C9A227" }}>
+                    {group.cluster.description}
+                  </p>
+                  <div className="space-y-4">
+                    {group.posts.map(post => (
+                      <PostCard key={post.id} post={post} />
+                    ))}
+                  </div>
+                </section>
+              ))}
+
+              {unclustered.length > 0 && (
+                <section aria-labelledby="cluster-further">
+                  <h2 id="cluster-further" className="text-lg font-black text-header mb-6">
+                    Further Records
+                  </h2>
+                  <div className="space-y-4">
+                    {unclustered.map(post => (
+                      <PostCard key={post.id} post={post} />
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* Per-cluster JSON-LD ItemList for Google topical authority */}
+              {clusterGroups.map((group) => (
+                <script
+                  key={`ld-${group.cluster.id}`}
+                  type="application/ld+json"
+                  dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                      "@context": "https://schema.org",
+                      "@type": "ItemList",
+                      "name": group.cluster.label,
+                      "description": group.cluster.googleSignal,
+                      "url": `https://clownbinge.com/category/us_history#${group.cluster.id}`,
+                      "numberOfItems": group.posts.length,
+                      "itemListElement": group.posts.map((p, i) => ({
+                        "@type": "ListItem",
+                        "position": i + 1,
+                        "name": p.title,
+                        "url": `https://clownbinge.com/case/${p.slug}`,
+                      })),
+                    }),
+                  }}
+                />
               ))}
             </div>
           )}
