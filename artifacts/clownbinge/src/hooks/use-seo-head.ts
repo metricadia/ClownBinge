@@ -349,6 +349,16 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       "additionalProperty": additionalProps
     };
 
+    // Declare paywall for premium articles (Google Flexible Sampling — prevents cloaking penalty)
+    if ((post as any).premiumOnly) {
+      articleSchema.isAccessibleForFree = "False";
+      articleSchema.hasPart = {
+        "@type": "WebPageElement",
+        "isAccessibleForFree": "False",
+        "cssSelector": ".cb-article-body"
+      };
+    }
+
     if (isFoundersPen) {
       articleSchema.about = FOUNDERS_PEN_ENTITIES;
       articleSchema.genre = "Technical Report";

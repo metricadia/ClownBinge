@@ -101,13 +101,20 @@ export default function PostDetail() {
   const [gateOpen, setGateOpen] = useState(false);
   const [gateTrigger, setGateTrigger] = useState<"metricadiaid" | "factoid" | "comment">("metricadiaid");
 
+  // Crawler detection — Googlebot and all major search/archive bots bypass the gate.
+  // We declare the paywall in JSON-LD (isAccessibleForFree: False) so Google does not
+  // treat this as cloaking; it is explicitly allowed under Google's Flexible Sampling policy.
+  const isCrawler = typeof navigator !== "undefined" &&
+    /Googlebot|Googlebot-Mobile|Googlebot-Image|bingbot|DuckDuckBot|Slurp|ia_archiver|Applebot|AhrefsBot|SemrushBot|MJ12bot/i
+      .test(navigator.userAgent);
+
   // Clerk auth state
   const { isLoaded: clerkLoaded, isSignedIn } = useAuth();
-  const isAuthGated = clerkLoaded && !isSignedIn;
+  const isAuthGated = !isCrawler && clerkLoaded && !isSignedIn;
 
   // True once we know both admin and subscriber status
   const authResolved = !adminChecking && subscriptionStatus !== undefined;
-  const isPremiumGated = !isAuthGated && authResolved && !!(post as any)?.premiumOnly && !isAdmin && !subscriptionStatus?.isSubscriber;
+  const isPremiumGated = !isCrawler && !isAuthGated && authResolved && !!(post as any)?.premiumOnly && !isAdmin && !subscriptionStatus?.isSubscriber;
   const [commentText, setCommentText] = useState("");
   const [commentSubmitted, setCommentSubmitted] = useState(false);
 

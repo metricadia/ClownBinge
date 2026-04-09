@@ -16,6 +16,10 @@ import {
 
 const app: Express = express();
 
+// Trust the first proxy hop (Replit's load balancer) so rate limiting and
+// secure cookies work correctly with X-Forwarded-For and X-Forwarded-Proto.
+app.set("trust proxy", 1);
+
 app.use(
   pinoHttp({
     logger,
