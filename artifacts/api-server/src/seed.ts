@@ -125,42 +125,69 @@ export async function insertFoundersPenArticles(): Promise<void> {
     const existing = await db.execute(sql`SELECT case_number FROM posts WHERE case_number LIKE 'FP-%'`);
     const existingSet = new Set((existing.rows as { case_number: string }[]).map(r => r.case_number));
 
+    // Also fetch current body lengths for existing FP articles so we can detect truncation
+    const bodyLens = await db.execute(
+      sql`SELECT case_number, LENGTH(body) as body_len FROM posts WHERE case_number LIKE 'FP-%'`
+    );
+    const bodyLenMap = new Map(
+      (bodyLens.rows as { case_number: string; body_len: number }[]).map(r => [r.case_number, r.body_len])
+    );
+
     const fpArticles = fpArticlesData as FpArticle[];
     let inserted = 0;
+    let synced = 0;
     for (const article of fpArticles) {
-      if (existingSet.has(article.caseNumber)) continue;
-      try {
-        await db.insert(postsTable).values({
-          caseNumber: article.caseNumber,
-          title: article.title,
-          slug: article.slug,
-          teaser: article.teaser,
-          body: article.body,
-          category: article.category as typeof postsTable.$inferInsert["category"],
-          verifiedSource: article.verifiedSource || null,
-          tags: article.tags ?? [],
-          status: article.status as typeof postsTable.$inferInsert["status"],
-          publishedAt: article.publishedAt ? new Date(article.publishedAt) : new Date(),
-          premiumOnly: article.premiumOnly ?? true,
-          staffPick: article.staffPick ?? false,
-          nerdAccessible: article.nerdAccessible ?? true,
-          hasVideo: false,
-          userSubmitted: false,
-          pinned: false,
-          locked: false,
-          viewCount: 0,
-          shareCount: 0,
-        }).onConflictDoNothing();
-        console.log(`[Seed] Inserted missing Founder's Pen article: ${article.caseNumber}`);
-        inserted++;
-      } catch (err) {
-        console.error(`[Seed] Failed to insert ${article.caseNumber}:`, err);
+      if (!existingSet.has(article.caseNumber)) {
+        // Insert missing article
+        try {
+          await db.insert(postsTable).values({
+            caseNumber: article.caseNumber,
+            title: article.title,
+            slug: article.slug,
+            teaser: article.teaser,
+            body: article.body,
+            category: article.category as typeof postsTable.$inferInsert["category"],
+            verifiedSource: article.verifiedSource || null,
+            tags: article.tags ?? [],
+            status: article.status as typeof postsTable.$inferInsert["status"],
+            publishedAt: article.publishedAt ? new Date(article.publishedAt) : new Date(),
+            premiumOnly: article.premiumOnly ?? true,
+            staffPick: article.staffPick ?? false,
+            nerdAccessible: article.nerdAccessible ?? true,
+            hasVideo: false,
+            userSubmitted: false,
+            pinned: false,
+            locked: false,
+            viewCount: 0,
+            shareCount: 0,
+          }).onConflictDoNothing();
+          console.log(`[Seed] Inserted missing Founder's Pen article: ${article.caseNumber}`);
+          inserted++;
+        } catch (err) {
+          console.error(`[Seed] Failed to insert ${article.caseNumber}:`, err);
+        }
+      } else {
+        // Sync body if DB body is shorter than the canonical JSON body (indicates truncation)
+        const dbBodyLen = bodyLenMap.get(article.caseNumber) ?? 0;
+        if (article.body.length > dbBodyLen + 100) {
+          try {
+            await db.execute(
+              sql`UPDATE posts SET body = ${article.body} WHERE case_number = ${article.caseNumber}`
+            );
+            console.log(`[Seed] Synced Founder's Pen body: ${article.caseNumber} (${dbBodyLen} → ${article.body.length} chars)`);
+            synced++;
+          } catch (err) {
+            console.error(`[Seed] Failed to sync body for ${article.caseNumber}:`, err);
+          }
+        }
       }
     }
-    if (inserted === 0) {
-      console.log(`[Seed] Founder's Pen articles: all ${fpArticles.length} already present.`);
+    const total = inserted + synced;
+    if (total === 0) {
+      console.log(`[Seed] Founder's Pen articles: all ${fpArticles.length} present and up to date.`);
     } else {
-      console.log(`[Seed] Founder's Pen articles: ${inserted} inserted.`);
+      if (inserted > 0) console.log(`[Seed] Founder's Pen articles: ${inserted} inserted.`);
+      if (synced > 0) console.log(`[Seed] Founder's Pen articles: ${synced} body(s) synced.`);
     }
   } catch (err) {
     console.error("[Seed] Error during insertFoundersPenArticles:", err);
