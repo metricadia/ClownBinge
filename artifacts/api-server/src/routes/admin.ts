@@ -1,7 +1,16 @@
 import { Router } from "express";
 import { getAuth, clerkClient } from "@clerk/express";
+import rateLimit from "express-rate-limit";
 
 const router = Router();
+
+const adminRateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests — try again later." },
+});
 
 const ADMIN_EMAILS = [
   ...(process.env.ADMIN_CLERK_EMAILS ?? "").split(","),
@@ -12,7 +21,7 @@ const ADMIN_EMAILS = [
 
 // Auto-grant Kemet8 admin session to whitelisted Clerk users.
 // Email is fetched SERVER-SIDE from Clerk — never trusted from the request body.
-router.post("/admin/clerk-login", async (req, res) => {
+router.post("/admin/clerk-login", adminRateLimit, async (req, res) => {
   try {
     const { userId } = getAuth(req);
     if (!userId) {

@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import pinoHttp from "pino-http";
+import helmet from "helmet";
 import path from "path";
 import router from "./routes";
 import { registerMetricadiaRoutes } from "./editor-routes";
@@ -35,6 +36,16 @@ app.use(
   }),
 );
 
+// Security headers — must be before routes
+app.use(
+  helmet({
+    // Allow inline scripts/styles used by Clerk and the React SPA
+    contentSecurityPolicy: false,
+    // Allow the Replit preview iframe to embed the site
+    frameguard: false,
+  })
+);
+
 // Clerk proxy — must be before body parsers
 app.use(CLERK_PROXY_PATH, clerkProxyMiddleware());
 
@@ -44,14 +55,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // express-session retained for Metricadia admin (Kemet8) auth
-if (!process.env.SESSION_SECRET) {
-  console.error(
-    "[App] WARNING: SESSION_SECRET env var is not set. Using insecure fallback — set this secret immediately.",
-  );
+const SESSION_SECRET = process.env.SESSION_SECRET;
+if (!SESSION_SECRET) {
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("[App] FATAL: SESSION_SECRET env var must be set in production.");
+  }
+  console.error("[App] WARNING: SESSION_SECRET not set — using dev fallback. Set this before deploying.");
 }
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "metricadia-admin-secret",
+    secret: SESSION_SECRET ?? "metricadia-admin-secret-dev-only",
     resave: false,
     saveUninitialized: false,
     cookie: {
