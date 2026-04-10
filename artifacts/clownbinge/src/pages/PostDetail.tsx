@@ -113,7 +113,7 @@ export default function PostDetail() {
 
   // Clerk auth state
   const { isLoaded: clerkLoaded, isSignedIn } = useAuth();
-  const isAuthGated = !isCrawler && clerkLoaded && !isSignedIn;
+  const isAuthGated = !isCrawler && clerkLoaded && !isSignedIn && !isAdmin && !adminChecking;
 
   // True once we know both admin and subscriber status
   const authResolved = !adminChecking && subscriptionStatus !== undefined;
@@ -124,14 +124,14 @@ export default function PostDetail() {
   const [commentText, setCommentText] = useState("");
   const [commentSubmitted, setCommentSubmitted] = useState(false);
 
-  // Gate factoid popup: if premium-only and not subscribed, close factoid and show gate
+  // Gate factoid popup: if premium-only and not subscribed (and not admin), close factoid and show gate
   useEffect(() => {
-    if (factoid && post?.premiumOnly && !subscriptionStatus?.isSubscriber) {
+    if (factoid && post?.premiumOnly && !subscriptionStatus?.isSubscriber && !isAdmin) {
       closeFactoid();
       setGateTrigger("factoid");
       setGateOpen(true);
     }
-  }, [factoid, post?.premiumOnly, subscriptionStatus?.isSubscriber, closeFactoid]);
+  }, [factoid, post?.premiumOnly, subscriptionStatus?.isSubscriber, isAdmin, closeFactoid]);
 
   // ── MetricadiaID™ — people click handler ───────────────────────────────────
   interface MetricadiaIDPerson { name: string; imageUrl: string; description?: string; attribution?: string; }
