@@ -307,6 +307,7 @@ export async function updateNativeArticles(): Promise<void> {
 
 const IMPROVED_ARTICLES: string[] = [
   "CB-000384",
+  "CB-000388",
 ];
 
 export async function syncImprovedArticles(): Promise<void> {
@@ -333,7 +334,7 @@ export async function syncImprovedArticles(): Promise<void> {
       const seed = seedMap.get(row.caseNumber);
       if (!seed) continue;
       const seedBodyLen = (seed.body as string).length;
-      const needsLengthSync = seedBodyLen > row.bodyLen + 200;
+      const needsLengthSync = Math.abs(seedBodyLen - row.bodyLen) > 100;
       const needsCorruptionFix = row.hasCorruptedLinks;
       if (needsLengthSync || needsCorruptionFix) {
         const reason = needsCorruptionFix ? "corrupted links detected" : `${row.bodyLen} -> ${seedBodyLen} chars`;
