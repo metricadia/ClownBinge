@@ -445,6 +445,7 @@ const PREMIUM_SLUGS: string[] = [
   "philo-of-alexandria-logos-gospel-john-nicene-creed-definition",
   "european-renaissance-islamic-scholarship-primary-source-record",
   "replacement-theory-requires-a-culture-to-replace-the-record-does-not-confirm-one-exists",
+  "state-sponsor-terror-designation-statutory-analysis-economic-gatekeeper",
 ];
 
 export async function applyPremiumFlags(): Promise<void> {
