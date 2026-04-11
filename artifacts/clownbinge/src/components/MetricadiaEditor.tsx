@@ -667,7 +667,7 @@ export function MetricadiaEditor({
               </div>
               <div className="w-px self-stretch bg-slate-600/60 mx-1" />
               <span className="text-xl md:text-2xl font-black tracking-tight text-white/90 font-display">
-                EditMe™
+                Article Editor v1.0
               </span>
             </div>
 
