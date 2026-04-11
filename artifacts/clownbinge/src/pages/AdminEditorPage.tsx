@@ -100,21 +100,23 @@ function useAdminAuth() {
   const { getToken, isSignedIn } = useAuth();
 
   useEffect(() => {
-    // Fast path: token already in sessionStorage from a prior clerk-login
-    if (sessionStorage.getItem("metricadia_authenticated") === "true") {
-      setAuthenticated(true);
-      return;
-    }
+    // Always validate token against server on load — sessionStorage alone is
+    // not sufficient because a server restart clears in-memory sessions/tokens.
+    const storedToken = sessionStorage.getItem("metricadia_token");
 
-    // Check server session first, then fall back to Clerk-based auto-login
-    fetch("/api/metricadia/auth-status", { credentials: "include" })
+    fetch("/api/metricadia/auth-status", {
+      credentials: "include",
+      headers: storedToken ? { "X-Metricadia-Token": storedToken } : {},
+    })
       .then((r) => r.json())
       .then(async (d) => {
         if (d.authenticated) {
           setAuthenticated(true);
           return;
         }
-        // Not authenticated via session — try Clerk bridge if signed in
+        // Token is stale or absent — clear it and try Clerk bridge
+        sessionStorage.removeItem("metricadia_token");
+        sessionStorage.removeItem("metricadia_authenticated");
         if (!isSignedIn) { setAuthenticated(false); return; }
         try {
           const clerkToken = await getToken();
