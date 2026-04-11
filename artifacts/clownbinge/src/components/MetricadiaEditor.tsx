@@ -61,6 +61,7 @@ import {
 import { MetricadiaIDDialog } from "./MetricadiaIDDialog";
 import { CBFactoidDialog } from "./CBFactoidDialog";
 import { DeepFactoidScanDialog } from "./DeepFactoidScanDialog";
+import { PsaLogo } from "./PsaLogo";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -658,17 +659,9 @@ export function MetricadiaEditor({
             data-testid="editor-drag-handle"
           >
             <div className="flex items-center gap-3 md:gap-4">
-              <div
-                className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-xl text-xl md:text-2xl font-black text-white"
-                style={{ background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)" }}
-              >
-                M
-              </div>
               <div>
-                <h2 className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-indigo-400 tracking-tight">
-                  Metricadia Editor
-                </h2>
-                <p className="text-[10px] md:text-xs text-slate-500 tracking-widest uppercase font-bold">
+                <PsaLogo variant="white" style={{ fontSize: "1.45rem" }} />
+                <p className="text-[10px] md:text-xs text-slate-500 tracking-widest uppercase font-bold mt-1">
                   Drag to Move &bull; Content Intelligence Platform
                 </p>
               </div>
