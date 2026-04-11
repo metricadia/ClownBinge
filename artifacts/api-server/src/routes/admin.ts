@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getAuth, clerkClient } from "@clerk/express";
 import rateLimit from "express-rate-limit";
+import { generateToken, tokenToSessionId } from "../editor-routes";
 
 const router = Router();
 
@@ -46,7 +47,17 @@ router.post("/admin/clerk-login", adminRateLimit, async (req, res) => {
         return res.status(500).json({ error: "Session error" });
       }
       (req.session as any).metricadiaAdmin = true;
-      return res.json({ ok: true });
+
+      // Generate bearer token (same mechanism as password login) so the
+      // client can send X-Metricadia-Token on subsequent requests — more
+      // reliable than session cookies in the Replit proxy environment.
+      const token = generateToken();
+      const sessionId = req.session.id;
+      tokenToSessionId.set(token, sessionId);
+      setTimeout(() => tokenToSessionId.delete(token), 24 * 60 * 60 * 1000);
+      (req.session as any).adminToken = token;
+
+      return res.json({ ok: true, token });
     });
   } catch (err) {
     console.error("[admin/clerk-login] error:", err);

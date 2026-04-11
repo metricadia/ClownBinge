@@ -16,12 +16,12 @@ if (!process.env.METRICADIA_ADMIN_PASSWORD) {
 }
 const ADMIN_PASSWORD = process.env.METRICADIA_ADMIN_PASSWORD || "KoGAlpha#7";
 
-function generateToken(): string {
+export function generateToken(): string {
   return crypto.randomBytes(32).toString("hex");
 }
 
 // Map from token → session ID so logout can revoke only the caller's token
-const tokenToSessionId = new Map<string, string>();
+export const tokenToSessionId = new Map<string, string>();
 
 // Rate limiter: max 6 login attempts per 15 minutes per IP
 const loginRateLimiter = rateLimit({

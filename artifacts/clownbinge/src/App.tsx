@@ -89,6 +89,11 @@ function ClerkQueryClientCacheInvalidator() {
             headers: { "Content-Type": "application/json" },
             credentials: "include",
             body: JSON.stringify({ email }),
+          }).then((r) => r.ok ? r.json() : null).then((d) => {
+            if (d?.token) {
+              sessionStorage.setItem("metricadia_token", d.token);
+              sessionStorage.setItem("metricadia_authenticated", "true");
+            }
           }).catch(() => {});
         }
       }

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams, useLocation } from "wouter";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { useUser, useClerk } from "@clerk/react";
+import { useUser, useClerk, useAuth } from "@clerk/react";
 import { AdminLogin } from "@/components/AdminLogin";
 import { MetricadiaEditor } from "@/components/MetricadiaEditor";
 import { Button } from "@/components/ui/button";
@@ -97,17 +97,51 @@ function fmtDate(iso: string) {
 
 function useAdminAuth() {
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  const { getToken, isSignedIn } = useAuth();
 
   useEffect(() => {
+    // Fast path: token already in sessionStorage from a prior clerk-login
     if (sessionStorage.getItem("metricadia_authenticated") === "true") {
       setAuthenticated(true);
       return;
     }
+
+    // Check server session first, then fall back to Clerk-based auto-login
     fetch("/api/metricadia/auth-status", { credentials: "include" })
       .then((r) => r.json())
-      .then((d) => setAuthenticated(!!d.authenticated))
+      .then(async (d) => {
+        if (d.authenticated) {
+          setAuthenticated(true);
+          return;
+        }
+        // Not authenticated via session — try Clerk bridge if signed in
+        if (!isSignedIn) { setAuthenticated(false); return; }
+        try {
+          const clerkToken = await getToken();
+          const res = await fetch("/api/admin/clerk-login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              ...(clerkToken ? { Authorization: `Bearer ${clerkToken}` } : {}),
+            },
+            credentials: "include",
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (data?.token) {
+              sessionStorage.setItem("metricadia_token", data.token);
+              sessionStorage.setItem("metricadia_authenticated", "true");
+            }
+            setAuthenticated(true);
+          } else {
+            setAuthenticated(false);
+          }
+        } catch {
+          setAuthenticated(false);
+        }
+      })
       .catch(() => setAuthenticated(false));
-  }, []);
+  }, [isSignedIn, getToken]);
 
   const logout = async () => {
     await fetch("/api/metricadia/logout", { method: "POST", credentials: "include" });

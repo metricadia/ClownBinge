@@ -106,6 +106,11 @@ export function FloatingAdminBar() {
         credentials: "include",
       });
       if (res.ok) {
+        const data = await res.json();
+        if (data?.token) {
+          sessionStorage.setItem("metricadia_token", data.token);
+          sessionStorage.setItem("metricadia_authenticated", "true");
+        }
         window.location.reload();
       } else {
         setError("Not authorized for admin");
