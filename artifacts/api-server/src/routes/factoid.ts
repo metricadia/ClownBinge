@@ -3,6 +3,33 @@ import { anthropic } from "@workspace/integrations-anthropic-ai";
 
 const router: IRouter = Router();
 
+// Robustly extract and parse JSON from Claude output.
+// Handles: markdown fences, trailing commas, single-quoted keys/values.
+function parseClaudeJson<T>(text: string, arrayMode: boolean): T | null {
+  // 1. Strip markdown code fences (```json ... ``` or ``` ... ```)
+  let cleaned = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/i, "").trim();
+
+  // 2. Extract the first array or object
+  const startChar = arrayMode ? "[" : "{";
+  const endChar = arrayMode ? "]" : "}";
+  const start = cleaned.indexOf(startChar);
+  const end = cleaned.lastIndexOf(endChar);
+  if (start === -1 || end === -1 || end <= start) return null;
+  cleaned = cleaned.slice(start, end + 1);
+
+  // 3. Remove trailing commas before } or ] (common LLM mistake)
+  cleaned = cleaned.replace(/,\s*([}\]])/g, "$1");
+
+  // 4. Attempt direct parse
+  try { return JSON.parse(cleaned) as T; } catch { /* continue */ }
+
+  // 5. Replace single-quoted strings with double-quoted (last resort)
+  try {
+    const fixed = cleaned.replace(/'([^'\\]*(\\.[^'\\]*)*)'/g, '"$1"');
+    return JSON.parse(fixed) as T;
+  } catch { return null; }
+}
+
 router.post("/factoid-context", async (req, res) => {
   try {
     const { href, linkText, surroundingText, articleTitle } = req.body as {
@@ -97,13 +124,11 @@ Do not include any text outside the JSON object.`;
       return;
     }
 
-    const jsonMatch = content.text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
+    const parsed = parseClaudeJson<{ title: string; summary: string }>(content.text, false);
+    if (!parsed) {
       res.status(500).json({ error: "Could not parse Claude response" });
       return;
     }
-
-    const parsed = JSON.parse(jsonMatch[0]) as { title: string; summary: string };
     res.json({ title: parsed.title, summary: parsed.summary });
   } catch (err) {
     console.error("factoid/generate error:", err);
@@ -173,17 +198,11 @@ Return ONLY a JSON array with this exact shape (no other text):
       return;
     }
 
-    const jsonMatch = content.text.match(/\[[\s\S]*\]/);
-    if (!jsonMatch) {
+    const parsed = parseClaudeJson<{ phrase: string; title: string; summary: string }[]>(content.text, true);
+    if (!parsed) {
       res.status(500).json({ error: "Could not parse Claude response as JSON array" });
       return;
     }
-
-    const parsed = JSON.parse(jsonMatch[0]) as {
-      phrase: string;
-      title: string;
-      summary: string;
-    }[];
 
     // Validate and cap at 6
     const factoids = parsed
