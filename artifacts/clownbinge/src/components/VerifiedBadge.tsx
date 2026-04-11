@@ -4,8 +4,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 
 function parseVerifiedSource(source: string): { label: string; citation: string }[] {
   if (source.includes("::")) {
+    // Delimiter is | between entries, each entry is "Label :: Citation text"
     return source
-      .split(/;/)
+      .split("|")
       .map(s => s.trim())
       .filter(Boolean)
       .map(entry => {
