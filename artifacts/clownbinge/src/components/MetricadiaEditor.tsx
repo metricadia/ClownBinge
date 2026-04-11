@@ -658,13 +658,17 @@ export function MetricadiaEditor({
             style={{ cursor: isDragging ? "grabbing" : "grab", touchAction: "none" }}
             data-testid="editor-drag-handle"
           >
-            <div className="flex items-center gap-3 md:gap-4">
-              <div>
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col gap-0.5">
                 <PsaLogo variant="white" style={{ fontSize: "1.45rem" }} />
-                <p className="text-[10px] md:text-xs text-slate-500 tracking-widest uppercase font-bold mt-1">
+                <p className="text-[10px] md:text-xs text-slate-500 tracking-widest uppercase font-bold">
                   Drag to Move &bull; Content Intelligence Platform
                 </p>
               </div>
+              <div className="w-px self-stretch bg-slate-600/60 mx-1" />
+              <span className="text-xl md:text-2xl font-black tracking-tight text-white/90 font-display">
+                EditMe™
+              </span>
             </div>
 
             {/* SEO Score */}
