@@ -111,6 +111,7 @@ export function registerMetricadiaRoutes(app: Express) {
       // Store token in session so logout can revoke it
       (req.session as any).adminToken = token;
 
+      res.cookie("cb_admin", "1", { maxAge: 86400000, sameSite: "lax", secure: true, httpOnly: false });
       return res.json({ success: true, token });
     });
   });
