@@ -31,6 +31,18 @@ import AdminEditorPage from "@/pages/AdminEditorPage";
 import Subscribe from "@/pages/Subscribe";
 import MyAccount from "@/pages/MyAccount";
 import NotFound from "@/pages/not-found";
+import ComingSoon from "@/pages/ComingSoon";
+
+function HomeOrComingSoon() {
+  const isAdmin = 
+    sessionStorage.getItem("metricadia_authenticated") === "true" ||
+    sessionStorage.getItem("metricadia_token") !== null;
+  
+  if (isAdmin) {
+    return <Home />;
+  }
+  return <ComingSoon />;
+}
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 const clerkProxyUrl = import.meta.env.VITE_CLERK_PROXY_URL || undefined;
@@ -142,7 +154,7 @@ function Router() {
     <>
       <ScrollToTop />
       <Switch>
-        <Route path="/" component={Home} />
+        <Route path="/" component={HomeOrComingSoon} />
         <Route path="/sign-in/*?" component={SignInPage} />
         <Route path="/sign-up/*?" component={SignUpPage} />
         <Route path="/account" component={MyAccount} />

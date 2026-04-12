@@ -1,18 +1,21 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-if (!process.env.AI_INTEGRATIONS_ANTHROPIC_BASE_URL) {
+// Support two modes:
+//   Replit: AI_INTEGRATIONS_ANTHROPIC_BASE_URL + AI_INTEGRATIONS_ANTHROPIC_API_KEY
+//   Self-hosted: ANTHROPIC_API_KEY (standard Anthropic env var)
+const replitApiKey  = process.env.AI_INTEGRATIONS_ANTHROPIC_API_KEY;
+const replitBaseUrl = process.env.AI_INTEGRATIONS_ANTHROPIC_BASE_URL;
+const directApiKey  = process.env.ANTHROPIC_API_KEY;
+
+const apiKey  = replitApiKey  || directApiKey;
+const baseURL = replitBaseUrl || undefined;
+
+if (!apiKey) {
   throw new Error(
-    "AI_INTEGRATIONS_ANTHROPIC_BASE_URL must be set. Did you forget to provision the Anthropic AI integration?",
+    "[Metricadia] No Anthropic API key found. " +
+    "On Replit: provision the Anthropic AI integration. " +
+    "On self-hosted: set the ANTHROPIC_API_KEY environment variable.",
   );
 }
 
-if (!process.env.AI_INTEGRATIONS_ANTHROPIC_API_KEY) {
-  throw new Error(
-    "AI_INTEGRATIONS_ANTHROPIC_API_KEY must be set. Did you forget to provision the Anthropic AI integration?",
-  );
-}
-
-export const anthropic = new Anthropic({
-  apiKey: process.env.AI_INTEGRATIONS_ANTHROPIC_API_KEY,
-  baseURL: process.env.AI_INTEGRATIONS_ANTHROPIC_BASE_URL,
-});
+export const anthropic = new Anthropic({ apiKey, ...(baseURL ? { baseURL } : {}) });
