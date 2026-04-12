@@ -42,6 +42,7 @@ import {
   CheckCircle2,
   AlertCircle,
   ScanSearch,
+  Loader2,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -179,6 +180,7 @@ export function MetricadiaEditor({
 
   // Deep Factoid Scanner state
   const [showDeepScanDialog, setShowDeepScanDialog] = useState(false);
+  const [isDeepScanning, setIsDeepScanning] = useState(false);
 
   // Dragging state
   const [isDragging, setIsDragging] = useState(false);
@@ -1187,7 +1189,8 @@ export function MetricadiaEditor({
             .replace(/This is Part (One|Two|Three) of the .*?archival investigation\.[^.]*\./gi, "")
             .trim()
         }
-        onClose={() => setShowDeepScanDialog(false)}
+        onClose={() => { setShowDeepScanDialog(false); setIsDeepScanning(false); }}
+        onScanningChange={setIsDeepScanning}
         onInstall={handleInstallDeepFactoids}
       />
 

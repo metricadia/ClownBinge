@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ScanSearch, Loader2, Check, X, Zap, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +22,7 @@ interface DeepFactoidScanDialogProps {
   articleTitle: string;
   bodyText: string;
   onClose: () => void;
+  onScanningChange?: (scanning: boolean) => void;
   onInstall: (approved: Array<{ phrase: string; title: string; summary: string }>) => void;
 }
 
@@ -33,13 +34,27 @@ export function DeepFactoidScanDialog({
   onInstall,
 }: DeepFactoidScanDialogProps) {
   const [scanning, setScanning] = useState(false);
+  const autoStartedRef = useRef(false);
+
+  const setScanningWithCallback = (value: boolean) => {
+    setScanning(value);
+    onScanningChange?.(value);
+  };
+
+  useEffect(() => {
+    if (open && !autoStartedRef.current && !scanned && bodyText.length >= 100) {
+      autoStartedRef.current = true;
+      handleScan();
+    }
+    if (!open) autoStartedRef.current = false;
+  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
   const [factoids, setFactoids] = useState<DeepFactoid[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [scanned, setScanned] = useState(false);
   const [expanded, setExpanded] = useState<number | null>(null);
 
   const handleScan = async () => {
-    setScanning(true);
+    setScanningWithCallback(true);
     setError(null);
     setFactoids([]);
     setScanned(false);
@@ -62,7 +77,7 @@ export function DeepFactoidScanDialog({
     } catch {
       setError("Claude couldn't complete the scan. Check the API connection and try again.");
     } finally {
-      setScanning(false);
+      setScanningWithCallback(false);
     }
   };
 
