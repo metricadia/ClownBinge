@@ -104,8 +104,17 @@ function countWords(text: string): number {
   return t.length === 0 ? 0 : t.split(/\s+/).length;
 }
 
-function countLiItems(html: string): number {
-  return (html.match(/<li[\s>]/gi) || []).length;
+function parseApaReferences(raw: unknown): Array<{ title: string; notes?: string; url?: string; id?: string }> {
+  if (!raw) return [];
+  if (Array.isArray(raw)) return raw as Array<{ title: string; notes?: string; url?: string; id?: string }>;
+  if (typeof raw === "string") {
+    try { return JSON.parse(raw); } catch { return []; }
+  }
+  return [];
+}
+
+function countApaReferences(raw: unknown): number {
+  return parseApaReferences(raw).length;
 }
 
 function fmtCategory(cat: string): string {
@@ -244,10 +253,10 @@ function validateArticle(data: ArticleInput): ValidationResult {
   if (wc > 5000) warnings.push({ field: "wordCount", message: `Word count ${wc} exceeds the 5,000 maximum. (Info only)` });
 
   // 5.5 APA references
-  const liCount = countLiItems(data.apaReferences || "");
-  if (liCount < 3) warnings.push({ field: "apaReferences", message: `Found ${liCount} <li> item(s) in apaReferences — minimum 3 recommended.` });
+  const liCount = countApaReferences(data.apaReferences);
+  if (liCount < 3) warnings.push({ field: "apaReferences", message: `Found ${liCount} source entry(s) in apaReferences — minimum 3 recommended.` });
   if (data.primarySourceCount !== undefined && data.primarySourceCount !== liCount) {
-    warnings.push({ field: "primarySourceCount", message: `primarySourceCount (${data.primarySourceCount}) does not match <li> count in apaReferences (${liCount}).` });
+    warnings.push({ field: "primarySourceCount", message: `primarySourceCount (${data.primarySourceCount}) does not match entry count in apaReferences (${liCount}).` });
   }
 
   // Section 6 — auto-generated fields
@@ -282,7 +291,7 @@ function enrichArticle(data: ArticleInput): ArticleInput & {
   const lastVerified = data.lastVerified || (data.publishedAt ? data.publishedAt.split("T")[0] : new Date().toISOString().split("T")[0]);
   const schemaType = data.schemaType || "NewsArticle";
   const authorName = data.authorName || "ClownBinge Staff";
-  const primarySourceCount = data.primarySourceCount ?? countLiItems(data.apaReferences || "");
+  const primarySourceCount = data.primarySourceCount ?? countApaReferences(data.apaReferences);
 
   const jsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -627,11 +636,36 @@ export default function PublishWizard() {
                     />
 
                     {/* Primary Sources — Section 8 */}
-                    {enriched.apaReferences && (
+                    {enriched.apaReferences && parseApaReferences(enriched.apaReferences).length > 0 && (
                       <div style={{ marginTop: 32, paddingTop: 24, borderTop: `1px solid rgba(8,18,46,0.15)` }}>
                         <h2 style={{ fontFamily: "Georgia, serif", fontSize: 18, fontWeight: 700, color: NAVY, marginBottom: 6 }}>Primary Sources</h2>
-                        <p style={{ fontSize: 12, color: "rgba(8,18,46,0.5)", marginBottom: 14 }}>{enriched.primarySourceCount} primary source{enriched.primarySourceCount !== 1 ? "s" : ""} documented and linked.</p>
-                        <div style={{ fontSize: 13, color: NAVY, lineHeight: 1.7 }} dangerouslySetInnerHTML={{ __html: enriched.apaReferences }} />
+                        <p style={{ fontSize: 12, color: "rgba(8,18,46,0.5)", marginBottom: 18 }}>{enriched.primarySourceCount} primary source{enriched.primarySourceCount !== 1 ? "s" : ""} documented and linked.</p>
+                        <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 14 }}>
+                          {parseApaReferences(enriched.apaReferences).map((src, i) => (
+                            <li key={src.id || i} style={{ display: "flex", gap: 14 }}>
+                              <span style={{ fontFamily: "monospace", fontWeight: 700, fontSize: 12, color: GOLD, minWidth: 22, textAlign: "right", paddingTop: 1, flexShrink: 0 }}>{i + 1}.</span>
+                              <div>
+                                <p style={{ fontWeight: 700, fontSize: 13, color: NAVY, margin: "0 0 3px" }}>{src.title}</p>
+                                {(src.notes || (src as any).citation || (src as any).apa) && (
+                                  <p style={{ fontSize: 13, color: "rgba(8,18,46,0.6)", fontStyle: "italic", margin: 0, lineHeight: 1.6 }}>
+                                    {src.url
+                                      ? <>
+                                          <span>{((src.notes || (src as any).citation || (src as any).apa || "") as string).replace(src.url, "").trim()}{" "}</span>
+                                          <a href={src.url} target="_blank" rel="noopener noreferrer" style={{ color: "#3D6FE8", textDecoration: "underline", textDecorationStyle: "dotted", wordBreak: "break-all" }}>{src.url}</a>
+                                        </>
+                                      : (src.notes || (src as any).citation || (src as any).apa)
+                                    }
+                                  </p>
+                                )}
+                                {!(src.notes || (src as any).citation || (src as any).apa) && src.url && (
+                                  <p style={{ fontSize: 13, fontStyle: "italic", margin: 0 }}>
+                                    <a href={src.url} target="_blank" rel="noopener noreferrer" style={{ color: "#3D6FE8", textDecoration: "underline", textDecorationStyle: "dotted", wordBreak: "break-all" }}>{src.url}</a>
+                                  </p>
+                                )}
+                              </div>
+                            </li>
+                          ))}
+                        </ol>
                       </div>
                     )}
 
