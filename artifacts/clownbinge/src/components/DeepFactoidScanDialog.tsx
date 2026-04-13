@@ -22,8 +22,8 @@ interface DeepFactoidScanDialogProps {
   articleTitle: string;
   bodyText: string;
   onClose: () => void;
-  onScanningChange?: (scanning: boolean) => void;
   onInstall: (approved: Array<{ phrase: string; title: string; summary: string }>) => void;
+  onScanningChange?: (scanning: boolean) => void;
 }
 
 export function DeepFactoidScanDialog({
@@ -32,26 +32,30 @@ export function DeepFactoidScanDialog({
   bodyText,
   onClose,
   onInstall,
+  onScanningChange,
 }: DeepFactoidScanDialogProps) {
   const [scanning, setScanning] = useState(false);
+  const [factoids, setFactoids] = useState<DeepFactoid[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [scanned, setScanned] = useState(false);
+  const [expanded, setExpanded] = useState<number | null>(null);
   const autoStartedRef = useRef(false);
 
-  const setScanningWithCallback = (value: boolean) => {
-    setScanning(value);
-    onScanningChange?.(value);
-  };
-
+  // Auto-start scan the moment the dialog opens
   useEffect(() => {
     if (open && !autoStartedRef.current && !scanned && bodyText.length >= 100) {
       autoStartedRef.current = true;
       handleScan();
     }
-    if (!open) autoStartedRef.current = false;
+    if (!open) {
+      autoStartedRef.current = false;
+    }
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
-  const [factoids, setFactoids] = useState<DeepFactoid[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [scanned, setScanned] = useState(false);
-  const [expanded, setExpanded] = useState<number | null>(null);
+
+  const setScanningWithCallback = (value: boolean) => {
+    setScanning(value);
+    onScanningChange?.(value);
+  };
 
   const handleScan = async () => {
     setScanningWithCallback(true);
@@ -132,9 +136,15 @@ export function DeepFactoidScanDialog({
           )}
 
           {scanning && (
-            <p className="text-white/40 text-xs text-center">
-              Analyzing concepts, laws, agencies, and key terms across the full article body…
-            </p>
+            <div className="flex flex-col items-center gap-3 py-6">
+              <Loader2 className="w-7 h-7 animate-spin text-[#C9A227]" />
+              <p className="text-[#C9A227]/80 text-sm font-semibold text-center">
+                Claude is reading the article…
+              </p>
+              <p className="text-white/40 text-xs text-center max-w-xs">
+                Identifying institutional terms, laws, agencies, and key concepts. This takes 5–15 seconds.
+              </p>
+            </div>
           )}
 
           {error && (
