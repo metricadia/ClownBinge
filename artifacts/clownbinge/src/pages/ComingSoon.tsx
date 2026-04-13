@@ -32,12 +32,12 @@ export default function ComingSoon() {
         .glow-wrap { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
         .glow-blue { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: #1a3060; opacity: 0.5; top: -15%; left: -10%; filter: blur(160px); }
         .glow-brown { position: absolute; width: 320px; height: 320px; border-radius: 50%; background: #2a1800; opacity: 0.35; bottom: 0%; right: -5%; filter: blur(120px); }
-        .card-wrap { position: relative; width: 100%; max-width: 384px; padding-top: 100px; z-index: 1; }
+        .card-wrap { position: relative; width: 100%; max-width: 440px; padding-top: 100px; z-index: 1; }
         .lion { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 260px; height: auto; z-index: 10; pointer-events: none; filter: drop-shadow(0 8px 32px rgba(201,162,39,0.35)) drop-shadow(0 2px 8px rgba(0,0,0,0.7)); }
         .card { border-radius: 1rem; padding: 80px 2rem 2.5rem; background: linear-gradient(160deg, rgba(26,44,85,0.97) 0%, rgba(18,30,62,0.99) 100%); border: 1px solid rgba(201,162,39,0.18); box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 32px 80px rgba(0,0,0,0.65), 0 0 60px rgba(201,162,39,0.08); position: relative; overflow: hidden; }
         .card-glow { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); width: 240px; height: 160px; background: radial-gradient(ellipse at top, rgba(201,162,39,0.10) 0%, transparent 70%); pointer-events: none; }
         .logo-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 1.25rem; }
-        .psa-logo { display: inline-flex; align-items: baseline; font-family: Montserrat, system-ui, sans-serif; text-transform: uppercase; line-height: 1; letter-spacing: 0.01em; user-select: none; font-size: 1.55rem; margin-bottom: 0.5rem; }
+        .psa-logo { display: inline-flex; align-items: baseline; font-family: Montserrat, system-ui, sans-serif; text-transform: uppercase; line-height: 1; letter-spacing: 0.01em; user-select: none; font-size: 1.35rem; margin-bottom: 0.5rem; }
         .psa-metricadia { color: #ffffff; font-weight: 700; }
         .psa-dot { display: inline-block; width: 0.65em; height: 0.13em; background: #C9A227; border-radius: 2px; position: relative; top: -0.28em; margin: 0 0.08em; flex-shrink: 0; }
         .psa-research { color: #ffffff; font-weight: 700; }
