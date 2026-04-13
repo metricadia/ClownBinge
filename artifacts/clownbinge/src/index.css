@@ -423,6 +423,54 @@
     line-height: 1.55;
   }
 
+  /* ─── Primary Sources HTML renderer (wizard-published articles) ─── */
+  .primary-sources-html ol {
+    list-style: none;
+    counter-reset: source-counter;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+  .primary-sources-html ol li {
+    counter-increment: source-counter;
+    position: relative;
+    padding-left: 2rem;
+    line-height: 1.5;
+  }
+  .primary-sources-html ol li::before {
+    content: counter(source-counter) ".";
+    color: #F5C518;
+    font-weight: 700;
+    font-size: 0.875rem;
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+  }
+  .primary-sources-html ol li strong {
+    display: block;
+    font-weight: 700;
+    font-size: 0.875rem;
+    margin-bottom: 0.15rem;
+    text-decoration: none !important;
+  }
+  .primary-sources-html ol li em {
+    display: block;
+    font-style: italic;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    opacity: 0.7;
+  }
+  .primary-sources-html ol li br {
+    display: none;
+  }
+  .primary-sources-html ol li a {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    word-break: break-all;
+  }
+
   /* ─── Factoid Popup — desktop fixed bottom-center card ─── */
   .cb-factoid-popup {
     position: fixed;
