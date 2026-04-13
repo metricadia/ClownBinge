@@ -32,7 +32,7 @@ export default function ComingSoon() {
         .glow-blue { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: #1a3060; opacity: 0.5; top: -15%; left: -10%; filter: blur(160px); }
         .glow-brown { position: absolute; width: 320px; height: 320px; border-radius: 50%; background: #2a1800; opacity: 0.35; bottom: 0%; right: -5%; filter: blur(120px); }
 
-        .card-wrap { position: relative; width: 100%; max-width: 420px; padding-top: 110px; z-index: 1; }
+        .card-wrap { position: relative; width: 100%; max-width: 460px; padding-top: 110px; z-index: 1; }
         .lion { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 240px; height: auto; z-index: 10; pointer-events: none; filter: drop-shadow(0 8px 32px rgba(201,162,39,0.35)) drop-shadow(0 2px 8px rgba(0,0,0,0.7)); }
 
         .card {
@@ -67,6 +67,7 @@ export default function ComingSoon() {
           line-height: 1;
           margin-bottom: 0.3rem;
           position: relative;
+          white-space: nowrap;
         }
         .company-name .dash { color: #C9A227; font-weight: 300; margin: 0 0.05em; }
         .company-llc {
