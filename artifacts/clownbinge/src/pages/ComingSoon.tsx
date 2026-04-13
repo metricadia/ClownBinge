@@ -106,7 +106,7 @@ export default function ComingSoon() {
             </div>
             <div className="coming-body">
               <div className="shimmer-bar"></div>
-              <p className="coming-headline">Coming Soon = ClownBinge</p>
+              <p className="coming-headline">ClownBinge</p>
               <p className="coming-sub">
                 Next Generation Information Innovation<br />
                 <br />
