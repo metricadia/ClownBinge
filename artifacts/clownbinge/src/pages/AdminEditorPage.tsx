@@ -1343,7 +1343,7 @@ export default function AdminEditorPage() {
         initialContent={editingPost.content}
         initialExcerpt={editingPost.excerpt}
         initialCategory={editingPost.category || ""}
-        initialPrimarySourcess={(editingPost.primarySources as any) || []}
+        initialPrimarySourcess={Array.isArray(editingPost.primarySources) ? (editingPost.primarySources as any) : []}
         onClose={() => {
           setEditingPost(null);
           setLocation("/Kemet8");
