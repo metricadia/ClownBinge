@@ -144,6 +144,7 @@ function mapPost(p: PostRow) {
     staffPick: p.staffPick,
     seoMetaTitle: p.seoMetaTitle ?? null,
     premiumOnly: p.premiumOnly,
+    primarySources: p.primarySources ?? null,
     seriesName: p.seriesName ?? null,
     seriesSequence: p.seriesSequence ?? null,
     seriesThesis: p.seriesThesis ?? null,
