@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 function MetricadiaLogo() {
   return (
@@ -29,8 +28,6 @@ function MetricadiaLogo() {
 }
 
 export default function ComingSoon() {
-  const navigate = useNavigate();
-
   useEffect(() => {
     document.title = "ClownBinge — Coming Soon";
   }, []);
@@ -269,7 +266,7 @@ export default function ComingSoon() {
             </span>
 
             <div className="cs-links">
-              <button className="cs-link-btn" onClick={() => navigate("/Kemet8")}>
+              <button className="cs-link-btn" onClick={() => { window.location.href = "/Kemet8"; }}>
                 Admin Access
               </button>
               <span className="cs-link-sep" />
