@@ -34,10 +34,12 @@ export default function ComingSoon() {
         .glow-brown { position: absolute; width: 320px; height: 320px; border-radius: 50%; background: #2a1800; opacity: 0.35; bottom: 0%; right: -5%; filter: blur(120px); }
         .card-wrap { position: relative; width: 100%; max-width: 440px; padding-top: 100px; z-index: 1; }
         .lion { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 260px; height: auto; z-index: 10; pointer-events: none; filter: drop-shadow(0 8px 32px rgba(201,162,39,0.35)) drop-shadow(0 2px 8px rgba(0,0,0,0.7)); }
-        .card { border-radius: 1rem; padding: 80px 2rem 2.5rem; background: linear-gradient(180deg, rgba(78,44,11,0.92) 0%, rgba(82,47,12,0.90) 40%, rgba(26,44,85,0.97) 40%, rgba(18,30,62,0.99) 100%); border: 1px solid rgba(201,162,39,0.18); box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 32px 80px rgba(0,0,0,0.65), 0 0 60px rgba(201,162,39,0.08); position: relative; overflow: hidden; }
-        .card-glow { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); width: 240px; height: 160px; background: radial-gradient(ellipse at top, rgba(201,162,39,0.10) 0%, transparent 70%); pointer-events: none; }
-        .logo-section { display: flex; flex-direction: column; align-items: center; margin: 0 -2rem 1.5rem; padding: 1.1rem 2rem 1.1rem; background: none; }
-        .psa-logo { display: inline-flex; align-items: baseline; font-family: Montserrat, system-ui, sans-serif; text-transform: uppercase; line-height: 1; letter-spacing: 0.01em; user-select: none; font-size: 1.35rem; margin-bottom: 0.5rem; }
+        .card { border-radius: 1rem; padding: 0; background: none; border: 1px solid rgba(201,162,39,0.18); box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 32px 80px rgba(0,0,0,0.65), 0 0 60px rgba(201,162,39,0.08); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        .card-glow { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); width: 240px; height: 160px; background: radial-gradient(ellipse at top, rgba(201,162,39,0.10) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+        .card-top { background: rgba(74,42,10,0.94); padding: 80px 2rem 1.8rem; display: flex; align-items: center; justify-content: center; min-height: 175px; position: relative; }
+        .card-bottom { background: linear-gradient(160deg, rgba(26,44,85,0.97) 0%, rgba(18,30,62,0.99) 100%); padding: 2rem 2rem 2.5rem; }
+        .logo-section { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+        .psa-logo { display: inline-flex; align-items: baseline; font-family: Montserrat, system-ui, sans-serif; text-transform: uppercase; line-height: 1; letter-spacing: 0.01em; user-select: none; font-size: 1.65rem; }
         .psa-metricadia { color: #ffffff; font-weight: 700; }
         .psa-dot { display: inline-block; width: 0.65em; height: 0.13em; background: #C9A227; border-radius: 2px; position: relative; top: -0.28em; margin: 0 0.08em; flex-shrink: 0; }
         .psa-research { color: #ffffff; font-weight: 700; }
@@ -99,17 +101,21 @@ export default function ComingSoon() {
           <img className="lion" src="/brain-lion.png" alt="Metricadia Brain" />
           <div className="card">
             <div className="card-glow"></div>
-            <div className="logo-section">
-              <div className="psa-logo">
-                <span className="psa-metricadia">Metricadia</span>
-                <span className="psa-dot"></span>
-                <span className="psa-research">Research</span>
-                <span className="psa-llc">LLC</span>
+            <div className="card-top">
+              <div className="logo-section">
+                <div className="psa-logo">
+                  <span className="psa-metricadia">Metricadia</span>
+                  <span className="psa-dot"></span>
+                  <span className="psa-research">Research</span>
+                  <span className="psa-llc">LLC</span>
+                </div>
               </div>
             </div>
-            <div className="coming-body">
-              <p className="coming-headline">ClownBinge</p>
-              <span className="coming-pill">Launching shortly</span>
+            <div className="card-bottom">
+              <div className="coming-body">
+                <p className="coming-headline">ClownBinge</p>
+                <span className="coming-pill">Launching shortly</span>
+              </div>
             </div>
           </div>
           <p className="card-footer">Metricadia Research LLC &mdash; All Rights Reserved</p>
