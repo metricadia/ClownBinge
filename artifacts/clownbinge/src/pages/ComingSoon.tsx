@@ -103,23 +103,13 @@ export default function ComingSoon() {
                 <span className="psa-research">Research</span>
                 <span className="psa-llc">LLC</span>
               </div>
-              <div className="gold-rule"></div>
-              <div className="brain-badge">
-                <div className="brain-name">
-                  <span className="brain-title">Brain</span>
-                  <span className="brain-version">v1.0</span>
-                </div>
-                <div className="brain-instance-row">
-                  <div className="brain-rule"></div>
-                  <span className="brain-instance">ClownBinge Instance</span>
-                  <div className="brain-rule"></div>
-                </div>
-              </div>
             </div>
             <div className="coming-body">
               <div className="shimmer-bar"></div>
-              <p className="coming-headline">Coming Soon</p>
+              <p className="coming-headline">Coming Soon = ClownBinge</p>
               <p className="coming-sub">
+                Next Generation Information Innovation<br />
+                <br />
                 Accountability journalism.<br />
                 Primary sources. No performance.<br />
                 <br />
