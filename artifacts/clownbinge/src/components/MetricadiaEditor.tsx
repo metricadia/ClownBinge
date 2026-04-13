@@ -159,7 +159,7 @@ export function MetricadiaEditor({
   const [title, setTitle] = useState(initialTitle);
   const [excerpt, setExcerpt] = useState(initialExcerpt);
   const [category, setCategory] = useState(initialCategory || "");
-  const [primarySources, setPrimarySources] = useState<PrimarySource[]>(initialPrimarySourcess || []);
+  const [primarySources, setPrimarySources] = useState<PrimarySource[]>(Array.isArray(initialPrimarySourcess) ? initialPrimarySourcess : []);
   const [showSourcesPanel, setShowSourcesPanel] = useState(false);
   const [addingSource, setAddingSource] = useState(false);
   const [newSource, setNewSource] = useState<Partial<PrimarySource>>({ tier: "tier1", type: "government_doc" });
