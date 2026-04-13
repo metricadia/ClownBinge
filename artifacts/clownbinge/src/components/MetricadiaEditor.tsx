@@ -1091,8 +1091,11 @@ export function MetricadiaEditor({
               <Sparkles className="w-4 h-4 mr-1" /><span className="hidden md:inline">Factoid</span>
             </Button>
             {/* Deep Factoid Scanner™ */}
-            <Button onClick={() => setShowDeepScanDialog(true)} variant="outline" size="sm" className="min-h-[44px] px-3 bg-amber-950/50 text-amber-200 border-amber-500/50 hover:border-amber-300 font-bold" data-testid="button-deep-scan" title="Scan entire article with Claude — auto-installs gold dotted factoids on key institutional terms">
-              <ScanSearch className="w-4 h-4 mr-1" /><span className="hidden md:inline">Deep Scan</span>
+            <Button onClick={() => setShowDeepScanDialog(true)} disabled={isDeepScanning} variant="outline" size="sm" className="min-h-[44px] px-3 bg-amber-950/50 text-amber-200 border-amber-500/50 hover:border-amber-300 font-bold" data-testid="button-deep-scan" title="Scan entire article with Claude — auto-installs gold dotted factoids on key institutional terms">
+              {isDeepScanning
+                ? <><Loader2 className="w-4 h-4 mr-1 animate-spin" /><span className="hidden md:inline">Scanning…</span></>
+                : <><ScanSearch className="w-4 h-4 mr-1" /><span className="hidden md:inline">Deep Scan</span></>
+              }
             </Button>
 
             <div className="hidden md:block w-px h-8 bg-slate-700 mx-1" />
@@ -1190,8 +1193,8 @@ export function MetricadiaEditor({
             .trim()
         }
         onClose={() => { setShowDeepScanDialog(false); setIsDeepScanning(false); }}
-        onScanningChange={setIsDeepScanning}
         onInstall={handleInstallDeepFactoids}
+        onScanningChange={setIsDeepScanning}
       />
 
       {/* Auto-detect review modal */}
