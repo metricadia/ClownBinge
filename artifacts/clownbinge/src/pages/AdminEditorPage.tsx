@@ -9,7 +9,7 @@ import {
   PenLine, LogOut, Plus, X, Loader2, Star, Trash2, Copy, Check,
   LayoutDashboard, FileText, Users, Key, BarChart2, DollarSign,
   LifeBuoy, Mail, Eye, ChevronRight, ShieldOff, ExternalLink,
-  Globe, EyeOff, AlertTriangle,
+  Globe, EyeOff, AlertTriangle, Upload,
 } from "lucide-react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -311,6 +311,7 @@ interface DashboardPanelProps {
 }
 
 function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPanelProps) {
+  const [, setLocation] = useLocation();
   const { data: members = [] } = useQuery<Member[]>({
     queryKey: ["/api/members"],
     queryFn: async () => {
@@ -378,8 +379,17 @@ function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPan
         <div>
           <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "12px", letterSpacing: "0.18em", color: "#0B1930" }}>DASHBOARD</span>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3">
           <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(11,25,48,0.45)" }}>{today.toUpperCase()}</span>
+          <button
+            onClick={() => setLocation("/Kemet8/publish")}
+            className="flex items-center gap-2 px-4 py-1.5"
+            style={{ background: "transparent", color: "#0B1930", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em", border: "1.5px solid #0B1930" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
+          >
+            <Upload size={12} />UPLOAD WIZARD
+          </button>
           <button
             onClick={onNewArticle}
             className="flex items-center gap-2 px-4 py-1.5"
@@ -539,6 +549,7 @@ interface ArticlesPanelProps {
 }
 
 function ArticlesPanel({ posts, allPosts, allCount, isLoading, search, onSearch, onNewArticle, onEdit, premiumMutation, statusMutation, deleteMutation }: ArticlesPanelProps) {
+  const [, setLocation] = useLocation();
   const [confirmDelete, setConfirmDelete] = useState<Post | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
@@ -572,16 +583,27 @@ function ArticlesPanel({ posts, allPosts, allCount, isLoading, search, onSearch,
             {activeCategory === "all" ? allCount : displayedPosts.length} ON RECORD
           </span>
         </div>
-        <button
-          onClick={onNewArticle}
-          className="flex items-center gap-2 px-4 py-1.5"
-          style={{ background: "#0B1930", color: "#C9A227", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#C9A227"; (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
-          data-testid="button-new-article"
-        >
-          <Plus size={12} />NEW ARTICLE
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setLocation("/Kemet8/publish")}
+            className="flex items-center gap-2 px-4 py-1.5"
+            style={{ background: "transparent", color: "#0B1930", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em", border: "1.5px solid #0B1930" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
+          >
+            <Upload size={12} />UPLOAD WIZARD
+          </button>
+          <button
+            onClick={onNewArticle}
+            className="flex items-center gap-2 px-4 py-1.5"
+            style={{ background: "#0B1930", color: "#C9A227", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#C9A227"; (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
+            data-testid="button-new-article"
+          >
+            <Plus size={12} />NEW ARTICLE
+          </button>
+        </div>
       </div>
 
       {/* Search */}
