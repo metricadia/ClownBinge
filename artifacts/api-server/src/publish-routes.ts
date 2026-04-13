@@ -13,14 +13,14 @@ async function nextCaseNumber(): Promise<string> {
   const rows = await db
     .select({ caseNumber: postsTable.caseNumber })
     .from(postsTable)
-    .where(sql`${postsTable.caseNumber} ~ '^CB-[0-9]{6}$'`);
+    .where(sql`${postsTable.caseNumber} ~ '^CBR-[0-9]{5}$'`);
 
   let max = 0;
   for (const row of rows) {
-    const num = parseInt(row.caseNumber.replace("CB-", ""), 10);
+    const num = parseInt(row.caseNumber.replace("CBR-", ""), 10);
     if (!isNaN(num) && num > max) max = num;
   }
-  return `CB-${String(max + 1).padStart(6, "0")}`;
+  return `CBR-${String(max + 1).padStart(5, "0")}`;
 }
 
 // ── Sitemap update ─────────────────────────────────────────────────────────────
@@ -149,7 +149,7 @@ router.post("/wizard/publish", requireMetricadiaAuth, async (req: Request, res: 
     return res.json({
       ok: true,
       caseNumber: inserted.caseNumber,
-      url: `https://clownbinge.com/${inserted.slug}`,
+      url: `https://clownbinge.com/case/${inserted.slug}`,
     });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
