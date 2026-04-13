@@ -207,11 +207,14 @@ export default function PostDetail() {
   const references = useMemo(() => extractReferences(post?.body ?? ""), [post?.body]);
 
   // Citation count that matches what the Primary Sources section actually renders.
-  // Priority: primarySources JSONB > APA 7 (::) verifiedSource > factoid links > plain verifiedSource > sourceUrl.
+  // Priority: primarySources HTML string (count <li> tags) > APA 7 (::) verifiedSource > factoid links > plain verifiedSource > sourceUrl.
   const citationCount = useMemo(() => {
     if (!post) return 0;
     const ps = (post as any).primarySources;
-    if (Array.isArray(ps) && ps.length > 0) return ps.length;
+    if (typeof ps === "string" && ps.trim().length > 0) {
+      const liCount = (ps.match(/<li[\s>]/gi) || []).length;
+      return liCount > 0 ? liCount : 1;
+    }
     if (post.verifiedSource && post.verifiedSource.includes("::")) {
       return post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).length;
     }
@@ -672,8 +675,9 @@ export default function PostDetail() {
 
         {/* Primary Sources */}
         {(() => {
-          const primarySources = (post as any).primarySources;
-          const hasPrimarySources = Array.isArray(primarySources) && primarySources.length > 0;
+          const ps = (post as any).primarySources;
+          const psHtml: string = typeof ps === "string" ? ps : "";
+          const hasPrimarySources = psHtml.trim().length > 0;
           const hasAny = hasPrimarySources || references.length > 0 || !!post.verifiedSource;
           if (!hasAny) return null;
           return (
@@ -682,38 +686,20 @@ export default function PostDetail() {
               <h2 className="font-mono font-bold text-lg tracking-tight text-header mb-6 uppercase">
                 Primary Sources
               </h2>
-              <ol className="space-y-5 list-none p-0 m-0">
-                {hasPrimarySources
-                  /* ── primarySources JSONB — highest priority ── */
-                  ? primarySources.map((src: any, i: number) => {
-                      const title: string = src.title || src.heading || "";
-                      const citation: string = src.notes || src.citation || src.apa || "";
-                      const url: string = src.url || src.href || "";
-                      return (
-                        <li key={src.id || i} className="flex gap-4">
-                          <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
-                          <div>
-                            <p className="font-bold text-sm text-foreground/80 leading-snug mb-0.5 m-0">{title}</p>
-                            {citation && (
-                              <p className="text-sm text-foreground/65 leading-snug m-0 italic">
-                                {url
-                                  ? <><span>{citation.replace(url, "").trim()} </span><a href={url} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted hover:text-foreground/80 break-all">{url}</a></>
-                                  : citation
-                                }
-                              </p>
-                            )}
-                            {!citation && url && (
-                              <p className="text-sm text-foreground/65 leading-snug m-0 italic">
-                                <a href={url} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted hover:text-foreground/80 break-all">{url}</a>
-                              </p>
-                            )}
-                          </div>
-                        </li>
-                      );
-                    })
-                  /* ── verifiedSource APA 7 (::) ── */
-                  : post.verifiedSource && post.verifiedSource.includes("::")
-                  ? post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
+
+              {hasPrimarySources
+                /* ── primarySources HTML string — highest priority ── */
+                ? (
+                  <div
+                    className="primary-sources-html text-sm leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: psHtml }}
+                  />
+                )
+                /* ── verifiedSource APA 7 (::) ── */
+                : post.verifiedSource && post.verifiedSource.includes("::")
+                ? (
+                  <ol className="space-y-5 list-none p-0 m-0">
+                    {post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
                       const cleaned = entry.replace(/(https?:\/\/[^\s,;)]+)/, "").trim();
                       const heading = cleaned.split("::")[0].trim();
                       const citation = cleaned.split("::").slice(1).join("::").trim();
@@ -726,10 +712,14 @@ export default function PostDetail() {
                           </div>
                         </li>
                       );
-                    })
-                  /* ── factoid links extracted from body ── */
-                  : references.length > 0
-                  ? references.map((ref, i) => (
+                    })}
+                  </ol>
+                )
+                /* ── factoid links extracted from body ── */
+                : references.length > 0
+                ? (
+                  <ol className="space-y-5 list-none p-0 m-0">
+                    {references.map((ref, i) => (
                       <li key={ref.href} className="flex gap-4">
                         <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
                         <div>
@@ -737,33 +727,39 @@ export default function PostDetail() {
                           <p className="text-sm text-foreground/75 leading-relaxed m-0">{ref.summary}</p>
                         </div>
                       </li>
-                    ))
-                  /* ── plain verifiedSource / sourceUrl fallback ── */
-                  : post.sourceUrl
-                  ? (
-                    <li className="flex gap-4">
-                      <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">1.</span>
-                      <div>
-                        <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{abbreviateSource(post.verifiedSource)}</p>
-                      </div>
-                    </li>
-                  )
-                  : post.verifiedSource!.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
-                      const urlMatch = entry.match(/(https?:\/\/[^\s,;)]+)/);
-                      const url = urlMatch ? urlMatch[1] : null;
-                      const cleaned = url ? entry.replace(url, "").replace(/\s+$/, "").trim() : entry;
-                      const displayLabel = cleaned || (url ? new URL(url).hostname.replace(/^www\./, "") : entry);
-                      return (
-                        <li key={i} className="flex gap-4">
-                          <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
+                    ))}
+                  </ol>
+                )
+                /* ── plain verifiedSource / sourceUrl fallback ── */
+                : (
+                  <ol className="space-y-5 list-none p-0 m-0">
+                    {post.sourceUrl
+                      ? (
+                        <li className="flex gap-4">
+                          <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">1.</span>
                           <div>
-                            <p className="font-bold text-sm text-foreground/80 leading-snug m-0">{displayLabel}</p>
+                            <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{abbreviateSource(post.verifiedSource)}</p>
                           </div>
                         </li>
-                      );
-                    })
-                }
-              </ol>
+                      )
+                      : post.verifiedSource!.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
+                          const urlMatch = entry.match(/(https?:\/\/[^\s,;)]+)/);
+                          const url = urlMatch ? urlMatch[1] : null;
+                          const cleaned = url ? entry.replace(url, "").replace(/\s+$/, "").trim() : entry;
+                          const displayLabel = cleaned || (url ? new URL(url).hostname.replace(/^www\./, "") : entry);
+                          return (
+                            <li key={i} className="flex gap-4">
+                              <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
+                              <div>
+                                <p className="font-bold text-sm text-foreground/80 leading-snug m-0">{displayLabel}</p>
+                              </div>
+                            </li>
+                          );
+                        })
+                    }
+                  </ol>
+                )
+              }
             </section>
           );
         })()}
