@@ -207,9 +207,11 @@ export default function PostDetail() {
   const references = useMemo(() => extractReferences(post?.body ?? ""), [post?.body]);
 
   // Citation count that matches what the Primary Sources section actually renders.
-  // Priority: APA 7 (::) entries > factoid links in body > plain verifiedSource entries > sourceUrl.
+  // Priority: primarySources JSONB > APA 7 (::) verifiedSource > factoid links > plain verifiedSource > sourceUrl.
   const citationCount = useMemo(() => {
     if (!post) return 0;
+    const ps = (post as any).primarySources;
+    if (Array.isArray(ps) && ps.length > 0) return ps.length;
     if (post.verifiedSource && post.verifiedSource.includes("::")) {
       return post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).length;
     }
@@ -217,8 +219,6 @@ export default function PostDetail() {
     if (post.verifiedSource) {
       return post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).length || 1;
     }
-    const ps = (post as any).primarySources;
-    if (Array.isArray(ps) && ps.length > 0) return ps.length;
     if (post.sourceUrl) return 1;
     return 0;
   }, [post, references]);
@@ -671,30 +671,64 @@ export default function PostDetail() {
         </div>
 
         {/* Primary Sources */}
-        {(references.length > 0 || post.verifiedSource) && (
-          <section id="primary-sources" className="mt-10" aria-label="Primary Sources">
-            <div className="h-1 w-full bg-[#F5C518] rounded-full mb-8" />
-            <h2 className="font-mono font-bold text-lg tracking-tight text-header mb-6 uppercase">
-              Primary Sources
-            </h2>
-            <ol className="space-y-5 list-none p-0 m-0">
-              {/* verifiedSource with APA 7 format (::) always takes priority */}
-              {post.verifiedSource && post.verifiedSource.includes("::")
-                ? post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
-                    const cleaned = entry.replace(/(https?:\/\/[^\s,;)]+)/, "").trim();
-                    const heading = cleaned.split("::")[0].trim();
-                    const citation = cleaned.split("::").slice(1).join("::").trim();
-                    return (
-                      <li key={i} className="flex gap-4">
-                        <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
-                        <div>
-                          <p className="font-bold text-sm text-foreground/80 leading-snug mb-0.5 m-0">{heading}</p>
-                          {citation && <p className="text-sm text-foreground/65 leading-snug m-0 italic">{citation}</p>}
-                        </div>
-                      </li>
-                    );
-                  })
-                : references.length > 0
+        {(() => {
+          const primarySources = (post as any).primarySources;
+          const hasPrimarySources = Array.isArray(primarySources) && primarySources.length > 0;
+          const hasAny = hasPrimarySources || references.length > 0 || !!post.verifiedSource;
+          if (!hasAny) return null;
+          return (
+            <section id="primary-sources" className="mt-10" aria-label="Primary Sources">
+              <div className="h-1 w-full bg-[#F5C518] rounded-full mb-8" />
+              <h2 className="font-mono font-bold text-lg tracking-tight text-header mb-6 uppercase">
+                Primary Sources
+              </h2>
+              <ol className="space-y-5 list-none p-0 m-0">
+                {hasPrimarySources
+                  /* ── primarySources JSONB — highest priority ── */
+                  ? primarySources.map((src: any, i: number) => {
+                      const title: string = src.title || src.heading || "";
+                      const citation: string = src.notes || src.citation || src.apa || "";
+                      const url: string = src.url || src.href || "";
+                      return (
+                        <li key={src.id || i} className="flex gap-4">
+                          <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
+                          <div>
+                            <p className="font-bold text-sm text-foreground/80 leading-snug mb-0.5 m-0">{title}</p>
+                            {citation && (
+                              <p className="text-sm text-foreground/65 leading-snug m-0 italic">
+                                {url
+                                  ? <><span>{citation.replace(url, "").trim()} </span><a href={url} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted hover:text-foreground/80 break-all">{url}</a></>
+                                  : citation
+                                }
+                              </p>
+                            )}
+                            {!citation && url && (
+                              <p className="text-sm text-foreground/65 leading-snug m-0 italic">
+                                <a href={url} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted hover:text-foreground/80 break-all">{url}</a>
+                              </p>
+                            )}
+                          </div>
+                        </li>
+                      );
+                    })
+                  /* ── verifiedSource APA 7 (::) ── */
+                  : post.verifiedSource && post.verifiedSource.includes("::")
+                  ? post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
+                      const cleaned = entry.replace(/(https?:\/\/[^\s,;)]+)/, "").trim();
+                      const heading = cleaned.split("::")[0].trim();
+                      const citation = cleaned.split("::").slice(1).join("::").trim();
+                      return (
+                        <li key={i} className="flex gap-4">
+                          <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
+                          <div>
+                            <p className="font-bold text-sm text-foreground/80 leading-snug mb-0.5 m-0">{heading}</p>
+                            {citation && <p className="text-sm text-foreground/65 leading-snug m-0 italic">{citation}</p>}
+                          </div>
+                        </li>
+                      );
+                    })
+                  /* ── factoid links extracted from body ── */
+                  : references.length > 0
                   ? references.map((ref, i) => (
                       <li key={ref.href} className="flex gap-4">
                         <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
@@ -704,33 +738,35 @@ export default function PostDetail() {
                         </div>
                       </li>
                     ))
+                  /* ── plain verifiedSource / sourceUrl fallback ── */
                   : post.sourceUrl
-                    ? (
-                      <li className="flex gap-4">
-                        <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">1.</span>
-                        <div>
-                          <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{abbreviateSource(post.verifiedSource)}</p>
-                        </div>
-                      </li>
-                    )
-                    : post.verifiedSource!.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
-                        const urlMatch = entry.match(/(https?:\/\/[^\s,;)]+)/);
-                        const url = urlMatch ? urlMatch[1] : null;
-                        const cleaned = url ? entry.replace(url, "").replace(/\s+$/, "").trim() : entry;
-                        const displayLabel = cleaned || (url ? new URL(url).hostname.replace(/^www\./, "") : entry);
-                        return (
-                          <li key={i} className="flex gap-4">
-                            <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
-                            <div>
-                              <p className="font-bold text-sm text-foreground/80 leading-snug m-0">{displayLabel}</p>
-                            </div>
-                          </li>
-                        );
-                      })
-              }
-            </ol>
-          </section>
-        )}
+                  ? (
+                    <li className="flex gap-4">
+                      <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">1.</span>
+                      <div>
+                        <p className="font-bold text-sm text-foreground/80 leading-snug mb-1 m-0">{abbreviateSource(post.verifiedSource)}</p>
+                      </div>
+                    </li>
+                  )
+                  : post.verifiedSource!.split(/[;|]/).map(s => s.trim()).filter(Boolean).map((entry, i) => {
+                      const urlMatch = entry.match(/(https?:\/\/[^\s,;)]+)/);
+                      const url = urlMatch ? urlMatch[1] : null;
+                      const cleaned = url ? entry.replace(url, "").replace(/\s+$/, "").trim() : entry;
+                      const displayLabel = cleaned || (url ? new URL(url).hostname.replace(/^www\./, "") : entry);
+                      return (
+                        <li key={i} className="flex gap-4">
+                          <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
+                          <div>
+                            <p className="font-bold text-sm text-foreground/80 leading-snug m-0">{displayLabel}</p>
+                          </div>
+                        </li>
+                      );
+                    })
+                }
+              </ol>
+            </section>
+          );
+        })()}
 
         {/* Zone 3: Bottom programmatic slot — after the full source record */}
         <AdSlot id="cb-ad-bottom" className="mt-10" />
