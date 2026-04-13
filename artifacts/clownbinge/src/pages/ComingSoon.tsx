@@ -37,7 +37,7 @@ export default function ComingSoon() {
         .card { border-radius: 1rem; padding: 80px 2rem 2.5rem; background: linear-gradient(160deg, rgba(26,44,85,0.97) 0%, rgba(18,30,62,0.99) 100%); border: 1px solid rgba(201,162,39,0.18); box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 32px 80px rgba(0,0,0,0.65), 0 0 60px rgba(201,162,39,0.08); position: relative; overflow: hidden; }
         .card-glow { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); width: 240px; height: 160px; background: radial-gradient(ellipse at top, rgba(201,162,39,0.10) 0%, transparent 70%); pointer-events: none; }
         .logo-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 1.25rem; }
-        .psa-logo { display: inline-flex; align-items: baseline; font-family: Montserrat, system-ui, sans-serif; text-transform: uppercase; line-height: 1; letter-spacing: 0.01em; user-select: none; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .psa-logo { display: inline-flex; align-items: baseline; font-family: Montserrat, system-ui, sans-serif; text-transform: uppercase; line-height: 1; letter-spacing: 0.01em; user-select: none; font-size: 1.55rem; margin-bottom: 0.5rem; }
         .psa-metricadia { color: #ffffff; font-weight: 700; }
         .psa-dot { display: inline-block; width: 0.65em; height: 0.13em; background: #C9A227; border-radius: 2px; position: relative; top: -0.28em; margin: 0 0.08em; flex-shrink: 0; }
         .psa-research { color: #ffffff; font-weight: 700; }
@@ -51,8 +51,11 @@ export default function ComingSoon() {
         .brain-rule { height: 1px; width: 24px; background: rgba(255,255,255,0.35); }
         .brain-instance { font-family: Montserrat, system-ui, sans-serif; font-weight: 600; font-size: 0.52rem; color: #ffffff; letter-spacing: 0.22em; text-transform: uppercase; }
         .coming-body { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; margin-top: 1rem; }
-        .coming-headline { font-family: Montserrat, system-ui, sans-serif; font-weight: 700; font-size: 1.45rem; color: #F2E8D4; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
-        .coming-sub { font-family: Montserrat, system-ui, sans-serif; font-weight: 400; font-size: 0.78rem; color: rgba(242,232,212,0.6); letter-spacing: 0.04em; text-align: center; line-height: 1.6; max-width: 260px; }
+        .coming-headline { font-family: Montserrat, system-ui, sans-serif; font-weight: 700; font-size: 1.9rem; color: #F2E8D4; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; text-shadow: 0 2px 24px rgba(201,162,39,0.18); }
+        .coming-sub { font-family: Montserrat, system-ui, sans-serif; font-weight: 300; font-size: 0.68rem; color: rgba(201,162,39,0.75); letter-spacing: 0.28em; text-align: center; line-height: 1.6; text-transform: uppercase; }
+        .coming-soon-tag { display: inline-flex; align-items: center; gap: 10px; }
+        .coming-soon-rule { height: 1px; width: 28px; background: rgba(201,162,39,0.45); }
+        .coming-soon-text { font-family: Montserrat, system-ui, sans-serif; font-weight: 600; font-size: 0.58rem; color: rgba(201,162,39,0.85); letter-spacing: 0.32em; text-transform: uppercase; }
         .coming-pill { display: inline-block; background: rgba(201,162,39,0.09); border: 1px solid rgba(201,162,39,0.28); border-radius: 999px; padding: 6px 18px; font-family: Montserrat, system-ui, sans-serif; font-weight: 600; font-size: 0.63rem; color: #C9A227; letter-spacing: 0.22em; text-transform: uppercase; }
         @keyframes barShimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
         .shimmer-bar { width: 120px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, rgba(201,162,39,0.15) 0%, #C9A227 40%, #F0D458 55%, #C9A227 70%, rgba(201,162,39,0.15) 100%); background-size: 200% auto; animation: barShimmer 2.8s linear infinite; }
@@ -107,14 +110,12 @@ export default function ComingSoon() {
             <div className="coming-body">
               <div className="shimmer-bar"></div>
               <p className="coming-headline">ClownBinge</p>
-              <p className="coming-sub">
-                Next Generation Information Innovation<br />
-                <br />
-                Accountability journalism.<br />
-                Primary sources. No performance.<br />
-                <br />
-                The record is being prepared.
-              </p>
+              <p className="coming-sub">Next Generation Information Innovation</p>
+              <div className="coming-soon-tag">
+                <div className="coming-soon-rule"></div>
+                <span className="coming-soon-text">Coming Soon</span>
+                <div className="coming-soon-rule"></div>
+              </div>
               <span className="coming-pill">Launching shortly</span>
             </div>
           </div>
