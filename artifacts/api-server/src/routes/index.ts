@@ -12,11 +12,13 @@ import factoidRouter from "./factoid";
 import subscriptionRouter from "./subscription";
 import membersRouter from "./members";
 import adminRouter from "./admin";
+import publishRouter from "../publish-routes";
 
 const router: IRouter = Router();
 
 router.use(healthRouter);
 router.use(postsRouter);
+router.use(publishRouter);
 router.use(reactionsRouter);
 router.use(booksRouter);
 router.use(subscribersRouter);
