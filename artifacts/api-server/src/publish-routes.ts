@@ -13,14 +13,14 @@ async function nextCaseNumber(): Promise<string> {
   const rows = await db
     .select({ caseNumber: postsTable.caseNumber })
     .from(postsTable)
-    .where(sql`${postsTable.caseNumber} ~ '^CBR-[0-9]{5}$'`);
+    .where(sql`${postsTable.caseNumber} ~ '^CB-[0-9]{6}$'`);
 
   let max = 0;
   for (const row of rows) {
-    const num = parseInt(row.caseNumber.replace("CBR-", ""), 10);
+    const num = parseInt(row.caseNumber.replace("CB-", ""), 10);
     if (!isNaN(num) && num > max) max = num;
   }
-  return `CBR-${String(max + 1).padStart(5, "0")}`;
+  return `CB-${String(max + 1).padStart(6, "0")}`;
 }
 
 // ── Sitemap update ─────────────────────────────────────────────────────────────
