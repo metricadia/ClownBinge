@@ -1,6 +1,36 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+function MetricadiaLogo() {
+  return (
+    <div style={{
+      fontFamily: "'Montserrat', system-ui, sans-serif",
+      fontWeight: 800,
+      textTransform: "uppercase",
+      letterSpacing: "0.06em",
+      fontSize: "1rem",
+      lineHeight: 1,
+      color: "#ffffff",
+      whiteSpace: "nowrap",
+    }}>
+      <span>Metricadia</span>
+      <span style={{ color: "#C9A227", fontWeight: 300, margin: "0 0.16em" }}>—</span>
+      <span>Research</span>
+      <span style={{
+        fontWeight: 400,
+        fontSize: "0.68em",
+        color: "rgba(255,255,255,0.48)",
+        letterSpacing: "0.2em",
+        marginLeft: "0.4em",
+        verticalAlign: "middle",
+      }}>LLC</span>
+    </div>
+  );
+}
 
 export default function ComingSoon() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.title = "ClownBinge — Coming Soon";
   }, []);
@@ -9,160 +39,254 @@ export default function ComingSoon() {
     <>
       <style>{`
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
-        .cs-body {
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap');
+
+        .cs-root {
+          position: relative;
           min-height: 100vh;
+          width: 100%;
+          overflow: hidden;
+          background: linear-gradient(160deg, #080f22 0%, #0c1836 40%, #0a1428 75%, #06101e 100%);
+          font-family: 'Montserrat', system-ui, sans-serif;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .cs-grid {
+          position: absolute; inset: 0; pointer-events: none; opacity: 0.025;
+          background-image: linear-gradient(#C9A227 1px, transparent 1px),
+                            linear-gradient(90deg, #C9A227 1px, transparent 1px);
+          background-size: 52px 52px;
+        }
+
+        .cs-glow-tl {
+          position: absolute; pointer-events: none;
+          width: 620px; height: 620px; border-radius: 50%;
+          background: #0d2260; opacity: 0.5;
+          top: -18%; left: -12%; filter: blur(190px);
+        }
+        .cs-glow-br {
+          position: absolute; pointer-events: none;
+          width: 440px; height: 440px; border-radius: 50%;
+          background: #091440; opacity: 0.38;
+          bottom: -12%; right: -10%; filter: blur(150px);
+        }
+
+        .cs-veins {
+          position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+        }
+
+        /* Top-left logo bar */
+        .cs-topbar {
+          position: absolute;
+          top: 1.75rem; left: 2rem;
+          display: flex; align-items: center; gap: 10px;
+          z-index: 20;
+        }
+        .cs-flags {
+          display: flex; align-items: center; gap: 3px;
+          font-size: 13px; margin-top: 1px; opacity: 0.85;
+        }
+
+        /* Center column */
+        .cs-center {
+          position: relative;
+          z-index: 5;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          flex: 1;
+          padding: 5rem 1rem 0;
+        }
+
+        /* Founders image — large, centered, dissolving into background */
+        .cs-founders {
+          position: relative;
+          width: 100%;
+          max-width: 700px;
+          height: 52vh;
+          min-height: 280px;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+        }
+        .cs-founders img {
+          height: 125%;
+          width: auto;
+          object-fit: contain;
+          object-position: bottom center;
+          display: block;
+          -webkit-mask-image: radial-gradient(ellipse 72% 82% at 50% 52%, black 20%, rgba(0,0,0,0.6) 45%, transparent 72%);
+          mask-image: radial-gradient(ellipse 72% 82% at 50% 52%, black 20%, rgba(0,0,0,0.6) 45%, transparent 72%);
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        /* Text content — below founders, centered */
+        .cs-content {
+          position: relative;
+          z-index: 6;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 0 1rem 2.5rem;
+          margin-top: -1rem;
+        }
+
+        .cs-eyebrow {
+          font-size: 0.58rem;
+          font-weight: 600;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          color: rgba(201,162,39,0.7);
+          margin-bottom: 0.7rem;
+        }
+
+        .cs-headline {
+          font-size: clamp(2.8rem, 7vw, 5rem);
+          font-weight: 900;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #F2E8D4;
+          line-height: 1;
+          text-shadow: 0 0 60px rgba(201,162,39,0.12), 0 2px 24px rgba(0,0,0,0.6);
+          margin-bottom: 0.5rem;
+        }
+
+        .cs-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          background: rgba(201,162,39,0.07);
+          border: 1px solid rgba(201,162,39,0.28);
+          border-radius: 999px;
+          padding: 7px 20px;
+          font-size: 0.57rem;
+          font-weight: 700;
+          letter-spacing: 0.28em;
+          text-transform: uppercase;
+          color: rgba(201,162,39,0.88);
+          margin-bottom: 1.6rem;
+          margin-top: 1rem;
+        }
+        .cs-dot {
+          width: 5px; height: 5px; border-radius: 50%;
+          background: #C9A227;
+          animation: dotpulse 2.2s ease-in-out infinite;
+        }
+        @keyframes dotpulse {
+          0%, 100% { opacity: 0.85; transform: scale(1); }
+          50% { opacity: 0.3; transform: scale(0.65); }
+        }
+
+        /* Access links */
+        .cs-links {
           display: flex;
           align-items: center;
-          justify-content: center;
-          padding: 1rem;
-          background: linear-gradient(170deg, #0a1628 0%, #0d1c3a 45%, #0b1a35 100%);
+          gap: 0;
+        }
+        .cs-link-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
           font-family: 'Montserrat', system-ui, sans-serif;
-          overflow: hidden;
-          position: relative;
-        }
-        .grid-overlay {
-          position: absolute; inset: 0; pointer-events: none; opacity: 0.03;
-          background-image: linear-gradient(#C9A227 1px, transparent 1px), linear-gradient(90deg, #C9A227 1px, transparent 1px);
-          background-size: 48px 48px;
-        }
-        @keyframes veinPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
-        .vein-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; animation: veinPulse 9s ease-in-out infinite; }
-        .glow-wrap { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-        .glow-blue { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: #1a3060; opacity: 0.5; top: -15%; left: -10%; filter: blur(160px); }
-        .glow-brown { position: absolute; width: 320px; height: 320px; border-radius: 50%; background: #2a1800; opacity: 0.35; bottom: 0%; right: -5%; filter: blur(120px); }
-
-        .card-wrap { position: relative; width: 100%; max-width: 460px; padding-top: 110px; z-index: 1; }
-        .lion { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 240px; height: auto; z-index: 10; pointer-events: none; filter: drop-shadow(0 8px 32px rgba(201,162,39,0.35)) drop-shadow(0 2px 8px rgba(0,0,0,0.7)); }
-
-        .card {
-          border-radius: 1.25rem;
-          padding: 80px 2.5rem 2.5rem;
-          background: linear-gradient(160deg, rgba(20,34,72,0.98) 0%, rgba(14,24,52,1) 100%);
-          border: 1px solid rgba(201,162,39,0.20);
-          box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 32px 80px rgba(0,0,0,0.7), inset 0 1px 0 rgba(201,162,39,0.08);
-          position: relative;
-          overflow: hidden;
-          text-align: center;
-        }
-
-        /* Subtle warm glow at top of card where lion meets card */
-        .card::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 120px;
-          background: radial-gradient(ellipse at 50% 0%, rgba(160,100,20,0.18) 0%, transparent 70%);
-          pointer-events: none;
-        }
-
-        /* Company name — the main identity */
-        .company-name {
-          font-family: Montserrat, system-ui, sans-serif;
-          font-weight: 800;
-          font-size: 1.55rem;
-          color: #ffffff;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
-          line-height: 1;
-          margin-bottom: 0.3rem;
-          position: relative;
-          white-space: nowrap;
-        }
-        .company-name .dash { color: #C9A227; font-weight: 300; margin: 0 0.05em; }
-        .company-llc {
-          font-size: 0.85rem;
-          font-weight: 400;
-          color: rgba(255,255,255,0.55);
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          font-family: Montserrat, system-ui, sans-serif;
-          display: block;
-          margin-bottom: 1.5rem;
-          position: relative;
-        }
-
-        .divider {
-          width: 100%;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(201,162,39,0.5), transparent);
-          margin-bottom: 1.75rem;
-          position: relative;
-        }
-
-        /* Product name — secondary but bold */
-        .product-name {
-          font-family: Montserrat, system-ui, sans-serif;
-          font-weight: 700;
-          font-size: 2.1rem;
-          color: #F2E8D4;
+          font-size: 0.7rem;
+          font-weight: 600;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          text-shadow: 0 0 40px rgba(201,162,39,0.20);
-          margin-bottom: 1.75rem;
-          position: relative;
-        }
-
-        .pill {
+          color: rgba(255,255,255,0.5);
+          padding: 6px 16px;
+          transition: color 0.2s;
+          text-decoration: none;
           display: inline-block;
-          background: rgba(201,162,39,0.08);
-          border: 1px solid rgba(201,162,39,0.30);
-          border-radius: 999px;
-          padding: 7px 22px;
-          font-family: Montserrat, system-ui, sans-serif;
-          font-weight: 600;
-          font-size: 0.6rem;
-          color: rgba(201,162,39,0.9);
-          letter-spacing: 0.25em;
-          text-transform: uppercase;
-          position: relative;
+        }
+        .cs-link-btn:hover { color: #C9A227; }
+        .cs-link-sep {
+          width: 1px;
+          height: 14px;
+          background: rgba(255,255,255,0.18);
         }
 
-        .card-footer {
+        /* Bottom copyright */
+        .cs-copyright {
+          position: relative;
+          z-index: 10;
           text-align: center;
-          margin-top: 1.25rem;
-          font-size: 9px;
-          letter-spacing: 0.22em;
+          padding: 1.2rem 1rem;
+          font-size: 8.5px;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: rgba(201,162,39,0.45);
-          user-select: none;
-          font-family: Montserrat, system-ui, sans-serif;
+          color: rgba(201,162,39,0.32);
+          width: 100%;
         }
       `}</style>
 
-      <div className="cs-body">
-        <div className="grid-overlay"></div>
+      <div className="cs-root">
+        <div className="cs-grid" />
+        <div className="cs-glow-tl" />
+        <div className="cs-glow-br" />
 
-        <svg className="vein-svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <svg className="cs-veins" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <filter id="vein-glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            <filter id="vg" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2.5" result="b" />
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <path d="M -10 590 C 70 530, 55 450, 160 400 C 265 350, 370 420, 450 360 C 530 300, 495 195, 598 148 C 672 115, 748 155, 820 98 C 890 42, 958 20, 1010 5" fill="none" stroke="#C8A230" strokeWidth="18" strokeOpacity="0.025" />
-          <path d="M -10 590 C 70 530, 55 450, 160 400 C 265 350, 370 420, 450 360 C 530 300, 495 195, 598 148 C 672 115, 748 155, 820 98 C 890 42, 958 20, 1010 5" fill="none" stroke="#F0D070" strokeWidth="1.0" strokeOpacity="0.18" filter="url(#vein-glow)" />
-          <path d="M -10 30 C 80 80, 60 170, 170 220 C 280 270, 390 200, 470 260 C 550 320, 520 430, 620 470 C 710 505, 810 465, 890 520 C 950 562, 990 590, 1010 605" fill="none" stroke="#C8A230" strokeWidth="14" strokeOpacity="0.022" />
-          <path d="M -10 30 C 80 80, 60 170, 170 220 C 280 270, 390 200, 470 260 C 550 320, 520 430, 620 470 C 710 505, 810 465, 890 520 C 950 562, 990 590, 1010 605" fill="none" stroke="#F0D070" strokeWidth="0.8" strokeOpacity="0.15" filter="url(#vein-glow)" />
-          <path d="M -10 480 C 80 460, 140 510, 240 495 C 340 480, 370 420, 480 438 C 590 456, 630 510, 740 500 C 840 490, 910 450, 1010 465" fill="none" stroke="#F0D070" strokeWidth="0.7" strokeOpacity="0.14" filter="url(#vein-glow)" />
+          <path d="M -20 820 C 100 750, 90 640, 240 570 C 390 500, 540 590, 660 510 C 780 430, 730 280, 880 210 C 980 165, 1090 220, 1200 145 C 1310 70, 1400 30, 1460 10" fill="none" stroke="#F0D070" strokeWidth="0.9" strokeOpacity="0.14" filter="url(#vg)" />
+          <path d="M -20 40 C 110 110, 95 240, 250 310 C 405 380, 565 280, 680 370 C 795 460, 760 620, 900 685 C 1020 740, 1160 680, 1280 750 C 1380 810, 1430 860, 1460 880" fill="none" stroke="#F0D070" strokeWidth="0.7" strokeOpacity="0.12" filter="url(#vg)" />
         </svg>
 
-        <div className="glow-wrap">
-          <div className="glow-blue"></div>
-          <div className="glow-brown"></div>
+        {/* Top-left logo */}
+        <div className="cs-topbar">
+          <MetricadiaLogo />
+          <div className="cs-flags">
+            <span title="Saint Kitts and Nevis">🇰🇳</span>
+            <span title="United States">🇺🇸</span>
+            <span title="Iceland">🇮🇸</span>
+          </div>
         </div>
 
-        <div className="card-wrap">
-          <img className="lion" src="/brain-lion.png" alt="Metricadia" />
-          <div className="card">
-            <p className="company-name">Metricadia<span className="dash">—</span>Research</p>
-            <span className="company-llc">LLC</span>
-            <div className="divider"></div>
-            <p className="product-name">ClownBinge</p>
-            <span className="pill">Launching Shortly</span>
+        {/* Centered hero */}
+        <div className="cs-center">
+          <div className="cs-founders">
+            <img src="/founders-nobg.png" alt="Metricadia founders" />
           </div>
-          <p className="card-footer">Metricadia Research LLC &mdash; All Rights Reserved</p>
+
+          <div className="cs-content">
+            <p className="cs-eyebrow">A Metricadia Research Publication</p>
+            <h1 className="cs-headline">ClownBinge</h1>
+
+            <span className="cs-pill">
+              <span className="cs-dot" />
+              Coming Soon
+            </span>
+
+            <div className="cs-links">
+              <button className="cs-link-btn" onClick={() => navigate("/Kemet8")}>
+                Admin Access
+              </button>
+              <span className="cs-link-sep" />
+              <a
+                className="cs-link-btn"
+                href="mailto:contact@metricadia.com"
+              >
+                Contact Metricadia
+              </a>
+            </div>
+          </div>
         </div>
+
+        {/* Bottom copyright */}
+        <p className="cs-copyright">
+          &copy; 2026 Metricadia-Research LLC &mdash; All Rights Reserved
+        </p>
       </div>
     </>
   );
