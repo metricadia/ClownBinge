@@ -149,7 +149,7 @@ router.post("/wizard/publish", requireMetricadiaAuth, async (req: Request, res: 
     return res.json({
       ok: true,
       caseNumber: inserted.caseNumber,
-      url: `https://clownbinge.com/case/${inserted.slug}`,
+      url: `https://clownbinge.com/${inserted.slug}`,
     });
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
