@@ -36,7 +36,7 @@ export default function ComingSoon() {
         .lion { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 260px; height: auto; z-index: 10; pointer-events: none; filter: drop-shadow(0 8px 32px rgba(201,162,39,0.35)) drop-shadow(0 2px 8px rgba(0,0,0,0.7)); }
         .card { border-radius: 1rem; padding: 80px 2rem 2.5rem; background: linear-gradient(160deg, rgba(26,44,85,0.97) 0%, rgba(18,30,62,0.99) 100%); border: 1px solid rgba(201,162,39,0.18); box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 32px 80px rgba(0,0,0,0.65), 0 0 60px rgba(201,162,39,0.08); position: relative; overflow: hidden; }
         .card-glow { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); width: 240px; height: 160px; background: radial-gradient(ellipse at top, rgba(201,162,39,0.10) 0%, transparent 70%); pointer-events: none; }
-        .logo-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 1.25rem; }
+        .logo-section { display: flex; flex-direction: column; align-items: center; margin: 0 -2rem 1.25rem; padding: 1.1rem 2rem 1rem; background: linear-gradient(90deg, rgba(72,40,10,0.0) 0%, rgba(80,46,12,0.55) 18%, rgba(90,52,14,0.65) 50%, rgba(80,46,12,0.55) 82%, rgba(72,40,10,0.0) 100%); }
         .psa-logo { display: inline-flex; align-items: baseline; font-family: Montserrat, system-ui, sans-serif; text-transform: uppercase; line-height: 1; letter-spacing: 0.01em; user-select: none; font-size: 1.35rem; margin-bottom: 0.5rem; }
         .psa-metricadia { color: #ffffff; font-weight: 700; }
         .psa-dot { display: inline-block; width: 0.65em; height: 0.13em; background: #C9A227; border-radius: 2px; position: relative; top: -0.28em; margin: 0 0.08em; flex-shrink: 0; }
