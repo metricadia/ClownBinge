@@ -44,8 +44,8 @@ async function getSha(path) {
 }
 
 async function pushFile(localPath) {
-  const content = readFileSync(localPath, "utf8");
-  const encoded = Buffer.from(content).toString("base64");
+  const content = readFileSync(localPath);          // Buffer — works for text AND binary
+  const encoded = content.toString("base64");
   const sha     = await getSha(localPath);
 
   const body = {
