@@ -266,7 +266,7 @@ export default function ComingSoon() {
             </span>
 
             <div className="cs-links">
-              <button className="cs-link-btn" onClick={() => { window.location.href = "/Kemet8"; }}>
+              <button className="cs-link-btn" onClick={() => { window.location.href = "/admin-access"; }}>
                 Admin Access
               </button>
               <span className="cs-link-sep" />
