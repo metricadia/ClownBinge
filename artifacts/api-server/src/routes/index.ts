@@ -13,6 +13,7 @@ import subscriptionRouter from "./subscription";
 import membersRouter from "./members";
 import adminRouter from "./admin";
 import adminOtpRouter from "./admin-otp";
+import authRouter from "./auth-routes";
 import publishRouter from "../publish-routes";
 
 const router: IRouter = Router();
@@ -32,5 +33,6 @@ router.use(subscriptionRouter);
 router.use(membersRouter);
 router.use(adminRouter);
 router.use(adminOtpRouter);
+router.use(authRouter);
 
 export default router;
