@@ -1,0 +1,25 @@
+name: Deploy to Iceland
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Iceland VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/clownbinge
+            git pull
+            pnpm install
+            cd artifacts/api-server && node build.mjs
+            cd /var/www/clownbinge/artifacts/clownbinge && PORT=3000 BASE_PATH=/ npx vite build
+            cd /var/www/clownbinge/lib/db && DATABASE_URL=$(grep DATABASE_URL /var/www/clownbinge/artifacts/api-server/.env | cut -d= -f2-) pnpm exec drizzle-kit push
+            pm2 restart api-server
