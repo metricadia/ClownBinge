@@ -4,7 +4,7 @@ import { Menu, X, ChevronDown, Heart, Home, Star } from "lucide-react";
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { usePostsCount } from "@/hooks/use-posts";
 import { FloatingAdminBar } from "@/components/FloatingAdminBar";
-import { useAuth } from "@clerk/react";
+import { useAuth } from "@/context/AuthContext";
 
 const CATEGORIES = [
   { id: "all",               label: "All" },
