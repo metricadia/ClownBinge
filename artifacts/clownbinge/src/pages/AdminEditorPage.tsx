@@ -1322,16 +1322,10 @@ export default function AdminEditorPage() {
     );
   }
 
-  // ── Login screen ──
+  // ── Not authenticated — send to OTP flow ──
   if (!authenticated) {
-    return (
-      <AdminLogin
-        onSuccess={() => {
-          sessionStorage.setItem("metricadia_authenticated", "true");
-          setAuthenticated(true);
-        }}
-      />
-    );
+    window.location.replace("/admin-access");
+    return <div style={{ minHeight: "100vh", background: "#08122E" }} />;
   }
 
   // ── Article editor (full-screen) ──
