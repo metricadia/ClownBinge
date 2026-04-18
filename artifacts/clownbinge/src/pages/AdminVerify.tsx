@@ -61,7 +61,7 @@ export default function AdminVerify() {
 
       sessionStorage.setItem("metricadia_token", activateData.token);
       sessionStorage.setItem("metricadia_authenticated", "true");
-      setLocation("/Kemet8");
+      setLocation(activateData.brainPath as string);
     } catch (err: any) {
       setError(err.message ?? "An error occurred.");
       setDigits(Array(6).fill(""));
