@@ -324,7 +324,7 @@ export default function PublishWizard() {
     sessionStorage.getItem("metricadia_token") !== null;
 
   if (!isAdmin) {
-    setLocation("/Kemet8");
+    setLocation("/admin-access");
     return null;
   }
 
@@ -419,7 +419,7 @@ export default function PublishWizard() {
       <div style={{ ...NAV, padding: "14px 32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <button
-            onClick={() => setLocation("/Kemet8")}
+            onClick={() => setLocation(sessionStorage.getItem("brain_instance_path") || "/admin-access")}
             style={{ background: "transparent", border: "none", color: GOLD, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, fontSize: 11, fontWeight: 700, letterSpacing: "0.12em" }}
           >
             <ArrowLeft size={13} /> BACK TO ADMIN
