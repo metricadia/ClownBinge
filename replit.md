@@ -107,24 +107,44 @@ Utility scripts package. Each script is a `.ts` file in `src/` with a correspond
 **Tagline:** "Verified. Primary Sources. Clowned."
 **Mission:** Verified accountability journalism and political satire. Real, verifiable incidents of politicians and religious leaders betraying constituents.
 
-### Authentication (Clerk)
+### Authentication (Self-Hosted JWT — Clerk fully removed)
 
-Site is **public** — no global login wall. Article reading requires Clerk social sign-in.
+Site is **public** — no global login wall. Article reading requires member sign-in.
 
-- **Auth provider:** Clerk (`@clerk/react` frontend, `@clerk/express` server middleware)
-- **Provisioned app:** `app_3C3Lb6pvok9tbn36yfEKuhFRHap` (WhiteLabel, Google + Apple social login)
-- **Env vars:** `CLERK_SECRET_KEY`, `CLERK_PUBLISHABLE_KEY`, `VITE_CLERK_PUBLISHABLE_KEY`, `VITE_CLERK_PROXY_URL` (auto-set in prod)
-- **Clerk proxy:** `clerkProxyMiddleware.ts` — proxies `/api/__clerk` to Clerk's FAPI (must be mounted before body parsers)
-- **Article gate:** `PostDetail.tsx` — detects `!isSignedIn` via `useAuth()`, shows "Sign In to Read" overlay with bodyBottom hidden
+- **Auth provider:** Self-hosted JWT (`bcryptjs` password hashing, `jsonwebtoken` signed tokens in `cb_auth` httpOnly cookie)
+- **Clerk:** Fully removed. `@clerk/react` and `@clerk/express` are gone. No Clerk keys needed.
+- **Member auth routes:** `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`, `GET /api/auth/verify-email`, `POST /api/auth/resend-verification`
+- **Frontend context:** `artifacts/clownbinge/src/context/AuthContext.tsx` — `AuthProvider` + `useAuth()` hook (same API surface: `isLoaded`, `isSignedIn`, `user`, `signOut`, `refresh`)
+- **JWT secret:** Uses `JWT_SECRET` env var, falls back to `METRICADIA_TOKEN_SECRET`. No new secret needed in dev.
+- **Article gate:** `PostDetail.tsx` — detects `!isSignedIn` via `useAuth()` from AuthContext, shows "Sign In to Read" overlay with bodyBottom hidden
 - **Crawler whitelist (NEVER REMOVE):** `PostDetail.tsx` — `isCrawler` flag detects Googlebot, bingbot, DuckDuckBot, Applebot, AhrefsBot, SemrushBot, ia_archiver, MJ12bot by `navigator.userAgent`. When `isCrawler = true`, BOTH `isAuthGated` and `isPremiumGated` are forced to `false` — crawlers always see the full article body. This is legal under Google's Flexible Sampling policy because we declare the paywall in JSON-LD (`isAccessibleForFree: "False"`, `hasPart` with `cssSelector: ".cb-article-body"`). **If this is ever removed, Googlebot will only see 1 paragraph of every article and all SEO value collapses.**
-- **Routes:** `/sign-in` (Clerk SignIn component), `/sign-up` (Clerk SignUp component), `/account` (MyAccount.tsx — redirects to /sign-in if not authed)
-- **Nav:** "My Account" link → `/account` (signed in) or `/sign-in` (signed out) via Clerk `useAuth()` in Layout.tsx
-- **Member tracking:** On Clerk sign-in, App.tsx `ClerkQueryClientCacheInvalidator` fires `POST /api/members/sync` with Clerk user data → upserts `members` table
-- **Kemet8 admin:** `/Kemet8` → Members tab shows all registered Clerk members (name, email, avatar, join date, last login)
-- **Admin auth:** Kemet8 uses `express-session` + `metricadiaAdmin` session flag — separate from Clerk, unchanged
-- **Removed:** Replit OIDC (`openid-client`), `routes/auth.ts`, `middlewares/authMiddleware.ts`, `lib/auth.ts`, `LoginWall.tsx`, `@workspace/replit-auth-web` dep
+- **Sign-in/up pages:** `/sign-in` (`SignIn.tsx`), `/sign-up` (`SignUp.tsx`) — custom forms, CB-branded, no Clerk
+- **Account page:** `/account` (MyAccount.tsx — redirects to `/sign-in` if not authed)
+- **Nav:** "My Account" link → `/account` (signed in) or `/sign-in` (signed out) via `useAuth()` in Layout.tsx
+- **Email verification:** Nodemailer with Proton SMTP — 24h token sent on registration. `GET /api/auth/verify-email?token=...` verifies and redirects.
+- **Kemet8 admin:** Members tab queries `cb_members` table (self-hosted members)
+- **Admin auth:** OTP-based via `admin-otp.ts` — no Clerk bridge
+- **Middleware:** `cbAuthMiddleware` in `auth-middleware.ts` — reads `cb_auth` cookie, attaches `req.cbUser` to requests
 
-**DB tables:** `members` table — `clerk_id` (PK), `email`, `name`, `avatar_url`, `created_at`, `last_login_at`
+**DB tables:**
+- `members` — old Clerk-based table (1 legacy row, preserved, not actively used)
+- `cb_members` — self-hosted auth: `id` (serial PK), `email` (unique), `password_hash`, `name`, `avatar_url`, `email_verified`, `email_verify_token`, `verify_token_expires_at`, `created_at`, `last_login_at`
+
+**Iceland production `.env` needed** (replace old Clerk vars):
+```
+DATABASE_URL=...
+SESSION_SECRET=...
+METRICADIA_TOKEN_SECRET=...   # also used as JWT_SECRET fallback
+METRICADIA_ADMIN_HASH=...
+SMTP_HOST=smtp.protonmail.ch
+SMTP_PORT=587
+SMTP_USER=...
+SMTP_PASS=...
+SMTP_FROM=noreply@clownbinge.com
+CB_DOMAIN=https://clownbinge.com
+NODE_ENV=production
+```
+Remove: `VITE_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, `VITE_CLERK_PROXY_URL`
 
 ### Products
 
@@ -334,6 +354,19 @@ cd scripts && pnpm sitemap                                    # Regenerate sitem
 - ALWAYS run `pnpm sitemap` after inserting new articles
 - Generate script uses `ANTHROPIC_API_KEY` directly; batches of 3 max (~30-40s per article)
 - `subjectParty` can be null for non-politicians
+
+### PERMANENT DIRECTIVE -- primarySources / apaReferences Storage (NEVER REVERT)
+
+**File:** `artifacts/api-server/src/publish-routes.ts`
+
+**Problem:** The line `primarySources: (data.apaReferences as any) || null` causes PostgreSQL/Drizzle to coerce the HTML string into `[]` (empty array) instead of storing the actual HTML string. This silently drops the Primary Sources HTML from every wizard-published article.
+
+**Correct implementation (enforced permanently):**
+```typescript
+primarySources: data.apaReferences ? JSON.stringify(data.apaReferences) : null
+```
+
+`JSON.stringify()` forces PostgreSQL to store the value as a JSONB string literal. When Drizzle reads it back, it returns the string correctly. `PostDetail.tsx` then reads it via `typeof ps === "string"` and renders with `dangerouslySetInnerHTML`. Do not revert to `(data.apaReferences as any) || null` under any circumstances.
 
 ### Article Database (articles in DB)
 
