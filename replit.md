@@ -1,5 +1,14 @@
 # Workspace
 
+## DEPLOYMENT (PERMANENT RULE — NEVER DEVIATE)
+
+**Production runs exclusively on a self-hosted VPS at 1984 Hosting, Reykjavik, Iceland.**
+- IP: `93.95.231.150` (Ubuntu 22.04)
+- Site: `https://clownbinge.com`
+- **GitHub Actions deploys automatically on every push to `main`.** Push code to GitHub — Iceland handles everything after that.
+- **Never use Replit hosting, Replit deployment, or any Replit infrastructure for production.**
+- Agent's job: write code + push to GitHub via `node scripts/github-push.js <files>`. Done.
+
 ## Overview
 
 pnpm workspace monorepo using TypeScript. Each package manages its own dependencies.
