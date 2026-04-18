@@ -88,9 +88,9 @@ function Router() {
         <Route path="/corrections" component={Corrections} />
         <Route path="/admin-access/verify" component={AdminVerify} />
         <Route path="/admin-access" component={AdminGate} />
-        <Route path="/Kemet8/publish" component={PublishWizard} />
-        <Route path="/Kemet8/:postId?" component={AdminEditorPage} />
-        <Route path="/Kemet8" component={AdminEditorPage} />
+        <Route path="/Brain-Instance-:token/publish" component={PublishWizard} />
+        <Route path="/Brain-Instance-:token/:postId" component={AdminEditorPage} />
+        <Route path="/Brain-Instance-:token" component={AdminEditorPage} />
         <Route path="/subscribe" component={Subscribe} />
         <Route component={NotFound} />
       </Switch>
