@@ -8,11 +8,7 @@ import path from "path";
 import router from "./routes";
 import { registerMetricadiaRoutes } from "./editor-routes";
 import { logger } from "./lib/logger";
-import { clerkMiddleware } from "@clerk/express";
-import {
-  CLERK_PROXY_PATH,
-  clerkProxyMiddleware,
-} from "./middlewares/clerkProxyMiddleware";
+import { cbAuthMiddleware } from "./middlewares/auth-middleware";
 
 const app: Express = express();
 
@@ -43,22 +39,17 @@ app.use(
 // Security headers — must be before routes
 app.use(
   helmet({
-    // Allow inline scripts/styles used by Clerk and the React SPA
     contentSecurityPolicy: false,
-    // Allow the Replit preview iframe to embed the site
     frameguard: false,
   })
 );
-
-// Clerk proxy — must be before body parsers
-app.use(CLERK_PROXY_PATH, clerkProxyMiddleware());
 
 app.use(cors({ credentials: true, origin: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// express-session retained for Metricadia admin (Kemet8) auth
+// Session for Metricadia admin (Kemet8) OTP auth
 const SESSION_SECRET = process.env.SESSION_SECRET;
 if (!SESSION_SECRET) {
   if (process.env.NODE_ENV === "production") {
@@ -80,8 +71,8 @@ app.use(
   }),
 );
 
-// Clerk auth middleware
-app.use(clerkMiddleware());
+// Self-hosted CB member JWT auth
+app.use(cbAuthMiddleware);
 
 // Serve uploaded images
 app.use(
