@@ -1,11 +1,11 @@
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
-import { useEffect, useRef } from "react";
-import { QueryClientProvider, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AdminProvider } from "@/context/AdminContext";
-import { ClerkProvider, SignIn, SignUp, useClerk } from "@clerk/react";
+import { AuthProvider } from "@/context/AuthContext";
 
 // Pages
 import Home from "@/pages/Home";
@@ -33,29 +33,23 @@ import AdminGate from "@/pages/AdminGate";
 import AdminVerify from "@/pages/AdminVerify";
 import Subscribe from "@/pages/Subscribe";
 import MyAccount from "@/pages/MyAccount";
+import SignIn from "@/pages/SignIn";
+import SignUp from "@/pages/SignUp";
 import NotFound from "@/pages/not-found";
 import ComingSoon from "@/pages/ComingSoon";
 
 function HomeOrComingSoon() {
-  const isAdmin = 
+  const isAdmin =
     sessionStorage.getItem("metricadia_authenticated") === "true" ||
     sessionStorage.getItem("metricadia_token") !== null;
-  
+
   if (isAdmin) {
     return <Home />;
   }
   return <ComingSoon />;
 }
 
-const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-const clerkProxyUrl = import.meta.env.VITE_CLERK_PROXY_URL || undefined;
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
-
-function stripBase(path: string): string {
-  return basePath && path.startsWith(basePath)
-    ? path.slice(basePath.length) || "/"
-    : path;
-}
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -65,101 +59,14 @@ function ScrollToTop() {
   return null;
 }
 
-const apiBase = import.meta.env.BASE_URL.replace(/\/$/, "");
-
-function ClerkQueryClientCacheInvalidator() {
-  const { addListener } = useClerk();
-  const qc = useQueryClient();
-  const prevUserIdRef = useRef<string | null | undefined>(undefined);
-
-  useEffect(() => {
-    const unsubscribe = addListener(({ user }) => {
-      const userId = user?.id ?? null;
-      if (
-        prevUserIdRef.current !== undefined &&
-        prevUserIdRef.current !== userId
-      ) {
-        qc.clear();
-      }
-      // Sync member record + attempt admin auto-login when user signs in
-      if (userId && prevUserIdRef.current !== userId && user) {
-        const email = user.primaryEmailAddress?.emailAddress ?? "";
-        if (email) {
-          // Member sync
-          fetch(`${apiBase}/api/members/sync`, {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              clerkId: userId,
-              email,
-              name: user.fullName || user.username || null,
-              avatarUrl: user.imageUrl || null,
-            }),
-          }).catch(() => {});
-
-          // Auto-grant Kemet8 admin session if email is whitelisted
-          fetch(`${apiBase}/api/admin/clerk-login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({ email }),
-          }).then((r) => r.ok ? r.json() : null).then((d) => {
-            if (d?.token) {
-              sessionStorage.setItem("metricadia_token", d.token);
-              sessionStorage.setItem("metricadia_authenticated", "true");
-            }
-          }).catch(() => {});
-        }
-      }
-      prevUserIdRef.current = userId;
-    });
-    return unsubscribe;
-  }, [addListener, qc]);
-
-  return null;
-}
-
-function SignInPage() {
-  return (
-    <div
-      className="min-h-screen flex items-center justify-center"
-      style={{ background: "#192e7a" }}
-    >
-      <SignIn
-        routing="path"
-        path={`${basePath}/sign-in`}
-        signUpUrl={`${basePath}/sign-up`}
-        fallbackRedirectUrl={`${basePath}/`}
-      />
-    </div>
-  );
-}
-
-function SignUpPage() {
-  return (
-    <div
-      className="min-h-screen flex items-center justify-center"
-      style={{ background: "#192e7a" }}
-    >
-      <SignUp
-        routing="path"
-        path={`${basePath}/sign-up`}
-        signInUrl={`${basePath}/sign-in`}
-        fallbackRedirectUrl={`${basePath}/`}
-      />
-    </div>
-  );
-}
-
 function Router() {
   return (
     <>
       <ScrollToTop />
       <Switch>
         <Route path="/" component={HomeOrComingSoon} />
-        <Route path="/sign-in/*?" component={SignInPage} />
-        <Route path="/sign-up/*?" component={SignUpPage} />
+        <Route path="/sign-in" component={SignIn} />
+        <Route path="/sign-up" component={SignUp} />
         <Route path="/account" component={MyAccount} />
         <Route path="/case/:slug" component={PostDetail} />
         <Route path="/store" component={Store} />
@@ -191,33 +98,19 @@ function Router() {
   );
 }
 
-function ClerkProviderWithRoutes() {
-  const [, setLocation] = useLocation();
-
-  return (
-    <ClerkProvider
-      publishableKey={clerkPubKey || ""}
-      proxyUrl={clerkProxyUrl}
-      routerPush={(to) => setLocation(stripBase(to))}
-      routerReplace={(to) => setLocation(stripBase(to), { replace: true })}
-    >
-      <QueryClientProvider client={queryClient}>
-        <ClerkQueryClientCacheInvalidator />
-        <AdminProvider>
-          <TooltipProvider>
-            <Router />
-            <Toaster />
-          </TooltipProvider>
-        </AdminProvider>
-      </QueryClientProvider>
-    </ClerkProvider>
-  );
-}
-
 function App() {
   return (
     <WouterRouter base={basePath}>
-      <ClerkProviderWithRoutes />
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <AdminProvider>
+            <TooltipProvider>
+              <Router />
+              <Toaster />
+            </TooltipProvider>
+          </AdminProvider>
+        </QueryClientProvider>
+      </AuthProvider>
     </WouterRouter>
   );
 }
