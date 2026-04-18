@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams, useLocation } from "wouter";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { useUser, useClerk, useAuth } from "@clerk/react";
 import { AdminLogin } from "@/components/AdminLogin";
 import { MetricadiaEditor } from "@/components/MetricadiaEditor";
 import { Button } from "@/components/ui/button";
@@ -97,7 +96,6 @@ function fmtDate(iso: string) {
 
 function useAdminAuth() {
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
-  const { getToken, isSignedIn } = useAuth();
 
   useEffect(() => {
     // Always validate token against server on load — sessionStorage alone is
@@ -109,41 +107,18 @@ function useAdminAuth() {
       headers: storedToken ? { "X-Metricadia-Token": storedToken } : {},
     })
       .then((r) => r.json())
-      .then(async (d) => {
+      .then((d) => {
         if (d.authenticated) {
           setAuthenticated(true);
           return;
         }
-        // Token is stale or absent — clear it and try Clerk bridge
+        // Token is stale or absent — clear and require OTP login
         sessionStorage.removeItem("metricadia_token");
         sessionStorage.removeItem("metricadia_authenticated");
-        if (!isSignedIn) { setAuthenticated(false); return; }
-        try {
-          const clerkToken = await getToken();
-          const res = await fetch("/api/admin/clerk-login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              ...(clerkToken ? { Authorization: `Bearer ${clerkToken}` } : {}),
-            },
-            credentials: "include",
-          });
-          if (res.ok) {
-            const data = await res.json();
-            if (data?.token) {
-              sessionStorage.setItem("metricadia_token", data.token);
-              sessionStorage.setItem("metricadia_authenticated", "true");
-            }
-            setAuthenticated(true);
-          } else {
-            setAuthenticated(false);
-          }
-        } catch {
-          setAuthenticated(false);
-        }
+        setAuthenticated(false);
       })
       .catch(() => setAuthenticated(false));
-  }, [isSignedIn, getToken]);
+  }, []);
 
   const logout = async () => {
     await fetch("/api/metricadia/logout", { method: "POST", credentials: "include" });
@@ -178,9 +153,6 @@ const NAV_SOON: { id: Section; label: string; icon: React.ElementType }[] = [
 ];
 
 function Sidebar({ activeSection, onSection, onLogout }: SidebarProps) {
-  const { user } = useUser();
-  const { signOut } = useClerk();
-
   const handleReaderMode = async () => {
     await fetch("/api/metricadia/logout", { method: "POST", credentials: "include" });
     sessionStorage.removeItem("metricadia_token");
@@ -249,21 +221,15 @@ function Sidebar({ activeSection, onSection, onLogout }: SidebarProps) {
       {/* Bottom controls */}
       <div className="px-3 pb-5 pt-4 space-y-1" style={{ borderTop: "1px solid rgba(201,162,39,0.15)" }}>
         {/* Current user */}
-        {user && (
-          <div className="flex items-center gap-2.5 px-3 py-2 mb-2">
-            {user.imageUrl ? (
-              <img src={user.imageUrl} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" style={{ border: "1px solid rgba(201,162,39,0.3)" }} />
-            ) : (
-              <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[11px] font-bold" style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.3)", color: "#C9A227" }}>
-                {(user.fullName || user.primaryEmailAddress?.emailAddress || "A")[0].toUpperCase()}
-              </div>
-            )}
-            <div className="min-w-0">
-              <p className="text-xs font-bold text-white truncate">{user.fullName || "Admin"}</p>
-              <p className="text-[10px] truncate" style={{ color: "rgba(255,255,255,0.4)" }}>{user.primaryEmailAddress?.emailAddress}</p>
-            </div>
+        <div className="flex items-center gap-2.5 px-3 py-2 mb-2">
+          <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[11px] font-bold" style={{ background: "#0C1F52", border: "1px solid rgba(201,162,39,0.3)", color: "#C9A227" }}>
+            M
           </div>
-        )}
+          <div className="min-w-0">
+            <p className="text-xs font-bold text-white truncate">Metricadia Admin</p>
+            <p className="text-[10px] truncate" style={{ color: "rgba(255,255,255,0.4)" }}>metricadia@pm.me</p>
+          </div>
+        </div>
 
         <a
           href="/"
@@ -288,7 +254,7 @@ function Sidebar({ activeSection, onSection, onLogout }: SidebarProps) {
         </button>
 
         <button
-          onClick={async () => { await onLogout(); signOut(); }}
+          onClick={async () => { await onLogout(); }}
           className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold transition-colors text-left"
           style={{ color: "rgba(255,255,255,0.4)" }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#E8C840"; (e.currentTarget as HTMLButtonElement).style.background = "rgba(201,162,39,0.06)"; }}
