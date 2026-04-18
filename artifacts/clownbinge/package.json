@@ -77,7 +77,6 @@
     "zod": "catalog:"
   },
   "dependencies": {
-    "@clerk/react": "^6.1.4",
     "@radix-ui/react-visually-hidden": "^1.2.4",
     "@tiptap/core": "^3.22.2",
     "@tiptap/extension-color": "^3.22.2",
