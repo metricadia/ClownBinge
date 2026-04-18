@@ -92,38 +92,62 @@ function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
+// ── Brain-Instance path helper ────────────────────────────────────────────────
+// Returns the sessionStorage-stored brain path + optional suffix, or falls back
+// to /admin-access so the admin is never silently stuck.
+function getAdminPath(suffix = ""): string {
+  const base = sessionStorage.getItem("brain_instance_path") ?? "";
+  return base ? `${base}${suffix}` : "/admin-access";
+}
+
 // ── useAdminAuth ──────────────────────────────────────────────────────────────
 
-function useAdminAuth() {
+function useAdminAuth(brainToken?: string) {
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Always validate token against server on load — sessionStorage alone is
-    // not sufficient because a server restart clears in-memory sessions/tokens.
     const storedToken = sessionStorage.getItem("metricadia_token");
 
-    fetch("/api/metricadia/auth-status", {
-      credentials: "include",
-      headers: storedToken ? { "X-Metricadia-Token": storedToken } : {},
-    })
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.authenticated) {
-          setAuthenticated(true);
-          return;
+    async function init() {
+      // On first visit via Brain-Instance URL, burn the one-time token.
+      // If already burned (navigating within the same session) the server
+      // returns 401 — that is expected; we fall through to the session check.
+      if (brainToken) {
+        try {
+          const burnRes = await fetch(`/api/admin/brain-instance/${brainToken}`, {
+            credentials: "include",
+          });
+          if (burnRes.ok) {
+            sessionStorage.setItem("brain_instance_path", `/Brain-Instance-${brainToken}`);
+          }
+        } catch {
+          // Network error — fall through to session check
         }
-        // Token is stale or absent — clear and require OTP login
+      }
+
+      const r = await fetch("/api/metricadia/auth-status", {
+        credentials: "include",
+        headers: storedToken ? { "X-Metricadia-Token": storedToken } : {},
+      });
+      const d = await r.json();
+      if (d.authenticated) {
+        setAuthenticated(true);
+      } else {
         sessionStorage.removeItem("metricadia_token");
         sessionStorage.removeItem("metricadia_authenticated");
+        sessionStorage.removeItem("brain_instance_path");
         setAuthenticated(false);
-      })
-      .catch(() => setAuthenticated(false));
+      }
+    }
+
+    init().catch(() => setAuthenticated(false));
   }, []);
 
   const logout = async () => {
     await fetch("/api/metricadia/logout", { method: "POST", credentials: "include" });
     sessionStorage.removeItem("metricadia_token");
     sessionStorage.removeItem("metricadia_authenticated");
+    sessionStorage.removeItem("brain_instance_path");
     setAuthenticated(false);
   };
 
@@ -348,7 +372,7 @@ function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPan
         <div className="flex items-center gap-3">
           <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(11,25,48,0.45)" }}>{today.toUpperCase()}</span>
           <button
-            onClick={() => setLocation("/Kemet8/publish")}
+            onClick={() => setLocation(getAdminPath("/publish"))}
             className="flex items-center gap-2 px-4 py-1.5"
             style={{ background: "transparent", color: "#0B1930", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em", border: "1.5px solid #0B1930" }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
@@ -551,7 +575,7 @@ function ArticlesPanel({ posts, allPosts, allCount, isLoading, search, onSearch,
         </div>
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setLocation("/Kemet8/publish")}
+            onClick={() => setLocation(getAdminPath("/publish"))}
             className="flex items-center gap-2 px-4 py-1.5"
             style={{ background: "transparent", color: "#0B1930", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em", border: "1.5px solid #0B1930" }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
@@ -1192,9 +1216,9 @@ function MembersPanel({ authHeaders }: { authHeaders: () => Record<string, strin
 // ── AdminEditorPage (main) ────────────────────────────────────────────────────
 
 export default function AdminEditorPage() {
-  const params = useParams<{ postId?: string }>();
+  const params = useParams<{ token?: string; postId?: string }>();
   const [, setLocation] = useLocation();
-  const { authenticated, setAuthenticated, logout } = useAdminAuth();
+  const { authenticated, setAuthenticated, logout } = useAdminAuth(params.token);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [search, setSearch] = useState("");
   const [showNewArticle, setShowNewArticle] = useState(false);
@@ -1306,7 +1330,7 @@ export default function AdminEditorPage() {
         initialPrimarySourcess={Array.isArray(editingPost.primarySources) ? (editingPost.primarySources as any) : []}
         onClose={() => {
           setEditingPost(null);
-          setLocation("/Kemet8");
+          setLocation(getAdminPath());
         }}
       />
     );
