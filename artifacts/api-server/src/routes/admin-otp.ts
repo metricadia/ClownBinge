@@ -2,11 +2,13 @@
  * Admin OTP + One-Time Token System
  *
  * Flow:
- *   1. POST /api/admin/request-otp  — generates 6-digit OTP, emails it to ADMIN_EMAIL
- *   2. POST /api/admin/verify-otp   — verifies OTP (one-time), returns UUID token
- *   3. GET  /api/admin/activate/:uuid — validates UUID (one-time, 15 min), issues admin session
+ *   1. POST /api/admin/request-otp       — generates 6-digit OTP, emails it to ADMIN_EMAIL
+ *   2. POST /api/admin/verify-otp        — verifies OTP (one-time), returns UUID token
+ *   3. GET  /api/admin/activate/:uuid    — validates UUID (one-time, 15 min), issues admin session
+ *                                          + returns brainPath: "/Brain-Instance-XXXXXXXX"
+ *   4. GET  /api/admin/brain-instance/:token — validates + burns Brain-Instance token (one-time, 15 min)
  *
- * No static path grants access.  /Kemet8 requires a live session.
+ * No static path grants access. Every admin session entry point is ephemeral.
  */
 
 import { Router } from "express";
@@ -18,13 +20,20 @@ import { generateToken, tokenToSessionId } from "../editor-routes";
 const router = Router();
 
 const ADMIN_EMAIL = process.env.ADMIN_OTP_DEST ?? "metricadia@pm.me";
+const BRAIN_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
 
-// ── In-memory stores ────────────────────────────────────────────────────────
-// OTP store: single entry keyed to "admin" (only one admin)
-const otpStore = new Map<string, { otp: string; expiresAt: number }>();
+function generateBrainToken(): string {
+  let result = "";
+  for (let i = 0; i < 8; i++) {
+    result += BRAIN_CHARS[Math.floor(Math.random() * BRAIN_CHARS.length)];
+  }
+  return result;
+}
 
-// UUID token store: keyed to UUID string
-const tokenStore = new Map<string, { expiresAt: number; used: boolean }>();
+// ── In-memory stores ─────────────────────────────────────────────────────────
+const otpStore          = new Map<string, { otp: string; expiresAt: number }>();
+const tokenStore        = new Map<string, { expiresAt: number; used: boolean }>();
+const brainInstanceStore = new Map<string, { expiresAt: number; used: boolean }>();
 
 // ── Rate limits ──────────────────────────────────────────────────────────────
 const requestOtpLimit = rateLimit({
@@ -57,8 +66,8 @@ function makeTransport() {
 
 // ── POST /api/admin/request-otp ──────────────────────────────────────────────
 router.post("/admin/request-otp", requestOtpLimit, async (_req, res) => {
-  const otp = String(randomInt(100_000, 1_000_000)); // 6-digit
-  const expiresAt = Date.now() + 10 * 60 * 1_000;    // 10 min
+  const otp = String(randomInt(100_000, 1_000_000));
+  const expiresAt = Date.now() + 10 * 60 * 1_000;
 
   otpStore.set("admin", { otp, expiresAt });
   setTimeout(() => otpStore.delete("admin"), 10 * 60 * 1_000);
@@ -102,10 +111,8 @@ router.post("/admin/verify-otp", verifyOtpLimit, (req, res) => {
     return res.status(401).json({ error: "Invalid OTP." });
   }
 
-  // Consume immediately — cannot reuse
   otpStore.delete("admin");
 
-  // Generate UUID one-time token (15 min TTL)
   const uuid = randomUUID();
   const tokenExpiry = Date.now() + 15 * 60 * 1_000;
   tokenStore.set(uuid, { expiresAt: tokenExpiry, used: false });
@@ -124,11 +131,9 @@ router.get("/admin/activate/:uuid", (req, res) => {
     return res.status(401).json({ error: "Token invalid, already used, or expired." });
   }
 
-  // Burn the token immediately
   entry.used = true;
   tokenStore.set(uuid, entry);
 
-  // Create admin session + bearer token
   req.session.regenerate((err) => {
     if (err) {
       console.error("[admin/activate] session regenerate error:", err);
@@ -140,12 +145,40 @@ router.get("/admin/activate/:uuid", (req, res) => {
     const adminToken = generateToken();
     const sessionId = req.session.id;
     tokenToSessionId.set(adminToken, sessionId);
-    // 24-hour bearer token
     setTimeout(() => tokenToSessionId.delete(adminToken), 24 * 60 * 60 * 1_000);
     (req.session as any).adminToken = adminToken;
 
-    return res.json({ ok: true, token: adminToken });
+    // Generate one-time Brain-Instance URL (15 min TTL)
+    const brainToken = generateBrainToken();
+    const brainExpiry = Date.now() + 15 * 60 * 1_000;
+    brainInstanceStore.set(brainToken, { expiresAt: brainExpiry, used: false });
+    setTimeout(() => brainInstanceStore.delete(brainToken), 15 * 60 * 1_000);
+
+    return res.json({
+      ok: true,
+      token: adminToken,
+      brainPath: `/Brain-Instance-${brainToken}`,
+    });
   });
+});
+
+// ── GET /api/admin/brain-instance/:token ─────────────────────────────────────
+// Called by the frontend on first load of the Brain-Instance URL.
+// Validates and permanently burns the one-time token.
+// The admin session (established by activate/:uuid) is the ongoing auth gate.
+router.get("/admin/brain-instance/:token", (req, res) => {
+  const { token } = req.params;
+  const entry = brainInstanceStore.get(token);
+
+  if (!entry || entry.used || Date.now() > entry.expiresAt) {
+    brainInstanceStore.delete(token);
+    return res.status(401).json({ error: "Brain-Instance token invalid, already used, or expired." });
+  }
+
+  entry.used = true;
+  brainInstanceStore.set(token, entry);
+
+  return res.json({ ok: true });
 });
 
 export default router;
