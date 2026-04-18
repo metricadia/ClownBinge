@@ -29,6 +29,8 @@ import Methodology from "@/pages/Methodology";
 import Corrections from "@/pages/Corrections";
 import AdminEditorPage from "@/pages/AdminEditorPage";
 import PublishWizard from "@/pages/PublishWizard";
+import AdminGate from "@/pages/AdminGate";
+import AdminVerify from "@/pages/AdminVerify";
 import Subscribe from "@/pages/Subscribe";
 import MyAccount from "@/pages/MyAccount";
 import NotFound from "@/pages/not-found";
@@ -177,6 +179,8 @@ function Router() {
         <Route path="/category/:slug" component={CategoryHub} />
         <Route path="/methodology" component={Methodology} />
         <Route path="/corrections" component={Corrections} />
+        <Route path="/admin-access/verify" component={AdminVerify} />
+        <Route path="/admin-access" component={AdminGate} />
         <Route path="/Kemet8/publish" component={PublishWizard} />
         <Route path="/Kemet8/:postId?" component={AdminEditorPage} />
         <Route path="/Kemet8" component={AdminEditorPage} />
