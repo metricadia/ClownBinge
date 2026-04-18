@@ -39,7 +39,7 @@ export function FloatingAdminBar() {
 
   const handleLogout = async () => { await logout(); setOpen(false); };
 
-  if (location.startsWith("/Kemet8")) return null;
+  if (location.startsWith("/Brain-Instance-")) return null;
   if (checking) return null;
 
   return (
@@ -60,7 +60,7 @@ export function FloatingAdminBar() {
           <div className="flex flex-col gap-1.5">
             {articleSlug && (
               <a
-                href={`/Kemet8/${encodeURIComponent(articleSlug)}`}
+                href={`${sessionStorage.getItem("brain_instance_path") || "/admin-access"}/${encodeURIComponent(articleSlug)}`}
                 className="flex items-center gap-2 text-sm font-bold text-sky-300 hover:text-sky-100 transition-colors px-3 py-2 rounded-xl hover:bg-sky-900/40"
               >
                 <PenLine size={14} />
@@ -68,11 +68,11 @@ export function FloatingAdminBar() {
               </a>
             )}
             <a
-              href="/Kemet8"
+              href={sessionStorage.getItem("brain_instance_path") || "/admin-access"}
               className="flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-white transition-colors px-3 py-2 rounded-xl hover:bg-slate-700/50"
             >
               <LayoutDashboard size={14} />
-              Kemet8 Dashboard
+              Admin Dashboard
             </a>
             <button
               onClick={handleLogout}
