@@ -88,9 +88,9 @@ function Router() {
         <Route path="/corrections" component={Corrections} />
         <Route path="/admin-access/verify" component={AdminVerify} />
         <Route path="/admin-access" component={AdminGate} />
-        <Route path="/Brain-Instance-:token/publish" component={PublishWizard} />
-        <Route path="/Brain-Instance-:token/:postId" component={AdminEditorPage} />
-        <Route path="/Brain-Instance-:token" component={AdminEditorPage} />
+        <Route path={/^\/Brain-Instance-(?<token>[A-Za-z0-9]+)\/publish\/?$/i} component={PublishWizard} />
+        <Route path={/^\/Brain-Instance-(?<token>[A-Za-z0-9]+)\/(?<postId>[^/]+)\/?$/i} component={AdminEditorPage} />
+        <Route path={/^\/Brain-Instance-(?<token>[A-Za-z0-9]+)\/?$/i} component={AdminEditorPage} />
         <Route path="/subscribe" component={Subscribe} />
         <Route component={NotFound} />
       </Switch>
