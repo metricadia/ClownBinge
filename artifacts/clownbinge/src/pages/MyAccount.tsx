@@ -87,14 +87,14 @@ export default function MyAccount() {
               <ShieldCheck className="w-6 h-6 text-[#F5C518]" />
               <div>
                 <p className="font-black text-white text-sm">Admin Access Active</p>
-                <p className="text-white/60 text-xs">You have editorial access to the Kemet8 system</p>
+                <p className="text-white/60 text-xs">You have editorial access. Use the OTP login to enter.</p>
               </div>
             </div>
             <a
-              href={`${basePath}/Kemet8`}
+              href={`${basePath}/admin-access`}
               className="px-4 py-2 rounded-xl text-[13px] font-black uppercase tracking-wider bg-[#F5C518] text-[#1A1A2E] hover:bg-[#e0b400] transition-colors shrink-0"
             >
-              Open Editor
+              Admin Login
             </a>
           </div>
         )}
