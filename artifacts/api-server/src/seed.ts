@@ -577,6 +577,31 @@ export async function applyCategoryOverrides(): Promise<void> {
   }
 }
 
+// Articles that have been damaged by automated sync and must never be touched by
+// any startup function again. locked = true is checked by syncImprovedArticles
+// and insertFoundersPenArticles before any body update.
+const CONTENT_LOCKED_ARTICLES: string[] = [
+  "CB-000088", // Locked April 19, 2026 — body lost to bidirectional sync incident
+];
+
+export async function applyContentLocks(): Promise<void> {
+  try {
+    if (CONTENT_LOCKED_ARTICLES.length === 0) return;
+    const result = await db
+      .update(postsTable)
+      .set({ locked: true })
+      .where(
+        sql`${postsTable.caseNumber} = ANY(${CONTENT_LOCKED_ARTICLES}::text[]) AND ${postsTable.locked} = false`
+      );
+    const count = (result as unknown as { rowCount?: number })?.rowCount ?? 0;
+    if (count > 0) {
+      console.log(`[Seed] Content locks applied: ${count} article(s) locked against automated sync.`);
+    }
+  } catch (err) {
+    console.error("[Seed] Error during applyContentLocks:", err);
+  }
+}
+
 export async function applyStaffPickFlags(): Promise<void> {
   try {
     const result = await db
