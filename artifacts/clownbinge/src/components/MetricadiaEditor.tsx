@@ -278,6 +278,8 @@ export function MetricadiaEditor({
           predicate: (q) => Array.isArray(q.queryKey) && q.queryKey[0] === "/api/posts",
         });
       }
+      // Always refresh the admin posts list so the articles panel shows updated title/category
+      queryClient.invalidateQueries({ queryKey: ["/api/metricadia/posts"] });
       setIsSaving(false);
     },
     onError: (error: any) => {
@@ -311,7 +313,7 @@ export function MetricadiaEditor({
       }
     }, 2000);
     return () => clearTimeout(id);
-  }, [title, excerpt, editor?.state.doc]);
+  }, [title, excerpt, category, editor?.state.doc]);
 
   // ── SEO Score ──────────────────────────────────────────────────────────────
   const calculateSEOScore = () => {
