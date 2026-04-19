@@ -581,6 +581,57 @@ export async function applyCategoryOverrides(): Promise<void> {
   }
 }
 
+// ─── War & Inhumanity tag standardization (April 2026) ───────────────────────
+// Applies clean, consistent tags across all 13 war_and_inhumanity articles.
+// Idempotent: checks current tag count before updating to avoid re-running.
+
+const WAR_TAG_PATCHES: Record<string, string[]> = {
+  "CB-000390": ["ukraine","nato","geopolitical_record","diplomatic_record","declassified","nato_expansion","accountability"],
+  "CB-000242": ["myanmar","military_coup","human_rights","united_nations","aung_san_suu_kyi","accountability","civilian_harm","un_documented"],
+  "CB-000241": ["ukraine","cluster_munitions","war_crimes","civilian_harm","nato","geopolitical_record","biden_administration"],
+  "CB-000240": ["sudan","rsf","rapid_support_forces","atrocities","civilian_harm","accountability","un_documented","humanitarian_crisis"],
+  "CB-000239": ["drc","congo","conflict_minerals","united_nations","m23","accountability","un_documented","civilian_harm"],
+  "CB-000238": ["yemen","humanitarian_crisis","war_crimes","saudi_arabia","civilian_harm","accountability","un_documented"],
+  "CB-000012": ["gaza","palestine","genocide","ethnic_cleansing","civilian_harm","accountability","displacement","icj"],
+  "CB-000121": ["congressional_appropriations","military_spending","fiscal_accountability","accountability","defense_budget","war_spending"],
+  "CB-000188": ["abu_ghraib","torture","taguba_report","us_military","iraq_war","classified_documents","war_crimes","accountability"],
+  "CB-000203": ["drone_strikes","cia","pakistan","civilian_harm","targeted_killing","accountability","war_crimes","national_security"],
+  "CB-000184": ["defense_contractors","gao","pentagon","cost_overruns","military_spending","accountability","fiscal_accountability","government_waste"],
+  "CB-000192": ["yemen","civilian_harm","arms_sales","saudi_arabia","humanitarian_crisis","us_foreign_policy","war_crimes","accountability"],
+  "CB-000198": ["agent_orange","vietnam_veterans","va","disability_claims","pact_act","accountability","fiscal_accountability","veterans_affairs"],
+};
+
+export async function applyWarCategoryTagPatches(): Promise<void> {
+  try {
+    let updated = 0;
+    for (const [caseNum, targetTags] of Object.entries(WAR_TAG_PATCHES)) {
+      const existing = await db.execute(
+        sql`SELECT tags FROM posts WHERE case_number = ${caseNum}`
+      );
+      if (existing.rows.length === 0) continue;
+      const currentTags: string[] = (existing.rows[0] as { tags: string[] }).tags ?? [];
+      const alreadyClean =
+        currentTags.length === targetTags.length &&
+        targetTags.every(t => currentTags.includes(t));
+      if (!alreadyClean) {
+        const arrayLiteral = `{${targetTags.map(t => `"${t}"`).join(",")}}`;
+        await db.execute(
+          sql`UPDATE posts SET tags = ${arrayLiteral}::text[] WHERE case_number = ${caseNum}`
+        );
+        updated++;
+        console.log(`[Seed] Tag patch applied: ${caseNum}`);
+      }
+    }
+    if (updated === 0) {
+      console.log(`[Seed] War category tags: all articles already correct.`);
+    } else {
+      console.log(`[Seed] War category tags: ${updated} article(s) updated.`);
+    }
+  } catch (err) {
+    console.error("[Seed] Error during applyWarCategoryTagPatches:", err);
+  }
+}
+
 // ─── One-time verified_source patch for CB-000390 ────────────────────────────
 // Replaces the HTML-formatted source block (full APA citations) with clean
 // CB citation format: Document Name :: Institution. Body is never touched.
