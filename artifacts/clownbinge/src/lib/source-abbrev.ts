@@ -196,8 +196,25 @@ function applyAbbrev(s: string): string {
   return s.replace(/\s+/g, " ").trim();
 }
 
+/** Strip HTML tags and decode basic HTML entities from a string */
+function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&mdash;/g, "—")
+    .replace(/&ndash;/g, "–")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export function abbreviateSource(raw: string | null | undefined, prefix = false): string {
   if (!raw) return prefix ? "Source: Verified Public Record" : "Verified Public Record";
+
+  // If the value contains HTML markup, strip tags before further processing
+  if (/<[a-z][\s\S]*?>/i.test(raw)) raw = stripHtml(raw);
 
   // Split on semicolons (primary CB separator)
   const segments = raw.split(";").map(s => s.trim()).filter(Boolean);
