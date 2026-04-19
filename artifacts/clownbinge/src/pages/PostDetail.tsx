@@ -215,6 +215,11 @@ export default function PostDetail() {
       const liCount = (ps.match(/<li[\s>]/gi) || []).length;
       return liCount > 0 ? liCount : 1;
     }
+    // verifiedSource stored as raw HTML — count <li> items
+    if (post.verifiedSource && /<li[\s>]/i.test(post.verifiedSource)) {
+      const liCount = (post.verifiedSource.match(/<li[\s>]/gi) || []).length;
+      return liCount > 0 ? liCount : 1;
+    }
     if (post.verifiedSource && post.verifiedSource.includes("::")) {
       return post.verifiedSource.split(/[;|]/).map(s => s.trim()).filter(Boolean).length;
     }
@@ -693,6 +698,14 @@ export default function PostDetail() {
                   <div
                     className="primary-sources-html text-sm leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: psHtml }}
+                  />
+                )
+                /* ── verifiedSource HTML fallback (raw HTML stored in field) ── */
+                : post.verifiedSource && /<[a-z][\s\S]*?>/i.test(post.verifiedSource)
+                ? (
+                  <div
+                    className="primary-sources-html text-sm leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: post.verifiedSource }}
                   />
                 )
                 /* ── verifiedSource APA 7 (::) ── */
