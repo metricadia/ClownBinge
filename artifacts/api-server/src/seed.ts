@@ -306,6 +306,7 @@ export async function updateNativeArticles(): Promise<void> {
 // Only articles explicitly listed here are touched. Never overwrites locked articles.
 
 const IMPROVED_ARTICLES: string[] = [
+  "CB-000088",
   "CB-000384",
   "CB-000388",
 ];
