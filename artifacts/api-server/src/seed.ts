@@ -655,6 +655,148 @@ const CB000390_CLEAN_SOURCE = [
   "Jens Stoltenberg testimony to the European Parliament :: European Parliament",
 ].join("; ");
 
+// ─── Comprehensive tag cleanup (April 2026) ──────────────────────────────────
+// Replaces keyword-stuffed long-phrase tags with short topical tags across all
+// categories. Also fixes native_and_first_nations pipe-delimited single-string
+// tags and adds missing cluster anchor tags. Fully idempotent.
+
+const COMPREHENSIVE_TAG_FIXES: Record<string, string[]> = {
+  "FP-002": ["islam","philosophy","western_thought","intellectual_history","medieval","founders_pen","erased_history"],
+  "FP-003": ["founders_pen","harriet_tubman","irena_sendler","moral_courage","civil_rights","holocaust","erased_history"],
+  "FP-005": ["founders_pen","fbi_crime_data","racial_bias","statistics","debunked","racial_justice","accountability"],
+  "CB-000001": ["health_and_healing","authenticity","psychology","social_performance","wellbeing","research"],
+  "CB-000004": ["pastor_accountability","megachurch_scandal","child_sexual_abuse","gateway_church","accountability","religion","texas"],
+  "CB-000006": ["pastor_accountability","covid_fraud","ppp_fraud","financial_fraud","accountability","religion","north_carolina"],
+  "CB-000008": ["self_owned","dei_hypocrisy","book_banning","school_board","accountability","republican","education"],
+  "CB-000009": ["predatory_lending","consumer_finance","credit_cards","cfpb","debt_trap","financial_accountability","interest_rates"],
+  "CB-000010": ["self_owned","hypocrisy","government_accountability","accountability","republican","attorney_general"],
+  "CB-000017": ["pastor_accountability","prosperity_gospel","televangelist","private_jets","accountability","religion"],
+  "CB-000019": ["pastor_accountability","megachurch_scandal","financial_abuse","spiritual_abuse","accountability","religion","chicago"],
+  "CB-000021": ["self_owned","deficit","congressional_record","government_spending","accountability","republican","senate_vote"],
+  "CB-000022": ["estate_tax","tax_policy","wealth_inequality","tcja","irs","dynastic_wealth","fiscal_accountability"],
+  "CB-000023": ["self_owned","pastor_accountability","fraud","guilty_plea","accountability","religion"],
+  "CB-000024": ["second_amendment","racial_disparity","gun_rights","philando_castile","nra","racial_bias","constitutional_law"],
+  "CB-000030": ["health_and_healing","spirituality","mental_health","research","longevity","harvard_study","empirical_evidence"],
+  "CB-000031": ["censorship","social_media","disinformation","facebook_papers","platform_accountability","algorithmic_harm","accountability"],
+  "CB-000033": ["pastor_accountability","megachurch_scandal","child_sexual_abuse","gateway_church","guilty_plea","accountability","religion"],
+  "CB-000034": ["social_security","retirement_finance","ssa","claiming_strategy","consumer_finance","fiscal_accountability"],
+  "CB-000036": ["predatory_lending","payday_loans","cfpb","consumer_finance","interest_rates","financial_accountability"],
+  "CB-000037": ["self_owned","infrastructure","broadband","congressional_record","accountability","republican","senate_vote"],
+  "CB-000038": ["womens_rights","business_history","womens_achievements","us_history","gender_equity","erased_history"],
+  "CB-000043": ["health_and_healing","longevity","relationships","forgiveness","mental_health","research","emotional_healing"],
+  "CB-000045": ["global_south","us_foreign_policy","immigration","cia","central_america","structural_adjustment","accountability"],
+  "CB-000046": ["pastor_accountability","megachurch_scandal","sexual_misconduct","anti_lgbtq","accountability","religion","atlanta"],
+  "CB-000047": ["censorship","media_accountability","diversity_dei","corporate_media","accountability","journalism"],
+  "CB-000048": ["pastor_accountability","tax_evasion","financial_fraud","accountability","religion","brooklyn"],
+  "CB-000051": ["womens_rights","gender_history","etymology","chivalry","legal_history","gender_equity","erased_history"],
+  "CB-000053": ["death_penalty","capital_punishment","wrongful_convictions","racial_disparity","accountability","criminal_justice","abolition"],
+  "CB-000055": ["indigenous_genocide","native_american","census_data","us_history","elimination_policy","first_nations","accountability"],
+  "CB-000060": ["censorship","free_speech","first_amendment","racist_speech","civil_liberties","western_tradition"],
+  "CB-000061": ["pastor_accountability","megachurch_scandal","spiritual_abuse","mars_hill_church","accountability","religion","seattle"],
+  "CB-000062": ["social_security","retirement_finance","trust_fund","ssa","retirement_planning","fiscal_accountability"],
+  "CB-000065": ["self_owned","immigration","political_theater","congressional_record","accountability","republican"],
+  "CB-000068": ["health_and_healing","traditional_medicine","nigella_sativa","anti_inflammatory","global_south","research","empirical_evidence"],
+  "CB-000072": ["us_foreign_policy","declassified","resource_wars","iran_1953","iraq_war","us_history","accountability"],
+  "CB-000074": ["pastor_accountability","covid_defiance","faith_healing","accountability","religion","florida"],
+  "CB-000079": ["student_loans","tax_policy","education_finance","consumer_finance","jct","financial_accountability"],
+  "CB-000083": ["two_party_system","democracy","political_representation","electoral_reform","us_history","structural_failure"],
+  "CB-000088": ["global_south","ancient_egypt","kemet","herodotus","african_civilization","primary_sources","erased_history"],
+  "CB-000089": ["pastor_accountability","prosperity_gospel","private_jets","financial_abuse","accountability","religion"],
+  "CB-000090": ["mortgage_deduction","tax_policy","housing_policy","consumer_finance","wealth_inequality","financial_accountability"],
+  "CB-000094": ["jury_discrimination","sixth_amendment","supreme_court","civil_rights_law","racial_bias","constitutional_law","accountability"],
+  "CB-000100": ["pastor_accountability","megachurch_scandal","hate_speech","homophobia","accountability","religion","texas"],
+  "CB-000103": ["retirement_finance","401k","employer_match","consumer_finance","retirement_planning","dol"],
+  "CB-000104": ["self_owned","ted_cruz","christian_nationalism","accountability","republican","theology"],
+  "CB-000105": ["stock_buybacks","corporate_accountability","sec","executive_compensation","financial_accountability","shareholder_returns"],
+  "CB-000109": ["slavery","indigenous_land_theft","racial_wealth_gap","us_history","economic_history","accountability"],
+  "CB-000111": ["white_replacement_theory","census_data","demographic_data","us_history","disinformation","debunked"],
+  "CB-000113": ["pastor_accountability","megachurch_scandal","cover_up","new_life_church","accountability","religion","colorado"],
+  "CB-000115": ["pastor_accountability","veterans_fraud","financial_fraud","accountability","religion","georgia"],
+  "CB-000116": ["national_debt","fiscal_accountability","congressional_record","cbo","accountability","government_spending"],
+  "CB-000118": ["education_finance","529_plans","wealth_inequality","consumer_finance","tax_policy","fiscal_accountability"],
+  "CB-000120": ["equal_protection","fourteenth_amendment","constitutional_violations","civil_rights_law","accountability","primary_sources"],
+  "CB-000122": ["indigenous_knowledge","native_american","traditional_knowledge","us_history","first_nations","erased_history"],
+  "CB-000123": ["health_and_healing","chronic_stress","cortisol","inflammation","anger","longevity","neuroscience"],
+  "CB-000126": ["pastor_accountability","election_interference","trump","accountability","religion","political_speech"],
+  "CB-000128": ["pastor_accountability","covid_defiance","ppp_fraud","accountability","religion","louisiana"],
+  "CB-000129": ["consumer_finance","health_savings_account","hsa","tax_policy","retirement_finance","healthcare_costs"],
+  "CB-000130": ["self_owned","congressional_record","voting_record","accountability","republican","senate"],
+  "CB-000131": ["tax_policy","carried_interest","private_equity","tax_loopholes","fiscal_accountability","wealth_inequality"],
+  "CB-000133": ["gerrymandering","rucho_v_common_cause","supreme_court","voting_rights","racial_gerrymandering","constitutional_law","accountability"],
+  "CB-000139": ["anti_racist_heroes","police_accountability","wrongful_police_raid","civil_rights","accountability","self_owned"],
+  "CB-000141": ["pastor_accountability","megachurch_scandal","cover_up","hillsong","accountability","religion","australia"],
+  "CB-000142": ["education_finance","529_plans","consumer_finance","compound_interest","wealth_inequality","college_costs"],
+  "CB-000146": ["ketanji_brown_jackson","supreme_court","confirmation_hearing","womens_rights","accountability","erased_history"],
+  "CB-000155": ["retirement_finance","roth_ira","tax_policy","consumer_finance","fiscal_accountability","high_income_strategy"],
+  "CB-000157": ["consumer_finance","investment_fees","retirement_finance","index_funds","sec","financial_accountability"],
+  "CB-000159": ["fbi_crime_data","criminal_justice","statistics","racial_bias","bureau_of_justice_statistics","accountability","policing"],
+  "CB-000160": ["health_and_healing","social_connection","longevity","harvard_study","friendship","wellbeing","mental_health"],
+  "CB-000165": ["pastor_accountability","prosperity_gospel","private_jets","financial_abuse","accountability","religion","louisiana"],
+  "CB-000166": ["global_south","palestine","archaeology","ancient_history","primary_sources","erased_history","jericho"],
+  "CB-000167": ["pastor_accountability","immigration_hypocrisy","self_owned","accountability","religion"],
+  "CB-000168": ["censorship","ihra","antisemitism_definition","academic_freedom","free_speech","political_speech"],
+  "CB-000170": ["predatory_lending","overdraft_fees","cfpb","consumer_finance","banking_accountability","financial_accountability"],
+};
+
+export async function applyComprehensiveTagPatches(): Promise<void> {
+  try {
+    let replaced = 0;
+    let anchored = 0;
+
+    // 1. Replace keyword-stuffed tags with clean short tags
+    for (const [caseNum, targetTags] of Object.entries(COMPREHENSIVE_TAG_FIXES)) {
+      const existing = await db.execute(sql`SELECT tags FROM posts WHERE case_number = ${caseNum}`);
+      if (existing.rows.length === 0) continue;
+      const currentTags: string[] = (existing.rows[0] as { tags: string[] }).tags ?? [];
+      const alreadyClean =
+        currentTags.length === targetTags.length &&
+        targetTags.every(t => currentTags.includes(t));
+      if (!alreadyClean) {
+        const arrayLiteral = `{${targetTags.map(t => `"${t}"`).join(",")}}`;
+        await db.execute(sql`UPDATE posts SET tags = ${arrayLiteral}::text[] WHERE case_number = ${caseNum}`);
+        replaced++;
+      }
+    }
+
+    // 2. Fix native_and_first_nations pipe-delimited single-string tags
+    const nativeRows = await db.execute(
+      sql`SELECT case_number, tags FROM posts WHERE category = 'native_and_first_nations'`
+    );
+    for (const row of nativeRows.rows as { case_number: string; tags: string[] }[]) {
+      const tags = row.tags ?? [];
+      if (tags.length === 1 && tags[0].includes('|')) {
+        const split = tags[0].split('|').map((t: string) => t.trim()).filter(Boolean);
+        const arrayLiteral = `{${split.map((t: string) => `"${t.replace(/"/g, '\\"')}"`).join(",")}}`;
+        await db.execute(sql`UPDATE posts SET tags = ${arrayLiteral}::text[] WHERE case_number = ${row.case_number}`);
+        replaced++;
+      }
+    }
+
+    // 3. Add missing cluster anchor tags (additive only — never remove)
+    const anchorUpdates: Array<{ selector: string; anchor: string; where?: string }> = [
+      { selector: `category = 'anti_racist_heroes'`, anchor: 'anti_racist_heroes' },
+      { selector: `category = 'anti_racist_heroes' AND case_number >= 'CB-000254'`, anchor: 'erased_history' },
+      { selector: `category = 'women_and_girls'`, anchor: 'womens_rights' },
+    ];
+    for (const { selector, anchor } of anchorUpdates) {
+      const res = await db.execute(
+        sql.raw(`UPDATE posts SET tags = array_append(tags, '${anchor}') WHERE ${selector} AND NOT ('${anchor}' = ANY(tags))`)
+      );
+      const n = (res as unknown as { rowCount?: number })?.rowCount ?? 0;
+      anchored += n;
+    }
+
+    const total = replaced + anchored;
+    if (total === 0) {
+      console.log(`[Seed] Comprehensive tag patches: all articles already correct.`);
+    } else {
+      console.log(`[Seed] Comprehensive tag patches: ${replaced} replaced, ${anchored} anchors added.`);
+    }
+  } catch (err) {
+    console.error("[Seed] Error during applyComprehensiveTagPatches:", err);
+  }
+}
+
 export async function patchCB000390Source(): Promise<void> {
   try {
     // Idempotent: only runs while verified_source still contains HTML tags
