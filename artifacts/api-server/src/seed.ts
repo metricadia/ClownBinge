@@ -581,6 +581,47 @@ export async function applyCategoryOverrides(): Promise<void> {
   }
 }
 
+// ─── One-time verified_source patch for CB-000390 ────────────────────────────
+// Replaces the HTML-formatted source block (full APA citations) with clean
+// CB citation format: Document Name :: Institution. Body is never touched.
+
+const CB000390_CLEAN_SOURCE = [
+  "NATO Expansion: What Gorbachev Heard (NSA Briefing Book 613) :: National Security Archive, George Washington University",
+  "Memorandum of Conversation: Baker-Gorbachev (February 9, 1990) :: George H. W. Bush Presidential Library and Museum",
+  "Nyet Means Nyet: Russia's NATO Enlargement Redlines (Cable 08MOSCOW265) :: United States Department of State, Embassy Moscow",
+  "The Back Channel \u2014 memoir of William J. Burns :: Random House",
+  "Bucharest Summit Declaration, paragraph 23 :: North Atlantic Treaty Organization",
+  "Minsk II \u2014 Package of Measures for the Implementation of the Minsk Agreements :: Organization for Security and Co-operation in Europe",
+  "Interview with Angela Merkel on Minsk and the Ukraine war :: Die Zeit",
+  "Interview with Francois Hollande confirming the Merkel account :: The Kyiv Independent",
+  "Interview with Petro Poroshenko on Minsk as strategic delay :: Deutsche Welle",
+  "Interview with Naftali Bennett on Istanbul negotiations :: Naftali Bennett Official YouTube Channel",
+  "Interview with Numan Kurtulmus on Istanbul negotiations :: CNN Turk",
+  "Russian Draft Treaties on Security Guarantees :: Russian Ministry of Foreign Affairs",
+  "Leaked U.S. and NATO responses to Russian draft treaties :: El Pa\u00eds",
+  "The World Putin Wants (Foreign Affairs, September/October 2022) :: Council on Foreign Relations",
+  "Ukrainska Pravda investigation of the Istanbul negotiations and the Johnson visit :: Ukrainska Pravda",
+  "Jens Stoltenberg testimony to the European Parliament :: European Parliament",
+].join("; ");
+
+export async function patchCB000390Source(): Promise<void> {
+  try {
+    // Idempotent: only runs while verified_source still contains HTML tags
+    const result = await db.execute(
+      sql`UPDATE posts
+          SET verified_source = ${CB000390_CLEAN_SOURCE}
+          WHERE case_number = 'CB-000390'
+            AND verified_source LIKE '%<%'`
+    );
+    const count = (result as unknown as { rowCount?: number })?.rowCount ?? 0;
+    if (count > 0) {
+      console.log(`[Seed] CB-000390 verified_source patched to clean CB citation format.`);
+    }
+  } catch (err) {
+    console.error("[Seed] Error during patchCB000390Source:", err);
+  }
+}
+
 // Articles that have been damaged by automated sync and must never be touched by
 // any startup function again. locked = true is checked by syncImprovedArticles
 // and insertFoundersPenArticles before any body update.
