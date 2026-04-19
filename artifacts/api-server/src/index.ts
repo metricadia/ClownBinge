@@ -1,6 +1,6 @@
 import app from "./app";
 import { logger } from "./lib/logger";
-import { seedIfEmpty, insertNewArticles, insertFoundersPenArticles, updateNativeArticles, syncImprovedArticles, applyPremiumFlags, applyStaffPickFlags, applyCategoryOverrides, applyCaseNumberRenames } from "./seed";
+import { seedIfEmpty, insertNewArticles, insertFoundersPenArticles, updateNativeArticles, syncImprovedArticles, applyPremiumFlags, applyStaffPickFlags, applyCategoryOverrides, applyCaseNumberRenames, applyContentLocks } from "./seed";
 
 const rawPort = process.env["PORT"];
 
@@ -33,5 +33,6 @@ app.listen(port, (err) => {
     .then(() => applyCategoryOverrides())
     .then(() => applyPremiumFlags())
     .then(() => applyStaffPickFlags())
+    .then(() => applyContentLocks())
     .catch((e) => logger.error({ err: e }, "Seed failed"));
 });
