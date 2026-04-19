@@ -306,7 +306,6 @@ export async function updateNativeArticles(): Promise<void> {
 // Only articles explicitly listed here are touched. Never overwrites locked articles.
 
 const IMPROVED_ARTICLES: string[] = [
-  "CB-000088",
   "CB-000384",
   "CB-000388",
 ];
@@ -335,7 +334,7 @@ export async function syncImprovedArticles(): Promise<void> {
       const seed = seedMap.get(row.caseNumber);
       if (!seed) continue;
       const seedBodyLen = (seed.body as string).length;
-      const needsLengthSync = Math.abs(seedBodyLen - row.bodyLen) > 100;
+      const needsLengthSync = seedBodyLen > row.bodyLen + 100;
       const needsCorruptionFix = row.hasCorruptedLinks;
       if (needsLengthSync || needsCorruptionFix) {
         const reason = needsCorruptionFix ? "corrupted links detected" : `${row.bodyLen} -> ${seedBodyLen} chars`;
