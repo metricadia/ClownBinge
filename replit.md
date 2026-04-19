@@ -331,6 +331,25 @@ For any citation that references a non-government source deemed essential (e.g.,
 2. Corporate internal documents obtained via FOIA
 3. State court records not yet digitized in PACER
 
+### INCIDENT LOG — Production Data Loss (April 19, 2026)
+
+**What happened:** `syncImprovedArticles()` in `seed.ts` used `Math.abs()` to compare seed body length vs. production DB body length, causing it to sync in **either direction** — including overwriting a longer production body with a shorter seed body. Agent added `CB-000088` to the `IMPROVED_ARTICLES` list without fully auditing this behavior. On the next Iceland server restart, the function detected that the production DB body for `CB-000088` was ~5,000 characters longer than the seed, and replaced it with the shorter seed version. Approximately 5,000 characters of article content written directly in the Iceland Brain editor were permanently lost.
+
+**Root cause:** `Math.abs(seedBodyLen - row.bodyLen) > 100` — bidirectional sync. Should have been `seedBodyLen > row.bodyLen + 100` (seed longer only). This was a pre-existing bug in the function; agent's error was adding a new article to the list without catching it.
+
+**Fix applied (commit 9a1350db40):**
+1. `CB-000088` removed from `IMPROVED_ARTICLES`
+2. `Math.abs` replaced with directional check — sync now only triggers when seed body is longer than DB body
+
+**Data recovery:** Content was only in Iceland's production PostgreSQL database. No copy exists in the seed, GitHub history, or Replit. Recovery requires a point-in-time backup from 1984 Hosting prior to the deploy that triggered the sync.
+
+**Standing rule — NEVER BYPASS:**
+- `syncImprovedArticles()` must ONLY sync upward (seed longer than DB). It must NEVER overwrite a longer production body with a shorter seed body.
+- Before adding any article to `IMPROVED_ARTICLES`, verify: (1) the seed body is the canonical/intended version, (2) the production DB does not have a longer edited version, (3) the sync direction logic is unidirectional.
+- Any content written through the Brain editor on Iceland production that is NOT also saved back to the seed JSON is at risk if the article is ever added to `IMPROVED_ARTICLES`. The seed JSON is the only safe canonical store.
+
+---
+
 ### Founder's Pen — Self-Healing Startup (NEVER REMOVE OR BYPASS)
 
 The 7 Founder's Pen articles (FP-001 through FP-007) are maintained by a self-healing system that runs on every server startup. This was built because FP article bodies and `verifiedSource` fields were repeatedly lost or truncated in production.
