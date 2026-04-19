@@ -306,6 +306,7 @@ export async function updateNativeArticles(): Promise<void> {
 // Only articles explicitly listed here are touched. Never overwrites locked articles.
 
 const IMPROVED_ARTICLES: string[] = [
+  "CB-000088",
   "CB-000384",
   "CB-000388",
 ];
@@ -344,6 +345,9 @@ export async function syncImprovedArticles(): Promise<void> {
             body: seed.body as string,
             verifiedSource: (seed.verified_source as string | null) ?? null,
             teaser: (seed.teaser as string) ?? undefined,
+            title: (seed.title as string) ?? undefined,
+            slug: (seed.slug as string) ?? undefined,
+            seoMetaTitle: (seed.seo_meta_title as string | null) ?? null,
           })
           .where(eq(postsTable.caseNumber, row.caseNumber));
         updated++;
