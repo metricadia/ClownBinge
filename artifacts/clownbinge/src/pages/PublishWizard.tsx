@@ -117,6 +117,68 @@ function fmtDate(iso: string): string {
   catch { return iso; }
 }
 
+interface ParseErrorDetail {
+  message: string;
+  line: number | null;
+  col: number | null;
+  snippet: string | null;
+  hint: string | null;
+}
+
+function diagnoseParseError(jsonText: string, err: unknown): ParseErrorDetail {
+  const raw = err instanceof Error ? err.message : String(err);
+
+  // Extract character position from error message (V8: "at position N", JSC: "at line N col N")
+  let charPos: number | null = null;
+  let lineNum: number | null = null;
+  let colNum: number | null = null;
+
+  const posMatch = raw.match(/position\s+(\d+)/i);
+  if (posMatch) charPos = parseInt(posMatch[1], 10);
+
+  const lineColMatch = raw.match(/line\s+(\d+)\s+col(?:umn)?\s+(\d+)/i);
+  if (lineColMatch) {
+    lineNum = parseInt(lineColMatch[1], 10);
+    colNum = parseInt(lineColMatch[2], 10);
+  }
+
+  // If we have a char position, convert to line/col
+  if (charPos !== null && lineNum === null) {
+    const before = jsonText.slice(0, charPos);
+    const lines = before.split("\n");
+    lineNum = lines.length;
+    colNum = lines[lines.length - 1].length + 1;
+  }
+
+  // Extract snippet around the problem area
+  let snippet: string | null = null;
+  if (lineNum !== null) {
+    const lines = jsonText.split("\n");
+    const idx = lineNum - 1;
+    const surrounding: string[] = [];
+    for (let i = Math.max(0, idx - 1); i <= Math.min(lines.length - 1, idx + 1); i++) {
+      const prefix = i === idx ? "→ " : "  ";
+      surrounding.push(`${String(i + 1).padStart(4, " ")} ${prefix}${lines[i].slice(0, 120)}`);
+    }
+    snippet = surrounding.join("\n");
+  }
+
+  // Guess the cause
+  let hint: string | null = null;
+  if (jsonText.includes('"body"')) {
+    const bodyMatch = jsonText.match(/"body"\s*:\s*"([\s\S]*?)(?<!\\)",/);
+    if (!bodyMatch) hint = 'The "body" field is the most common culprit. HTML inside a JSON string must have all double-quotes escaped as \\" and all backslashes escaped as \\\\.';
+  }
+  if (!hint && raw.toLowerCase().includes("expected '}'")) {
+    hint = 'A closing brace "}" is missing. Check that every opened "{" has a matching "}".';
+  }
+  if (!hint && raw.toLowerCase().includes("unexpected token")) {
+    hint = 'An unexpected character was found — often an unescaped double-quote (" inside a string value) or a trailing comma after the last field.';
+  }
+
+  return { message: raw, line: lineNum, col: colNum, snippet, hint };
+}
+
 function authHeaders(): Record<string, string> {
   const h: Record<string, string> = { "Content-Type": "application/json" };
   const t = sessionStorage.getItem("metricadia_token");
@@ -329,7 +391,7 @@ export default function PublishWizard() {
   }
 
   const [jsonText, setJsonText] = useState("");
-  const [parseError, setParseError] = useState<string | null>(null);
+  const [parseError, setParseError] = useState<ParseErrorDetail | null>(null);
   const [validation, setValidation] = useState<ValidationResult | null>(null);
   const [enriched, setEnriched] = useState<ReturnType<typeof enrichArticle> | null>(null);
   const [showPreview, setShowPreview] = useState(false);
@@ -358,7 +420,7 @@ export default function PublishWizard() {
     try {
       parsed = JSON.parse(jsonText);
     } catch (err: unknown) {
-      setParseError(`JSON parse error: ${err instanceof Error ? err.message : String(err)}`);
+      setParseError(diagnoseParseError(jsonText, err));
       setValidation(null);
       setEnriched(null);
       return;
@@ -474,8 +536,25 @@ export default function PublishWizard() {
           />
 
           {parseError && (
-            <div style={{ background: "#450a0a", color: "#fca5a5", padding: "8px 12px", borderRadius: 4, fontSize: 12 }}>
-              {parseError}
+            <div style={{ background: "#450a0a", color: "#fca5a5", padding: "12px 14px", borderRadius: 4, fontSize: 12, display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+                <AlertCircle size={14} style={{ flexShrink: 0, marginTop: 1 }} />
+                <span style={{ fontWeight: 700 }}>
+                  JSON parse error
+                  {parseError.line !== null && ` — line ${parseError.line}${parseError.col !== null ? `, col ${parseError.col}` : ""}`}
+                </span>
+              </div>
+              <div style={{ opacity: 0.8 }}>{parseError.message}</div>
+              {parseError.snippet && (
+                <pre style={{ margin: 0, background: "rgba(0,0,0,0.3)", padding: "8px 10px", borderRadius: 3, fontFamily: "'Courier New', monospace", fontSize: 11, lineHeight: 1.6, overflowX: "auto", color: "#fecaca" }}>
+                  {parseError.snippet}
+                </pre>
+              )}
+              {parseError.hint && (
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: 8, opacity: 0.9 }}>
+                  <span style={{ fontWeight: 700 }}>Likely cause: </span>{parseError.hint}
+                </div>
+              )}
             </div>
           )}
 
