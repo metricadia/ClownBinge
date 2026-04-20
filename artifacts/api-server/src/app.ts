@@ -7,6 +7,7 @@ import helmet from "helmet";
 import path from "path";
 import router from "./routes";
 import { registerMetricadiaRoutes } from "./editor-routes";
+import publishRouter from "./publish-routes";
 import { logger } from "./lib/logger";
 import { cbAuthMiddleware } from "./middlewares/auth-middleware";
 
@@ -92,6 +93,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api", router);
+app.use("/api", publishRouter);
 
 registerMetricadiaRoutes(app);
 
