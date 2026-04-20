@@ -8,7 +8,7 @@ import {
   PenLine, LogOut, Plus, X, Loader2, Star, Trash2, Copy, Check,
   LayoutDashboard, FileText, Users, Key, BarChart2, DollarSign,
   LifeBuoy, Mail, Eye, ChevronRight, ShieldOff, ExternalLink,
-  Globe, EyeOff, AlertTriangle, Upload,
+  Globe, EyeOff, AlertTriangle, Upload, Menu,
 } from "lucide-react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -160,6 +160,8 @@ interface SidebarProps {
   activeSection: Section;
   onSection: (s: Section) => void;
   onLogout: () => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const NAV_REAL: { id: Section; label: string; icon: React.ElementType }[] = [
@@ -176,7 +178,7 @@ const NAV_SOON: { id: Section; label: string; icon: React.ElementType }[] = [
   { id: "email",    label: "Email Campaigns",   icon: Mail },
 ];
 
-function Sidebar({ activeSection, onSection, onLogout }: SidebarProps) {
+function Sidebar({ activeSection, onSection, onLogout, isOpen, onClose }: SidebarProps) {
   const handleReaderMode = async () => {
     await fetch("/api/metricadia/logout", { method: "POST", credentials: "include" });
     sessionStorage.removeItem("metricadia_token");
@@ -185,20 +187,48 @@ function Sidebar({ activeSection, onSection, onLogout }: SidebarProps) {
   };
 
   return (
-    <aside className="w-[240px] min-h-screen flex flex-col shrink-0" style={{ background: "#08122E", borderRight: "1px solid rgba(201,162,39,0.18)" }}>
+    <>
+      {/* Mobile backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 md:hidden"
+          style={{ background: "rgba(0,0,0,0.6)" }}
+          onClick={onClose}
+        />
+      )}
+
+      <aside
+        className={`
+          fixed inset-y-0 left-0 z-50 w-[240px] flex flex-col
+          md:relative md:z-auto md:translate-x-0 md:shrink-0
+          transition-transform duration-200 ease-in-out
+          ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+        `}
+        style={{ background: "#08122E", borderRight: "1px solid rgba(201,162,39,0.18)" }}
+      >
 
       {/* Gold top bar */}
       <div style={{ height: "4px", background: "linear-gradient(90deg,#C9A227 0%,#E8C840 20%,#D4A820 40%,#F0D458 55%,#D4A820 70%,#E8C840 82%,#C9A227 100%)", boxShadow: "0 1px 8px rgba(201,162,39,0.4)" }} />
 
-      {/* Brand */}
+      {/* Brand + mobile close button */}
       <div className="px-5 pt-5 pb-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.15)" }}>
-        <div className="mb-1">
-          <span
-            className="text-white leading-none"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "22px", letterSpacing: "0.04em" }}
+        <div className="flex items-start justify-between">
+          <div className="mb-1">
+            <span
+              className="text-white leading-none"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: "22px", letterSpacing: "0.04em" }}
+            >
+              BRAIN
+            </span>
+          </div>
+          <button
+            onClick={onClose}
+            className="md:hidden p-1 rounded"
+            style={{ color: "rgba(255,255,255,0.4)" }}
+            aria-label="Close navigation"
           >
-            BRAIN
-          </span>
+            <X size={16} />
+          </button>
         </div>
         <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: "10px", letterSpacing: "0.18em", color: "rgba(201,162,39,0.7)", marginTop: "2px" }}>
           METRICADIA RESEARCH LLC
@@ -288,7 +318,8 @@ function Sidebar({ activeSection, onSection, onLogout }: SidebarProps) {
           Sign Out
         </button>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }
 
@@ -365,24 +396,24 @@ function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPan
   return (
     <div>
       {/* Section header — Metricadia style */}
-      <div className="flex items-center justify-between pb-3 mb-8" style={{ borderBottom: "1px solid rgba(201,162,39,0.5)" }}>
+      <div className="flex flex-col md:flex-row md:items-center justify-between pb-3 mb-6 md:mb-8 gap-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.5)" }}>
         <div>
           <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "12px", letterSpacing: "0.18em", color: "#0B1930" }}>DASHBOARD</span>
         </div>
-        <div className="flex items-center gap-3">
-          <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(11,25,48,0.45)" }}>{today.toUpperCase()}</span>
+        <div className="flex flex-wrap items-center gap-2 md:gap-3">
+          <span className="w-full md:w-auto mb-2 md:mb-0" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(11,25,48,0.45)" }}>{today.toUpperCase()}</span>
           <button
             onClick={() => setLocation(getAdminPath("/publish"))}
-            className="flex items-center gap-2 px-4 py-1.5"
+            className="flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 md:py-1.5"
             style={{ background: "transparent", color: "#0B1930", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em", border: "1.5px solid #0B1930" }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
           >
-            <Upload size={12} />UPLOAD WIZARD
+            <Upload size={12} />UPLOAD
           </button>
           <button
             onClick={onNewArticle}
-            className="flex items-center gap-2 px-4 py-1.5"
+            className="flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 md:py-1.5"
             style={{ background: "#0B1930", color: "#C9A227", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em" }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#C9A227"; (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
@@ -393,12 +424,12 @@ function DashboardPanel({ articlesCount, onNewArticle, onSection }: DashboardPan
       </div>
 
       {/* Stat Cards — AmEx style */}
-      <div className="grid grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-12">
         {statCards.map(({ label, value, icon: Icon, color, action, comingSoon }) => (
           <div
             key={label}
             onClick={action}
-            className={`relative bg-white p-5 ${action ? "cursor-pointer" : ""}`}
+            className={`relative bg-white p-4 md:p-5 ${action ? "cursor-pointer" : ""}`}
             style={{ borderTop: "3px solid #C9A227", boxShadow: "0 1px 4px rgba(11,25,48,0.08)" }}
             onMouseEnter={(e) => { if (action) (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 16px rgba(11,25,48,0.14)"; }}
             onMouseLeave={(e) => { if (action) (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 4px rgba(11,25,48,0.08)"; }}
@@ -566,26 +597,26 @@ function ArticlesPanel({ posts, allPosts, allCount, isLoading, search, onSearch,
   return (
     <div>
       {/* Section header */}
-      <div className="flex items-center justify-between pb-3 mb-0" style={{ borderBottom: "1px solid rgba(201,162,39,0.5)" }}>
-        <div className="flex items-baseline gap-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between pb-3 mb-0 gap-4" style={{ borderBottom: "1px solid rgba(201,162,39,0.5)" }}>
+        <div className="flex items-baseline gap-4 md:gap-8">
           <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "12px", letterSpacing: "0.18em", color: "#0B1930" }}>ARTICLES</span>
           <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "11px", letterSpacing: "0.14em", color: "rgba(11,25,48,0.45)" }}>
             {activeCategory === "all" ? allCount : displayedPosts.length} ON RECORD
           </span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setLocation(getAdminPath("/publish"))}
-            className="flex items-center gap-2 px-4 py-1.5"
+            className="flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 md:py-1.5"
             style={{ background: "transparent", color: "#0B1930", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em", border: "1.5px solid #0B1930" }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
           >
-            <Upload size={12} />UPLOAD WIZARD
+            <Upload size={12} />UPLOAD
           </button>
           <button
             onClick={onNewArticle}
-            className="flex items-center gap-2 px-4 py-1.5"
+            className="flex-1 md:flex-none flex items-center justify-center gap-2 px-3 md:px-4 py-2 md:py-1.5"
             style={{ background: "#0B1930", color: "#C9A227", fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.15em" }}
             onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#C9A227"; (e.currentTarget as HTMLButtonElement).style.color = "#0B1930"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0B1930"; (e.currentTarget as HTMLButtonElement).style.color = "#C9A227"; }}
@@ -693,47 +724,49 @@ function ArticlesPanel({ posts, allPosts, allCount, isLoading, search, onSearch,
               onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.background = "transparent"; }}
               data-testid={`card-post-${post.id}`}
             >
-              <div className="flex items-center gap-0 py-4 px-1">
-                {/* Gold number */}
-                <div className="w-12 shrink-0">
-                  <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "12px", color: "#C9A227", letterSpacing: "0.04em" }}>
-                    {String(idx + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                {/* Title block */}
-                <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onEdit(post)}>
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    {/* Draft badge */}
-                    {isDraft && (
-                      <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "8px", letterSpacing: "0.18em", padding: "1px 6px", background: "rgba(234,179,8,0.12)", color: "#C9A227", border: "1px solid rgba(201,162,39,0.35)" }}>
-                        DRAFT
-                      </span>
-                    )}
-                    {post.premiumOnly && (
-                      <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "8px", letterSpacing: "0.18em", padding: "1px 6px", background: "#0B1930", color: "#C9A227" }}>
-                        MEMBERS
-                      </span>
-                    )}
-                    {post.category && (
-                      <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "8px", letterSpacing: "0.16em", padding: "1px 6px", background: "rgba(201,162,39,0.1)", color: "rgba(11,25,48,0.6)", border: "1px solid rgba(201,162,39,0.25)" }}>
-                        {(CATEGORIES.find(c => c.value === post.category)?.label ?? post.category).toUpperCase()}
-                      </span>
-                    )}
-                    {post.caseNumber && (
-                      <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "10px", letterSpacing: "0.08em", color: "rgba(11,25,48,0.35)" }}>{post.caseNumber}</span>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 py-4 px-2 sm:px-1">
+                <div className="flex items-start sm:items-center gap-2 sm:gap-0 flex-1 min-w-0">
+                  {/* Gold number */}
+                  <div className="w-8 sm:w-12 shrink-0 pt-0.5 sm:pt-0">
+                    <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "12px", color: "#C9A227", letterSpacing: "0.04em" }}>
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  {/* Title block */}
+                  <div className="flex-1 min-w-0 cursor-pointer" onClick={() => onEdit(post)}>
+                    <div className="flex items-center gap-2 flex-wrap mb-1">
+                      {/* Draft badge */}
+                      {isDraft && (
+                        <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "8px", letterSpacing: "0.18em", padding: "1px 6px", background: "rgba(234,179,8,0.12)", color: "#C9A227", border: "1px solid rgba(201,162,39,0.35)" }}>
+                          DRAFT
+                        </span>
+                      )}
+                      {post.premiumOnly && (
+                        <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "8px", letterSpacing: "0.18em", padding: "1px 6px", background: "#0B1930", color: "#C9A227" }}>
+                          MEMBERS
+                        </span>
+                      )}
+                      {post.category && (
+                        <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "8px", letterSpacing: "0.16em", padding: "1px 6px", background: "rgba(201,162,39,0.1)", color: "rgba(11,25,48,0.6)", border: "1px solid rgba(201,162,39,0.25)" }}>
+                          {(CATEGORIES.find(c => c.value === post.category)?.label ?? post.category).toUpperCase()}
+                        </span>
+                      )}
+                      {post.caseNumber && (
+                        <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "10px", letterSpacing: "0.08em", color: "rgba(11,25,48,0.35)" }}>{post.caseNumber}</span>
+                      )}
+                    </div>
+                    <span className="transition-colors block leading-snug" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "14px", fontWeight: 700, color: "#0B1930" }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLSpanElement).style.color = "#C9A227"; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLSpanElement).style.color = "#0B1930"; }}
+                    >
+                      {post.title || "(Untitled)"}
+                    </span>
+                    {post.publishedAt && !isDraft && (
+                      <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "10px", letterSpacing: "0.1em", color: "rgba(11,25,48,0.35)", marginTop: "4px" }}>{fmtDate(post.publishedAt)}</p>
                     )}
                   </div>
-                  <span className="transition-colors" style={{ fontFamily: "'Libre Baskerville', serif", fontSize: "14px", fontWeight: 700, color: "#0B1930" }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLSpanElement).style.color = "#C9A227"; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLSpanElement).style.color = "#0B1930"; }}
-                  >
-                    {post.title || "(Untitled)"}
-                  </span>
-                  {post.publishedAt && !isDraft && (
-                    <p style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, fontSize: "10px", letterSpacing: "0.1em", color: "rgba(11,25,48,0.35)", marginTop: "3px" }}>{fmtDate(post.publishedAt)}</p>
-                  )}
                 </div>
-                <div className="flex items-center gap-1.5 shrink-0">
+                <div className="flex items-center gap-1.5 shrink-0 ml-10 sm:ml-0 mt-1 sm:mt-0 flex-wrap">
                   {/* Premium toggle */}
                   <button
                     onClick={(e) => { e.stopPropagation(); premiumMutation.mutate({ id: post.id, premiumOnly: !post.premiumOnly }); }}
@@ -1051,12 +1084,12 @@ function SubscribersPanel({ authHeaders }: { authHeaders: () => Record<string, s
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
         <div>
           <h1 className="text-2xl font-black text-white">Subscribers</h1>
           <p className="text-slate-500 text-sm mt-0.5">{tokens.filter(t => t.active).length} active tokens</p>
         </div>
-        <Button size="sm" onClick={() => setCreating(true)} className="bg-amber-500 hover:bg-amber-600 text-black font-bold">
+        <Button size="sm" onClick={() => setCreating(true)} className="bg-amber-500 hover:bg-amber-600 text-black font-bold w-full sm:w-auto">
           <Plus className="w-4 h-4 mr-2" />Issue Token
         </Button>
       </div>
@@ -1178,36 +1211,74 @@ function MembersPanel({ authHeaders }: { authHeaders: () => Record<string, strin
           <p className="text-sm" style={{ color: "rgba(11,25,48,0.4)", fontFamily: "'Inter', sans-serif" }}>No members yet. They appear after signing in.</p>
         </div>
       ) : (
-        <table className="w-full">
-          <thead>
-            <tr style={{ borderBottom: "1px solid rgba(201,162,39,0.4)" }}>
-              {["Member", "Email", "Joined", "Last Login"].map(h => (
-                <th key={h} className="text-left pb-3" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "10px", letterSpacing: "0.18em", color: "rgba(11,25,48,0.5)" }}>{h.toUpperCase()}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
+        <>
+          {/* Mobile view: Stacked cards */}
+          <div className="md:hidden grid gap-4">
             {members.map((m) => (
-              <tr key={m.clerkId} style={{ borderBottom: "1px solid rgba(11,25,48,0.07)" }}>
-                <td className="py-3 pr-4">
-                  <div className="flex items-center gap-3">
-                    {m.avatarUrl ? (
-                      <img src={m.avatarUrl} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" />
-                    ) : (
-                      <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold" style={{ background: "#0B1930", color: "#C9A227" }}>
-                        {(m.name || m.email)[0].toUpperCase()}
-                      </div>
-                    )}
-                    <span className="font-semibold" style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", color: "#0B1930" }}>{m.name || <span className="italic" style={{ color: "rgba(11,25,48,0.35)" }}>—</span>}</span>
+              <div key={m.clerkId} className="bg-white rounded-xl p-4 shadow-sm" style={{ border: "1px solid rgba(11,25,48,0.08)" }}>
+                <div className="flex items-center gap-3 mb-3">
+                  {m.avatarUrl ? (
+                    <img src={m.avatarUrl} alt="" className="w-10 h-10 rounded-full object-cover shrink-0" />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-sm font-bold" style={{ background: "#0B1930", color: "#C9A227" }}>
+                      {(m.name || m.email)[0].toUpperCase()}
+                    </div>
+                  )}
+                  <div className="min-w-0 flex-1">
+                    <p className="font-bold text-sm truncate" style={{ color: "#0B1930", fontFamily: "'Inter', sans-serif" }}>
+                      {m.name || <span className="italic" style={{ color: "rgba(11,25,48,0.4)" }}>No name</span>}
+                    </p>
+                    <p className="text-xs truncate" style={{ color: "rgba(11,25,48,0.55)" }}>{m.email}</p>
                   </div>
-                </td>
-                <td className="py-3 pr-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", color: "rgba(11,25,48,0.6)" }}>{m.email}</td>
-                <td className="py-3 pr-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "11px", color: "rgba(11,25,48,0.45)", whiteSpace: "nowrap" }}>{fmtDate(m.createdAt)}</td>
-                <td className="py-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: "11px", color: "rgba(11,25,48,0.45)", whiteSpace: "nowrap" }}>{fmtDate(m.lastLoginAt)}</td>
-              </tr>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  <div>
+                    <p style={{ color: "rgba(11,25,48,0.45)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.1em" }}>JOINED</p>
+                    <p style={{ color: "#0B1930", fontWeight: 500 }}>{fmtDate(m.createdAt)}</p>
+                  </div>
+                  <div>
+                    <p style={{ color: "rgba(11,25,48,0.45)", fontSize: "10px", fontWeight: 600, letterSpacing: "0.1em" }}>LAST LOGIN</p>
+                    <p style={{ color: "#0B1930", fontWeight: 500 }}>{fmtDate(m.lastLoginAt)}</p>
+                  </div>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+
+          {/* Desktop view: Table */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr style={{ borderBottom: "1px solid rgba(201,162,39,0.4)" }}>
+                  {["Member", "Email", "Joined", "Last Login"].map(h => (
+                    <th key={h} className="text-left pb-3" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "10px", letterSpacing: "0.18em", color: "rgba(11,25,48,0.5)" }}>{h.toUpperCase()}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {members.map((m) => (
+                  <tr key={m.clerkId} style={{ borderBottom: "1px solid rgba(11,25,48,0.07)" }}>
+                    <td className="py-3 pr-4">
+                      <div className="flex items-center gap-3">
+                        {m.avatarUrl ? (
+                          <img src={m.avatarUrl} alt="" className="w-7 h-7 rounded-full object-cover shrink-0" />
+                        ) : (
+                          <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold" style={{ background: "#0B1930", color: "#C9A227" }}>
+                            {(m.name || m.email)[0].toUpperCase()}
+                          </div>
+                        )}
+                        <span className="font-semibold" style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", color: "#0B1930" }}>{m.name || <span className="italic" style={{ color: "rgba(11,25,48,0.35)" }}>—</span>}</span>
+                      </div>
+                    </td>
+                    <td className="py-3 pr-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", color: "rgba(11,25,48,0.6)" }}>{m.email}</td>
+                    <td className="py-3 pr-4" style={{ fontFamily: "'Inter', sans-serif", fontSize: "11px", color: "rgba(11,25,48,0.45)", whiteSpace: "nowrap" }}>{fmtDate(m.createdAt)}</td>
+                    <td className="py-3" style={{ fontFamily: "'Inter', sans-serif", fontSize: "11px", color: "rgba(11,25,48,0.45)", whiteSpace: "nowrap" }}>{fmtDate(m.lastLoginAt)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
     </div>
   );
@@ -1223,6 +1294,7 @@ export default function AdminEditorPage() {
   const [search, setSearch] = useState("");
   const [showNewArticle, setShowNewArticle] = useState(false);
   const [activeSection, setActiveSection] = useState<Section>("dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const queryClient = useQueryClient();
 
   const premiumMutation = useMutation({
@@ -1348,26 +1420,36 @@ export default function AdminEditorPage() {
 
       <Sidebar
         activeSection={activeSection}
-        onSection={(s) => { setActiveSection(s); setSearch(""); }}
+        onSection={(s) => { setActiveSection(s); setSearch(""); setSidebarOpen(false); }}
         onLogout={logout}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
 
       <main className="flex-1 min-w-0 overflow-y-auto flex flex-col" style={{ background: "#FAFAF8" }}>
         {/* ── Metricadia-style sticky header ── */}
         <div className="sticky top-0 z-30" style={{ background: "#0B1930" }}>
-          <div className="flex items-center justify-between px-10 py-0" style={{ height: "52px" }}>
-            {/* Wordmark — exact Metricadia-Research LLC style */}
+          <div className="flex items-center justify-between px-4 md:px-10 py-0" style={{ height: "52px" }}>
+            {/* Left: hamburger (mobile) + wordmark */}
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="md:hidden p-1.5 rounded"
+                style={{ color: "rgba(255,255,255,0.7)" }}
+                aria-label="Open navigation"
+              >
+                <Menu size={18} />
+              </button>
               <div className="flex items-baseline gap-0">
                 <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 900, fontSize: "14px", letterSpacing: "0.01em", color: "#fff" }}>METRICADIA</span>
-                <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "14px", letterSpacing: "0.01em", color: "#fff" }}>&thinsp;&ndash;&thinsp;RESEARCH</span>
-                <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "12px", letterSpacing: "0.06em", color: "rgba(255,255,255,0.75)", marginLeft: "4px" }}>LLC</span>
+                <span className="hidden sm:inline" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "14px", letterSpacing: "0.01em", color: "#fff" }}>&thinsp;&ndash;&thinsp;RESEARCH</span>
+                <span className="hidden sm:inline" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "12px", letterSpacing: "0.06em", color: "rgba(255,255,255,0.75)", marginLeft: "4px" }}>LLC</span>
               </div>
               {/* Brain badge */}
               <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "9px", letterSpacing: "0.22em", color: "#C9A227", background: "rgba(201,162,39,0.12)", padding: "2px 7px", border: "1px solid rgba(201,162,39,0.3)" }}>BRAIN</span>
             </div>
-            {/* Right nav — Brain sections, pipe-separated like screenshot */}
-            <div className="flex items-center" style={{ fontFamily: "'Inter', sans-serif" }}>
+            {/* Right nav — hidden on mobile, shown on desktop */}
+            <div className="hidden md:flex items-center" style={{ fontFamily: "'Inter', sans-serif" }}>
               {["DASHBOARD","ARTICLES","MEMBERS","SUBSCRIBERS"].map((label, i, arr) => {
                 const sectionId = label.toLowerCase() as Section;
                 const isActive = activeSection === sectionId;
@@ -1384,13 +1466,19 @@ export default function AdminEditorPage() {
                 );
               })}
             </div>
+            {/* Mobile: show active section name */}
+            <div className="md:hidden">
+              <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "11px", letterSpacing: "0.12em", color: "#C9A227" }}>
+                {activeSection.toUpperCase()}
+              </span>
+            </div>
           </div>
           {/* Gold bar under header */}
           <div style={{ height: "3px", background: "linear-gradient(90deg,#C9A227 0%,#E8C840 20%,#D4A820 40%,#F0D458 55%,#D4A820 70%,#E8C840 82%,#C9A227 100%)" }} />
         </div>
 
         {/* Content */}
-        <div className="px-10 py-10 max-w-5xl w-full flex-1">
+        <div className="px-4 py-6 md:px-10 md:py-10 max-w-5xl w-full flex-1">
           {activeSection === "dashboard" && (
             <DashboardPanel
               articlesCount={allPosts.length}
@@ -1426,13 +1514,13 @@ export default function AdminEditorPage() {
         {/* ── Metricadia-style footer ── */}
         <div className="mt-auto" style={{ background: "#0B1930" }}>
           <div style={{ height: "3px", background: "linear-gradient(90deg,#C9A227 0%,#E8C840 20%,#D4A820 40%,#F0D458 55%,#D4A820 70%,#E8C840 82%,#C9A227 100%)" }} />
-          <div className="flex items-center justify-between px-10" style={{ height: "48px" }}>
+          <div className="flex items-center justify-between px-4 md:px-10" style={{ height: "48px" }}>
             <div className="flex items-baseline gap-0">
               <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 900, fontSize: "12px", color: "#fff", letterSpacing: "0.01em" }}>METRICADIA</span>
               <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "12px", color: "#fff", letterSpacing: "0.01em" }}>&thinsp;&ndash;&thinsp;RESEARCH</span>
               <span style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300, fontSize: "10px", color: "rgba(255,255,255,0.7)", marginLeft: "3px", letterSpacing: "0.05em" }}>LLC</span>
             </div>
-            <div className="flex items-center gap-6" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "11px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.45)" }}>
+            <div className="hidden md:flex items-center gap-6" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: "11px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.45)" }}>
               <span>METRICADIA.COM</span>
               <span style={{ color: "rgba(255,255,255,0.2)" }}>|</span>
               <span>CLOWNBINGE.COM</span>
