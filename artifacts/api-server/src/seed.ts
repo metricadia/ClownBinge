@@ -661,6 +661,7 @@ const CB000390_CLEAN_SOURCE = [
 // tags and adds missing cluster anchor tags. Fully idempotent.
 
 const COMPREHENSIVE_TAG_FIXES: Record<string, string[]> = {
+  "RP-001": ["global south","Africa","colonialism","CFA franc","IMF","World Bank","structural adjustment","Walter Rodney","reasons pen"],
   "RP-002": ["islam","philosophy","western_thought","intellectual_history","medieval","reasons_pen","erased_history"],
   "RP-003": ["reasons_pen","harriet_tubman","irena_sendler","moral_courage","civil_rights","holocaust","erased_history"],
   "RP-005": ["reasons_pen","fbi_crime_data","racial_bias","statistics","debunked","racial_justice","accountability"],
