@@ -5,8 +5,8 @@
   --font-sans: 'Libre Franklin', sans-serif;
   --font-headline: 'Libre Franklin', sans-serif;
   --font-display: 'Archivo Black', sans-serif;
-  --font-founders-title: 'Playfair Display', serif;
-  --font-founders-body: 'Source Serif 4', serif;
+  --font-reasons-title: 'Playfair Display', serif;
+  --font-reasons-body: 'Source Serif 4', serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* ClownBinge Design System Colors */
@@ -165,23 +165,23 @@
     margin-bottom: 1.75rem;
   }
 
-  .founders-pen-article .founders-pen-title {
+  .reasons-pen-article .reasons-pen-title {
     font-size: 2.4rem;
     line-height: 1.15;
   }
 
-  .founders-pen-article .founders-pen-body {
+  .reasons-pen-article .reasons-pen-body {
     font-size: 17px;
     line-height: 1.8;
   }
 
-  .founders-pen-article .founders-pen-lede {
+  .reasons-pen-article .reasons-pen-lede {
     font-size: 18px;
     line-height: 1.75;
     color: #111827;
   }
 
-  /* ── Founder's Pen body component classes (used in article HTML) ── */
+  /* ── Reason's Pen body component classes (used in article HTML) ── */
   .fp-body {
     font-size: 17px;
     line-height: 1.8;
