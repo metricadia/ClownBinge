@@ -1,7 +1,7 @@
 import { db, postsTable } from "@workspace/db";
 import { eq, inArray, sql } from "drizzle-orm";
 import seedData from "./posts-seed.json";
-import fpArticlesData from "./founders-pen-articles.json";
+import rpArticlesData from "./reasons-pen-articles.json";
 
 const SEED_EXPECTED_COUNT = (seedData as Record<string, unknown>[]).length;
 
@@ -80,7 +80,7 @@ async function verifyIntegrity(): Promise<void> {
 }
 
 // ─── Safe delete: only removes articles that came from the seed file ──────────
-// Admin-created articles (e.g. FP-001, FP-002) are NOT in the seed and will
+// Admin-created articles (e.g. RP-001, RP-002) are NOT in the seed and will
 // NOT be deleted. Only articles whose case_number appears in the seed are removed.
 
 async function deleteSeedArticles(): Promise<void> {
@@ -100,11 +100,11 @@ async function deleteSeedArticles(): Promise<void> {
   console.log(`[Seed] Deleted ${deleted} old seed articles (admin-created articles preserved).`);
 }
 
-// ─── Founder's Pen articles — self-healing insert on every startup ────────────
+// ─── Reason's Pen articles — self-healing insert on every startup ────────────
 // These articles are NOT in posts-seed.json and will never be wiped by deleteSeedArticles().
 // This function inserts any missing FP articles into the DB on every boot.
 
-type FpArticle = {
+type RpArticle = {
   caseNumber: string;
   title: string;
   slug: string;
@@ -120,23 +120,23 @@ type FpArticle = {
   nerdAccessible: boolean;
 };
 
-export async function insertFoundersPenArticles(): Promise<void> {
+export async function insertReasonsPenArticles(): Promise<void> {
   try {
-    const existing = await db.execute(sql`SELECT case_number FROM posts WHERE case_number LIKE 'FP-%'`);
+    const existing = await db.execute(sql`SELECT case_number FROM posts WHERE case_number LIKE 'RP-%'`);
     const existingSet = new Set((existing.rows as { case_number: string }[]).map(r => r.case_number));
 
     // Also fetch current body lengths for existing FP articles so we can detect truncation
     const bodyLens = await db.execute(
-      sql`SELECT case_number, LENGTH(body) as body_len FROM posts WHERE case_number LIKE 'FP-%'`
+      sql`SELECT case_number, LENGTH(body) as body_len FROM posts WHERE case_number LIKE 'RP-%'`
     );
     const bodyLenMap = new Map(
       (bodyLens.rows as { case_number: string; body_len: number }[]).map(r => [r.case_number, r.body_len])
     );
 
-    const fpArticles = fpArticlesData as FpArticle[];
+    const rpArticles = rpArticlesData as RpArticle[];
     let inserted = 0;
     let synced = 0;
-    for (const article of fpArticles) {
+    for (const article of rpArticles) {
       if (!existingSet.has(article.caseNumber)) {
         // Insert missing article
         try {
@@ -161,7 +161,7 @@ export async function insertFoundersPenArticles(): Promise<void> {
             viewCount: 0,
             shareCount: 0,
           }).onConflictDoNothing();
-          console.log(`[Seed] Inserted missing Founder's Pen article: ${article.caseNumber}`);
+          console.log(`[Seed] Inserted missing Reason's Pen article: ${article.caseNumber}`);
           inserted++;
         } catch (err) {
           console.error(`[Seed] Failed to insert ${article.caseNumber}:`, err);
@@ -176,7 +176,7 @@ export async function insertFoundersPenArticles(): Promise<void> {
             await db.execute(
               sql`UPDATE posts SET body = ${article.body} WHERE case_number = ${article.caseNumber}`
             );
-            console.log(`[Seed] Synced Founder's Pen body: ${article.caseNumber} (${dbBodyLen} → ${article.body.length} chars)`);
+            console.log(`[Seed] Synced Reason's Pen body: ${article.caseNumber} (${dbBodyLen} → ${article.body.length} chars)`);
             synced++;
           } catch (err) {
             console.error(`[Seed] Failed to sync body for ${article.caseNumber}:`, err);
@@ -196,13 +196,13 @@ export async function insertFoundersPenArticles(): Promise<void> {
     }
     const total = inserted + synced;
     if (total === 0) {
-      console.log(`[Seed] Founder's Pen articles: all ${fpArticles.length} present and up to date.`);
+      console.log(`[Seed] Reason's Pen articles: all ${rpArticles.length} present and up to date.`);
     } else {
-      if (inserted > 0) console.log(`[Seed] Founder's Pen articles: ${inserted} inserted.`);
-      if (synced > 0) console.log(`[Seed] Founder's Pen articles: ${synced} body(s) synced.`);
+      if (inserted > 0) console.log(`[Seed] Reason's Pen articles: ${inserted} inserted.`);
+      if (synced > 0) console.log(`[Seed] Reason's Pen articles: ${synced} body(s) synced.`);
     }
   } catch (err) {
-    console.error("[Seed] Error during insertFoundersPenArticles:", err);
+    console.error("[Seed] Error during insertReasonsPenArticles:", err);
   }
 }
 
@@ -381,7 +381,7 @@ export async function insertNewArticles(): Promise<void> {
     const newPosts = posts.filter(
       (p) =>
         !existingCases.has(p.case_number as string) &&
-        !RETIRED_TO_FP.has(p.case_number as string)
+        !RETIRED_TO_RP.has(p.case_number as string)
     );
 
     if (newPosts.length === 0) {
@@ -508,19 +508,19 @@ const STAFF_PICK_SLUGS: string[] = [
 
 // ─── Rename case numbers that were originally assigned wrong CB- prefixes ─────
 // These articles were created via the editor and got CB- numbers. They belong
-// in the FP- series. This rename runs on every startup and is idempotent.
+// in the RP- series. This rename runs on every startup and is idempotent.
 
 const CASE_NUMBER_RENAMES: { from: string; to: string }[] = [
-  { from: "CB-000125", to: "FP-005" }, // No, Black Americans Do Not Commit More Violent Crime
-  { from: "CB-000384", to: "FP-006" }, // Philo of Alexandria
+  { from: "CB-000125", to: "RP-005" }, // No, Black Americans Do Not Commit More Violent Crime
+  { from: "CB-000384", to: "RP-006" }, // Philo of Alexandria
 ];
 
-// CB- numbers that have been promoted to FP- articles and removed from the
+// CB- numbers that have been promoted to RP- articles and removed from the
 // regular seed. The seed file still lists them under the old number, so
 // insertNewArticles() would try to re-insert them every startup without this
 // exclusion list.
-const RETIRED_TO_FP: Set<string> = new Set([
-  "CB-000174", // → FP-008: $40 Billion Tax on Paying Your Taxes
+const RETIRED_TO_RP: Set<string> = new Set([
+  "CB-000174", // → RP-008: $40 Billion Tax on Paying Your Taxes
 ]);
 
 export async function applyCaseNumberRenames(): Promise<void> {
@@ -545,18 +545,18 @@ export async function applyCaseNumberRenames(): Promise<void> {
 }
 
 // ─── Correct categories that were misassigned during earlier reseeds ──────────
-// These articles were wiped from founders_pen by a prior TRUNCATE and re-added
+// These articles were wiped from reasons_pen by a prior TRUNCATE and re-added
 // under wrong categories. This corrects them permanently on every startup.
 
 const CATEGORY_OVERRIDES: { caseNumber: string; category: typeof postsTable.$inferInsert["category"] }[] = [
-  { caseNumber: "FP-001", category: "founders_pen" }, // Engineered Underdevelopment
-  { caseNumber: "FP-002", category: "founders_pen" }, // Hidden Debts & Philosophia
-  { caseNumber: "FP-003", category: "founders_pen" }, // Harriet Tubman / Irena Sendler
-  { caseNumber: "FP-004", category: "founders_pen" }, // African Immigrants $55 Billion
-  { caseNumber: "FP-005", category: "founders_pen" }, // No, Black Americans Do Not Commit More Violent Crime
-  { caseNumber: "FP-006", category: "founders_pen" }, // Philo of Alexandria
-  { caseNumber: "FP-007", category: "founders_pen" }, // Replacement Theory Requires a Culture to Replace
-  { caseNumber: "FP-008", category: "founders_pen" }, // $40 Billion Tax on Paying Your Taxes
+  { caseNumber: "RP-001", category: "reasons_pen" }, // Engineered Underdevelopment
+  { caseNumber: "RP-002", category: "reasons_pen" }, // Hidden Debts & Philosophia
+  { caseNumber: "RP-003", category: "reasons_pen" }, // Harriet Tubman / Irena Sendler
+  { caseNumber: "RP-004", category: "reasons_pen" }, // African Immigrants $55 Billion
+  { caseNumber: "RP-005", category: "reasons_pen" }, // No, Black Americans Do Not Commit More Violent Crime
+  { caseNumber: "RP-006", category: "reasons_pen" }, // Philo of Alexandria
+  { caseNumber: "RP-007", category: "reasons_pen" }, // Replacement Theory Requires a Culture to Replace
+  { caseNumber: "RP-008", category: "reasons_pen" }, // $40 Billion Tax on Paying Your Taxes
 ];
 
 export async function applyCategoryOverrides(): Promise<void> {
@@ -661,9 +661,9 @@ const CB000390_CLEAN_SOURCE = [
 // tags and adds missing cluster anchor tags. Fully idempotent.
 
 const COMPREHENSIVE_TAG_FIXES: Record<string, string[]> = {
-  "FP-002": ["islam","philosophy","western_thought","intellectual_history","medieval","founders_pen","erased_history"],
-  "FP-003": ["founders_pen","harriet_tubman","irena_sendler","moral_courage","civil_rights","holocaust","erased_history"],
-  "FP-005": ["founders_pen","fbi_crime_data","racial_bias","statistics","debunked","racial_justice","accountability"],
+  "RP-002": ["islam","philosophy","western_thought","intellectual_history","medieval","reasons_pen","erased_history"],
+  "RP-003": ["reasons_pen","harriet_tubman","irena_sendler","moral_courage","civil_rights","holocaust","erased_history"],
+  "RP-005": ["reasons_pen","fbi_crime_data","racial_bias","statistics","debunked","racial_justice","accountability"],
   "CB-000001": ["health_and_healing","authenticity","psychology","social_performance","wellbeing","research"],
   "CB-000004": ["pastor_accountability","megachurch_scandal","child_sexual_abuse","gateway_church","accountability","religion","texas"],
   "CB-000006": ["pastor_accountability","covid_fraud","ppp_fraud","financial_fraud","accountability","religion","north_carolina"],
@@ -817,7 +817,7 @@ export async function patchCB000390Source(): Promise<void> {
 
 // Articles that have been damaged by automated sync and must never be touched by
 // any startup function again. locked = true is checked by syncImprovedArticles
-// and insertFoundersPenArticles before any body update.
+// and insertReasonsPenArticles before any body update.
 const CONTENT_LOCKED_ARTICLES: string[] = [
   "CB-000088", // Locked April 19, 2026 — body lost to bidirectional sync incident
 ];
