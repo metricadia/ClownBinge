@@ -3,7 +3,7 @@ import { useListPosts } from "@workspace/api-client-react";
 import { RELATED_ARTICLES } from "@/config/related-articles";
 
 const CATEGORY_LABELS: Record<string, string> = {
-  founders_pen:       "Founder's Pen",
+  reasons_pen:       "Reason's Pen",
   self_owned:         "Self-Owned",
   law_and_justice:    "Law & Justice",
   money_and_power:    "Money & Power",
