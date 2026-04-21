@@ -5,7 +5,7 @@ import { Upload, FileText, CheckCircle2, AlertCircle, Info, X, Loader2, ChevronD
 // ── Constants ──────────────────────────────────────────────────────────────────
 
 const VALID_CATEGORIES = [
-  "anti_racist_heroes", "censorship", "disarming_hate", "founders_pen",
+  "anti_racist_heroes", "censorship", "disarming_hate", "reasons_pen",
   "global_south", "health_and_healing", "how_it_works", "investigations",
   "law_and_justice", "money_and_power", "native_and_first_nations", "nerd_out",
   "religion", "self_owned", "technology", "us_constitution", "us_history",
