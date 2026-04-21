@@ -20,6 +20,13 @@ import { signCbJwt, cbAuthMiddleware, requireCbAuth } from "../middlewares/auth-
 const router = Router();
 
 const authLimit = rateLimit({ windowMs: 15 * 60 * 1000, max: 20 });
+const loginLimit = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many login attempts. Try again in 15 minutes." },
+});
 
 const CB_DOMAIN = process.env.CB_DOMAIN ?? "https://clownbinge.com";
 
@@ -107,7 +114,7 @@ router.post("/auth/register", authLimit, async (req, res) => {
 });
 
 // ── POST /api/auth/login ──────────────────────────────────────────────────────
-router.post("/auth/login", authLimit, async (req, res) => {
+router.post("/auth/login", loginLimit, async (req, res) => {
   const { email, password } = req.body as { email?: string; password?: string };
   if (!email?.trim() || !password?.trim()) {
     return res.status(400).json({ error: "Email and password are required." });

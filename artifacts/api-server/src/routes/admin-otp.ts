@@ -37,7 +37,7 @@ const brainInstanceStore = new Map<string, { expiresAt: number; used: boolean }>
 
 // ── Rate limits ──────────────────────────────────────────────────────────────
 const requestOtpLimit = rateLimit({
-  windowMs: 10 * 60 * 1000,
+  windowMs: 15 * 60 * 1000,
   max: 5,
   standardHeaders: true,
   legacyHeaders: false,
