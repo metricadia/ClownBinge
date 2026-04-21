@@ -1,5 +1,10 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="180" height="180" rx="28" fill="#08122E"/>
-  <text x="18" y="148" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="138" fill="#FFFFFF" letter-spacing="-4">C</text>
-  <text x="88" y="148" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="138" fill="#C9A227" letter-spacing="-4">B</text>
+  <defs>
+    <linearGradient id="cb-grad" x1="0" x2="180" y1="0" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="50%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#C9A227"/>
+    </linearGradient>
+  </defs>
+  <text x="90" y="150" text-anchor="middle" font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-size="136" fill="url(#cb-grad)">CB</text>
 </svg>
