@@ -9,6 +9,7 @@
 - **Never use Replit hosting, Replit deployment, or any Replit infrastructure for production.**
 - Agent's job: write code + push to GitHub via `node scripts/github-push.js <files>`. Done.
 - **CRITICAL RULE**: Always pass ALL changed files to `github-push.js` in a SINGLE call. This creates ONE commit → ONE deploy. Never call the script multiple times in a row. Never push files one-at-a-time. Multiple pushes = multiple deploys = site goes down repeatedly.
+- **CRITICAL RULE**: The deploy workflow on Iceland runs `pnpm install`, NOT `pnpm install --frozen-lockfile`. The lockfile drifts whenever packages are added inside Replit. Using `--frozen-lockfile` breaks the deploy if the lockfile is out of sync with `package.json`. Never add `--frozen-lockfile` to the deploy script.
 
 ## Overview
 
@@ -87,6 +88,11 @@ Database layer using Drizzle ORM with PostgreSQL. Exports a Drizzle client insta
 - Exports: `.` (pool, db, schema), `./schema` (schema only)
 
 Production migrations are handled by Replit when publishing. In development, we just use `pnpm --filter @workspace/db run push`, and we fallback to `pnpm --filter @workspace/db run push-force`.
+
+**CRITICAL — PostgreSQL enum changes require manual migration.** PostgreSQL can add new values to an enum automatically, but it CANNOT drop or rename existing enum values via `drizzle-kit push`. If you rename or remove an enum value (e.g., renaming a category), you must:
+1. Note the change explicitly before pushing — it will require raw SQL on the Iceland production database.
+2. The migration sequence is: (a) add the new enum value via `ALTER TYPE ... ADD VALUE`, (b) update all rows to use the new value, (c) only then remove the old value via a full enum recreation (`CREATE TYPE ... AS ENUM`, `ALTER TABLE ... ALTER COLUMN ... TYPE`, `DROP TYPE`).
+3. Never assume `drizzle-kit push` handles enum removals/renames automatically — it will error or silently fail on production PostgreSQL.
 
 ### `lib/api-spec` (`@workspace/api-spec`)
 
