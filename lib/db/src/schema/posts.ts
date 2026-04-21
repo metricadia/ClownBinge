@@ -3,7 +3,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
 export const categoryEnum = pgEnum("category", [
-  "founders_pen",
+  "reasons_pen",
   "self_owned",
   "law_and_justice",
   "money_and_power",
