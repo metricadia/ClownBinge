@@ -150,7 +150,6 @@ export default function ComingSoon() {
           font-weight: 900;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: #F2E8D4;
           line-height: 1;
           text-shadow: 0 0 60px rgba(201,162,39,0.12), 0 2px 24px rgba(0,0,0,0.6);
           margin-bottom: 0.5rem;
@@ -258,7 +257,7 @@ export default function ComingSoon() {
 
           <div className="cs-content">
             <p className="cs-eyebrow">A Metricadia Research Publication</p>
-            <h1 className="cs-headline">ClownBinge</h1>
+            <h1 className="cs-headline"><span style={{ color: "#F2E8D4" }}>Clown</span><span style={{ color: "#C9A227" }}>Binge</span></h1>
 
             <span className="cs-pill">
               <span className="cs-dot" />
