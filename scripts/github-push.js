@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 /**
  * github-push.js
- * Push one or more local files to GitHub via the Contents API.
- * No git CLI. No credential store. No push failures.
+ * Push one or more local files to GitHub as a SINGLE commit via the Git Trees API.
+ * One commit = one GitHub Actions deploy trigger, regardless of how many files.
  *
  * Usage:
  *   node scripts/github-push.js <file1> [file2] [file3] ...
  *
  * Requires: GITHUB_PERSONAL_ACCESS_TOKEN env var (already set in Replit secrets)
- * Repo / branch are hardcoded below — change if the project moves.
  */
 
 import { readFileSync } from "fs";
@@ -16,7 +15,7 @@ import { readFileSync } from "fs";
 const REPO   = "metricadia/ClownBinge";
 const BRANCH = "main";
 const TOKEN  = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
-const API    = `https://api.github.com/repos/${REPO}/contents`;
+const API    = `https://api.github.com/repos/${REPO}`;
 
 if (!TOKEN) {
   console.error("ERROR: GITHUB_PERSONAL_ACCESS_TOKEN is not set.");
@@ -29,48 +28,59 @@ if (files.length === 0) {
   process.exit(1);
 }
 
-const headers = {
+const h = {
   "Authorization": `Bearer ${TOKEN}`,
-  "Accept":        "application/vnd.github+json",
+  "Accept": "application/vnd.github+json",
   "X-GitHub-Api-Version": "2022-11-28",
-  "Content-Type":  "application/json",
+  "Content-Type": "application/json",
 };
 
-async function getSha(path) {
-  const res = await fetch(`${API}/${path}?ref=${BRANCH}`, { headers });
-  if (res.status === 404) return null;
-  const j = await res.json();
-  return j.sha ?? null;
+async function gh(path, opts = {}) {
+  const res = await fetch(`${API}${path}`, { headers: h, ...opts });
+  return res.json();
 }
 
-async function pushFile(localPath) {
-  const content = readFileSync(localPath);          // Buffer — works for text AND binary
-  const encoded = content.toString("base64");
-  const sha     = await getSha(localPath);
+// 1. Get current HEAD
+const refData = await gh(`/git/ref/heads/${BRANCH}`);
+const headSha = refData.object.sha;
 
-  const body = {
-    message: `Sync ${localPath.split("/").pop()} via GitHub API`,
-    content: encoded,
-    branch:  BRANCH,
-    ...(sha ? { sha } : {}),
-  };
+// 2. Get current tree SHA
+const commitData = await gh(`/git/commits/${headSha}`);
+const baseTreeSha = commitData.tree.sha;
 
-  const res = await fetch(`${API}/${localPath}`, {
-    method:  "PUT",
-    headers,
-    body:    JSON.stringify(body),
+// 3. Create a blob for each file
+const treeItems = [];
+for (const localPath of files) {
+  const content = readFileSync(localPath);
+  const blobRes = await gh(`/git/blobs`, {
+    method: "POST",
+    body: JSON.stringify({ content: content.toString("base64"), encoding: "base64" }),
   });
-
-  const j = await res.json();
-
-  if (j.commit?.sha) {
-    console.log(`✓ ${localPath}  →  commit ${j.commit.sha.slice(0, 10)}`);
-  } else {
-    console.error(`✗ ${localPath}  →  ${JSON.stringify(j.message ?? j).slice(0, 120)}`);
-    process.exitCode = 1;
-  }
+  treeItems.push({ path: localPath, mode: "100644", type: "blob", sha: blobRes.sha });
+  console.log(`  staged: ${localPath}`);
 }
 
-for (const f of files) {
-  await pushFile(f);
-}
+// 4. Create new tree
+const newTree = await gh(`/git/trees`, {
+  method: "POST",
+  body: JSON.stringify({ base_tree: baseTreeSha, tree: treeItems }),
+});
+
+// 5. Create single commit
+const changedFiles = files.map(f => f.split("/").pop()).join(", ");
+const newCommit = await gh(`/git/commits`, {
+  method: "POST",
+  body: JSON.stringify({
+    message: `chore: update ${changedFiles}`,
+    tree: newTree.sha,
+    parents: [headSha],
+  }),
+});
+
+// 6. Update branch ref
+await gh(`/git/refs/heads/${BRANCH}`, {
+  method: "PATCH",
+  body: JSON.stringify({ sha: newCommit.sha }),
+});
+
+console.log(`\n✓ ${files.length} file(s) → single commit ${newCommit.sha.slice(0, 10)}`);

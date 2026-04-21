@@ -8,6 +8,7 @@
 - **GitHub Actions deploys automatically on every push to `main`.** Push code to GitHub — Iceland handles everything after that.
 - **Never use Replit hosting, Replit deployment, or any Replit infrastructure for production.**
 - Agent's job: write code + push to GitHub via `node scripts/github-push.js <files>`. Done.
+- **CRITICAL RULE**: Always pass ALL changed files to `github-push.js` in a SINGLE call. This creates ONE commit → ONE deploy. Never call the script multiple times in a row. Never push files one-at-a-time. Multiple pushes = multiple deploys = site goes down repeatedly.
 
 ## Overview
 
