@@ -350,24 +350,24 @@ For any citation that references a non-government source deemed essential (e.g.,
 
 ---
 
-### Founder's Pen — Self-Healing Startup (NEVER REMOVE OR BYPASS)
+### Reason's Pen — Self-Healing Startup (NEVER REMOVE OR BYPASS)
 
-The 7 Founder's Pen articles (FP-001 through FP-007) are maintained by a self-healing system that runs on every server startup. This was built because FP article bodies and `verifiedSource` fields were repeatedly lost or truncated in production.
+The 7 Reason's Pen articles (RP-001 through RP-007) are maintained by a self-healing system that runs on every server startup. This was built because FP article bodies and `verifiedSource` fields were repeatedly lost or truncated in production.
 
-**Canonical source:** `artifacts/api-server/src/founders-pen-articles.json` — this is the single source of truth for all 7 FP articles (title, body, verifiedSource, caseNumber, slug, category, tags). Never modify a FP article in the DB without also updating this file.
+**Canonical source:** `artifacts/api-server/src/reasons-pen-articles.json` — this is the single source of truth for all 7 FP articles (title, body, verifiedSource, caseNumber, slug, category, tags). Never modify a FP article in the DB without also updating this file.
 
-**`insertFoundersPenArticles()` in `seed.ts` does the following on every startup:**
+**`insertReasonsPenArticles()` in `seed.ts` does the following on every startup:**
 1. Checks all 7 FP articles exist in the DB — inserts any missing ones
 2. If an FP article body in the DB is shorter than the JSON body by >100 chars (truncation indicator), overwrites the DB body from JSON
 3. Always syncs `verified_source` from JSON to DB (`IS DISTINCT FROM` check — only updates if different)
 
-**Startup sequence (order matters):** `seedIfEmpty → applyCaseNumberRenames → insertNewArticles → insertFoundersPenArticles → updateNativeArticles → syncImprovedArticles → applyCategoryOverrides → applyPremiumFlags → applyStaffPickFlags`
+**Startup sequence (order matters):** `seedIfEmpty → applyCaseNumberRenames → insertNewArticles → insertReasonsPenArticles → updateNativeArticles → syncImprovedArticles → applyCategoryOverrides → applyPremiumFlags → applyStaffPickFlags`
 
-**RETIRED_TO_FP exclusion set (in seed.ts):** CB- numbers that were promoted to FP articles must be added here so `insertNewArticles()` doesn't re-insert the old seed version on every restart. Current list: `CB-000174` → FP-008. Add future promotions here.
+**RETIRED_TO_RP exclusion set (in seed.ts):** CB- numbers that were promoted to FP articles must be added here so `insertNewArticles()` doesn't re-insert the old seed version on every restart. Current list: `CB-000174` → RP-008. Add future promotions here.
 
 **FP article structure requirements (in the JSON and enforced by BLOCK 2 scan):**
 - Each FP article body must contain 5+ `<h2>` sections (provides Table of Contents entries for Google "Jump to:" sitelinks)
-- `verifiedSource` must be in `Title :: APA citation` pipe-separated format (18 entries for FP-007)
+- `verifiedSource` must be in `Title :: APA citation` pipe-separated format (18 entries for RP-007)
 - No `<h1>` tags in body (duplicate H1 penalty)
 - No em dashes in title or body
 
@@ -486,10 +486,10 @@ primarySources: data.apaReferences ? JSON.stringify(data.apaReferences) : null
 
 **Table of Contents — Auto-Generated from H2 Tags (NEVER REMOVE):**
 - Hook: `artifacts/clownbinge/src/hooks/use-article-toc.ts` — scans `containerRef` for H2 elements after body renders, adds slugified `id` attributes to each (e.g., `"The Lobbying Ledger"` → `id="the-lobbying-ledger"`), returns list
-- Component: `artifacts/clownbinge/src/components/ArticleToc.tsx` — renders nothing if < 2 H2s found; renders "In This Treatise" for Founder's Pen articles (dark `#1C0E00` bg, gold `#C9A84C` text) and "In This Article" for all others
-- Wired in: `PostDetail.tsx` — `useArticleToc(containerRef, post?.id, isAuthGated || isPremiumGated)` then `<ArticleToc items={toc} isFoundersPen={isFoundersPen} />` placed between the article header and the `cb-article-body` div
+- Component: `artifacts/clownbinge/src/components/ArticleToc.tsx` — renders nothing if < 2 H2s found; renders "In This Treatise" for Reason's Pen articles (dark `#1C0E00` bg, gold `#C9A84C` text) and "In This Article" for all others
+- Wired in: `PostDetail.tsx` — `useArticleToc(containerRef, post?.id, isAuthGated || isPremiumGated)` then `<ArticleToc items={toc} isReasonsPen={isReasonsPen} />` placed between the article header and the `cb-article-body` div
 - **Why it matters:** H2 anchor IDs are how Google generates "Jump to:" sitelinks in search results — those make the result taller, more prominent, and significantly increase click-through rate. All FP articles have 6-9 H2 sections (enforced by BLOCK 2 minimum of 5 H2s per article). The ToC is invisible on short articles, automatic on long ones — zero manual work per article.
-- **Protection:** H2 structure in FP article bodies is canonical in `founders-pen-articles.json` and is synced by `insertFoundersPenArticles()` on every server startup. It cannot be lost.
+- **Protection:** H2 structure in FP article bodies is canonical in `reasons-pen-articles.json` and is synced by `insertReasonsPenArticles()` on every server startup. It cannot be lost.
 - **Do not gate the ToC:** It must show for signed-out users and crawlers. The `isCrawler` bypass ensures Googlebot sees it. The ToC renders BEFORE the auth gate overlay.
 
 ### Editorial Rules
