@@ -98,15 +98,15 @@ export default function CategoryHub() {
           </div>
         </div>
 
-        {/* ── Founder's Pen Special Editorial Statement ── */}
-        {slug === "founders_pen" && (
+        {/* ── Reason's Pen Special Editorial Statement ── */}
+        {slug === "reasons_pen" && (
           <div className="mb-10">
 
             {/* Definition block */}
             <div className="rounded-none border-l-4 border-[#C9A227] pl-6 py-4 mb-8" style={{ background: "#FAFAF8" }}>
               <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#C9A227", fontFamily: "'Inter', sans-serif" }}>What It Is</p>
               <p className="text-sm leading-relaxed" style={{ color: "#0B1930", fontFamily: "'Georgia', serif" }}>
-                The Founder's Pen is a <strong>rare, explicitly authored</strong> ClownBinge article category written exclusively by the platform founder. It publishes infrequently and deliberately. Every Founder's Pen piece is a long read by definition. No exceptions.
+                The Reason's Pen is a <strong>rare, explicitly authored</strong> ClownBinge article category written exclusively by the platform founder. It publishes infrequently and deliberately. Every Reason's Pen piece is a long read by definition. No exceptions.
               </p>
             </div>
 
@@ -114,10 +114,10 @@ export default function CategoryHub() {
             <div className="rounded-none border border-[#C9A227]/30 p-6 mb-6" style={{ background: "#0B1930" }}>
               <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#C9A227", fontFamily: "'Inter', sans-serif", letterSpacing: "0.2em" }}>Epistemological Posture</p>
               <p className="text-sm leading-relaxed mb-4" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "'Georgia', serif" }}>
-                The Founder's Pen maintains all CB sourcing standards: Tier One primary documentation, falsifiable claims, verified evidence, three-tier source hierarchy. It departs from CB Dry Rationalism in one named and deliberate respect: <strong style={{ color: "#E8C840" }}>it makes no pretense at Eurocentric objectivity</strong> — which was itself a subjective determination made by specific people, in specific institutions, serving specific political and racial interests, at a specific historical moment, and then universalized as the only legitimate posture for knowledge production.
+                The Reason's Pen maintains all CB sourcing standards: Tier One primary documentation, falsifiable claims, verified evidence, three-tier source hierarchy. It departs from CB Dry Rationalism in one named and deliberate respect: <strong style={{ color: "#E8C840" }}>it makes no pretense at Eurocentric objectivity</strong> — which was itself a subjective determination made by specific people, in specific institutions, serving specific political and racial interests, at a specific historical moment, and then universalized as the only legitimate posture for knowledge production.
               </p>
               <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.85)", fontFamily: "'Georgia', serif" }}>
-                The Founder's Pen carries a documented editorial posture, not an undisclosed one. The departure is named. The reasoning is published. Readers are not asked to mistake a standpoint for the absence of one.
+                The Reason's Pen carries a documented editorial posture, not an undisclosed one. The departure is named. The reasoning is published. Readers are not asked to mistake a standpoint for the absence of one.
               </p>
             </div>
 
@@ -166,7 +166,7 @@ export default function CategoryHub() {
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: "#C9A227", fontFamily: "'Inter', sans-serif", letterSpacing: "0.2em" }}>Mandatory Footer — Appears on Every Piece</p>
                 <p className="text-sm italic leading-relaxed" style={{ color: "rgba(255,255,255,0.8)", fontFamily: "'Georgia', serif" }}>
-                  "This piece was written under The Founder's Pen category guidelines. It maintains CB three-tier sourcing standards. It does not maintain CB Dry Rationalism. The distinction is deliberate and documented in CB editorial policy."
+                  "This piece was written under The Reason's Pen category guidelines. It maintains CB three-tier sourcing standards. It does not maintain CB Dry Rationalism. The distinction is deliberate and documented in CB editorial policy."
                 </p>
               </div>
             </div>
