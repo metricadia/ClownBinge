@@ -2,7 +2,7 @@ import type { TocItem } from "@/hooks/use-article-toc";
 
 interface ArticleTocProps {
   items: TocItem[];
-  isFoundersPen?: boolean;
+  isReasonsPen?: boolean;
 }
 
 function scrollToHeading(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
@@ -15,10 +15,10 @@ function scrollToHeading(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
   }
 }
 
-export function ArticleToc({ items, isFoundersPen }: ArticleTocProps) {
+export function ArticleToc({ items, isReasonsPen }: ArticleTocProps) {
   if (items.length < 2) return null;
 
-  if (isFoundersPen) {
+  if (isReasonsPen) {
     return (
       <nav
         aria-label="Table of Contents"
