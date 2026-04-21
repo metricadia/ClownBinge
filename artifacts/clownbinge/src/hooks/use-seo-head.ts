@@ -47,7 +47,7 @@ function removeMeta(name: string, attr = "name") {
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
-  founders_pen:       "Founder's Pen",
+  reasons_pen:       "Reason's Pen",
   self_owned:         "Self-Owned",
   law_and_justice:    "Law & Justice Files",
   money_and_power:    "Money & Power",
@@ -183,8 +183,8 @@ export function useArticleSeoHead(post: Post | null | undefined) {
     const isConstitution = post.category === "us_constitution";
     const isGlobalSouth = post.category === "global_south";
     const isDisarmingHate = post.category === "disarming_hate";
-    const isFoundersPen = post.category === "founders_pen";
-    const isScholarlyDeepDive = isNerdOut || isConstitution || isGlobalSouth || isDisarmingHate || isFoundersPen;
+    const isReasonsPen = post.category === "reasons_pen";
+    const isScholarlyDeepDive = isNerdOut || isConstitution || isGlobalSouth || isDisarmingHate || isReasonsPen;
     const hasApaCitations = !!(post.verifiedSource && post.verifiedSource.includes("::"));
     const pageTitle = isNerdOut
       ? `${post.title} | NerdOut Academic Analysis | ClownBinge`
@@ -269,7 +269,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
 
     // Article @type — ScholarlyArticle for deep legal/historical/academic dives
     let articleType: string | string[];
-    if (isFoundersPen) {
+    if (isReasonsPen) {
       articleType = ["NewsArticle", "ScholarlyArticle", "TechReport", "AnalysisNewsArticle"];
     } else if (isScholarlyDeepDive) {
       articleType = ["NewsArticle", "ScholarlyArticle", "AnalysisNewsArticle"];
@@ -359,7 +359,7 @@ export function useArticleSeoHead(post: Post | null | undefined) {
       };
     }
 
-    if (isFoundersPen) {
+    if (isReasonsPen) {
       articleSchema.about = FOUNDERS_PEN_ENTITIES;
       articleSchema.genre = "Technical Report";
       articleSchema.educationalLevel = "advanced";
