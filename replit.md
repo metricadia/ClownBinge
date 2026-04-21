@@ -867,3 +867,52 @@ A drop-in WYSIWYG admin CMS panel installed at `/Kemet8`.
 **Client packages added**: `@tiptap/core`, `@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-link`, `@tiptap/extension-image`, `@tiptap/extension-underline`, `@tiptap/extension-color`, `@tiptap/extension-text-style`, `@radix-ui/react-visually-hidden`
 
 **Server packages added**: `express-session`, `multer`, `@types/express-session`, `@types/multer`
+
+---
+
+## JSON-LD Server-Side Injection
+
+Structured data (NewsArticle + BreadcrumbList) is injected server-side into `<head>` for article pages so Googlebot and SGE pipelines receive it at first byte before any JS executes.
+
+**Architecture**: Express intercepts `/article/:slug` requests in production, queries the DB for the article, builds the JSON-LD schema, injects `<script type="application/ld+json">` blocks before `</head>`, then serves the enriched HTML. Express also serves all other static files from the Vite build.
+
+**Key files**:
+- `artifacts/api-server/src/middlewares/jsonld-injector.ts` — middleware with schema builders
+- `artifacts/api-server/src/app.ts` — production block that mounts the middleware + static serving
+
+**Environment variables required on Iceland** (add to `artifacts/api-server/.env`):
+- `NODE_ENV=production` — activates the production block (set in pm2 config or .env)
+- `CLOWNBINGE_DIST_PATH=/var/www/clownbinge/artifacts/clownbinge/dist/public` — path to Vite build output
+
+**CRITICAL: nginx config change required on Iceland** (one-time, must be done manually by SSH):
+
+Currently nginx serves static files directly from `dist/public/`. After this change, Express must serve everything. Update the nginx site config (`/etc/nginx/sites-available/clownbinge` or wherever it lives) to proxy ALL traffic to Express instead of serving static files:
+
+```nginx
+# Remove or comment out the static root block:
+# root /var/www/clownbinge/artifacts/clownbinge/dist/public;
+# index index.html;
+# location / { try_files $uri $uri/ /index.html; }
+
+# Replace the / location with a proxy to Express:
+location / {
+    proxy_pass http://127.0.0.1:PORT;   # PORT = same port as api-server
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_cache_bypass $http_upgrade;
+}
+# Keep the /api location block if it exists — it's now handled by the / block above.
+```
+
+After editing: `sudo nginx -t && sudo systemctl reload nginx`
+
+**index.html caching**: The middleware caches `index.html` in memory on first read and reuses it for subsequent requests. A server restart (via pm2 after each deploy) clears the cache, so freshly built HTML is always used after deployment.
+
+**Schemas generated per article**:
+1. `NewsArticle` (+ `ScholarlyArticle` for `reasons_pen` / `nerd_out` categories) with `isAccessibleForFree: "False"` and `hasPart` paywall spec
+2. `BreadcrumbList` with three levels: Home → Category → Article

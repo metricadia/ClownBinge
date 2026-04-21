@@ -10,6 +10,7 @@ import { registerMetricadiaRoutes } from "./editor-routes";
 import publishRouter from "./publish-routes";
 import { logger } from "./lib/logger";
 import { cbAuthMiddleware } from "./middlewares/auth-middleware";
+import { jsonLdInjector } from "./middlewares/jsonld-injector";
 
 const app: Express = express();
 
@@ -96,5 +97,20 @@ app.use("/api", router);
 app.use("/api", publishRouter);
 
 registerMetricadiaRoutes(app);
+
+// Production: serve Vite build + inject JSON-LD for article pages.
+// In dev, Vite dev server handles all frontend traffic.
+// CLOWNBINGE_DIST_PATH must be set in the server .env on Iceland.
+if (process.env.NODE_ENV === "production") {
+  const distPath =
+    process.env.CLOWNBINGE_DIST_PATH ??
+    path.resolve(process.cwd(), "../clownbinge/dist/public");
+
+  app.use(jsonLdInjector(distPath));
+  app.use(express.static(distPath));
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+}
 
 export default app;
