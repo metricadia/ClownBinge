@@ -142,7 +142,7 @@ const CATEGORY_OPTIONS: { value: string; label: string }[] = [
   { value: "how_it_works", label: "How It Works" },
   { value: "nerd_out", label: "NerdOut / Academic" },
   { value: "disarming_hate", label: "Disarming Hate" },
-  { value: "founders_pen", label: "Founder's Pen" },
+  { value: "reasons_pen", label: "Reason's Pen" },
   { value: "self_owned", label: "Self-Owned" },
 ];
 
