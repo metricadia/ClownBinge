@@ -295,7 +295,7 @@ export default function PostDetail() {
                   <>
                     <span>•</span>
                     <span className="text-[11px] font-black uppercase tracking-[0.2em]" style={{ color: "#8B1A1A" }}>
-                      Reason's Pen
+                      🧠 Reason's Pen
                     </span>
                     <span>•</span>
                     <span className="text-xs font-semibold text-header/70">
@@ -367,8 +367,8 @@ export default function PostDetail() {
           <div className="border-b-2 border-border mb-4" />
 
           {isReasonsPen && (
-            <div className="mb-4 inline-flex items-center px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em]" style={{ background: "#3D1A00", color: "#fff" }}>
-              Reason's Pen
+            <div className="mb-4 inline-flex items-center gap-1.5 px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em]" style={{ background: "#3D1A00", color: "#fff" }}>
+              🧠 Reason's Pen
             </div>
           )}
 
