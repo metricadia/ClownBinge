@@ -274,14 +274,14 @@ export default function PostDetail() {
   const isVideo = post.hasVideo;
   const isHero = post.category === "anti_racist_heroes";
   const isNerdOut = post.category === "nerd_out";
-  const isFoundersPen = post.category === "founders_pen";
-  const foundersPenWordCount = post?.body ? post.body.replace(/<[^>]+>/g, "").split(/\s+/).filter(Boolean).length : 0;
-  const foundersPenReadTime = Math.max(1, Math.ceil(foundersPenWordCount / 200));
-  const foundersPenArticleHtml = post?.body ?? "";
+  const isReasonsPen = post.category === "reasons_pen";
+  const reasonsPenWordCount = post?.body ? post.body.replace(/<[^>]+>/g, "").split(/\s+/).filter(Boolean).length : 0;
+  const reasonsPenReadTime = Math.max(1, Math.ceil(reasonsPenWordCount / 200));
+  const reasonsPenArticleHtml = post?.body ?? "";
 
   return (
     <Layout>
-      <article className={`cb-container py-8 sm:py-12 max-w-3xl mx-auto pb-32 ${isFoundersPen ? "founders-pen-article" : ""}`}>
+      <article className={`cb-container py-8 sm:py-12 max-w-3xl mx-auto pb-32 ${isReasonsPen ? "reasons-pen-article" : ""}`}>
 
         <header className="mb-10">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-border pb-5 mb-0">
@@ -290,20 +290,20 @@ export default function PostDetail() {
                 CASE {post.caseNumber}
               </div>
               <div className="flex flex-wrap items-center gap-3 text-sm font-medium text-muted-foreground">
-                {!isFoundersPen && <span className="uppercase tracking-widest">{post.category.replace(/_/g, " ")}</span>}
-                {isFoundersPen && (
+                {!isReasonsPen && <span className="uppercase tracking-widest">{post.category.replace(/_/g, " ")}</span>}
+                {isReasonsPen && (
                   <>
                     <span>•</span>
                     <span className="text-[11px] font-black uppercase tracking-[0.2em]" style={{ color: "#8B1A1A" }}>
-                      Founder's Pen
+                      Reason's Pen
                     </span>
                     <span>•</span>
                     <span className="text-xs font-semibold text-header/70">
-                      {foundersPenWordCount.toLocaleString()} WORDS | {foundersPenReadTime} MIN READ
+                      {reasonsPenWordCount.toLocaleString()} WORDS | {reasonsPenReadTime} MIN READ
                     </span>
                   </>
                 )}
-                {!isFoundersPen && processedBody && processedBody.length > 5000 && (
+                {!isReasonsPen && processedBody && processedBody.length > 5000 && (
                   <>
                     <span>•</span>
                     <span className="text-xs font-semibold text-header/70">
@@ -366,13 +366,13 @@ export default function PostDetail() {
           </div>
           <div className="border-b-2 border-border mb-4" />
 
-          {isFoundersPen && (
+          {isReasonsPen && (
             <div className="mb-4 inline-flex items-center px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em]" style={{ background: "#3D1A00", color: "#fff" }}>
-              Founder's Pen
+              Reason's Pen
             </div>
           )}
 
-          <h1 data-speakable-headline className={`font-sans font-bold text-xl sm:text-2xl lg:text-3xl leading-tight tracking-tight mb-3 ${isSelfOwned ? "text-primary" : "text-header"} ${isFoundersPen ? "founders-pen-title" : ""}`}>
+          <h1 data-speakable-headline className={`font-sans font-bold text-xl sm:text-2xl lg:text-3xl leading-tight tracking-tight mb-3 ${isSelfOwned ? "text-primary" : "text-header"} ${isReasonsPen ? "reasons-pen-title" : ""}`}>
             {post.title}
           </h1>
 
@@ -382,16 +382,16 @@ export default function PostDetail() {
             </p>
           )}
 
-          {isFoundersPen && (
+          {isReasonsPen && (
             <div className="mb-5 p-4 border-l-[3px]" style={{ borderLeftColor: "#8B1A1A", background: "#F5F5F3" }}>
               <p className="text-sm uppercase tracking-[0.2em] font-black mb-2" style={{ color: "#8B1A1A" }}>A note on this category.</p>
               <p className="text-base leading-relaxed" style={{ fontFamily: "'Source Serif 4', Georgia, serif" }}>
-                Mainstream "Opinion" is discourse theatre. This is a Founder's Treatise. We maintain absolute ClownBinge sourcing standards to prove that our perspective isn't a bias—it's the only logical result of reading the documents. Read this as a data-driven indictment of the status quo.
+                Mainstream "Opinion" is discourse theatre. This is a Reason's Treatise. We maintain absolute ClownBinge sourcing standards to prove that our perspective isn't a bias—it's the only logical result of reading the documents. Read this as a data-driven indictment of the status quo.
               </p>
             </div>
           )}
 
-          <p data-speakable-lede className={`text-base sm:text-lg text-muted-foreground font-medium leading-relaxed border-l-4 border-secondary pl-5 ${isFoundersPen ? "founders-pen-lede" : ""}`}>
+          <p data-speakable-lede className={`text-base sm:text-lg text-muted-foreground font-medium leading-relaxed border-l-4 border-secondary pl-5 ${isReasonsPen ? "reasons-pen-lede" : ""}`}>
             {post.teaser}
           </p>
 
@@ -437,15 +437,15 @@ export default function PostDetail() {
 
 
         {/* Table of Contents — auto-generated from H2 tags; visible to crawlers and signed-in users */}
-        <ArticleToc items={toc} isFoundersPen={isFoundersPen} />
+        <ArticleToc items={toc} isReasonsPen={isReasonsPen} />
 
         {/* Article body — preview only when gated */}
         <div
           ref={containerRef as React.RefObject<HTMLDivElement>}
-          className={`cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-strong:text-header prose-p:leading-relaxed mb-4 ${isFoundersPen ? "founders-pen-body" : ""}`}
+          className={`cb-article-body prose prose-lg sm:prose-xl max-w-none text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary prose-strong:text-header prose-p:leading-relaxed mb-4 ${isReasonsPen ? "reasons-pen-body" : ""}`}
         >
-          {isFoundersPen ? (
-            <div className="fp-body" dangerouslySetInnerHTML={{ __html: (isAuthGated || isPremiumGated) ? bodyTop : foundersPenArticleHtml }} />
+          {isReasonsPen ? (
+            <div className="fp-body" dangerouslySetInnerHTML={{ __html: (isAuthGated || isPremiumGated) ? bodyTop : reasonsPenArticleHtml }} />
           ) : (
             <div dangerouslySetInnerHTML={{ __html: bodyTop }} />
           )}
@@ -457,7 +457,7 @@ export default function PostDetail() {
               }
               <ClownCheckCTA />
               <ForensicPivot slug={slug} />
-              {!isFoundersPen && <div dangerouslySetInnerHTML={{ __html: bodyBottom }} />}
+              {!isReasonsPen && <div dangerouslySetInnerHTML={{ __html: bodyBottom }} />}
             </>
           )}
         </div>
