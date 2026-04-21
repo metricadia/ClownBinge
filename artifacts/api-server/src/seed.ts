@@ -520,7 +520,7 @@ const CASE_NUMBER_RENAMES: { from: string; to: string }[] = [
 // insertNewArticles() would try to re-insert them every startup without this
 // exclusion list.
 const RETIRED_TO_RP: Set<string> = new Set([
-  "CB-000174", // → RP-008: $40 Billion Tax on Paying Your Taxes
+  "CB-000174", // → RP-009: $40 Billion Tax on Paying Your Taxes
 ]);
 
 export async function applyCaseNumberRenames(): Promise<void> {
@@ -556,7 +556,8 @@ const CATEGORY_OVERRIDES: { caseNumber: string; category: typeof postsTable.$inf
   { caseNumber: "RP-005", category: "reasons_pen" }, // No, Black Americans Do Not Commit More Violent Crime
   { caseNumber: "RP-006", category: "reasons_pen" }, // Philo of Alexandria
   { caseNumber: "RP-007", category: "reasons_pen" }, // Replacement Theory Requires a Culture to Replace
-  { caseNumber: "RP-008", category: "reasons_pen" }, // $40 Billion Tax on Paying Your Taxes
+  { caseNumber: "RP-008", category: "reasons_pen" }, // A House Divided Against Itself By Design
+  { caseNumber: "RP-009", category: "reasons_pen" }, // $40 Billion Tax on Paying Your Taxes
 ];
 
 export async function applyCategoryOverrides(): Promise<void> {
