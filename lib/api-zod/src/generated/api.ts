@@ -42,11 +42,9 @@ export const ListPostsQueryParams = zod.object({
       "nerd_out",
       "disarming_hate",
       "native_and_first_nations",
+      "reasons_pen",
     ])
     .optional(),
-  tag: zod.string().optional(),
-  series: zod.string().optional(),
-  staffPick: zod.coerce.boolean().optional(),
   limit: zod.coerce.number().default(listPostsQueryLimitDefault),
   offset: zod.coerce.number().default(listPostsQueryOffsetDefault),
 });
@@ -61,6 +59,7 @@ export const ListPostsResponse = zod.object({
       teaser: zod.string(),
       body: zod.string(),
       category: zod.enum([
+        "founders_pen",
         "self_owned",
         "law_and_justice",
         "money_and_power",
@@ -79,6 +78,7 @@ export const ListPostsResponse = zod.object({
         "nerd_out",
         "disarming_hate",
         "native_and_first_nations",
+        "reasons_pen",
       ]),
       subjectName: zod.string().nullish(),
       subjectTitle: zod.string().nullish(),
@@ -95,9 +95,6 @@ export const ListPostsResponse = zod.object({
       createdAt: zod.string(),
       viewCount: zod.number(),
       shareCount: zod.number(),
-      staffPick: zod.boolean().optional(),
-      pinned: zod.boolean().optional(),
-      locked: zod.boolean().optional(),
     }),
   ),
   total: zod.number(),
@@ -120,6 +117,7 @@ export const GetPostResponse = zod.object({
   teaser: zod.string(),
   body: zod.string(),
   category: zod.enum([
+    "founders_pen",
     "self_owned",
     "law_and_justice",
     "money_and_power",
@@ -136,6 +134,9 @@ export const GetPostResponse = zod.object({
     "global_south",
     "how_it_works",
     "nerd_out",
+    "disarming_hate",
+    "native_and_first_nations",
+    "reasons_pen",
   ]),
   subjectName: zod.string().nullish(),
   subjectTitle: zod.string().nullish(),
@@ -152,9 +153,6 @@ export const GetPostResponse = zod.object({
   createdAt: zod.string(),
   viewCount: zod.number(),
   shareCount: zod.number(),
-  staffPick: zod.boolean().optional(),
-  pinned: zod.boolean().optional(),
-  locked: zod.boolean().optional(),
 });
 
 /**

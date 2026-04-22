@@ -21,6 +21,7 @@ export interface SuccessResponse {
 export type PostCategory = (typeof PostCategory)[keyof typeof PostCategory];
 
 export const PostCategory = {
+  founders_pen: "founders_pen",
   self_owned: "self_owned",
   law_and_justice: "law_and_justice",
   money_and_power: "money_and_power",
@@ -39,6 +40,7 @@ export const PostCategory = {
   nerd_out: "nerd_out",
   disarming_hate: "disarming_hate",
   native_and_first_nations: "native_and_first_nations",
+  reasons_pen: "reasons_pen",
 } as const;
 
 export type PostStatus = (typeof PostStatus)[keyof typeof PostStatus];
@@ -72,13 +74,6 @@ export interface Post {
   createdAt: string;
   viewCount: number;
   shareCount: number;
-  sourceUrl?: string | null;
-  userSubmitted: boolean;
-  pinned: boolean;
-  locked: boolean;
-  staffPick?: boolean | null;
-  seoMetaTitle?: string | null;
-  premiumOnly?: boolean | null;
 }
 
 export interface PostListResponse {
@@ -141,8 +136,6 @@ export interface SubscribeRequest {
 
 export type ListPostsParams = {
   category?: ListPostsCategory;
-  tag?: string;
-  staffPick?: boolean;
   limit?: number;
   offset?: number;
 };
@@ -151,6 +144,7 @@ export type ListPostsCategory =
   (typeof ListPostsCategory)[keyof typeof ListPostsCategory];
 
 export const ListPostsCategory = {
+  founders_pen: "founders_pen",
   self_owned: "self_owned",
   law_and_justice: "law_and_justice",
   money_and_power: "money_and_power",
@@ -167,4 +161,7 @@ export const ListPostsCategory = {
   global_south: "global_south",
   how_it_works: "how_it_works",
   nerd_out: "nerd_out",
+  disarming_hate: "disarming_hate",
+  native_and_first_nations: "native_and_first_nations",
+  reasons_pen: "reasons_pen",
 } as const;

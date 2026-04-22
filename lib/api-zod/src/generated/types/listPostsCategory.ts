@@ -10,6 +10,7 @@ export type ListPostsCategory =
   (typeof ListPostsCategory)[keyof typeof ListPostsCategory];
 
 export const ListPostsCategory = {
+  founders_pen: "founders_pen",
   self_owned: "self_owned",
   law_and_justice: "law_and_justice",
   money_and_power: "money_and_power",
@@ -28,4 +29,5 @@ export const ListPostsCategory = {
   nerd_out: "nerd_out",
   disarming_hate: "disarming_hate",
   native_and_first_nations: "native_and_first_nations",
+  reasons_pen: "reasons_pen",
 } as const;

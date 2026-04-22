@@ -42,7 +42,7 @@ paths:
           required: false
           schema:
             type: string
-            enum: [founders_pen, self_owned, law_and_justice, money_and_power, us_constitution, women_and_girls, anti_racist_heroes, us_history, religion, investigations, war_and_inhumanity, health_and_healing, technology, censorship, global_south, how_it_works, nerd_out, disarming_hate, native_and_first_nations]
+            enum: [founders_pen, self_owned, law_and_justice, money_and_power, us_constitution, women_and_girls, anti_racist_heroes, us_history, religion, investigations, war_and_inhumanity, health_and_healing, technology, censorship, global_south, how_it_works, nerd_out, disarming_hate, native_and_first_nations, reasons_pen]
         - name: limit
           in: query
           required: false
@@ -228,7 +228,7 @@ components:
           type: string
         category:
           type: string
-          enum: [founders_pen, self_owned, law_and_justice, money_and_power, us_constitution, women_and_girls, anti_racist_heroes, us_history, religion, investigations, war_and_inhumanity, health_and_healing, technology, censorship, global_south, how_it_works, nerd_out, disarming_hate, native_and_first_nations]
+          enum: [founders_pen, self_owned, law_and_justice, money_and_power, us_constitution, women_and_girls, anti_racist_heroes, us_history, religion, investigations, war_and_inhumanity, health_and_healing, technology, censorship, global_south, how_it_works, nerd_out, disarming_hate, native_and_first_nations, reasons_pen]
         subjectName:
           type: string
           nullable: true

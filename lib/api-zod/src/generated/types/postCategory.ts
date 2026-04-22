@@ -9,6 +9,7 @@
 export type PostCategory = (typeof PostCategory)[keyof typeof PostCategory];
 
 export const PostCategory = {
+  founders_pen: "founders_pen",
   self_owned: "self_owned",
   law_and_justice: "law_and_justice",
   money_and_power: "money_and_power",
@@ -27,4 +28,5 @@ export const PostCategory = {
   nerd_out: "nerd_out",
   disarming_hate: "disarming_hate",
   native_and_first_nations: "native_and_first_nations",
+  reasons_pen: "reasons_pen",
 } as const;
