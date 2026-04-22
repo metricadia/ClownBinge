@@ -233,7 +233,7 @@ export default function Privacy() {
               {
                 icon: "🗑️",
                 title: "Right to Deletion",
-                body: "Request deletion of any personally identifiable data at any time. Email privacy@clownbinge.com. Processed within 48 hours with written confirmation.",
+                body: "Request deletion of any personally identifiable data at any time. Email clownbinge@metricadia.com. Processed within 48 hours with written confirmation.",
               },
               {
                 icon: "📭",
@@ -280,7 +280,7 @@ export default function Privacy() {
             ["Entity", "Metricadia Research, LLC"],
             ["Jurisdiction", "Nevis, St. Kitts & Nevis (SKN)"],
             ["Infrastructure", "Republic of Iceland"],
-            ["Inquiries", "privacy@clownbinge.com"],
+            ["Inquiries", "clownbinge@metricadia.com"],
           ].map(([label, value]) => (
             <div key={label}>
               <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">{label}</p>

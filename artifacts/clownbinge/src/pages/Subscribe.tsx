@@ -116,7 +116,7 @@ export default function Subscribe() {
                     </div>
 
                     <a
-                      href="mailto:editor@clownbinge.com?subject=Supporting%20Member%20Subscription"
+                      href="mailto:clownbinge@metricadia.com?subject=Supporting%20Member%20Subscription"
                       className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-sm transition-colors text-white mb-3"
                       style={{ background: "#1B3E99" }}
                     >

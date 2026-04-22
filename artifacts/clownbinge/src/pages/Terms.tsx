@@ -133,7 +133,7 @@ export default function Terms() {
           </p>
 
           <p className="text-muted-foreground font-mono text-sm border-l-2 border-secondary pl-4 mt-10">
-            ClownBinge is published by Metricadia Research, LLC. Jurisdiction of record: Federation of Saint Christopher and Nevis. Contact: legal@clownbinge.com
+            ClownBinge is published by Metricadia Research, LLC. Jurisdiction of record: Federation of Saint Christopher and Nevis. Contact: clownbinge@metricadia.com
           </p>
 
         </div>

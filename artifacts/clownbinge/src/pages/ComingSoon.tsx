@@ -271,7 +271,7 @@ export default function ComingSoon() {
               <span className="cs-link-sep" />
               <a
                 className="cs-link-btn"
-                href="mailto:contact@metricadia.com"
+                href="mailto:clownbinge@metricadia.com"
               >
                 Contact Metricadia
               </a>

@@ -128,7 +128,7 @@ export default function Support() {
                   and the reporting free for every reader.
                 </p>
                 <a
-                  href="mailto:support@clownbinge.com?subject=I%20want%20to%20support%20ClownBinge"
+                  href="mailto:clownbinge@metricadia.com?subject=I%20want%20to%20support%20ClownBinge"
                   className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-bold text-xs transition-opacity hover:opacity-80 border"
                   style={{ borderColor: "rgba(245,197,24,0.4)", color: "#F5C518", background: "transparent" }}
                 >

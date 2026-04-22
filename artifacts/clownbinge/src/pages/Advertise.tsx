@@ -83,7 +83,7 @@ export default function Advertise() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <a
-              href="mailto:advertising@clownbinge.com"
+              href="mailto:corporate@metricadia.com"
               className="inline-flex items-center gap-2 bg-secondary text-gray-900 font-bold px-8 py-4 rounded-full text-sm uppercase tracking-wider hover:bg-secondary/90 transition-colors"
             >
               <Mail className="w-4 h-4" />
@@ -271,11 +271,11 @@ export default function Advertise() {
               are discussed directly.
             </p>
             <a
-              href="mailto:advertising@clownbinge.com"
+              href="mailto:corporate@metricadia.com"
               className="inline-flex items-center gap-2 bg-primary text-white font-bold px-10 py-4 rounded-full text-sm uppercase tracking-wider hover:bg-primary/90 transition-colors shadow-lg"
             >
               <Mail className="w-4 h-4" />
-              advertising@clownbinge.com
+              corporate@metricadia.com
             </a>
             <p className="text-xs text-muted-foreground mt-6">
               Metricadia Research, LLC &nbsp;·&nbsp; ClownBinge.com &nbsp;·&nbsp; All advertising subject to editorial review.

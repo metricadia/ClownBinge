@@ -118,8 +118,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-bold text-sm text-foreground">General Inquiries</p>
-                      <a href="mailto:contact@clownbinge.com" className="text-sm text-primary hover:underline mt-1 block">
-                        contact@clownbinge.com
+                      <a href="mailto:clownbinge@metricadia.com" className="text-sm text-primary hover:underline mt-1 block">
+                        clownbinge@metricadia.com
                       </a>
                     </div>
                   </div>
@@ -140,8 +140,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-bold text-sm text-foreground">Advertising</p>
-                      <a href="mailto:advertising@clownbinge.com" className="text-sm text-primary hover:underline mt-1 block">
-                        advertising@clownbinge.com
+                      <a href="mailto:corporate@metricadia.com" className="text-sm text-primary hover:underline mt-1 block">
+                        corporate@metricadia.com
                       </a>
                     </div>
                   </div>
@@ -254,7 +254,7 @@ export default function Contact() {
                   </p>
                 </div>
                 <a
-                  href="mailto:advertising@clownbinge.com"
+                  href="mailto:corporate@metricadia.com"
                   className="shrink-0 inline-flex items-center gap-2 font-bold px-7 py-3.5 rounded-full transition-opacity hover:opacity-90 text-sm"
                   style={{ background: "#F5C518", color: "#1A3A8F" }}
                 >
@@ -340,12 +340,12 @@ export default function Contact() {
               <h3 className="font-black text-2xl text-header mb-2">Ready to be next to the source?</h3>
               <p className="text-muted-foreground text-sm mb-5 max-w-md mx-auto">All advertising inquiries are reviewed by our editorial team. We respond within two business days.</p>
               <a
-                href="mailto:advertising@clownbinge.com"
+                href="mailto:corporate@metricadia.com"
                 className="inline-flex items-center gap-2 text-white font-bold px-10 py-4 rounded-full text-sm hover:opacity-90 transition-opacity shadow-lg"
                 style={{ background: "#1A3A8F" }}
               >
                 <Mail className="w-4 h-4" />
-                advertising@clownbinge.com
+                corporate@metricadia.com
               </a>
               <p className="text-xs text-muted-foreground mt-4">Metricadia Research, LLC &nbsp;&middot;&nbsp; All advertising subject to editorial review.</p>
             </div>
