@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
 
+# Admin & editor routes
+Disallow: /admin-access
+Disallow: /admin-access/
+Disallow: /Brain-Instance-
+
+# Authentication
+Disallow: /sign-in
+Disallow: /sign-up
+Disallow: /account
+
+# Internal utility
+Disallow: /FixMe
+
+# API — all endpoints
+Disallow: /api/
+
 Sitemap: https://clownbinge.com/sitemap.xml
