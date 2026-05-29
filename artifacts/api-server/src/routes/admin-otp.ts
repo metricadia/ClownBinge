@@ -89,6 +89,10 @@ router.post("/admin/request-otp", requestOtpLimit, async (_req, res) => {
     });
   } catch (err) {
     console.error("[admin/request-otp] email error:", err);
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(`[admin/request-otp] DEV MODE — SMTP not configured. OTP: ${otp}`);
+      return res.json({ ok: true });
+    }
     otpStore.delete("admin");
     return res.status(500).json({ error: "Failed to send OTP email. Check SMTP configuration." });
   }

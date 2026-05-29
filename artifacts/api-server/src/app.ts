@@ -11,6 +11,7 @@ import publishRouter from "./publish-routes";
 import { logger } from "./lib/logger";
 import { cbAuthMiddleware } from "./middlewares/auth-middleware";
 import { jsonLdInjector } from "./middlewares/jsonld-injector";
+import { botRenderer } from "./middlewares/bot-renderer";
 
 const app: Express = express();
 
@@ -97,6 +98,10 @@ app.use("/api", router);
 app.use("/api", publishRouter);
 
 registerMetricadiaRoutes(app);
+
+// Bot renderer — serves fully-rendered HTML to crawlers for /articles/:slug.
+// Runs in both dev and production. Bots get complete HTML; humans pass through.
+app.use(botRenderer());
 
 // Production: serve Vite build + inject JSON-LD for article pages.
 // In dev, Vite dev server handles all frontend traffic.
