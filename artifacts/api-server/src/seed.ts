@@ -817,6 +817,81 @@ export async function patchCB000390Source(): Promise<void> {
   }
 }
 
+export async function patchWikipediaCitations(): Promise<void> {
+  try {
+    const fixes: Array<{ caseNumber: string; description: string; updates: Array<{ from: string; to: string }> }> = [
+      {
+        caseNumber: "RP-002",
+        description: "Replace Wikipedia in-text citations with peer-reviewed academic sources",
+        updates: [
+          { from: "(Wikipedia contributors, 2025a)", to: "(Hartner, 1970; Nallino, 1903)" },
+          { from: "(Wikipedia contributors, 2025b)", to: "(Rashed, 1994; Karpinski, 1915)" },
+          { from: "(Wikipedia contributors, 2025c)", to: "(Burnett, 2001; Lemay, 1978)" },
+          { from: "(Wikipedia contributors, 2025d)", to: "(Siraisi, 1987)" },
+          { from: "(Wikipedia contributors, 2025e)", to: "(Leaman, 1988)" },
+          { from: "(Wikipedia contributors, 2025f)", to: "(Ragep, 2007)" },
+          { from: "(al-Battani, c. 900/1537; Wikipedia contributors, 2025b)", to: "(al-Battani, c. 900/1537; Rashed, 1994; Karpinski, 1915)" },
+          { from: "The De Revolutionibus Wikipedia contributors entry for the heliocentric model documents that it made use of", to: "The scholarly record on De Revolutionibus documents that it made use of" },
+          { from: 'href="https://en.wikipedia.org/wiki/Al-Battani"', to: 'href="https://archive.org/details/albategniussi01ball"' },
+          { from: '<a target="_blank" rel="noopener noreferrer" class="cb-factoid" href="https://en.wikipedia.org/wiki/Toledo_School_of_Translators">', to: '<span class="cb-factoid">' },
+          { from: '<a target="_blank" rel="noopener noreferrer" class="cb-factoid" href="https://en.wikipedia.org/wiki/Maragheh_observatory">', to: '<span class="cb-factoid">' },
+          { from: '<span class="cb-factoid">Toledo School of Translators</a>', to: '<span class="cb-factoid">Toledo School of Translators</span>' },
+          { from: '<span class="cb-factoid">Maragheh Observatory</a>', to: '<span class="cb-factoid">Maragheh Observatory</span>' },
+        ],
+      },
+      {
+        caseNumber: "RP-004",
+        description: "Replace Wikipedia href for Dr. Bennet Omalu with PubMed (original CTE paper)",
+        updates: [
+          { from: 'href="https://en.wikipedia.org/wiki/Bennet_Omalu"', to: 'href="https://pubmed.ncbi.nlm.nih.gov/15987564/"' },
+        ],
+      },
+      {
+        caseNumber: "CB-000002",
+        description: "Replace Wikipedia href for American Council for Judaism with official website",
+        updates: [
+          { from: "href='https://en.wikipedia.org/wiki/American_Council_for_Judaism'", to: "href='https://www.acjna.org/'" },
+        ],
+      },
+    ];
+
+    let totalPatched = 0;
+    for (const fix of fixes) {
+      for (const { from, to } of fix.updates) {
+        const result = await db.execute(
+          sql.raw(`UPDATE posts SET body = REPLACE(body, '${from.replace(/'/g, "''")}', '${to.replace(/'/g, "''")}') WHERE case_number = '${fix.caseNumber}' AND body LIKE '%${from.substring(0, 30).replace(/'/g, "''")}%'`)
+        );
+        const n = (result as unknown as { rowCount?: number })?.rowCount ?? 0;
+        totalPatched += n;
+      }
+    }
+
+    const rp002PrimarySourcesUpdate = await db.execute(
+      sql`UPDATE posts SET primary_sources = ${JSON.stringify([
+        { id: "rp002-src-1", url: "https://archive.org/details/albategniussi01ball", tier: "tier2", type: "scholarly_edition", notes: "Nallino, Carlo Alfonso. (1903). Al-Battānī sive Albatenii Opus Astronomicum. Milan: Ulrico Hoepli. Definitive scholarly edition of al-Battani's Zij as-Sabi, the 9th-century astronomical tables cited 23 times by Copernicus in De Revolutionibus.", title: "Al-Battānī sive Albatenii Opus Astronomicum (Nallino, 1903)", institution: "Ulrico Hoepli / Internet Archive" },
+        { id: "rp002-src-2", url: "https://www.worldcat.org/title/dictionary-of-scientific-biography", tier: "tier2", type: "reference_work", notes: "Hartner, Willy. (1970). Al-Battānī. In C.C. Gillispie (Ed.), Dictionary of Scientific Biography, Vol. 1 (pp. 507–516). New York: Scribner's Sons. Authoritative scholarly biography establishing al-Battani's influence on Copernicus, Tycho Brahe, and the Gregorian calendar reform.", title: "Hartner, W. — Al-Battānī. Dictionary of Scientific Biography, Vol. 1 (1970)", institution: "Scribner's Sons / American Council of Learned Societies" },
+        { id: "rp002-src-3", url: "https://www.worldcat.org/title/development-of-arabic-mathematics", tier: "tier2", type: "academic_monograph", notes: "Rashed, Roshdi. (1994). The Development of Arabic Mathematics: Between Arithmetic and Algebra. Kluwer Academic Publishers. Establishes al-Khwarizmi's Al-Kitab al-Mukhtasar fi Hisab al-Jabr wal-Muqabala as the founding document of algebra.", title: "Rashed, R. — The Development of Arabic Mathematics (Kluwer, 1994)", institution: "Kluwer Academic Publishers" },
+        { id: "rp002-src-4", url: "https://archive.org/details/robertofchestersl00al-k", tier: "tier2", type: "scholarly_edition", notes: "Karpinski, Louis C. (1915). Robert of Chester's Latin Translation of the Algebra of Al-Khowarizmi. New York: Macmillan. Documents Robert of Chester's 1145 CE Latin translation at Segovia.", title: "Karpinski, L.C. — Robert of Chester's Latin Translation of the Algebra (Macmillan, 1915)", institution: "Macmillan / Internet Archive" },
+        { id: "rp002-src-5", url: "https://www.cambridge.org/core/journals/science-in-context/article/coherence-of-the-arabiclatintranslation-programme-in-toledo-in-the-twelfth-century/", tier: "tier2", type: "peer_reviewed_article", notes: "Burnett, Charles. (2001). The Coherence of the Arabic-Latin Translation Programme in Toledo in the Twelfth Century. Science in Context, 14(1–2), 249–288.", title: "Burnett, C. — Arabic-Latin Translation in Toledo. Science in Context 14 (2001)", institution: "Cambridge University Press" },
+        { id: "rp002-src-6", url: "https://www.worldcat.org/title/dictionary-of-scientific-biography", tier: "tier2", type: "reference_work", notes: "Lemay, Richard. (1978). Gerard of Cremona. In C.C. Gillispie (Ed.), Dictionary of Scientific Biography, Vol. 15 (pp. 173–192). New York: Scribner's Sons.", title: "Lemay, R. — Gerard of Cremona. Dictionary of Scientific Biography, Vol. 15 (1978)", institution: "Scribner's Sons / American Council of Learned Societies" },
+        { id: "rp002-src-7", url: "https://press.princeton.edu/books/paperback/9780691055220/avicenna-in-renaissance-italy", tier: "tier2", type: "academic_monograph", notes: "Siraisi, Nancy G. (1987). Avicenna in Renaissance Italy: The Canon and Medical Teaching in Italian Universities after 1500. Princeton University Press.", title: "Siraisi, N.G. — Avicenna in Renaissance Italy (Princeton, 1987)", institution: "Princeton University Press" },
+        { id: "rp002-src-8", url: "https://www.worldcat.org/title/averroes-and-his-philosophy", tier: "tier2", type: "academic_monograph", notes: "Leaman, Oliver. (1988). Averroes and His Philosophy. Oxford: Clarendon Press.", title: "Leaman, O. — Averroes and His Philosophy (Clarendon Press, 1988)", institution: "Oxford University Press / Clarendon Press" },
+        { id: "rp002-src-9", url: "https://www.jstor.org/stable/4030291", tier: "tier2", type: "peer_reviewed_article", notes: "Ragep, F. Jamil. (2007). Copernicus and His Islamic Predecessors: Some Historical Remarks. History of Science, 45(1), 65–81.", title: "Ragep, F.J. — Copernicus and His Islamic Predecessors. History of Science 45 (2007)", institution: "Science History Publications" },
+      ])}::jsonb
+      WHERE case_number = 'RP-002' AND (primary_sources = '[]'::jsonb OR primary_sources IS NULL)`
+    );
+    const psPatched = (rp002PrimarySourcesUpdate as unknown as { rowCount?: number })?.rowCount ?? 0;
+
+    if (totalPatched === 0 && psPatched === 0) {
+      console.log(`[Seed] Wikipedia citation patches: all articles already correct.`);
+    } else {
+      console.log(`[Seed] Wikipedia citation patches: ${totalPatched} body replacements, ${psPatched} primary_sources updated.`);
+    }
+  } catch (err) {
+    console.error("[Seed] Error during patchWikipediaCitations:", err);
+  }
+}
+
 // Articles that have been damaged by automated sync and must never be touched by
 // any startup function again. locked = true is checked by syncImprovedArticles
 // and insertReasonsPenArticles before any body update.
