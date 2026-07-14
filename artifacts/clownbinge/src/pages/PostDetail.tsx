@@ -211,6 +211,7 @@ export default function PostDetail() {
   const citationCount = useMemo(() => {
     if (!post) return 0;
     const ps = (post as any).primarySources;
+    if (Array.isArray(ps) && ps.length > 0) return ps.length;
     if (typeof ps === "string" && ps.trim().length > 0) {
       const liCount = (ps.match(/<li[\s>]/gi) || []).length;
       return liCount > 0 ? liCount : 1;
@@ -681,8 +682,10 @@ export default function PostDetail() {
         {/* Primary Sources */}
         {(() => {
           const ps = (post as any).primarySources;
+          const psArray: any[] = Array.isArray(ps) && ps.length > 0 ? ps : [];
           const psHtml: string = typeof ps === "string" ? ps : "";
-          const hasPrimarySources = psHtml.trim().length > 0;
+          const hasPrimarySourcesArray = psArray.length > 0;
+          const hasPrimarySources = hasPrimarySourcesArray || psHtml.trim().length > 0;
           const hasAny = hasPrimarySources || references.length > 0 || !!post.verifiedSource;
           if (!hasAny) return null;
           return (
@@ -692,8 +695,27 @@ export default function PostDetail() {
                 Primary Sources
               </h2>
 
-              {hasPrimarySources
-                /* ── primarySources HTML string — highest priority ── */
+              {hasPrimarySourcesArray
+                /* ── primarySources JSONB array — canonical render path ── */
+                ? (
+                  <ol className="space-y-5 list-none p-0 m-0">
+                    {psArray.map((src: any, i: number) => (
+                      <li key={src.id ?? i} className="flex gap-4">
+                        <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
+                        <div>
+                          <p className="font-bold text-sm text-foreground/80 leading-snug mb-0.5 m-0">
+                            {src.url
+                              ? <a href={src.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">{src.title}</a>
+                              : src.title}
+                          </p>
+                          {src.notes && <p className="text-sm text-foreground/65 leading-snug m-0 italic">{src.notes}</p>}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                )
+                /* ── primarySources HTML string (legacy format) ── */
+                : psHtml.trim().length > 0
                 ? (
                   <div
                     className="primary-sources-html text-sm leading-relaxed"
