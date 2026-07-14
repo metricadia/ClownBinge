@@ -915,11 +915,9 @@ export async function patchRP008(): Promise<void> {
       fixed += n;
     }
 
-    const emDashResult = await db.execute(
-      sql.raw(`UPDATE posts SET body = REPLACE(body, '\u2014', ', ') WHERE case_number = 'RP-008' AND body LIKE '%\u2014%'`)
-    );
-    const emFixed = (emDashResult as unknown as { rowCount?: number })?.rowCount ?? 0;
-    fixed += emFixed;
+    // Em dash replacement intentionally disabled.
+    // Blanket punctuation replacement requires per-instance human editorial review.
+    // Do not re-enable without approval.
 
     const sourcesResult = await db.execute(
       sql`UPDATE posts SET primary_sources = ${JSON.stringify([
@@ -938,10 +936,22 @@ export async function patchRP008(): Promise<void> {
     );
     const psFixed = (sourcesResult as unknown as { rowCount?: number })?.rowCount ?? 0;
 
-    if (fixed === 0 && psFixed === 0) {
+    // Fix verified_source: RP-009's IRS sources were copy-pasted here. Replace with correct attribution.
+    const vsResult = await db.execute(
+      sql.raw(`UPDATE posts SET verified_source = 'National Archives :: United States. Declaration of Independence (1776). National Archives, Washington, D.C. | Library of Congress :: U.S. Congress. Naturalization Act of 1790, 1 Stat. 103; Naturalization Act of 1870, 16 Stat. 254. Library of Congress. | U.S. Supreme Court :: Shelby County v. Holder, 570 U.S. 529 (2013). | U.S. Supreme Court :: Ozawa v. United States, 260 U.S. 178 (1922); United States v. Bhagat Singh Thind, 261 U.S. 204 (1923). | Federal Housing Administration :: FHA Underwriting Manual (1938). | Federal Register :: Executive Order 14160 (2025). 90 Fed. Reg. 8449.' WHERE case_number = 'RP-008' AND verified_source LIKE '%Internal Revenue Service%'`)
+    );
+    const vsFixed = (vsResult as unknown as { rowCount?: number })?.rowCount ?? 0;
+
+    // Fix date_of_incident: Declaration adopted July 4, not July 3.
+    const dateResult = await db.execute(
+      sql.raw(`UPDATE posts SET date_of_incident = '1776-07-04' WHERE case_number = 'RP-008' AND date_of_incident = '1776-07-03'`)
+    );
+    const dateFixed = (dateResult as unknown as { rowCount?: number })?.rowCount ?? 0;
+
+    if (fixed === 0 && psFixed === 0 && vsFixed === 0 && dateFixed === 0) {
       console.log(`[Seed] RP-008 patch: all already correct.`);
     } else {
-      console.log(`[Seed] RP-008 patch: ${fixed} body fixes, ${psFixed} primary_sources populated.`);
+      console.log(`[Seed] RP-008 patch: ${fixed} body fixes, ${psFixed} primary_sources populated, ${vsFixed} verified_source fixed, ${dateFixed} date_of_incident corrected.`);
     }
   } catch (err) {
     console.error("[Seed] Error during patchRP008:", err);
