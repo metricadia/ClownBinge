@@ -79,6 +79,29 @@ router.post("/wizard/publish", requireMetricadiaAuth, async (req: Request, res: 
       return res.status(409).json({ ok: false, error: `Slug "${data.slug}" already exists.` });
     }
 
+    // ── Integrity guard 1: verifiedSource must not be empty ───────────────────
+    const verifiedSource = (data.verifiedSource as string) || null;
+    if (!verifiedSource || verifiedSource.trim().length === 0) {
+      return res.status(400).json({
+        ok: false,
+        error: "PUBLISH BLOCKED: verified_source is empty. An article must have citations before it can be published.",
+      });
+    }
+
+    // ── Integrity guard 2: verifiedSource must not be byte-identical to another published article ──
+    const duplicateSource = await db
+      .select({ caseNumber: postsTable.caseNumber, title: postsTable.title })
+      .from(postsTable)
+      .where(sql`${postsTable.verifiedSource} = ${verifiedSource} AND ${postsTable.status} = 'published'`)
+      .limit(1);
+
+    if (duplicateSource.length > 0) {
+      return res.status(409).json({
+        ok: false,
+        error: `PUBLISH BLOCKED: verified_source is byte-identical to ${duplicateSource[0].caseNumber} ("${duplicateSource[0].title}"). Citations must be unique to each article. This article may have been created by cloning.`,
+      });
+    }
+
     const caseNumber = await nextCaseNumber();
     const canonicalUrl = (data.canonicalUrl as string) || `https://clownbinge.com/articles/${data.slug}`;
     const ogTitle = (data.ogTitle as string) || (data.metaTitle as string) || (data.title as string);
