@@ -699,19 +699,20 @@ export default function PostDetail() {
                 /* ── primarySources JSONB array — canonical render path ── */
                 ? (
                   <ol className="space-y-5 list-none p-0 m-0">
-                    {psArray.map((src: any, i: number) => (
-                      <li key={src.id ?? i} className="flex gap-4">
-                        <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
-                        <div>
-                          <p className="font-bold text-sm text-foreground/80 leading-snug mb-0.5 m-0">
-                            {src.url
-                              ? <a href={src.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">{src.title}</a>
-                              : src.title}
-                          </p>
-                          {src.notes && <p className="text-sm text-foreground/65 leading-snug m-0 italic">{src.notes}</p>}
-                        </div>
-                      </li>
-                    ))}
+                    {psArray.map((src: any, i: number) => {
+                      const notesClean = src.notes
+                        ? src.notes.replace(/https?:\/\/[^\s,;)]+/g, "").replace(/\s{2,}/g, " ").trim()
+                        : "";
+                      return (
+                        <li key={src.id ?? i} className="flex gap-4">
+                          <span className="font-mono font-bold text-sm text-[#F5C518] mt-0.5 shrink-0 w-6 text-right">{i + 1}.</span>
+                          <div>
+                            <p className="font-bold text-sm text-foreground/80 leading-snug mb-0.5 m-0">{src.title}</p>
+                            {notesClean && <p className="text-sm text-foreground/65 leading-snug m-0 italic">{notesClean}</p>}
+                          </div>
+                        </li>
+                      );
+                    })}
                   </ol>
                 )
                 /* ── primarySources HTML string (legacy format) ── */
