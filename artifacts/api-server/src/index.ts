@@ -1,6 +1,6 @@
 import app from "./app";
 import { logger } from "./lib/logger";
-import { seedIfEmpty, insertNewArticles, insertReasonsPenArticles, updateNativeArticles, syncImprovedArticles, applyPremiumFlags, applyStaffPickFlags, applyCategoryOverrides, applyCaseNumberRenames, applyContentLocks, patchCB000390Source, applyWarCategoryTagPatches, applyComprehensiveTagPatches, patchWikipediaCitations } from "./seed";
+import { seedIfEmpty, insertNewArticles, insertReasonsPenArticles, updateNativeArticles, syncImprovedArticles, applyPremiumFlags, applyStaffPickFlags, applyCategoryOverrides, applyCaseNumberRenames, applyContentLocks, patchCB000390Source, applyWarCategoryTagPatches, applyComprehensiveTagPatches, patchWikipediaCitations, patchRP008 } from "./seed";
 
 const rawPort = process.env["PORT"];
 
@@ -38,5 +38,6 @@ app.listen(port, (err) => {
     .then(() => applyComprehensiveTagPatches())
     .then(() => patchCB000390Source())
     .then(() => patchWikipediaCitations())
+    .then(() => patchRP008())
     .catch((e) => logger.error({ err: e }, "Seed failed"));
 });

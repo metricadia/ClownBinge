@@ -892,6 +892,62 @@ export async function patchWikipediaCitations(): Promise<void> {
   }
 }
 
+export async function patchRP008(): Promise<void> {
+  try {
+    let fixed = 0;
+
+    const bodyFixes: { from: string; to: string }[] = [
+      {
+        from: "That restriction governed naturalization law for 162 years, until 1952.",
+        to: "The 1870 Naturalization Act extended citizenship to persons of African descent. The white-only requirement persisted for most other applicants; in Ozawa v. United States (1922) and United States v. Bhagat Singh Thind (1923), the Supreme Court adjudicated whiteness as a legal category in real time. The racial bar on naturalization was not fully abolished until the McCarran-Walter Act of 1952.",
+      },
+      {
+        from: "in states implementing strict voter ID laws in the aftermath of Shelby County.",
+        to: "in states implementing strict voter ID laws.",
+      },
+    ];
+
+    for (const { from, to } of bodyFixes) {
+      const result = await db.execute(
+        sql.raw(`UPDATE posts SET body = REPLACE(body, '${from.replace(/'/g, "''")}', '${to.replace(/'/g, "''")}') WHERE case_number = 'RP-008' AND body LIKE '%${from.substring(0, 40).replace(/'/g, "''")}%'`)
+      );
+      const n = (result as unknown as { rowCount?: number })?.rowCount ?? 0;
+      fixed += n;
+    }
+
+    const emDashResult = await db.execute(
+      sql.raw(`UPDATE posts SET body = REPLACE(body, '\u2014', ', ') WHERE case_number = 'RP-008' AND body LIKE '%\u2014%'`)
+    );
+    const emFixed = (emDashResult as unknown as { rowCount?: number })?.rowCount ?? 0;
+    fixed += emFixed;
+
+    const sourcesResult = await db.execute(
+      sql`UPDATE posts SET primary_sources = ${JSON.stringify([
+        { id: "rp008-src-1", url: "https://www.archives.gov/founding-docs/declaration-transcript", tier: "tier1", type: "founding_document", notes: "United States. (1776). Declaration of Independence. National Archives, Washington, D.C. Primary text: 'all men are created equal...endowed by their Creator with certain unalienable Rights.'", title: "Declaration of Independence (1776)", institution: "National Archives" },
+        { id: "rp008-src-2", url: "https://loc.gov/law/help/statutes-at-large/1st-congress/session-2/c1s2ch3.pdf", tier: "tier1", type: "law_statute", notes: "U.S. Congress. (1790). An Act to Establish a Uniform Rule of Naturalization, 1 Stat. 103. 1st Congress, Session 2. Restricted citizenship to 'free white persons.' Library of Congress.", title: "Naturalization Act of 1790, 1st Congress", institution: "Library of Congress" },
+        { id: "rp008-src-3", url: "https://www.loc.gov/law/help/statutes-at-large/41st-congress/session-2/c41s2ch254.pdf", tier: "tier1", type: "law_statute", notes: "U.S. Congress. (1870). An Act to Amend the Naturalization Laws, 16 Stat. 254. 41st Congress. Extended naturalization to persons of African descent, while the white-only restriction persisted for Asian applicants.", title: "Naturalization Act of 1870, 41st Congress", institution: "Library of Congress" },
+        { id: "rp008-src-4", url: "https://supreme.justia.com/cases/federal/us/260/178/", tier: "tier1", type: "court_ruling", notes: "Ozawa v. United States, 260 U.S. 178 (1922). U.S. Supreme Court ruled that a Japanese applicant did not qualify as a 'free white person' under naturalization law. Court adjudicated whiteness as a legal category.", title: "Ozawa v. United States, 260 U.S. 178 (1922)", institution: "U.S. Supreme Court" },
+        { id: "rp008-src-5", url: "https://supreme.justia.com/cases/federal/us/261/204/", tier: "tier1", type: "court_ruling", notes: "United States v. Bhagat Singh Thind, 261 U.S. 204 (1923). U.S. Supreme Court ruled that a South Asian applicant, despite being Caucasian in anthropological classification, did not qualify as 'white' under the common understanding of the naturalization law.", title: "United States v. Bhagat Singh Thind, 261 U.S. 204 (1923)", institution: "U.S. Supreme Court" },
+        { id: "rp008-src-6", url: "https://supreme.justia.com/cases/federal/us/570/529/", tier: "tier1", type: "court_ruling", notes: "Shelby County v. Holder, 570 U.S. 529 (2013). U.S. Supreme Court struck down Section 4(b) of the Voting Rights Act, eliminating the preclearance requirement that required states with histories of voter discrimination to obtain federal approval before changing voting laws.", title: "Shelby County v. Holder, 570 U.S. 529 (2013)", institution: "U.S. Supreme Court" },
+        { id: "rp008-src-7", url: "https://gao.gov/assets/gao-14-634.pdf", tier: "tier1", type: "government_report", notes: "U.S. Government Accountability Office. (2014). Elections: Issues Related to State Voter Identification Laws. GAO-14-634. Examined 2008 and 2012 turnout data in Kansas and Tennessee. Found Black voter turnout declined an estimated 2 to 3 percentage points in states with strict voter ID laws.", title: "GAO-14-634: Issues Related to State Voter Identification Laws (2014)", institution: "U.S. Government Accountability Office" },
+        { id: "rp008-src-8", url: "https://www.huduser.gov/portal/sites/default/files/pdf/Federal-Housing-Administration-Underwriting-Manual.pdf", tier: "tier1", type: "government_doc", notes: "Federal Housing Administration. (1938). Underwriting Manual: Underwriting and Valuation Procedure Under Title II of the National Housing Act. Sections on 'inharmonious racial groups' and racial homogeneity as underwriting criteria. Institutionalized redlining as federal mortgage policy.", title: "FHA Underwriting Manual (1938)", institution: "Federal Housing Administration" },
+        { id: "rp008-src-9", url: "https://www.federalregister.gov/documents/2025/01/22/2025-01779/protecting-the-meaning-and-value-of-american-citizenship", tier: "tier1", type: "executive_order", notes: "Trump, Donald J. (2025). Executive Order 14160: Protecting the Meaning and Value of American Citizenship. 90 Fed. Reg. 8449. Signed January 20, 2025. Sought to end birthright citizenship for children of undocumented immigrants, challenged in federal court.", title: "Executive Order 14160 (2025)", institution: "Federal Register" },
+        { id: "rp008-src-10", url: "https://www.worldcat.org/title/the-new-jim-crow", tier: "tier2", type: "academic_monograph", notes: "Alexander, Michelle. (2010). The New Jim Crow: Mass Incarceration in the Age of Colorblindness. The New Press. Documents the structural continuity between Jim Crow law and mass incarceration as a mechanism of racial control.", title: "Alexander, M. — The New Jim Crow (The New Press, 2010)", institution: "The New Press" },
+      ])}::jsonb
+      WHERE case_number = 'RP-008' AND (primary_sources = '[]'::jsonb OR primary_sources IS NULL)`
+    );
+    const psFixed = (sourcesResult as unknown as { rowCount?: number })?.rowCount ?? 0;
+
+    if (fixed === 0 && psFixed === 0) {
+      console.log(`[Seed] RP-008 patch: all already correct.`);
+    } else {
+      console.log(`[Seed] RP-008 patch: ${fixed} body fixes, ${psFixed} primary_sources populated.`);
+    }
+  } catch (err) {
+    console.error("[Seed] Error during patchRP008:", err);
+  }
+}
+
 // Articles that have been damaged by automated sync and must never be touched by
 // any startup function again. locked = true is checked by syncImprovedArticles
 // and insertReasonsPenArticles before any body update.
